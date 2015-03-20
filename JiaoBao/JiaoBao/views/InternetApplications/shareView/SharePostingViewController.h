@@ -1,0 +1,40 @@
+//
+//  SharePostingViewController.h
+//  JiaoBao
+//  发表文章
+//  Created by Zqw on 14-11-24.
+//  Copyright (c) 2014年 JSY. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "MyNavigationBar.h"
+#import "dm.h"
+#import "utils.h"
+#import "ShareHttp.h"
+#import "MBProgressHUD.h"
+
+@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>{
+    MyNavigationBar *mNav_navgationBar;//导航条
+    UITextView *mTextV_content;//内容
+    MBProgressHUD *mProgressV;//
+    UIButton *mBtn_send;//发表文章按钮
+    UITextField *mTextF_title;//标题
+    UIButton *mBtn_selectPic;//选择图片
+    int mInt_index;//记录添加了多少图片,第几张
+    NSMutableArray *mArr_pic;//添加的图片数组
+    UnitSectionMessageModel *mModel_unit;//传递过来的单位信息
+    int mInt_section;//判断是来自分享0还是展示1
+}
+
+@property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
+@property (nonatomic,strong) IBOutlet UITextView *mTextV_content;//内容
+@property (nonatomic,strong) MBProgressHUD *mProgressV;//
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_send;//发表文章按钮
+@property (nonatomic,strong) IBOutlet UITextField *mTextF_title;//标题
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_selectPic;//选择图片
+@property (nonatomic,assign) int mInt_index;//记录添加了多少图片
+@property (nonatomic,strong) NSMutableArray *mArr_pic;//添加的图片数组
+@property (nonatomic,strong) UnitSectionMessageModel *mModel_unit;//传递过来的单位信息
+@property (nonatomic,assign) int mInt_section;//判断是来自分享0还是展示1
+
+@end

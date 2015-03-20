@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SignInViewController">
+            <connections>
+                <outlet property="calendarView" destination="0f5-6R-N0Y" id="sZO-Lu-54h"/>
+                <outlet property="menuView" destination="uB0-LR-w9r" id="WvM-nk-bEb"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uB0-LR-w9r" customClass="JTCalendarMenuView">
+                    <rect key="frame" x="0.0" y="64" width="320" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0f5-6R-N0Y" customClass="JTCalendarContentView">
+                    <rect key="frame" x="0.0" y="114" width="320" height="300"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylP-GG-Hb3">
+                    <rect key="frame" x="20" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_left_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="leftBtnAction:" destination="-1" eventType="touchUpInside" id="FgT-Uz-NJm"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUS-vw-8My">
+                    <rect key="frame" x="77" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_left_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="leftBtnAction:" destination="-1" eventType="touchUpInside" id="wyR-Mr-R9h"/>
+                        <action selector="minusYearAction:" destination="-1" eventType="touchUpInside" id="Jby-St-Fr4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVY-Uz-PPc">
+                    <rect key="frame" x="87" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_left_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="leftBtnAction:" destination="-1" eventType="touchUpInside" id="x9p-qY-0w2"/>
+                        <action selector="minusYearAction:" destination="-1" eventType="touchUpInside" id="BEA-UH-Aa4"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oht-SZ-zoX">
+                    <rect key="frame" x="226" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_right_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addYearAction:" destination="-1" eventType="touchUpInside" id="KZj-vq-Lkr"/>
+                        <action selector="rightBtnAction:" destination="-1" eventType="touchUpInside" id="cr3-Mi-g2h"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VdV-Gw-CLi">
+                    <rect key="frame" x="236" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_right_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="addYearAction:" destination="-1" eventType="touchUpInside" id="STK-jd-P2x"/>
+                        <action selector="rightBtnAction:" destination="-1" eventType="touchUpInside" id="AUj-la-gcy"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akn-9t-gB1">
+                    <rect key="frame" x="290" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_right_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="rightBtnAction:" destination="-1" eventType="touchUpInside" id="KAA-CO-JZP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5G-V9-L4T">
+                    <rect key="frame" x="215" y="488" width="30" height="30"/>
+                    <state key="normal" title="查询">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="queryAction:" destination="-1" eventType="touchUpInside" id="m69-zZ-gKR"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Juc-zq-iVQ">
+                    <rect key="frame" x="61" y="488" width="30" height="30"/>
+                    <state key="normal" title="提交">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="submitAction:" destination="-1" eventType="touchUpInside" id="U2O-Vw-5f3"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Juc-zq-iVQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="61" id="AKy-0A-CvE"/>
+                <constraint firstItem="0f5-6R-N0Y" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="114" id="HFF-lc-NjY"/>
+                <constraint firstItem="Juc-zq-iVQ" firstAttribute="top" secondItem="0f5-6R-N0Y" secondAttribute="bottom" constant="74" id="QPp-e5-Lw3"/>
+                <constraint firstItem="uB0-LR-w9r" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VNm-mp-bda"/>
+                <constraint firstAttribute="trailing" secondItem="0f5-6R-N0Y" secondAttribute="trailing" id="XAr-rO-9TI"/>
+                <constraint firstAttribute="bottom" secondItem="Juc-zq-iVQ" secondAttribute="bottom" constant="50" id="Xg4-x9-lYr"/>
+                <constraint firstItem="T5G-V9-L4T" firstAttribute="baseline" secondItem="Juc-zq-iVQ" secondAttribute="baseline" id="YMz-PC-6ib"/>
+                <constraint firstItem="uB0-LR-w9r" firstAttribute="leading" secondItem="0f5-6R-N0Y" secondAttribute="leading" id="bcH-7z-SVB"/>
+                <constraint firstAttribute="trailing" secondItem="T5G-V9-L4T" secondAttribute="trailing" constant="75" id="hkj-3Y-DXG"/>
+                <constraint firstItem="0f5-6R-N0Y" firstAttribute="trailing" secondItem="uB0-LR-w9r" secondAttribute="trailing" id="muO-0b-lIv"/>
+                <constraint firstItem="0f5-6R-N0Y" firstAttribute="top" secondItem="uB0-LR-w9r" secondAttribute="bottom" id="tb1-bb-4eo"/>
+                <constraint firstItem="uB0-LR-w9r" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="upb-ZI-Inw"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="kal_left_arrow.png" width="9" height="12"/>
+        <image name="kal_right_arrow.png" width="10" height="12"/>
+    </resources>
+</document>

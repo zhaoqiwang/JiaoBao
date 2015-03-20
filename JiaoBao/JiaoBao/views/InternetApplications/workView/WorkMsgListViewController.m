@@ -1,0 +1,689 @@
+//
+//  WorkMsgListViewController.m
+//  JiaoBao
+//
+//  Created by Zqw on 15-2-10.
+//  Copyright (c) 2015年 JSY. All rights reserved.
+//
+
+#import "WorkMsgListViewController.h"
+#import "Reachability.h"
+#import "ReSendMsgViewController.h"
+
+@interface WorkMsgListViewController ()
+
+@end
+
+@implementation WorkMsgListViewController
+@synthesize mBtn_send,mTableV_detail,mTextF_text,mView_text,mArr_list,mNav_navgationBar,mProgressV,mArr_feeback,mArr_msg,mInt_down,mInt_up,mStr_lastID,mStr_name,mStr_tableID,mInt_page,mArr_attList,mInt_file,mInt_flag,mInt_our,mInt_msg,mArr_readList,mStr_flag;
+
+-(instancetype)init{
+    self.mArr_list = [[NSMutableArray alloc] init];
+    self.mArr_msg = [[NSMutableArray alloc] init];
+    self.mArr_feeback = [[NSMutableArray alloc] init];
+    self.mArr_attList = [[NSMutableArray alloc] init];
+    self.mArr_readList = [[NSMutableArray alloc] init];
+    return self;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    //取单个用户发给我消息列表，new
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SendToMeMsgList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SendToMeMsgList:) name:@"SendToMeMsgList" object:nil];
+    //获取我发送的消息列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMySendMsgList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetMySendMsgList:) name:@"GetMySendMsgList" object:nil];
+    //通知界面刷新信息详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MsgDetail" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MsgDetail:) name:@"MsgDetail" object:nil];
+    //键盘事件
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+    //通知信息详情界面，更新下载文件的进度条
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"loadingProgress" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadingProgress:) name:@"loadingProgress" object:nil];
+    //通知信息详情界面回复是否成功
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"addFeeBack" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addFeeBack:) name:@"addFeeBack" object:nil];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
+    //添加导航条
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_name];
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar setGoBack];
+    [self.view addSubview:self.mNav_navgationBar];
+    
+    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+    //添加表格的下拉刷新
+    self.mTableV_detail.separatorStyle = UITableViewCellSeparatorStyleNone;
+    if (self.mInt_flag == 1) {
+        [self.mTableV_detail addHeaderWithTarget:self action:@selector(headerRereshing)];
+        self.mTableV_detail.headerPullToRefreshText = @"下拉刷新";
+        self.mTableV_detail.headerReleaseToRefreshText = @"松开后刷新";
+        self.mTableV_detail.headerRefreshingText = @"正在刷新...";
+    }
+    
+    //输入View坐标
+    self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
+    //输入框
+    self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15-70, 51-20);
+    //发送按钮
+    self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
+    [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.mProgressV];
+    
+    [[LoginSendHttp getInstance] msgDetailwithUID:self.mStr_tableID page:1 feeBack:self.mStr_tableID ReadFlag:self.mStr_flag];
+    self.mProgressV.labelText = @"加载中...";
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+}
+
+//通知界面刷新信息详情
+-(void)MsgDetail:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    [self.mTableV_detail headerEndRefreshing];
+    [self.mTableV_detail footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSMutableArray *tempArr = [dic valueForKey:@"array"];
+    if (self.mInt_page > 1) {
+        if (tempArr.count>0) {
+            [self.mArr_feeback addObjectsFromArray:tempArr];
+        }
+    }else{
+        self.mArr_feeback = [NSMutableArray arrayWithArray:tempArr];
+    }
+    //判断是否隐藏加载更多按钮
+    if (tempArr.count==20) {
+        [self.mTableV_detail addFooterWithTarget:self action:@selector(footerRereshing)];
+        self.mTableV_detail.footerPullToRefreshText = @"上拉加载更多";
+        self.mTableV_detail.footerReleaseToRefreshText = @"松开加载更多数据";
+        self.mTableV_detail.footerRefreshingText = @"正在加载...";
+    }else{
+        [self.mTableV_detail removeFooter];
+    }
+    //加入内容列表为空，加入
+    if (self.mArr_msg.count==0) {
+        UnReadMsg_model *modelMsg = [dic valueForKey:@"model"];
+        CommMsgListModel *model = [[CommMsgListModel alloc] init];
+        model.TabIDStr = modelMsg.TabIDStr;
+        model.MsgContent = modelMsg.MsgContent;
+        model.RecDate = modelMsg.RecDate;
+        model.UserName = modelMsg.UserName;
+        model.JiaoBaoHao = modelMsg.JiaoBaoHao;
+        model.noReadCount = @"";
+        model.NoReplyCount = @"";
+        model.ReadFlag = @"";
+        model.flag = @"0";
+        [self.mArr_msg addObject:model];
+        [self.mArr_attList addObjectsFromArray:modelMsg.arrayAttList];
+        //阅读人员列表
+        self.mArr_readList = [NSMutableArray arrayWithArray:modelMsg.arrayReaderList];
+    }
+    //定位
+    [self addArray];
+}
+
+//取单个用户发给我消息列表
+-(void)SendToMeMsgList:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    [self.mTableV_detail headerEndRefreshing];
+    [self.mTableV_detail footerEndRefreshing];
+    SendToMeUserListModel *model = noti.object;
+    if (model.LastID.length==0) {
+        [self.mTableV_detail removeHeader];
+    }
+    self.mStr_lastID = model.LastID;
+    
+    //将值倒序插入
+    if (model.CommMsgList.count>1) {
+        if (self.mArr_msg.count==1) {
+            for (int i=1; i<model.CommMsgList.count; i++) {
+                CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
+                [self.mArr_msg insertObject:modelTemp atIndex:0];
+            }
+        }else{
+            for (int i=0; i<model.CommMsgList.count; i++) {
+                CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
+                [self.mArr_msg insertObject:modelTemp atIndex:0];
+            }
+        }
+    }
+    
+    [self addArray];
+}
+
+-(void)GetMySendMsgList:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    [self.mTableV_detail headerEndRefreshing];
+    [self.mTableV_detail footerEndRefreshing];
+    NSMutableArray *array = noti.object;
+    if (array.count>1) {
+        //将值倒序插入
+        if (self.mArr_msg.count==1) {
+            for (int i=1; i<array.count; i++) {
+                CommMsgListModel *modelTemp = [array objectAtIndex:i];
+                [self.mArr_msg insertObject:modelTemp atIndex:0];
+            }
+        }else{
+            for (int i=0; i<array.count; i++) {
+                CommMsgListModel *modelTemp = [array objectAtIndex:i];
+                [self.mArr_msg insertObject:modelTemp atIndex:0];
+            }
+        }
+    }
+    
+    if (array.count!=20) {
+        [self.mTableV_detail removeHeader];
+    }
+    [self addArray];
+}
+
+-(void)addArray{
+    [self.mArr_list removeAllObjects];
+    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[self.mArr_msg count])];
+    [self.mArr_list insertObjects:self.mArr_msg atIndexes:indexes];
+    [self.mArr_list addObjectsFromArray:self.mArr_feeback];
+    [self.mTableV_detail reloadData];
+}
+
+//检查当前网络是否可用
+-(BOOL)checkNetWork{
+    if([Reachability isEnableNetwork]==NO){
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = NETWORKENABLE;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+-(void)ProgressViewLoad{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    self.mProgressV.labelText = @"加载中...";
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    CommMsgListModel *model = [self.mArr_msg objectAtIndex:0];
+//    self.mInt_index = 1;
+    //取单个用户发给我消息列表 new
+    self.mInt_msg = (int)self.mArr_msg.count/20+1;
+    if (self.mInt_our == 1) {
+        [[LoginSendHttp getInstance] login_GetMySendMsgList:@"20" Page:[NSString stringWithFormat:@"%d",self.mInt_msg] SendName:@"" sDate:@"" eDate:@""];
+    }else if (self.mInt_our == 2){
+        [[LoginSendHttp getInstance] login_SendToMeMsgList:@"20" Page:[NSString stringWithFormat:@"%d",self.mInt_msg] senderAccId:model.JiaoBaoHao sDate:@"" eDate:@"" readFlag:@"" lastId:self.mStr_lastID];
+    }
+    
+    [self ProgressViewLoad];
+}
+- (void)footerRereshing{
+    //检查当前网络是否可用
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    D("点击查看更多按钮");
+    if (self.mArr_feeback.count>=20) {
+        self.mInt_page = (int)self.mArr_feeback.count/20+1;
+        D("self.mint.page-====%lu %d",(unsigned long)self.mArr_feeback.count,self.mInt_page);
+        CommMsgListModel *model = [self.mArr_msg objectAtIndex:self.mArr_msg.count-1];
+        [[LoginSendHttp getInstance] msgDetailwithUID:model.TabIDStr page:self.mInt_page feeBack:@"" ReadFlag:self.mStr_flag];
+        
+        self.mProgressV.labelText = @"加载中...";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+    } else {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"没有更多了";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
+}
+
+//点击发送按钮
+-(void)clickSendBtn:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    D("点击发送按钮");
+    [self.mTextF_text resignFirstResponder];
+    if (self.mTextF_text.text.length==0) {
+        self.mProgressV.labelText = @"请输入内容";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    CommMsgListModel *model = [self.mArr_msg objectAtIndex:self.mArr_msg.count-1];
+    [[LoginSendHttp getInstance] addFeeBackWithUID:model.TabIDStr content:self.mTextF_text.text];
+    self.mProgressV.labelText = @"发送中...";
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+}
+
+-(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.mArr_list.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *indentifier = @"WorkMsgListCell";
+    WorkMsgListCell *cell = (WorkMsgListCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+    if(cell == nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"WorkMsgListCell" owner:self options:nil] lastObject];
+    }
+    cell.tag = indexPath.row;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //判断要显示哪种类型的数据
+    if (self.mArr_msg.count>indexPath.row) {
+        CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        //文件名
+        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+        if (img.size.width>0) {
+            [cell.mImgV_head setImage:img];
+        }else{
+            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+            //获取头像
+            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+        }
+        cell.mImgV_head.frame = CGRectMake(10, 17, 40, 40);
+        //姓名
+        cell.mLab_name.hidden = YES;
+        //时间
+        CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
+        cell.mLab_time.frame = CGRectMake(0, 2, [dm getInstance].width, timeSize.height);
+        cell.mLab_time.text = model.RecDate;
+        //按钮
+        cell.mBtn_work.hidden = NO;
+        cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 20, 50, 30);
+        [cell.mBtn_work setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        
+        //内容
+        CGFloat tempW;
+        //判断是不是需要显示详情的cell
+        if (self.mInt_our == 1) {//自己发送的
+            tempW = [dm getInstance].width-50-70-10;
+            cell.mBtn_work.hidden = NO;
+            if (self.mArr_msg.count==indexPath.row+1) {
+                cell.mBtn_work.enabled = YES;
+                [cell.mBtn_work setTitle:@"再发" forState:UIControlStateNormal];
+                [cell.mBtn_work addTarget:self action:@selector(clickAttListSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+            }else{
+                cell.mBtn_work.enabled = NO;
+                [cell.mBtn_work setTitle:@"详情" forState:UIControlStateNormal];
+            }
+        }else{
+            cell.mBtn_work.enabled = NO;
+            if (self.mArr_msg.count==indexPath.row+1) {
+                tempW = [dm getInstance].width-50-20;
+                cell.mBtn_work.hidden = YES;
+            }else{
+                tempW = [dm getInstance].width-50-70-10;
+                cell.mBtn_work.hidden = NO;
+            }
+            
+            if ([model.ReadFlag intValue]==0) {
+                [cell.mBtn_work setTitle:@"未阅" forState:UIControlStateNormal];
+            }else if ([model.ReadFlag intValue]==1) {
+                [cell.mBtn_work setTitle:@"待回复" forState:UIControlStateNormal];
+            }else if ([model.ReadFlag intValue]==2) {
+                [cell.mBtn_work setTitle:@"再回复" forState:UIControlStateNormal];
+            }
+        }
+        
+        CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
+        cell.mLab_content.text = model.MsgContent;
+        
+        //计算宽度
+        CGFloat cellFloat;
+        if (tempW>contentSize.width) {
+            cellFloat = contentSize.width;
+        }else{
+            cellFloat = tempW;
+        }
+        //计算行数
+        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+        cell.mLab_content.frame = CGRectMake(65, cell.mLab_time.frame.origin.y+20, cellFloat, contentSize.height);
+        CGRect rect = cell.mLab_content.frame;
+        if (self.mArr_msg.count == indexPath.row+1) {
+            //是否有附件
+            for (int i=0; i<self.mArr_attList.count; i++) {
+                MsgDetail_AttList *model = [self.mArr_attList objectAtIndex:i];
+                NSString *attStr = [NSString stringWithFormat:@"附件:%@(%@)",model.OrgFilename,model.FileSize];
+                CGSize size = [attStr sizeWithFont:[UIFont systemFontOfSize:11]];
+                if (size.width>tempW) {
+                    size.width = tempW;
+                }
+                if (size.width>cellFloat) {
+                    cellFloat = size.width;
+                }
+                rect = CGRectMake(rect.origin.x, rect.origin.y+rect.size.height+2, size.width, size.height);
+                UIButton *tempBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                tempBtn.frame = rect;
+                tempBtn.titleLabel.font = [UIFont systemFontOfSize: 11];
+                [tempBtn setTitle:attStr forState:UIControlStateNormal];
+                [tempBtn setTitleColor:[UIColor colorWithRed:17/255.0 green:107/255.0 blue:255/255.0 alpha:1] forState:UIControlStateNormal];
+                tempBtn.tag = i+1;
+                [tempBtn addTarget:self action:@selector(clickAttListBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:tempBtn];
+                
+                D("detail.attListModel -== %@,%@,%@",model.dlurl,model.OrgFilename,model.FileSize);
+            }
+        }
+        //背景色
+//        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
+        [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
+        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y-5, cellFloat+20, rect.origin.y+rect.size.height-15);
+        //再计算行高,看内容是否高于头像
+        CGFloat lineH;
+        CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
+        if (tempBack>60) {
+            lineH = tempBack;
+        }else{
+            lineH = 60;
+        }
+        //分割线
+        cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
+        cell.frame = CGRectMake(0, 0, [dm getInstance].width, lineH);
+    }else{
+        MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
+        //姓名
+        cell.mLab_name.hidden = NO;
+        cell.mLab_name.frame = CGRectMake(0, 2, [dm getInstance].width-10, 15);
+        cell.mLab_name.text = model.UserName;
+        cell.mLab_name.textAlignment = NSTextAlignmentRight;
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        //文件名
+        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
+        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+        if (img.size.width>0) {
+            [cell.mImgV_head setImage:img];
+        }else{
+            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+            //获取头像
+            [[ExchangeHttp getInstance] getUserInfoFace:model.Jiaobaohao];
+        }
+        cell.mImgV_head.frame = CGRectMake([dm getInstance].width-50, 20, 40, 40);
+        
+        //时间
+//        CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
+//        cell.mLab_time.frame = CGRectMake(0, 2, [dm getInstance].width, timeSize.height);
+//        cell.mLab_time.text = model.RecDate;
+        cell.mLab_time.hidden = YES;
+        //按钮
+        cell.mBtn_work.hidden = YES;
+        
+        //内容
+        CGFloat tempW = [dm getInstance].width-110;
+        CGSize contentSize = [model.FeeBackMsg sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
+        cell.mLab_content.text = model.FeeBackMsg;
+        //计算宽度
+        CGFloat cellFloat;
+        if (tempW>contentSize.width) {
+            cellFloat = contentSize.width;
+        }else{
+            cellFloat = tempW;
+        }
+        //计算行数
+        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+        cell.mLab_content.frame = CGRectMake([dm getInstance].width-cellFloat-60, cell.mLab_time.frame.origin.y+20, cellFloat, contentSize.height);
+        //背景色
+//        cell.mImgV_background.image = [UIImage imageNamed:@"workDetail"];
+        [cell.mImgV_background setImage:[[UIImage imageNamed:@"workDetail"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
+        cell.mImgV_background.frame = CGRectMake([dm getInstance].width-cellFloat-65, cell.mLab_content.frame.origin.y-5, cellFloat+10, cell.mLab_content.frame.size.height+10);
+        //再计算行高,看内容是否高于头像
+        CGFloat lineH;
+        CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
+        CGFloat tempBack1 = cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+5;
+        if (tempBack>tempBack1) {
+            lineH = tempBack;
+        }else{
+            lineH = tempBack1;
+        }
+        //分割线
+//        cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
+        cell.mLab_line.hidden = YES;
+        cell.frame = CGRectMake(0, 0, [dm getInstance].width, lineH);
+    }
+    
+    return cell;
+}
+
+// 用于延时显示图片，以减少内存的使用
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    WorkMsgListCell *cell2 = (WorkMsgListCell *)cell;
+    if (self.mArr_msg.count>indexPath.row) {
+        CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        //文件名
+        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+        if (img.size.width>0) {
+            [cell2.mImgV_head setImage:img];
+        }else{
+            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+        }
+    }else{
+        MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        //文件名
+        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
+        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+        if (img.size.width>0) {
+            [cell2.mImgV_head setImage:img];
+        }else{
+            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+        }
+    }
+}
+
+-(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
+    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    if (cell) {
+        return cell.frame.size.height;
+    }
+    return 0;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.mArr_msg.count>indexPath.row+1) {
+        WorkMsgListViewController *work = [[WorkMsgListViewController alloc] init];
+        CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+        work.mStr_name = @"信息详情";
+        work.mInt_flag = 2;
+        work.mStr_flag = model.NoReadCount;
+        work.mInt_our = self.mInt_our;
+        work.mStr_tableID = model.TabIDStr;
+        [utils pushViewController:work animated:YES];
+    }
+}
+
+-(void)clickAttListSendBtn:(UIButton *)btn{
+    D("wyeoiurwghfkljgvn;lk");
+    ReSendMsgViewController *reSend = [[ReSendMsgViewController alloc] init];
+    reSend.mArr_member = [NSMutableArray arrayWithArray:self.mArr_readList];
+    [utils pushViewController:reSend animated:YES];
+}
+
+//通知信息详情界面回复是否成功
+-(void)addFeeBack:(NSNotification *)noti{
+    NSDictionary *dic = noti.object;
+    NSString *str = [dic objectForKey:@"msg"];
+    NSString *flag = [dic objectForKey:@"flag"];
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = str;
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    if ([flag isEqual:@"1"]) {//成功
+        MsgDetail_FeebackList *model = [[MsgDetail_FeebackList alloc] init];
+        model.FeeBackMsg = self.mTextF_text.text;
+        model.Jiaobaohao = [dm getInstance].jiaoBaoHao;
+        model.UserName = [dm getInstance].name;
+        [self.mArr_feeback insertObject:model atIndex:0];
+        self.mTextF_text.text = @"";
+        [self.mTextF_text resignFirstResponder];
+        [self addArray];
+    } else {//失败
+        
+    }
+}
+//点击附件按钮下载文件按钮
+-(void)clickAttListBtn:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    D("l;dfgjal;ksngv");
+    D("点击附件按钮下载文件按钮.tag-=  %ld",(long)btn.tag);
+    MsgDetail_AttList *model = [self.mArr_attList objectAtIndex:btn.tag-1];
+    self.mInt_file = (int)btn.tag;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    //文件名
+//    NSString *fileName = [NSString stringWithFormat:@"%@%@",model.dlurl,model.OrgFilename];
+//    fileName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@""];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    NSString *imgPath=[tempPath stringByAppendingPathComponent:model.OrgFilename];
+    D("imgPath-== %@",imgPath);
+    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+    if (!yesNo) {//不存在
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"文件可以下载，但是有可能无法显示或执行，确认下载附件%@?",model.OrgFilename] message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.tag = 10;
+        [alert show];
+    }else {//存在
+        self.mProgressV.labelText = @"已下载此文件";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
+}
+
+//UIAlertView回调
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 10) {
+        if (buttonIndex == 1) {
+            //检查当前网络是否可用
+            if ([self checkNetWork]) {
+                return;
+            }
+            MsgDetail_AttList *model = [self.mArr_attList objectAtIndex:self.mInt_file-1];
+            [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename];
+            // Set determinate mode
+            self.mProgressV.mode = MBProgressHUDModeAnnularDeterminate;
+            self.mProgressV.labelText = @"下载中...";
+            [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+        }
+    }
+}
+
+//通知信息详情界面，更新下载文件的进度条
+-(void)loadingProgress:(NSNotification *)noti{
+    NSString *str = noti.object;
+    float temp = [str intValue];
+    self.mProgressV.progress = temp;
+    if (temp>=100) {
+        [self.mProgressV hide:YES];
+    }
+}
+
+- (void) keyboardWasShown:(NSNotification *) notif{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSValue *animationDurationValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mTableV_detail.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-keyboardSize.height+[dm getInstance].statusBar);
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height-keyboardSize.height-51, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+- (void) keyboardWasHidden:(NSNotification *) notif{
+    NSDictionary *userInfo = [notif userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mTableV_detail.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+
+- (void)loading {
+    sleep(TIMEOUT);
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    [self.mTableV_detail headerEndRefreshing];
+    [self.mTableV_detail footerEndRefreshing];
+    sleep(2);
+}
+-(void)noMore{
+    sleep(1);
+}
+
+//导航条返回按钮
+-(void)myNavigationGoback{
+    [utils popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
