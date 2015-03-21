@@ -12,12 +12,16 @@
 	<dict>
 		<key>0F7A6644DB0AF47146AEA165DB77843D89B84F00</key>
 		<string>https://github.com/zhaoqiwang/JiaoBao.git</string>
+		<key>1614E1303EBB134D404B23AFF616FC54F0E59214</key>
+		<string>https://github.com/zhaoqiwang/JiaoBao.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>JiaoBao/JiaoBao.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>0F7A6644DB0AF47146AEA165DB77843D89B84F00</key>
+		<string>../../../../gitJiaoBao</string>
+		<key>1614E1303EBB134D404B23AFF616FC54F0E59214</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,7 +29,7 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>0F7A6644DB0AF47146AEA165DB77843D89B84F00</string>
+	<string>1614E1303EBB134D404B23AFF616FC54F0E59214</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -35,6 +39,14 @@
 			<string>0F7A6644DB0AF47146AEA165DB77843D89B84F00</string>
 			<key>IDESourceControlWCCName</key>
 			<string>gitJiaoBao</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1614E1303EBB134D404B23AFF616FC54F0E59214</string>
+			<key>IDESourceControlWCCName</key>
+			<string>JiaoBao</string>
 		</dict>
 	</array>
 </dict>

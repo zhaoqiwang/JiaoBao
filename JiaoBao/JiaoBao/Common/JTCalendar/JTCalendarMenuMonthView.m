@@ -124,6 +124,7 @@
 
 #pragma - mark  自定义方法 用于汉化日历的月份
 - (NSString *) monthToChinese:(NSString *) enMonth {
+    
     if (!([enMonth length] > 0)) {
         return nil;
     }
@@ -131,34 +132,35 @@
     NSArray *arr = [enMonth componentsSeparatedByString:@" "];
     NSString *arrMonth = [arr objectAtIndex:0];
     //NSString *arrYear = [arr objectAtIndex:1];
-    if ([arrMonth isEqualToString:@"January"]) {
+    if ([arrMonth isEqualToString:@"一月"]) {
         [chMonth appendString:@"1月"];
-    } else if([arrMonth isEqualToString:@"February"]) {
+    } else if([arrMonth isEqualToString:@"二月"]) {
         [chMonth appendString:@"2月"];
-    } else if([arrMonth isEqualToString:@"March"]) {
+    } else if([arrMonth isEqualToString:@"三月"]) {
         [chMonth appendString:@"3月"];
-    } else if([arrMonth isEqualToString:@"April"]) {
+    } else if([arrMonth isEqualToString:@"四月"]) {
         [chMonth appendString:@"4月"];
-    } else if([arrMonth isEqualToString:@"May"]) {
+    } else if([arrMonth isEqualToString:@"五月"]) {
         [chMonth appendString:@"5月"];
-    } else if([arrMonth isEqualToString:@"June"]) {
+    } else if([arrMonth isEqualToString:@"六月"]) {
         [chMonth appendString:@"6月"];
-    } else if([arrMonth isEqualToString:@"July"]) {
+    } else if([arrMonth isEqualToString:@"七月"]) {
         [chMonth appendString:@"7月"];
-    } else if([arrMonth isEqualToString:@"August"]) {
+    } else if([arrMonth isEqualToString:@"八月"]) {
         [chMonth appendString:@"8月"];
-    } else if([arrMonth isEqualToString:@"September"]) {
+    } else if([arrMonth isEqualToString:@"九月"]) {
         [chMonth appendString:@"9月"];
-    } else if([arrMonth isEqualToString:@"October"]) {
+    } else if([arrMonth isEqualToString:@"十月"]) {
         [chMonth appendString:@"10月"];
-    } else if([arrMonth isEqualToString:@"November"]) {
+    } else if([arrMonth isEqualToString:@"十一月"]) {
         [chMonth appendString:@"11月"];
-    } else if([arrMonth isEqualToString:@"December"]) {
+    } else if([arrMonth isEqualToString:@"十二月"]) {
         [chMonth appendString:@"12月"];
     }
     //[chMonth appendFormat:@"  %@", arrYear];
     return chMonth;
 }
+
 
 
 @end

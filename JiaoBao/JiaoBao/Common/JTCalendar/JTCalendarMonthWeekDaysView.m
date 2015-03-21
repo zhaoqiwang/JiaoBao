@@ -134,23 +134,24 @@ static NSArray *cacheDaysOfWeeks;
     }
     NSString *upperWeek = [enWeek uppercaseString];
     NSString *chWeek = nil;
-    if ([upperWeek isEqualToString:@"MON"]) {
+    if ([upperWeek isEqualToString:@"星期一"]) {
         chWeek = @"周一";
-    } else if([upperWeek isEqualToString:@"TUE"]) {
+    } else if([upperWeek isEqualToString:@"星期二"]) {
         chWeek = @"周二";
-    } else if([upperWeek isEqualToString:@"WED"]) {
+    } else if([upperWeek isEqualToString:@"星期三"]) {
         chWeek = @"周三";
-    } else if([upperWeek isEqualToString:@"THU"]) {
+    } else if([upperWeek isEqualToString:@"星期四"]) {
         chWeek = @"周四";
-    } else if([upperWeek isEqualToString:@"FRI"]) {
+    } else if([upperWeek isEqualToString:@"星期五"]) {
         chWeek = @"周五";
-    } else if([upperWeek isEqualToString:@"SAT"]) {
+    } else if([upperWeek isEqualToString:@"星期六"]) {
         chWeek = @"周六";
-    } else if([upperWeek isEqualToString:@"SUN"]) {
+    } else if([upperWeek isEqualToString:@"星期日"]) {
         chWeek = @"周日";
     }
     return chWeek;
 }
+
 
 @end
 

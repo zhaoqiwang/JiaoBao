@@ -44,14 +44,14 @@ static Nav_internetAppView *loginSendHttp = nil;
         [self.mBtn_setting addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:self.mBtn_setting];
         //添加按钮
-        if (SHOWRONGYUN == 1) {
+       
             self.mBtn_add = [UIButton buttonWithType:UIButtonTypeCustom];
             self.mBtn_add.frame = CGRectMake([dm getInstance].width-Nav_width*2, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
             [self.mBtn_add setImage:[UIImage imageNamed:@"appNav_add"] forState:UIControlStateNormal];
             self.mBtn_add.tag = 2;
             [self.mBtn_add addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
             [self addSubview:self.mBtn_add];
-        }
+        
         
 //        //搜索按钮
 //        self.mBtn_search = [UIButton buttonWithType:UIButtonTypeCustom];

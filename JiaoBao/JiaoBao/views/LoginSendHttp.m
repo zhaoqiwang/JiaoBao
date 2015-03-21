@@ -38,6 +38,7 @@ static LoginSendHttp *loginSendHttp = nil;
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
+    flag_request = 4;
     [request startAsynchronous];
 }
 
@@ -773,7 +774,6 @@ static LoginSendHttp *loginSendHttp = nil;
             D("握手成功");
             //登录获取时间
             [self getTime];
-            self.flag_request = 4;
         }
     }else if (flag_request == 4){//登录获取时间回调
         NSString *time = [jsonDic objectForKey:@"Data"];
