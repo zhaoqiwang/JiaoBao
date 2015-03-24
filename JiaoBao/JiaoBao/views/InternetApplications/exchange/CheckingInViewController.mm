@@ -494,9 +494,22 @@ if(component == 0)
 #pragma mark - navigationBarItemAction
 -(void)navigationRightAction:(UIButton *)sender
 {
+    if(self.mView_all.hidden)
+    {
         self.mView_all.hidden = NO;
         self.mTableV_left.hidden = NO;
         self.mTableV_right.hidden = NO;
+        
+    }
+    else{
+        self.mView_all.hidden = YES;
+        self.mTableV_left.hidden = YES;
+        self.mTableV_right.hidden = YES;
+        
+    }
+
+    [self.mTableV_left reloadData];
+    [self.mTableV_right reloadData];
     
 
     

@@ -99,7 +99,6 @@
 {
     KxMenuItem *menuItem = sender;
     self.selectedTag = menuItem.tag;
-    NSLog(@"selectedTag = %ld",self.selectedTag);
     
 }
 
@@ -199,7 +198,7 @@
 }
 
 -(void)myNavigationGoback{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)leftBtnAction:(id)sender {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];

@@ -8,6 +8,7 @@
 
 #import "SignInHttp.h"
 #import "JSONKit.h"
+#import "SVProgressHUD.h"
 
 @implementation SignInHttp
 static  SignInHttp*__instance;
@@ -186,13 +187,14 @@ static  SignInHttp*__instance;
         [request addPostValue:jsonStr forKey:@"SignInJsonData"];
         [request setDelegate:self];
         [request startAsynchronous];
-        request.tag = 1;
+        request.tag = 10;
         NSError *error1 = [request error];
         if (!error1) {
             NSString *response = [request responseString];
             
             NSLog(@"Test：%@",response);
         }
+
     }
 
     
@@ -332,6 +334,29 @@ static  SignInHttp*__instance;
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
         NSDictionary *dicList = [dataString objectFromJSONString];
         NSLog(@"dataString = %@",dataString);
+        NSArray *arr = [dicList objectForKey:@"Data"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
+        
+    }
+    if(_request.tag == 10)
+    {
+        NSData *responseData = [_request responseData];
+        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+        NSDictionary *dicList = [dataString objectFromJSONString];
+        NSLog(@"dataString = %@",dataString);
+        NSString *result = [dicList objectForKey:@"ResultDesc"];
+        if([result isEqualToString:@"成功"])
+        {
+            [SVProgressHUD showSuccessWithStatus:@"签报成功"];
+
+            
+        }
+        else
+        {
+            [SVProgressHUD showErrorWithStatus:@"签报失败"];
+        }
+        
         NSArray *arr = [dicList objectForKey:@"Data"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
         

@@ -196,11 +196,14 @@
 }
 
 
--(void)myNavigationGoback{
-    [utils popViewControllerAnimated:YES];
+-(void)myNavigationGoback
+{
+    
+    [utils popViewControllerAnimated:NO];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
