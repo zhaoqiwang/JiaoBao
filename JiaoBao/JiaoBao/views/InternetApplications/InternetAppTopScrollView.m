@@ -137,6 +137,7 @@
 
 //展示未读数量
 -(void)showUnReadMSG{
+    
 //    UIImageView *tempImaV;
 //    if (SHOWRONGYUN == 1) {
 //        tempImaV = (UIImageView *)[self viewWithTag:203];
@@ -148,6 +149,7 @@
 //    } else {
 //        tempImaV.hidden = YES;
 //    }
+    
 }
 
 //分享未读数量
@@ -226,6 +228,8 @@
 }
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
+    self.timer = nil;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol:) userInfo:nil repeats:NO];
     if (mInt_userSelectedChannelID == 100) {
         [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
     }else{
@@ -237,6 +241,7 @@
                 //获取所有单位
                 [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];
 //                [[InternetAppRootScrollView shareInstance].exchangeView ProgressViewLoad];
+                mInt_show = 1;
             }
         }else if (mInt_userSelectedChannelID == 101) {//事务
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
@@ -246,19 +251,23 @@
                 //获取我发送的消息列表
                 [[LoginSendHttp getInstance] login_GetMySendMsgList:@"1" Page:@"1" SendName:@"" sDate:@"" eDate:@""];
                 [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+                mInt_work_mysend = 1;
             }
             if (mInt_work_sendToMe == 0) {
                 //取发给我消息的用户列表，new
                 [[LoginSendHttp getInstance] login_SendToMeUserList:@"20" Page:@"1" SendName:@"" sDate:@"" eDate:@"" readFlag:@"" lastId:@""];
                 [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+                mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 102) {//分享
             if (mInt_share == 0) {
                 //获取同事、关注人、好友的分享文章
                 [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
                 [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
+                mInt_share = 1;
             }
-        }else if (mInt_userSelectedChannelID == 103){//展示
+        }else if (mInt_userSelectedChannelID == 103){
+            //展示
 //            if (mInt_show == 0) {
 //                //获取所有单位
 //                [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];
@@ -274,6 +283,7 @@
                 //取我关注的和我所参与的主题
                 [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
                 [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
+                mInt_theme = 1;
             }
         }
     }else{
@@ -285,17 +295,20 @@
                 //获取我发送的消息列表
                 [[LoginSendHttp getInstance] login_GetMySendMsgList:@"1" Page:@"1" SendName:@"" sDate:@"" eDate:@""];
                 [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+                mInt_work_mysend = 1;
             }
             if (mInt_work_sendToMe == 0) {
                 //取发给我消息的用户列表，new
                 [[LoginSendHttp getInstance] login_SendToMeUserList:@"20" Page:@"1" SendName:@"" sDate:@"" eDate:@"" readFlag:@"" lastId:@""];
                 [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+                mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 101) {//分享
             if (mInt_share == 0) {
                 //获取同事、关注人、好友的分享文章
                 [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
                 [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
+                mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 102){//展示
 //            if (mInt_show == 0) {
@@ -310,6 +323,7 @@
 //            }
         }else if (mInt_userSelectedChannelID == 103){//主题
             if (mInt_theme == 0) {
+                mInt_theme = 1;
                 //取我关注的和我所参与的主题
                 [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
                 [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
@@ -317,6 +331,16 @@
         }
     }
     
+}
+
+-(void)updateRequestSymbol:(id)sender
+{
+    self.mInt_share = 0;
+    self.mInt_show = 0;
+    self.mInt_show2 = 0;
+    self.mInt_theme = 0;
+    self.mInt_work_mysend = 0;
+    self.mInt_work_sendToMe = 0;
 }
 
 @end
