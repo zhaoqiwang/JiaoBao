@@ -400,6 +400,10 @@
 		A763A53C1A48F372008365B5 /* photo_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A763A5391A48F372008365B5 /* photo_default@2x.png */; };
 		A763A53D1A48F372008365B5 /* photo_default@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A763A53A1A48F372008365B5 /* photo_default@3x.png */; };
 		A763A5401A49663C008365B5 /* PersonPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A763A53F1A49663C008365B5 /* PersonPhotoModel.m */; };
+		A76829621AC6955F003B31EB /* ClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A768295F1AC6955F003B31EB /* ClassTableViewCell.xib */; };
+		A76829631AC6955F003B31EB /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A76829611AC6955F003B31EB /* ClassTableViewCell.m */; };
+		A76829691AC69575003B31EB /* ClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A76829661AC69575003B31EB /* ClassModel.m */; };
+		A768296A1AC69575003B31EB /* ParserJson_class.m in Sources */ = {isa = PBXBuildFile; fileRef = A76829681AC69575003B31EB /* ParserJson_class.m */; };
 		A76976A41A8372C3002A4FB3 /* message.wav in Resources */ = {isa = PBXBuildFile; fileRef = A76976A31A8372C3002A4FB3 /* message.wav */; };
 		A76B6A681AB2895F00B6ED12 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A76B6A671AB2895F00B6ED12 /* MobileCoreServices.framework */; };
 		A76B6A6D1AB2C98F00B6ED12 /* AccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A76B6A6B1AB2C98F00B6ED12 /* AccessoryViewController.m */; };
@@ -1183,6 +1187,13 @@
 		A763A53A1A48F372008365B5 /* photo_default@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "photo_default@3x.png"; path = "Image/InternetApp/share/photo_default@3x.png"; sourceTree = "<group>"; };
 		A763A53E1A49663C008365B5 /* PersonPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonPhotoModel.h; path = views/InternetApplications/shareView/model/PersonPhotoModel.h; sourceTree = "<group>"; };
 		A763A53F1A49663C008365B5 /* PersonPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonPhotoModel.m; path = views/InternetApplications/shareView/model/PersonPhotoModel.m; sourceTree = "<group>"; };
+		A768295F1AC6955F003B31EB /* ClassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ClassTableViewCell.xib; path = views/InternetApplications/class/cell/ClassTableViewCell.xib; sourceTree = "<group>"; };
+		A76829601AC6955F003B31EB /* ClassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassTableViewCell.h; path = views/InternetApplications/class/cell/ClassTableViewCell.h; sourceTree = "<group>"; };
+		A76829611AC6955F003B31EB /* ClassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassTableViewCell.m; path = views/InternetApplications/class/cell/ClassTableViewCell.m; sourceTree = "<group>"; };
+		A76829651AC69575003B31EB /* ClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassModel.h; path = views/InternetApplications/class/model/ClassModel.h; sourceTree = "<group>"; };
+		A76829661AC69575003B31EB /* ClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassModel.m; path = views/InternetApplications/class/model/ClassModel.m; sourceTree = "<group>"; };
+		A76829671AC69575003B31EB /* ParserJson_class.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserJson_class.h; path = views/InternetApplications/class/model/ParserJson_class.h; sourceTree = "<group>"; };
+		A76829681AC69575003B31EB /* ParserJson_class.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserJson_class.m; path = views/InternetApplications/class/model/ParserJson_class.m; sourceTree = "<group>"; };
 		A76976A31A8372C3002A4FB3 /* message.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = message.wav; path = Common/message.wav; sourceTree = "<group>"; };
 		A76B6A671AB2895F00B6ED12 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		A76B6A6A1AB2C98F00B6ED12 /* AccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AccessoryViewController.h; path = views/InternetApplications/workView/AccessoryViewController.h; sourceTree = "<group>"; };
@@ -2485,6 +2496,8 @@
 		A75E6EA21ABA6A0100B51B18 /* class */ = {
 			isa = PBXGroup;
 			children = (
+				A76829641AC69563003B31EB /* model */,
+				A768295D1AC69549003B31EB /* cell */,
 				A75E6EA71ABA75D000B51B18 /* ClassView.h */,
 				A75E6EA81ABA75D000B51B18 /* ClassView.m */,
 			);
@@ -2530,6 +2543,27 @@
 				A762FFF71A2828FE00A78B5C /* UnitNoticeModel.m */,
 				A762FFF91A282A6000A78B5C /* NoticeInfoModel.h */,
 				A762FFFA1A282A6000A78B5C /* NoticeInfoModel.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		A768295D1AC69549003B31EB /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				A768295F1AC6955F003B31EB /* ClassTableViewCell.xib */,
+				A76829601AC6955F003B31EB /* ClassTableViewCell.h */,
+				A76829611AC6955F003B31EB /* ClassTableViewCell.m */,
+			);
+			name = cell;
+			sourceTree = "<group>";
+		};
+		A76829641AC69563003B31EB /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A76829651AC69575003B31EB /* ClassModel.h */,
+				A76829661AC69575003B31EB /* ClassModel.m */,
+				A76829671AC69575003B31EB /* ParserJson_class.h */,
+				A76829681AC69575003B31EB /* ParserJson_class.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -3296,6 +3330,7 @@
 				A74C119A1A01D9FC00925230 /* icon@2x.png in Resources */,
 				A75E6EC31ABACDBD00B51B18 /* classView_3@3x.png in Resources */,
 				A7AD8C4F19F644A2002E65FB /* tabbar_app1@2x.png in Resources */,
+				A76829621AC6955F003B31EB /* ClassTableViewCell.xib in Resources */,
 				A73DD81D19FE4D5E00BF0C97 /* root_open.png in Resources */,
 				A763A53C1A48F372008365B5 /* photo_default@2x.png in Resources */,
 				A773FC511A4C0563005F84C2 /* ELCAssetTablePicker.xib in Resources */,
@@ -3439,6 +3474,7 @@
 				A73CAD701A07755B00D6C5AA /* MJRefreshHeaderView.m in Sources */,
 				A7BEEA191A441E10003C9EAD /* UnintAlbumsListViewController.m in Sources */,
 				A73B52B619FB930D00187CB9 /* UnReadMsg_model.m in Sources */,
+				A76829631AC6955F003B31EB /* ClassTableViewCell.m in Sources */,
 				A70E3CA61A1EEFA600E6D0EC /* ArthDetailModel.m in Sources */,
 				A7595E9B1A5FC2F30027848E /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */,
@@ -3454,6 +3490,7 @@
 				A7BEEA151A440819003C9EAD /* UnitAlbumsModel.m in Sources */,
 				A755E70E19F278B900BBDF3D /* ASICloudFilesObject.m in Sources */,
 				A761D40D1A7F7B4C00DCAEB9 /* GetArthInfoModel.m in Sources */,
+				A76829691AC69575003B31EB /* ClassModel.m in Sources */,
 				F79D84D91ABD4DC000897477 /* RecordViewController.m in Sources */,
 				A74821B219FF747F00234020 /* MsgDetail_FeebackList.m in Sources */,
 				A7595E9E1A5FC2F30027848E /* PSTCollectionViewController.m in Sources */,
@@ -3600,6 +3637,7 @@
 				A749B9E119F89FF40036F480 /* TreeView_Level0_Model.m in Sources */,
 				A7595E911A5FC2F30027848E /* MWGridCell.m in Sources */,
 				A7557BFA19FA30480057835B /* Identity_UserClasses_model.m in Sources */,
+				A768296A1AC69575003B31EB /* ParserJson_class.m in Sources */,
 				A75A37371A087C76009D2464 /* ForwardViewController.m in Sources */,
 				F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */,
 				A755E71319F278B900BBDF3D /* ASIS3BucketRequest.m in Sources */,
