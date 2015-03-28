@@ -16,7 +16,7 @@
     NSString *url;//系统应用的URL
     int statusBar;//状态栏
     NSString *jiaoBaoHao;//教宝号,accid
-    NSString *name;//自己的名字
+    NSString *name;//自己的名字`
     NSString *TrueName;
     NSMutableArray *identity;//个人的班级或者学校信息
     NSString *unReadMsg1;//未读交流信息数量

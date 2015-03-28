@@ -1,0 +1,51 @@
+//
+//  ClassModel.h
+//  JiaoBao
+//
+//  Created by Zqw on 15-3-27.
+//  Copyright (c) 2015年 JSY. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface ClassModel : NSObject{
+    NSString *TabIDStr;//加密ID
+    NSString *ClickCount;//点击数量
+    NSString *Context;//
+    NSString *JiaoBaoHao;//教宝号
+    NSString *LikeCount;//赞数
+    NSString *RecDate;//发布日期
+    NSString *Source;//
+    NSString *StarJson;//
+    NSString *State;//
+    NSString *Title;//标题
+    NSString *Abstracts;//摘要
+    NSString *Thumbnail;//图片url(string[]数组
+    NSString *ViewCount;//观看人数
+    NSString *SectionID;//
+    NSString *FeeBackCount;//回复数量
+    NSString *UserName;//发表者姓名
+    NSString *UnitName;//发布单位
+}
+
+@property (nonatomic,strong) NSString *TabIDStr;
+@property (nonatomic,strong) NSString *ClickCount;
+@property (nonatomic,strong) NSString *Context;
+@property (nonatomic,strong) NSString *JiaoBaoHao;
+@property (nonatomic,strong) NSString *LikeCount;
+@property (nonatomic,strong) NSString *RecDate;
+@property (nonatomic,strong) NSString *Source;
+@property (nonatomic,strong) NSString *StarJson;
+@property (nonatomic,strong) NSString *State;
+@property (nonatomic,strong) NSString *Title;
+@property (nonatomic,strong) NSString *Abstracts;
+@property (nonatomic,strong) NSString *Thumbnail;
+@property (nonatomic,strong) NSString *ViewCount;
+@property (nonatomic,strong) NSString *SectionID;
+@property (nonatomic,strong) NSString *FeeBackCount;
+@property (nonatomic,strong) NSString *UserName;
+@property (nonatomic,strong) NSString *UnitName;
+
+@end
+
+//[{"TabIDStr":"QjgzMzg3NTZGM0Y4QjQ5Nw","ClickCount":32,"Context":null,"JiaoBaoHao":5160786,"LikeCount":20,"RecDate":"2015-03-27T09:00:46.4082611+08:00","Source":0,"StarJson":null,"State":1,"Title":"孩子们总会给我们的课堂带来出乎意料的东西","Abstracts":"今天上园地，本园地中有一篇可爱的小诗《小鸟》，文章共有三小节，要求 学生 读一读，背一背。在和学生们一起朗读，对内容进行了讲解后。我按照文中的要求让学试背。于是我 指导 学生背诵：“文章共有……","Thumbnail":null,"ViewCount":27,"SectionID":"997_2","FeeBackCount":0,"UserName":"龚驰","UnitName":"恩施办"},

@@ -55,8 +55,10 @@
         self.contentSize = CGSizeMake([dm getInstance].width, 48);
         if (SHOWRONGYUN == 1) {
             self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校",@"主题", nil];
+//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
             self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校",@"主题", nil];
+//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
         }
         
         mInt_userSelectedChannelID = 100;
