@@ -599,6 +599,7 @@
 		F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F79D84E11ABD4E1100897477 /* CheckingInViewController.mm */; };
 		F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
+		F7DC76461AC698BC00D6B0CE /* libbaidumapapis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1551,6 +1552,7 @@
 		F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckingInViewController.xib; path = views/InternetApplications/exchange/CheckingInViewController.xib; sourceTree = "<group>"; };
 		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
 		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
+		F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbaidumapapis.a; path = Common/BaiduSDk/libbaidumapapis.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1585,6 +1587,7 @@
 				A755E6AD19F254A600BBDF3D /* Security.framework in Frameworks */,
 				A755E6AB19F2549B00BBDF3D /* UIKit.framework in Frameworks */,
 				A755E6A919F2548E00BBDF3D /* Foundation.framework in Frameworks */,
+				F7DC76461AC698BC00D6B0CE /* libbaidumapapis.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3007,6 +3010,7 @@
 			children = (
 				F79D84461ABD4A1D00897477 /* inc */,
 				F79D84841ABD4A1D00897477 /* libbaidumapapi.a */,
+				F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */,
 				F79D84851ABD4A1D00897477 /* mapapi.bundle */,
 			);
 			name = BaiduSDK;
