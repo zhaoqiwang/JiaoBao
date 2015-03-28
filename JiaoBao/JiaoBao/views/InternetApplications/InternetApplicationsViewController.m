@@ -364,6 +364,7 @@
     return 44;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (tableView.tag == 1) {
         if (indexPath.row== 0) {
             
@@ -394,6 +395,7 @@
         //发送获取列表请求
         [[LoginSendHttp getInstance] changeCurUnit];
         [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        NSLog(@"unit = %@",[dm getInstance].mStr_unit);
         self.mProgressV.labelText = @"加载中...";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;
 //        self.mProgressV.userInteractionEnabled = NO;
@@ -405,11 +407,12 @@
     }
 }
 - (void)Loading{
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
+    //sleep(TIMEOUT);
+//    self.mProgressV.mode = MBProgressHUDModeCustomView;
+//    self.mProgressV.labelText = @"加载超时";
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"unitNameNotication" object:nil];
 //    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
+    //sleep(2);
 }
 
 -(void)noMore{
@@ -420,11 +423,11 @@
     NSArray *menuItems =
     @[
       
-      [KxMenuItem menuItem:@"签到"
+      [KxMenuItem menuItem:@"签到考勤"
                      image:[UIImage imageNamed:@"appNav_contact"]
                     target:self
                     action:@selector(pushMenuItemSignIn:)],
-      [KxMenuItem menuItem:@"日程"
+      [KxMenuItem menuItem:@"日程记录"
                      image:[UIImage imageNamed:@"appNav_contact"]
                     target:self
                     action:@selector(pushMenuItemSchedule:)],
@@ -457,6 +460,10 @@
     self.mView_all.hidden = NO;
     self.mTableV_left.hidden = NO;
     self.mTableV_right.hidden = NO;
+    NSLog(@"%@",self.mView_all);
+    NSLog(@"%d",self.mView_all.hidden);
+    //self.mView_all.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.mView_all];
     [self.mTableV_left reloadData];
     [self.mTableV_right reloadData];
 }

@@ -130,10 +130,20 @@
     
     NSString *destDateString = [dateFormatter stringFromDate:date];
     NSLog(@"destDateString = %@",destDateString);
-    NSUInteger arrIndex = [self.selectedArrSymbol indexOfObject:destDateString];
-    NSLog(@"selectedArrSymbol = %@",self.selectedArrSymbol);
-    self.dicArr = [self.datasource objectAtIndex:arrIndex];
-    [self.tableView reloadData];
+    if([self.selectedArrSymbol containsObject:destDateString])
+    {
+        NSUInteger arrIndex = [self.selectedArrSymbol indexOfObject:destDateString];
+        NSLog(@"selectedArrSymbol = %@",self.selectedArrSymbol);
+        self.dicArr = [self.datasource objectAtIndex:arrIndex];
+        [self.tableView reloadData];
+        
+    }
+    else{
+        self.dicArr = nil;
+        [self.tableView reloadData];
+
+    }
+
 
     
     

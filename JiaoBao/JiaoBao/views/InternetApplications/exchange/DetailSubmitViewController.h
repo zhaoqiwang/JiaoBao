@@ -13,7 +13,7 @@
 
 
 
-@interface DetailSubmitViewController : UIViewController<MyNavigationDelegate>
+@interface DetailSubmitViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UITextFieldDelegate>
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UITextView *textView2;

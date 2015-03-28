@@ -95,8 +95,45 @@
     NSDictionary *dic = [sender object];
     NSString *str = [dic objectForKey:@"ResultDesc"];
     [SVProgressHUD showSuccessWithStatus:str];
+    self.textView.text = @"";
+    self.textView2.text = @"";
+    self.startTime.text = @"";
+    self.endTime.text = @"";
     
 }
+
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    
+    if([textView isEqual:self.textView2])
+    {
+        self.view.frame = CGRectMake(0, -90, self.view.frame.size.width, self.view.frame.size.height);
+    }
+    return YES;
+}
+
+-(BOOL)textViewShouldEndEditing:(UITextView *)textView
+{
+    if([textView isEqual:self.textView2])
+    {
+        self.view.frame = CGRectMake(0,0 , self.view.frame.size.width, self.view.frame.size.height);
+    }
+    [self.view endEditing:YES];
+    return YES;
+    
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        //在这里做你响应return键的代码
+        [textView resignFirstResponder];
+        return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+    }
+    
+    return YES;
+}
+
 -(void)textViewChangedAction:(id)sender
 {
     //self.textView = (UITextView*)sender;
@@ -174,86 +211,94 @@
 }
 
 - (IBAction)doneAction:(id)sender {
+    NSDate *date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"hh:mm"];
+    [dateFormatter setDateFormat:@"HH:mm"];
     NSString *destDateString;
-    if([self.dateTextField isEqual:self.startTime])
-    {
-        if(self.textView2.text)
-        {
-            if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedAscending)
-            {
-                destDateString = [dateFormatter stringFromDate:self.datePicker.date];
-                self.dateTextField.text = destDateString;
-                
-                
-                
-            }
-            if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedSame)
-            {
-                destDateString = [dateFormatter stringFromDate:self.datePicker.date];
-                self.dateTextField.text = destDateString;
-                
-                
-                
-            }
-            if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedDescending)
-            {
-                
-                [SVProgressHUD showErrorWithStatus:@"结束时间必须大于开始时间"];
-            }
 
-        
-    }
-        else
+
+        if([self.dateTextField isEqual:self.startTime])
         {
-            destDateString = [dateFormatter stringFromDate:self.datePicker.date];
-            self.dateTextField.text = destDateString;
+            NSLog(@"text = %@",self.endTime.text);
+            if(![self.endTime.text isEqualToString:@""] )
+            {
+                
+                if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedAscending)
+                {
+                    destDateString = [dateFormatter stringFromDate:self.datePicker.date];
+                    self.dateTextField.text = destDateString;
+                    
+                    
+                    
+                }
+                if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedSame)
+                {
+                    destDateString = [dateFormatter stringFromDate:self.datePicker.date];
+                    self.dateTextField.text = destDateString;
+                    
+                    
+                    
+                }
+                if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedDescending)
+                {
+                    
+                    [SVProgressHUD showErrorWithStatus:@"结束时间必须大于开始时间"];
+                }
+                
+                
+            }
+            else
+            {
+                destDateString = [dateFormatter stringFromDate:self.datePicker.date];
+                self.dateTextField.text = destDateString;
+                
+            }
             
-        }
-
-    
-    
-        
-    }
-    
-    if([self.dateTextField isEqual:self.endTime])
-    {
-        if(self.textView.text)
-        {
-            if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedAscending)
-            {
-                destDateString = [dateFormatter stringFromDate:self.datePicker.date];
-                self.dateTextField.text = destDateString;
-                
-                
-                
-            }
-            if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedSame)
-            {
-                destDateString = [dateFormatter stringFromDate:self.datePicker.date];
-                self.dateTextField.text = destDateString;
-                
-                
-                
-            }
-            if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedDescending)
-            {
-                
-                [SVProgressHUD showErrorWithStatus:@"结束时间必须大于开始时间"];
-            }
+            
             
             
         }
         
-        else
+        if([self.dateTextField isEqual:self.endTime])
         {
-            destDateString = [dateFormatter stringFromDate:self.datePicker.date];
-            self.dateTextField.text = destDateString;
+            if(![self.startTime.text isEqualToString:@""] )
+            {
+                if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedAscending)
+                {
+                    destDateString = [dateFormatter stringFromDate:self.secDatePicker.date];
+                    self.dateTextField.text = destDateString;
+                    
+                    
+                    
+                }
+                if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedSame)
+                {
+                    destDateString = [dateFormatter stringFromDate:self.secDatePicker.date];
+                    self.dateTextField.text = destDateString;
+                    
+                    
+                    
+                }
+                if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedDescending)
+                {
+                    
+                    [SVProgressHUD showErrorWithStatus:@"结束时间必须大于开始时间"];
+                }
+                
+                
+            }
             
+            else
+            {
+                destDateString = [dateFormatter stringFromDate:self.secDatePicker.date];
+                self.dateTextField.text = destDateString;
+                
+            }
         }
-    }
 
+        
+    
+    
 
     [self.view endEditing:YES];
 }

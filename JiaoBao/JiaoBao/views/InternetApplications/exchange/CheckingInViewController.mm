@@ -102,8 +102,18 @@
     
     
 }
+-(void)getUnitName:(id)sender
+{
+    NSLog(@"title = %@",[dm getInstance].mStr_unit);
+    self.mNav_navgationBar.label_Title.text = [dm getInstance].mStr_unit;
+    [[SignInHttp getInstance]getTime];
+
+    [[SignInHttp getInstance]getSignInAddress];
+    [[SignInHttp getInstance]GetSignInGroupByUnitID];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUnitName:) name:@"unitNameNotication" object:nil];
     [[SignInHttp getInstance]getTime];
 
 //    _mapManager = [[BMKMapManager alloc]init];
@@ -143,8 +153,10 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCurrentTime:) name:@"GetTime" object:nil];
 
     
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"签到考勤"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:[dm getInstance].mStr_unit];
     [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
+    NSLog(@"unit = %@",[dm getInstance].mStr_unit);
+    [self.mNav_navgationBar setBackBtnTitle:[dm getInstance].mStr_unit];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -299,18 +311,27 @@ errorCode:(BMKSearchErrorCode)error{
 #pragma -mark 通知返回数据方法
 -(void)getSignInAddress:(id)sender
 {
-    NSDictionary *dic = [[sender object]objectAtIndex:0];
-    self.Longitude = (CLLocationDegrees)[[dic objectForKey:@"Longitude"] doubleValue];
-    self.Latitude = (CLLocationDegrees)[[dic objectForKey:@"Latitude"] doubleValue];
-    NSLog(@"Longitude = %f %f",self.Longitude,self.Latitude);
-    
-    
-    
-    self.location = [[CLLocation alloc]initWithLatitude:self.Latitude longitude:self.Longitude];
+ 
+    NSArray *arr = [sender object];
+    if(arr.count >0)
+    {
+        [BaidumapView removeOverlay:self.circle];
+        self.circle = nil;
+        NSDictionary *dic = [[sender object]objectAtIndex:0];
+        self.Longitude = (CLLocationDegrees)[[dic objectForKey:@"Longitude"] doubleValue];
+        self.Latitude = (CLLocationDegrees)[[dic objectForKey:@"Latitude"] doubleValue];
+        NSLog(@"Longitude = %f %f",self.Longitude,self.Latitude);
+        
+        
+        
+        self.location = [[CLLocation alloc]initWithLatitude:self.Latitude longitude:self.Longitude];
+        
+        self.circle = [BMKCircle circleWithCenterCoordinate:self.location.coordinate radius:100];
+        
+        [BaidumapView addOverlay:self.circle];
+        
+    }
 
-    self.circle = [BMKCircle circleWithCenterCoordinate:self.location.coordinate radius:100];
-    
-    [BaidumapView addOverlay:self.circle];
 //    MKCoordinateRegion region;
 //    //region.span = MKCoordinateSpanMake(2, 1);
 //    region.span.longitudeDelta =0.006;
