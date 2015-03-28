@@ -783,10 +783,11 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }
         //发表
         if (self.mInt_where == 0) {
-            NSMutableArray *array = [NSMutableArray array];
-            [array addObjectsFromArray:self.mArr_accessory];
-            [array addObjectsFromArray:self.mArr_photo];
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:self.mStr_forwardTableID access:array];
+            NSMutableArray *array0 = [NSMutableArray array];
+            [array0 addObjectsFromArray:self.mArr_accessory];
+            [array0 addObjectsFromArray:self.mArr_photo];
+            D("array.count-====%lu",(unsigned long)array0.count);
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:self.mStr_forwardTableID access:array0];
         }else if (self.mInt_where == 1) {//发表下发通知
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
         }if (self.mInt_where == 2) {//发表短信直通车

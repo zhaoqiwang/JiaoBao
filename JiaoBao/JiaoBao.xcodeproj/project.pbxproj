@@ -594,6 +594,7 @@
 		F79D84DF1ABD4DC000897477 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84D01ABD4DC000897477 /* SignInViewController.xib */; };
 		F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F79D84E11ABD4E1100897477 /* CheckingInViewController.mm */; };
 		F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */; };
+		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1537,6 +1538,8 @@
 		F79D84E01ABD4E1100897477 /* CheckingInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckingInViewController.h; path = views/InternetApplications/exchange/CheckingInViewController.h; sourceTree = "<group>"; };
 		F79D84E11ABD4E1100897477 /* CheckingInViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CheckingInViewController.mm; path = views/InternetApplications/exchange/CheckingInViewController.mm; sourceTree = "<group>"; };
 		F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckingInViewController.xib; path = views/InternetApplications/exchange/CheckingInViewController.xib; sourceTree = "<group>"; };
+		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
+		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2487,6 +2490,8 @@
 			children = (
 				A75E6EA71ABA75D000B51B18 /* ClassView.h */,
 				A75E6EA81ABA75D000B51B18 /* ClassView.m */,
+				F7DC76401AC697C400D6B0CE /* ClassHttp.h */,
+				F7DC76411AC697C400D6B0CE /* ClassHttp.m */,
 			);
 			name = class;
 			sourceTree = "<group>";
@@ -3643,6 +3648,7 @@
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,
 				A755E70119F278B900BBDF3D /* ASIAuthenticationDialog.m in Sources */,
 				F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */,
+				F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */,
 				A74736F41A78C2F90042F110 /* UncaughtExceptionHandler.m in Sources */,
 				A755E71119F278B900BBDF3D /* ASIS3Bucket.m in Sources */,
 				A7595E921A5FC2F30027848E /* MWGridViewController.m in Sources */,
