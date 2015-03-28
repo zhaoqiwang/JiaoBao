@@ -53,12 +53,7 @@
     [self.calendar setMenuMonthsView:self.menuView];
     [self.calendar setContentView:self.calendarView];
     [self.calendar setDataSource:self];
-    //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"日程"];
-    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
-    self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar setGoBack];
-    [self.view addSubview:self.mNav_navgationBar];
+
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetDelayedTime:) name:@"GetDelayedTime" object:nil];
@@ -99,6 +94,8 @@
 {
     KxMenuItem *menuItem = sender;
     self.selectedTag = menuItem.tag;
+    self.mNav_navgationBar.label_Title.text = menuItem.title;
+    
     
 }
 
@@ -113,6 +110,13 @@
 -(void)getUnitGroups:(id)sender
 {
     self.groupArr = [sender object];
+    //添加导航条
+    NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:str];
+    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar setGoBack];
+    [self.view addSubview:self.mNav_navgationBar];
     
     
 }
@@ -165,15 +169,40 @@
 {
     DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    
-    NSTimeInterval timeInterval = [self.calendar.currentDate timeIntervalSinceDate:self.calendar.currentDateSelected];
-    NSLog(@"timeinterval = %f",timeInterval);
-    NSUInteger dayInterval =   (NSUInteger) timeInterval/(24*60*60);
-    NSLog(@"dayinterval = %ld",dayInterval);
+    [dateFormatter setDateFormat:@"yyyyMMdd"];
+    NSString *date = [dateFormatter stringFromDate:self.calendar.currentDate];
+    NSString *date2 = [dateFormatter stringFromDate:self.calendar.currentDateSelected];
+    long long currentDate = [date longLongValue];
+    long long selectedDate = [date2 longLongValue];
+    if(selectedDate == 0)
+    {
+        selectedDate = currentDate;
+    }
+        
+        
+    NSLog(@"current = %ld,selectedDate = %ld",( long)currentDate,( long)selectedDate);
+    long long dayInterval = currentDate-selectedDate;
+    NSLog(@"dayInterval = %ld",( long)dayInterval);
+
+//    NSLog(@"current = %@,selectedDate = %@",self.calendar.currentDate,self.calendar.currentDateSelected);
+//    NSTimeInterval timeInterval = [self.calendar.currentDate timeIntervalSinceDate:self.calendar.currentDateSelected];
+//    NSLog(@"timeinterval = %f",timeInterval);
+//    NSUInteger dayInterval =   (NSUInteger) timeInterval/(24*60*60);
+//    NSLog(@"dayinterval = %ld",(unsigned long)dayInterval);
     if(dayInterval >3)
     {
         [SVProgressHUD showErrorWithStatus:@"超出期限"];
+    }
+    else if(dayInterval <0)
+    {
+        
+        NSLog(@"dayInterval = %ld",(unsigned long)dayInterval);
+        [SVProgressHUD showErrorWithStatus:@"不能提前提报日程"];
+
+        
+        
+
+        
     }
     else
     {
@@ -183,6 +212,8 @@
         [utils logDic:detail.groupDic];
         
         [self.navigationController pushViewController:detail animated:YES];
+
+
         
     }
 

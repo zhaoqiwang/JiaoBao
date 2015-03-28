@@ -106,7 +106,7 @@
     NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
     NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
     NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
-    NSLog(@"dic[%ld]:%@",dic.count,str);
+    NSLog(@"dic[%ld]:%@",(unsigned long)dic.count,str);
 }
 + (void)logArr:(NSArray *)arr
 {
@@ -116,7 +116,7 @@
     NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
     NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
     NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
-    NSLog(@"arr[%ld]:%@",arr.count,str);
+    NSLog(@"arr[%ld]:%@",(unsigned long)arr.count,str);
 }
 
 
