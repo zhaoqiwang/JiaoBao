@@ -28,6 +28,13 @@
 @end
 
 @implementation SignInViewController
+-(void)dealloc
+{
+    self.calendar = nil;
+    self.calendarView = nil;
+    self.menuView = nil;
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -92,7 +99,6 @@
 {
     KxMenuItem *menuItem = sender;
     self.selectedTag = menuItem.tag;
-    NSLog(@"selectedTag = %ld",self.selectedTag);
     
 }
 
@@ -116,6 +122,13 @@
     [super viewDidAppear:animated];
     
     [self.calendar reloadData]; // （必须要在这里调用）Must be call in viewDidAppear
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+//    self.calendar = nil;
+//    self.calendarView = nil;
+//    self.menuView = nil;
+    
 }
 
 - (BOOL)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date
@@ -185,7 +198,7 @@
 }
 
 -(void)myNavigationGoback{
-    [utils popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)leftBtnAction:(id)sender {
     [[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];

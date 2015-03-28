@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import<AVFoundation/AVFoundation.h>
 
+CLLocationManager *locationManager;
 
 @interface AppDelegate ()
 
@@ -20,6 +21,12 @@
 @synthesize mInternet,mRegister_view,mInt_index;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    BMKMapManager *mapManager = [[BMKMapManager alloc]init];
+    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+    BOOL ret = [mapManager start:@"iqYoKFAodVcfY8oRpi0KtuHs"  generalDelegate:self];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 //    {{0, 0}, {375, 667}}  {{0, 0}, {414, 736}}    {{0, 0}, {320, 568}} 13964035770  5150028  ghost0726
@@ -326,6 +333,8 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
+    [BMKMapView willBackGround];
+
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
@@ -340,6 +349,8 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    [BMKMapView didForeGround];
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 //    if (SHOWRONGYUN == 1) {
 //        [UIApplication sharedApplication].applicationIconBadgeNumber = [[RCIM sharedRCIM] getTotalUnreadCount];
@@ -355,5 +366,45 @@
 - (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
     return UIInterfaceOrientationMaskPortrait;
 }
+//iOS8开始定位
+- (BOOL)beginLocationUpdate
+{
+    // 判断定位操作是否被允许
+    if([CLLocationManager locationServicesEnabled])
+    {
+        locationManager = [[CLLocationManager alloc] init];//注意，这里的locationManager不是局部变量
+        //兼容iOS8定位
+        SEL requestSelector = NSSelectorFromString(@"requestWhenInUseAuthorization");
+        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined &&
+            [locationManager respondsToSelector:requestSelector]) {
+            [locationManager requestWhenInUseAuthorization];
+        }
+        return YES;
+    }else {
+        //提示用户无法进行定位操作
+    }
+    return NO;
+}
+- (void)onGetNetworkState:(int)iError
+{
+    if (0 == iError) {
+        NSLog(@"联网成功");
+    }
+    else{
+        NSLog(@"onGetNetworkState %d",iError);
+    }
+    
+}
+
+- (void)onGetPermissionState:(int)iError
+{
+    if (0 == iError) {
+        NSLog(@"授权成功");
+    }
+    else {
+        NSLog(@"onGetPermissionState %d",iError);
+    }
+}
+
 
 @end

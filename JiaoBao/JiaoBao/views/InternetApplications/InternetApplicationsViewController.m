@@ -9,6 +9,7 @@
 #import "InternetApplicationsViewController.h"
 #import "Reachability.h"
 #import "SignInViewController.h"
+#import "CheckingInViewController.h"
 
 
 @interface InternetApplicationsViewController ()
@@ -291,7 +292,7 @@
         if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
             [self showMenu:btn];
         }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
-//            [self shareAddMenu:btn];
+            [self shareAddMenu:btn];
         }
     }
 }
@@ -439,6 +440,11 @@
                  menuItems:menuItems];
 }
 - (void) pushMenuItemSignIn:(id)sender{
+    CheckingInViewController *check = [[CheckingInViewController alloc]init];
+    check.mView_all = self.mView_all;
+    check.mTableV_left = self.mTableV_left;
+    check.mTableV_right = self.mTableV_right;
+    [utils pushViewController:check animated:YES];
     
 }
 

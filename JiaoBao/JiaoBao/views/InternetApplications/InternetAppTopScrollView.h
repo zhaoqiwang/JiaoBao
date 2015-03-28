@@ -27,6 +27,7 @@
 @property (assign,nonatomic) NSInteger mInt_theme;//0需要发送关注及参与主题请求，1不需要
 @property (assign,nonatomic) NSInteger mInt_work_mysend;//0需要发送1不需要
 @property (assign,nonatomic) NSInteger mInt_work_sendToMe;//0需要发送，1不需要
+@property(nonatomic,strong)NSTimer *timer;
 
 
 + (InternetAppTopScrollView *)shareInstance;

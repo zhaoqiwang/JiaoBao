@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordViewController">
+            <connections>
+                <outlet property="calendarView" destination="hQR-oO-RGu" id="UrL-JL-xBs"/>
+                <outlet property="menuView" destination="fjD-qd-UgN" id="omC-mX-qyO"/>
+                <outlet property="tableView" destination="kuL-qR-S77" id="d30-Z6-rmV"/>
+                <outlet property="view" destination="z8j-wf-rSS" id="BrT-8h-ouL"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="z8j-wf-rSS">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fjD-qd-UgN" customClass="JTCalendarMenuView">
+                    <rect key="frame" x="0.0" y="64" width="320" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQR-oO-RGu" customClass="JTCalendarContentView">
+                    <rect key="frame" x="0.0" y="114" width="320" height="300"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wq-d2-U1D">
+                    <rect key="frame" x="20" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_left_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zx0-Qb-eyU">
+                    <rect key="frame" x="77" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_left_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbY-rT-Bu7">
+                    <rect key="frame" x="87" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_left_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42o-eK-Hie">
+                    <rect key="frame" x="226" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_right_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9z-Rh-tCg">
+                    <rect key="frame" x="236" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_right_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jV3-3X-ONz">
+                    <rect key="frame" x="290" y="80" width="20" height="20"/>
+                    <state key="normal" image="kal_right_arrow.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kuL-qR-S77">
+                    <rect key="frame" x="0.0" y="422" width="320" height="146"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="k01-2d-3VN"/>
+                        <outlet property="delegate" destination="-1" id="Lxd-cM-Z6e"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="leading" secondItem="hQR-oO-RGu" secondAttribute="leading" id="7y9-TS-CMw"/>
+                <constraint firstAttribute="bottom" secondItem="kuL-qR-S77" secondAttribute="bottom" id="AYZ-NI-4UE"/>
+                <constraint firstItem="kuL-qR-S77" firstAttribute="trailing" secondItem="hQR-oO-RGu" secondAttribute="trailing" id="BCG-za-A5m"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="top" secondItem="fjD-qd-UgN" secondAttribute="bottom" id="Bkv-qp-USy"/>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="top" secondItem="z8j-wf-rSS" secondAttribute="top" constant="64" id="CL9-js-UVV"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="top" secondItem="z8j-wf-rSS" secondAttribute="top" constant="114" id="Y2r-W5-CLY"/>
+                <constraint firstItem="kuL-qR-S77" firstAttribute="leading" secondItem="hQR-oO-RGu" secondAttribute="leading" id="bkw-LK-Kdo"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="trailing" secondItem="fjD-qd-UgN" secondAttribute="trailing" id="iO3-92-o9h"/>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="leading" secondItem="z8j-wf-rSS" secondAttribute="leading" id="nhf-nK-jT2"/>
+                <constraint firstItem="kuL-qR-S77" firstAttribute="top" secondItem="hQR-oO-RGu" secondAttribute="bottom" constant="8" symbolic="YES" id="s4V-7M-mZs"/>
+                <constraint firstAttribute="trailing" secondItem="hQR-oO-RGu" secondAttribute="trailing" id="w9h-4f-2PX"/>
+                <constraint firstAttribute="bottom" secondItem="hQR-oO-RGu" secondAttribute="bottom" constant="154" id="wlZ-wm-flm"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="304" y="378"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="kal_left_arrow.png" width="9" height="12"/>
+        <image name="kal_right_arrow.png" width="10" height="12"/>
+    </resources>
+</document>

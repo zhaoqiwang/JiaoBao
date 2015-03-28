@@ -12,8 +12,9 @@
 #import "RegisterViewController.h"
 #import "dm.h"
 #import "Loger.h"
+#import "BMapKit.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+@interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{
 //    RootViewController *mRoot_view;
     InternetApplicationsViewController *mInternet;
     RegisterViewController *mRegister_view;

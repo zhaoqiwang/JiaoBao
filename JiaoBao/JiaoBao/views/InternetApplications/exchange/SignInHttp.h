@@ -28,5 +28,10 @@
 -(void)uploadschedule:(NSDictionary*)dic;
 -(void)querySchedule:(NSDictionary*)dic;
 -(void)getUnitGroups:(NSUInteger)UID;
+-(void)getSignInAddress;
+-(void)GetSignInGroupByUnitID;
+-(void)CreateSignIn:(NSDictionary*)SignInJsonData;
+-(void)getTime;
+-(void)GetSignInListForMobile:(NSString*)year Month:(NSString*)month;
 
 @end
