@@ -49,3 +49,5 @@
 @end
 
 //[{"TabIDStr":"QjgzMzg3NTZGM0Y4QjQ5Nw","ClickCount":32,"Context":null,"JiaoBaoHao":5160786,"LikeCount":20,"RecDate":"2015-03-27T09:00:46.4082611+08:00","Source":0,"StarJson":null,"State":1,"Title":"孩子们总会给我们的课堂带来出乎意料的东西","Abstracts":"今天上园地，本园地中有一篇可爱的小诗《小鸟》，文章共有三小节，要求 学生 读一读，背一背。在和学生们一起朗读，对内容进行了讲解后。我按照文中的要求让学试背。于是我 指导 学生背诵：“文章共有……","Thumbnail":null,"ViewCount":27,"SectionID":"997_2","FeeBackCount":0,"UserName":"龚驰","UnitName":"恩施办"},
+
+//{"TabIDStr":"NDY2OTJCMjA4RDFFNUM0Ng","ClickCount":22,"Abstracts":"好记忆不如烂笔头”，就是说边学习边动笔的好处。笔记不仅是学习新知识的方法，也是复习旧知识的依据，同时我们还可以从笔记中发现新的问题，我们要培养孩子养成写读书笔记的习惯，这有可能是影响孩子一辈……","JiaoBaoHao":5220059,"LikeCount":7,"RecDate":"2015-03-30T12:58:43","Source":0,"StarJson":null,"State":1,"Title":"好记忆不如烂笔头","ViewCount":20,"Thumbnail":null,"SectionID":"1655_2","UserName":"刘俊玲","UnitName":"中册徐李小学"}]

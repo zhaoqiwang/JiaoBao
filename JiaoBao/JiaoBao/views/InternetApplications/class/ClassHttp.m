@@ -27,7 +27,7 @@ static ClassHttp *classHttp = nil;
 }
 
 //客户端通过本接口获取本单位栏目文章。    默认第一页           默认20条           1个人发布文章，2单位发布文章     单位ID           0按最新排序，1按最热排序，默认为0  标题关键字搜索
--(void)classHttpUnitArthListIndex:(NSString *)page Num:(NSString *)num Flag:(NSString *)flag UnitID:(NSString *)UnitID order:(NSString *)order title:(NSString *)title{
+-(void)classHttpUnitArthListIndex:(NSString *)page Num:(NSString *)num Flag:(NSString *)flag UnitID:(NSString *)UnitID order:(NSString *)order title:(NSString *)title RequestFlag:(NSString *)ReFlag{
     NSString *urlString = [NSString stringWithFormat:@"%@Sections/UnitArthListIndex",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -36,10 +36,47 @@ static ClassHttp *classHttp = nil;
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
     [request addPostValue:page forKey:@"pageNum"];
-    [request addPostValue:@"20" forKey:@"numPerPage"];
+    [request addPostValue:num forKey:@"numPerPage"];
     [request addPostValue:flag forKey:@"SectionFlag"];
     [request addPostValue:UnitID forKey:@"UnitID"];
+    request.userInfo = [NSDictionary dictionaryWithObject:flag forKey:@"flag"];
     request.tag = 1;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//取单位空间发表的最新或推荐文章,              默认第一页   默认20条               1最新                     local本地，默认为空，取所有记录      请求flag
+-(void)classHttpShowingUnitArthList:(NSString *)page Num:(NSString *)num topFlags:(NSString *)topFlags flag:(NSString *)flag RequestFlag:(NSString *)ReFlag{
+    NSString *urlString = [NSString stringWithFormat:@"%@Sections/ShowingUnitArthList",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:page forKey:@"pageNum"];
+    [request addPostValue:num forKey:@"numPerPage"];
+    [request addPostValue:topFlags forKey:@"topFlags"];
+    [request addPostValue:flag forKey:@"flag"];
+    request.userInfo = [NSDictionary dictionaryWithObject:ReFlag forKey:@"flag"];
+    request.tag = 2;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//取我关注的单位栏目文章                   默认第一页           默认20条           教宝号
+-(void)classHttpMyAttUnitArthListIndex:(NSString *)page Num:(NSString *)num accid:(NSString *)accid{
+    NSString *urlString = [NSString stringWithFormat:@"%@Sections/MyAttUnitArthListIndex",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:page forKey:@"pageNum"];
+    [request addPostValue:num forKey:@"numPerPage"];
+    [request addPostValue:accid forKey:@"accId"];
+    request.tag = 3;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
 }
@@ -62,8 +99,34 @@ static ClassHttp *classHttp = nil;
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=class==1=>>>>==%@",str);
         NSMutableArray *array = [ParserJson_class parserJsonUnitArthListIndex:str];
-        //
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex" object:array];
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:flag forKey:@"flag"];
+        [dic1 setValue:array forKey:@"array"];
+        //通知学校界面，获取到的单位和个人数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex" object:dic1];
+    }else if (_request.tag == 2){//取单位空间发表的最新或推荐文章
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=class==2=>>>>==%@",str);
+        NSMutableArray *array = [ParserJson_class parserJsonUnitArthListIndex:str];
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:flag forKey:@"flag"];
+        [dic1 setValue:array forKey:@"array"];
+        //通知学校界面，获取到的本地和全部数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowingUnitArthList" object:dic1];
+    }else if (_request.tag == 3){//取我关注的单位栏目文章
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=class==3=>>>>==%@",str);
+        NSMutableArray *array = [ParserJson_class parserJsonUnitArthListIndex:str];
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:flag forKey:@"flag"];
+        [dic1 setValue:array forKey:@"array"];
+        //通知学校界面，获取到的关注数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttUnitArthListIndex" object:dic1];
     }
 }
 //请求失败

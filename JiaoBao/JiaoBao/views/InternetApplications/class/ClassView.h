@@ -10,6 +10,8 @@
 #import "dm.h"
 #import "ClassTableViewCell.h"
 #import "ClassHttp.h"
+#import "MBProgressHUD.h"
+#import "MJRefresh.h"//上拉下拉刷新
 
 @interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate>{
     UIView *mView_button;//放四个按钮
@@ -21,7 +23,13 @@
     NSMutableArray *mArr_sum;//全部
     UIButton *mBtn_photo;//拍照发布
     int mInt_index;//当前点击的是第几个
-    UIScrollView *mScrollV_sum;//放可滑动组件
+//    UIScrollView *mScrollV_sum;//放可滑动组件
+    NSMutableArray *mArr_unitTop;//本单位
+    NSMutableArray *mArr_classTop;//本班级
+    NSMutableArray *mArr_localTop;//本地
+    NSMutableArray *mArr_attentionTop;//关注
+    NSMutableArray *mArr_sumTop;//全部
+    MBProgressHUD *mProgressV;//
 }
 
 @property (nonatomic,strong) UIView *mView_button;//放四个按钮
@@ -33,7 +41,13 @@
 @property (nonatomic,strong) NSMutableArray *mArr_sum;//全部
 @property (strong,nonatomic) UIButton *mBtn_photo;//拍照发布
 @property (assign,nonatomic) int mInt_index;//当前点击的是第几个
-@property (strong,nonatomic) UIScrollView *mScrollV_sum;//放可滑动组件
+//@property (strong,nonatomic) UIScrollView *mScrollV_sum;//放可滑动组件
+@property (nonatomic,strong) NSMutableArray *mArr_unitTop;//本单位
+@property (nonatomic,strong) NSMutableArray *mArr_classTop;//本班级
+@property (nonatomic,strong) NSMutableArray *mArr_localTop;//本地
+@property (nonatomic,strong) NSMutableArray *mArr_attentionTop;//关注
+@property (nonatomic,strong) NSMutableArray *mArr_sumTop;//全部
+@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 - (id)initWithFrame1:(CGRect)frame;
 
