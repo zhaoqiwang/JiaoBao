@@ -39,13 +39,13 @@
         NSString *str2 = [dic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];
         if (range.length>0) {
-            model.RecDate = [[[dic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+//            model.RecDate = [[[dic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+            NSString *tempStr = [[dic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+            model.RecDate = [tempStr substringWithRange:NSMakeRange(10, 9)];
         }else{
             model.RecDate = [[[dic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
         }
         [array addObject:model];
-        
-        
     }
     return array;
 }

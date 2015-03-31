@@ -54,10 +54,10 @@
         self.bounces = YES;
         self.contentSize = CGSizeMake([dm getInstance].width, 48);
         if (SHOWRONGYUN == 1) {
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
         }
         
@@ -269,6 +269,7 @@
                 mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 103){
+            [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
             //展示
 //            if (mInt_show == 0) {
 //                //获取所有单位
@@ -313,6 +314,7 @@
                 mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 102){//展示
+            [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
 //            if (mInt_show == 0) {
 //                //获取所有单位
 //                [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];

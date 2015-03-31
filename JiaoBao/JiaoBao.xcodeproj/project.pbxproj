@@ -179,6 +179,8 @@
 		A74821AF19FF745900234020 /* MsgDetail_TrunToList.m in Sources */ = {isa = PBXBuildFile; fileRef = A74821AE19FF745900234020 /* MsgDetail_TrunToList.m */; };
 		A74821B219FF747F00234020 /* MsgDetail_FeebackList.m in Sources */ = {isa = PBXBuildFile; fileRef = A74821B119FF747F00234020 /* MsgDetail_FeebackList.m */; };
 		A74821B519FF78B300234020 /* MsgDetail_AttList.m in Sources */ = {isa = PBXBuildFile; fileRef = A74821B419FF78B300234020 /* MsgDetail_AttList.m */; };
+		A74937E01ACA8A4F00F96741 /* ClassTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A74937DE1ACA8A4F00F96741 /* ClassTopViewController.m */; };
+		A74937E11ACA8A4F00F96741 /* ClassTopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A74937DF1ACA8A4F00F96741 /* ClassTopViewController.xib */; };
 		A749B9C219F89A530036F480 /* root_addBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = A749B9AA19F89A530036F480 /* root_addBtn.png */; };
 		A749B9C319F89A530036F480 /* root_addBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A749B9AB19F89A530036F480 /* root_addBtn@2x.png */; };
 		A749B9C419F89A530036F480 /* root_close.png in Resources */ = {isa = PBXBuildFile; fileRef = A749B9AC19F89A530036F480 /* root_close.png */; };
@@ -876,6 +878,9 @@
 		A74821B119FF747F00234020 /* MsgDetail_FeebackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MsgDetail_FeebackList.m; path = views/InternetApplications/workView/model/MsgDetail_FeebackList.m; sourceTree = "<group>"; };
 		A74821B319FF78B300234020 /* MsgDetail_AttList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MsgDetail_AttList.h; path = views/InternetApplications/workView/model/MsgDetail_AttList.h; sourceTree = "<group>"; };
 		A74821B419FF78B300234020 /* MsgDetail_AttList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MsgDetail_AttList.m; path = views/InternetApplications/workView/model/MsgDetail_AttList.m; sourceTree = "<group>"; };
+		A74937DD1ACA8A4F00F96741 /* ClassTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassTopViewController.h; path = views/InternetApplications/class/ClassTopViewController.h; sourceTree = "<group>"; };
+		A74937DE1ACA8A4F00F96741 /* ClassTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassTopViewController.m; path = views/InternetApplications/class/ClassTopViewController.m; sourceTree = "<group>"; };
+		A74937DF1ACA8A4F00F96741 /* ClassTopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ClassTopViewController.xib; path = views/InternetApplications/class/ClassTopViewController.xib; sourceTree = "<group>"; };
 		A749B9AA19F89A530036F480 /* root_addBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = root_addBtn.png; path = Image/InternetApp/workView/root_addBtn.png; sourceTree = "<group>"; };
 		A749B9AB19F89A530036F480 /* root_addBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "root_addBtn@2x.png"; path = "Image/InternetApp/workView/root_addBtn@2x.png"; sourceTree = "<group>"; };
 		A749B9AC19F89A530036F480 /* root_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = root_close.png; path = Image/InternetApp/workView/root_close.png; sourceTree = "<group>"; };
@@ -2546,6 +2551,9 @@
 				A75E6EA81ABA75D000B51B18 /* ClassView.m */,
 				F7DC76401AC697C400D6B0CE /* ClassHttp.h */,
 				F7DC76411AC697C400D6B0CE /* ClassHttp.m */,
+				A74937DD1ACA8A4F00F96741 /* ClassTopViewController.h */,
+				A74937DE1ACA8A4F00F96741 /* ClassTopViewController.m */,
+				A74937DF1ACA8A4F00F96741 /* ClassTopViewController.xib */,
 			);
 			name = class;
 			sourceTree = "<group>";
@@ -3523,6 +3531,7 @@
 				A7CE67361AA70A250038D0C5 /* showArticle@2x.png in Resources */,
 				A761D3F21A7F697900DCAEB9 /* rootTable_2.png in Resources */,
 				A7CE67331AA70A250038D0C5 /* shareArticle@2x.png in Resources */,
+				A74937E11ACA8A4F00F96741 /* ClassTopViewController.xib in Resources */,
 				A75A37381A087C76009D2464 /* ForwardViewController.xib in Resources */,
 				A727C7D71A6F93780019C4CD /* share_likeBig_0.png in Resources */,
 				F79D84DA1ABD4DC000897477 /* RecordViewController.xib in Resources */,
@@ -3606,6 +3615,7 @@
 				A7255F8E1A19878C005F9CCE /* ParserJson_share.m in Sources */,
 				A771CAAF1A2430CD000B41F2 /* Loger.mm in Sources */,
 				A7A74DB71A7638AE0014CCE9 /* ChineseString.m in Sources */,
+				A74937E01ACA8A4F00F96741 /* ClassTopViewController.m in Sources */,
 				F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */,
 				A743394F1A452B7700AFC0A5 /* SDWebImageCompat.m in Sources */,
 				A749B9FA19F8F3E40036F480 /* TreeView_Level2_Model.m in Sources */,
