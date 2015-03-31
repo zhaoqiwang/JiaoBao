@@ -277,6 +277,22 @@
     [button addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:button];
 }
+-(void)leftBtnAction:(NSString *)title
+{
+    [self.leftBtn removeFromSuperview];
+    self.leftBtn = nil;
+    self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.leftBtn.frame = CGRectMake(5, 0+[dm getInstance].statusBar, 120, MAIN_TOPBAR_HEIGHT);
+    self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(15,-10,10,12);
+    [self.leftBtn setTitle:title forState:UIControlStateNormal];
+    
+    [self.leftBtn setImage:[UIImage imageNamed:@"nav_return"] forState:UIControlStateNormal];
+    self.leftBtn.tag = BTN_GOBACK_TAG;
+    [self.leftBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.leftBtn];
+    
+}
+
 -(void)goBack{
     if (_delegate != nil && [_delegate respondsToSelector:@selector(myNavigationGoback)]) {
         [_delegate myNavigationGoback];
@@ -386,20 +402,45 @@
  */
 
 -(void)setBackBtnTitle:(NSString *)backBtnTitle{
-    NSString * btnTitleStr = [NSString stringWithFormat:@"  %@",backBtnTitle];
-    [(UIButton *)[self viewWithTag:BTN_GOBACK_TAG] setTitle:btnTitleStr forState:UIControlStateNormal];
-    if (backBtnTitle.length==3) {
-        btnTitleStr = [NSString stringWithFormat:@"    %@",backBtnTitle];
-        CGSize btnSize = [btnTitleStr sizeWithFont:[UIFont systemFontOfSize:16]];
-        //        btnSize.width += 12;
-        [(UIButton *)[self viewWithTag:BTN_GOBACK_TAG] setFrame:CGRectMake(5, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.origin.y, btnSize.width+9, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.size.height)];
+    NSString *title = @"返回";
+    CGSize btnSize = [title sizeWithFont:[UIFont systemFontOfSize:18]];
+    btnSize.width += 12;
+    
+    UIButton *button = (UIButton*) [self viewWithTag:BTN_RIGHT_TAG];
+    if (button) {
+        [button removeFromSuperview];
     }
-    if (backBtnTitle.length==4) {
-        btnTitleStr = [NSString stringWithFormat:@"    %@",backBtnTitle];
-        CGSize btnSize = [btnTitleStr sizeWithFont:[UIFont systemFontOfSize:16]];
-        //        btnSize.width += 12;
-        [(UIButton *)[self viewWithTag:BTN_GOBACK_TAG] setFrame:CGRectMake(5, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.origin.y, btnSize.width+10, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.size.height)];
-    }
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [button setBackgroundImage:[UIImage imageNamed:@"nav_return"] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:18];
+    [button setTitle:title forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.tag = BTN_RIGHT_TAG;
+    //    if (btnSize.width<55) {
+    //        button.frame = CGRectMake(MAIN_WIDTH-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-btnSize.width)/2-20, (MAIN_TOPBAR_HEIGHT-44)/2+[dm getInstance].offsetValue, 55, 44);
+    //    }else{
+    //        button.frame = CGRectMake(MAIN_WIDTH-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-btnSize.width)/2-20, (MAIN_TOPBAR_HEIGHT-44)/2+[dm getInstance].offsetValue, btnSize.width, 44);
+    //    }
+    
+    [button addTarget:self action:@selector(rightbtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:button];
+    
+//    NSString * btnTitleStr = [NSString stringWithFormat:@"  %@",backBtnTitle];
+//    [(UIButton *)[self viewWithTag:BTN_GOBACK_TAG] setTitle:btnTitleStr forState:UIControlStateNormal];
+//    if (backBtnTitle.length==3) {
+//        btnTitleStr = [NSString stringWithFormat:@"    %@",backBtnTitle];
+//        CGSize btnSize = [btnTitleStr sizeWithFont:[UIFont systemFontOfSize:16]];
+//        //        btnSize.width += 12;
+//        [(UIButton *)[self viewWithTag:BTN_GOBACK_TAG] setFrame:CGRectMake(5, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.origin.y, btnSize.width+9, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.size.height)];
+//    }
+//    if (backBtnTitle.length==4) {
+//        btnTitleStr = [NSString stringWithFormat:@"    %@",backBtnTitle];
+//        CGSize btnSize = [btnTitleStr sizeWithFont:[UIFont systemFontOfSize:16]];
+//        //        btnSize.width += 12;
+//        [(UIButton *)[self viewWithTag:BTN_GOBACK_TAG] setFrame:CGRectMake(5, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.origin.y, btnSize.width+10, ((UIButton *)[self viewWithTag:BTN_GOBACK_TAG]).frame.size.height)];
+//    }
 
 }
 

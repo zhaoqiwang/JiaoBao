@@ -58,6 +58,7 @@
 @property (nonatomic , assign) int roomId;
 @property (nonatomic , retain) UILabel * mainTitleLabel;
 @property (nonatomic , retain) UILabel * subTitleLabel;
+@property(nonatomic,strong)UIButton *leftBtn;
 
 
 -(id)initWithTitle:(NSString*)title;
@@ -65,6 +66,7 @@
 -(void)setMyFrameBy:(CGRect)frame;
 -(void)setGoBack;
 -(void)setBackBtnTitle:(NSString *)backBtnTitle;
+-(void)leftBtnAction:(NSString *)title;
 
 -(void)setRightBtn:(UIImage*)img;
 -(void)setRightBtnTitle:(NSString *)title;

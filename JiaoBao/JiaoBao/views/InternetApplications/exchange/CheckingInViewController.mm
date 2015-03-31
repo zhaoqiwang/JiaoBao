@@ -105,7 +105,7 @@
 -(void)getUnitName:(id)sender
 {
     NSLog(@"title = %@",[dm getInstance].mStr_unit);
-    self.mNav_navgationBar.label_Title.text = [dm getInstance].mStr_unit;
+    [self.mNav_navgationBar leftBtnAction:[dm getInstance].mStr_unit];
     [[SignInHttp getInstance]getTime];
 
     [[SignInHttp getInstance]getSignInAddress];
@@ -153,12 +153,12 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getCurrentTime:) name:@"GetTime" object:nil];
 
     
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:[dm getInstance].mStr_unit];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
     [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
-    NSLog(@"unit = %@",[dm getInstance].mStr_unit);
-    [self.mNav_navgationBar setBackBtnTitle:[dm getInstance].mStr_unit];
+//    NSLog(@"unit = %@",[dm getInstance].mStr_unit);
+//    [self.mNav_navgationBar setBackBtnTitle:[dm getInstance].mStr_unit];
     self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar setGoBack];
+    [self.mNav_navgationBar leftBtnAction:[dm getInstance].mStr_unit];
     [self.view addSubview:self.mNav_navgationBar];
     MKCoordinateRegion theRegion = { {0.0,0.0 }, {0.0,0.0 } };
     theRegion.center= self.mapView.userLocation.location.coordinate;

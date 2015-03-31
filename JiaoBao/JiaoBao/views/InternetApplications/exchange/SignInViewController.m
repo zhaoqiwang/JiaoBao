@@ -112,10 +112,10 @@
     self.groupArr = [sender object];
     //添加导航条
     NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:str];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
     [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
     self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar setGoBack];
+    [self.mNav_navgationBar leftBtnAction:str];
     [self.view addSubview:self.mNav_navgationBar];
     
     
@@ -158,7 +158,8 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
