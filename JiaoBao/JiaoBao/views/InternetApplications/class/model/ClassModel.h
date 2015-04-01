@@ -20,9 +20,9 @@
     NSString *State;//
     NSString *Title;//标题
     NSString *Abstracts;//摘要
-    NSString *Thumbnail;//图片url(string[]数组
+    NSMutableArray *Thumbnail;//图片url(string[]数组
     NSString *ViewCount;//观看人数
-    NSString *SectionID;//文章栏目ID
+    NSString *SectionID;//文章栏目ID，997_2，最后一位，1是展示，2是分享
     NSString *FeeBackCount;//回复数量
     NSString *UserName;//发表者姓名
     NSString *UnitName;//发布单位
@@ -39,7 +39,7 @@
 @property (nonatomic,strong) NSString *State;
 @property (nonatomic,strong) NSString *Title;
 @property (nonatomic,strong) NSString *Abstracts;
-@property (nonatomic,strong) NSString *Thumbnail;
+@property (nonatomic,strong) NSMutableArray *Thumbnail;
 @property (nonatomic,strong) NSString *ViewCount;
 @property (nonatomic,strong) NSString *SectionID;
 @property (nonatomic,strong) NSString *FeeBackCount;

@@ -402,6 +402,9 @@
 		A763A53C1A48F372008365B5 /* photo_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A763A5391A48F372008365B5 /* photo_default@2x.png */; };
 		A763A53D1A48F372008365B5 /* photo_default@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A763A53A1A48F372008365B5 /* photo_default@3x.png */; };
 		A763A5401A49663C008365B5 /* PersonPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A763A53F1A49663C008365B5 /* PersonPhotoModel.m */; };
+		A766B4441ACB9E1B00018D46 /* classView_more.png in Resources */ = {isa = PBXBuildFile; fileRef = A766B4411ACB9E1B00018D46 /* classView_more.png */; };
+		A766B4451ACB9E1B00018D46 /* classView_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A766B4421ACB9E1B00018D46 /* classView_more@2x.png */; };
+		A766B4461ACB9E1B00018D46 /* classView_more@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A766B4431ACB9E1B00018D46 /* classView_more@3x.png */; };
 		A76829621AC6955F003B31EB /* ClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A768295F1AC6955F003B31EB /* ClassTableViewCell.xib */; };
 		A76829631AC6955F003B31EB /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A76829611AC6955F003B31EB /* ClassTableViewCell.m */; };
 		A76829691AC69575003B31EB /* ClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A76829661AC69575003B31EB /* ClassModel.m */; };
@@ -1213,6 +1216,9 @@
 		A763A53A1A48F372008365B5 /* photo_default@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "photo_default@3x.png"; path = "Image/InternetApp/share/photo_default@3x.png"; sourceTree = "<group>"; };
 		A763A53E1A49663C008365B5 /* PersonPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonPhotoModel.h; path = views/InternetApplications/shareView/model/PersonPhotoModel.h; sourceTree = "<group>"; };
 		A763A53F1A49663C008365B5 /* PersonPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonPhotoModel.m; path = views/InternetApplications/shareView/model/PersonPhotoModel.m; sourceTree = "<group>"; };
+		A766B4411ACB9E1B00018D46 /* classView_more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classView_more.png; path = Image/InternetApp/class/classView_more.png; sourceTree = "<group>"; };
+		A766B4421ACB9E1B00018D46 /* classView_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_more@2x.png"; path = "Image/InternetApp/class/classView_more@2x.png"; sourceTree = "<group>"; };
+		A766B4431ACB9E1B00018D46 /* classView_more@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_more@3x.png"; path = "Image/InternetApp/class/classView_more@3x.png"; sourceTree = "<group>"; };
 		A768295F1AC6955F003B31EB /* ClassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ClassTableViewCell.xib; path = views/InternetApplications/class/cell/ClassTableViewCell.xib; sourceTree = "<group>"; };
 		A76829601AC6955F003B31EB /* ClassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassTableViewCell.h; path = views/InternetApplications/class/cell/ClassTableViewCell.h; sourceTree = "<group>"; };
 		A76829611AC6955F003B31EB /* ClassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassTableViewCell.m; path = views/InternetApplications/class/cell/ClassTableViewCell.m; sourceTree = "<group>"; };
@@ -2561,6 +2567,9 @@
 		A75E6EAB1ABACD8300B51B18 /* class */ = {
 			isa = PBXGroup;
 			children = (
+				A766B4411ACB9E1B00018D46 /* classView_more.png */,
+				A766B4421ACB9E1B00018D46 /* classView_more@2x.png */,
+				A766B4431ACB9E1B00018D46 /* classView_more@3x.png */,
 				A768296C1AC69B21003B31EB /* classView_4.png */,
 				A768296D1AC69B21003B31EB /* classView_4@2x.png */,
 				A768296E1AC69B21003B31EB /* classView_4@3x.png */,
@@ -3329,6 +3338,7 @@
 				A74821A519FF452200234020 /* msgDetail_send@2x.png in Resources */,
 				A75046931A0A14BC00C54ECC /* forward_sendMsg1.png in Resources */,
 				A761D4061A7F697900DCAEB9 /* rootTableSelect_3@3x.png in Resources */,
+				A766B4451ACB9E1B00018D46 /* classView_more@2x.png in Resources */,
 				A7AD8C5219F644A2002E65FB /* tabbar_center1.png in Resources */,
 				A727C7DD1A6F93780019C4CD /* share_lookBig.png in Resources */,
 				A7AD8C5819F644A2002E65FB /* tabbar_student2.png in Resources */,
@@ -3355,6 +3365,7 @@
 				A73D9C161A368EDF004CE4D5 /* RongYun_group@3x.png in Resources */,
 				A73D9C131A368EDF004CE4D5 /* RongYun_discussion@3x.png in Resources */,
 				A761D4081A7F697900DCAEB9 /* rootTableSelect_4@2x.png in Resources */,
+				A766B4441ACB9E1B00018D46 /* classView_more.png in Resources */,
 				A73AD8341A20824C00F68C47 /* share_tableV_class.png in Resources */,
 				A749B9C219F89A530036F480 /* root_addBtn.png in Resources */,
 				A74C118F1A01D23F00925230 /* Default@2x.png in Resources */,
@@ -3449,6 +3460,7 @@
 				A757DFE11A80C7B9001172A4 /* appNav_changeUnit@3x.png in Resources */,
 				A761D4021A7F697900DCAEB9 /* rootTableSelect_2@2x.png in Resources */,
 				A701798F1AB91D2100E7093F /* work_photo@3x.png in Resources */,
+				A766B4461ACB9E1B00018D46 /* classView_more@3x.png in Resources */,
 				A7AD8C5719F644A2002E65FB /* tabbar_student1@2x.png in Resources */,
 				A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */,
 				A71D61F01A1C96A400B8D33D /* share_school1@2x.png in Resources */,
