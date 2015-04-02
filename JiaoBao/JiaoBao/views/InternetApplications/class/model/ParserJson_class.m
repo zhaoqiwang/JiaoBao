@@ -45,6 +45,7 @@
         model.SectionID = [dic objectForKey:@"SectionID"];
         model.UserName = [dic objectForKey:@"UserName"];
         model.UnitName = [dic objectForKey:@"UnitName"];
+        model.flag = [model.SectionID substringFromIndex:model.SectionID.length-1];
         NSString *str = [utils getLocalTimeDate];
         NSString *str2 = [dic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];

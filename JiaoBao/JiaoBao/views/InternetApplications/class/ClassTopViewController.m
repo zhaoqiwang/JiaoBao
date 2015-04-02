@@ -143,7 +143,7 @@
         cell.mImgV_airPhoto.frame = CGRectMake(62, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, 40, 40);
         //详情
         contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72-45, 99999)];
-        if (contentSize.height>26) {
+        if (contentSize.height>26||model.Thumbnail.count>0) {
             contentSize = CGSizeMake([dm getInstance].width-82-35, 48);
             cell.mLab_content.numberOfLines = 2;
         }
@@ -152,7 +152,7 @@
         cell.mImgV_airPhoto.hidden = YES;
         //详情
         contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
-        if (contentSize.height>26) {
+        if (contentSize.height>26||model.Thumbnail.count>0) {
             contentSize = CGSizeMake([dm getInstance].width-82, 48);
             cell.mLab_content.numberOfLines = 2;
         }

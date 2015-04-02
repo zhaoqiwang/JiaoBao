@@ -29,8 +29,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MyAttUnitArthListIndex" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MyAttUnitArthListIndex:) name:@"MyAttUnitArthListIndex" object:nil];
         //获取到头像后刷新
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
         
         self.mArr_unit = [NSMutableArray array];
         self.mArr_class = [NSMutableArray array];
@@ -338,7 +338,6 @@
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if(cell == nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] lastObject];
-        cell.frame = CGRectMake(0, 0, [dm getInstance].width, 54);
     }
     //找到当前应该显示的数组
     NSMutableArray *array = [NSMutableArray array];
@@ -402,15 +401,12 @@
     //姓名
     NSString *tempName;
     //判断应该显示姓名，还是单位名
-    if (indexPath.section == 0) {
-        if (self.mInt_index == 0||self.mInt_index == 1) {
-            tempName = model.UnitName;
-        }else{
-            tempName = model.UserName;
-        }
-    }else{
+    if ([model.flag intValue] ==1) {//展示
         tempName = model.UserName;
+    }else{//分享2
+        tempName = model.UnitName;
     }
+    D("model.flag-===%@",model.flag);
     CGSize nameSize = [[NSString stringWithFormat:@"%@",tempName] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_name.frame = CGRectMake(62, 18, nameSize.width, cell.mLab_name.frame.size.height);
     cell.mLab_name.text = tempName;
@@ -441,7 +437,7 @@
         cell.mImgV_airPhoto.frame = CGRectMake(62, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, 40, 40);
         //详情
         contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72-45, 99999)];
-        if (contentSize.height>26) {
+        if (contentSize.height>26||model.Thumbnail.count>0) {
             contentSize = CGSizeMake([dm getInstance].width-82-35, 48);
             cell.mLab_content.numberOfLines = 2;
         }
@@ -450,7 +446,7 @@
         cell.mImgV_airPhoto.hidden = YES;
         //详情
         contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
-        if (contentSize.height>26) {
+        if (contentSize.height>26||model.Thumbnail.count>0) {
             contentSize = CGSizeMake([dm getInstance].width-82, 48);
             cell.mLab_content.numberOfLines = 2;
         }
@@ -551,7 +547,7 @@
     model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
     SharePostingViewController *posting = [[SharePostingViewController alloc] init];
     posting.mModel_unit = model;
-    posting.mInt_section = 1;
+    posting.mInt_section = 0;
     [utils pushViewController:posting animated:YES];
 }
 

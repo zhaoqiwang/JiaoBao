@@ -9,7 +9,7 @@
 #import "ClassModel.h"
 
 @implementation ClassModel
-@synthesize TabIDStr,ClickCount,Context,JiaoBaoHao,LikeCount,RecDate,Source,StarJson,State,Title,Abstracts,Thumbnail,ViewCount,SectionID,FeeBackCount,UserName,UnitName;
+@synthesize TabIDStr,ClickCount,Context,JiaoBaoHao,LikeCount,RecDate,Source,StarJson,State,Title,Abstracts,Thumbnail,ViewCount,SectionID,FeeBackCount,UserName,UnitName,flag;
 
 -(id)init{
     self.Thumbnail = [NSMutableArray array];

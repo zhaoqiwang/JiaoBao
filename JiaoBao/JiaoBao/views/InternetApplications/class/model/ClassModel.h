@@ -26,6 +26,7 @@
     NSString *FeeBackCount;//回复数量
     NSString *UserName;//发表者姓名
     NSString *UnitName;//发布单位
+    NSString *flag;//来自展示1，还是分享2
 }
 
 @property (nonatomic,strong) NSString *TabIDStr;
@@ -45,6 +46,7 @@
 @property (nonatomic,strong) NSString *FeeBackCount;
 @property (nonatomic,strong) NSString *UserName;
 @property (nonatomic,strong) NSString *UnitName;
+@property (nonatomic,strong) NSString *flag;//来自展示1，还是分享2
 
 @end
 
