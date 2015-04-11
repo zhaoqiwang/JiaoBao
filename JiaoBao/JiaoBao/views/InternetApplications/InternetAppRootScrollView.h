@@ -19,12 +19,14 @@
 #import "ThemeView.h"
 #import "WorkView_new.h"
 #import "ClassView.h"
+#import "WorkView_new2.h"
 
 @interface InternetAppRootScrollView : UIScrollView<UIScrollViewDelegate>{
     BOOL isLeftScroll;
     CGFloat userContentOffsetX;
 //    WorkView *workView;//事务
-    WorkView_new *workView;
+//    WorkView_new *workView;
+    WorkView_new2 *workView;
 //    ShareView *shareView;//分享
     ShareViewNew *shareView;//分享
 //    ShowView *showView;//展示
@@ -36,7 +38,8 @@
 }
 
 //@property (strong,nonatomic) WorkView *workView;
-@property (strong,nonatomic) WorkView_new *workView;
+//@property (strong,nonatomic) WorkView_new *workView;
+@property (strong,nonatomic) WorkView_new2 *workView;
 @property (strong,nonatomic) ShareViewNew *shareView;//分享
 @property (strong,nonatomic) ShowViewNew *showView ;//展示
 @property (strong,nonatomic) NoticeView *notiView;//内务

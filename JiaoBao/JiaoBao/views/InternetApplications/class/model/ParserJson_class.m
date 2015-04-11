@@ -31,7 +31,13 @@
         model.FeeBackCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FeeBackCount"]];
         model.StarJson = [dic objectForKey:@"StarJson"];
         model.Title = [dic objectForKey:@"Title"];
-        model.Abstracts = [dic objectForKey:@"Abstracts"];
+        
+        NSString *Abstracts = [dic objectForKey:@"Thumbnail"];
+        if ([Abstracts isEqual:[NSNull null]]||[Abstracts isEqual:@"<null>"]) {
+            model.Abstracts = @"";
+        }else{
+            model.Abstracts = [dic objectForKey:@"Abstracts"];
+        }
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         NSString *thumbnail = [dic objectForKey:@"Thumbnail"];
         NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"Thumbnail"]);

@@ -15,8 +15,10 @@
 #import "ArthDetailViewController.h"
 #import "ClassTopViewController.h"
 #import "SharePostingViewController.h"
+#import "MJPhoto.h"
+#import "MJPhotoBrowser.h"
 
-@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
+@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate>{
     UIView *mView_button;//放四个按钮
     UITableView *mTableV_list;//表格
     NSMutableArray *mArr_unit;//本单位

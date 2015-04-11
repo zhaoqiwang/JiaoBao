@@ -13,6 +13,23 @@
 
 -(id)init{
     self.Thumbnail = [NSMutableArray array];
+    self.TabIDStr = @"";
+    self.ClickCount = @"";
+    self.Context = @"";
+    self.JiaoBaoHao = @"";
+    self.LikeCount = @"";
+    self.RecDate = @"";
+    self.Source = @"";
+    self.StarJson = @"";
+    self.State = @"";
+    self.Title = @"";
+    self.Abstracts = @"";
+    self.ViewCount = @"";
+    self.SectionID = @"";
+    self.FeeBackCount = @"";
+    self.UserName = @"";
+    self.UnitName = @"";
+    self.flag = @"";
     return self;
 }
 

@@ -40,21 +40,21 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" id="Pqy-uQ-a3W">
-                        <rect key="frame" x="52" y="115" width="255" height="20"/>
+                        <rect key="frame" x="52" y="95" width="255" height="12"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="A7c-PT-Cqp">
-                        <rect key="frame" x="52" y="65" width="41" height="41"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我我我" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7YM-HT-N6t">
-                        <rect key="frame" x="108" y="75" width="189" height="13"/>
+                        <rect key="frame" x="109" y="58" width="189" height="13"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="A7c-PT-Cqp">
+                        <rect key="frame" x="52" y="52" width="41" height="41"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-03-09" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QxI-3X-DL4">
                         <rect key="frame" x="29" y="144" width="55" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -104,9 +104,31 @@
                         <color key="textColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" id="6oN-Cm-0kG">
+                        <rect key="frame" x="52" y="115" width="255" height="33"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="reG-DT-qmd">
+                                <rect key="frame" x="8" y="0.0" width="38" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="EBZ-bj-4U5">
+                                <rect key="frame" x="54" y="0.0" width="46" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="6MQ-rQ-iTV">
+                                <rect key="frame" x="108" y="0.0" width="43" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="mImgV_0" destination="reG-DT-qmd" id="7VI-53-PhM"/>
+                <outlet property="mImgV_1" destination="EBZ-bj-4U5" id="ebx-8b-WRr"/>
+                <outlet property="mImgV_2" destination="6MQ-rQ-iTV" id="SoI-aD-eu1"/>
                 <outlet property="mImgV_airPhoto" destination="A7c-PT-Cqp" id="aY9-rh-dWz"/>
                 <outlet property="mImgV_head" destination="YKi-nW-AQK" id="Jwy-Jt-KN1"/>
                 <outlet property="mLab_assess" destination="nxT-nQ-VXb" id="mhV-7X-E0N"/>
@@ -121,6 +143,7 @@
                 <outlet property="mLab_name" destination="F8G-K9-kmi" id="paX-Mv-vbr"/>
                 <outlet property="mLab_time" destination="QxI-3X-DL4" id="GQz-Ue-Mex"/>
                 <outlet property="mView_background" destination="Pqy-uQ-a3W" id="VQR-Pp-rKH"/>
+                <outlet property="mView_img" destination="6oN-Cm-0kG" id="Rpp-La-pqI"/>
             </connections>
             <point key="canvasLocation" x="150" y="207.5"/>
         </tableViewCell>

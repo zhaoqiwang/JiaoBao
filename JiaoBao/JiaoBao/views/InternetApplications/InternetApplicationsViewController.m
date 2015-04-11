@@ -34,8 +34,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"internetAppGetUserInfo" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetAppGetUserInfo) name:@"internetAppGetUserInfo" object:nil];
     //向exchangeView页面发送通知，
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getTotalUnreadCount" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTotalUnreadCount) name:@"getTotalUnreadCount" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getTotalUnreadCount" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTotalUnreadCount) name:@"getTotalUnreadCount" object:nil];
     //通知界面，是否登录成功
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"loginSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess:) name:@"loginSuccess" object:nil];

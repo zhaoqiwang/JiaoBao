@@ -137,34 +137,78 @@
     cell.mLab_assessContent.text = model.Title;
     //文章logo
     CGSize contentSize;
-    if (model.Thumbnail.count>0) {
-        cell.mImgV_airPhoto.hidden = NO;
-        [cell.mImgV_airPhoto sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:0]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
-        cell.mImgV_airPhoto.frame = CGRectMake(62, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, 40, 40);
-        //详情
-        contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72-45, 99999)];
-        if (contentSize.height>26||model.Thumbnail.count>0) {
-            contentSize = CGSizeMake([dm getInstance].width-82-35, 48);
-            cell.mLab_content.numberOfLines = 2;
-        }
-        cell.mLab_content.frame = CGRectMake(62+45, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
-    }else{
-        cell.mImgV_airPhoto.hidden = YES;
-        //详情
-        contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
-        if (contentSize.height>26||model.Thumbnail.count>0) {
-            contentSize = CGSizeMake([dm getInstance].width-82, 48);
-            cell.mLab_content.numberOfLines = 2;
-        }
-        cell.mLab_content.frame = CGRectMake(62+3, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
+    //    if (model.Thumbnail.count>0) {
+    //        cell.mImgV_airPhoto.hidden = NO;
+    //        [cell.mImgV_airPhoto sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:0]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+    //        cell.mImgV_airPhoto.frame = CGRectMake(62, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, 40, 40);
+    //        //详情
+    //        contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72-45, 99999)];
+    //        if (contentSize.height>26||model.Thumbnail.count>0) {
+    //            contentSize = CGSizeMake([dm getInstance].width-82-35, 48);
+    //            cell.mLab_content.numberOfLines = 2;
+    //        }
+    //        cell.mLab_content.frame = CGRectMake(62+45, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
+    //    }else{
+    cell.mImgV_airPhoto.hidden = YES;
+    //详情
+    contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
+    if (contentSize.height>26) {
+        contentSize = CGSizeMake([dm getInstance].width-82, 30);
+        cell.mLab_content.numberOfLines = 2;
     }
+    if (model.Abstracts.length==0) {
+        contentSize = CGSizeMake([dm getInstance].width-82, 0);
+        cell.mView_background.hidden = YES;
+    }
+    cell.mLab_content.frame = CGRectMake(62+3, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
+    //    }
     
     cell.mLab_content.text = model.Abstracts;
     
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+4);
+    //是否有文章图片需要显示
+    if (model.Thumbnail.count>0) {
+        cell.mView_img.hidden = NO;
+        //最多显示6个图片
+        int a;
+        if (model.Thumbnail.count>=6) {
+            a=6;
+        }else{
+            a = (int)model.Thumbnail.count;
+        }
+        //显示图片的宽度
+        int m = ([dm getInstance].width-82)/3;
+        //开始塞图片
+        BOOL notFirst = NO;
+        float y = 5;    float x = 0;
+        
+        for (int i=0; i<a; i++,x++) {
+            if ((i%3)==0 && notFirst) {
+                
+                y = y+(m+5);
+                x = 0;
+            }
+            notFirst = YES;
+            
+            UIImageView *gridItem = [[UIImageView alloc] init];
+            [gridItem setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
+            [gridItem sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+            [cell.mView_img addSubview:gridItem];
+        }
+        if (model.Thumbnail.count>3) {
+            cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m*2+10);
+        }else{
+            cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
+        }
+        
+    }else{
+        cell.mView_img.hidden = YES;
+        cell.mView_img.frame = cell.mView_background.frame;
+    }
+    
     //时间
-    cell.mLab_time.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
+    cell.mLab_time.frame = CGRectMake(62, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
     cell.mLab_time.text = model.RecDate;
     //点赞
     CGSize likeSize = [[NSString stringWithFormat:@"%@",model.LikeCount] sizeWithFont:[UIFont systemFontOfSize:10]];

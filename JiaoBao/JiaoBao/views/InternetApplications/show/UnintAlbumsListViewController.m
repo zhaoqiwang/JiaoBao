@@ -172,7 +172,7 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 //    }
 //
 //    // 2.显示相册
-//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    MJPhotoBrowser *browser = [[MJPhotoBrows er alloc] init];
 //    browser.currentPhotoIndex = indexPath.row; // 弹出相册时显示的第一张图片是？
 //    browser.photos = photos; // 设置所有的图片
 //    [browser show];
