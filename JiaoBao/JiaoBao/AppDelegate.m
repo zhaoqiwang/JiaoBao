@@ -126,7 +126,8 @@ CLLocationManager *locationManager;
         //走主界面
         [self.window addSubview:self.navigationController.view];
         self.window.rootViewController = self.navigationController;
-    }else{//走登录界面
+    }else{
+        //走登录界面
         mRegister_view = [[RegisterViewController alloc]init];
         [LoginSendHttp getInstance].flag_skip = 1;
         UINavigationController * aNa = [[UINavigationController alloc]initWithRootViewController:mRegister_view];
@@ -146,7 +147,8 @@ CLLocationManager *locationManager;
     } else { //有网络状态，3G或wifi
         NSString *tempName = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"];
         NSString *tempPassWD = [[NSUserDefaults standardUserDefaults]objectForKey:@"PassWD"];
-        if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"Register"] isEqual:@"OK"]&&tempName.length>0&&tempPassWD.length>0) {//走主界面
+        if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"Register"] isEqual:@"OK"]&&tempName.length>0&&tempPassWD.length>0) {
+            //走主界面
             //判断之前有没有登录成功
             if ([dm getInstance].url.length==0) {
                 [[LoginSendHttp getInstance] hands_login];

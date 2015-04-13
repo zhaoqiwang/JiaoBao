@@ -32,8 +32,8 @@
 
 }
 
-@property (strong, nonatomic) IBOutlet UIPickerView *pickView;
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet UIPickerView *pickView;//点击考勤模式弹出的pickView
+@property (nonatomic, weak) IBOutlet MKMapView *mapView;//
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) MKPlacemark *placemark;
 @property(nonatomic,strong)CLLocationManager *locationManage;
@@ -47,10 +47,10 @@
 @property(nonatomic,strong)UITextField *field;
 @property(nonatomic,strong)BMKCircle* circle;
 
-- (IBAction)checkInAction:(id)sender;
+- (IBAction)checkInAction:(id)sender;//点击签到按钮方法
 
-- (IBAction)recordAction:(id)sender;
-- (IBAction)groupTypeAction:(id)sender;
+- (IBAction)recordAction:(id)sender;//点击纪录按钮方法
+- (IBAction)groupTypeAction:(id)sender;//点击考勤模式方法
 
 
 - (IBAction)cancelAction:(id)sender;
@@ -187,9 +187,9 @@
     self.geocoder = [[CLGeocoder alloc] init];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAction) name:@"location" object:nil];
     // 添加圆形覆盖物
-    CLLocationCoordinate2D coor;
-    coor.latitude = 39.915;
-    coor.longitude = 116.404;
+//    CLLocationCoordinate2D coor;
+//    coor.latitude = 39.915;
+//    coor.longitude = 116.404;
 //    BMKCircle* circle = [BMKCircle circleWithCenterCoordinate:coor radius:5000];
 //    
 //    [_mapView addOverlay:circle];
@@ -326,7 +326,7 @@ errorCode:(BMKSearchErrorCode)error{
         
         self.location = [[CLLocation alloc]initWithLatitude:self.Latitude longitude:self.Longitude];
         
-        self.circle = [BMKCircle circleWithCenterCoordinate:self.location.coordinate radius:100];
+        self.circle = [BMKCircle circleWithCenterCoordinate:self.location.coordinate radius:[[dic objectForKey:@"Range"] doubleValue]];
         
         [BaidumapView addOverlay:self.circle];
         

@@ -137,7 +137,9 @@ static NSString *kJTCalendarDaySelected = @"kJTCalendarDaySelected";
 - (void)didTouch
 {
     [self setSelected:YES animated:YES];
+    
     [self.calendarManager setCurrentDateSelected:self.date];
+    NSLog(@"selecteDate = %@",self.date);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kJTCalendarDaySelected object:self.date];
     

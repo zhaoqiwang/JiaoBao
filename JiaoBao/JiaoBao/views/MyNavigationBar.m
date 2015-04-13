@@ -282,8 +282,10 @@
     [self.leftBtn removeFromSuperview];
     self.leftBtn = nil;
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.leftBtn.frame = CGRectMake(5, 0+[dm getInstance].statusBar, 120, MAIN_TOPBAR_HEIGHT);
-    self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(15,-10,10,12);
+    self.leftBtn.frame = CGRectMake(5, 0+[dm getInstance].statusBar, 200, MAIN_TOPBAR_HEIGHT);
+    self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(12,0,10,12);
+    //self.leftBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    self.leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.leftBtn setTitle:title forState:UIControlStateNormal];
     
     [self.leftBtn setImage:[UIImage imageNamed:@"nav_return"] forState:UIControlStateNormal];
@@ -384,11 +386,13 @@
     }
 }
 
--(void)setMyFrame{
+-(void)setMyFrame
+{
     self.frame = CGRectMake(0, 0, [dm getInstance].width, MAIN_TOPBAR_HEIGHT+[dm getInstance].statusBar);
 }
 
--(void)setMyFrameBy:(CGRect)frame{
+-(void)setMyFrameBy:(CGRect)frame
+{
     self.frame = frame;
 }
 
@@ -401,7 +405,8 @@
  }
  */
 
--(void)setBackBtnTitle:(NSString *)backBtnTitle{
+-(void)setBackBtnTitle:(NSString *)backBtnTitle
+{
     NSString *title = @"返回";
     CGSize btnSize = [title sizeWithFont:[UIFont systemFontOfSize:18]];
     btnSize.width += 12;
