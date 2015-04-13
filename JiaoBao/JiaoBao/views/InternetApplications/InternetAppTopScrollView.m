@@ -54,10 +54,10 @@
         self.bounces = YES;
         self.contentSize = CGSizeMake([dm getInstance].width, 48);
         if (SHOWRONGYUN == 1) {
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
         }
         
@@ -247,18 +247,18 @@
             }
         }else if (mInt_userSelectedChannelID == 101) {//事务
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
-                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
+//                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
             }
             if (mInt_work_mysend == 0) {
                 //获取我发送的消息列表
                 [[LoginSendHttp getInstance] login_GetMySendMsgList:@"1" Page:@"1" SendName:@"" sDate:@"" eDate:@""];
-                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+//                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
                 mInt_work_mysend = 1;
             }
             if (mInt_work_sendToMe == 0) {
                 //取发给我消息的用户列表，new
                 [[LoginSendHttp getInstance] login_SendToMeUserList:@"20" Page:@"1" SendName:@"" sDate:@"" eDate:@"" readFlag:@"" lastId:@""];
-                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+//                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
                 mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 102) {//分享
@@ -269,6 +269,7 @@
                 mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 103){
+            [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
             //展示
 //            if (mInt_show == 0) {
 //                //获取所有单位
@@ -290,19 +291,20 @@
         }
     }else{
         if (mInt_userSelectedChannelID == 100) {//事务
+            [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
-                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
+//                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
             }
             if (mInt_work_mysend == 0) {
                 //获取我发送的消息列表
-                [[LoginSendHttp getInstance] login_GetMySendMsgList:@"1" Page:@"1" SendName:@"" sDate:@"" eDate:@""];
-                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+//                [[LoginSendHttp getInstance] login_GetMySendMsgList:@"1" Page:@"1" SendName:@"" sDate:@"" eDate:@""];
+//                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
                 mInt_work_mysend = 1;
             }
             if (mInt_work_sendToMe == 0) {
                 //取发给我消息的用户列表，new
-                [[LoginSendHttp getInstance] login_SendToMeUserList:@"20" Page:@"1" SendName:@"" sDate:@"" eDate:@"" readFlag:@"" lastId:@""];
-                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
+//                [[LoginSendHttp getInstance] login_SendToMeUserList:@"20" Page:@"1" SendName:@"" sDate:@"" eDate:@"" readFlag:@"" lastId:@""];
+//                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
                 mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 101) {//分享
@@ -313,6 +315,7 @@
                 mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 102){//展示
+            [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
 //            if (mInt_show == 0) {
 //                //获取所有单位
 //                [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];

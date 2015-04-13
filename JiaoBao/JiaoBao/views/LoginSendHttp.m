@@ -232,6 +232,7 @@ static LoginSendHttp *loginSendHttp = nil;
     [request addPostValue:@"20" forKey:@"numPerPage"];
     if (tag == 6) {
         [request addPostValue:@"1" forKey:@"readflag"];
+        request.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d",tag] forKey:@"tag"];
         request.tag = 5;//设置请求tag
     } else if(tag == 8){
         [request addPostValue:@"2" forKey:@"readflag"];
@@ -244,6 +245,10 @@ static LoginSendHttp *loginSendHttp = nil;
         request.tag = 9;//设置请求tag
     }else if (tag == 7){
         request.tag = 11;//设置请求tag
+    }else if(tag == 0){//全部
+        [request addPostValue:@"null" forKey:@"readflag"];
+        request.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d",tag] forKey:@"tag"];
+        request.tag = 5;//设置请求tag
     }
     self.flag_request = 0;
     [request setDelegate:self];
@@ -712,6 +717,7 @@ static LoginSendHttp *loginSendHttp = nil;
     if (lastId.length>0) {
         [request addPostValue:lastId forKey:@"lastId"];
     }
+    request.userInfo = [NSDictionary dictionaryWithObject:readFlag forKey:@"readFlag"];
     request.tag = 28;//设置请求tag
     self.flag_request = 0;
     [request setDelegate:self];
@@ -889,14 +895,19 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableArray *array = [ParserJson parserJsonUnReadMsgWith:str000];
         D("array.count-===== %lu",(unsigned long)array.count);
         //获取头像
-        [self getFaceImg:array];
+//        [self getFaceImg:array];
         //通知界面刷新待处理未读消息
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"6" forKey:@"tag"];
+        NSString *tag =  [_request.userInfo objectForKey:@"tag"];
+        if ([tag intValue] == 0) {
+            [dic setValue:@"0" forKey:@"tag"];
+        }else{
+            [dic setValue:@"6" forKey:@"tag"];
+        }
         [dic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
         //通知界面更新未读消息数量
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsg" object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsg" object:nil];
     }else if (_request.tag == 6){//已处理未回复的
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -904,7 +915,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //解析成model数组
         NSMutableArray *array = [ParserJson parserJsonUnReadMsgWith:str000];
         //获取头像
-        [self getFaceImg:array];
+//        [self getFaceImg:array];
         //通知界面刷新已处理未回复消息
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"8" forKey:@"tag"];
@@ -917,7 +928,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //解析成model数组
         NSMutableArray *array = [ParserJson parserJsonUnReadMsgWith:str000];
         //获取头像
-        [self getFaceImg:array];
+//        [self getFaceImg:array];
         //通知界面刷新已处理已回复消息
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"9" forKey:@"tag"];
@@ -931,7 +942,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableArray *array = [ParserJson parserJsonUnReadMsgWith:str000];
         D("array.count-= %lu",(unsigned long)array.count);
         //获取头像
-        [self getFaceImg:array];
+//        [self getFaceImg:array];
         //通知界面刷新已处理已回复消息
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"2" forKey:@"tag"];
@@ -947,7 +958,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //解析成model数组
         NSMutableArray *array = [ParserJson parserJsonUnReadMsgWith:str000];
         //获取头像
-        [self getFaceImg:array];
+//        [self getFaceImg:array];
         //通知界面刷新已处理已回复消息
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"4" forKey:@"tag"];
@@ -984,7 +995,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //解析成model数组
         NSMutableArray *array = [ParserJson parserJsonUnReadMsgWith:str000];
         //获取头像
-        [self getFaceImg:array];
+//        [self getFaceImg:array];
         //通知界面刷新回复我的信息
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"7" forKey:@"tag"];
@@ -1240,10 +1251,14 @@ static LoginSendHttp *loginSendHttp = nil;
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             [InternetAppTopScrollView shareInstance].mInt_work_sendToMe = 1;
             NSString *str = [jsonDic objectForKey:@"Data"];
-            D("str00=login==28=>>>>==%@",str);
+            NSString *readFlag = [_request.userInfo objectForKey:@"readFlag"];
+            D("str00=login==28=>>>>=%@=%@",readFlag,str);
             SendToMeUserListModel *model = [ParserJson parserJsonSendToMeUserList:str];
+            NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+            [dic2 setValue:readFlag forKey:@"readFlag"];
+            [dic2 setValue:model forKey:@"model"];
             //传到事务界面显示
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeUserList" object:model];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeUserList" object:dic2];
         }
     }else if (_request.tag == 29){//取单个用户发给我消息列表 new
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {

@@ -39,7 +39,7 @@ static ClassHttp *classHttp = nil;
     [request addPostValue:num forKey:@"numPerPage"];
     [request addPostValue:flag forKey:@"SectionFlag"];
     [request addPostValue:UnitID forKey:@"UnitID"];
-    request.userInfo = [NSDictionary dictionaryWithObject:flag forKey:@"flag"];
+    request.userInfo = [NSDictionary dictionaryWithObject:ReFlag forKey:@"flag"];
     request.tag = 1;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -103,8 +103,12 @@ static ClassHttp *classHttp = nil;
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
         [dic1 setValue:flag forKey:@"flag"];
         [dic1 setValue:array forKey:@"array"];
-        //通知学校界面，获取到的单位和个人数据
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex" object:dic1];
+        if ([flag intValue]==3) {//获取单位专门列表界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex3" object:dic1];
+        }else{
+            //通知学校界面，获取到的单位和个人数据
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex" object:dic1];
+        }
     }else if (_request.tag == 2){//取单位空间发表的最新或推荐文章
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];

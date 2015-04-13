@@ -15,17 +15,18 @@
     NSString *JiaoBaoHao;//教宝号
     NSString *LikeCount;//赞数
     NSString *RecDate;//发布日期
-    NSString *Source;//
+    NSString *Source;//来源网站
     NSString *StarJson;//
     NSString *State;//
     NSString *Title;//标题
     NSString *Abstracts;//摘要
-    NSString *Thumbnail;//图片url(string[]数组
+    NSMutableArray *Thumbnail;//图片url(string[]数组
     NSString *ViewCount;//观看人数
-    NSString *SectionID;//
+    NSString *SectionID;//文章栏目ID，997_2，最后一位，1是展示，2是分享
     NSString *FeeBackCount;//回复数量
     NSString *UserName;//发表者姓名
     NSString *UnitName;//发布单位
+    NSString *flag;//来自展示1，还是分享2
 }
 
 @property (nonatomic,strong) NSString *TabIDStr;
@@ -39,12 +40,13 @@
 @property (nonatomic,strong) NSString *State;
 @property (nonatomic,strong) NSString *Title;
 @property (nonatomic,strong) NSString *Abstracts;
-@property (nonatomic,strong) NSString *Thumbnail;
+@property (nonatomic,strong) NSMutableArray *Thumbnail;
 @property (nonatomic,strong) NSString *ViewCount;
 @property (nonatomic,strong) NSString *SectionID;
 @property (nonatomic,strong) NSString *FeeBackCount;
 @property (nonatomic,strong) NSString *UserName;
 @property (nonatomic,strong) NSString *UnitName;
+@property (nonatomic,strong) NSString *flag;//来自展示1，还是分享2
 
 @end
 

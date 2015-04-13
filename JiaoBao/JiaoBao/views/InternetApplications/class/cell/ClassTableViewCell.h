@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClassModel.h"
+
+@protocol ClassTableViewCellDelegate;
 
 @interface ClassTableViewCell : UITableViewCell{
     UIImageView *mImgV_head;//单位logo
@@ -23,6 +26,13 @@
     UILabel *mLab_assessCount;//评论条数
     UILabel *mLab_like;//赞
     UILabel *mLab_likeCount;//赞个数
+    UIView *mView_img;//显示文章中的图片
+    //需要显示的3张预览图片
+    UIImageView *mImgV_0;
+    UIImageView *mImgV_1;
+    UIImageView *mImgV_2;
+    id<ClassTableViewCellDelegate> delegate;
+    ClassModel *mModel_class;//
 }
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;//单位logo
@@ -39,5 +49,27 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_assessCount;//评论条数
 @property (nonatomic,strong) IBOutlet UILabel *mLab_like;//赞
 @property (nonatomic,strong) IBOutlet UILabel *mLab_likeCount;//赞个数
+@property (nonatomic,strong) IBOutlet UIView *mView_img;//显示文章中的图片
+//需要显示的3张预览图片
+@property (nonatomic,strong) IBOutlet UIImageView *mImgV_0;
+@property (nonatomic,strong) IBOutlet UIImageView *mImgV_1;
+@property (nonatomic,strong) IBOutlet UIImageView *mImgV_2;
+
+@property (strong,nonatomic) id<ClassTableViewCellDelegate> delegate;
+@property (nonatomic,strong) ClassModel *mModel_class;//
+
+//给图片添加点击事件
+-(void)thumbImgClick;
+
+@end
+
+@protocol ClassTableViewCellDelegate <NSObject>
+
+//向cell中添加图片点击手势
+- (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
+
+- (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
+
+- (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
 
 @end

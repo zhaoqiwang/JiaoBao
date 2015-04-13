@@ -87,6 +87,7 @@
         unReadMsgModel.MsgContent = [result objectForKey:@"MsgContent"];
         unReadMsgModel.MsgTabIDStr = [result objectForKey:@"MsgTabIDStr"];
         unReadMsgModel.FeeBackMsg = [result objectForKey:@"FeeBackMsg"];
+        unReadMsgModel.UnitShortName = [result objectForKey:@"UnitShortName"];
 //        unReadMsgModel.RecDate = [[result objectForKey:@"RecDate"]stringByReplacingOccurrencesOfString:@"T" withString:@" "];
         NSString *str = [utils getLocalTimeDate];
         NSString *str2 = [result objectForKey:@"RecDate"];
@@ -121,6 +122,7 @@
     unReadMsgModel.TabIDStr = [model objectForKey:@"TabIDStr"];
     unReadMsgModel.UserName = [model objectForKey:@"UserName"];
     unReadMsgModel.MsgContent = [model objectForKey:@"MsgContent"];
+    unReadMsgModel.UnitShortName = [result objectForKey:@"UnitShortName"];
 //    unReadMsgModel.RecDate = [[model objectForKey:@"RecDate"]stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     NSString *str = [utils getLocalTimeDate];
     NSString *str2 = [model objectForKey:@"RecDate"];

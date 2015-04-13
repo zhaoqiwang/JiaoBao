@@ -44,7 +44,8 @@
         if (SHOWRONGYUN == 1) {
             //添加事务
 //            self.workView = [[WorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-            self.workView = [[WorkView_new alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
+//            self.workView = [[WorkView_new alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
+            self.workView = [[WorkView_new2 alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.workView];
             //添加分享
             self.shareView = [[ShareViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
@@ -59,7 +60,8 @@
             [self addSubview:self.themeView];
         }else{
             //添加事务
-            self.workView = [[WorkView_new alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
+//            self.workView = [[WorkView_new alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
+            self.workView = [[WorkView_new2 alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.workView];
             //添加分享
             self.shareView = [[ShareViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];

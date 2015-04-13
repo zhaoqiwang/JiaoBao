@@ -315,18 +315,25 @@
             //获取头像
             [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
         }
-        cell.mImgV_head.frame = CGRectMake(10, 17, 40, 40);
+        cell.mImgV_head.frame = CGRectMake(10, 20, 40, 40);
         //姓名
         cell.mLab_name.hidden = YES;
         //时间
         CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-        cell.mLab_time.frame = CGRectMake(0, 2, [dm getInstance].width, timeSize.height);
+        cell.mLab_time.frame = CGRectMake(([dm getInstance].width-timeSize.width-20)/2, 2, timeSize.width+20, timeSize.height);
         cell.mLab_time.text = model.RecDate;
+        cell.mLab_time.textColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1];
+        cell.mLab_time.backgroundColor = [UIColor colorWithRed:203/255.0 green:203/255.0 blue:203/255.0 alpha:1];
+        //将图层的边框设置为圆脚
+        cell.mLab_time.layer.cornerRadius = 2;
+        cell.mLab_time.layer.masksToBounds = YES;
         //按钮
         cell.mBtn_work.hidden = NO;
-        cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 20, 50, 30);
+        cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 25, 50, 30);
         [cell.mBtn_work setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        
+        //将图层的边框设置为圆脚
+        cell.mBtn_work.layer.cornerRadius = 8;
+        cell.mBtn_work.layer.masksToBounds = YES;
         //内容
         CGFloat tempW;
         //判断是不是需要显示详情的cell
@@ -334,9 +341,11 @@
             tempW = [dm getInstance].width-50-70-10;
             cell.mBtn_work.hidden = NO;
             if (self.mArr_msg.count==indexPath.row+1) {
-                cell.mBtn_work.enabled = YES;
-                [cell.mBtn_work setTitle:@"再发" forState:UIControlStateNormal];
-                [cell.mBtn_work addTarget:self action:@selector(clickAttListSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+                cell.mBtn_work.hidden = YES;
+                tempW = [dm getInstance].width-50-30;
+//                cell.mBtn_work.enabled = YES;
+//                [cell.mBtn_work setTitle:@"再发" forState:UIControlStateNormal];
+//                [cell.mBtn_work addTarget:self action:@selector(clickAttListSendBtn:) forControlEvents:UIControlEventTouchUpInside];
             }else{
                 cell.mBtn_work.enabled = NO;
                 [cell.mBtn_work setTitle:@"详情" forState:UIControlStateNormal];
@@ -344,7 +353,7 @@
         }else{
             cell.mBtn_work.enabled = NO;
             if (self.mArr_msg.count==indexPath.row+1) {
-                tempW = [dm getInstance].width-50-20;
+                tempW = [dm getInstance].width-50-30;
                 cell.mBtn_work.hidden = YES;
             }else{
                 tempW = [dm getInstance].width-50-70-10;
@@ -360,12 +369,12 @@
             }
         }
         
-        CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.MsgContent;
-        
+        cell.mLab_content.font = [UIFont systemFontOfSize:16];
         //计算宽度
         CGFloat cellFloat;
-        if (tempW>contentSize.width) {
+        if (contentSize.width>tempW) {
             cellFloat = contentSize.width;
         }else{
             cellFloat = tempW;
@@ -389,7 +398,7 @@
                 rect = CGRectMake(rect.origin.x, rect.origin.y+rect.size.height+2, size.width, size.height);
                 UIButton *tempBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 tempBtn.frame = rect;
-                tempBtn.titleLabel.font = [UIFont systemFontOfSize: 11];
+                tempBtn.titleLabel.font = [UIFont systemFontOfSize: 13];
                 [tempBtn setTitle:attStr forState:UIControlStateNormal];
                 [tempBtn setTitleColor:[UIColor colorWithRed:17/255.0 green:107/255.0 blue:255/255.0 alpha:1] forState:UIControlStateNormal];
                 tempBtn.tag = i+1;
@@ -402,7 +411,7 @@
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
-        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y-5, cellFloat+20, rect.origin.y+rect.size.height-15);
+        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y, cellFloat+20, rect.origin.y+rect.size.height-15);
         //再计算行高,看内容是否高于头像
         CGFloat lineH;
         CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
@@ -413,6 +422,7 @@
         }
         //分割线
         cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
+        cell.mLab_line.hidden = YES;
         cell.frame = CGRectMake(0, 0, [dm getInstance].width, lineH);
     }else{
         MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
@@ -444,13 +454,15 @@
         cell.mBtn_work.hidden = YES;
         
         //内容
-        CGFloat tempW = [dm getInstance].width-110;
-        CGSize contentSize = [model.FeeBackMsg sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
+        CGFloat tempW = [dm getInstance].width-50-70-10;
+        CGSize contentSize = [model.FeeBackMsg sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.FeeBackMsg;
+        cell.mLab_content.font = [UIFont systemFontOfSize:16];
         //计算宽度
         CGFloat cellFloat;
-        if (tempW>contentSize.width) {
-            cellFloat = contentSize.width;
+        if (contentSize.width>tempW) {
+//            cellFloat = contentSize.width;
+            cellFloat = tempW;
         }else{
             cellFloat = tempW;
         }

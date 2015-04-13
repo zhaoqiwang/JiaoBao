@@ -191,7 +191,8 @@ static ShareHttp *shareHttp = nil;
 //上传图片
 -(void)shareHttpUploadSectionImgWith:(UIImage *)img Name:(NSString *)name{
     NSData *data = UIImagePNGRepresentation(img);//获取图片数据
-    NSString *urlString = [NSString stringWithFormat:@"%@AppFiles/uploadSectionImg",MAINURL];
+//    NSString *urlString = [NSString stringWithFormat:@"%@AppFiles/uploadSectionImg",MAINURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@ClientUpLoadFile/uploadSectionImg",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];

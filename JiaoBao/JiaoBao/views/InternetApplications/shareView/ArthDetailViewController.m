@@ -121,6 +121,7 @@
         [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.Arthmodel.TabIDStr sid:self.Arthmodel.SectionID];
         self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.Arthmodel.Title];
     }
+    D("model.tableID==%@,sectionID-===%@",self.Arthmodel.TabIDStr,self.Arthmodel.SectionID);
     self.mProgressV.labelText = @"加载中...";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     [self.mProgressV show:YES];
