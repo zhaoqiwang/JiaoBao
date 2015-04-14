@@ -369,9 +369,10 @@
             }
         }
         
-        CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
+        CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 20000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.MsgContent;
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
+        D("contenent0-0--==%f,%f,%@",contentSize.width,contentSize.height,model.MsgContent);
         //计算宽度
         CGFloat cellFloat;
         if (contentSize.width>tempW) {
@@ -380,8 +381,10 @@
             cellFloat = tempW;
         }
         //计算行数
-        cell.mLab_content.numberOfLines = contentSize.width/tempW;
-        cell.mLab_content.frame = CGRectMake(65, cell.mLab_time.frame.origin.y+20, cellFloat, contentSize.height);
+//        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+        [cell.mLab_content setNumberOfLines:0];
+        cell.mLab_content.frame = CGRectMake(65, cell.mLab_time.frame.origin.y+20+5, cellFloat, contentSize.height);
+        D("lsjfljglsj-====%@,%ld,%f,%f",NSStringFromCGRect(cell.mLab_content.frame),(long)cell.mLab_content.numberOfLines,contentSize.width,tempW);
         CGRect rect = cell.mLab_content.frame;
         if (self.mArr_msg.count == indexPath.row+1) {
             //是否有附件
@@ -411,7 +414,7 @@
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
-        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y, cellFloat+20, rect.origin.y+rect.size.height-15);
+        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y-5, cellFloat+20, rect.origin.y+rect.size.height-15);
         //再计算行高,看内容是否高于头像
         CGFloat lineH;
         CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
@@ -468,7 +471,7 @@
         }
         //计算行数
         cell.mLab_content.numberOfLines = contentSize.width/tempW;
-        cell.mLab_content.frame = CGRectMake([dm getInstance].width-cellFloat-60, cell.mLab_time.frame.origin.y+20, cellFloat, contentSize.height);
+        cell.mLab_content.frame = CGRectMake([dm getInstance].width-cellFloat-60, cell.mImgV_head.frame.origin.y+5, cellFloat, contentSize.height);
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workDetail"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workDetail"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];

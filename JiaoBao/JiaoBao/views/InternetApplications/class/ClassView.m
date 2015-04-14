@@ -28,6 +28,9 @@
         //通知学校界面，获取到的关注数据
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MyAttUnitArthListIndex" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MyAttUnitArthListIndex:) name:@"MyAttUnitArthListIndex" object:nil];
+        //我的班级文章列表
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AllMyClassArthList" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AllMyClassArthList:) name:@"AllMyClassArthList" object:nil];
         //获取到头像后刷新
 //        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
@@ -100,6 +103,31 @@
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [self.mTableV_list reloadData];
+}
+
+//我的班级文章列表
+-(void)AllMyClassArthList:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
+    
+    NSDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    NSMutableArray *array = [dic objectForKey:@"array"];
+    if ([flag intValue] == 2) {//单位动态
+        //如果是刷新，将数据清除
+        if (self.mInt_flag == 1) {
+            [self.mArr_classTop removeAllObjects];
+        }
+        self.mArr_classTop = array;
+    }else{//个人
+        //如果是刷新，将数据清除
+        if (self.mInt_flag == 1) {
+            [self.mArr_class removeAllObjects];
+        }
+        [self.mArr_class addObjectsFromArray:array];
+    }
     [self.mTableV_list reloadData];
 }
 
@@ -195,8 +223,15 @@
             }
             [self ProgressViewLoad];
         }
-    }else if (self.mInt_index == 1&&self.mArr_class.count==0){
-        
+    }else if (self.mInt_index == 1&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
+        if (self.mArr_classTop.count==0) {
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
+            [self ProgressViewLoad];
+        }
+        if (self.mArr_class.count==0) {
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"1" RequestFlag:@"1"];//个人
+            [self ProgressViewLoad];
+        }
     }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
         [self tableViewDownReloadData];
     }else if (self.mInt_index == 3&&self.mArr_attention.count==0){
@@ -229,7 +264,9 @@
         }
         [self ProgressViewLoad];
     }else if (self.mInt_index == 1){
-        
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"1" RequestFlag:@"1"];//个人
+        [self ProgressViewLoad];
     }else if (self.mInt_index == 2){
         [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"20" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
         [self ProgressViewLoad];
@@ -437,7 +474,7 @@
     //发布单位
     NSString *tempUnit;
     if ([model.flag intValue] ==1) {//展示
-        if (self.mInt_index == 0) {
+        if (self.mInt_index == 0||self.mInt_index == 1) {
             cell.mLab_class.hidden = YES;
         }else{
             tempUnit = [NSString stringWithFormat:@"(动态)"];
@@ -619,13 +656,6 @@
 
 //发表文章按钮
 -(void)clickPosting:(UIButton *)btn{
-//    NSString *UnitID;//单位ID
-//    NSString *UnitName;//单位名称
-//    NSString *IsMyUnit;//单位标识，1我所在单位，2我的上级，如果同在上级和本单位，本单位优先
-//    NSString *MessageCount;//未读数量
-//    NSString *UnitType;//教育局1，学校2
-//    NSString *imgName;//图片
-    
     UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
     model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
     model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
@@ -705,7 +735,17 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 1){
-        
+        if (self.mArr_class.count>=20) {
+            //检查当前网络是否可用
+            if ([self checkNetWork]) {
+                return;
+            }
+            int a = (int)self.mArr_class.count/20+1;
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"20" sectionFlag:@"1" RequestFlag:@"1"];//个人
+            [self ProgressViewLoad];
+        } else {
+            [self loadNoMore];
+        }
     }else if (self.mInt_index == 2){
         if (self.mArr_local.count>=20) {
             //检查当前网络是否可用

@@ -14,7 +14,7 @@
 @end
 
 @implementation ClassTopViewController
-@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag;
+@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -27,6 +27,9 @@
     //获取到头像后刷新
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
+    //我的班级文章列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AllMyClassArthList3" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AllMyClassArthList3:) name:@"AllMyClassArthList3" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -52,12 +55,17 @@
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
-    
-    if ([dm getInstance].uType==1) {
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-    }else{
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+    //判断应该加载单位1还是班级2
+    if (self.mInt_unit_class == 1) {
+        if ([dm getInstance].uType==1) {
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        }else{
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        }
+    } else {
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"2"];//单位
     }
+    
     [self ProgressViewLoad];
 }
 
@@ -76,6 +84,23 @@
     
     NSDictionary *dic = noti.object;
 //    NSString *flag = [dic objectForKey:@"flag"];
+    NSMutableArray *array = [dic objectForKey:@"array"];
+    //如果是刷新，将数据清除
+    if (self.mInt_flag == 1) {
+        [self.mArr_list removeAllObjects];
+    }
+    [self.mArr_list addObjectsFromArray:array];
+    [self.mTableV_list reloadData];
+}
+
+//通知学校界面，获取到的单位和个人数据,本单位或本班
+-(void)AllMyClassArthList3:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
+    
+    NSDictionary *dic = noti.object;
+    //    NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     //如果是刷新，将数据清除
     if (self.mInt_flag == 1) {
@@ -297,11 +322,16 @@
     [self ProgressViewLoad];
     //标注为刷新
     self.mInt_flag = 1;
-    //刚进入学校圈，或者下拉刷新时执行
-    if ([dm getInstance].uType==1) {
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-    }else{
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+    //判断应该加载单位1还是班级2
+    if (self.mInt_unit_class == 1) {
+        //刚进入学校圈，或者下拉刷新时执行
+        if ([dm getInstance].uType==1) {
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        }else{
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        }
+    } else {
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
     }
 }
 - (void)footerRereshing{
@@ -312,12 +342,19 @@
         if ([self checkNetWork]) {
             return;
         }
-        int a = (int)self.mArr_list.count/20+1;
-        if ([dm getInstance].uType==1) {
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-        }else{
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        //判断应该加载单位1还是班级2
+        if (self.mInt_unit_class == 1) {
+            int a = (int)self.mArr_list.count/20+1;
+            if ([dm getInstance].uType==1) {
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+            }else{
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+            }
+        } else {
+            int a = (int)self.mArr_list.count/20+1;
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
         }
+        
         [self ProgressViewLoad];
     } else {
         [self loadNoMore];

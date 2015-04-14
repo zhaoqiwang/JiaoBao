@@ -23,12 +23,13 @@
     NSMutableArray *mArr_list;//列表数组
     MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新
-    
+    int mInt_unit_class;//判断的是要加载单位1还是班级2
 }
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//列表显示
 @property (nonatomic,strong) NSMutableArray *mArr_list;//列表数组
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
+@property (assign,nonatomic) int mInt_unit_class;//判断的是要加载单位1还是班级2
 
 @end

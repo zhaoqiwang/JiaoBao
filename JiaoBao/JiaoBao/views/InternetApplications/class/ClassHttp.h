@@ -36,4 +36,7 @@
 //取我关注的单位栏目文章                   默认第一页           默认20条           教宝号
 -(void)classHttpMyAttUnitArthListIndex:(NSString *)page Num:(NSString *)num accid:(NSString *)accid;
 
+//我的班级文章列表                          默认第一页           默认20条           1个人发布文章，2单位动态       1是总界面，3是单独列表界面
+-(void)classHttpAllMyClassArthList:(NSString *)page Num:(NSString *)num sectionFlag:(NSString *)flag RequestFlag:(NSString *)ReFlag;
+
 @end
