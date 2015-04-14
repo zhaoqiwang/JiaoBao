@@ -27,6 +27,8 @@
     NSString *UserName;//发表者姓名
     NSString *UnitName;//发布单位
     NSString *flag;//来自展示1，还是分享2
+    NSString *className;//班级名称
+    NSString *classID;//班级号
 }
 
 @property (nonatomic,strong) NSString *TabIDStr;
@@ -47,6 +49,8 @@
 @property (nonatomic,strong) NSString *UserName;
 @property (nonatomic,strong) NSString *UnitName;
 @property (nonatomic,strong) NSString *flag;//来自展示1，还是分享2
+@property (nonatomic,strong) NSString *className;//班级名称
+@property (nonatomic,strong) NSString *classID;//班级号
 
 @end
 

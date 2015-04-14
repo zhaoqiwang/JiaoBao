@@ -34,6 +34,9 @@
         //获取到头像后刷新
 //        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
+        //通知学校界面，切换成功身份成功，清空数组
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
         
         self.mArr_unit = [NSMutableArray array];
         self.mArr_class = [NSMutableArray array];
@@ -99,6 +102,12 @@
         self.mProgressV.delegate = self;
     }
     return self;
+}
+
+//通知学校界面，切换成功身份成功，清空数组
+-(void)changeCurUnit{
+    [self clearArray];
+    [self.mTableV_list reloadData];
 }
 
 //获取到头像后，更新界面
@@ -415,15 +424,6 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     //文件名
     NSString *imgPath;
-//    if (indexPath.section == 0) {
-//        if (self.mInt_index == 0||self.mInt_index == 1) {
-//            imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",[dm getInstance].UID]];
-//        }else {
-//            imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//        }
-//    }else{
-//        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    }
     if ([model.flag intValue] ==1) {//展示
         imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",[dm getInstance].UID]];
     }else{
@@ -435,15 +435,6 @@
     }else{
         [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
         //获取头像
-//        if (indexPath.section == 0) {
-//            if (self.mInt_index == 0||self.mInt_index == 1) {
-//                [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Size:@""];
-//            }else {
-//                [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//            }
-//        }else{
-//            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//        }
         if ([model.flag intValue] ==1) {//展示
              [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Size:@""];
         }else{
@@ -454,15 +445,6 @@
     //姓名
     NSString *tempName;
     //判断应该显示姓名，还是单位名
-//    if (indexPath.section == 0) {
-//        if (self.mInt_index == 0||self.mInt_index == 1) {
-//            tempName = model.UnitName;
-//        }else{
-//            tempName = model.UserName;
-//        }
-//    }else{
-//        tempName = model.UserName;
-//    }
     if ([model.flag intValue] ==1) {//展示
         tempName = model.UnitName;
     }else{
@@ -480,7 +462,11 @@
             tempUnit = [NSString stringWithFormat:@"(动态)"];
         }
     }else{
-        tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
+        if (model.className.length>0) {
+            tempUnit = [NSString stringWithFormat:@"(%@)",model.className];
+        }else{
+            tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
+        }
         cell.mLab_class.hidden = NO;
     }
     CGSize unitSize = [tempUnit sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -488,15 +474,6 @@
     cell.mLab_class.text = tempUnit;
     
     //判断是否隐藏
-//    if (indexPath.section == 0) {
-//        if (self.mInt_index == 0||self.mInt_index == 1) {
-//            cell.mLab_class.hidden = YES;
-//        }else{
-//            cell.mLab_class.hidden = NO;
-//        }
-//    }else{
-//        cell.mLab_class.hidden = NO;
-//    }
     //标题
 //    CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_assessContent.frame = CGRectMake(62, cell.mLab_name.frame.origin.y+cell.mLab_name.frame.size.height, [dm getInstance].width-72, cell.mLab_assessContent.frame.size.height);
@@ -548,11 +525,6 @@
                 x = 0;
             }
             notFirst = YES;
-            
-//            UIImageView *gridItem = [[UIImageView alloc] init];
-//            [gridItem setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
-//             [gridItem sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
-//            [cell.mView_img addSubview:gridItem];
             if (i==0) {
                 cell.mImgV_0.hidden = NO;
                 [cell.mImgV_0 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
@@ -567,11 +539,7 @@
                 [cell.mImgV_2 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }
         }
-//        if (model.Thumbnail.count>3) {
-//            cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m*2+10);
-//        }else{
-            cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
-//        }
+        cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
         
     }else{
         cell.mView_img.hidden = YES;
@@ -607,12 +575,9 @@
     ClassModel *ClassModel;
     if (indexPath.section == 0) {
         if (self.mInt_index == 0) {
-//            ClassTopViewController *topView = [[ClassTopViewController alloc] init];
-//            [utils pushViewController:topView animated:YES];
-//            return;
             ClassModel = [self.mArr_unitTop objectAtIndex:indexPath.row];
         }else if (self.mInt_index == 1){
-            
+            ClassModel = [self.mArr_classTop objectAtIndex:indexPath.row];
         }else if (self.mInt_index == 2){
             ClassModel = [self.mArr_local objectAtIndex:indexPath.row];
         }else if (self.mInt_index == 3){
@@ -668,6 +633,11 @@
 //点击senction中的更多
 -(void)clickMoreUnit{
     ClassTopViewController *topView = [[ClassTopViewController alloc] init];
+    if (self.mInt_index ==0) {
+        topView.mInt_unit_class = 1;
+    }else{
+        topView.mInt_unit_class = 2;
+    }
     [utils pushViewController:topView animated:YES];
 }
 
@@ -857,6 +827,17 @@
     browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
     browser.photos = photos; // 设置所有的图片
     [browser show];
+}
+//当切换账号时，将此界面的所有数组清空
+-(void)clearArray{
+    [self.mArr_attention removeAllObjects];
+    [self.mArr_attentionTop removeAllObjects];
+    [self.mArr_class removeAllObjects];
+    [self.mArr_classTop removeAllObjects];
+    [self.mArr_local removeAllObjects];
+    [self.mArr_localTop removeAllObjects];
+    [self.mArr_sum removeAllObjects];
+    [self.mArr_sumTop removeAllObjects];
 }
 
 @end
