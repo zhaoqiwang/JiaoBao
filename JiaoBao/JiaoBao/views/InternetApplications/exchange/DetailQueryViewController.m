@@ -81,6 +81,14 @@
     {
             UILabel *cellLabel = [cell.labelCollection objectAtIndex:i];
         cellLabel.text = [dic objectForKey:[self.keyArr objectAtIndex:i]];
+        if(i==cell.labelCollection.count-1)
+        {
+            UILabel *cellLabel = [cell.labelCollection objectAtIndex:i];
+            cellLabel.text = [dic objectForKey:[self.keyArr objectAtIndex:i]];
+            NSString *dateStr = [cellLabel.text stringByReplacingOccurrencesOfString:@"0:00:00" withString:@""];
+            cellLabel.text = dateStr;
+            
+        }
         
     }
 
@@ -102,6 +110,7 @@
         cell = (DetailQueryCell*)[cellArr objectAtIndex:0];
     }
     [self configureCell:cell atIndexPath:indexPath];
+    
     return cell;
     
 }
@@ -130,6 +139,7 @@
 }
 - (void)logArr:(NSArray *)arr
 {
+    
     NSError *error;
     NSString *tempStr1 = [[arr description] stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
     NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
@@ -137,7 +147,9 @@
     NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
     NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
     NSLog(@"arr[%ld]:%@",arr.count,str);
+    
 }
+
 /*
 #pragma mark - Navigation
 
