@@ -647,6 +647,20 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     return array;
 }
 
+//取消勾选人员
+-(void)delMyUnitMember:(myUnit *)tempUnit{
+    for (int i=0; i<tempUnit.list.count; i++) {
+        UserListModel *model2 = [tempUnit.list objectAtIndex:i];
+        NSMutableArray *arr9 = model2.groupselit_selit;
+        for (int n=0; n<arr9.count; n++) {
+            groupselit_selitModel *model3 = [arr9 objectAtIndex:n];
+            if (model3.mInt_select == 1) {
+                model3.mInt_select = 0;
+            }
+        }
+    }
+}
+
 //点击发表按钮
 -(void)clickSendBtn:(UIButton *)btn{
     //检查当前网络是否可用
@@ -755,10 +769,12 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
                     if (i == 0) {
                         if (tempModel.mInt_select == 1) {
                             [array addObject:tempModel.id0];
+
                         }
                     }else if (i == 1){
                         if (tempModel.mInt_select == 1) {
                             [array1 addObject:tempModel.id0];
+
                         }
                     }else if (i == 2){
                         if (tempModel.mInt_select == 1) {
@@ -799,8 +815,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //        self.mProgressV.userInteractionEnabled = NO;
         [self.mProgressV show:YES];
         [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+
     }
-}
+    [self.mCollectionV_list reloadData];}
 
 //向转发界面传递得到的人员单位列表
 -(void)CMRevicer:(NSNotification *)noti{
@@ -944,6 +961,109 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     self.mTextV_enter.text = @"";
+    
+    //
+    if (self.mInt_where == 0) {//发送短信
+        if (self.mInt_select_send == 3) {
+            //当前单位
+            myUnit *tempUnit = self.mModel_unitList.myUnit;
+            [self delMyUnitMember:tempUnit];
+            //上级单位
+            for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+                [self delMyUnitMember:tempUnit];
+            }
+            //下级单位
+            for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.subUnits objectAtIndex:i];
+                [self delMyUnitMember:tempUnit];
+            }
+            for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+                [self delMyUnitMember:tempUnit];
+            }
+        }else{
+            //检索当前需要发送的ID
+            for (int m=0; m<self.mModel_myUnit.list.count; m++) {
+                UserListModel *model2 = [self.mModel_myUnit.list objectAtIndex:m];
+                NSMutableArray *arr9 = model2.groupselit_selit;
+                for (int n=0; n<arr9.count; n++) {
+                    groupselit_selitModel *model3 = [arr9 objectAtIndex:n];
+                    if (self.mInt_select_send == 1) {
+                        model3.mInt_select = 1;
+                    }else if (self.mInt_select_send == 2){
+                        if (model3.mInt_select == 0) {
+                            model3.mInt_select = 1;
+                        } else {
+                            model3.mInt_select = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }else if (self.mInt_where == 1){//下发通知
+        //循环遍历
+        for (int i=0; i<self.mArr_notice.count; i++) {
+            CommMsgUnitNotice *noticeModel = [self.mArr_notice objectAtIndex:i];
+            for (int a=0; a<noticeModel.selitadmintomem.count; a++) {
+                UserListModel *model = [noticeModel.selitadmintomem objectAtIndex:a];
+                for (int m=0; m<model.groupselit_selit.count; m++) {
+                    groupselit_selitModel *tempModel = [model.groupselit_selit objectAtIndex:m];
+                    if (tempModel.selit.length>0) {
+                        if (self.mInt_select_send == 1) {
+                            tempModel.mInt_select = 1;
+                        }else if (self.mInt_select_send == 2){
+                            if (tempModel.mInt_select == 0) {
+                                tempModel.mInt_select = 1;
+                            } else {
+                                tempModel.mInt_select = 0;
+                            }
+                        }else if (self.mInt_select_send == 3){
+                            if (tempModel.mInt_select == 1) {
+                                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                                [dic setValue:tempModel.flag forKey:@"flag"];
+                                [dic setValue:tempModel.selit forKey:@"selit"];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }else if (self.mInt_where == 2){//短信直通车
+        for (int i=0; i<self.mArr_SMS.count; i++) {
+            SMSTreeArrayModel *model = [self.mArr_SMS objectAtIndex:i];
+            for (int m=0; m<model.smsTree.count; m++) {
+                SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                if (self.mInt_select_send == 1) {
+                    tempModel.mInt_select = 1;
+                }else if (self.mInt_select_send == 2){
+                    if (tempModel.mInt_select == 0) {
+                        tempModel.mInt_select = 1;
+                    } else {
+                        tempModel.mInt_select = 0;
+                    }
+                }else if (self.mInt_select_send == 3){
+                    if (i == 0) {
+                        if (tempModel.mInt_select == 1) {
+                            tempModel.mInt_select = 0;
+                            
+                        }
+                    }else if (i == 1){
+                        if (tempModel.mInt_select == 1) {
+                            tempModel.mInt_select = 0;
+                            
+                        }
+                    }else if (i == 2){
+                        if (tempModel.mInt_select == 1) {
+                            tempModel.mInt_select = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    [self.mCollectionV_list reloadData];
+    
 }
 -(void)noMore{
     sleep(1);
@@ -1427,6 +1547,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }else{
             cell.mLab_name.textColor = [UIColor blackColor];
             if (smsModel.mInt_select == 0) {
+                
                 cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
             } else {
                 cell.mImgV_select.image = [UIImage imageNamed:@"forward_select2"];
