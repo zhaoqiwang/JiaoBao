@@ -81,12 +81,30 @@ static ClassHttp *classHttp = nil;
     [request startAsynchronous];
 }
 
+//我的班级文章列表                          默认第一页           默认20条           1个人发布文章，2单位动态
+-(void)classHttpAllMyClassArthList:(NSString *)page Num:(NSString *)num sectionFlag:(NSString *)flag RequestFlag:(NSString *)ReFlag{
+    NSString *urlString = [NSString stringWithFormat:@"%@Sections/AllMyClassArthList",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:page forKey:@"pageNum"];
+    [request addPostValue:num forKey:@"numPerPage"];
+    [request addPostValue:flag forKey:@"sectionFlag"];
+    request.userInfo = [NSDictionary dictionaryWithObject:ReFlag forKey:@"flag"];
+    request.tag = 4;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
     NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-    D("dataString--tag=----class--------====%ld---  %@",(long)_request.tag,dataString);
+    D("dataString--tag=----class--------====%ld---  ",(long)_request.tag);
     NSMutableDictionary *jsonDic = [dataString objectFromJSONString];
     //先对返回值做判断，是否连接超时
     NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -131,6 +149,22 @@ static ClassHttp *classHttp = nil;
         [dic1 setValue:array forKey:@"array"];
         //通知学校界面，获取到的关注数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttUnitArthListIndex" object:dic1];
+    }else if (_request.tag == 4){//我的班级文章列表
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=class==4=>>>>==%@",str);
+        NSMutableArray *array = [ParserJson_class parserJsonUnitArthListIndex:str];
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:flag forKey:@"flag"];
+        [dic1 setValue:array forKey:@"array"];
+        if ([flag intValue]==3) {//获取单位专门列表界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AllMyClassArthList3" object:dic1];
+        }else{
+            //通知学校界面，获取到的关注数据
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AllMyClassArthList" object:dic1];
+        }
+        
     }
 }
 //请求失败

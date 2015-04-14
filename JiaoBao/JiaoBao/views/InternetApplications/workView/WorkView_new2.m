@@ -69,7 +69,7 @@
         [self.mBtn_new setBackgroundImage:img_btn forState:UIControlStateNormal];
         [self.mBtn_new addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
         self.mBtn_new.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
-        [self.mBtn_new setTitle:@"拍照发布" forState:UIControlStateNormal];
+        [self.mBtn_new setTitle:@"新建事务" forState:UIControlStateNormal];
         [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self addSubview:self.mBtn_new];
         

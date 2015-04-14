@@ -67,7 +67,6 @@ CLLocationManager *locationManager;
         [dm getInstance].statusBar = 0;
     }
     if (SHOWRONGYUN == 1) {
-        
         if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
             UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
                                                                                                  |UIRemoteNotificationTypeSound

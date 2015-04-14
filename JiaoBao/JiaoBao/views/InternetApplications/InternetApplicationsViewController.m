@@ -507,7 +507,6 @@
     friends.mStr_title = @"关注空间";
     friends.mInt_flag = 2;
     [utils pushViewController:friends animated:YES];
-    
 }
 
 - (void)didReceiveMemoryWarning {

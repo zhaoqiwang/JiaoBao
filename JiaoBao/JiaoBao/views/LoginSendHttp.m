@@ -1071,7 +1071,7 @@ static LoginSendHttp *loginSendHttp = nil;
         if ([time intValue] == 0) {
              D("tag-=== 16=== 切换身份成功");
             //发送获取接收人列表请求
-//
+
             if (self.mInt_forwardFlag == 1) {//普通请求
                 [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
             }else{//短信直通车
