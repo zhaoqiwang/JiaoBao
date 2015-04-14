@@ -9,6 +9,7 @@
 #import "WorkView_new2.h"
 #import "Reachability.h"
 
+
 @implementation WorkView_new2
 @synthesize mArr_mySend,mBtn_new,mInt_flag,mInt_index,mProgressV,mTableV_list,mView_button,mArr_reply,mArr_sum,mArr_unRead,mArr_unReply;
 

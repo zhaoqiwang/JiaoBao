@@ -8,8 +8,12 @@
 
 #import "SharePostingViewController.h"
 #import "Reachability.h"
+#import "TableViewWithBlock.h"
+#import "SelectionCell.h"
 
 @interface SharePostingViewController ()
+@property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
+@property(nonatomic,assign)BOOL isOpen;//是否下拉的标志
 
 @end
 
@@ -32,6 +36,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isOpen = NO;
+    NSArray *pullArr = [NSArray arrayWithObjects:@"分享",@"展示", nil];
+    if(self.isOpen == NO)
+    {
+        self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectZero];
+    }
+    else
+    {
+    self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2)];
+    }
+   [ self.mTableV_type initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
+        return pullArr.count;
+        
+    } setCellForIndexPathBlock:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
+                SelectionCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
+                if (!cell) {
+                    cell=[[[NSBundle mainBundle]loadNibNamed:@"SelectionCell" owner:self options:nil]objectAtIndex:0];
+                    [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+                }
+                [cell.lb setText:[NSString stringWithFormat:@"%@",[pullArr objectAtIndex:indexPath.row]]];
+                return cell;
+    } setDidSelectRowBlock:^(UITableView *tableView, NSIndexPath *indexPath) {
+        [self.pullDownBtn setTitle:[pullArr objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        self.mTableV_type.frame = CGRectZero;
+        self.isOpen = NO;
+        self.mInt_section = indexPath.row;
+        
+    }];
+    [self.view addSubview:self.mTableV_type];
+    [self.mTableV_type.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.mTableV_type.layer setBorderWidth:2];
+    [self.pullDownBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.pullDownBtn.layer setBorderWidth:2];
+    
+//    self.mTableV_type = [[TableViewWithBlock alloc]initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
+//        return pullArr.count;
+//    } setCellForIndexPathBlock:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
+//        SelectionCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
+//        if (!cell) {
+//            cell=[[[NSBundle mainBundle]loadNibNamed:@"SelectionCell" owner:self options:nil]objectAtIndex:0];
+//            [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+//        }
+//        [cell.lb setText:[NSString stringWithFormat:@"%@",[pullArr objectAtIndex:indexPath.row]]];
+//        return cell;
+//
+//    } setDidSelectRowBlock:^(UITableView *tableView, NSIndexPath *indexPath) {
+//        
+//    }];
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
@@ -128,6 +180,7 @@
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
+    
     if (self.mInt_section == 0) {//分享
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mModel_unit.UnitType UnitID:self.mModel_unit.UnitID SectionFlag:@"1"];
     }else if (self.mInt_section == 1){//展示
@@ -245,4 +298,15 @@
 }
 */
 
+- (IBAction)pullAction:(id)sender {
+    if(self.isOpen == YES)
+    {
+        self.mTableV_type.frame = CGRectZero;
+    }
+    else
+    {
+        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2);
+    }
+    self.isOpen = !self.isOpen;
+}
 @end

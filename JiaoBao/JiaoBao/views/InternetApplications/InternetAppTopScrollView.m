@@ -315,7 +315,13 @@
                 mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 102){//展示
-            [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
+            if(mInt_show == 0)
+            {
+                mInt_show = 1;
+                [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
+
+                
+            }
 //            if (mInt_show == 0) {
 //                //获取所有单位
 //                [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];

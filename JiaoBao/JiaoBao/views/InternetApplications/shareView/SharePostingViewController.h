@@ -25,6 +25,8 @@
     UnitSectionMessageModel *mModel_unit;//传递过来的单位信息
     int mInt_section;//判断是来自分享0还是展示1
 }
+@property (weak, nonatomic) IBOutlet UIButton *pullDownBtn;
+- (IBAction)pullAction:(id)sender;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITextView *mTextV_content;//内容
