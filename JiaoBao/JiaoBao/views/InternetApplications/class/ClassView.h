@@ -61,4 +61,7 @@
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData;
 
+//当切换账号时，将此界面的所有数组清空
+-(void)clearArray;
+
 @end

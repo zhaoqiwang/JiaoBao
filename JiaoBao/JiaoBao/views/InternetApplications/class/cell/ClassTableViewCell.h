@@ -10,6 +10,7 @@
 #import "ClassModel.h"
 
 @protocol ClassTableViewCellDelegate;
+@protocol ClassTableViewCellClassDelegate;
 
 @interface ClassTableViewCell : UITableViewCell{
     UIImageView *mImgV_head;//单位logo
@@ -33,6 +34,7 @@
     UIImageView *mImgV_2;
     id<ClassTableViewCellDelegate> delegate;
     ClassModel *mModel_class;//
+    id<ClassTableViewCellClassDelegate> ClassDelegate;
 }
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;//单位logo
@@ -57,9 +59,13 @@
 
 @property (strong,nonatomic) id<ClassTableViewCellDelegate> delegate;
 @property (nonatomic,strong) ClassModel *mModel_class;//
+@property (strong,nonatomic) id<ClassTableViewCellClassDelegate> ClassDelegate;
 
 //给图片添加点击事件
 -(void)thumbImgClick;
+
+//给班级添加点击事件
+-(void)classLabClick;
 
 @end
 
@@ -73,3 +79,11 @@
 - (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
 
 @end
+
+@protocol ClassTableViewCellClassDelegate <NSObject>
+
+//向cell中添加图片点击手势
+- (void) ClassTableViewCellClassTapPress:(ClassTableViewCell *) topArthListCell;
+
+@end
+

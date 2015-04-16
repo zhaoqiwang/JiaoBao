@@ -121,7 +121,7 @@ static ClassHttp *classHttp = nil;
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
         [dic1 setValue:flag forKey:@"flag"];
         [dic1 setValue:array forKey:@"array"];
-        if ([flag intValue]==3) {//获取单位专门列表界面
+        if ([flag intValue]==3||[flag intValue]==4) {//获取单位专门列表界面
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex3" object:dic1];
         }else{
             //通知学校界面，获取到的单位和个人数据

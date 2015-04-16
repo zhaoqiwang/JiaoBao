@@ -14,7 +14,7 @@
 @end
 
 @implementation ClassTopViewController
-@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class;
+@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class,mStr_classID,mStr_navName,mArr_list_class;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -36,8 +36,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
+    self.mArr_list_class = [NSMutableArray array];
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"所有文章"];
+    if (self.mStr_navName.length>0) {
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
+    }else{
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"所有文章"];
+    }
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -62,8 +67,10 @@
         }else{
             [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
         }
-    } else {
-        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"2"];//单位
+    } else if(self.mInt_unit_class == 2) {
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
+    }else if (self.mInt_unit_class == 3){
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
     }
     
     [self ProgressViewLoad];
@@ -83,13 +90,20 @@
     [self.mTableV_list footerEndRefreshing];
     
     NSDictionary *dic = noti.object;
-//    NSString *flag = [dic objectForKey:@"flag"];
+    NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
+    
     //如果是刷新，将数据清除
     if (self.mInt_flag == 1) {
         [self.mArr_list removeAllObjects];
+        [self.mArr_list_class removeAllObjects];
     }
-    [self.mArr_list addObjectsFromArray:array];
+    if ([flag intValue] == 3) {
+        [self.mArr_list addObjectsFromArray:array];
+    }else{
+        [self.mArr_list_class addObjectsFromArray:array];
+    }
+    
     [self.mTableV_list reloadData];
 }
 
@@ -122,7 +136,12 @@
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.mArr_list.count;
+    if (self.mInt_unit_class == 3){
+        return self.mArr_list_class.count;
+    }else{
+        return self.mArr_list.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -130,11 +149,16 @@
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if(cell == nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] lastObject];
-        cell.frame = CGRectMake(0, 0, [dm getInstance].width, 54);
     }
-    
+    cell.tag = indexPath.row;
+    NSMutableArray *array = [NSMutableArray array];
+    if (self.mInt_unit_class == 3){
+        array = [NSMutableArray arrayWithArray:self.mArr_list_class];
+    }else{
+        array = [NSMutableArray arrayWithArray:self.mArr_list];
+    }
     //显示具体界面
-    ClassModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    ClassModel *model = [array objectAtIndex:indexPath.row];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     //文件名
     NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
@@ -152,28 +176,26 @@
     cell.mLab_name.frame = CGRectMake(62, 18, nameSize.width, cell.mLab_name.frame.size.height);
     cell.mLab_name.text = model.UserName;
     //发布单位
-    NSString *tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
+    NSString *tempUnit;
+    if (model.className.length>0) {
+        tempUnit = [NSString stringWithFormat:@"(%@)",model.className];
+    }else{
+        tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
+    }
     CGSize unitSize = [tempUnit sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, unitSize.width, cell.mLab_class.frame.size.height);
     cell.mLab_class.text = tempUnit;
+    //判断是否添加班级的点击事件
+    if (self.mInt_unit_class == 2&&model.className.length>0) {
+        cell.ClassDelegate = self;
+        [cell classLabClick];
+    }
     //标题
     //    CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_assessContent.frame = CGRectMake(62, cell.mLab_name.frame.origin.y+cell.mLab_name.frame.size.height, [dm getInstance].width-72, cell.mLab_assessContent.frame.size.height);
     cell.mLab_assessContent.text = model.Title;
     //文章logo
     CGSize contentSize;
-    //    if (model.Thumbnail.count>0) {
-    //        cell.mImgV_airPhoto.hidden = NO;
-    //        [cell.mImgV_airPhoto sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:0]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
-    //        cell.mImgV_airPhoto.frame = CGRectMake(62, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, 40, 40);
-    //        //详情
-    //        contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72-45, 99999)];
-    //        if (contentSize.height>26||model.Thumbnail.count>0) {
-    //            contentSize = CGSizeMake([dm getInstance].width-82-35, 48);
-    //            cell.mLab_content.numberOfLines = 2;
-    //        }
-    //        cell.mLab_content.frame = CGRectMake(62+45, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
-    //    }else{
     cell.mImgV_airPhoto.hidden = YES;
     //详情
     contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
@@ -186,7 +208,6 @@
         cell.mView_background.hidden = YES;
     }
     cell.mLab_content.frame = CGRectMake(62+3, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
-    //    }
     
     cell.mLab_content.text = model.Abstracts;
     
@@ -226,7 +247,6 @@
         }else{
             cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
         }
-        
     }else{
         cell.mView_img.hidden = YES;
         cell.mView_img.frame = cell.mView_background.frame;
@@ -258,7 +278,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ClassModel *ClassModel = [self.mArr_list objectAtIndex:indexPath.row];
+    NSMutableArray *array = [NSMutableArray array];
+    if (self.mInt_unit_class == 3){
+        array = [NSMutableArray arrayWithArray:self.mArr_list_class];
+    }else{
+        array = [NSMutableArray arrayWithArray:self.mArr_list];
+    }
+    ClassModel *ClassModel = [array objectAtIndex:indexPath.row];
     //转model
     TopArthListModel *model = [[TopArthListModel alloc] init];
     model.TabIDStr = ClassModel.TabIDStr;
@@ -330,8 +356,10 @@
         }else{
             [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
         }
-    } else {
+    } else if (self.mInt_unit_class == 2){
         [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
+    }else if (self.mInt_unit_class == 3){
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
     }
 }
 - (void)footerRereshing{
@@ -350,11 +378,17 @@
             }else{
                 [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
             }
-        } else {
+        } else if (self.mInt_unit_class == 2){
             int a = (int)self.mArr_list.count/20+1;
             [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
+        }else if (self.mInt_unit_class == 3){
+            
         }
         
+        [self ProgressViewLoad];
+    }else if (self.mArr_list_class.count>=20){
+        int a = (int)self.mArr_list_class.count/20+1;
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
         [self ProgressViewLoad];
     } else {
         [self loadNoMore];
@@ -373,6 +407,18 @@
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [utils popViewControllerAnimated:YES];
+}
+
+//cell中，点击班级时的回调
+-(void)ClassTableViewCellClassTapPress:(ClassTableViewCell *)topArthListCell{
+    ClassModel *model = [self.mArr_list objectAtIndex:topArthListCell.tag];
+    D("sjdlhsglfkhgilw;fghejkrhn;-===%ld,%@",(long)topArthListCell.tag,model.className);
+    //重新跳转到当前界面,显示当前班级中的所有数据
+    ClassTopViewController *topView = [[ClassTopViewController alloc] init];
+    topView.mInt_unit_class = 3;
+    topView.mStr_navName = model.className;
+    topView.mStr_classID = model.classID;
+    [utils pushViewController:topView animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
