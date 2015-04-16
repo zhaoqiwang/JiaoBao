@@ -221,7 +221,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self clickImg:(int)indexPath.row flag:1];
+    [self clickImg:(int)indexPath.row flag:2];
 }
 
 //头像点击回调

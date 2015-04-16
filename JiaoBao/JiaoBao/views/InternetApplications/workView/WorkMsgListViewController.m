@@ -55,6 +55,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
@@ -69,11 +70,18 @@
     self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+40, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     //添加表格的下拉刷新
     self.mTableV_detail.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mTableV_detail.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     if (self.mInt_flag == 1) {
         [self.mTableV_detail addHeaderWithTarget:self action:@selector(headerRereshing)];
         self.mTableV_detail.headerPullToRefreshText = @"下拉刷新";
         self.mTableV_detail.headerReleaseToRefreshText = @"松开后刷新";
         self.mTableV_detail.headerRefreshingText = @"正在刷新...";
+    }
+    else
+    {
+        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+
+        self.dropDownLabel.frame = CGRectZero;
     }
     
     //输入View坐标
@@ -420,7 +428,7 @@
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
-        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y-5, cellFloat+20, rect.origin.y+rect.size.height-15);
+        cell.mImgV_background.frame = CGRectMake(55, cell.mLab_content.frame.origin.y-5, cellFloat+15, rect.origin.y+rect.size.height-15);
         //再计算行高,看内容是否高于头像
         CGFloat lineH;
         CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
@@ -437,9 +445,12 @@
         MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
         //姓名
         cell.mLab_name.hidden = NO;
-        cell.mLab_name.frame = CGRectMake(0, 2, [dm getInstance].width-10, 15);
+        cell.mLab_name.frame = CGRectMake(0, 62, [dm getInstance].width-10, 15);
         cell.mLab_name.text = model.UserName;
         cell.mLab_name.textAlignment = NSTextAlignmentRight;
+        cell.mLab_name.font = [UIFont systemFontOfSize:12];
+
+        //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
@@ -495,7 +506,9 @@
 //        cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
         cell.mLab_line.hidden = YES;
         cell.frame = CGRectMake(0, 0, [dm getInstance].width, lineH);
+        
     }
+    cell.contentView.backgroundColor = self.view.backgroundColor;
     
     return cell;
 }
