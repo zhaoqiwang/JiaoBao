@@ -389,7 +389,7 @@
         D("contenent0-0--==%f,%f,%@",contentSize.width,contentSize.height,model.MsgContent);
         //计算宽度
         CGFloat cellFloat;
-        if (contentSize.width>tempW) {
+        if (contentSize.width<tempW) {
             cellFloat = contentSize.width;
         }else{
             cellFloat = tempW;
@@ -477,12 +477,13 @@
         CGFloat tempW = [dm getInstance].width-50-70-10;
         CGSize contentSize = [model.FeeBackMsg sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.FeeBackMsg;
+        //NSLog(@"contentSize_width = %f contentSize_width = %f",contentSize.width,contentSize.height);
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
         //计算宽度
         CGFloat cellFloat;
-        if (contentSize.width>tempW) {
-//            cellFloat = contentSize.width;
-            cellFloat = tempW;
+        if (contentSize.width<tempW) {
+            cellFloat = contentSize.width;
+            //cellFloat = tempW;
         }else{
             cellFloat = tempW;
         }
