@@ -344,10 +344,11 @@
         //按钮
         cell.mBtn_work.hidden = NO;
         cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 33, 50, 30);
-        [cell.mBtn_work setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [cell.mBtn_work setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        cell.mBtn_work.backgroundColor = [UIColor colorWithRed:5/255.0 green:164/255.0 blue:170/255.0 alpha:1];
         //将图层的边框设置为圆脚
-//        cell.mBtn_work.layer.cornerRadius = 8;
-//        cell.mBtn_work.layer.masksToBounds = YES;
+        cell.mBtn_work.layer.cornerRadius = 5;
+        cell.mBtn_work.layer.masksToBounds = YES;
         //内容
         CGFloat tempW;
         //判断是不是需要显示详情的cell
