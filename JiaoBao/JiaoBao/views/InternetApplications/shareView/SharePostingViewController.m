@@ -18,7 +18,7 @@
 @end
 
 @implementation SharePostingViewController
-@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType;
+@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu;
 
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -130,7 +130,12 @@
     self.mArr_pic = [NSMutableArray array];
     
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表文章"];
+//    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表文章"];
+    if (self.mInt_section == 0) {//分享
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表分享文章"];
+    }else if (self.mInt_section == 1){//展示
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表动态文章"];
+    }
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -145,19 +150,36 @@
     self.mTextV_content.layer.cornerRadius = 8;
     self.mTextV_content.layer.masksToBounds = YES;
     //发表按钮
-    self.mBtn_send.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
+//    self.mBtn_send.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
+    self.mBtn_send.frame = CGRectMake(10, self.mBtn_send.frame.origin.y, [dm getInstance].width-20, self.mBtn_send.frame.size.height);
     [self.mBtn_send addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.mBtn_send2.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-self.mBtn_send2.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
-    [self.mBtn_send addTarget:self action:@selector(clickPosting1:) forControlEvents:UIControlEventTouchUpInside];
+//    self.mBtn_send2.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-self.mBtn_send2.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
+//    [self.mBtn_send addTarget:self action:@selector(clickPosting1:) forControlEvents:UIControlEventTouchUpInside];
+    self.mBtn_send2.hidden = YES;
     //选择图片按钮
-    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_send2.frame.size.width*2-self.mBtn_selectPic.frame.size.width-30, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
+//    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_send2.frame.size.width-self.mBtn_selectPic.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
+    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_selectPic.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
     [self.mBtn_selectPic addTarget:self action:@selector(clickSelectPic:) forControlEvents:UIControlEventTouchUpInside];
+    //添加边框
+    self.mBtn_selectPic.layer.borderWidth = .5;
+    self.mBtn_selectPic.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
+    //将图层的边框设置为圆脚
+    self.mBtn_selectPic.layer.cornerRadius = 8;
+    self.mBtn_selectPic.layer.masksToBounds = YES;
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
 //    self.mProgressV.userInteractionEnabled = NO;
+    
+    if (self.mInt_section == 0) {//分享
+        self.mLab_fabu.text = @"发布到";
+        self.mLab_dongtai.text = @"分享空间";
+    }else if (self.mInt_section == 1){//展示
+        self.mLab_fabu.text = @"发表";
+        self.mLab_dongtai.text = @"动态";
+    }
 }
 
 //检查当前网络是否可用
@@ -194,7 +216,7 @@
 
 //点击发送按钮
 -(void)clickPosting:(UIButton *)btn{
-    self.mInt_section = 0;
+//    self.mInt_section = 0;
     [self clickPosting3];
 }
 -(void)clickPosting1:(UIButton *)btn{
