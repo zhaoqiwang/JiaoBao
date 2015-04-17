@@ -230,8 +230,11 @@
 }
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
-    self.timer = nil;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol:) userInfo:nil repeats:NO];
+//    [self.timer invalidate];
+//
+//    self.timer = nil;
+
+
     if (mInt_userSelectedChannelID == 100) {
         [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
     }else{
@@ -239,6 +242,7 @@
     }
     if (SHOWRONGYUN == 1) {
         if (mInt_userSelectedChannelID == 100) {
+ 
             if (mInt_show == 0) {
                 //获取所有单位
                 [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];
@@ -246,6 +250,7 @@
                 mInt_show = 1;
             }
         }else if (mInt_userSelectedChannelID == 101) {//事务
+            
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
 //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
             }
@@ -291,7 +296,21 @@
         }
     }else{
         if (mInt_userSelectedChannelID == 100) {//事务
-            [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+
+
+            
+            
+
+            if(self.mInt_unReadMsg == 0)
+            {
+                self.timer0 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol0:) userInfo:nil repeats:NO];
+                //[self.timer0 setFireDate:[NSDate date]];
+                //[self.timer0 setFireDate:[NSDate distantPast]];
+                [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+                self.mInt_unReadMsg = 1;
+
+                
+            }
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
 //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
             }
@@ -308,16 +327,28 @@
                 mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 101) {//分享
+
+
+
+
+
             if (mInt_share == 0) {
                 //获取同事、关注人、好友的分享文章
+                self.timer1 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol1:) userInfo:nil repeats:NO];
+                mInt_share = 1;
+                NSLog(@"mIntShare = %ld",(long)mInt_share);
+
                 [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
                 [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
-                mInt_share = 1;
             }
         }else if (mInt_userSelectedChannelID == 102){//展示
+
+
+                
+
             if(mInt_show == 0)
             {
-                mInt_show = 1;
+                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];                mInt_show = 1;
                 [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
 
                 
@@ -333,8 +364,11 @@
 //                [[InternetAppRootScrollView shareInstance].showView ProgressViewLoad];
 //            }
         }else if (mInt_userSelectedChannelID == 103){//主题
+
+
+
             if (mInt_theme == 0) {
-                mInt_theme = 1;
+                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];                mInt_theme = 1;
                 //取我关注的和我所参与的主题
                 [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
                 [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
@@ -344,14 +378,38 @@
     
 }
 
--(void)updateRequestSymbol:(id)sender
+-(void)updateRequestSymbol0:(id)sender
 {
-    self.mInt_share = 0;
-    self.mInt_show = 0;
-    self.mInt_show2 = 0;
-    self.mInt_theme = 0;
+
     self.mInt_work_mysend = 0;
     self.mInt_work_sendToMe = 0;
+    self.mInt_unReadMsg = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+}
+-(void)updateRequestSymbol1:(id)sender
+{
+    
+    mInt_share = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+
+}
+-(void)updateRequestSymbol2:(id)sender
+{
+    
+    self.mInt_show = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+}
+-(void)updateRequestSymbol3:(id)sender
+{
+    
+
+    self.mInt_theme = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+
 }
 
 @end

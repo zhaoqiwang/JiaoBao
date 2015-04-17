@@ -55,6 +55,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
@@ -66,14 +67,21 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+40, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     //添加表格的下拉刷新
     self.mTableV_detail.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mTableV_detail.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     if (self.mInt_flag == 1) {
         [self.mTableV_detail addHeaderWithTarget:self action:@selector(headerRereshing)];
         self.mTableV_detail.headerPullToRefreshText = @"下拉刷新";
         self.mTableV_detail.headerReleaseToRefreshText = @"松开后刷新";
         self.mTableV_detail.headerRefreshingText = @"正在刷新...";
+    }
+    else
+    {
+        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+
+        self.dropDownLabel.frame = CGRectZero;
     }
     
     //输入View坐标
@@ -100,6 +108,7 @@
     [self.mTableV_detail footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSMutableArray *tempArr = [dic valueForKey:@"array"];
+    [utils logArr:tempArr];
     if (self.mInt_page > 1) {
         if (tempArr.count>0) {
             [self.mArr_feeback addObjectsFromArray:tempArr];
@@ -115,6 +124,9 @@
         self.mTableV_detail.footerRefreshingText = @"正在加载...";
     }else{
         [self.mTableV_detail removeFooter];
+//        self.dropDownBtn.frame = CGRectZero;
+//        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+        
     }
     //加入内容列表为空，加入
     if (self.mArr_msg.count==0) {
@@ -146,6 +158,8 @@
     SendToMeUserListModel *model = noti.object;
     if (model.LastID.length==0) {
         [self.mTableV_detail removeHeader];
+        [self.dropDownLabel setFrame:CGRectZero];
+        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     }
     self.mStr_lastID = model.LastID;
     
@@ -315,12 +329,12 @@
             //获取头像
             [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
         }
-        cell.mImgV_head.frame = CGRectMake(10, 20, 40, 40);
+        cell.mImgV_head.frame = CGRectMake(10, 33, 40, 40);
         //姓名
         cell.mLab_name.hidden = YES;
         //时间
         CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-        cell.mLab_time.frame = CGRectMake(([dm getInstance].width-timeSize.width-20)/2, 2, timeSize.width+20, timeSize.height);
+        cell.mLab_time.frame = CGRectMake(([dm getInstance].width-timeSize.width-20)/2, 0, 70, 20);
         cell.mLab_time.text = model.RecDate;
         cell.mLab_time.textColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1];
         cell.mLab_time.backgroundColor = [UIColor colorWithRed:203/255.0 green:203/255.0 blue:203/255.0 alpha:1];
@@ -329,11 +343,11 @@
         cell.mLab_time.layer.masksToBounds = YES;
         //按钮
         cell.mBtn_work.hidden = NO;
-        cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 25, 50, 30);
+        cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 33, 50, 30);
         [cell.mBtn_work setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         //将图层的边框设置为圆脚
-        cell.mBtn_work.layer.cornerRadius = 8;
-        cell.mBtn_work.layer.masksToBounds = YES;
+//        cell.mBtn_work.layer.cornerRadius = 8;
+//        cell.mBtn_work.layer.masksToBounds = YES;
         //内容
         CGFloat tempW;
         //判断是不是需要显示详情的cell
@@ -375,7 +389,7 @@
         D("contenent0-0--==%f,%f,%@",contentSize.width,contentSize.height,model.MsgContent);
         //计算宽度
         CGFloat cellFloat;
-        if (contentSize.width>tempW) {
+        if (contentSize.width<tempW) {
             cellFloat = contentSize.width;
         }else{
             cellFloat = tempW;
@@ -383,7 +397,7 @@
         //计算行数
 //        cell.mLab_content.numberOfLines = contentSize.width/tempW;
         [cell.mLab_content setNumberOfLines:0];
-        cell.mLab_content.frame = CGRectMake(65, cell.mLab_time.frame.origin.y+20+5, cellFloat, contentSize.height);
+        cell.mLab_content.frame = CGRectMake(65, 38, cellFloat, contentSize.height);
         D("lsjfljglsj-====%@,%ld,%f,%f",NSStringFromCGRect(cell.mLab_content.frame),(long)cell.mLab_content.numberOfLines,contentSize.width,tempW);
         CGRect rect = cell.mLab_content.frame;
         if (self.mArr_msg.count == indexPath.row+1) {
@@ -414,7 +428,7 @@
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
-        cell.mImgV_background.frame = CGRectMake(50, cell.mLab_content.frame.origin.y-5, cellFloat+20, rect.origin.y+rect.size.height-15);
+        cell.mImgV_background.frame = CGRectMake(55, cell.mLab_content.frame.origin.y-5, cellFloat+15, rect.origin.y+rect.size.height-15);
         //再计算行高,看内容是否高于头像
         CGFloat lineH;
         CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
@@ -431,9 +445,12 @@
         MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
         //姓名
         cell.mLab_name.hidden = NO;
-        cell.mLab_name.frame = CGRectMake(0, 2, [dm getInstance].width-10, 15);
+        cell.mLab_name.frame = CGRectMake(0, 62, [dm getInstance].width-10, 15);
         cell.mLab_name.text = model.UserName;
         cell.mLab_name.textAlignment = NSTextAlignmentRight;
+        cell.mLab_name.font = [UIFont systemFontOfSize:12];
+
+        //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
@@ -460,12 +477,13 @@
         CGFloat tempW = [dm getInstance].width-50-70-10;
         CGSize contentSize = [model.FeeBackMsg sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 2000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.FeeBackMsg;
+        //NSLog(@"contentSize_width = %f contentSize_width = %f",contentSize.width,contentSize.height);
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
         //计算宽度
         CGFloat cellFloat;
-        if (contentSize.width>tempW) {
-//            cellFloat = contentSize.width;
-            cellFloat = tempW;
+        if (contentSize.width<tempW) {
+            cellFloat = contentSize.width;
+            //cellFloat = tempW;
         }else{
             cellFloat = tempW;
         }
@@ -475,7 +493,7 @@
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workDetail"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workDetail"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
-        cell.mImgV_background.frame = CGRectMake([dm getInstance].width-cellFloat-65, cell.mLab_content.frame.origin.y-5, cellFloat+10, cell.mLab_content.frame.size.height+10);
+        cell.mImgV_background.frame = CGRectMake([dm getInstance].width-cellFloat-65, cell.mLab_content.frame.origin.y-5, cellFloat+10, cell.mLab_content.frame.size.height+20);
         //再计算行高,看内容是否高于头像
         CGFloat lineH;
         CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
@@ -489,7 +507,9 @@
 //        cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
         cell.mLab_line.hidden = YES;
         cell.frame = CGRectMake(0, 0, [dm getInstance].width, lineH);
+        
     }
+    cell.contentView.backgroundColor = self.view.backgroundColor;
     
     return cell;
 }
@@ -525,7 +545,7 @@
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
     if (cell) {
-        return cell.frame.size.height;
+        return cell.frame.size.height+17;
     }
     return 0;
 }

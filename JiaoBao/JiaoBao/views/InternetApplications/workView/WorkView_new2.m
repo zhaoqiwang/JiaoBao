@@ -33,7 +33,7 @@
         
         //放四个按钮
         self.mView_button = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 42)];
-        self.mView_button.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+        self.mView_button.backgroundColor = [UIColor colorWithRed:240/255.0 green:239/255.0 blue:247/255.0 alpha:1];
         [self addSubview:self.mView_button];
         
         //加载按钮
@@ -178,7 +178,7 @@
         //获取头像
         [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
     }
-    cell.mImgV_head.frame = CGRectMake(10, 7, 40, 40);
+    cell.mImgV_head.frame = CGRectMake(10, 10, 45, 45);
     cell.delegate = self;
     cell.tag = indexPath.row;
     //头像点击事件
@@ -190,8 +190,8 @@
     NSString *name;
     name = model.UserName;
 
-    CGSize nameSize = [[NSString stringWithFormat:@"%@",name] sizeWithFont:[UIFont systemFontOfSize:15]];
-    cell.mLab_name.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, 10, nameSize.width, 20);
+    CGSize nameSize = [[NSString stringWithFormat:@"%@",name] sizeWithFont:[UIFont systemFontOfSize:16]];
+    cell.mLab_name.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, 15, nameSize.width, 20);
     cell.mLab_name.text = name;
     
     //单位
@@ -204,14 +204,16 @@
     cell.mLab_unit.text = unitName;
     //时间
     CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-    cell.mLab_time.frame = CGRectMake([dm getInstance].width-timeSize.width-10, 10, timeSize.width, 20);
+    cell.mLab_time.frame = CGRectMake([dm getInstance].width-timeSize.width-12, 15, timeSize.width, 20);
+    cell.mLab_time.textColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
     cell.mLab_time.text = model.RecDate;
+    
     //内容
     cell.mLab_content.text = model.MsgContent;
-    cell.mLab_content.frame = CGRectMake(cell.mLab_name.frame.origin.x, cell.mLab_name.frame.origin.y+20, [dm getInstance].width-cell.mImgV_head.frame.size.width-30, 20);
+    cell.mLab_content.frame = CGRectMake(cell.mLab_name.frame.origin.x, cell.mLab_name.frame.origin.y+25, [dm getInstance].width-cell.mImgV_head.frame.size.width-30, 20);
     //分割线
-    cell.mLab_line.frame = CGRectMake(0, 53, [dm getInstance].width, .5);
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, 54);
+    cell.mLab_line.frame = CGRectMake(0, 64, [dm getInstance].width, .5);
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, 65);
     
     return cell;
 }
@@ -250,6 +252,7 @@
         work.mInt_our = 2;
     }
     work.mInt_flag = flag;
+
     work.mStr_tableID = unReadMsgModel.TabIDStr;
     [utils pushViewController:work animated:YES];
 }
