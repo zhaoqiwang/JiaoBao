@@ -10,7 +10,7 @@
 #import "ClassModel.h"
 
 @protocol ClassTableViewCellDelegate;
-@protocol ClassTableViewCellClassDelegate;
+@protocol ClassTableViewCellClassDelegate,ClassTableViewCellHeadImgDelegate;
 
 @interface ClassTableViewCell : UITableViewCell{
     UIImageView *mImgV_head;//单位logo
@@ -35,6 +35,7 @@
     id<ClassTableViewCellDelegate> delegate;
     ClassModel *mModel_class;//
     id<ClassTableViewCellClassDelegate> ClassDelegate;
+    id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
 }
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;//单位logo
@@ -60,6 +61,7 @@
 @property (strong,nonatomic) id<ClassTableViewCellDelegate> delegate;
 @property (nonatomic,strong) ClassModel *mModel_class;//
 @property (strong,nonatomic) id<ClassTableViewCellClassDelegate> ClassDelegate;
+@property (strong,nonatomic) id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
 
 //给图片添加点击事件
 -(void)thumbImgClick;
@@ -67,11 +69,14 @@
 //给班级添加点击事件
 -(void)classLabClick;
 
+//给头像添加点击事件
+-(void)headImgClick;
+
 @end
 
+//向cell中添加图片点击手势
 @protocol ClassTableViewCellDelegate <NSObject>
 
-//向cell中添加图片点击手势
 - (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
 
 - (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
@@ -80,10 +85,17 @@
 
 @end
 
+//向cell班级显示中添加点击手势
 @protocol ClassTableViewCellClassDelegate <NSObject>
 
-//向cell中添加图片点击手势
 - (void) ClassTableViewCellClassTapPress:(ClassTableViewCell *) topArthListCell;
+
+@end
+
+//向cell头像显示中添加点击手势
+@protocol ClassTableViewCellHeadImgDelegate <NSObject>
+
+- (void) ClassTableViewCellHeadImgTapPress:(ClassTableViewCell *) topArthListCell;
 
 @end
 

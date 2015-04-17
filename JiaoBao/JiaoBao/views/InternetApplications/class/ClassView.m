@@ -74,7 +74,7 @@
         }
         //列表
 //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
-        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44-51)];
+        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
         self.mTableV_list.delegate=self;
         self.mTableV_list.dataSource=self;
 //        self.mTableV_list.scrollEnabled = NO;
@@ -88,14 +88,14 @@
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         //新建按钮
-        self.mBtn_photo = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
-        [self.mBtn_photo setBackgroundImage:img_btn forState:UIControlStateNormal];
-        [self.mBtn_photo addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
-        self.mBtn_photo.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
-        [self.mBtn_photo setTitle:@"拍照发布" forState:UIControlStateNormal];
-        [self.mBtn_photo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self addSubview:self.mBtn_photo];
+//        self.mBtn_photo = [UIButton buttonWithType:UIButtonTypeCustom];
+//        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
+//        [self.mBtn_photo setBackgroundImage:img_btn forState:UIControlStateNormal];
+//        [self.mBtn_photo addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
+//        self.mBtn_photo.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
+//        [self.mBtn_photo setTitle:@"拍照发布" forState:UIControlStateNormal];
+//        [self.mBtn_photo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [self addSubview:self.mBtn_photo];
         
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
         [self addSubview:self.mProgressV];
@@ -425,7 +425,7 @@
     //文件名
     NSString *imgPath;
     if ([model.flag intValue] ==1) {//展示
-        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png",[dm getInstance].UID]];
+        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
     }else{
         imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
     }
@@ -436,7 +436,7 @@
         [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
         //获取头像
         if ([model.flag intValue] ==1) {//展示
-             [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Size:@""];
+             [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%@",model.unitId] Size:@""];
         }else{
             [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
         }
@@ -459,7 +459,7 @@
         if (self.mInt_index == 0||self.mInt_index == 1) {
             cell.mLab_class.hidden = YES;
         }else{
-            tempUnit = [NSString stringWithFormat:@"(动态)"];
+            tempUnit = [NSString stringWithFormat:@"[动态]"];
         }
     }else{
         if (model.className.length>0) {
@@ -492,7 +492,6 @@
         cell.mView_background.hidden = YES;
     }
     cell.mLab_content.frame = CGRectMake(62+3, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
-    
     cell.mLab_content.text = model.Abstracts;
     
     //添加图片点击事件
@@ -500,6 +499,9 @@
     cell.mModel_class = model;
     cell.delegate = self;
     cell.tag = indexPath.row;
+    //添加头像点击事件
+    [cell headImgClick];
+    cell.headImgDelegate = self;
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+4);
     //是否有文章图片需要显示
@@ -635,8 +637,10 @@
     ClassTopViewController *topView = [[ClassTopViewController alloc] init];
     if (self.mInt_index ==0) {
         topView.mInt_unit_class = 1;
+        topView.mStr_navName = @"单位动态";
     }else{
         topView.mInt_unit_class = 2;
+        topView.mStr_navName = @"班级动态";
     }
     [utils pushViewController:topView animated:YES];
 }
@@ -766,7 +770,6 @@
 
 //向cell中添加图片点击手势
 - (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
-    D("0dianjid的toucell.tag===%ld,%lu",(long)topArthListCell.tag,(unsigned long)topArthListCell.mModel_class.Thumbnail.count);
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
@@ -787,7 +790,6 @@
 }
 
 - (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
-    D("1dianjid的toucell.tag===%ld,%lu",(long)topArthListCell.tag,(unsigned long)topArthListCell.mModel_class.Thumbnail.count);
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
@@ -809,7 +811,6 @@
 
 
 - (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
-    D("2dianjid的toucell.tag===%ld,%lu",(long)topArthListCell.tag,(unsigned long)topArthListCell.mModel_class.Thumbnail.count);
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
@@ -828,6 +829,34 @@
     browser.photos = photos; // 设置所有的图片
     [browser show];
 }
+-(void)ClassTableViewCellHeadImgTapPress:(ClassTableViewCell *)topArthListCell{
+    ClassModel *ClassModel = topArthListCell.mModel_class;
+    if ([ClassModel.flag intValue] ==1) {//展示
+        UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+        model.UnitID = ClassModel.unitId;
+        if (ClassModel.className.length>0) {
+            model.UnitName = ClassModel.className;
+        }else{
+            model.UnitName = ClassModel.UnitName;
+        }
+        
+        model.UnitType = ClassModel.UnitType;
+        UnitSpaceViewController *space = [[UnitSpaceViewController alloc] init];
+        space.mModel_unit = model;
+        [utils pushViewController:space animated:YES];
+    }else{//分享
+        //生成个人信息
+        UserInfoByUnitIDModel *userModel = [[UserInfoByUnitIDModel alloc] init];
+        userModel.UserID = ClassModel.JiaoBaoHao;
+        userModel.UserName = ClassModel.UserName;
+        userModel.AccID = ClassModel.JiaoBaoHao;
+        
+        PersonalSpaceViewController *personal = [[PersonalSpaceViewController alloc] init];
+        personal.mModel_personal = userModel;
+        [utils pushViewController:personal animated:YES];
+    }
+}
+
 //当切换账号时，将此界面的所有数组清空
 -(void)clearArray{
     [self.mArr_attention removeAllObjects];

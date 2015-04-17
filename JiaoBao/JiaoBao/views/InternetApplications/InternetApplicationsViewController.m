@@ -283,6 +283,11 @@
                         target:self
                         action:@selector(pushMenuItem3:)],
           
+          [KxMenuItem menuItem:@"发表文章"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem4:)],
+          
           ];
         
         [KxMenu showMenuInView:self.view
@@ -448,7 +453,6 @@
     check.mTableV_left = self.mTableV_left;
     check.mTableV_right = self.mTableV_right;
     [utils pushViewController:check animated:YES];
-    
 }
 
 - (void) pushMenuItemSchedule:(id)sender{
@@ -485,6 +489,26 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegisterView" object:nil];
     [Nav_internetAppView getInstance].mLab_name.text = @"";
     [utils pushViewController:mRegister_view animated:NO];
+}
+
+//发表文章
+- (void) pushMenuItem4:(id)sender{
+    self.mView_all.hidden = NO;
+    self.mTableV_left.hidden = NO;
+    self.mTableV_right.hidden = NO;
+    NSLog(@"%@",self.mView_all);
+    NSLog(@"%d",self.mView_all.hidden);
+    //self.mView_all.backgroundColor = [UIColor redColor];
+    
+    UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+    model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+    SharePostingViewController *posting = [[SharePostingViewController alloc] init];
+    posting.mModel_unit = model;
+    posting.mInt_section = 0;
+    posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+    posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    [utils pushViewController:posting animated:YES];
 }
 
 //右上角+，分享

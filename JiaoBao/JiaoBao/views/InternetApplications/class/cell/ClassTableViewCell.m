@@ -9,7 +9,7 @@
 #import "ClassTableViewCell.h"
 
 @implementation ClassTableViewCell
-@synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate;
+@synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate,headImgDelegate;
 
 - (void)awakeFromNib {
     // Initialization code
@@ -58,6 +58,17 @@
 
 -(void)classLabClick:(UIGestureRecognizer *)gest{
     [ClassDelegate ClassTableViewCellClassTapPress:self];
+}
+
+//给头像添加点击事件
+-(void)headImgClick{
+    self.mImgV_head.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headImgClick:)];
+    [self.mImgV_head addGestureRecognizer:tap];
+}
+
+-(void)headImgClick:(UIGestureRecognizer *)gest{
+    [headImgDelegate ClassTableViewCellHeadImgTapPress:self];
 }
 
 @end

@@ -17,8 +17,9 @@
 #import "SharePostingViewController.h"
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
+#import "UnitSpaceViewController.h"
 
-@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate>{
+@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate>{
     UIView *mView_button;//放四个按钮
     UITableView *mTableV_list;//表格
     NSMutableArray *mArr_unit;//本单位

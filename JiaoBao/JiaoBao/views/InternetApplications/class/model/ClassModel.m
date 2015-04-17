@@ -9,7 +9,7 @@
 #import "ClassModel.h"
 
 @implementation ClassModel
-@synthesize TabIDStr,ClickCount,Context,JiaoBaoHao,LikeCount,RecDate,Source,StarJson,State,Title,Abstracts,Thumbnail,ViewCount,SectionID,FeeBackCount,UserName,UnitName,flag,className,classID;
+@synthesize TabIDStr,ClickCount,Context,JiaoBaoHao,LikeCount,RecDate,Source,StarJson,State,Title,Abstracts,Thumbnail,ViewCount,SectionID,FeeBackCount,UserName,UnitName,flag,className,classID,unitId,UnitType;
 
 -(id)init{
     self.Thumbnail = [NSMutableArray array];
@@ -32,6 +32,8 @@
     self.flag = @"";
     self.className = @"";
     self.classID = @"";
+    self.UnitType = @"";
+    self.unitId = @"";
     return self;
 }
 
