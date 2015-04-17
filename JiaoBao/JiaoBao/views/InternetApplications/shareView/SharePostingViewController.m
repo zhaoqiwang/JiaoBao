@@ -321,10 +321,26 @@
             }
         }
         // 跳转到相机或相册页面
+//        MHImagePickerMutilSelector* imagePickerMutilSelector=[MHImagePickerMutilSelector standardSelector];//自动释放
+//        imagePickerMutilSelector.delegate=self;//设置代理
+//        
+//        UIImagePickerController* picker=[[UIImagePickerController alloc] init];
+//        picker.delegate=imagePickerMutilSelector;//将UIImagePicker的代理指向到imagePickerMutilSelector
+//        [picker setAllowsEditing:NO];
+//        picker.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+//        picker.modalTransitionStyle= UIModalTransitionStyleCoverVertical;
+//        picker.navigationController.delegate=imagePickerMutilSelector;//将UIImagePicker的导航代理指向到imagePickerMutilSelector
+//        
+//        imagePickerMutilSelector.imagePicker=picker;//使imagePickerMutilSelector得知其控制的UIImagePicker实例，为释放时需要。
+//        
+//        [self presentModalViewController:picker animated:YES];
+        
+
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
         imagePickerController.delegate = self;
         imagePickerController.allowsEditing = YES;
         imagePickerController.sourceType = sourceType;
+        
         
         [self presentViewController:imagePickerController animated:YES completion:^{}];
     }
@@ -344,6 +360,11 @@
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+}
+-(void)imagePickerMutilSelectorDidGetImages:(NSArray *)imageArray
+{
+    NSLog(@"%ld",imageArray.count);
+//    importItems=[[NSMutableArrayalloc] initWithArray:imageArray copyItems:YES];
 }
 
 //- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{

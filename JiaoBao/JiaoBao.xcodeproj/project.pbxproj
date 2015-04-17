@@ -634,6 +634,7 @@
 		F71803431AB3C71A00E6167F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718033F1AB3C71A00E6167F /* SVIndefiniteAnimatedView.m */; };
 		F71803441AB3C71A00E6167F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F71803401AB3C71A00E6167F /* SVProgressHUD.bundle */; };
 		F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F71803421AB3C71A00E6167F /* SVProgressHUD.m */; };
+		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
@@ -1572,6 +1573,8 @@
 		F71803401AB3C71A00E6167F /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = Common/SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
 		F71803411AB3C71A00E6167F /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = Common/SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		F71803421AB3C71A00E6167F /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = Common/SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
+		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
+		F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHImagePickerMutilSelector.m; path = Common/MHImagePick/MHImagePickerMutilSelector.m; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -2310,6 +2313,7 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F72D74B41AE0E92100189057 /* MHImagePick */,
 				F79D84451ABD4A0900897477 /* BaiduSDK */,
 				F71803351AB3C5E400E6167F /* SVProgressHUD */,
 				F71803081AB3C42900E6167F /* JTCalendar */,
@@ -3182,6 +3186,15 @@
 			name = SVProgressHUD;
 			sourceTree = "<group>";
 		};
+		F72D74B41AE0E92100189057 /* MHImagePick */ = {
+			isa = PBXGroup;
+			children = (
+				F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */,
+				F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */,
+			);
+			name = MHImagePick;
+			sourceTree = "<group>";
+		};
 		F79D84451ABD4A0900897477 /* BaiduSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -3956,6 +3969,7 @@
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,
 				A725E4331A53F40900957EAE /* MyFriendsGroupsModel.m in Sources */,
+				F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */,
 				A755E6B319F25B9000BBDF3D /* dm.m in Sources */,
 				A72B58251A3D7D5C004D8920 /* UnitSpaceArthListViewController.m in Sources */,
 				A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */,
