@@ -338,7 +338,9 @@
 
 
 
-            if (mInt_share == 0) {
+            if (mInt_show == 0) {
+                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];                mInt_show = 1;
+                [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
                 //获取同事、关注人、好友的分享文章
 //                self.timer1 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol1:) userInfo:nil repeats:NO];
 //                mInt_share = 1;
@@ -352,10 +354,14 @@
 
                 
 
-            if(mInt_show == 0)
+            if(mInt_theme == 0)
             {
-                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];                mInt_show = 1;
-                [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
+                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];                mInt_theme = 1;
+                //取我关注的和我所参与的主题
+                [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
+                [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
+//                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];                mInt_show = 1;
+//                [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
 
                 
             }
