@@ -29,7 +29,7 @@
         if (SHOWRONGYUN == 1) {
             self.contentSize = CGSizeMake([dm getInstance].width*5, [dm getInstance].height-43-[dm getInstance].statusBar-48);
         }else{
-            self.contentSize = CGSizeMake([dm getInstance].width*4, [dm getInstance].height-43-[dm getInstance].statusBar-48);
+            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-48);
         }
         
         self.pagingEnabled = YES;
@@ -64,15 +64,15 @@
             self.workView = [[WorkView_new2 alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.workView];
             //添加分享
-            self.shareView = [[ShareViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.shareView];
+//            self.shareView = [[ShareViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
+//            [self addSubview:self.shareView];
             //添加展示
 //            self.showView = [[ShowViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
 //            [self addSubview:self.showView];
-            self.classView = [[ClassView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+            self.classView = [[ClassView alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.classView];
             //主题
-            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
+            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.themeView];
         }
     }

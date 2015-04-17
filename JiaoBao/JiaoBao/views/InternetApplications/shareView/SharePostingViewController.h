@@ -28,6 +28,8 @@
     int mInt_section;//判断是来自分享0还是展示1
     NSString *mStr_uType;//类型
     NSString *mStr_unitID;//单位ID
+    UILabel *mLab_fabu;//发布lab
+    UILabel *mLab_dongtai;//动态lab
 }
 @property (weak, nonatomic) IBOutlet UIButton *pullDownBtn;
 - (IBAction)pullAction:(id)sender;
@@ -45,5 +47,7 @@
 @property (nonatomic,assign) int mInt_section;//判断是来自分享0还是展示1
 @property (nonatomic,strong) NSString *mStr_uType;//类型
 @property (nonatomic,strong) NSString *mStr_unitID;//单位ID
+@property (nonatomic,strong) IBOutlet UILabel *mLab_fabu;//发布lab
+@property (nonatomic,strong) IBOutlet UILabel *mLab_dongtai;//动态lab
 
 @end

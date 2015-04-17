@@ -57,7 +57,8 @@
             self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
+//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
         }
         
@@ -81,7 +82,6 @@
     [self addSubview:tempLab];
     
     for (int i = 0; i < [self.self.mArr_name count]; i++) {
-        
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
         [button setTag:i+100];
@@ -95,8 +95,14 @@
         [button setTitleColor:[UIColor colorWithRed:91/255.0 green:178/255.0 blue:57/255.0 alpha:1] forState:UIControlStateSelected];
         [button setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
         //设置标题位置
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+1]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+1]] forState:UIControlStateSelected];
+        if (i>=1) {
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+2]] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+2]] forState:UIControlStateSelected];
+        }else{
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+1]] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+1]] forState:UIControlStateSelected];
+        }
+        
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
         //    在UIButton中有三个对EdgeInsets的设置：ContentEdgeInsets、titleEdgeInsets、imageEdgeInsets
@@ -267,12 +273,12 @@
                 mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 102) {//分享
-            if (mInt_share == 0) {
-                //获取同事、关注人、好友的分享文章
-                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
-                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
-                mInt_share = 1;
-            }
+//            if (mInt_share == 0) {
+//                //获取同事、关注人、好友的分享文章
+//                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
+//                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
+//                mInt_share = 1;
+//            }
         }else if (mInt_userSelectedChannelID == 103){
             [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
             //展示
@@ -334,12 +340,12 @@
 
             if (mInt_share == 0) {
                 //获取同事、关注人、好友的分享文章
-                self.timer1 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol1:) userInfo:nil repeats:NO];
-                mInt_share = 1;
-                NSLog(@"mIntShare = %ld",(long)mInt_share);
-
-                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
-                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
+//                self.timer1 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol1:) userInfo:nil repeats:NO];
+//                mInt_share = 1;
+//                NSLog(@"mIntShare = %ld",(long)mInt_share);
+//
+//                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
+//                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
             }
         }else if (mInt_userSelectedChannelID == 102){//展示
 

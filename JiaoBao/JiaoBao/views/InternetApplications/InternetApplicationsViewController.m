@@ -283,10 +283,14 @@
                         target:self
                         action:@selector(pushMenuItem3:)],
           
-          [KxMenuItem menuItem:@"发表文章"
+          [KxMenuItem menuItem:@"发表动态"
                          image:[UIImage imageNamed:@"appNav_changeUser"]
                         target:self
                         action:@selector(pushMenuItem4:)],
+          [KxMenuItem menuItem:@"发表分享"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem5:)],
           
           ];
         
@@ -491,11 +495,31 @@
     [utils pushViewController:mRegister_view animated:NO];
 }
 
-//发表文章
+//发表文章动态
 - (void) pushMenuItem4:(id)sender{
-    self.mView_all.hidden = NO;
-    self.mTableV_left.hidden = NO;
-    self.mTableV_right.hidden = NO;
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
+    NSLog(@"%@",self.mView_all);
+    NSLog(@"%d",self.mView_all.hidden);
+    //self.mView_all.backgroundColor = [UIColor redColor];
+    
+    UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+    model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+    SharePostingViewController *posting = [[SharePostingViewController alloc] init];
+    posting.mModel_unit = model;
+    posting.mInt_section = 1;
+    posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+    posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    [utils pushViewController:posting animated:YES];
+}
+
+//发表文章分享
+- (void) pushMenuItem5:(id)sender{
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
     NSLog(@"%@",self.mView_all);
     NSLog(@"%d",self.mView_all.hidden);
     //self.mView_all.backgroundColor = [UIColor redColor];
