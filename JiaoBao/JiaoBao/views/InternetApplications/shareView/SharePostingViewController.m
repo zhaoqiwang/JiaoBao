@@ -18,7 +18,7 @@
 @end
 
 @implementation SharePostingViewController
-@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section;
+@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType;
 
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -37,7 +37,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isOpen = NO;
-    NSArray *pullArr = [NSArray arrayWithObjects:@"分享",@"展示", nil];
+//    NSArray *pullArr = [NSArray arrayWithObjects:@"分享",@"展示", nil];
+    NSMutableArray *pullArr = [NSMutableArray array];
+//    Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
+//    if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
+//        return idenModel.UserUnits.count;
+//    }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
+//        return idenModel.UserClasses.count;
+//    }
+    for (int i=0; i<[dm getInstance].identity.count; i++) {
+        Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
+            for (int a=0; a<idenModel.UserUnits.count; a++) {
+                Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:a];
+                NSString *str = [NSString stringWithFormat:@"%@-%@",idenModel.RoleIdName,userUnitsModel.UnitName];
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                [dic setValue:idenModel.RoleIdentity forKey:@"type"];
+                [dic setValue:userUnitsModel.UnitID forKey:@"unitID"];
+                [dic setValue:str forKey:@"name"];
+                [pullArr addObject:dic];
+            }
+        }
+        if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
+            for (int a=0; a<idenModel.UserClasses.count; a++) {
+                Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:a];
+                NSString *str = [NSString stringWithFormat:@"%@-%@",idenModel.RoleIdName,userUnitsModel.ClassName];
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                [dic setValue:idenModel.RoleIdentity forKey:@"type"];
+                [dic setValue:userUnitsModel.ClassID forKey:@"unitID"];
+                [dic setValue:str forKey:@"name"];
+                [pullArr addObject:dic];
+            }
+        }
+    }
+    
+    [self.pullDownBtn setTitle:[dm getInstance].mStr_unit forState:UIControlStateNormal];
     if(self.isOpen == NO)
     {
         self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectZero];
@@ -55,14 +89,18 @@
                     cell=[[[NSBundle mainBundle]loadNibNamed:@"SelectionCell" owner:self options:nil]objectAtIndex:0];
                     [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
                 }
-                [cell.lb setText:[NSString stringWithFormat:@"%@",[pullArr objectAtIndex:indexPath.row]]];
+        NSString *name = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
+//                [cell.lb setText:[NSString stringWithFormat:@"%@",[pullArr objectAtIndex:indexPath.row]]];
+         [cell.lb setText:[NSString stringWithFormat:@"%@",name]];
                 return cell;
     } setDidSelectRowBlock:^(UITableView *tableView, NSIndexPath *indexPath) {
-        [self.pullDownBtn setTitle:[pullArr objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        NSString *name = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
+        [self.pullDownBtn setTitle:name forState:UIControlStateNormal];
+        self.mStr_unitID = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"unitID"];
+        self.mStr_uType = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"type"];
         self.mTableV_type.frame = CGRectZero;
         self.isOpen = NO;
-        self.mInt_section = indexPath.row;
-        
+        self.mInt_section = (int)indexPath.row;
     }];
     [self.view addSubview:self.mTableV_type];
     [self.mTableV_type.layer setBorderColor:[UIColor lightGrayColor].CGColor];
@@ -107,10 +145,13 @@
     self.mTextV_content.layer.cornerRadius = 8;
     self.mTextV_content.layer.masksToBounds = YES;
     //发表按钮
-    self.mBtn_send.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
+    self.mBtn_send.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
     [self.mBtn_send addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.mBtn_send2.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-self.mBtn_send2.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
+    [self.mBtn_send addTarget:self action:@selector(clickPosting1:) forControlEvents:UIControlEventTouchUpInside];
     //选择图片按钮
-    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-self.mBtn_selectPic.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
+    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_send2.frame.size.width*2-self.mBtn_selectPic.frame.size.width-30, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
     [self.mBtn_selectPic addTarget:self action:@selector(clickSelectPic:) forControlEvents:UIControlEventTouchUpInside];
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
@@ -153,6 +194,15 @@
 
 //点击发送按钮
 -(void)clickPosting:(UIButton *)btn{
+    self.mInt_section = 0;
+    [self clickPosting3];
+}
+-(void)clickPosting1:(UIButton *)btn{
+    self.mInt_section = 1;
+    [self clickPosting3];
+}
+
+-(void)clickPosting3{
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -182,9 +232,9 @@
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
     
     if (self.mInt_section == 0) {//分享
-        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mModel_unit.UnitType UnitID:self.mModel_unit.UnitID SectionFlag:@"1"];
+        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
     }else if (self.mInt_section == 1){//展示
-        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mModel_unit.UnitType UnitID:self.mModel_unit.UnitID SectionFlag:@"2"];
+        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }
     
     self.mProgressV.labelText = @"加载中...";
@@ -305,7 +355,7 @@
     }
     else
     {
-        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2);
+        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*5);
     }
     self.isOpen = !self.isOpen;
 }

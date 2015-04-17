@@ -45,7 +45,7 @@
             }
             [tempbtn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"workView_%d",i]] forState:UIControlStateSelected];
             [tempbtn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"workView_click_%d",i]] forState:UIControlStateNormal];
-            tempbtn.frame = CGRectMake((([dm getInstance].width-56*5)/6)*(i+1)+56*i, 0, 56, 42);
+            tempbtn.frame = CGRectMake((([dm getInstance].width-56*5)/6)*(i+1)+56*i, 0, 52, 42);
             [tempbtn addTarget:self action:@selector(btnChange:) forControlEvents:UIControlEventTouchUpInside];
             [self.mView_button addSubview:tempbtn];
         }
@@ -374,7 +374,22 @@
 
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData{
-    
+    if (self.mInt_index == 0) {
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 1){
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:6 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 2){
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:8 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 3){
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:9 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 4){
+        [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:@"1"];
+        [self ProgressViewLoad];
+    }
 }
 
 -(void)ProgressViewLoad{

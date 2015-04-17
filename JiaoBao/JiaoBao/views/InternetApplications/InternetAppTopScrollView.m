@@ -95,8 +95,8 @@
         [button setTitleColor:[UIColor colorWithRed:91/255.0 green:178/255.0 blue:57/255.0 alpha:1] forState:UIControlStateSelected];
         [button setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
         //设置标题位置
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i]] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+1]] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+1]] forState:UIControlStateSelected];
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
         //    在UIButton中有三个对EdgeInsets的设置：ContentEdgeInsets、titleEdgeInsets、imageEdgeInsets

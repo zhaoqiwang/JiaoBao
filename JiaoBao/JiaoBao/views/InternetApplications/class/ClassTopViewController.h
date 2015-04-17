@@ -16,8 +16,9 @@
 #import "ArthDetailViewController.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "ClassHttp.h"
+#import "UnitSpaceViewController.h"
 
-@interface ClassTopViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,ClassTableViewCellClassDelegate>{
+@interface ClassTopViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,ClassTableViewCellClassDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_list;//列表显示
     NSMutableArray *mArr_list;//列表数组

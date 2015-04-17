@@ -29,7 +29,7 @@
         model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
         model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
         model.FeeBackCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FeeBackCount"]];
-        model.StarJson = [dic objectForKey:@"StarJson"];
+        model.StarJson = [dic objectForKey:@"StarJson"]; 
         model.Title = [dic objectForKey:@"Title"];
         
         NSString *Abstracts = [dic objectForKey:@"Thumbnail"];
@@ -40,7 +40,7 @@
         }
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         NSString *thumbnail = [dic objectForKey:@"Thumbnail"];
-        NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"Thumbnail"]);
+//        NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"Thumbnail"]);
         if ([thumbnail isEqual:[NSNull null]]||[thumbnail isEqual:@"<null>"]) {
             model.Thumbnail = [NSMutableArray array];
         }else{
@@ -51,6 +51,13 @@
         model.SectionID = [dic objectForKey:@"SectionID"];
         model.UserName = [dic objectForKey:@"UserName"];
         model.UnitName = [dic objectForKey:@"UnitName"];
+        
+        model.UnitType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitType"]];
+        if ([model.UnitType intValue]==3) {//班级id，单独字段
+            model.unitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitClassID"]];
+        }else{
+            model.unitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitId"]];
+        }
         model.flag = [model.SectionID substringFromIndex:model.SectionID.length-1];
         NSString *str = [utils getLocalTimeDate];
         NSString *str2 = [dic objectForKey:@"RecDate"];
