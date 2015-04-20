@@ -10,6 +10,8 @@
 #import "Reachability.h"
 #import "TableViewWithBlock.h"
 #import "SelectionCell.h"
+#import <MobileCoreServices/UTCoreTypes.h>
+
 
 @interface SharePostingViewController ()
 @property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
@@ -319,6 +321,17 @@
                 sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
             }
         }
+        ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+        
+        elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
+        elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+        elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+        elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+        elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
+        
+        elcPicker.imagePickerDelegate = self;
+        
+        [self presentViewController:elcPicker animated:YES completion:nil];
         // 跳转到相机或相册页面
 //        MHImagePickerMutilSelector* imagePickerMutilSelector=[MHImagePickerMutilSelector standardSelector];//自动释放
 //        imagePickerMutilSelector.delegate=self;//设置代理
@@ -335,13 +348,13 @@
 //        [self presentModalViewController:picker animated:YES];
         
 
-        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-        imagePickerController.delegate = self;
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.sourceType = sourceType;
-        
-        
-        [self presentViewController:imagePickerController animated:YES completion:^{}];
+//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+//        imagePickerController.delegate = self;
+//        imagePickerController.allowsEditing = YES;
+//        imagePickerController.sourceType = sourceType;
+//        
+//        
+//        [self presentViewController:imagePickerController animated:YES completion:^{}];
     }
 }
 #pragma mark - image picker delegte
@@ -402,4 +415,82 @@
     }
     self.isOpen = !self.isOpen;
 }
+#pragma mark ELCImagePickerControllerDelegate Methods
+
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    //发送选中图片上传请求
+        NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
+        for (NSDictionary *dict in info) {
+            if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
+                if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+                    UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                    [images addObject:image];
+    
+                    UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+                    [imageview setContentMode:UIViewContentModeScaleAspectFit];
+                }
+            }
+        }
+    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:[images objectAtIndex:0] Name:@"图片"];
+
+
+    
+//    for (UIView *v in [_scrollView subviews]) {
+//        [v removeFromSuperview];
+//    }
+//    
+//    CGRect workingFrame = _scrollView.frame;
+//    workingFrame.origin.x = 0;
+//    
+//    NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
+//    for (NSDictionary *dict in info) {
+//        if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
+//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+//                [images addObject:image];
+//                
+//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+//                [imageview setContentMode:UIViewContentModeScaleAspectFit];
+//                imageview.frame = workingFrame;
+//                
+//                [_scrollView addSubview:imageview];
+//                
+//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+//            } else {
+//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+//            }
+//        } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
+//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+//                
+//                [images addObject:image];
+//                
+//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
+//                [imageview setContentMode:UIViewContentModeScaleAspectFit];
+//                imageview.frame = workingFrame;
+//                
+//                [_scrollView addSubview:imageview];
+//                
+//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
+//            } else {
+//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+//            }
+//        } else {
+//            NSLog(@"Uknown asset type");
+//        }
+//    }
+//    
+//    self.chosenImages = images;
+//    
+//    [_scrollView setPagingEnabled:YES];
+//    [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
+}
+
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end

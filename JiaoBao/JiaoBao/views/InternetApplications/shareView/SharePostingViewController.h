@@ -13,8 +13,9 @@
 #import "ShareHttp.h"
 #import "MBProgressHUD.h"
 #import "MHImagePickerMutilSelector.h"
+#import "ELCImagePickerHeader.h"
 
-@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate>{
+@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITextView *mTextV_content;//内容
     MBProgressHUD *mProgressV;//
