@@ -50,7 +50,7 @@
             [self.mView_button addSubview:tempbtn];
         }
         //列表
-        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44-51)];
+        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
         self.mTableV_list.delegate=self;
         self.mTableV_list.dataSource=self;
         self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -64,14 +64,14 @@
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         //新建按钮
-        self.mBtn_new = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
-        [self.mBtn_new setBackgroundImage:img_btn forState:UIControlStateNormal];
-        [self.mBtn_new addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
-        self.mBtn_new.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
-        [self.mBtn_new setTitle:@"新建事务" forState:UIControlStateNormal];
-        [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self addSubview:self.mBtn_new];
+//        self.mBtn_new = [UIButton buttonWithType:UIButtonTypeCustom];
+//        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
+//        [self.mBtn_new setBackgroundImage:img_btn forState:UIControlStateNormal];
+//        [self.mBtn_new addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
+//        self.mBtn_new.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
+//        [self.mBtn_new setTitle:@"新建事务" forState:UIControlStateNormal];
+//        [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [self addSubview:self.mBtn_new];
         
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
         [self addSubview:self.mProgressV];
@@ -329,8 +329,7 @@
     //不是刷新
     self.mInt_flag = 0;
     if (self.mInt_index == 0) {
-        if (self.mArr_sum.count>=20) {
-            //检查当前网络是否可用
+        if (self.mArr_sum.count>=20&&self.mArr_sum.count%20==0) {
             int a = (int)self.mArr_sum.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -338,7 +337,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 1){
-        if (self.mArr_unRead.count>=20) {
+        if (self.mArr_unRead.count>=20&&self.mArr_unRead.count%20==0) {
             int a = (int)self.mArr_unRead.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:6 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -346,7 +345,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 2){
-        if (self.mArr_unReply.count>=20) {
+        if (self.mArr_unReply.count>=20&&self.mArr_unReply.count%20==0) {
             int a = (int)self.mArr_unReply.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:8 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -354,7 +353,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 3){
-        if (self.mArr_reply.count>=20) {
+        if (self.mArr_reply.count>=20&&self.mArr_reply.count%20==0) {
             int a = (int)self.mArr_reply.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:9 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -362,7 +361,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 4){
-        if (self.mArr_mySend.count>=20) {
+        if (self.mArr_mySend.count>=20&&self.mArr_mySend.count%20==0) {
             int a = (int)self.mArr_mySend.count/20+1;
             [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];

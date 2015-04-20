@@ -272,6 +272,19 @@
     if (btn.tag == 1) {//点击设置按钮
         NSArray *menuItems =
         @[
+          [KxMenuItem menuItem:@"新建事务"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem6:)],
+          
+          [KxMenuItem menuItem:@"发表动态"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem4:)],
+          [KxMenuItem menuItem:@"发表分享"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem5:)],
           
           [KxMenuItem menuItem:@"切换单位"
                          image:[UIImage imageNamed:@"appNav_changeUnit"]
@@ -282,15 +295,6 @@
                          image:[UIImage imageNamed:@"appNav_changeUser"]
                         target:self
                         action:@selector(pushMenuItem3:)],
-          
-          [KxMenuItem menuItem:@"发表动态"
-                         image:[UIImage imageNamed:@"appNav_changeUser"]
-                        target:self
-                        action:@selector(pushMenuItem4:)],
-          [KxMenuItem menuItem:@"发表分享"
-                         image:[UIImage imageNamed:@"appNav_changeUser"]
-                        target:self
-                        action:@selector(pushMenuItem5:)],
           
           ];
         
@@ -533,6 +537,26 @@
     posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
     posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
     [utils pushViewController:posting animated:YES];
+}
+
+//新建事务
+- (void) pushMenuItem6:(id)sender{
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    D("点击新建事务、发布通知按钮");
+    ForwardViewController *forward = [[ForwardViewController alloc] init];
+    forward.mStr_navName = @"新建事务";
+    forward.mInt_forwardFlag = 1;
+    forward.mInt_forwardAll = 2;
+    forward.mInt_flag = 1;
+    forward.mInt_all = 2;
+    forward.mInt_where = 0;
+    [utils pushViewController:forward animated:YES];
 }
 
 //右上角+，分享

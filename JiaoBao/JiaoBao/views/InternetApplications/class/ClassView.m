@@ -460,6 +460,11 @@
             cell.mLab_class.hidden = YES;
         }else{
             tempUnit = [NSString stringWithFormat:@"[动态]"];
+            cell.mLab_class.backgroundColor = [UIColor redColor];
+            cell.mLab_class.textColor = [UIColor whiteColor];
+            //将图层的边框设置为圆脚
+            cell.mLab_class.layer.cornerRadius = 3;
+            cell.mLab_class.layer.masksToBounds = YES;
         }
     }else{
         if (model.className.length>0) {
@@ -693,7 +698,7 @@
     //不是刷新
     self.mInt_flag = 0;
     if (self.mInt_index == 0) {
-        if (self.mArr_unit.count>=20) {
+        if (self.mArr_unit.count>=20&&self.mArr_unit.count%20==0) {
             //检查当前网络是否可用
             if ([self checkNetWork]) {
                 return;
@@ -709,7 +714,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 1){
-        if (self.mArr_class.count>=20) {
+        if (self.mArr_class.count>=20&&self.mArr_class.count%20==0) {
             //检查当前网络是否可用
             if ([self checkNetWork]) {
                 return;
@@ -721,7 +726,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 2){
-        if (self.mArr_local.count>=20) {
+        if (self.mArr_local.count>=20&&self.mArr_local.count%20==0) {
             //检查当前网络是否可用
             if ([self checkNetWork]) {
                 return;
@@ -733,7 +738,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 3){
-        if (self.mArr_attention.count>=20) {
+        if (self.mArr_attention.count>=20&&self.mArr_attention.count%20==0) {
             //检查当前网络是否可用
             if ([self checkNetWork]) {
                 return;
@@ -745,7 +750,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 4){
-        if (self.mArr_sum.count>=20) {
+        if (self.mArr_sum.count>=20&&self.mArr_sum.count%20==0) {
             //检查当前网络是否可用
             if ([self checkNetWork]) {
                 return;
