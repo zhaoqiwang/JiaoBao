@@ -459,8 +459,8 @@
         if (self.mInt_index == 0||self.mInt_index == 1) {
             cell.mLab_class.hidden = YES;
         }else{
-            tempUnit = [NSString stringWithFormat:@"[动态]"];
-            cell.mLab_class.backgroundColor = [UIColor redColor];
+            tempUnit = [NSString stringWithFormat:@" 动态 "];
+            cell.mLab_class.backgroundColor = [UIColor colorWithRed:230/255.0 green:130/255.0 blue:130/255.0 alpha:1];
             cell.mLab_class.textColor = [UIColor whiteColor];
             //将图层的边框设置为圆脚
             cell.mLab_class.layer.cornerRadius = 3;

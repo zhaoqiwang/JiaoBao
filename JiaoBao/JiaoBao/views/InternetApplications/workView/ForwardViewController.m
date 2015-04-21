@@ -961,7 +961,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     self.mTextV_enter.text = @"";
-    
+    [self.mArr_accessory removeAllObjects];
+    [self.mArr_photo removeAllObjects];
     //
     if (self.mInt_where == 0) {//发送短信
         if (self.mInt_select_send == 3) {
