@@ -31,6 +31,7 @@
     NSString *mStr_unitID;//单位ID
     UILabel *mLab_fabu;//发布lab
     UILabel *mLab_dongtai;//动态lab
+    NSMutableArray *mArr_dynamic;//动态中的权限数组
 }
 @property (weak, nonatomic) IBOutlet UIButton *pullDownBtn;
 - (IBAction)pullAction:(id)sender;
@@ -50,5 +51,6 @@
 @property (nonatomic,strong) NSString *mStr_unitID;//单位ID
 @property (nonatomic,strong) IBOutlet UILabel *mLab_fabu;//发布lab
 @property (nonatomic,strong) IBOutlet UILabel *mLab_dongtai;//动态lab
+@property (nonatomic,strong) NSMutableArray *mArr_dynamic;//动态中的权限数组
 
 @end

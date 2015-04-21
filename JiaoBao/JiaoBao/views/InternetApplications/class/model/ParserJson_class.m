@@ -84,4 +84,19 @@
     return array;
 }
 
+//获取当前用户可以发布动态的单位列表(含班级）
++(NSMutableArray *)parserJsonGetReleaseNewsUnits:(NSString *)json{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for (int i=0; i<arrList.count; i++) {
+        ReleaseNewsUnitsModel *model = [[ReleaseNewsUnitsModel alloc] init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.UnitName = [dic objectForKey:@"UnitName"];
+        model.UnitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitId"]];
+        model.UnitType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitType"]];
+        [array addObject:model];
+    }
+    return array;
+}
+
 @end

@@ -42,6 +42,9 @@
     //是否有更新
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"itunesUpdataCheck" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itunesUpdataCheck:) name:@"itunesUpdataCheck" object:nil];
+    //获取当前用户可以发布动态的单位列表(含班级）
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetReleaseNewsUnits" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetReleaseNewsUnits:) name:@"GetReleaseNewsUnits" object:nil];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -507,16 +510,15 @@
     NSLog(@"%@",self.mView_all);
     NSLog(@"%d",self.mView_all.hidden);
     //self.mView_all.backgroundColor = [UIColor redColor];
-    
-    UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
-    model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
-    model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
-    SharePostingViewController *posting = [[SharePostingViewController alloc] init];
-    posting.mModel_unit = model;
-    posting.mInt_section = 1;
-    posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
-    posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
-    [utils pushViewController:posting animated:YES];
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    [[ClassHttp getInstance] classHttpGetReleaseNewsUnits];
+    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
 }
 
 //发表文章分享
@@ -557,6 +559,28 @@
     forward.mInt_all = 2;
     forward.mInt_where = 0;
     [utils pushViewController:forward animated:YES];
+}
+
+//获取当前用户可以发布动态的单位列表(含班级）
+-(void)GetReleaseNewsUnits:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    NSMutableArray *array = noti.object;
+    if (array.count==0) {
+        self.mProgressV.labelText = @"没有权限";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    }else{
+        UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+        model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+        model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+        SharePostingViewController *posting = [[SharePostingViewController alloc] init];
+        posting.mModel_unit = model;
+        posting.mInt_section = 1;
+        posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+        posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+        [utils pushViewController:posting animated:YES];
+    }
 }
 
 //右上角+，分享

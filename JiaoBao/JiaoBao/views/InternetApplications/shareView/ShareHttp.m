@@ -190,7 +190,7 @@ static ShareHttp *shareHttp = nil;
 }
 //上传图片
 -(void)shareHttpUploadSectionImgWith:(UIImage *)img Name:(NSString *)name{
-    NSData *data = UIImagePNGRepresentation(img);//获取图片数据
+//    NSData *data = UIImagePNGRepresentation(img);//获取图片数据
 //    NSString *urlString = [NSString stringWithFormat:@"%@AppFiles/uploadSectionImg",MAINURL];
     NSString *urlString = [NSString stringWithFormat:@"%@ClientUpLoadFile/uploadSectionImg",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -203,8 +203,8 @@ static ShareHttp *shareHttp = nil;
     request.tag = 8;//设置请求tag
     [request setDelegate:self];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    文件名
-    NSFileManager* fileManager=[NSFileManager defaultManager];
+//    文件名
+//    NSFileManager* fileManager=[NSFileManager defaultManager];
     NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",name]];
 //    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
 //    if (!yesNo) {//不存在，则直接写入后通知界面刷新

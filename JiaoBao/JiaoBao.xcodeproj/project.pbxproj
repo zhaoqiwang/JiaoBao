@@ -506,6 +506,7 @@
 		A773FC511A4C0563005F84C2 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = A773FC451A4C0563005F84C2 /* ELCAssetTablePicker.xib */; };
 		A773FC521A4C0563005F84C2 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = A773FC461A4C0563005F84C2 /* Overlay.png */; };
 		A773FC531A4C0563005F84C2 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A773FC471A4C0563005F84C2 /* Overlay@2x.png */; };
+		A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A778389D1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m */; };
 		A77FF00C1A65093300DB85E3 /* UnitListJsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF00B1A65093300DB85E3 /* UnitListJsonModel.m */; };
 		A77FF0271A650B3F00DB85E3 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0101A650B3F00DB85E3 /* JSONModel.m */; };
 		A77FF0281A650B3F00DB85E3 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0121A650B3F00DB85E3 /* JSONModelArray.m */; };
@@ -1382,6 +1383,8 @@
 		A773FC451A4C0563005F84C2 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
 		A773FC461A4C0563005F84C2 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		A773FC471A4C0563005F84C2 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		A778389C1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseNewsUnitsModel.h; path = views/InternetApplications/class/model/ReleaseNewsUnitsModel.h; sourceTree = "<group>"; };
+		A778389D1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseNewsUnitsModel.m; path = views/InternetApplications/class/model/ReleaseNewsUnitsModel.m; sourceTree = "<group>"; };
 		A77FF00A1A65093300DB85E3 /* UnitListJsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitListJsonModel.h; path = views/InternetApplications/workView/model/UnitListJsonModel.h; sourceTree = "<group>"; };
 		A77FF00B1A65093300DB85E3 /* UnitListJsonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitListJsonModel.m; path = views/InternetApplications/workView/model/UnitListJsonModel.m; sourceTree = "<group>"; };
 		A77FF00F1A650B3F00DB85E3 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
@@ -2716,6 +2719,8 @@
 				A76829661AC69575003B31EB /* ClassModel.m */,
 				A76829671AC69575003B31EB /* ParserJson_class.h */,
 				A76829681AC69575003B31EB /* ParserJson_class.m */,
+				A778389C1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.h */,
+				A778389D1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -3802,6 +3807,7 @@
 				F71803231AB3C46300E6167F /* JTCalendarMenuView.m in Sources */,
 				A76E432A1A61085F00699F92 /* CommMsgRevicerUnitListModel.m in Sources */,
 				A773FC491A4C0563005F84C2 /* ELCAsset.m in Sources */,
+				A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */,
 				A7209E701A29CF9800418A9C /* NoticeListViewController.m in Sources */,
 				A755E6A119F24D2C00BBDF3D /* RootViewController.m in Sources */,
 				A7AD8C3319F63CC7002E65FB /* InternetApplicationsViewController.m in Sources */,
