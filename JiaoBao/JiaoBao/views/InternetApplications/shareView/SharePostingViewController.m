@@ -374,22 +374,22 @@
 //        [self presentViewController:imagePickerController animated:YES completion:^{}];
     }
 }
-#pragma mark - image picker delegte
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    [picker dismissViewControllerAnimated:YES completion:^{}];
-    UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
-    if (!image) {
-        image=[info objectForKey:UIImagePickerControllerOriginalImage];
-    }
-    NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
-    self.mInt_index ++;
-    //发送选中图片上传请求
-    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:image Name:name];
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
+//#pragma mark - image picker delegte
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+//    [picker dismissViewControllerAnimated:YES completion:^{}];
+//    UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
+//    if (!image) {
+//        image=[info objectForKey:UIImagePickerControllerOriginalImage];
+//    }
+//    NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
+//    self.mInt_index ++;
+//    //发送选中图片上传请求
+//    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imag Name:name];
+//    self.mProgressV.labelText = @"加载中...";
+//    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+//    [self.mProgressV show:YES];
+//    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+//}
 -(void)imagePickerMutilSelectorDidGetImages:(NSArray *)imageArray
 {
     NSLog(@"%ld",imageArray.count);
@@ -460,9 +460,10 @@
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                NSData *imageData = UIImageJPEGRepresentation(image,1.0);
-                
-                NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
+                NSData *imageData = UIImageJPEGRepresentation(image,0.75);
+                NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+
+                //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
                 //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
                 D("图片路径是：%@",imgPath);
                 BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
@@ -472,7 +473,7 @@
                         if (result) {
                             NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
 
-                            [[ShareHttp getInstance] shareHttpUploadSectionImgWith:image Name:name];
+                            [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
                             self.mInt_index ++;
 
 
@@ -490,7 +491,7 @@
                             if (result) {
                                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                                 
-                                [[ShareHttp getInstance] shareHttpUploadSectionImgWith:image Name:name];
+                                [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
                                 self.mInt_index ++;
                                 
                                 break;

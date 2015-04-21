@@ -51,7 +51,7 @@
 -(void)shareHttpGetMySubUnitInfoWith:(NSString *)UID;
 
 //上传图片
--(void)shareHttpUploadSectionImgWith:(UIImage *)img Name:(NSString *)name;
+-(void)shareHttpUploadSectionImgWith:(NSString *)imgPath Name:(NSString *)name;
 
 //发表文章                                  标题                      内容                  单位类型                单位ID                    来自分享1、展示2
 -(void)shareHttpSavePublishArticleWith:(NSString *)title Content:(NSString *)content uType:(NSString *)utype UnitID:(NSString *)unitID SectionFlag:(NSString *)flag;
