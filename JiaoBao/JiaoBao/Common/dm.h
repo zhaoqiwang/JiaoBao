@@ -34,6 +34,7 @@
     NSMutableArray *mArr_unit_member;//所在的所有单位，和单位里面分组、人员
     NSMutableArray *mArr_myFriends;//自己所有的好友分组、好友
     NSString *uuid;//启动时设置，注册成功后，添加到key中
+    BOOL tableSymbol;
 }
 
 @property (nonatomic,assign) int width;//界面宽度
@@ -59,6 +60,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_unit_member;//所在的所有单位，和单位里面分组、人员
 @property (nonatomic,strong) NSMutableArray *mArr_myFriends;//自己所有的好友分组、好友
 @property (nonatomic,strong) NSString *uuid;//启动时设置，注册成功后，添加到key中
+@property(nonatomic,assign)BOOL tableSymbol;
 
 + (dm*) getInstance;
 
