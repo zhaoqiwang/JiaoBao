@@ -211,6 +211,11 @@
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
     [self.mProgressV hide:YES];
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"上传图片成功";
+    //    self.mProgressV.userInteractionEnabled = NO;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     UploadImgModel *model = noti.object;
     [self.mArr_pic addObject:model];
     self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
@@ -469,6 +474,7 @@
 
                             [[ShareHttp getInstance] shareHttpUploadSectionImgWith:image Name:name];
                             self.mInt_index ++;
+
 
 
                             

@@ -200,19 +200,23 @@
 }
 
 //点赞按钮
--(void)tapLikeImg{
+-(void)tapLikeImg
+{
     //检查当前网络是否可用
-    if ([self checkNetWork]) {
+    if ([self checkNetWork])
+    {
         return;
     }
-    if (self.mModel_arthInfo.Likeflag >=0) {
+    if (self.mModel_arthInfo.Likeflag >=0)
+    {
         [[ShareHttp getInstance] shareHttpAirthLikeIt:self.mModel.TabIDStr Flag:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.Likeflag]];
         [self progressViewShow:@"提交中"];
     }
 }
 
 //将踩、顶回复返回界面
--(void)AirthAddScore:(NSNotification *)noti{
+-(void)AirthAddScore:(NSNotification *)noti
+{
     NSMutableDictionary *dic = noti.object;
     NSString *uid = [dic objectForKey:@"uid"];
     NSString *tp = [dic objectForKey:@"tp"];
