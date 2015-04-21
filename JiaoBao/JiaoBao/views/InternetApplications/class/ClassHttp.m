@@ -99,6 +99,20 @@ static ClassHttp *classHttp = nil;
     [request startAsynchronous];
 }
 
+//获取当前用户可以发布动态的单位列表(含班级）
+-(void)classHttpGetReleaseNewsUnits{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Sections/GetReleaseNewsUnits",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    request.tag = 5;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
@@ -164,7 +178,13 @@ static ClassHttp *classHttp = nil;
             //通知学校界面，获取到的关注数据
             [[NSNotificationCenter defaultCenter] postNotificationName:@"AllMyClassArthList" object:dic1];
         }
-        
+    }else if (_request.tag == 5){//获取当前用户可以发布动态的单位列表(含班级）
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=class==5=>>>>==%@",str);
+        NSMutableArray *array = [ParserJson_class parserJsonGetReleaseNewsUnits:str];
+        //通知主界面，获取到的单位班级数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetReleaseNewsUnits" object:array];
     }
 }
 //请求失败
