@@ -169,7 +169,7 @@
     [self.view addSubview:self.mView_all];
 
     flag = YES;
-    self.SignInGroupID = @"5150001";
+    self.SignInGroupID = [dm getInstance].jiaoBaoHao;
     self.field = [[UITextField alloc]initWithFrame:CGRectMake(-100, -100, -100, -100)];
     [self.view addSubview:self.field];
     self.field.inputAccessoryView = self.toolBar;
@@ -407,6 +407,8 @@ errorCode:(BMKSearchErrorCode)error{
         flag = NO;
         
     }
+    else
+    {
     
         NSString *time = [utils getLocalTime];
         dm *dmInstance = [dm getInstance];
@@ -434,7 +436,8 @@ errorCode:(BMKSearchErrorCode)error{
     
         NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
         [[SignInHttp getInstance]CreateSignIn:dic];
-        
+    }
+    
         
     
     
