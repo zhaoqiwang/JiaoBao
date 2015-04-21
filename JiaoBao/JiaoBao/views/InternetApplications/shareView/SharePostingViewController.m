@@ -450,7 +450,7 @@
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                NSData *imageData = UIImageJPEGRepresentation(image,1.0);
+                NSData *imageData = UIImageJPEGRepresentation(image,0.5);
                 
                 NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
                 //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
