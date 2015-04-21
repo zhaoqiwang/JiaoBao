@@ -189,8 +189,8 @@ static ShareHttp *shareHttp = nil;
     [request startAsynchronous];
 }
 //上传图片
--(void)shareHttpUploadSectionImgWith:(UIImage *)img Name:(NSString *)name{
-    NSData *data = UIImagePNGRepresentation(img);//获取图片数据
+-(void)shareHttpUploadSectionImgWith:(NSString *)imgPath Name:(NSString *)name{
+   // NSData *data = UIImagePNGRepresentation(img);//获取图片数据
 //    NSString *urlString = [NSString stringWithFormat:@"%@AppFiles/uploadSectionImg",MAINURL];
     NSString *urlString = [NSString stringWithFormat:@"%@ClientUpLoadFile/uploadSectionImg",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -202,10 +202,11 @@ static ShareHttp *shareHttp = nil;
     [request setRequestMethod:@"POST"];
     request.tag = 8;//设置请求tag
     [request setDelegate:self];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    文件名
-    NSFileManager* fileManager=[NSFileManager defaultManager];
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",name]];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    NSFileManager* fileManager=[NSFileManager defaultManager];
+//    
+//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",name]];
+//    NSLog(@"imgPath = %@",imgPath);
 //    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
 //    if (!yesNo) {//不存在，则直接写入后通知界面刷新
 //        D("no  have");
