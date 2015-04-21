@@ -39,6 +39,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isOpen = NO;
+    
+    //添加单击手势
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
+//    tap.delegate = self;//设置代理，防止手势和按钮的点击事件冲突
+    [self.view addGestureRecognizer:tap];
+    
 //    NSArray *pullArr = [NSArray arrayWithObjects:@"分享",@"展示", nil];
     NSMutableArray *pullArr = [NSMutableArray array];
 //    Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
@@ -134,9 +140,9 @@
     //添加导航条
 //    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表文章"];
     if (self.mInt_section == 0) {//分享
-        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表分享文章"];
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表分享"];
     }else if (self.mInt_section == 1){//展示
-        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表动态文章"];
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表动态"];
     }
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
@@ -182,6 +188,11 @@
         self.mLab_fabu.text = @"发表";
         self.mLab_dongtai.text = @"动态";
     }
+}
+
+-(void)pressTap:(UITapGestureRecognizer *)tap{
+    [self.mTextF_title resignFirstResponder];
+    [self.mTextV_content resignFirstResponder];
 }
 
 //检查当前网络是否可用
@@ -263,7 +274,6 @@
     
     if (self.mInt_section == 0) {//分享
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
-        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"99"];//发到个人空间
     }else if (self.mInt_section == 1){//展示
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }

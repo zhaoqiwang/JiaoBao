@@ -23,6 +23,9 @@
         //取发给我消息的用户列表，new
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnReadMsgCell" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnReadMsgCell:) name:@"UnReadMsgCell" object:nil];
+        //通知事务界面，切换成功身份成功，清空数组
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
         
         self.mArr_unReply = [NSMutableArray array];
         self.mArr_unRead = [NSMutableArray array];
@@ -435,6 +438,21 @@
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = @"加载超时";
     sleep(2);
+}
+
+//通知学校界面，切换成功身份成功，清空数组
+-(void)changeCurUnit{
+    [self clearArray];
+    [self.mTableV_list reloadData];
+}
+
+//清空所有数据
+-(void)clearArray{
+    [self.mArr_mySend removeAllObjects];
+    [self.mArr_reply removeAllObjects];
+    [self.mArr_sum removeAllObjects];
+    [self.mArr_unRead removeAllObjects];
+    [self.mArr_unReply removeAllObjects];
 }
 
 @end
