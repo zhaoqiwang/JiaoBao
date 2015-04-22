@@ -46,6 +46,8 @@
 @property(nonatomic,assign)NSUInteger selectedRow;
 @property(nonatomic,strong)UITextField *field;
 @property(nonatomic,strong)BMKCircle* circle;
+@property(nonatomic,strong)UILabel *nameLabel,*nameLabel2;
+@property(nonatomic,assign)NSUInteger range;
 
 - (IBAction)checkInAction:(id)sender;//点击签到按钮方法
 
@@ -111,27 +113,56 @@
     [[SignInHttp getInstance]getSignInAddress];
     [[SignInHttp getInstance]GetSignInGroupByUnitID];
 }
+-(void)locationAction:(id)sender
+{
+    [_locService stopUserLocationService];
+    
+    _locService.delegate = nil;
+    
+    
+    BaidumapView.showsUserLocation = NO;
+    BaidumapView.delegate = nil; // 不用时，置nil
+    [_locService startUserLocationService];
+    
+    BaidumapView.showsUserLocation = NO;
+    BaidumapView.showsUserLocation = YES;
+    BaidumapView.delegate = self;
+    _locService.delegate = self;
+    self.nameLabel2.text = @"定位中...";
+//    BaidumapView.showsUserLocation = NO;
+//    [_locService startUserLocationService];
+//
+//    BaidumapView.userTrackingMode = BMKUserTrackingModeFollow;
+//    BaidumapView.showsUserLocation = YES;
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, self.view.frame.size.height-200, 280, 30)];
+    self.nameLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(20, self.view.frame.size.height-100, 280, 30)];
+
+
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUnitName:) name:@"unitNameNotication" object:nil];
     [[SignInHttp getInstance]getTime];
 
-//    _mapManager = [[BMKMapManager alloc]init];
-//    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
-//    BOOL ret = [_mapManager start:@"iqYoKFAodVcfY8oRpi0KtuHs"  generalDelegate:nil];
-//    if (!ret) {
-//        NSLog(@"manager start failed!");
-//    }
+
     BaidumapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64+30, 320, 568-94)];
     [self.view addSubview:BaidumapView];
     [self.view addSubview:bottomView];
     [bottomView setFrame:CGRectMake(0, self.view.frame.size.height-90, 320, 90)];
+    UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    [locationBtn setTitle:@"定位" forState:UIControlStateNormal];
+    [locationBtn addTarget:self action:@selector(locationAction:) forControlEvents:UIControlEventTouchUpInside];
+    locationBtn.frame = CGRectMake(270, 64+35, 50, 30);
+    [self.view addSubview:locationBtn];
+    
+
     
     BaidumapView.delegate = self;
-    BaidumapView.zoomLevel = 1000;
+    BaidumapView.zoomLevel = 10;
     BMKLocationViewDisplayParam *displayParam = [[BMKLocationViewDisplayParam alloc]init];
     displayParam.isRotateAngleValid = true;//跟随态旋转角度是否生效
-    displayParam.isAccuracyCircleShow = false;//精度圈是否显示
+    displayParam.isAccuracyCircleShow = YES;//精度圈是否显示
     //displayParam.locationViewImgName= @"icon";//定位图标名称
     displayParam.locationViewOffsetX = 0;//定位偏移量(经度)
     displayParam.locationViewOffsetY = 0;//定位偏移量（纬度）
@@ -139,7 +170,7 @@
     [self.view addSubview:self.mView_all];
 
     flag = YES;
-    self.SignInGroupID = @"5150001";
+    self.SignInGroupID = [dm getInstance].jiaoBaoHao;
     self.field = [[UITextField alloc]initWithFrame:CGRectMake(-100, -100, -100, -100)];
     [self.view addSubview:self.field];
     self.field.inputAccessoryView = self.toolBar;
@@ -160,13 +191,13 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar leftBtnAction:[dm getInstance].mStr_unit];
     [self.view addSubview:self.mNav_navgationBar];
-    MKCoordinateRegion theRegion = { {0.0,0.0 }, {0.0,0.0 } };
+    BMKCoordinateRegion theRegion = { {0.0,0.0 }, {0.0,0.0 } };
     theRegion.center= self.mapView.userLocation.location.coordinate;
     //缩放的精度。数值越小约精准
-    theRegion.span.longitudeDelta =0.001;
-    theRegion.span.latitudeDelta =0.001;
+    theRegion.span.longitudeDelta =0.005;
+    theRegion.span.latitudeDelta =0.005;
     //让MapView显示缩放后的地图。
-    [self.mapView setRegion:theRegion animated:YES];
+    [BaidumapView setRegion:theRegion animated:YES];
     locationManager = [[CLLocationManager alloc] init];
     //获取授权认证
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0f) {
@@ -177,6 +208,8 @@
     }
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.distanceFilter = 10;
+    
+
 //    MKCoordinateRegion region;
 //    //region.span = MKCoordinateSpanMake(2, 1);
 //    region.span.longitudeDelta =0.005;
@@ -226,6 +259,7 @@
 
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)getCurrentTime:(id)sender
 {
     NSDictionary *dic = [sender object];
@@ -250,6 +284,13 @@ errorCode:(BMKSearchErrorCode)error{
   if (error == BMK_SEARCH_NO_ERROR) {
       NSLog(@"reverse = %@",result.address);
       address = result.address;
+      self.nameLabel2.text = result.address;
+      self.nameLabel2.backgroundColor = [UIColor whiteColor];
+      self.nameLabel2.font = [UIFont systemFontOfSize:12];
+      self.nameLabel2.textAlignment = NSTextAlignmentCenter;
+      self.nameLabel2.textColor = [UIColor blueColor];
+      [self.view addSubview:self.nameLabel2];
+      
       
   }
   else {
@@ -318,13 +359,29 @@ errorCode:(BMKSearchErrorCode)error{
         [BaidumapView removeOverlay:self.circle];
         self.circle = nil;
         NSDictionary *dic = [[sender object]objectAtIndex:0];
+        
+//        self.nameLabel.text = [dic objectForKey:@"AddressName"];
+//        self.nameLabel.backgroundColor = [UIColor clearColor];
+//        self.nameLabel.font = [UIFont systemFontOfSize:12];
+//        self.nameLabel.textAlignment = NSTextAlignmentCenter;
+//        self.nameLabel.textColor = [UIColor blueColor];
+//        [BaidumapView addSubview:self.nameLabel];
         self.Longitude = (CLLocationDegrees)[[dic objectForKey:@"Longitude"] doubleValue];
         self.Latitude = (CLLocationDegrees)[[dic objectForKey:@"Latitude"] doubleValue];
+        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+        CLLocationCoordinate2D coor;
+        coor.latitude = self.Latitude;
+        coor.longitude = self.Longitude;
+        annotation.coordinate = coor;
+        annotation.title = [dic objectForKey:@"AddressName"];
+        [BaidumapView addAnnotation:annotation];
+        //self.nameLabel.center = CGPointMake(self.Longitude, self.Latitude);
         NSLog(@"Longitude = %f %f",self.Longitude,self.Latitude);
         
         
         
         self.location = [[CLLocation alloc]initWithLatitude:self.Latitude longitude:self.Longitude];
+        self.range = [[dic objectForKey:@"Range"]integerValue];
         
         self.circle = [BMKCircle circleWithCenterCoordinate:self.location.coordinate radius:[[dic objectForKey:@"Range"] doubleValue]];
         
@@ -356,12 +413,14 @@ errorCode:(BMKSearchErrorCode)error{
 - (IBAction)checkInAction:(id)sender {
     CLLocation *location2 = [[CLLocation alloc]initWithLatitude:BaidumapView.centerCoordinate.latitude longitude:BaidumapView.centerCoordinate.longitude];
     CLLocationDistance distance = [self.location distanceFromLocation:location2];
-    if(distance>100)
+    if(distance>self.range)
     {
         [SVProgressHUD showErrorWithStatus:@"超出签到范围"];
         flag = NO;
         
     }
+    else
+    {
     
         NSString *time = [utils getLocalTime];
         dm *dmInstance = [dm getInstance];
@@ -389,7 +448,8 @@ errorCode:(BMKSearchErrorCode)error{
     
         NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
         [[SignInHttp getInstance]CreateSignIn:dic];
-        
+    }
+    
         
     
     
@@ -528,6 +588,7 @@ if(component == 0)
         self.mTableV_right.hidden = YES;
         
     }
+    [dm getInstance].tableSymbol = YES;
 
     [self.mTableV_left reloadData];
     [self.mTableV_right reloadData];

@@ -20,6 +20,7 @@
 @synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mProgressV,mInt_flag;
 
 -(void)viewWillAppear:(BOOL)animated{
+    [dm getInstance].tableSymbol =NO;
     if (self.mInt_flag == 0) {
         self.mInt_flag = 1;
     }else{
@@ -321,6 +322,10 @@
         return 0;
     }
     if (tableView.tag == 100) {
+        if([dm getInstance].tableSymbol == YES)
+        {
+            return 2;
+        }
         return [dm getInstance].identity.count;
     }else if (tableView.tag == 101){
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
