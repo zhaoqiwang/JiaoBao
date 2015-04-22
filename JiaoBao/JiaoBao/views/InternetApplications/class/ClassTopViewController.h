@@ -17,8 +17,9 @@
 #import "MJRefresh.h"//上拉下拉刷新
 #import "ClassHttp.h"
 #import "UnitSpaceViewController.h"
+#import "MWPhotoBrowser.h"
 
-@interface ClassTopViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,ClassTableViewCellClassDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate>{
+@interface ClassTopViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,ClassTableViewCellClassDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_list;//列表显示
     NSMutableArray *mArr_list;//列表数组
@@ -38,5 +39,6 @@
 @property (assign,nonatomic) int mInt_unit_class;//判断的是要加载单位1还是班级2
 @property (nonatomic,strong) NSString *mStr_classID;//当显示班级时，班级ID
 @property (nonatomic,strong) NSString *mStr_navName;//当为班级时，加载班级名称
+@property (nonatomic, strong) NSMutableArray *photos;
 
 @end
