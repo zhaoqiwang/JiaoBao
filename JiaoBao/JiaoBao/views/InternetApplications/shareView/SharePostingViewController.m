@@ -20,8 +20,12 @@
 @end
 
 @implementation SharePostingViewController
-@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu;
+@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu,mArr_dynamic,mLab_hidden;
 
+-(id)init{
+    self.mArr_dynamic = [NSMutableArray array];
+    return self;
+}
 
 -(void)viewDidDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -39,47 +43,52 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isOpen = NO;
+    self.view.tag = 5;
+    self.mLab_hidden.frame = self.view.frame;
     
-    //添加单击手势
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
-//    tap.delegate = self;//设置代理，防止手势和按钮的点击事件冲突
-    [self.view addGestureRecognizer:tap];
-    
-//    NSArray *pullArr = [NSArray arrayWithObjects:@"分享",@"展示", nil];
     NSMutableArray *pullArr = [NSMutableArray array];
-//    Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
-//    if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
-//        return idenModel.UserUnits.count;
-//    }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
-//        return idenModel.UserClasses.count;
-//    }
-    for (int i=0; i<[dm getInstance].identity.count; i++) {
-        Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
-        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
-            for (int a=0; a<idenModel.UserUnits.count; a++) {
-                Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:a];
-                NSString *str = [NSString stringWithFormat:@"%@-%@",idenModel.RoleIdName,userUnitsModel.UnitName];
-                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                [dic setValue:idenModel.RoleIdentity forKey:@"type"];
-                [dic setValue:userUnitsModel.UnitID forKey:@"unitID"];
-                [dic setValue:str forKey:@"name"];
-                [pullArr addObject:dic];
+    if (self.mInt_section == 0) {//分享
+        [self.pullDownBtn setTitle:[dm getInstance].mStr_unit forState:UIControlStateNormal];
+        for (int i=0; i<[dm getInstance].identity.count; i++) {
+            Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
+            if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
+                for (int a=0; a<idenModel.UserUnits.count; a++) {
+                    Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:a];
+                    NSString *str = [NSString stringWithFormat:@"%@-%@",idenModel.RoleIdName,userUnitsModel.UnitName];
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                    [dic setValue:idenModel.RoleIdentity forKey:@"type"];
+                    [dic setValue:userUnitsModel.UnitID forKey:@"unitID"];
+                    [dic setValue:str forKey:@"name"];
+                    [pullArr addObject:dic];
+                }
+            }
+            if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
+                for (int a=0; a<idenModel.UserClasses.count; a++) {
+                    Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:a];
+                    NSString *str = [NSString stringWithFormat:@"%@-%@",idenModel.RoleIdName,userUnitsModel.ClassName];
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                    [dic setValue:idenModel.RoleIdentity forKey:@"type"];
+                    [dic setValue:userUnitsModel.ClassID forKey:@"unitID"];
+                    [dic setValue:str forKey:@"name"];
+                    [pullArr addObject:dic];
+                }
             }
         }
-        if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
-            for (int a=0; a<idenModel.UserClasses.count; a++) {
-                Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:a];
-                NSString *str = [NSString stringWithFormat:@"%@-%@",idenModel.RoleIdName,userUnitsModel.ClassName];
-                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                [dic setValue:idenModel.RoleIdentity forKey:@"type"];
-                [dic setValue:userUnitsModel.ClassID forKey:@"unitID"];
-                [dic setValue:str forKey:@"name"];
-                [pullArr addObject:dic];
+    }else{//动态
+        for (int i=0; i<self.mArr_dynamic.count; i++) {
+            ReleaseNewsUnitsModel *model = [self.mArr_dynamic objectAtIndex:i];
+            if (i==0) {
+                 [self.pullDownBtn setTitle:model.UnitName forState:UIControlStateNormal];
             }
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setValue:model.UnitType forKey:@"type"];
+            [dic setValue:model.UnitId forKey:@"unitID"];
+            [dic setValue:model.UnitName forKey:@"name"];
+            [pullArr addObject:dic];
         }
     }
     
-    [self.pullDownBtn setTitle:[dm getInstance].mStr_unit forState:UIControlStateNormal];
+    self.mTableV_type.tag = 2;
     if(self.isOpen == NO)
     {
         self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectZero];
@@ -88,7 +97,7 @@
     {
     self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2)];
     }
-   [ self.mTableV_type initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
+    [self.mTableV_type initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
         return pullArr.count;
         
     } setCellForIndexPathBlock:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
@@ -98,7 +107,6 @@
                     [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
                 }
         NSString *name = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
-//                [cell.lb setText:[NSString stringWithFormat:@"%@",[pullArr objectAtIndex:indexPath.row]]];
          [cell.lb setText:[NSString stringWithFormat:@"%@",name]];
                 return cell;
     } setDidSelectRowBlock:^(UITableView *tableView, NSIndexPath *indexPath) {
@@ -109,6 +117,8 @@
         self.mTableV_type.frame = CGRectZero;
         self.isOpen = NO;
         self.mInt_section = (int)indexPath.row;
+        [self.mTextF_title resignFirstResponder];
+        [self.mTextV_content resignFirstResponder];
     }];
     [self.view addSubview:self.mTableV_type];
     [self.mTableV_type.layer setBorderColor:[UIColor lightGrayColor].CGColor];
@@ -116,20 +126,6 @@
     [self.pullDownBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.pullDownBtn.layer setBorderWidth:2];
     
-//    self.mTableV_type = [[TableViewWithBlock alloc]initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
-//        return pullArr.count;
-//    } setCellForIndexPathBlock:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
-//        SelectionCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
-//        if (!cell) {
-//            cell=[[[NSBundle mainBundle]loadNibNamed:@"SelectionCell" owner:self options:nil]objectAtIndex:0];
-//            [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
-//        }
-//        [cell.lb setText:[NSString stringWithFormat:@"%@",[pullArr objectAtIndex:indexPath.row]]];
-//        return cell;
-//
-//    } setDidSelectRowBlock:^(UITableView *tableView, NSIndexPath *indexPath) {
-//        
-//    }];
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
@@ -138,7 +134,6 @@
     self.mArr_pic = [NSMutableArray array];
     
     //添加导航条
-//    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表文章"];
     if (self.mInt_section == 0) {//分享
         self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表分享"];
     }else if (self.mInt_section == 1){//展示
@@ -158,15 +153,10 @@
     self.mTextV_content.layer.cornerRadius = 8;
     self.mTextV_content.layer.masksToBounds = YES;
     //发表按钮
-//    self.mBtn_send.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
     self.mBtn_send.frame = CGRectMake(10, self.mBtn_send.frame.origin.y, [dm getInstance].width-20, self.mBtn_send.frame.size.height);
     [self.mBtn_send addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
-    
-//    self.mBtn_send2.frame = CGRectMake([dm getInstance].width-self.mBtn_send.frame.size.width-self.mBtn_send2.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_send.frame.size.width, self.mBtn_send.frame.size.height);
-//    [self.mBtn_send addTarget:self action:@selector(clickPosting1:) forControlEvents:UIControlEventTouchUpInside];
     self.mBtn_send2.hidden = YES;
     //选择图片按钮
-//    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_send2.frame.size.width-self.mBtn_selectPic.frame.size.width-20, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10+40, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
     self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_selectPic.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
     [self.mBtn_selectPic addTarget:self action:@selector(clickSelectPic:) forControlEvents:UIControlEventTouchUpInside];
     //添加边框
@@ -188,6 +178,12 @@
         self.mLab_fabu.text = @"发表";
         self.mLab_dongtai.text = @"动态";
     }
+    
+    //添加单击手势
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
+    tap.delegate = self;//设置代理，防止手势和按钮的点击事件冲突
+    self.mLab_hidden.userInteractionEnabled = YES;
+    [self.mLab_hidden addGestureRecognizer:tap];
 }
 
 -(void)pressTap:(UITapGestureRecognizer *)tap{
@@ -349,47 +345,9 @@
         elcPicker.imagePickerDelegate = self;
         
         [self presentViewController:elcPicker animated:YES completion:nil];
-        // 跳转到相机或相册页面
-//        MHImagePickerMutilSelector* imagePickerMutilSelector=[MHImagePickerMutilSelector standardSelector];//自动释放
-//        imagePickerMutilSelector.delegate=self;//设置代理
-//        
-//        UIImagePickerController* picker=[[UIImagePickerController alloc] init];
-//        picker.delegate=imagePickerMutilSelector;//将UIImagePicker的代理指向到imagePickerMutilSelector
-//        [picker setAllowsEditing:NO];
-//        picker.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
-//        picker.modalTransitionStyle= UIModalTransitionStyleCoverVertical;
-//        picker.navigationController.delegate=imagePickerMutilSelector;//将UIImagePicker的导航代理指向到imagePickerMutilSelector
-//        
-//        imagePickerMutilSelector.imagePicker=picker;//使imagePickerMutilSelector得知其控制的UIImagePicker实例，为释放时需要。
-//        
-//        [self presentModalViewController:picker animated:YES];
-        
-
-//        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-//        imagePickerController.delegate = self;
-//        imagePickerController.allowsEditing = YES;
-//        imagePickerController.sourceType = sourceType;
-//        
-//        
-//        [self presentViewController:imagePickerController animated:YES completion:^{}];
     }
 }
-//#pragma mark - image picker delegte
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-//    [picker dismissViewControllerAnimated:YES completion:^{}];
-//    UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
-//    if (!image) {
-//        image=[info objectForKey:UIImagePickerControllerOriginalImage];
-//    }
-//    NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
-//    self.mInt_index ++;
-//    //发送选中图片上传请求
-//    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imag Name:name];
-//    self.mProgressV.labelText = @"加载中...";
-//    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//    [self.mProgressV show:YES];
-//    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-//}
+
 -(void)imagePickerMutilSelectorDidGetImages:(NSArray *)imageArray
 {
     NSLog(@"%ld",imageArray.count);
@@ -431,6 +389,8 @@
         self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*5);
     }
     self.isOpen = !self.isOpen;
+    [self.mTextF_title resignFirstResponder];
+    [self.mTextV_content resignFirstResponder];
 }
 #pragma mark ELCImagePickerControllerDelegate Methods
 
@@ -509,59 +469,6 @@
         timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
     }
     [self.mProgressV hide:YES];
-
-
-
-    
-//    for (UIView *v in [_scrollView subviews]) {
-//        [v removeFromSuperview];
-//    }
-//    
-//    CGRect workingFrame = _scrollView.frame;
-//    workingFrame.origin.x = 0;
-//    
-//    NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
-//    for (NSDictionary *dict in info) {
-//        if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
-//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-//                [images addObject:image];
-//                
-//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
-//                [imageview setContentMode:UIViewContentModeScaleAspectFit];
-//                imageview.frame = workingFrame;
-//                
-//                [_scrollView addSubview:imageview];
-//                
-//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
-//            } else {
-//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-//            }
-//        } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
-//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-//                
-//                [images addObject:image];
-//                
-//                UIImageView *imageview = [[UIImageView alloc] initWithImage:image];
-//                [imageview setContentMode:UIViewContentModeScaleAspectFit];
-//                imageview.frame = workingFrame;
-//                
-//                [_scrollView addSubview:imageview];
-//                
-//                workingFrame.origin.x = workingFrame.origin.x + workingFrame.size.width;
-//            } else {
-//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-//            }
-//        } else {
-//            NSLog(@"Uknown asset type");
-//        }
-//    }
-//    
-//    self.chosenImages = images;
-//    
-//    [_scrollView setPagingEnabled:YES];
-//    [_scrollView setContentSize:CGSizeMake(workingFrame.origin.x, workingFrame.size.height)];
 }
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker

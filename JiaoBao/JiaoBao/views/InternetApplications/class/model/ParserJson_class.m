@@ -32,7 +32,7 @@
         model.StarJson = [dic objectForKey:@"StarJson"]; 
         model.Title = [dic objectForKey:@"Title"];
         
-        NSString *Abstracts = [dic objectForKey:@"Thumbnail"];
+        NSString *Abstracts = [dic objectForKey:@"Abstracts"];
         if ([Abstracts isEqual:[NSNull null]]||[Abstracts isEqual:@"<null>"]) {
             model.Abstracts = @"";
         }else{
