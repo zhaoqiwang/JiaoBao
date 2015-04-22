@@ -256,7 +256,8 @@
 //                [[InternetAppRootScrollView shareInstance].exchangeView ProgressViewLoad];
                 mInt_show = 1;
             }
-        }else if (mInt_userSelectedChannelID == 101) {//事务
+        }
+        else if (mInt_userSelectedChannelID == 101) {//事务
             
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
 //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
