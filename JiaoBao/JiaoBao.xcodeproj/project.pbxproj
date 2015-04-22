@@ -4094,11 +4094,8 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
 				PROVISIONING_PROFILE = "ef842c2e-b213-48d2-a58f-a1901c3bb45c";
-=======
 				PROVISIONING_PROFILE = "";
->>>>>>> 0857cc8bf63e4a9a054f75fa8f88b9188bccdd54
 			};
 			name = Debug;
 		};
@@ -4124,11 +4121,8 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-<<<<<<< HEAD
 				PROVISIONING_PROFILE = "ef842c2e-b213-48d2-a58f-a1901c3bb45c";
-=======
 				PROVISIONING_PROFILE = "";
->>>>>>> 0857cc8bf63e4a9a054f75fa8f88b9188bccdd54
 			};
 			name = Release;
 		};
