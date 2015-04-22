@@ -128,6 +128,7 @@
     BaidumapView.showsUserLocation = YES;
     BaidumapView.delegate = self;
     _locService.delegate = self;
+    self.nameLabel2.text = @"定位中...";
 //    BaidumapView.showsUserLocation = NO;
 //    [_locService startUserLocationService];
 //
@@ -161,7 +162,7 @@
     BaidumapView.zoomLevel = 10;
     BMKLocationViewDisplayParam *displayParam = [[BMKLocationViewDisplayParam alloc]init];
     displayParam.isRotateAngleValid = true;//跟随态旋转角度是否生效
-    displayParam.isAccuracyCircleShow = false;//精度圈是否显示
+    displayParam.isAccuracyCircleShow = YES;//精度圈是否显示
     //displayParam.locationViewImgName= @"icon";//定位图标名称
     displayParam.locationViewOffsetX = 0;//定位偏移量(经度)
     displayParam.locationViewOffsetY = 0;//定位偏移量（纬度）
@@ -207,6 +208,8 @@
     }
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     locationManager.distanceFilter = 10;
+    
+
 //    MKCoordinateRegion region;
 //    //region.span = MKCoordinateSpanMake(2, 1);
 //    region.span.longitudeDelta =0.005;
@@ -256,6 +259,7 @@
 
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)getCurrentTime:(id)sender
 {
     NSDictionary *dic = [sender object];
@@ -355,15 +359,23 @@ errorCode:(BMKSearchErrorCode)error{
         [BaidumapView removeOverlay:self.circle];
         self.circle = nil;
         NSDictionary *dic = [[sender object]objectAtIndex:0];
-        self.nameLabel.text = [dic objectForKey:@"AddressName"];
-        self.nameLabel.backgroundColor = [UIColor clearColor];
-        self.nameLabel.font = [UIFont systemFontOfSize:12];
-        self.nameLabel.textAlignment = NSTextAlignmentCenter;
-        self.nameLabel.textColor = [UIColor blueColor];
-        [self.view addSubview:self.nameLabel];
+        
+//        self.nameLabel.text = [dic objectForKey:@"AddressName"];
+//        self.nameLabel.backgroundColor = [UIColor clearColor];
+//        self.nameLabel.font = [UIFont systemFontOfSize:12];
+//        self.nameLabel.textAlignment = NSTextAlignmentCenter;
+//        self.nameLabel.textColor = [UIColor blueColor];
+//        [BaidumapView addSubview:self.nameLabel];
         self.Longitude = (CLLocationDegrees)[[dic objectForKey:@"Longitude"] doubleValue];
         self.Latitude = (CLLocationDegrees)[[dic objectForKey:@"Latitude"] doubleValue];
-        //nameLabel.center = CGPointMake(self.Longitude, self.Latitude);
+        BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
+        CLLocationCoordinate2D coor;
+        coor.latitude = self.Latitude;
+        coor.longitude = self.Longitude;
+        annotation.coordinate = coor;
+        annotation.title = [dic objectForKey:@"AddressName"];
+        [BaidumapView addAnnotation:annotation];
+        //self.nameLabel.center = CGPointMake(self.Longitude, self.Latitude);
         NSLog(@"Longitude = %f %f",self.Longitude,self.Latitude);
         
         
