@@ -156,6 +156,9 @@
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
     SendToMeUserListModel *model = noti.object;
+    D("lastID = %@",model.LastID);
+    
+    //[utils logDic:noti.object];
     if (model.LastID.length==0) {
         [self.mTableV_detail removeHeader];
         [self.dropDownLabel setFrame:CGRectZero];
@@ -186,6 +189,7 @@
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
     NSMutableArray *array = noti.object;
+    
     if (array.count>1) {
         //将值倒序插入
         if (self.mArr_msg.count==1) {
@@ -203,6 +207,8 @@
     
     if (array.count!=20) {
         [self.mTableV_detail removeHeader];
+
+        
     }
     [self addArray];
 }
@@ -254,6 +260,8 @@
     }else if (self.mInt_our == 2){
         [[LoginSendHttp getInstance] login_SendToMeMsgList:@"20" Page:[NSString stringWithFormat:@"%d",self.mInt_msg] senderAccId:model.JiaoBaoHao sDate:@"" eDate:@"" readFlag:@"" lastId:self.mStr_lastID];
     }
+    [self.dropDownLabel setFrame:CGRectZero];
+    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     
     [self ProgressViewLoad];
 }

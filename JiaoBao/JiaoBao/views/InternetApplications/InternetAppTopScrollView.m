@@ -186,20 +186,22 @@
         mInt_userSelectedChannelID = sender.tag;
     }
     [InternetAppRootScrollView shareInstance].mInt = (int)sender.tag - 100;
-    [self sendRequest];
     //按钮选中状态
     if (!sender.selected) {
         sender.selected = YES;
         [UIView animateWithDuration:0.25 animations:^{
             
             [self.mImgV_slide setFrame:CGRectMake(sender.frame.origin.x, 38, [dm getInstance].width/self.mArr_name.count, 2)];
+
             
         } completion:^(BOOL finished) {
             if (finished) {
                 //设置页出现
-                [[InternetAppRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:YES];
+            [[InternetAppRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
                 //赋值滑动列表选择ID
                 mInt_scrollViewSelectedChannelID = sender.tag;
+                [self sendRequest];
+
             }
         }];
     }
@@ -256,7 +258,8 @@
 //                [[InternetAppRootScrollView shareInstance].exchangeView ProgressViewLoad];
                 mInt_show = 1;
             }
-        }else if (mInt_userSelectedChannelID == 101) {//事务
+        }
+        else if (mInt_userSelectedChannelID == 101) {//事务
             
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
 //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
