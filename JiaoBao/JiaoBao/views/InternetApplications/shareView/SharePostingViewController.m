@@ -320,10 +320,31 @@
                 case 0:
                     return;
                 case 1: //相机
+                {
                     sourceType = UIImagePickerControllerSourceTypeCamera;
+                    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+                    imagePickerController.delegate = self;
+                    imagePickerController.allowsEditing = NO;
+                    imagePickerController.sourceType = sourceType;
+
+                    [self presentViewController:imagePickerController animated:YES completion:^{}];
+                }
                     break;
                 case 2: //相册
+                {
                     sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                    
+                    elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
+                    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+                    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+                    elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+                    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
+                    
+                    elcPicker.imagePickerDelegate = self;
+                    
+                    [self presentViewController:elcPicker animated:YES completion:nil];
+                }
                     break;
             }
         }
@@ -332,25 +353,82 @@
                 return;
             } else {
                 sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+                ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                
+                elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
+                elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+                elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+                elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+                elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
+                
+                elcPicker.imagePickerDelegate = self;
+                
+                [self presentViewController:elcPicker animated:YES completion:nil];
             }
+
         }
-        ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-        
-        elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
-        elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
-        elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
-        elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
-        elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
-        
-        elcPicker.imagePickerDelegate = self;
-        
-        [self presentViewController:elcPicker animated:YES completion:nil];
+
+
     }
 }
+#pragma mark - image picker delegte
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
+    if (!image) {
+        image=[info objectForKey:UIImagePickerControllerOriginalImage];
+    }
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSData *imageData = UIImageJPEGRepresentation(image,0.75);
+    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+    D("图片路径是：%@",imgPath);
+    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+    if (!yesNo) {//不存在，则直接写入后通知界面刷新
+        BOOL result = [imageData writeToFile:imgPath atomically:YES];
+        for (;;) {
+            if (result) {
+                NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
+                
+                [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                
+                
+                
+                
+                break;
+            }
+        }
+    }else {
+        //存在
+        BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
+        if (blDele) {//删除成功后，写入，通知界面
+            BOOL result = [imageData writeToFile:imgPath atomically:YES];
+            for (;;) {
+                if (result) {
+                    NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
+                    
+                    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                    
+                    break;
+                }
+            }
+        }
+    }
+
+    self.mInt_index ++;
+    [self.mProgressV hide:YES];
+
+
+}
+
 
 -(void)imagePickerMutilSelectorDidGetImages:(NSArray *)imageArray
 {
-    NSLog(@"%ld",imageArray.count);
 //    importItems=[[NSMutableArrayalloc] initWithArray:imageArray copyItems:YES];
 }
 
@@ -422,7 +500,7 @@
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                 NSData *imageData = UIImageJPEGRepresentation(image,0.75);
                 NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
-
+                
                 //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
                 //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
                 D("图片路径是：%@",imgPath);
@@ -432,12 +510,12 @@
                     for (;;) {
                         if (result) {
                             NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
-
+                            
                             [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
                             self.mInt_index ++;
-
-
-
+                            
+                            
+                            
                             
                             break;
                         }
@@ -468,8 +546,7 @@
         }
         timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
     }
-    [self.mProgressV hide:YES];
-}
+    [self.mProgressV hide:YES];}
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
 {
