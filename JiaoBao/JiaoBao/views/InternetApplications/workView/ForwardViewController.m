@@ -963,6 +963,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mTextV_enter.text = @"";
     [self.mArr_accessory removeAllObjects];
     [self.mArr_photo removeAllObjects];
+    //刷新界面
+    [self addAccessoryPhoto];
+    //刷新界面
+    [self addAccessory];
     //
     if (self.mInt_where == 0) {//发送短信
         if (self.mInt_select_send == 3) {

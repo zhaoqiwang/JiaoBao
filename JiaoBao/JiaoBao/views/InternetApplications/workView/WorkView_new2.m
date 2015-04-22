@@ -26,6 +26,9 @@
         //通知事务界面，切换成功身份成功，清空数组
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+        //切换账号时，更新数据
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RegisterView" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RegisterView:) name:@"RegisterView" object:nil];
         
         self.mArr_unReply = [NSMutableArray array];
         self.mArr_unRead = [NSMutableArray array];
@@ -81,6 +84,12 @@
         self.mProgressV.delegate = self;
     }
     return self;
+}
+
+//切换账号时，更新数据
+-(void)RegisterView:(NSNotification *)noti{
+    [self clearArray];
+    self.mInt_index = 0;
 }
 
 -(void)UnReadMsgCell:(NSNotification *)noti{
@@ -442,8 +451,8 @@
 
 //通知学校界面，切换成功身份成功，清空数组
 -(void)changeCurUnit{
-    [self clearArray];
-    [self.mTableV_list reloadData];
+//    [self clearArray];
+//    [self.mTableV_list reloadData];
 }
 
 //清空所有数据
@@ -453,6 +462,7 @@
     [self.mArr_sum removeAllObjects];
     [self.mArr_unRead removeAllObjects];
     [self.mArr_unReply removeAllObjects];
+    [self.mTableV_list reloadData];
 }
 
 @end

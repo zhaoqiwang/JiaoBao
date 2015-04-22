@@ -37,6 +37,9 @@
         //通知学校界面，切换成功身份成功，清空数组
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+        //切换账号时，更新数据
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RegisterView" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RegisterView:) name:@"RegisterView" object:nil];
         
         self.mArr_unit = [NSMutableArray array];
         self.mArr_class = [NSMutableArray array];
@@ -104,10 +107,20 @@
     return self;
 }
 
+//切换账号时，更新数据
+-(void)RegisterView:(NSNotification *)noti{
+    [self clearArray];
+    self.mInt_index = 0;
+}
+
 //通知学校界面，切换成功身份成功，清空数组
 -(void)changeCurUnit{
     [self clearArray];
     [self.mTableV_list reloadData];
+    //重新获取数据
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.tag = self.mInt_index;
+    [self btnChange:btn];
 }
 
 //获取到头像后，更新界面
@@ -211,25 +224,15 @@
 //按钮点击事件
 -(void)btnChange:(UIButton *)btn{
     D("utype-===%d",[dm getInstance].uType);
-    //获取关联班级
-    [[ShareHttp getInstance] shareHttpGetMyUserClassWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Section:@"4"];
     self.mInt_index = (int)btn.tag;
     //点击按钮时，判断是否应该进行数据获取
-    if (self.mInt_index == 0||self.mArr_unitTop.count==0||self.mArr_unit.count==0) {
+    if (self.mInt_index == 0&&(self.mArr_unitTop.count==0||self.mArr_unit.count==0)) {
         if (self.mArr_unitTop.count==0) {
-            if ([dm getInstance].uType==1) {
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            }else{
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            }
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
             [self ProgressViewLoad];
         }
         if (self.mArr_unit.count==0) {
-            if ([dm getInstance].uType==1) {
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            }else{
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            }
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
             [self ProgressViewLoad];
         }
     }else if (self.mInt_index == 1&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
@@ -248,6 +251,7 @@
     }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
         [self tableViewDownReloadData];
     }
+    D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
     //切换图片
     for (UIButton *tempBtn in self.mView_button.subviews) {
         if ([tempBtn isKindOfClass:[UIButton class]]) {
@@ -264,13 +268,8 @@
 -(void)tableViewDownReloadData{
     if (self.mInt_index == 0) {
         //flag=1个人，=2单位
-        if ([dm getInstance].uType==1) {
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-        }else{
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-        }
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
         [self ProgressViewLoad];
     }else if (self.mInt_index == 1){
         [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
@@ -491,12 +490,13 @@
     if (contentSize.height>26) {
         contentSize = CGSizeMake([dm getInstance].width-82, 30);
         cell.mLab_content.numberOfLines = 2;
+        cell.mView_background.hidden = NO;
     }
     if (model.Abstracts.length==0) {
         contentSize = CGSizeMake([dm getInstance].width-82, 0);
         cell.mView_background.hidden = YES;
     }
-    cell.mLab_content.frame = CGRectMake(62+3, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+5, contentSize.width, contentSize.height);
+    cell.mLab_content.frame = CGRectMake(62+5, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+4, contentSize.width, contentSize.height);
     cell.mLab_content.text = model.Abstracts;
     
     //添加图片点击事件
@@ -508,7 +508,7 @@
     [cell headImgClick];
     cell.headImgDelegate = self;
     //详情背景色
-    cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+4);
+    cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+8);
     //是否有文章图片需要显示
     if (model.Thumbnail.count>0) {
         cell.mView_img.hidden = NO;
@@ -704,11 +704,7 @@
                 return;
             }
             int a = (int)self.mArr_unit.count/20+1;
-            if ([dm getInstance].uType==1) {
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            }else{
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            }
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
             [self ProgressViewLoad];
         } else {
             [self loadNoMore];
@@ -872,6 +868,8 @@
     [self.mArr_localTop removeAllObjects];
     [self.mArr_sum removeAllObjects];
     [self.mArr_sumTop removeAllObjects];
+    [self.mArr_unit removeAllObjects];
+    [self.mArr_unitTop removeAllObjects];
 }
 
 @end

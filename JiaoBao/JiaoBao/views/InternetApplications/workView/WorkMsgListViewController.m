@@ -489,7 +489,8 @@
             cellFloat = tempW;
         }
         //计算行数
-        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+//        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+        [cell.mLab_content setNumberOfLines:0];
         cell.mLab_content.frame = CGRectMake([dm getInstance].width-cellFloat-60, cell.mImgV_head.frame.origin.y+5, cellFloat, contentSize.height);
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workDetail"];

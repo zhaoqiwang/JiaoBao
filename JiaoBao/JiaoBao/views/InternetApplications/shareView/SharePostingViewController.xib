@@ -12,6 +12,7 @@
                 <outlet property="mBtn_send2" destination="sAS-s8-8qr" id="9sB-4G-CPS"/>
                 <outlet property="mLab_dongtai" destination="pUs-9h-hUZ" id="WbU-lx-Sqf"/>
                 <outlet property="mLab_fabu" destination="YE9-zw-KbH" id="OQf-Px-UWw"/>
+                <outlet property="mLab_hidden" destination="EGS-iV-XoG" id="Puy-uS-IBo"/>
                 <outlet property="mTextF_title" destination="Du8-IG-Nug" id="ykK-q6-ehB"/>
                 <outlet property="mTextV_content" destination="9XG-IG-Z0o" id="vOw-3M-OtU"/>
                 <outlet property="pullDownBtn" destination="tzW-eT-F2h" id="mDT-oe-PG3"/>
@@ -23,6 +24,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EGS-iV-XoG">
+                    <rect key="frame" x="103" y="418" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入标题" minimumFontSize="17" id="Du8-IG-Nug">
                     <rect key="frame" x="8" y="35" width="304" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

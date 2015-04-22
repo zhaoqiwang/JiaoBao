@@ -305,11 +305,11 @@
                       fromRect:btn.frame
                      menuItems:menuItems];
     }else if (btn.tag == 2) {//点击添加按钮,让显示不同的界面时，点击出现不同的功能
-        if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
+//        if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
             [self showMenu:btn];
-        }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
-            [self shareAddMenu:btn];
-        }
+//        }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
+//            [self shareAddMenu:btn];
+//        }
     }
 }
 
@@ -496,7 +496,7 @@
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
-    //通知shareView界面，更新数据
+    //通知界面，更新数据
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegisterView" object:nil];
     [Nav_internetAppView getInstance].mLab_name.text = @"";
     [utils pushViewController:mRegister_view animated:NO];
@@ -577,6 +577,7 @@
         SharePostingViewController *posting = [[SharePostingViewController alloc] init];
         posting.mModel_unit = model;
         posting.mInt_section = 1;
+        posting.mArr_dynamic = array;//*
         posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
         posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
         [utils pushViewController:posting animated:YES];
