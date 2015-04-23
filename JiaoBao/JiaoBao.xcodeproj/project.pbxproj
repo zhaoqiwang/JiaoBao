@@ -685,6 +685,8 @@
 		F7F460B61AE891C70069820F /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B31AE891C70069820F /* triangle.png */; };
 		F7F460B71AE891C70069820F /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B41AE891C70069820F /* triangle@2x.png */; };
 		F7F460B81AE891C70069820F /* triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B51AE891C70069820F /* triangle@3x.png */; };
+		F7F460C31AE8C0820069820F /* MemberGroupCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F460C11AE8C0820069820F /* MemberGroupCell.m */; };
+		F7F460C41AE8C0820069820F /* MemberGroupCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F460C21AE8C0820069820F /* MemberGroupCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1733,6 +1735,9 @@
 		F7F460B31AE891C70069820F /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = Image/InternetApp/share/triangle.png; sourceTree = "<group>"; };
 		F7F460B41AE891C70069820F /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@2x.png"; path = "Image/InternetApp/share/triangle@2x.png"; sourceTree = "<group>"; };
 		F7F460B51AE891C70069820F /* triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@3x.png"; path = "Image/InternetApp/share/triangle@3x.png"; sourceTree = "<group>"; };
+		F7F460C01AE8C0820069820F /* MemberGroupCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberGroupCell.h; sourceTree = "<group>"; };
+		F7F460C11AE8C0820069820F /* MemberGroupCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberGroupCell.m; sourceTree = "<group>"; };
+		F7F460C21AE8C0820069820F /* MemberGroupCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MemberGroupCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2043,6 +2048,9 @@
 				A75A37341A087C76009D2464 /* ForwardViewController.h */,
 				A75A37351A087C76009D2464 /* ForwardViewController.m */,
 				A75A37361A087C76009D2464 /* ForwardViewController.xib */,
+				F7F460C01AE8C0820069820F /* MemberGroupCell.h */,
+				F7F460C11AE8C0820069820F /* MemberGroupCell.m */,
+				F7F460C21AE8C0820069820F /* MemberGroupCell.xib */,
 				A7375F3D1A0B233A00B31926 /* Forward_section.h */,
 				A7375F3E1A0B233A00B31926 /* Forward_section.m */,
 				A7375F3F1A0B233A00B31926 /* Forward_section.xib */,
@@ -3599,6 +3607,7 @@
 				A76ED5C61AD67855006F3E0B /* workView_click_1@3x.png in Resources */,
 				A761D3F11A7F697900DCAEB9 /* rootTable_1@3x.png in Resources */,
 				A75046951A0A14BC00C54ECC /* forward_sendMsg2.png in Resources */,
+				F7F460C41AE8C0820069820F /* MemberGroupCell.xib in Resources */,
 				A7AAC4CD19F75DB200A0ED40 /* appNav_add.png in Resources */,
 				A727C7D91A6F93780019C4CD /* share_likeBig_0@3x.png in Resources */,
 				A76ED5C91AD67855006F3E0B /* workView_click_2@3x.png in Resources */,
@@ -3896,6 +3905,7 @@
 				A748219C19FF304F00234020 /* MyNavigationBar.m in Sources */,
 				A755E67319F2492700BBDF3D /* main.m in Sources */,
 				A748219719FF2AE500234020 /* MsgDetailViewController.m in Sources */,
+				F7F460C31AE8C0820069820F /* MemberGroupCell.m in Sources */,
 				F71803241AB3C46300E6167F /* JTCalendarMonthView.m in Sources */,
 				F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */,
 				A77FF02B1A650B3F00DB85E3 /* NSArray+JSONModel.m in Sources */,
@@ -4235,7 +4245,6 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-
 			};
 			name = Debug;
 		};
@@ -4262,7 +4271,6 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-
 			};
 			name = Release;
 		};
