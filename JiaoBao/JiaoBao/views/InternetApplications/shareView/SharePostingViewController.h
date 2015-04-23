@@ -16,7 +16,7 @@
 #import "ELCImagePickerHeader.h"
 #import "ReleaseNewsUnitsModel.h"
 
-@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate>{
+@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextViewDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITextView *mTextV_content;//内容
     MBProgressHUD *mProgressV;//
@@ -34,7 +34,9 @@
     UILabel *mLab_dongtai;//动态lab
     NSMutableArray *mArr_dynamic;//动态中的权限数组
     UILabel *mLab_hidden;//点击时输入框消失
+    UILabel *_placeholderLabel;
 }
+@property (weak, nonatomic) IBOutlet UILabel *_placeholdLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pullDownBtn;
 - (IBAction)pullAction:(id)sender;
 
@@ -55,5 +57,10 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_dongtai;//动态lab
 @property (nonatomic,strong) NSMutableArray *mArr_dynamic;//动态中的权限数组
 @property (nonatomic,strong) IBOutlet UILabel *mLab_hidden;//点击时输入框消失
+@property (weak, nonatomic) IBOutlet UIButton *cameraBtn;
+@property (weak, nonatomic) IBOutlet UIButton *albumBtn;
+- (IBAction)cameraBtnAction:(id)sender;
+- (IBAction)albumBtnAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIView *secondVIew;
 
 @end

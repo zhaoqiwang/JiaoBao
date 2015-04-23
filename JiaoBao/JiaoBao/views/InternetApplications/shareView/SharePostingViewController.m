@@ -42,6 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:240/255.0 green:239/255.0 blue:245/255.0 alpha:1];
     self.isOpen = NO;
     self.view.tag = 5;
     self.mLab_hidden.frame = self.view.frame;
@@ -95,7 +96,7 @@
     }
     else
     {
-    self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2)];
+    self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.secondVIew.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2)];
     }
     [self.mTableV_type initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
         return pullArr.count;
@@ -122,9 +123,14 @@
     }];
     [self.view addSubview:self.mTableV_type];
     [self.mTableV_type.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [self.mTableV_type.layer setBorderWidth:2];
+    [self.mTableV_type.layer setBorderWidth:1];
     [self.pullDownBtn.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [self.pullDownBtn.layer setBorderWidth:2];
+    [self.pullDownBtn.layer setBorderWidth:1];
+    
+    [self.cameraBtn.layer setCornerRadius:6];
+    [self.albumBtn.layer setCornerRadius:6];
+    [self.mBtn_send.layer setCornerRadius:6];
+    [self.pullDownBtn.layer setCornerRadius:3];
     
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
@@ -143,21 +149,21 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     //标题
-    self.mTextF_title.frame = CGRectMake(10, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width-20, self.mTextF_title.frame.size.height);
+    //self.mTextF_title.frame = CGRectMake(10, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width-20, self.mTextF_title.frame.size.height);
     //内容
-    self.mTextV_content.frame = CGRectMake(10, self.mTextF_title.frame.origin.y+self.mTextF_title.frame.size.height+10, [dm getInstance].width-20, 50);
+    //self.mTextV_content.frame = CGRectMake(10, self.mTextF_title.frame.origin.y+self.mTextF_title.frame.size.height+15, [dm getInstance].width-20, 80);
     //添加边框
     self.mTextV_content.layer.borderWidth = .5;
-    self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
+    self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 8;
     self.mTextV_content.layer.masksToBounds = YES;
     //发表按钮
-    self.mBtn_send.frame = CGRectMake(10, self.mBtn_send.frame.origin.y, [dm getInstance].width-20, self.mBtn_send.frame.size.height);
+    //self.mBtn_send.frame = CGRectMake(10, self.mBtn_send.frame.origin.y, [dm getInstance].width-20, self.mBtn_send.frame.size.height);
     [self.mBtn_send addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
     self.mBtn_send2.hidden = YES;
     //选择图片按钮
-    self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_selectPic.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
+    //self.mBtn_selectPic.frame = CGRectMake([dm getInstance].width-self.mBtn_selectPic.frame.size.width-10, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mBtn_selectPic.frame.size.width, self.mBtn_selectPic.frame.size.height);
     [self.mBtn_selectPic addTarget:self action:@selector(clickSelectPic:) forControlEvents:UIControlEventTouchUpInside];
     //添加边框
     self.mBtn_selectPic.layer.borderWidth = .5;
@@ -464,7 +470,7 @@
     }
     else
     {
-        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*5);
+        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height+320, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*5);
     }
     self.isOpen = !self.isOpen;
     [self.mTextF_title resignFirstResponder];
@@ -553,4 +559,59 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)cameraBtnAction:(id)sender {
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+    NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.sourceType = sourceType;
+    [self presentViewController:imagePickerController animated:YES completion:^{}];
+
+    }
+    else
+    {
+        
+    }
+    
+}
+
+- (IBAction)albumBtnAction:(id)sender {
+
+
+    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+    
+    elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
+    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+    elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
+    
+    elcPicker.imagePickerDelegate = self;
+    
+    [self presentViewController:elcPicker animated:YES completion:nil];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+
+{    if (![text isEqualToString:@""])
+    
+{
+    
+    self._placeholdLabel.hidden = YES;
+    
+}
+    
+    if ([text isEqualToString:@""] && range.location == 0 && range.length == 1)
+        
+    {
+        
+        self._placeholdLabel.hidden = NO;
+        
+    }
+    
+    return YES;
+    
+}
 @end
