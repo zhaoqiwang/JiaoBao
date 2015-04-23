@@ -773,62 +773,152 @@
 - (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
+    
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-        photo.srcImageView = imageView;
-        [photos addObject:photo];
+        D("getImageStrUrl-====%@",getImageStrUrl);
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
     }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:0];
     
-    // 2.显示相册
-    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
-    [browser show];
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    [utils pushViewController:browser animated:YES];
 }
 
 - (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
+    
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-        photo.srcImageView = imageView;
-        [photos addObject:photo];
+        D("getImageStrUrl-====%@",getImageStrUrl);
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
     }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:1];
     
-    // 2.显示相册
-    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
-    [browser show];
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    [utils pushViewController:browser animated:YES];
+//    self.navigationController.title = @"";
+//    [self.navigationController pushViewController:browser animated:YES];
 }
 
 
 - (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
+        
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-        MJPhoto *photo = [[MJPhoto alloc] init];
-        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-        photo.srcImageView = imageView;
-        [photos addObject:photo];
+        D("getImageStrUrl-====%@",getImageStrUrl);
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
     }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:2];
     
-    // 2.显示相册
-    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
-    [browser show];
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    [utils pushViewController:browser animated:YES];
 }
 -(void)ClassTableViewCellHeadImgTapPress:(ClassTableViewCell *)topArthListCell{
     ClassModel *ClassModel = topArthListCell.mModel_class;
@@ -856,6 +946,28 @@
         personal.mModel_personal = userModel;
         [utils pushViewController:personal animated:YES];
     }
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _photos.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _photos.count)
+        return [_photos objectAtIndex:index];
+    return nil;
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
+    NSLog(@"Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+}
+
+- (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
+    // If we subscribe to this method we must dismiss the view controller ourselves
+    NSLog(@"Did finish modal presentation");
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [utils popViewControllerAnimated:YES];
 }
 
 //当切换账号时，将此界面的所有数组清空
