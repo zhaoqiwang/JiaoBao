@@ -657,6 +657,9 @@
 		F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
 		F7DC76461AC698BC00D6B0CE /* libbaidumapapis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */; };
+		F7F460B61AE891C70069820F /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B31AE891C70069820F /* triangle.png */; };
+		F7F460B71AE891C70069820F /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B41AE891C70069820F /* triangle@2x.png */; };
+		F7F460B81AE891C70069820F /* triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B51AE891C70069820F /* triangle@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1671,6 +1674,9 @@
 		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
 		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
 		F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbaidumapapis.a; path = Common/BaiduSDk/libbaidumapapis.a; sourceTree = "<group>"; };
+		F7F460B31AE891C70069820F /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = Image/InternetApp/share/triangle.png; sourceTree = "<group>"; };
+		F7F460B41AE891C70069820F /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@2x.png"; path = "Image/InternetApp/share/triangle@2x.png"; sourceTree = "<group>"; };
+		F7F460B51AE891C70069820F /* triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@3x.png"; path = "Image/InternetApp/share/triangle@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2090,6 +2096,9 @@
 		A753E5291A1B3D77005A8EED /* share */ = {
 			isa = PBXGroup;
 			children = (
+				F7F460B31AE891C70069820F /* triangle.png */,
+				F7F460B41AE891C70069820F /* triangle@2x.png */,
+				F7F460B51AE891C70069820F /* triangle@3x.png */,
 				A727C7C81A6F93780019C4CD /* share_clickBig.png */,
 				A727C7C91A6F93780019C4CD /* share_clickBig@2x.png */,
 				A727C7CA1A6F93780019C4CD /* share_clickBig@3x.png */,
@@ -3484,9 +3493,11 @@
 				A7AAC4CD19F75DB200A0ED40 /* appNav_add.png in Resources */,
 				A727C7D91A6F93780019C4CD /* share_likeBig_0@3x.png in Resources */,
 				A76ED5C91AD67855006F3E0B /* workView_click_2@3x.png in Resources */,
+				F7F460B71AE891C70069820F /* triangle@2x.png in Resources */,
 				A761D3EE1A7F697900DCAEB9 /* rootTable_0@3x.png in Resources */,
 				A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */,
 				A71D61E41A1C96A400B8D33D /* share_new1@2x.png in Resources */,
+				F7F460B61AE891C70069820F /* triangle.png in Resources */,
 				F79D84DB1ABD4DC000897477 /* sectionView.xib in Resources */,
 				A78D65E01A8A04E800BE6326 /* workDetail@2x.png in Resources */,
 				A71D61E81A1C96A400B8D33D /* share_next1@2x.png in Resources */,
@@ -3539,6 +3550,7 @@
 				A7BB180A19F4F91E00A81286 /* Regiser_passwd.png in Resources */,
 				A773FC2F1A4BBD02005F84C2 /* UpLoadPhotoViewController.xib in Resources */,
 				A7CE67391AA70A250038D0C5 /* showUnit@2x.png in Resources */,
+				F7F460B81AE891C70069820F /* triangle@3x.png in Resources */,
 				A7AD8C5019F644A2002E65FB /* tabbar_app2.png in Resources */,
 				A7B0F94D1A47BC4300C1863A /* MJPhotoBrowser.bundle in Resources */,
 				A761D3F01A7F697900DCAEB9 /* rootTable_1@2x.png in Resources */,
@@ -4094,7 +4106,6 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ef842c2e-b213-48d2-a58f-a1901c3bb45c";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -4121,7 +4132,6 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ef842c2e-b213-48d2-a58f-a1901c3bb45c";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
