@@ -17,6 +17,7 @@
 + (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 + (void)pushViewController1:(UIViewController *)viewController animated:(BOOL)animated;
 + (UIViewController *)popViewControllerAnimated:(BOOL)animated;
++ (void)popViewControllerAnimated1:(BOOL)animated;
 + (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated;
 + (NSArray *)viewControllersInStack;
 + (UIViewController *)topViewController;
