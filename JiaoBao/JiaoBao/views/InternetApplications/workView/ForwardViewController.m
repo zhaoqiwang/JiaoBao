@@ -55,16 +55,62 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //上半部分
+    self.mView_top2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 0)];
+    self.mView_top2.backgroundColor = [UIColor whiteColor];
+    [self.mScrollV_all addSubview:self.mView_top2];
+    //输入框
+    self.mTextV_input2 = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, [dm getInstance].width-20, 60)];
+    //添加边框
+    self.mTextV_input2.layer.borderWidth = .5;
+    self.mTextV_input2.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    //将图层的边框设置为圆脚
+    self.mTextV_input2.layer.cornerRadius = 4;
+    self.mTextV_input2.layer.masksToBounds = YES;
+    [self.mView_top2 addSubview:self.mTextV_input2];
+    //附件
+    self.mBtn_accessory2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_accessory2.frame = CGRectMake(10, self.mTextV_input2.frame.origin.y+self.mTextV_input2.frame.size.height+10, 40, 30);
+    [self.mBtn_accessory2 setTitle:@"附件" forState:UIControlStateNormal];
+    [self.mBtn_accessory2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.mBtn_accessory2.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.mView_top2 addSubview:self.mBtn_accessory2];
+    //拍照
+    self.mBtn_photos2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_photos2.frame = CGRectMake(70, self.mBtn_accessory2.frame.origin.y, 40, 30);
+    [self.mBtn_photos2 setTitle:@"拍照" forState:UIControlStateNormal];
+    [self.mBtn_photos2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.mBtn_photos2.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.mView_top2 addSubview:self.mBtn_photos2];
+    //短信提醒
+    self.mBtn_sendMsg2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_sendMsg2.frame = CGRectMake(130, self.mBtn_accessory2.frame.origin.y, 60, 30);
+    [self.mBtn_sendMsg2 setTitle:@"短信提醒" forState:UIControlStateNormal];
+    [self.mBtn_sendMsg2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.mBtn_sendMsg2.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.mView_top2 addSubview:self.mBtn_sendMsg2];
+    //发送按钮
+    self.mBtn_send2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_send2.frame = CGRectMake(240, self.mBtn_accessory2.frame.origin.y, 40, 30);
+    [self.mBtn_send2 setTitle:@"发送" forState:UIControlStateNormal];
+    [self.mBtn_send2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.mBtn_send2.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.mView_top2 addSubview:self.mBtn_send2];
+    //附件显示框
+    self.mView_accessory2 = [[UIView alloc] initWithFrame:CGRectMake(20, self.mBtn_accessory2.frame.origin.y+self.mBtn_accessory2.frame.size.height+10, [dm getInstance].width-30, 0)];
+    //上半部分frame
+    self.mView_top2.frame = CGRectMake(0, 0, self.mView_top2.frame.size.width, self.mView_accessory2.frame.origin.y+self.mView_accessory2.frame.size.height);
+    [self.mScrollV_all addSubview:self.mView_top2];
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-    //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
-    self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar setGoBack];
-    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"forward_rightNav"]];
-    [self.view addSubview:self.mNav_navgationBar];
+//    //添加导航条
+//    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
+//    self.mNav_navgationBar.delegate = self;
+//    [self.mNav_navgationBar setGoBack];
+//    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"forward_rightNav"]];
+//    [self.view addSubview:self.mNav_navgationBar];
     
     
     if ([dm getInstance].identity.count>0) {
@@ -88,7 +134,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
     self.mModel_CMRevicer = [[CMRevicerModel alloc] init];
     //大scrollview的坐标
-    self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+10);
+    self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+10);
     //放单位信息的
     if (self.mInt_where == 0) {//发送短信
         self.mView_unit.frame =CGRectMake(Margin, Margin, [dm getInstance].width-2*Margin, 150);
@@ -168,7 +214,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.text = [dm getInstance].mStr_unit;
     
     //接收人，全选，反选，发表
-    self.mLab_4.frame =CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y+self.mBtn_sendMsg.frame.size.height, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(Margin, self.mView_top2.frame.size.height+self.mView_top2.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
     self.mBtn_all.frame = CGRectMake(self.mLab_4.frame.origin.x+self.mLab_4.frame.size.width, self.mLab_4.frame.origin.y, 40, 29);
     self.mBtn_all.backgroundColor = BtnColor;
     self.mBtn_all.tag = 1;
@@ -1280,7 +1326,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)CollectionReloadData{
     [self.mCollectionV_list reloadData];
     self.mCollectionV_list.frame = CGRectMake(self.mCollectionV_list.frame.origin.x, self.mCollectionV_list.frame.origin.y, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
-    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mCollectionV_list.frame.origin.y+self.mCollectionV_list.frame.size.height);
+    float height = self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height;
+    NSLog(@"height = %f",height);
+    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mCollectionV_list.frame.origin.y+self.mCollectionV_list.frame.size.height+150);
 }
 //获取当前单位中的人员
 -(void)sendRequest_member:(myUnit *)tempUnit{
@@ -1506,6 +1554,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
+    NSNumber *num = [NSNumber numberWithInteger:section];
+    if([[dm getInstance].sectionSet containsObject:num])
+    {
+        
+    }
+    else
+    {
+        return 0;
+    }
     if (self.mInt_where == 0) {//发送消息
 //        if (self.mInt_classNext == 1){
 ////            return self.mModel_class.studentgens_genselit.count;
@@ -1594,6 +1651,18 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //定义并返回每个headerView或footerView
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     Forward_section *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kDetailedViewControllerID forIndexPath:indexPath];
+    NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
+    if([[dm getInstance].sectionSet containsObject:num])
+    {
+        [view.addBtn setBackgroundImage:[UIImage imageNamed:@"plus.png"] forState:UIControlStateNormal];
+        [view.triangleBtn setBackgroundImage:[UIImage imageNamed:@"13.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [view.addBtn setBackgroundImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+        [view.triangleBtn setBackgroundImage:[UIImage imageNamed:@"12.png"] forState:UIControlStateNormal];
+
+    }
     view.delegate = self;
     view.tag = indexPath.section;
     if (self.mInt_where == 0) {//发送消息
@@ -1672,6 +1741,12 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //section点击事件
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
+    if(btn.tag == 3||btn.tag == 4)
+    {
+        [self CollectionReloadData];
+    }
+    else
+    {
     //找到当前点击的cell，然后改变选中值，重置界面
     if (self.mInt_where == 0) {//发送消息
         UserListModel *model = [self.mModel_myUnit.list objectAtIndex:section.tag];
@@ -1732,6 +1807,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }
     }
     [self.mCollectionV_list reloadData];
+    }
 }
 
 //导航条点击事件

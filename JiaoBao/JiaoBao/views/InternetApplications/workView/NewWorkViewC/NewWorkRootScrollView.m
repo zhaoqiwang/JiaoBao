@@ -31,8 +31,8 @@
         self.userInteractionEnabled = YES;
         self.bounces = YES;
         self.bouncesZoom = NO;//是否有弹簧效果
-        self.showsHorizontalScrollIndicator = NO;
-        self.showsVerticalScrollIndicator = NO;
+        self.showsHorizontalScrollIndicator = YES;
+        self.showsVerticalScrollIndicator = YES;
         [self setBackgroundColor:[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]];
         userContentOffsetX = 0;
         self.mInt = 0;

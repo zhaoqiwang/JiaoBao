@@ -7,17 +7,22 @@
 //
 
 #import "InsideWorkView.h"
+#import "dm.h"
 
 @implementation InsideWorkView
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
+        //self.mScrollV_all = [[UIScrollView alloc] initWithFrame:frame];
+        [self addSubview:self.mScrollV_all];
+        self.mScrollV_all.backgroundColor = [UIColor redColor];
+        
         // Initialization code
-        self.frame = frame;
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 70, 70, 40)];
-        lab.text = @"11111";
-        [self addSubview:lab];
+//        self.frame = frame;
+//        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 70, 70, 40)];
+//        lab.text = @"11111";
+//        [self addSubview:lab];
     }
     return self;
 }

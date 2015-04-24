@@ -7,6 +7,7 @@
 //
 
 #import "NewWorkViewController.h"
+#import "ForwardViewController.h"
 
 @interface NewWorkViewController ()
 
@@ -28,6 +29,19 @@
     [self.view addSubview:[NewWorkTopScrollView shareInstance]];
     //root
     [self.view addSubview:[NewWorkRootScrollView shareInstance]];
+    ForwardViewController *forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
+    forward.mStr_navName = @"新建事务";
+    forward.mInt_forwardFlag = 1;
+    forward.mInt_forwardAll = 2;
+    forward.mInt_flag = 1;
+    forward.mInt_all = 2;
+    forward.mInt_where = 0;
+    [self addChildViewController:forward];
+    [forward didMoveToParentViewController:self];
+    //[self addChild:leftTableVC withChildToRemove:nil];
+    [[NewWorkRootScrollView shareInstance] addSubview:forward.view];
+
+    
 }
 
 //导航条返回按钮回调

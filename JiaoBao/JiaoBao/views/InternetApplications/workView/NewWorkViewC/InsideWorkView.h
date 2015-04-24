@@ -10,6 +10,9 @@
 
 @interface InsideWorkView : UIView
 
+@property (nonatomic,strong) UIScrollView *mScrollV_all;//放所有控件
+
+
 - (id)initWithFrame1:(CGRect)frame;
 
 @end

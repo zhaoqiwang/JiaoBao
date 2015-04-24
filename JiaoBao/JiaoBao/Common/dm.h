@@ -61,6 +61,9 @@
 @property (nonatomic,strong) NSMutableArray *mArr_myFriends;//自己所有的好友分组、好友
 @property (nonatomic,strong) NSString *uuid;//启动时设置，注册成功后，添加到key中
 @property(nonatomic,assign)BOOL tableSymbol;
+@property(nonatomic,strong)NSMutableSet *sectionSet;
+@property(nonatomic,strong)NSMutableSet *sectionSet2;
+
 
 + (dm*) getInstance;
 

@@ -71,6 +71,14 @@
     UIView *mView_photo;//盛放需要发送的附件显示,相册或拍照
     NSMutableArray *mArr_photo;//附件列表,相册或拍照
 }
+@property (nonatomic,strong) UIView *mView_top2;//放列表的上部分控件
+@property (nonatomic,strong) UITextView *mTextV_input2;//输入内容
+@property (nonatomic,strong) UIButton *mBtn_accessory2;//附件按钮
+@property (nonatomic,strong) UIButton *mBtn_photos2;//拍照按钮
+@property (nonatomic,strong) UIButton *mBtn_sendMsg2;//是否发送短信
+@property (nonatomic,strong) UIButton *mBtn_send2;//发送按钮
+@property (nonatomic,strong) NSMutableArray *mArr_accessory2;//附件数组
+@property (nonatomic,strong) UIView *mView_accessory2;//显示附件用
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,assign) int mInt_flag;//判断是普通获取，还是短信直通车获取
