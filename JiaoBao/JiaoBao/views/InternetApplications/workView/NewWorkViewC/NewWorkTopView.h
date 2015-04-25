@@ -28,6 +28,9 @@
 //点击发送按钮
 -(void)mBtn_send:(UIButton *)btn;
 
+//删除附件
+-(void)deleteAccessory;
+
 @end
 
 @interface NewWorkTopView : UIView<UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,AccessoryViewControllerProtocol>{
