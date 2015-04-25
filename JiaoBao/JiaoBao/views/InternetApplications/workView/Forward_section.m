@@ -44,11 +44,19 @@
         [self.triangleBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.triangleBtn];
         
+        self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.rightBtn.frame = CGRectMake(self.frame.size.width-10-36*2-15, 12, 14, 14);
+        self.rightBtn.tag = 5;
+        [self.rightBtn setBackgroundImage:[UIImage imageNamed:@"10.png"] forState:UIControlStateNormal];
+        [self.rightBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.rightBtn];
+        
         self.mBtn_all = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_all.frame = CGRectMake(self.frame.size.width-10-36*2, 5, 36, 30);
         [self.mBtn_all setTitle:@"全选" forState:UIControlStateNormal];
+        [self.mBtn_all setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_all.titleLabel.font = [UIFont systemFontOfSize:12];
-        [self.mBtn_all setBackgroundColor:BtnColor];
+        //[self.mBtn_all setBackgroundColor:BtnColor];
         self.mBtn_all.tag = 1;
         [self.mBtn_all addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_all];
@@ -57,7 +65,9 @@
         self.mBtn_invertSelect.frame = CGRectMake(self.frame.size.width-5-36, 5, 36, 30);
         [self.mBtn_invertSelect setTitle:@"反选" forState:UIControlStateNormal];
         self.mBtn_invertSelect.titleLabel.font = [UIFont systemFontOfSize:12];
-        [self.mBtn_invertSelect setBackgroundColor:BtnColor];
+        [self.mBtn_invertSelect setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+        //[self.mBtn_invertSelect setBackgroundColor:BtnColor];
         self.mBtn_invertSelect.tag = 2;
         [self.mBtn_invertSelect addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_invertSelect];

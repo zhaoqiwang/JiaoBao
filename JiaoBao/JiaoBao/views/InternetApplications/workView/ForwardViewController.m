@@ -30,6 +30,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    self.insideWorkV.frame = self.insideWorkV.mView_top.frame;
+    NSLog(@"y = %f",self.insideWorkV.frame.origin.y);
+    [self setFrame];
     //向转发界面传递得到的人员单位列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
@@ -55,52 +58,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //上半部分
-    self.mView_top2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 0)];
-    self.mView_top2.backgroundColor = [UIColor whiteColor];
-    [self.mScrollV_all addSubview:self.mView_top2];
-    //输入框
-    self.mTextV_input2 = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, [dm getInstance].width-20, 60)];
-    //添加边框
-    self.mTextV_input2.layer.borderWidth = .5;
-    self.mTextV_input2.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
-    //将图层的边框设置为圆脚
-    self.mTextV_input2.layer.cornerRadius = 4;
-    self.mTextV_input2.layer.masksToBounds = YES;
-    [self.mView_top2 addSubview:self.mTextV_input2];
-    //附件
-    self.mBtn_accessory2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_accessory2.frame = CGRectMake(10, self.mTextV_input2.frame.origin.y+self.mTextV_input2.frame.size.height+10, 40, 30);
-    [self.mBtn_accessory2 setTitle:@"附件" forState:UIControlStateNormal];
-    [self.mBtn_accessory2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.mBtn_accessory2.titleLabel.font = [UIFont systemFontOfSize:12];
-    [self.mView_top2 addSubview:self.mBtn_accessory2];
-    //拍照
-    self.mBtn_photos2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_photos2.frame = CGRectMake(70, self.mBtn_accessory2.frame.origin.y, 40, 30);
-    [self.mBtn_photos2 setTitle:@"拍照" forState:UIControlStateNormal];
-    [self.mBtn_photos2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.mBtn_photos2.titleLabel.font = [UIFont systemFontOfSize:12];
-    [self.mView_top2 addSubview:self.mBtn_photos2];
-    //短信提醒
-    self.mBtn_sendMsg2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_sendMsg2.frame = CGRectMake(130, self.mBtn_accessory2.frame.origin.y, 60, 30);
-    [self.mBtn_sendMsg2 setTitle:@"短信提醒" forState:UIControlStateNormal];
-    [self.mBtn_sendMsg2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.mBtn_sendMsg2.titleLabel.font = [UIFont systemFontOfSize:12];
-    [self.mView_top2 addSubview:self.mBtn_sendMsg2];
-    //发送按钮
-    self.mBtn_send2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_send2.frame = CGRectMake(240, self.mBtn_accessory2.frame.origin.y, 40, 30);
-    [self.mBtn_send2 setTitle:@"发送" forState:UIControlStateNormal];
-    [self.mBtn_send2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.mBtn_send2.titleLabel.font = [UIFont systemFontOfSize:12];
-    [self.mView_top2 addSubview:self.mBtn_send2];
-    //附件显示框
-    self.mView_accessory2 = [[UIView alloc] initWithFrame:CGRectMake(20, self.mBtn_accessory2.frame.origin.y+self.mBtn_accessory2.frame.size.height+10, [dm getInstance].width-30, 0)];
-    //上半部分frame
-    self.mView_top2.frame = CGRectMake(0, 0, self.mView_top2.frame.size.width, self.mView_accessory2.frame.origin.y+self.mView_accessory2.frame.size.height);
-    [self.mScrollV_all addSubview:self.mView_top2];
+
+  
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
@@ -214,13 +173,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.text = [dm getInstance].mStr_unit;
     
     //接收人，全选，反选，发表
-    self.mLab_4.frame =CGRectMake(Margin, self.mView_top2.frame.size.height+self.mView_top2.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
-    self.mBtn_all.frame = CGRectMake(self.mLab_4.frame.origin.x+self.mLab_4.frame.size.width, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_all.backgroundColor = BtnColor;
+    self.insideWorkV = [[InsideWorkView alloc]initWithFrame1:CGRectMake(0, 10, [dm getInstance].width, 200)];
+    [self.mScrollV_all addSubview:self.insideWorkV];
+    self.mLab_4.frame =CGRectMake(Margin, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
+    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100, self.mLab_4.frame.origin.y, 40, 29);
+    //self.mBtn_all.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_all.tag = 1;
     [self.mBtn_all addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.mBtn_invertSelect.frame = CGRectMake(self.mBtn_all.frame.origin.x+self.mBtn_all.frame.size.width+5, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_invertSelect.backgroundColor = BtnColor;
+    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60, self.mLab_4.frame.origin.y, 40, 29);
+    //self.mBtn_invertSelect.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_invertSelect.tag = 2;
     [self.mBtn_invertSelect addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-Margin-81, self.mLab_4.frame.origin.y, 81, 29);
@@ -244,7 +205,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mTalbeV_sub.tag = 101;
     
     //人员列表
-    self.mCollectionV_list.frame = CGRectMake(Margin, self.mBtn_send.frame.origin.y+self.mBtn_send.frame.size.height+10, self.mView_unit.frame.size.width, 0);
+    self.mCollectionV_list.frame = CGRectMake(Margin,self.mLab_4.frame.size.height+self.mLab_4.frame.origin.y, self.mView_unit.frame.size.width, 0);
     self.mCollectionV_list.backgroundColor = [UIColor whiteColor];
     self.mCollectionV_list.layer.borderWidth = 1;
     self.mCollectionV_list.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
@@ -298,9 +259,11 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.frame = CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y, [dm getInstance].width-self.mBtn_sendMsg.frame.size.width-Margin*3, self.mBtn_sendMsg.frame.size.height);
     
     //接收人，全选，反选，发表
-    self.mLab_4.frame =CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y+self.mBtn_sendMsg.frame.size.height, self.mLab_4.frame.size.width, 29);
-    self.mBtn_all.frame = CGRectMake(self.mLab_4.frame.origin.x+self.mLab_4.frame.size.width, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_invertSelect.frame = CGRectMake(self.mBtn_all.frame.origin.x+self.mBtn_all.frame.size.width+5, self.mLab_4.frame.origin.y, 40, 29);
+    self.mLab_4.frame =CGRectMake(Margin, self.insideWorkV.frame.origin.y+self.insideWorkV.frame.size.height+20, self.mLab_4.frame.size.width, 29);
+    self.imgV.frame = CGRectMake([dm getInstance].width-15-100, self.mLab_4.frame.origin.y+7, 14, 14);
+    self.imgV.image = [UIImage imageNamed:@"10.png"];
+    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100, self.mLab_4.frame.origin.y, 40, 29);
+    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60, self.mLab_4.frame.origin.y, 40, 29);
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-Margin-81, self.mLab_4.frame.origin.y, 81, 29);
     //切换单位界面
     self.mView_switch.frame = CGRectMake(0, 0, [dm getInstance].width, 4*44);
@@ -309,7 +272,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //添加边框
     self.mTalbeV_sub.frame =CGRectMake([dm getInstance].width/2, 0, [dm getInstance].width/2, 4*44);
     //人员列表
-    self.mCollectionV_list.frame = CGRectMake(Margin, self.mBtn_send.frame.origin.y+self.mBtn_send.frame.size.height+10, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
+    self.mCollectionV_list.frame = CGRectMake(Margin, mLab_4.frame.origin.y+mLab_4.frame.size.height, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
 }
 
 //附件按钮点击事件
@@ -1756,6 +1719,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             //判断是全选还是反选
             if (btn.tag == 1) {
                 groupModel.mInt_select = 1;
+                
             }else{
                 if (groupModel.mInt_select == 0) {
                     groupModel.mInt_select = 1;

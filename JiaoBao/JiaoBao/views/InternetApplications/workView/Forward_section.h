@@ -23,6 +23,7 @@
 @property (strong,nonatomic) id<Forward_sectionDelegate> delegate;
 @property(nonatomic,strong)UIButton *addBtn;
 @property(nonatomic,strong)UIButton *triangleBtn;
+@property(nonatomic,strong)UIButton *rightBtn;
 
 
 - (void)initWithFrame1:(CGRect)frame;

@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ForwardViewController">
             <connections>
+                <outlet property="imgV" destination="Val-Ot-iK0" id="2Dg-Rd-l4V"/>
                 <outlet property="mBtn_accessory" destination="Qsi-aO-t9y" id="Vy0-iU-brK"/>
                 <outlet property="mBtn_all" destination="MO4-Ve-zOc" id="om3-Zw-BbJ"/>
                 <outlet property="mBtn_invertSelect" destination="hYr-Dd-PAd" id="u4a-aO-Ne8"/>
@@ -220,6 +221,10 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="Val-Ot-iK0">
+                            <rect key="frame" x="121" y="261" width="240" height="128"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
                     </subviews>
                 </scrollView>
             </subviews>

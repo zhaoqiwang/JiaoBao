@@ -128,7 +128,7 @@
     }
     self.mView_accessory.frame = CGRectMake(self.mView_accessory.frame.origin.x, self.mView_accessory.frame.origin.y, self.mView_accessory.frame.size.width, rect0.origin.y);
     self.mView_top.frame = CGRectMake(0, 0, self.mView_top.frame.size.width, self.mView_accessory.frame.origin.y+self.mView_accessory.frame.size.height);
-//    [self setFrame];
+    //[self setFrame];
 }
 
 -(void)mBtn_photo:(UIButton *)btn{
