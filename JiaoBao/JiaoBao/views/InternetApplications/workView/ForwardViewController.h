@@ -18,6 +18,7 @@
 #import "ELCImagePickerHeader.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "AccessoryViewController.h"
+#import "InsideWorkView.h"
 
 @interface ForwardViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,Forward_sectionDelegate,UIGestureRecognizerDelegate,MBProgressHUDDelegate,UITextViewDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,AccessoryViewControllerProtocol>{
     MyNavigationBar *mNav_navgationBar;//导航条
@@ -72,6 +73,7 @@
     NSMutableArray *mArr_photo;//附件列表,相册或拍照
 }
 
+
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,assign) int mInt_flag;//判断是普通获取，还是短信直通车获取
 @property (nonatomic,assign) int mInt_all;//是否群发，1是，2不是
@@ -121,6 +123,8 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_photo;//添加相册或拍照
 @property (nonatomic,strong) IBOutlet UIView *mView_photo;//盛放需要发送的附件显示,相册或拍照
 @property (nonatomic,strong) NSMutableArray *mArr_photo;//附件列表,相册或拍照
+@property(nonatomic,strong)InsideWorkView *insideWorkV;
+@property (weak, nonatomic) IBOutlet UIImageView *imgV;
 
 //附件按钮点击事件
 -(IBAction)mBtn_accessory:(UIButton *)btn;

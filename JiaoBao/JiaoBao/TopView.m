@@ -1,14 +1,14 @@
 //
-//  InsideWorkView.m
+//  TopView.m
 //  JiaoBao
 //
-//  Created by Zqw on 15-4-23.
+//  Created by songyanming on 15/4/25.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
 
-#import "InsideWorkView.h"
+#import "TopView.h"
 
-@implementation InsideWorkView
+@implementation TopView
 @synthesize mArr_accessory,mBtn_accessory,mBtn_photos,mBtn_send,mBtn_sendMsg,mScrollV_all,mTextV_input,mView_accessory,mView_top,mInt_sendMsg;
 
 - (id)initWithFrame1:(CGRect)frame{
@@ -17,13 +17,8 @@
         // Initialization code
         self.frame = frame;
         self.mArr_accessory = [NSMutableArray array];
-        //总框
-        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 10, [dm getInstance].width, self.frame.size.height-10)];
-        [self addSubview:self.mScrollV_all];
-        //上半部分
-        self.mView_top = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 0)];
-        self.mView_top.backgroundColor = [UIColor whiteColor];
-        [self.mScrollV_all addSubview:self.mView_top];
+
+
         //输入框
         self.mTextV_input = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, [dm getInstance].width-20, 60)];
         //添加边框
@@ -42,7 +37,7 @@
         [self.mBtn_accessory setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_accessory.titleLabel.font = [UIFont systemFontOfSize:12];
         [self.mBtn_accessory addTarget:self action:@selector(mBtn_accessory:) forControlEvents:UIControlEventTouchUpInside];
-        [self.mView_top addSubview:self.mBtn_accessory];
+        [self addSubview:self.mBtn_accessory];
         //拍照
         self.mBtn_photos = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_photos.frame = CGRectMake(self.mBtn_accessory.frame.origin.x+self.mBtn_accessory.frame.size.width+a, self.mBtn_accessory.frame.origin.y, 60, 30);
@@ -50,7 +45,7 @@
         [self.mBtn_photos setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_photos.titleLabel.font = [UIFont systemFontOfSize:12];
         [self.mBtn_photos addTarget:self action:@selector(mBtn_photo:) forControlEvents:UIControlEventTouchUpInside];
-        [self.mView_top addSubview:self.mBtn_photos];
+        [self addSubview:self.mBtn_photos];
         //短信提醒
         self.mBtn_sendMsg = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_sendMsg.frame = CGRectMake(self.mBtn_photos.frame.origin.x+self.mBtn_photos.frame.size.width+a, self.mBtn_accessory.frame.origin.y, 90, 30);
@@ -62,14 +57,14 @@
         [self.mBtn_sendMsg addTarget:self action:@selector(sendMsgBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self.mBtn_sendMsg setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_sendMsg.titleLabel.font = [UIFont systemFontOfSize:12];
-        [self.mView_top addSubview:self.mBtn_sendMsg];
+        [self addSubview:self.mBtn_sendMsg];
         //发送按钮
         self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_send.frame = CGRectMake(self.mBtn_sendMsg.frame.origin.x+self.mBtn_sendMsg.frame.size.width+a, self.mBtn_accessory.frame.origin.y, 50, 30);
         [self.mBtn_send setImage:[UIImage imageNamed:@"NewWork_Send"] forState:UIControlStateNormal];
         [self.mBtn_send setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:12];
-        [self.mView_top addSubview:self.mBtn_send];
+        [self addSubview:self.mBtn_send];
         //附件显示框
         self.mView_accessory = [[UIView alloc] initWithFrame:CGRectMake(20, self.mBtn_accessory.frame.origin.y+self.mBtn_accessory.frame.size.height+10, [dm getInstance].width-30, 0)];
         [self.mView_top addSubview:self.mView_accessory];
@@ -128,8 +123,6 @@
     }
     self.mView_accessory.frame = CGRectMake(self.mView_accessory.frame.origin.x, self.mView_accessory.frame.origin.y, self.mView_accessory.frame.size.width, rect0.origin.y);
     self.mView_top.frame = CGRectMake(0, 0, self.mView_top.frame.size.width, self.mView_accessory.frame.origin.y+self.mView_accessory.frame.size.height);
-//    self.frame = self.mView_top.frame;
-//    NSLog(@"insideWorkView.height = %f",self.frame.size.height);
     //    [self setFrame];
 }
 
@@ -347,5 +340,14 @@
     //添加显示附件
     [self addAccessoryPhoto];
 }
+
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    // Drawing code
+}
+*/
 
 @end

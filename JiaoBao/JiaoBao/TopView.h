@@ -1,8 +1,8 @@
 //
-//  InsideWorkView.h
+//  TopView.h
 //  JiaoBao
 //
-//  Created by Zqw on 15-4-23.
+//  Created by songyanming on 15/4/25.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 #import "ELCImagePickerHeader.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 
-@interface InsideWorkView : UIView<AccessoryViewControllerProtocol,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate>{
+@interface TopView : UIView<AccessoryViewControllerProtocol,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate>{
     UIScrollView *mScrollV_all;//放所有控件
     UIView *mView_top;//放列表的上部分控件
     UITextView *mTextV_input;//输入内容
