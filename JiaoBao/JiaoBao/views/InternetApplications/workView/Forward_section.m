@@ -122,7 +122,26 @@
     
         
     }
-
+//    if(btn.tag == 5)
+//    {
+//        if(!([dm getInstance].sectionSet2))
+//        {
+//            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+//            
+//        }
+//        if(![[dm getInstance].sectionSet2 containsObject:num] )
+//        {
+//            [[dm getInstance].sectionSet2 addObject:num];
+//            NSLog(@"mSet = %@",[dm getInstance].sectionSet2);
+//            
+//            
+//        }
+//        else
+//        {
+//            [[dm getInstance].sectionSet2 removeObject:num];
+//        }
+//    }
+//
             D("点击section中的btn-====%ld,%ld",(long)btn.tag,(long)self.tag);
             [self.delegate Forward_sectionClickBtnWith:btn cell:self];
             

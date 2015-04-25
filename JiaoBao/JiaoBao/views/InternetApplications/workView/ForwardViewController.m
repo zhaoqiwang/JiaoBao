@@ -31,13 +31,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 -(void)refreshWorkView:(id)sender
 {
-    self.insideWorkV.frame = self.insideWorkV.mView_top.frame;
-    NSLog(@"y = %f",self.insideWorkV.frame.origin.y);
+//    self.topView.frame = self.topView.mView_top.frame;
+//    NSLog(@"y = %f",self.topView.frame.origin.y);
     [self setFrame];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    self.insideWorkV.frame = self.insideWorkV.mView_top.frame;
-    NSLog(@"y = %f",self.insideWorkV.frame.origin.y);
+//    self.topView.frame = self.insideWorkV.mView_top.frame;
+//    NSLog(@"y = %f",self.topView.frame.origin.y);
     [self setFrame];
 
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
@@ -182,12 +182,14 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.text = [dm getInstance].mStr_unit;
     
     //接收人，全选，反选，发表
-    self.insideWorkV = [[InsideWorkView alloc]initWithFrame1:CGRectMake(0, 10, [dm getInstance].width, 200)];
-    [self.mScrollV_all addSubview:self.insideWorkV];
-    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+10, [dm getInstance].width, 28)];
+    self.topView = [[NewWorkTopView alloc]init];
+    self.topView.delegate = self;
+    [self.mScrollV_all addSubview:self.topView];
+    NSLog(@"topView = %@",self.topView);
+    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+10, [dm getInstance].width, 28)];
     self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
-    self.mLab_4.frame =CGRectMake(Margin, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
     //self.mBtn_all.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_all.tag = 1;
@@ -273,8 +275,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.frame = CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y, [dm getInstance].width-self.mBtn_sendMsg.frame.size.width-Margin*3, self.mBtn_sendMsg.frame.size.height);
     
     //接收人，全选，反选，发表
-    self.headView.frame = CGRectMake(0, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+20, [dm getInstance].width, 28);
-    self.mLab_4.frame =CGRectMake(Margin, self.insideWorkV.frame.origin.y+self.insideWorkV.frame.size.height+20, self.mLab_4.frame.size.width, 29);
+    self.headView.frame = CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+20, [dm getInstance].width, 28);
+    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.origin.y+self.topView.frame.size.height+20, self.mLab_4.frame.size.width, 29);
     self.imgV.frame = CGRectMake([dm getInstance].width-15-100+15, self.mLab_4.frame.origin.y+7, 14, 14);
     self.imgV.image = [UIImage imageNamed:@"10.png"];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
@@ -984,9 +986,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //    self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    self.mTextV_enter.text = @"";
-    [self.mArr_accessory removeAllObjects];
-    [self.mArr_photo removeAllObjects];
+    self.topView.mTextV_input.text = @"";
+    [self.topView.mArr_accessory removeAllObjects];
+    //[self.mArr_photo removeAllObjects];
     //刷新界面
     [self addAccessoryPhoto];
     //刷新界面
@@ -1648,6 +1650,16 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         [view.triangleBtn setBackgroundImage:[UIImage imageNamed:@"12.png"] forState:UIControlStateNormal];
 
     }
+    
+    if([[dm getInstance].sectionSet2 containsObject:num])
+    {
+        [view.rightBtn setBackgroundImage:[UIImage imageNamed:@"10.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [view.rightBtn setBackgroundImage:[UIImage imageNamed:@"9.png"] forState:UIControlStateNormal];
+        
+    }
     view.delegate = self;
     view.tag = indexPath.section;
     if (self.mInt_where == 0) {//发送消息
@@ -1727,7 +1739,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //section点击事件
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
     
-    if(btn.tag == 3||btn.tag == 4)
+    if(btn.tag == 3||btn.tag == 4||btn.tag == 5)
     {
         [self CollectionReloadData];
     }
@@ -1829,6 +1841,164 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     } else {
         self.mLab_tishi.hidden = NO;
     }
+}
+-(void)mBtn_send:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+//    if (btn.tag == 1) {
+//        self.mInt_select_send = 1;
+//    }else if (btn.tag == 2){
+//        self.mInt_select_send = 2;
+//    }else if (btn.tag == 3){
+        if (self.topView.mTextV_input.text.length == 0) {
+            self.mProgressV.mode = MBProgressHUDModeCustomView;
+            self.mProgressV.labelText = @"请输入内容";
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            return;
+        }
+        self.mInt_select_send = 3;
+    //}
+    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *array1 = [NSMutableArray array];
+    NSMutableArray *array2 = [NSMutableArray array];
+    
+    if (self.mInt_where == 0) {//发送短信
+        if (self.mInt_select_send == 3) {
+            //当前单位
+            myUnit *tempUnit = self.mModel_unitList.myUnit;
+            [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            //上级单位
+            for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+                [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            }
+            //下级单位
+            for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.subUnits objectAtIndex:i];
+                [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            }
+            for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+                [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            }
+        }else{
+            //检索当前需要发送的ID
+            for (int m=0; m<self.mModel_myUnit.list.count; m++) {
+                UserListModel *model2 = [self.mModel_myUnit.list objectAtIndex:m];
+                NSMutableArray *arr9 = model2.groupselit_selit;
+                for (int n=0; n<arr9.count; n++) {
+                    groupselit_selitModel *model3 = [arr9 objectAtIndex:n];
+                    if (self.mInt_select_send == 1) {
+                        model3.mInt_select = 1;
+                    }else if (self.mInt_select_send == 2){
+                        if (model3.mInt_select == 0) {
+                            model3.mInt_select = 1;
+                        } else {
+                            model3.mInt_select = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }else if (self.mInt_where == 1){//下发通知
+        //循环遍历
+        for (int i=0; i<self.mArr_notice.count; i++) {
+            CommMsgUnitNotice *noticeModel = [self.mArr_notice objectAtIndex:i];
+            for (int a=0; a<noticeModel.selitadmintomem.count; a++) {
+                UserListModel *model = [noticeModel.selitadmintomem objectAtIndex:a];
+                for (int m=0; m<model.groupselit_selit.count; m++) {
+                    groupselit_selitModel *tempModel = [model.groupselit_selit objectAtIndex:m];
+                    if (tempModel.selit.length>0) {
+                        if (self.mInt_select_send == 1) {
+                            tempModel.mInt_select = 1;
+                        }else if (self.mInt_select_send == 2){
+                            if (tempModel.mInt_select == 0) {
+                                tempModel.mInt_select = 1;
+                            } else {
+                                tempModel.mInt_select = 0;
+                            }
+                        }else if (self.mInt_select_send == 3){
+                            if (tempModel.mInt_select == 1) {
+                                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                                [dic setValue:tempModel.flag forKey:@"flag"];
+                                [dic setValue:tempModel.selit forKey:@"selit"];
+                                [array addObject:dic];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }else if (self.mInt_where == 2){//短信直通车
+        for (int i=0; i<self.mArr_SMS.count; i++) {
+            SMSTreeArrayModel *model = [self.mArr_SMS objectAtIndex:i];
+            for (int m=0; m<model.smsTree.count; m++) {
+                SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                if (self.mInt_select_send == 1) {
+                    tempModel.mInt_select = 1;
+                }else if (self.mInt_select_send == 2){
+                    if (tempModel.mInt_select == 0) {
+                        tempModel.mInt_select = 1;
+                    } else {
+                        tempModel.mInt_select = 0;
+                    }
+                }else if (self.mInt_select_send == 3){
+                    if (i == 0) {
+                        if (tempModel.mInt_select == 1) {
+                            [array addObject:tempModel.id0];
+                            
+                        }
+                    }else if (i == 1){
+                        if (tempModel.mInt_select == 1) {
+                            [array1 addObject:tempModel.id0];
+                            
+                        }
+                    }else if (i == 2){
+                        if (tempModel.mInt_select == 1) {
+                            [array2 addObject:tempModel.id0];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (self.mInt_select_send == 1||self.mInt_select_send == 2) {
+        [self.mCollectionV_list reloadData];
+    }else if (self.mInt_select_send == 3){
+        if (array.count==0) {
+            self.mProgressV.mode = MBProgressHUDModeCustomView;
+            self.mProgressV.labelText = @"请选择人员";
+            //            self.mProgressV.userInteractionEnabled = NO;
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            return;
+        }
+        //发表
+        if (self.mInt_where == 0) {
+            NSMutableArray *array0 = [NSMutableArray array];
+            [array0 addObjectsFromArray:self.topView.mArr_accessory];
+            //[array0 addObjectsFromArray:self.mArr_photo];
+            D("array.count-====%lu",(unsigned long)array0.count);
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:self.mStr_forwardTableID access:array0];
+        }else if (self.mInt_where == 1) {//发表下发通知
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
+        }if (self.mInt_where == 2) {//发表短信直通车
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+        }
+        
+        self.mProgressV.labelText = @"加载中...";
+        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+        //        self.mProgressV.userInteractionEnabled = NO;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        
+    }
+    [self.mCollectionV_list reloadData];
+    
 }
 
 - (void)didReceiveMemoryWarning {
