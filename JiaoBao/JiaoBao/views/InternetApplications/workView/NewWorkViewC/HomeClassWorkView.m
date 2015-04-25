@@ -23,17 +23,13 @@
         self.mViewTop = [[NewWorkTopView alloc] init];
         self.mViewTop.delegate = self;
         [self addSubview:self.mViewTop];
+        
     }
     return self;
 }
 
 //点击发送按钮
 -(void)mBtn_send:(UIButton *)btn{
-    
-}
-
-//删除附件后刷新界面
--(void)deleteAccessory{
     
 }
 

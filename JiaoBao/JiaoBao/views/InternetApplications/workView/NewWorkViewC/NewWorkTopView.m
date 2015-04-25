@@ -109,8 +109,6 @@
     [self.mArr_accessory removeObjectAtIndex:btn.tag];
     //刷新界面
     [self addAccessoryPhoto];
-    //通知界面
-    [self.delegate deleteAccessory];
 }
 
 //附件选择界面的回调
