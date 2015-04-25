@@ -23,7 +23,7 @@
     if (self) {
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width-5, self.frame.size.height);
         D("Forward_section-=tag=%ld==%@",(long)self.tag,NSStringFromCGRect(self.frame));
-        self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+        //self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         // Initialization code
         self.mLab_name = [[UILabel alloc] init];
         self.mLab_name.font = [UIFont systemFontOfSize:12];
@@ -47,7 +47,7 @@
         self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.rightBtn.frame = CGRectMake(self.frame.size.width-10-36*2-15, 12, 14, 14);
         self.rightBtn.tag = 5;
-        [self.rightBtn setBackgroundImage:[UIImage imageNamed:@"10.png"] forState:UIControlStateNormal];
+        [self.rightBtn setBackgroundImage:[UIImage imageNamed:@"9.png"] forState:UIControlStateNormal];
         [self.rightBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.rightBtn];
         

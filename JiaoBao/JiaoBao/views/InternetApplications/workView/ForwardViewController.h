@@ -125,6 +125,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_photo;//附件列表,相册或拍照
 @property(nonatomic,strong)InsideWorkView *insideWorkV;
 @property (weak, nonatomic) IBOutlet UIImageView *imgV;
+@property(nonatomic,strong)UIView *headView;
 
 //附件按钮点击事件
 -(IBAction)mBtn_accessory:(UIButton *)btn;

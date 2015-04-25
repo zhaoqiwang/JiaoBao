@@ -8,8 +8,9 @@
 
 #import "ForwardViewController.h"
 #import "Reachability.h"
+#import "CollectionFootView.h"
 
-#define Margin 10//边距
+#define Margin 0//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 
 @interface ForwardViewController ()
@@ -28,11 +29,19 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.mProgressV hide:YES];
 }
-
+-(void)refreshWorkView:(id)sender
+{
+    self.insideWorkV.frame = self.insideWorkV.mView_top.frame;
+    NSLog(@"y = %f",self.insideWorkV.frame.origin.y);
+    [self setFrame];
+}
 -(void)viewWillAppear:(BOOL)animated{
     self.insideWorkV.frame = self.insideWorkV.mView_top.frame;
     NSLog(@"y = %f",self.insideWorkV.frame.origin.y);
     [self setFrame];
+
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
     //向转发界面传递得到的人员单位列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
@@ -175,12 +184,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //接收人，全选，反选，发表
     self.insideWorkV = [[InsideWorkView alloc]initWithFrame1:CGRectMake(0, 10, [dm getInstance].width, 200)];
     [self.mScrollV_all addSubview:self.insideWorkV];
+    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+10, [dm getInstance].width, 28)];
+    self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
     self.mLab_4.frame =CGRectMake(Margin, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
-    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100, self.mLab_4.frame.origin.y, 40, 29);
+    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
     //self.mBtn_all.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_all.tag = 1;
     [self.mBtn_all addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60, self.mLab_4.frame.origin.y, 40, 29);
+    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60+15, self.mLab_4.frame.origin.y, 40, 29);
     //self.mBtn_invertSelect.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_invertSelect.tag = 2;
     [self.mBtn_invertSelect addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -211,6 +223,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mCollectionV_list.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
     [self.mCollectionV_list registerClass:[Forward_cell class] forCellWithReuseIdentifier:kCellID];
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDetailedViewControllerID];
+    
+        [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"CollectionFootView"];
     
     //添加单击手势
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
@@ -259,11 +273,12 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.frame = CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y, [dm getInstance].width-self.mBtn_sendMsg.frame.size.width-Margin*3, self.mBtn_sendMsg.frame.size.height);
     
     //接收人，全选，反选，发表
+    self.headView.frame = CGRectMake(0, self.insideWorkV.frame.size.height+self.insideWorkV.frame.origin.y+20, [dm getInstance].width, 28);
     self.mLab_4.frame =CGRectMake(Margin, self.insideWorkV.frame.origin.y+self.insideWorkV.frame.size.height+20, self.mLab_4.frame.size.width, 29);
-    self.imgV.frame = CGRectMake([dm getInstance].width-15-100, self.mLab_4.frame.origin.y+7, 14, 14);
+    self.imgV.frame = CGRectMake([dm getInstance].width-15-100+15, self.mLab_4.frame.origin.y+7, 14, 14);
     self.imgV.image = [UIImage imageNamed:@"10.png"];
-    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60, self.mLab_4.frame.origin.y, 40, 29);
+    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
+    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60+15, self.mLab_4.frame.origin.y, 40, 29);
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-Margin-81, self.mLab_4.frame.origin.y, 81, 29);
     //切换单位界面
     self.mView_switch.frame = CGRectMake(0, 0, [dm getInstance].width, 4*44);
@@ -1613,7 +1628,14 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 //定义并返回每个headerView或footerView
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-    Forward_section *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kDetailedViewControllerID forIndexPath:indexPath];
+    NSLog(@"kind = %@",kind);
+//    CollectionFootView *footView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"CollectionFootView" forIndexPath:indexPath];
+    //footView.backgroundColor = [UIColor lightGrayColor];
+    if([kind isEqualToString:UICollectionElementKindSectionFooter])
+    {
+        //return footView;
+    }
+    Forward_section *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDetailedViewControllerID forIndexPath:indexPath];
     NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
     if([[dm getInstance].sectionSet containsObject:num])
     {
@@ -1704,6 +1726,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //section点击事件
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
+    
     if(btn.tag == 3||btn.tag == 4)
     {
         [self CollectionReloadData];
@@ -1719,6 +1742,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             //判断是全选还是反选
             if (btn.tag == 1) {
                 groupModel.mInt_select = 1;
+                
+                
                 
             }else{
                 if (groupModel.mInt_select == 0) {
