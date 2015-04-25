@@ -13,7 +13,7 @@
 @end
 
 @implementation AccessoryViewController
-@synthesize mTableV_file,mArr_sumFile,mNav_navgationBar;
+@synthesize mTableV_file,mArr_sumFile,mNav_navgationBar,delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];

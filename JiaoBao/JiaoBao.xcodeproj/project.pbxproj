@@ -55,6 +55,7 @@
 		A7209E701A29CF9800418A9C /* NoticeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7209E6E1A29CF9800418A9C /* NoticeListViewController.m */; };
 		A7209E711A29CF9800418A9C /* NoticeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7209E6F1A29CF9800418A9C /* NoticeListViewController.xib */; };
 		A7216E361A3A7B010093876A /* KxMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = A7216E351A3A7B010093876A /* KxMenu.m */; };
+		A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = A72535D71AEB2245006D176A /* NewWorkTopView.m */; };
 		A7255F8E1A19878C005F9CCE /* ParserJson_share.m in Sources */ = {isa = PBXBuildFile; fileRef = A7255F8D1A19878C005F9CCE /* ParserJson_share.m */; };
 		A725E4301A53A11800957EAE /* MyAttUnitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A725E42F1A53A11800957EAE /* MyAttUnitModel.m */; };
 		A725E4331A53F40900957EAE /* MyFriendsGroupsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A725E4321A53F40900957EAE /* MyFriendsGroupsModel.m */; };
@@ -780,6 +781,8 @@
 		A7209E6F1A29CF9800418A9C /* NoticeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoticeListViewController.xib; path = views/InternetApplications/notice/NoticeListViewController.xib; sourceTree = "<group>"; };
 		A7216E341A3A7B010093876A /* KxMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KxMenu.h; path = Common/KxMenu.h; sourceTree = "<group>"; };
 		A7216E351A3A7B010093876A /* KxMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KxMenu.m; path = Common/KxMenu.m; sourceTree = "<group>"; };
+		A72535D61AEB2245006D176A /* NewWorkTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkTopView.h; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTopView.h; sourceTree = "<group>"; };
+		A72535D71AEB2245006D176A /* NewWorkTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkTopView.m; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTopView.m; sourceTree = "<group>"; };
 		A7255F8C1A19878C005F9CCE /* ParserJson_share.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserJson_share.h; path = views/InternetApplications/shareView/model/ParserJson_share.h; sourceTree = "<group>"; };
 		A7255F8D1A19878C005F9CCE /* ParserJson_share.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserJson_share.m; path = views/InternetApplications/shareView/model/ParserJson_share.m; sourceTree = "<group>"; };
 		A725E42E1A53A11800957EAE /* MyAttUnitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAttUnitModel.h; path = views/InternetApplications/show/model/MyAttUnitModel.h; sourceTree = "<group>"; };
@@ -3039,6 +3042,8 @@
 				A7781F271AE88F0100F03AEB /* HomeClassWorkView.m */,
 				A7781F291AE88F2200F03AEB /* MoreUnitWorkView.h */,
 				A7781F2A1AE88F2200F03AEB /* MoreUnitWorkView.m */,
+				A72535D61AEB2245006D176A /* NewWorkTopView.h */,
+				A72535D71AEB2245006D176A /* NewWorkTopView.m */,
 			);
 			name = NewWorkViewC;
 			sourceTree = "<group>";
@@ -4161,6 +4166,7 @@
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
 				F79D84D61ABD4DC000897477 /* ParserJson_SignIn.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
+				A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */,
 				A7781F1F1AE889B400F03AEB /* NewWorkTopScrollView.m in Sources */,
 				A7BB17E519F4AB4600A81286 /* LoginSendHttp.m in Sources */,
 				A7B0F9581A47C37D00C1863A /* MBProgressHUD+Add.m in Sources */,
