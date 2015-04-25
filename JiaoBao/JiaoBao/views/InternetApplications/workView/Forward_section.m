@@ -31,16 +31,16 @@
         [self addSubview:self.mLab_name];
         
         self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.addBtn.frame = CGRectMake(10+50+10+30, 15, 10, 10);
+        self.addBtn.frame = CGRectMake(10+50+10+30, 15, 20, 20);
         self.addBtn.tag = 3;
         [self.addBtn setBackgroundImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
         [self.addBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.addBtn];
         
         self.triangleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.triangleBtn.frame = CGRectMake(10, 15, 10, 10);
+        self.triangleBtn.frame = CGRectMake(10, 15, 20, 20);
         self.triangleBtn.tag = 4;
-        [self.triangleBtn setBackgroundImage:[UIImage imageNamed:@"12.png"] forState:UIControlStateNormal];
+        [self.triangleBtn setImage:[UIImage imageNamed:@"12.png"] forState:UIControlStateNormal];
         [self.triangleBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.triangleBtn];
         
@@ -71,6 +71,10 @@
         self.mBtn_invertSelect.tag = 2;
         [self.mBtn_invertSelect addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_invertSelect];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, self.frame.size.height-1, [dm getInstance].width, 0.5)];
+        [self addSubview:label];
+        label.backgroundColor = [UIColor grayColor];
+        
     }
     return self;
 }
@@ -81,6 +85,20 @@
 
 //按钮点击事件
 -(void)clickBtn:(UIButton *)btn{
+    if(self.sel_symbol)
+    {
+        [self.mBtn_all setBackgroundImage:[UIImage imageNamed:@"10.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.mBtn_all setBackgroundImage:[UIImage imageNamed:@"9.png"] forState:UIControlStateNormal];
+
+        
+    }
+    if(btn.tag == 2)
+    {
+        
+    }
     NSNumber *num = [NSNumber numberWithInteger:self.tag];
     if(btn.tag == 3)
     {

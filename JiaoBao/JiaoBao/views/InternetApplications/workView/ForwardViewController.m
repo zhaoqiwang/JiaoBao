@@ -226,7 +226,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [self.mCollectionV_list registerClass:[Forward_cell class] forCellWithReuseIdentifier:kCellID];
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDetailedViewControllerID];
     
-        [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"CollectionFootView"];
+    [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"CollectionFootView"];
     
     //添加单击手势
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
@@ -234,7 +234,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //    [self.mScrollV_all addGestureRecognizer:tap1];
     UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
     tap2.delegate = self;
-    [self.mView_unit addGestureRecognizer:tap2];
+    [self.topView addGestureRecognizer:tap2];
     
     [self sendRequest];
 }
@@ -632,7 +632,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 -(void)pressTap:(UITapGestureRecognizer *)tap{
     D("uuuu");
-    [self.mTextV_enter resignFirstResponder];
+    [self.topView.mTextV_input resignFirstResponder];
+    
 }
 
 - (void)Loading {
