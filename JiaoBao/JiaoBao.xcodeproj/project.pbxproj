@@ -660,6 +660,8 @@
 		A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */; };
 		A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */; };
 		F70206AD1AEB13950047CA2A /* TopView.m in Sources */ = {isa = PBXBuildFile; fileRef = F70206AC1AEB13950047CA2A /* TopView.m */; };
+		F70206B21AEB307B0047CA2A /* CollectionFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = F70206B01AEB307B0047CA2A /* CollectionFootView.m */; };
+		F70206B31AEB307B0047CA2A /* CollectionFootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70206B11AEB307B0047CA2A /* CollectionFootView.xib */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
 		F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030E1AB3C46300E6167F /* JTCalendarContentView.m */; };
@@ -1649,6 +1651,9 @@
 		A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@3x.png"; path = "Image/InternetApp/themeTotal@3x.png"; sourceTree = "<group>"; };
 		F70206AB1AEB13950047CA2A /* TopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopView.h; sourceTree = "<group>"; };
 		F70206AC1AEB13950047CA2A /* TopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopView.m; sourceTree = "<group>"; };
+		F70206AF1AEB307B0047CA2A /* CollectionFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionFootView.h; sourceTree = "<group>"; };
+		F70206B01AEB307B0047CA2A /* CollectionFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionFootView.m; sourceTree = "<group>"; };
+		F70206B11AEB307B0047CA2A /* CollectionFootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionFootView.xib; sourceTree = "<group>"; };
 		F71803091AB3C46300E6167F /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendar.h; path = Common/JTCalendar/JTCalendar.h; sourceTree = "<group>"; };
 		F718030A1AB3C46300E6167F /* JTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCalendar.m; path = Common/JTCalendar/JTCalendar.m; sourceTree = "<group>"; };
 		F718030B1AB3C46300E6167F /* JTCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendarAppearance.h; path = Common/JTCalendar/JTCalendarAppearance.h; sourceTree = "<group>"; };
@@ -2096,6 +2101,9 @@
 				A75A37341A087C76009D2464 /* ForwardViewController.h */,
 				A75A37351A087C76009D2464 /* ForwardViewController.m */,
 				A75A37361A087C76009D2464 /* ForwardViewController.xib */,
+				F70206AF1AEB307B0047CA2A /* CollectionFootView.h */,
+				F70206B01AEB307B0047CA2A /* CollectionFootView.m */,
+				F70206B11AEB307B0047CA2A /* CollectionFootView.xib */,
 				F70206AB1AEB13950047CA2A /* TopView.h */,
 				F70206AC1AEB13950047CA2A /* TopView.m */,
 				F7F460C01AE8C0820069820F /* MemberGroupCell.h */,
@@ -3923,6 +3931,7 @@
 				A7595EA81A5FC2F30027848E /* LICENSE in Resources */,
 				A71D61EF1A1C96A400B8D33D /* share_school1.png in Resources */,
 				A74370421A3ED555008AF29B /* PersonalSpaceViewController.xib in Resources */,
+				F70206B31AEB307B0047CA2A /* CollectionFootView.xib in Resources */,
 				A7781F461AE8A0F300F03AEB /* NewWorkView_2@2x.png in Resources */,
 				A75046921A0A14BC00C54ECC /* forward_select2@2x.png in Resources */,
 				A7CE67361AA70A250038D0C5 /* showArticle@2x.png in Resources */,
@@ -4090,6 +4099,7 @@
 				A74339501A452B7700AFC0A5 /* SDWebImageDecoder.m in Sources */,
 				A7141DC01A17022E00940A3E /* ShareView.m in Sources */,
 				A74821AF19FF745900234020 /* MsgDetail_TrunToList.m in Sources */,
+				F70206B21AEB307B0047CA2A /* CollectionFootView.m in Sources */,
 				A74339591A452B7700AFC0A5 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A70E3CA21A1EECB700E6D0EC /* ArthDetailViewController.m in Sources */,
 				A743703C1A3E8CB6008AF29B /* ShareViewNew.m in Sources */,
@@ -4340,7 +4350,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
 			};
 			name = Debug;
 		};
@@ -4366,7 +4376,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
 			};
 			name = Release;
 		};

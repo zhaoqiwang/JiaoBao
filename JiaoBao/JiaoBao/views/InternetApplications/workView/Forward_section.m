@@ -23,7 +23,7 @@
     if (self) {
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width-5, self.frame.size.height);
         D("Forward_section-=tag=%ld==%@",(long)self.tag,NSStringFromCGRect(self.frame));
-        self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
+        //self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         // Initialization code
         self.mLab_name = [[UILabel alloc] init];
         self.mLab_name.font = [UIFont systemFontOfSize:12];
@@ -47,7 +47,7 @@
         self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.rightBtn.frame = CGRectMake(self.frame.size.width-10-36*2-15, 12, 14, 14);
         self.rightBtn.tag = 5;
-        [self.rightBtn setBackgroundImage:[UIImage imageNamed:@"10.png"] forState:UIControlStateNormal];
+        [self.rightBtn setBackgroundImage:[UIImage imageNamed:@"9.png"] forState:UIControlStateNormal];
         [self.rightBtn addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.rightBtn];
         
@@ -122,7 +122,26 @@
     
         
     }
-
+//    if(btn.tag == 5)
+//    {
+//        if(!([dm getInstance].sectionSet2))
+//        {
+//            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+//            
+//        }
+//        if(![[dm getInstance].sectionSet2 containsObject:num] )
+//        {
+//            [[dm getInstance].sectionSet2 addObject:num];
+//            NSLog(@"mSet = %@",[dm getInstance].sectionSet2);
+//            
+//            
+//        }
+//        else
+//        {
+//            [[dm getInstance].sectionSet2 removeObject:num];
+//        }
+//    }
+//
             D("点击section中的btn-====%ld,%ld",(long)btn.tag,(long)self.tag);
             [self.delegate Forward_sectionClickBtnWith:btn cell:self];
             
