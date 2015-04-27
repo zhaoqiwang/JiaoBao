@@ -21,7 +21,7 @@
     if (self) {
         self.selectedBackgroundView.backgroundColor = [UIColor grayColor];
         // Initialization code
-        UIImage *img = [UIImage imageNamed:@"forward_select1"];
+        UIImage *img = [UIImage imageNamed:@"blank"];
         self.mImgV_select = [[UIImageView alloc] initWithFrame:CGRectMake(5, (self.frame.size.height-img.size.height)/2, img.size.width, img.size.height)];
         [self.mImgV_select setImage:img];
         [self addSubview:self.mImgV_select];

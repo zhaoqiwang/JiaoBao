@@ -9,17 +9,29 @@
 #import "MoreUnitWorkView.h"
 
 @implementation MoreUnitWorkView
+@synthesize mViewTop,mScrollV_all;
+
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
-        UILabel *lab = [[UILabel alloc] initWithFrame:CGRectMake(20, 70, 70, 40)];
-        lab.text = @"3333333";
-        [self addSubview:lab];
+        //总框
+        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 10, [dm getInstance].width, self.frame.size.height-10)];
+        [self addSubview:self.mScrollV_all];
+        //上半部分
+        self.mViewTop = [[NewWorkTopView alloc] init];
+        self.mViewTop.delegate = self;
+        [self addSubview:self.mViewTop];
+        
     }
     return self;
+}
+
+//点击发送按钮
+-(void)mBtn_send:(UIButton *)btn{
+    
 }
 
 @end

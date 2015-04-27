@@ -24,6 +24,7 @@
 @property(nonatomic,strong)UIButton *addBtn;
 @property(nonatomic,strong)UIButton *triangleBtn;
 @property(nonatomic,strong)UIButton *rightBtn;
+@property(nonatomic,assign)BOOL sel_symbol;
 
 
 - (void)initWithFrame1:(CGRect)frame;

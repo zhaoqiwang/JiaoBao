@@ -10,6 +10,8 @@
 #import "dm.h"
 
 #import "NewWorkTopView.h"
+#import "HomeClassTopScrollView.h"
+#import "HomeClassRootScrollView.h"
 
 @interface HomeClassWorkView : UIView<NewWorkTopViewProtocol>{
     UIScrollView *mScrollV_all;//放所有控件
