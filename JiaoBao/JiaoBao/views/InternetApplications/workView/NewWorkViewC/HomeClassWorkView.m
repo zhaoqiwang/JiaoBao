@@ -24,8 +24,14 @@
         self.mViewTop.delegate = self;
         [self addSubview:self.mViewTop];
         [self addSubview:[HomeClassRootScrollView shareInstance]];
-        //root
+
+//        //root
         [self addSubview:[HomeClassTopScrollView shareInstance]];
+                [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+10, [dm getInstance].width, 48);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 300);
+        //[HomeClassRootScrollView shareInstance].backgroundColor = [UIColor redColor];
+
+
         
     }
     return self;

@@ -45,7 +45,7 @@
         self.showsVerticalScrollIndicator = NO;
         self.bounces = YES;
         self.contentSize = CGSizeMake([dm getInstance].width, 48);
-        self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"",@"", @"", nil];
+        self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"",@"", @"",@"", nil];
         
         mInt_userSelectedChannelID = 100;
         mInt_scrollViewSelectedChannelID = 100;
@@ -80,8 +80,8 @@
         [button setTitleColor:[UIColor colorWithRed:91/255.0 green:178/255.0 blue:57/255.0 alpha:1] forState:UIControlStateSelected];
         [button setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
         //设置标题位置
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"NewWorkView_click_%d",i]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"NewWorkView_%d",i]] forState:UIControlStateSelected];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"HomeClass_%d",i+1]] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"HomeClass_Click_%d",i+1]] forState:UIControlStateSelected];
         
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         

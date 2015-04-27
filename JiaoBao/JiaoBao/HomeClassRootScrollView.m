@@ -9,7 +9,6 @@
 #import "HomeClassRootScrollView.h"
 
 @implementation HomeClassRootScrollView
-@synthesize mInt,moreUnitView,insideView,homeClassView;
 #define POSITIONID (int)self.contentOffset.x/[dm getInstance].width
 
 + (HomeClassRootScrollView *)shareInstance {
@@ -25,7 +24,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
-        self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44);
+        self.contentSize = CGSizeMake([dm getInstance].width*4, [dm getInstance].height-43-[dm getInstance].statusBar-44);
         
         self.pagingEnabled = YES;
         self.userInteractionEnabled = YES;
@@ -36,15 +35,15 @@
         [self setBackgroundColor:[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]];
         userContentOffsetX = 0;
         self.mInt = 0;
-        //内部事务
-        self.insideView = [[InsideWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.insideView];
-        //家校互动
-        self.homeClassView = [[HomeClassWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.homeClassView];
-        //多单位事务
-        self.moreUnitView = [[MoreUnitWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.moreUnitView];
+        self.classMessageView = [[ClassMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
+        [self addSubview:self.classMessageView];
+        //self.classMessageView.backgroundColor = [UIColor redColor];
+        self.characterView = [[CharacterView alloc] initWithFrame:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
+        [self addSubview:self.characterView];
+        self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+        [self addSubview:self.schoolMessage];
+        self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
+        [self addSubview:self.patriarchView];
     }
     return self;
 }

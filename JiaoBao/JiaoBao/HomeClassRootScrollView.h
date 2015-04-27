@@ -13,6 +13,10 @@
 #import "InsideWorkView.h"
 #import "HomeClassWorkView.h"
 #import "MoreUnitWorkView.h"
+#import "ClassMessage.h"
+#import "CharacterView.h"
+#import "SchoolMessage.h"
+#import "PatriarchView.h"
 
 @interface HomeClassRootScrollView : UIScrollView<UIScrollViewDelegate>{
     BOOL isLeftScroll;
@@ -27,6 +31,11 @@
 //@property (strong,nonatomic) InsideWorkView *insideView;//内部事务
 //@property (strong,nonatomic) HomeClassWorkView *homeClassView;//家校互动
 //@property (strong,nonatomic) MoreUnitWorkView *moreUnitView;//多单位事务
+@property(strong,nonatomic)ClassMessage *classMessageView;
+@property(strong,nonatomic)CharacterView *characterView;
+@property(strong,nonatomic)SchoolMessage *schoolMessage;
+@property(strong,nonatomic)PatriarchView *patriarchView;
+
 
 + (HomeClassRootScrollView *)shareInstance;
 
