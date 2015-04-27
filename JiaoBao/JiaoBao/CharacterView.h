@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "dm.h"
+#import "Forward_section.h"
 
-@interface CharacterView : UIView
+@interface CharacterView : UIView<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,Forward_sectionDelegate>
+@property(nonatomic,strong)UICollectionView *mCollectionV_list;
+@property(nonatomic,strong)NSMutableArray *datasource;
 
 @end

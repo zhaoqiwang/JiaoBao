@@ -14,24 +14,30 @@ NSString *kCell = @"Forward_cell2";
 - (instancetype)initWithFrame:(CGRect)frame
 {
    self = [super initWithFrame:frame];
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 36)];
+    self.datasource = [[NSMutableArray alloc]initWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
     headerView.backgroundColor = [UIColor lightGrayColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, [dm getInstance].width, 30)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     label.backgroundColor = [UIColor lightGrayColor];
     label.text = @"所在班级家长";
     label.font = [UIFont systemFontOfSize:13];
     [headerView addSubview:label];
-    UICollectionViewLayout *layOut = [[UICollectionViewLayout alloc]init];
-    self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, 0, 0) collectionViewLayout:layOut];
-   // self.mCollectionV_list.frame = CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, 0, 0);
+    //self.view.backgroundColor = [UIColor lightGrayColor];
+    UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc] init];
+    flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;//滚动方向
+
+//    
+    self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 300) collectionViewLayout:flowLayout];
+    [self addSubview:self.mCollectionV_list];
+
     self.mCollectionV_list.backgroundColor = [UIColor whiteColor];
     self.mCollectionV_list.layer.borderWidth = 1;
     self.mCollectionV_list.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
     [self.mCollectionV_list registerClass:[Forward_cell class] forCellWithReuseIdentifier:kCell];
     self.mCollectionV_list.delegate = self;
     self.mCollectionV_list.dataSource = self;
-    [self addSubview:self.mCollectionV_list];
+    
     return self;
     
 }
@@ -47,8 +53,9 @@ NSString *kCell = @"Forward_cell2";
     return 9;
 }
 //定义并返回每个cell
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    Forward_cell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCell forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    Forward_cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCell forIndexPath:indexPath];
     if (!cell) {
         
     }
@@ -68,6 +75,7 @@ NSString *kCell = @"Forward_cell2";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
   }
 //每一个cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -84,7 +92,7 @@ NSString *kCell = @"Forward_cell2";
 }
 //手动设置size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
-    return CGSizeMake(120, 40);
+    return CGSizeMake(120, 0);
 }
 
 

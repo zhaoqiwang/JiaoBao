@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "dm.h"
 
-@interface ClassMessage : UIView<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface ClassMessage : UIView<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
 @property(nonatomic,strong)UICollectionView *mCollectionV_list;
+@property(nonatomic,strong)NSMutableArray *datasource;
 
 @end
