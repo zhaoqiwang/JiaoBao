@@ -953,7 +953,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }else if (self.mInt_where == 1) {//发表下发通知
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
         }if (self.mInt_where == 2) {//发表短信直通车
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+//            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
         }
         
         self.mProgressV.labelText = @"加载中...";
