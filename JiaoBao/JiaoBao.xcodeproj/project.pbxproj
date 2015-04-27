@@ -686,6 +686,8 @@
 		F747976C1AEA090C0007AD10 /* 13.png in Resources */ = {isa = PBXBuildFile; fileRef = F747976A1AEA090C0007AD10 /* 13.png */; };
 		F74797731AEA43BE0007AD10 /* 9.png in Resources */ = {isa = PBXBuildFile; fileRef = F74797711AEA43BE0007AD10 /* 9.png */; };
 		F74797741AEA43BE0007AD10 /* 10.png in Resources */ = {isa = PBXBuildFile; fileRef = F74797721AEA43BE0007AD10 /* 10.png */; };
+		F75029AA1AEDC4AA004F822F /* HomeClassTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F75029A91AEDC4AA004F822F /* HomeClassTopScrollView.m */; };
+		F75029AE1AEDC564004F822F /* HomeClassRootScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F75029AD1AEDC564004F822F /* HomeClassRootScrollView.m */; };
 		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
@@ -1692,6 +1694,10 @@
 		F747976A1AEA090C0007AD10 /* 13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 13.png; sourceTree = "<group>"; };
 		F74797711AEA43BE0007AD10 /* 9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 9.png; sourceTree = "<group>"; };
 		F74797721AEA43BE0007AD10 /* 10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 10.png; sourceTree = "<group>"; };
+		F75029A81AEDC4AA004F822F /* HomeClassTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeClassTopScrollView.h; sourceTree = "<group>"; };
+		F75029A91AEDC4AA004F822F /* HomeClassTopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeClassTopScrollView.m; sourceTree = "<group>"; };
+		F75029AC1AEDC564004F822F /* HomeClassRootScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeClassRootScrollView.h; sourceTree = "<group>"; };
+		F75029AD1AEDC564004F822F /* HomeClassRootScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeClassRootScrollView.m; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -3052,6 +3058,10 @@
 				A7781F2A1AE88F2200F03AEB /* MoreUnitWorkView.m */,
 				A72535D61AEB2245006D176A /* NewWorkTopView.h */,
 				A72535D71AEB2245006D176A /* NewWorkTopView.m */,
+				F75029A81AEDC4AA004F822F /* HomeClassTopScrollView.h */,
+				F75029A91AEDC4AA004F822F /* HomeClassTopScrollView.m */,
+				F75029AC1AEDC564004F822F /* HomeClassRootScrollView.h */,
+				F75029AD1AEDC564004F822F /* HomeClassRootScrollView.m */,
 			);
 			name = NewWorkViewC;
 			sourceTree = "<group>";
@@ -4055,6 +4065,7 @@
 				A76E432A1A61085F00699F92 /* CommMsgRevicerUnitListModel.m in Sources */,
 				A773FC491A4C0563005F84C2 /* ELCAsset.m in Sources */,
 				A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */,
+				F75029AE1AEDC564004F822F /* HomeClassRootScrollView.m in Sources */,
 				A7209E701A29CF9800418A9C /* NoticeListViewController.m in Sources */,
 				A755E6A119F24D2C00BBDF3D /* RootViewController.m in Sources */,
 				A7AD8C3319F63CC7002E65FB /* InternetApplicationsViewController.m in Sources */,
@@ -4242,6 +4253,7 @@
 				A7B0A6B01A1205CA002D770A /* selitadminModel.m in Sources */,
 				A73CAD6E1A07755B00D6C5AA /* MJRefreshConst.m in Sources */,
 				A75A37441A08C2EA009D2464 /* UserListModel.m in Sources */,
+				F75029AA1AEDC4AA004F822F /* HomeClassTopScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

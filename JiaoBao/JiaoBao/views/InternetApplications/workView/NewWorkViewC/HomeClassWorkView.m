@@ -23,6 +23,9 @@
         self.mViewTop = [[NewWorkTopView alloc] init];
         self.mViewTop.delegate = self;
         [self addSubview:self.mViewTop];
+        [self addSubview:[HomeClassRootScrollView shareInstance]];
+        //root
+        [self addSubview:[HomeClassTopScrollView shareInstance]];
         
     }
     return self;

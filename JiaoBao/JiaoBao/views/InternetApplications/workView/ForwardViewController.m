@@ -1749,6 +1749,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //找到当前点击的cell，然后改变选中值，重置界面
     if (self.mInt_where == 0) {//发送消息
         UserListModel *model = [self.mModel_myUnit.list objectAtIndex:section.tag];
+        [utils logArr:self.mModel_myUnit.list];
+        
         for (int i=0; i<model.groupselit_selit.count; i++) {
             //得到分组
             groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
