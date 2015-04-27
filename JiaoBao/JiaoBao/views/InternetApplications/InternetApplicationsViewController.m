@@ -20,6 +20,8 @@
 @synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mProgressV,mInt_flag;
 
 -(void)viewWillAppear:(BOOL)animated{
+    [dm getInstance].sectionSet = nil;
+    [dm getInstance].sectionSet2 = nil;
     [dm getInstance].tableSymbol =NO;
     if (self.mInt_flag == 0) {
         self.mInt_flag = 1;

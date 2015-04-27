@@ -26,12 +26,13 @@
         self.delegate = self;
         self.contentSize = CGSizeMake([dm getInstance].width*4, [dm getInstance].height-43-[dm getInstance].statusBar-44);
         
-        self.pagingEnabled = YES;
+        self.pagingEnabled = NO;
         self.userInteractionEnabled = YES;
+        self.scrollEnabled = NO;
         self.bounces = YES;
         self.bouncesZoom = NO;//是否有弹簧效果
-        self.showsHorizontalScrollIndicator = YES;
-        self.showsVerticalScrollIndicator = YES;
+        self.showsHorizontalScrollIndicator = NO;
+        self.showsVerticalScrollIndicator = NO;
         [self setBackgroundColor:[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]];
         userContentOffsetX = 0;
         self.mInt = 0;
