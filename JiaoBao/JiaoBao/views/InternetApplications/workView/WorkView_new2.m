@@ -206,19 +206,20 @@
     cell.mLab_name.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, 15, nameSize.width, 20);
     cell.mLab_name.text = name;
     
-    //单位
-    if (model.UnitShortName.length>0) {
-        cell.mLab_unit.hidden = NO;
-    }
-    NSString *unitName = [NSString stringWithFormat:@"(%@)",model.UnitShortName];
-    CGSize unitSize = [[NSString stringWithFormat:@"%@",unitName] sizeWithFont:[UIFont systemFontOfSize:12]];
-    cell.mLab_unit.frame = CGRectMake(cell.mLab_name.frame.origin.x+nameSize.width, cell.mLab_name.frame.origin.y, unitSize.width, cell.mLab_unit.frame.size.height);
-    cell.mLab_unit.text = unitName;
     //时间
     CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mLab_time.frame = CGRectMake([dm getInstance].width-timeSize.width-12, 15, timeSize.width, 20);
     cell.mLab_time.textColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
     cell.mLab_time.text = model.RecDate;
+    
+    //单位
+    if (model.UnitShortName.length>0) {
+        cell.mLab_unit.hidden = NO;
+    }
+    NSString *unitName = [NSString stringWithFormat:@"(%@)",model.UnitShortName];
+//    CGSize unitSize = [[NSString stringWithFormat:@"%@",unitName] sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell.mLab_unit.frame = CGRectMake(cell.mLab_name.frame.origin.x+nameSize.width, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-timeSize.width-20, cell.mLab_unit.frame.size.height);
+    cell.mLab_unit.text = unitName;
     
     //内容
     cell.mLab_content.text = model.MsgContent;
