@@ -146,6 +146,7 @@
     }
     
     self.mModel_unReadMsg = [dic valueForKey:@"model"];
+    if(tempArr.count)
     //定位
     [self setFrame];
 }

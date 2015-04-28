@@ -13,7 +13,7 @@
 @end
 
 @implementation AccessoryViewController
-@synthesize mTableV_file,mArr_sumFile,mNav_navgationBar;
+@synthesize mTableV_file,mArr_sumFile,mNav_navgationBar,delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,9 +55,9 @@
     AccessoryModel *model = [self.mArr_sumFile objectAtIndex:indexPath.row];
     cell.mImgV_select.frame = CGRectMake(10, 10, 24, 24);
     if (model.mInt_select == 0) {
-        cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
+        cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
     }else{
-        cell.mImgV_select.image = [UIImage imageNamed:@"forward_select2"];
+        cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
     }
     cell.mLab_name.frame = CGRectMake(47, 0, [dm getInstance].width-50, 44);
     cell.mLab_name.text = model.mStr_name;

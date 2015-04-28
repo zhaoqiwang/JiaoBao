@@ -11,8 +11,8 @@
 #import "DetailQueryCell.h"
 
 @interface DetailQueryViewController ()
-@property(nonatomic,strong)NSArray *keyArr;
-@property(nonatomic,strong)NSArray *dataSource;
+@property(nonatomic,strong)NSArray *keyArr;//把需要的字典中的key存到数组中
+@property(nonatomic,strong)NSArray *dataSource;//本界面的数据源
 
 @end
 
@@ -21,16 +21,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //去掉多余的cell分割线
     self.tableView.tableFooterView=[[UIView alloc]init];
+    
     self.keyArr = [NSArray arrayWithObjects:@"sWorkPlace",@"dSdate",@"dEdate",@"sSubject",@"dRecDate", nil];
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"日程记录"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"getQueryResult" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getQueryResult:) name:@"getQueryResult" object:nil];
-    NSString *unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
-    NSString *userId = [NSString stringWithFormat:@"%@",[dm getInstance].userInfo.UserID];
+    NSString *unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];//单位ID
+    NSString *userId = [NSString stringWithFormat:@"%@",[dm getInstance].userInfo.UserID];//用户ID
     NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self.selectedDateStr,unitId,userId, nil] forKeys:[NSArray arrayWithObjects:@"WorkPlanDate",@"UnitID",@"UserID", nil]];
     [[SignInHttp getInstance]querySchedule:dic];
    ;

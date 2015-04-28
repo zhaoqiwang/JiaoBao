@@ -39,4 +39,7 @@
 //我的班级文章列表                          默认第一页           默认20条           1个人发布文章，2单位动态       1是总界面，3是单独列表界面
 -(void)classHttpAllMyClassArthList:(NSString *)page Num:(NSString *)num sectionFlag:(NSString *)flag RequestFlag:(NSString *)ReFlag;
 
+//获取当前用户可以发布动态的单位列表(含班级）
+-(void)classHttpGetReleaseNewsUnits;
+
 @end

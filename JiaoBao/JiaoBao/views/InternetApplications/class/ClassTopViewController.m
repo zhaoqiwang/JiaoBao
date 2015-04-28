@@ -161,14 +161,15 @@
     ClassModel *model = [array objectAtIndex:indexPath.row];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
     UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
     if (img.size.width>0) {
         [cell.mImgV_head setImage:img];
     }else{
         [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
         //获取头像
-        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+//        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+        [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%@",model.unitId] Size:@""];
     }
     cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
     //姓名
@@ -190,6 +191,14 @@
         cell.ClassDelegate = self;
         [cell classLabClick];
     }
+    //添加图片点击事件
+    [cell thumbImgClick];
+    cell.mModel_class = model;
+    cell.delegate = self;
+    cell.tag = indexPath.row;
+    //添加头像点击事件
+    [cell headImgClick];
+    cell.headImgDelegate = self;
     //标题
     //    CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_assessContent.frame = CGRectMake(62, cell.mLab_name.frame.origin.y+cell.mLab_name.frame.size.height, [dm getInstance].width-72, cell.mLab_assessContent.frame.size.height);
@@ -218,8 +227,8 @@
         cell.mView_img.hidden = NO;
         //最多显示6个图片
         int a;
-        if (model.Thumbnail.count>=6) {
-            a=6;
+        if (model.Thumbnail.count>=3) {
+            a=3;
         }else{
             a = (int)model.Thumbnail.count;
         }
@@ -236,17 +245,22 @@
                 x = 0;
             }
             notFirst = YES;
-            
-            UIImageView *gridItem = [[UIImageView alloc] init];
-            [gridItem setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
-            [gridItem sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
-            [cell.mView_img addSubview:gridItem];
+            if (i==0) {
+                cell.mImgV_0.hidden = NO;
+                [cell.mImgV_0 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
+                [cell.mImgV_0 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+            }else if (i==1){
+                cell.mImgV_1.hidden = NO;
+                [cell.mImgV_1 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
+                [cell.mImgV_1 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+            }else if (i==2){
+                cell.mImgV_2.hidden = NO;
+                [cell.mImgV_2 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
+                [cell.mImgV_2 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+            }
         }
-        if (model.Thumbnail.count>3) {
-            cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m*2+10);
-        }else{
-            cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
-        }
+        cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
+        
     }else{
         cell.mView_img.hidden = YES;
         cell.mView_img.frame = cell.mView_background.frame;
@@ -419,6 +433,207 @@
     topView.mStr_navName = model.className;
     topView.mStr_classID = model.classID;
     [utils pushViewController:topView animated:YES];
+}
+
+//向cell中添加图片点击手势
+- (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self.view viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
+    
+    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+        // 替换为中等尺寸图片
+        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+        D("getImageStrUrl-====%@",getImageStrUrl);
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+    }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:0];
+    
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    self.navigationController.title = @"";
+    [self.navigationController pushViewController:browser animated:YES];
+}
+
+- (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self.view viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
+    
+    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+        // 替换为中等尺寸图片
+        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+        D("getImageStrUrl-====%@",getImageStrUrl);
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+    }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:1];
+    
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    self.navigationController.title = @"";
+    [self.navigationController pushViewController:browser animated:YES];
+}
+
+
+- (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray array];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self.view viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
+    
+    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+        // 替换为中等尺寸图片
+        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+        D("getImageStrUrl-====%@",getImageStrUrl);
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+    }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:2];
+    
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    self.navigationController.title = @"";
+    [self.navigationController pushViewController:browser animated:YES];
+}
+-(void)ClassTableViewCellHeadImgTapPress:(ClassTableViewCell *)topArthListCell{
+    ClassModel *ClassModel = topArthListCell.mModel_class;
+    if ([ClassModel.flag intValue] ==1) {//展示
+        UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+        model.UnitID = ClassModel.unitId;
+        if (ClassModel.className.length>0) {
+            model.UnitName = ClassModel.className;
+        }else{
+            model.UnitName = ClassModel.UnitName;
+        }
+        
+        model.UnitType = ClassModel.UnitType;
+        //        D("tempModel.unitType-====%@",tempModel.unitType);
+        UnitSpaceViewController *space = [[UnitSpaceViewController alloc] init];
+        space.mModel_unit = model;
+        [utils pushViewController:space animated:YES];
+    }else{//分享
+        //生成个人信息
+        UserInfoByUnitIDModel *userModel = [[UserInfoByUnitIDModel alloc] init];
+        userModel.UserID = ClassModel.JiaoBaoHao;
+        userModel.UserName = ClassModel.UserName;
+        userModel.AccID = ClassModel.JiaoBaoHao;
+        
+        PersonalSpaceViewController *personal = [[PersonalSpaceViewController alloc] init];
+        personal.mModel_personal = userModel;
+        [utils pushViewController:personal animated:YES];
+    }
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _photos.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _photos.count)
+        return [_photos objectAtIndex:index];
+    return nil;
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
+    NSLog(@"Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+}
+
+- (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
+    // If we subscribe to this method we must dismiss the view controller ourselves
+    NSLog(@"Did finish modal presentation");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -17,8 +17,10 @@
 #import "SharePostingViewController.h"
 #import "MJPhoto.h"
 #import "MJPhotoBrowser.h"
+#import "UnitSpaceViewController.h"
+#import "MWPhotoBrowser.h"
 
-@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate>{
+@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate>{
     UIView *mView_button;//放四个按钮
     UITableView *mTableV_list;//表格
     NSMutableArray *mArr_unit;//本单位
@@ -55,6 +57,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_sumTop;//全部
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
+@property (nonatomic, strong) NSMutableArray *photos;
 
 - (id)initWithFrame1:(CGRect)frame;
 

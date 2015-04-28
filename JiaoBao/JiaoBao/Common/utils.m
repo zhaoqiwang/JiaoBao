@@ -41,6 +41,13 @@
     return [navi popViewControllerAnimated:animated];
 }
 
++ (void)popViewControllerAnimated1:(BOOL)animated
+{
+    UINavigationController *navi = [(AppDelegate*)[UIApplication sharedApplication].delegate navigationController];
+//    return
+    [navi dismissViewControllerAnimated:YES completion:nil];
+}
+
 + (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     UINavigationController *navi = [(AppDelegate*)[UIApplication sharedApplication].delegate navigationController];

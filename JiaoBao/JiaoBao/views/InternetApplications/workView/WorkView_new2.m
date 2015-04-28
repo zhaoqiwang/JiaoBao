@@ -23,6 +23,12 @@
         //取发给我消息的用户列表，new
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnReadMsgCell" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnReadMsgCell:) name:@"UnReadMsgCell" object:nil];
+        //通知事务界面，切换成功身份成功，清空数组
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+        //切换账号时，更新数据
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RegisterView" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RegisterView:) name:@"RegisterView" object:nil];
         
         self.mArr_unReply = [NSMutableArray array];
         self.mArr_unRead = [NSMutableArray array];
@@ -33,7 +39,7 @@
         
         //放四个按钮
         self.mView_button = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 42)];
-        self.mView_button.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+        self.mView_button.backgroundColor = [UIColor colorWithRed:240/255.0 green:239/255.0 blue:247/255.0 alpha:1];
         [self addSubview:self.mView_button];
         
         //加载按钮
@@ -45,12 +51,12 @@
             }
             [tempbtn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"workView_%d",i]] forState:UIControlStateSelected];
             [tempbtn setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"workView_click_%d",i]] forState:UIControlStateNormal];
-            tempbtn.frame = CGRectMake((([dm getInstance].width-56*5)/6)*(i+1)+56*i, 0, 56, 42);
+            tempbtn.frame = CGRectMake((([dm getInstance].width-56*5)/6)*(i+1)+56*i, 0, 52, 42);
             [tempbtn addTarget:self action:@selector(btnChange:) forControlEvents:UIControlEventTouchUpInside];
             [self.mView_button addSubview:tempbtn];
         }
         //列表
-        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44-51)];
+        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
         self.mTableV_list.delegate=self;
         self.mTableV_list.dataSource=self;
         self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -64,20 +70,26 @@
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         //新建按钮
-        self.mBtn_new = [UIButton buttonWithType:UIButtonTypeCustom];
-        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
-        [self.mBtn_new setBackgroundImage:img_btn forState:UIControlStateNormal];
-        [self.mBtn_new addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
-        self.mBtn_new.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
-        [self.mBtn_new setTitle:@"新建事务" forState:UIControlStateNormal];
-        [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [self addSubview:self.mBtn_new];
+//        self.mBtn_new = [UIButton buttonWithType:UIButtonTypeCustom];
+//        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
+//        [self.mBtn_new setBackgroundImage:img_btn forState:UIControlStateNormal];
+//        [self.mBtn_new addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
+//        self.mBtn_new.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
+//        [self.mBtn_new setTitle:@"新建事务" forState:UIControlStateNormal];
+//        [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [self addSubview:self.mBtn_new];
         
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
         [self addSubview:self.mProgressV];
         self.mProgressV.delegate = self;
     }
     return self;
+}
+
+//切换账号时，更新数据
+-(void)RegisterView:(NSNotification *)noti{
+    [self clearArray];
+    self.mInt_index = 0;
 }
 
 -(void)UnReadMsgCell:(NSNotification *)noti{
@@ -178,7 +190,7 @@
         //获取头像
         [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
     }
-    cell.mImgV_head.frame = CGRectMake(10, 7, 40, 40);
+    cell.mImgV_head.frame = CGRectMake(10, 10, 45, 45);
     cell.delegate = self;
     cell.tag = indexPath.row;
     //头像点击事件
@@ -190,28 +202,31 @@
     NSString *name;
     name = model.UserName;
 
-    CGSize nameSize = [[NSString stringWithFormat:@"%@",name] sizeWithFont:[UIFont systemFontOfSize:15]];
-    cell.mLab_name.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, 10, nameSize.width, 20);
+    CGSize nameSize = [[NSString stringWithFormat:@"%@",name] sizeWithFont:[UIFont systemFontOfSize:16]];
+    cell.mLab_name.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, 15, nameSize.width, 20);
     cell.mLab_name.text = name;
+    
+    //时间
+    CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell.mLab_time.frame = CGRectMake([dm getInstance].width-timeSize.width-12, 15, timeSize.width, 20);
+    cell.mLab_time.textColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
+    cell.mLab_time.text = model.RecDate;
     
     //单位
     if (model.UnitShortName.length>0) {
         cell.mLab_unit.hidden = NO;
     }
     NSString *unitName = [NSString stringWithFormat:@"(%@)",model.UnitShortName];
-    CGSize unitSize = [[NSString stringWithFormat:@"%@",unitName] sizeWithFont:[UIFont systemFontOfSize:12]];
-    cell.mLab_unit.frame = CGRectMake(cell.mLab_name.frame.origin.x+nameSize.width, cell.mLab_name.frame.origin.y, unitSize.width, cell.mLab_unit.frame.size.height);
+//    CGSize unitSize = [[NSString stringWithFormat:@"%@",unitName] sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell.mLab_unit.frame = CGRectMake(cell.mLab_name.frame.origin.x+nameSize.width, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-timeSize.width-20, cell.mLab_unit.frame.size.height);
     cell.mLab_unit.text = unitName;
-    //时间
-    CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-    cell.mLab_time.frame = CGRectMake([dm getInstance].width-timeSize.width-10, 10, timeSize.width, 20);
-    cell.mLab_time.text = model.RecDate;
+    
     //内容
     cell.mLab_content.text = model.MsgContent;
-    cell.mLab_content.frame = CGRectMake(cell.mLab_name.frame.origin.x, cell.mLab_name.frame.origin.y+20, [dm getInstance].width-cell.mImgV_head.frame.size.width-30, 20);
+    cell.mLab_content.frame = CGRectMake(cell.mLab_name.frame.origin.x, cell.mLab_name.frame.origin.y+25, [dm getInstance].width-cell.mImgV_head.frame.size.width-30, 20);
     //分割线
-    cell.mLab_line.frame = CGRectMake(0, 53, [dm getInstance].width, .5);
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, 54);
+    cell.mLab_line.frame = CGRectMake(0, 64, [dm getInstance].width, .5);
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, 65);
     
     return cell;
 }
@@ -250,6 +265,7 @@
         work.mInt_our = 2;
     }
     work.mInt_flag = flag;
+
     work.mStr_tableID = unReadMsgModel.TabIDStr;
     [utils pushViewController:work animated:YES];
 }
@@ -326,8 +342,7 @@
     //不是刷新
     self.mInt_flag = 0;
     if (self.mInt_index == 0) {
-        if (self.mArr_sum.count>=20) {
-            //检查当前网络是否可用
+        if (self.mArr_sum.count>=20&&self.mArr_sum.count%20==0) {
             int a = (int)self.mArr_sum.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -335,7 +350,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 1){
-        if (self.mArr_unRead.count>=20) {
+        if (self.mArr_unRead.count>=20&&self.mArr_unRead.count%20==0) {
             int a = (int)self.mArr_unRead.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:6 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -343,7 +358,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 2){
-        if (self.mArr_unReply.count>=20) {
+        if (self.mArr_unReply.count>=20&&self.mArr_unReply.count%20==0) {
             int a = (int)self.mArr_unReply.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:8 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -351,7 +366,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 3){
-        if (self.mArr_reply.count>=20) {
+        if (self.mArr_reply.count>=20&&self.mArr_reply.count%20==0) {
             int a = (int)self.mArr_reply.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:9 page:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -359,7 +374,7 @@
             [self loadNoMore];
         }
     }else if (self.mInt_index == 4){
-        if (self.mArr_mySend.count>=20) {
+        if (self.mArr_mySend.count>=20&&self.mArr_mySend.count%20==0) {
             int a = (int)self.mArr_mySend.count/20+1;
             [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:[NSString stringWithFormat:@"%d",a]];
             [self ProgressViewLoad];
@@ -371,7 +386,22 @@
 
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData{
-    
+    if (self.mInt_index == 0) {
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 1){
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:6 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 2){
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:8 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 3){
+        [[LoginSendHttp getInstance] wait_unReadMsgWithTag:9 page:@"1"];
+        [self ProgressViewLoad];
+    }else if (self.mInt_index == 4){
+        [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:@"1"];
+        [self ProgressViewLoad];
+    }
 }
 
 -(void)ProgressViewLoad{
@@ -418,6 +448,22 @@
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = @"加载超时";
     sleep(2);
+}
+
+//通知学校界面，切换成功身份成功，清空数组
+-(void)changeCurUnit{
+//    [self clearArray];
+//    [self.mTableV_list reloadData];
+}
+
+//清空所有数据
+-(void)clearArray{
+    [self.mArr_mySend removeAllObjects];
+    [self.mArr_reply removeAllObjects];
+    [self.mArr_sum removeAllObjects];
+    [self.mArr_unRead removeAllObjects];
+    [self.mArr_unReply removeAllObjects];
+    [self.mTableV_list reloadData];
 }
 
 @end

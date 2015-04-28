@@ -20,6 +20,9 @@
 @synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mProgressV,mInt_flag;
 
 -(void)viewWillAppear:(BOOL)animated{
+    [dm getInstance].sectionSet = nil;
+    [dm getInstance].sectionSet2 = nil;
+    [dm getInstance].tableSymbol =NO;
     if (self.mInt_flag == 0) {
         self.mInt_flag = 1;
     }else{
@@ -42,6 +45,9 @@
     //是否有更新
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"itunesUpdataCheck" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itunesUpdataCheck:) name:@"itunesUpdataCheck" object:nil];
+    //获取当前用户可以发布动态的单位列表(含班级）
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetReleaseNewsUnits" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetReleaseNewsUnits:) name:@"GetReleaseNewsUnits" object:nil];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -184,7 +190,8 @@
                 if ([userUnitsModel.UnitID intValue] == [str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
-                    [dm getInstance].uType = i+1;
+//                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -197,7 +204,8 @@
                 if ([userUnitsModel.ClassID intValue]==[str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.ClassID intValue];
-                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = 3;
+//                    [dm getInstance].uType = [userUnitsModel.UnitType intValue]
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -222,7 +230,8 @@
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
-                    [dm getInstance].uType = i+1;
+//                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -233,7 +242,7 @@
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.ClassID intValue];
-                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = 3;
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -272,6 +281,19 @@
     if (btn.tag == 1) {//点击设置按钮
         NSArray *menuItems =
         @[
+          [KxMenuItem menuItem:@"新建事务"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem6:)],
+          
+          [KxMenuItem menuItem:@"发表动态"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem4:)],
+          [KxMenuItem menuItem:@"发表分享"
+                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                        target:self
+                        action:@selector(pushMenuItem5:)],
           
           [KxMenuItem menuItem:@"切换单位"
                          image:[UIImage imageNamed:@"appNav_changeUnit"]
@@ -289,11 +311,11 @@
                       fromRect:btn.frame
                      menuItems:menuItems];
     }else if (btn.tag == 2) {//点击添加按钮,让显示不同的界面时，点击出现不同的功能
-        if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
+//        if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
             [self showMenu:btn];
-        }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
-            [self shareAddMenu:btn];
-        }
+//        }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
+//            [self shareAddMenu:btn];
+//        }
     }
 }
 
@@ -305,6 +327,10 @@
         return 0;
     }
     if (tableView.tag == 100) {
+        if([dm getInstance].tableSymbol == YES)
+        {
+            return 2;
+        }
         return [dm getInstance].identity.count;
     }else if (tableView.tag == 101){
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
@@ -448,7 +474,6 @@
     check.mTableV_left = self.mTableV_left;
     check.mTableV_right = self.mTableV_right;
     [utils pushViewController:check animated:YES];
-    
 }
 
 - (void) pushMenuItemSchedule:(id)sender{
@@ -481,10 +506,94 @@
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
-    //通知shareView界面，更新数据
+    //通知界面，更新数据
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegisterView" object:nil];
     [Nav_internetAppView getInstance].mLab_name.text = @"";
     [utils pushViewController:mRegister_view animated:NO];
+}
+
+//发表文章动态
+- (void) pushMenuItem4:(id)sender{
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
+    NSLog(@"%@",self.mView_all);
+    NSLog(@"%d",self.mView_all.hidden);
+    //self.mView_all.backgroundColor = [UIColor redColor];
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    [[ClassHttp getInstance] classHttpGetReleaseNewsUnits];
+    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+}
+
+//发表文章分享
+- (void) pushMenuItem5:(id)sender{
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
+    NSLog(@"%@",self.mView_all);
+    NSLog(@"%d",self.mView_all.hidden);
+    //self.mView_all.backgroundColor = [UIColor redColor];
+    
+    UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+    model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+    SharePostingViewController *posting = [[SharePostingViewController alloc] init];
+    posting.mModel_unit = model;
+    posting.mInt_section = 0;
+    posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+    posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    [utils pushViewController:posting animated:YES];
+}
+
+//新建事务
+- (void) pushMenuItem6:(id)sender{
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    D("点击新建事务、发布通知按钮");
+//    ForwardViewController *forward = [[ForwardViewController alloc] init];
+//    forward.mStr_navName = @"新建事务";
+//    forward.mInt_forwardFlag = 1;
+//    forward.mInt_forwardAll = 2;
+//    forward.mInt_flag = 1;
+//    forward.mInt_all = 2;
+//    forward.mInt_where = 0;
+//    [utils pushViewController:forward animated:YES];
+    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
+    [utils pushViewController:newWork animated:YES];
+}
+
+//获取当前用户可以发布动态的单位列表(含班级）
+-(void)GetReleaseNewsUnits:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    NSMutableArray *array = noti.object;
+    if (array.count==0) {
+        self.mProgressV.labelText = @"没有权限";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    }else{
+        UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
+        model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+        model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+        SharePostingViewController *posting = [[SharePostingViewController alloc] init];
+        posting.mModel_unit = model;
+        posting.mInt_section = 1;
+        posting.mArr_dynamic = array;//*
+        posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+        posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+        [utils pushViewController:posting animated:YES];
+    }
 }
 
 //右上角+，分享

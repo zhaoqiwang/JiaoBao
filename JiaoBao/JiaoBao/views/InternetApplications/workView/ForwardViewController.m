@@ -8,8 +8,9 @@
 
 #import "ForwardViewController.h"
 #import "Reachability.h"
+#import "CollectionFootView.h"
 
-#define Margin 10//边距
+#define Margin 0//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 
 @interface ForwardViewController ()
@@ -28,8 +29,25 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.mProgressV hide:YES];
 }
-
+-(void)refreshWorkView:(id)sender
+{
+//    self.topView.frame = self.topView.mView_top.frame;
+//    NSLog(@"y = %f",self.topView.frame.origin.y);
+    [self setFrame];
+}
+//-(void)refreshHomeClass:(id)sender
+//{
+//
+//}
 -(void)viewWillAppear:(BOOL)animated{
+//    self.topView.frame = self.insideWorkV.mView_top.frame;
+//    NSLog(@"y = %f",self.topView.frame.origin.y);
+    [self setFrame];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
+
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshHomeClass:) name:@"refreshHomeClass" object:nil];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshHomeClass" object:nil];
     //向转发界面传递得到的人员单位列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
@@ -55,16 +73,18 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+  
     // Do any additional setup after loading the view from its nib.
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-    //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
-    self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar setGoBack];
-    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"forward_rightNav"]];
-    [self.view addSubview:self.mNav_navgationBar];
+//    //添加导航条
+//    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
+//    self.mNav_navgationBar.delegate = self;
+//    [self.mNav_navgationBar setGoBack];
+//    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"forward_rightNav"]];
+//    [self.view addSubview:self.mNav_navgationBar];
     
     
     if ([dm getInstance].identity.count>0) {
@@ -88,7 +108,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
     self.mModel_CMRevicer = [[CMRevicerModel alloc] init];
     //大scrollview的坐标
-    self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+10);
+    self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+10);
     //放单位信息的
     if (self.mInt_where == 0) {//发送短信
         self.mView_unit.frame =CGRectMake(Margin, Margin, [dm getInstance].width-2*Margin, 150);
@@ -168,13 +188,22 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.text = [dm getInstance].mStr_unit;
     
     //接收人，全选，反选，发表
-    self.mLab_4.frame =CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y+self.mBtn_sendMsg.frame.size.height, self.mLab_4.frame.size.width, 29);
-    self.mBtn_all.frame = CGRectMake(self.mLab_4.frame.origin.x+self.mLab_4.frame.size.width, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_all.backgroundColor = BtnColor;
+
+    self.topView = [[NewWorkTopView alloc]init];
+    self.topView.delegate = self;
+    
+    [self.mScrollV_all addSubview:self.topView];
+    NSLog(@"topView = %@",self.topView);
+    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+10, [dm getInstance].width, 28)];
+    self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
+    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
+    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
+    //self.mBtn_all.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_all.tag = 1;
     [self.mBtn_all addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    self.mBtn_invertSelect.frame = CGRectMake(self.mBtn_all.frame.origin.x+self.mBtn_all.frame.size.width+5, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_invertSelect.backgroundColor = BtnColor;
+    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60+15, self.mLab_4.frame.origin.y, 45, 29);
+    //self.mBtn_invertSelect.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_invertSelect.tag = 2;
     [self.mBtn_invertSelect addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-Margin-81, self.mLab_4.frame.origin.y, 81, 29);
@@ -198,12 +227,17 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mTalbeV_sub.tag = 101;
     
     //人员列表
-    self.mCollectionV_list.frame = CGRectMake(Margin, self.mBtn_send.frame.origin.y+self.mBtn_send.frame.size.height+10, self.mView_unit.frame.size.width, 0);
+    self.mCollectionV_list.frame = CGRectMake(Margin,self.mLab_4.frame.size.height+self.mLab_4.frame.origin.y, self.mView_unit.frame.size.width, 0);
     self.mCollectionV_list.backgroundColor = [UIColor whiteColor];
     self.mCollectionV_list.layer.borderWidth = 1;
     self.mCollectionV_list.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
     [self.mCollectionV_list registerClass:[Forward_cell class] forCellWithReuseIdentifier:kCellID];
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDetailedViewControllerID];
+    [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"FootView"];
+    
+     [self.mCollectionV_list registerNib:[UINib nibWithNibName:@"CollectionFootView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FootView"];
+    
+//    [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"CollectionFootView"];
     
     //添加单击手势
 //    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
@@ -211,7 +245,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //    [self.mScrollV_all addGestureRecognizer:tap1];
     UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pressTap:)];
     tap2.delegate = self;
-    [self.mView_unit addGestureRecognizer:tap2];
+    [self.topView addGestureRecognizer:tap2];
     
     [self sendRequest];
 }
@@ -252,9 +286,12 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.frame = CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y, [dm getInstance].width-self.mBtn_sendMsg.frame.size.width-Margin*3, self.mBtn_sendMsg.frame.size.height);
     
     //接收人，全选，反选，发表
-    self.mLab_4.frame =CGRectMake(Margin, self.mBtn_sendMsg.frame.origin.y+self.mBtn_sendMsg.frame.size.height, self.mLab_4.frame.size.width, 29);
-    self.mBtn_all.frame = CGRectMake(self.mLab_4.frame.origin.x+self.mLab_4.frame.size.width, self.mLab_4.frame.origin.y, 40, 29);
-    self.mBtn_invertSelect.frame = CGRectMake(self.mBtn_all.frame.origin.x+self.mBtn_all.frame.size.width+5, self.mLab_4.frame.origin.y, 40, 29);
+    self.headView.frame = CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+20, [dm getInstance].width, 28);
+    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.origin.y+self.topView.frame.size.height+20, self.mLab_4.frame.size.width, 29);
+    self.imgV.frame = CGRectMake([dm getInstance].width-15-100+15, self.mLab_4.frame.origin.y+7, 14, 14);
+    self.imgV.image = [UIImage imageNamed:@"blank.png"];
+    self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
+    self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60+15, self.mLab_4.frame.origin.y, 45, 29);
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-Margin-81, self.mLab_4.frame.origin.y, 81, 29);
     //切换单位界面
     self.mView_switch.frame = CGRectMake(0, 0, [dm getInstance].width, 4*44);
@@ -263,7 +300,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //添加边框
     self.mTalbeV_sub.frame =CGRectMake([dm getInstance].width/2, 0, [dm getInstance].width/2, 4*44);
     //人员列表
-    self.mCollectionV_list.frame = CGRectMake(Margin, self.mBtn_send.frame.origin.y+self.mBtn_send.frame.size.height+10, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
+    self.mCollectionV_list.frame = CGRectMake(Margin, self.headView.frame.origin.y+self.headView.frame.size.height, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
 }
 
 //附件按钮点击事件
@@ -606,7 +643,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 -(void)pressTap:(UITapGestureRecognizer *)tap{
     D("uuuu");
-    [self.mTextV_enter resignFirstResponder];
+    [self.topView.mTextV_input resignFirstResponder];
+    
 }
 
 - (void)Loading {
@@ -669,18 +707,226 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     }
     if (btn.tag == 1) {
         self.mInt_select_send = 1;
+        self.imgV.image = [UIImage imageNamed:@"selected.png"] ;
+                    for(int i=0;i<self.mModel_myUnit.list.count;i++)
+                    {
+                        NSNumber *num = [NSNumber numberWithInteger:i];
+
+
+                        if(!([dm getInstance].sectionSet2))
+                        {
+                            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                            
+                        }
+                        if(![[dm getInstance].sectionSet2 containsObject:num] )
+                        {
+                            [[dm getInstance].sectionSet2 addObject:num];
+                            NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+                            
+                            
+                        }
+                        else
+                        {
+                            //[[dm getInstance].sectionSet2 removeObject:num];
+                        }
+                    }
+
     }else if (btn.tag == 2){
         self.mInt_select_send = 2;
-    }else if (btn.tag == 3){
-        if (self.mTextV_enter.text.length == 0) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"请输入内容";
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            return;
+
+        if([self.imgV.image isEqual:[UIImage imageNamed:@"selected.png"]])
+        {
+            [dm getInstance].sectionSet2 = nil;
+    
+            for(int i=0;i<self.mModel_myUnit.list.count;i++)
+            {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                for (int i=0; i<model.groupselit_selit.count; i++) {
+                    //得到分组
+                    groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
+                    
+                    groupModel.mInt_select = 0;
+                }
+
+               // NSNumber *num = [NSNumber numberWithInteger:i];
+                
+                
+//                if(!([dm getInstance].sectionSet2))
+//                {
+//                    [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+//                    
+//                }
+//                if(![[dm getInstance].sectionSet2 containsObject:num] )
+//                {
+//                    //                [[dm getInstance].sectionSet2 addObject:num];
+//                    //                NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+//                    
+//                    
+//                }
+//                else
+//                {
+//                    [[dm getInstance].sectionSet2 removeObject:num];
+//                }
+            }
+            
+            self.imgV.image = [UIImage imageNamed:@"blank.png"] ;
+            self.mInt_select_send = 0;
+
+            
         }
-        self.mInt_select_send = 3;
+        else
+        {
+            if( [dm getInstance].sectionSet2.count == 0)
+            {
+                int symbol = 0;
+                int allSymbol = 0;
+
+                for(int i=0;i<self.mModel_myUnit.list.count;i++)
+                {
+                    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                    for (int i=0; i<model.groupselit_selit.count; i++) {
+                        //得到分组
+                        groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
+                        if(groupModel.mInt_select == 0)
+                        {
+                            symbol++;
+                        }
+                        
+                    }
+                    if(symbol == model.groupselit_selit.count)
+                    {
+                        symbol = 0;
+                        allSymbol++;
+                        NSNumber *num = [NSNumber numberWithInteger:i];
+                        
+                        if(!([dm getInstance].sectionSet2))
+                        {
+                            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                            
+                        }
+                        if(![[dm getInstance].sectionSet2 containsObject:num] )
+                        {
+                            [[dm getInstance].sectionSet2 addObject:num];
+                            NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+                            
+                            
+                        }
+                        else
+                        {
+                            symbol = 0;
+                            //[[dm getInstance].sectionSet2 removeObject:num];
+                        }
+                    }
+
+                }
+                if(allSymbol == self.mModel_myUnit.list.count)
+                {
+                    self.imgV.image = [UIImage imageNamed:@"selected.png"];
+
+                    
+                }
+//                for(int i=0;i<self.mModel_myUnit.list.count;i++)
+//                {
+//                    NSNumber *num = [NSNumber numberWithInteger:i];
+//                    
+//                    
+//                    if(!([dm getInstance].sectionSet2))
+//                    {
+//                        [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+//                        
+//                    }
+//                    if(![[dm getInstance].sectionSet2 containsObject:num] )
+//                    {
+//                                        [[dm getInstance].sectionSet2 addObject:num];
+//                                        NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+//                        
+//                        
+//                    }
+//                    else
+//                    {
+//                        //[[dm getInstance].sectionSet2 removeObject:num];
+//                    }
+//                }
+
+                
+            }
+            else
+            {
+                int symbol = 0;
+                for(int i=0;i<self.mModel_myUnit.list.count;i++)
+                {
+                    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                    for(i=0;i<model.groupselit_selit.count;i++)
+                    {
+                        groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
+
+                        if(groupModel.mInt_select == 0)
+                        {
+                            symbol++;
+                        }
+
+    
+                    }
+                    if(symbol == model.groupselit_selit.count)
+                    {
+                        if(!([dm getInstance].sectionSet2))
+                        {
+                            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                            
+                        }
+                        NSNumber *num = [NSNumber numberWithInteger:i];
+                        if(![[dm getInstance].sectionSet2 containsObject:num] )
+                        {
+                            [[dm getInstance].sectionSet2 addObject:num];
+                            NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+                            
+                            
+                        }
+                        else
+                        {
+                            //[[dm getInstance].sectionSet2 removeObject:num];
+                        }
+                        
+                    }
+
+
+                    NSNumber *num = [NSNumber numberWithInteger:i];
+                    
+                    
+                    if(!([dm getInstance].sectionSet2))
+                    {
+                        [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                        
+                    }
+                    if(![[dm getInstance].sectionSet2 containsObject:num] )
+                    {
+                        [[dm getInstance].sectionSet2 addObject:num];
+                        NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+                        
+                        
+                    }
+                    else
+                    {
+                        [[dm getInstance].sectionSet2 removeObject:num];
+                    }
+                }
+
+                
+            }
+            //self.mInt_select_send = 1;
+
+        }
     }
+//    else if (btn.tag == 3){
+//        if (self.mTextV_enter.text.length == 0) {
+//            self.mProgressV.mode = MBProgressHUDModeCustomView;
+//            self.mProgressV.labelText = @"请输入内容";
+//            [self.mProgressV show:YES];
+//            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//            return;
+//        }
+//        self.mInt_select_send = 3;
+//    }
     NSMutableArray *array = [NSMutableArray array];
     NSMutableArray *array1 = [NSMutableArray array];
     NSMutableArray *array2 = [NSMutableArray array];
@@ -807,7 +1053,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }else if (self.mInt_where == 1) {//发表下发通知
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
         }if (self.mInt_where == 2) {//发表短信直通车
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+//            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
         }
         
         self.mProgressV.labelText = @"加载中...";
@@ -960,8 +1207,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //    self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    self.mTextV_enter.text = @"";
-    
+    self.topView.mTextV_input.text = @"";
+    [self.topView.mArr_accessory removeAllObjects];
+    //[self.mArr_photo removeAllObjects];
+    //刷新界面
+    [self addAccessoryPhoto];
+    //刷新界面
+    [self addAccessory];
     //
     if (self.mInt_where == 0) {//发送短信
         if (self.mInt_select_send == 3) {
@@ -1275,7 +1527,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)CollectionReloadData{
     [self.mCollectionV_list reloadData];
     self.mCollectionV_list.frame = CGRectMake(self.mCollectionV_list.frame.origin.x, self.mCollectionV_list.frame.origin.y, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
-    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mCollectionV_list.frame.origin.y+self.mCollectionV_list.frame.size.height);
+    float height = self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height;
+    NSLog(@"height = %f",height);
+    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mCollectionV_list.frame.origin.y+self.mCollectionV_list.frame.size.height+150);
 }
 //获取当前单位中的人员
 -(void)sendRequest_member:(myUnit *)tempUnit{
@@ -1501,6 +1755,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
+    NSNumber *num = [NSNumber numberWithInteger:section];
+    if([[dm getInstance].sectionSet containsObject:num])
+    {
+        
+    }
+    else
+    {
+        return 0;
+    }
     if (self.mInt_where == 0) {//发送消息
 //        if (self.mInt_classNext == 1){
 ////            return self.mModel_class.studentgens_genselit.count;
@@ -1542,15 +1805,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         cell.mLab_name.text = smsModel.name;
         //对权限对区分
         if (indexPath.section > 0&&[smsModel.uType intValue] == 1) {
-            cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
+            cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
             cell.mLab_name.textColor = [UIColor grayColor];
         }else{
             cell.mLab_name.textColor = [UIColor blackColor];
             if (smsModel.mInt_select == 0) {
                 
-                cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
+                cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
             } else {
-                cell.mImgV_select.image = [UIImage imageNamed:@"forward_select2"];
+                cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
             }
         }
     }else{
@@ -1567,13 +1830,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         if (groupModel.selit.length>0) {
             cell.mLab_name.textColor = [UIColor blackColor];
             if (groupModel.mInt_select == 0) {
-                cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
+                cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
             } else {
-                cell.mImgV_select.image = [UIImage imageNamed:@"forward_select2"];
+                cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
             }
         }else{
             cell.mLab_name.textColor = [UIColor grayColor];
-            cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
+            cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
         }
         CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
         if (size.width>cell.mLab_name.frame.size.width) {
@@ -1588,7 +1851,49 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 //定义并返回每个headerView或footerView
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+    NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
+    NSArray *arr = [[dm getInstance].sectionSet2 allObjects];
+    if(arr)
+    {
+        [utils logArr:arr];
+
+        
+    }
+
     Forward_section *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kDetailedViewControllerID forIndexPath:indexPath];
+    if([[dm getInstance].sectionSet2 containsObject:num])
+    {
+        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+        
+    }
+    if(self.mInt_select_send == 1)
+    {
+        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"]  forState:UIControlStateNormal];
+    }
+    else
+    {
+//        {
+//        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"]  forState:UIControlStateNormal];
+//
+//        }
+    }
+    if([[dm getInstance].sectionSet containsObject:num])
+    {
+        [view.addBtn setImage:[UIImage imageNamed:@"plus.png"] forState:UIControlStateNormal];
+        [view.triangleBtn setImage:[UIImage imageNamed:@"bTri.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [view.addBtn setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+        [view.triangleBtn setImage:[UIImage imageNamed:@"rTri.png"] forState:UIControlStateNormal];
+
+    }
+    
+
     view.delegate = self;
     view.tag = indexPath.section;
     if (self.mInt_where == 0) {//发送消息
@@ -1605,16 +1910,31 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         SMSTreeArrayModel *model = [self.mArr_SMS objectAtIndex:indexPath.section];
         view.mLab_name.text = model.name;
     }
+    
+if([dm getInstance].sectionSet2.count ==self.mModel_myUnit.list.count)
+{
+    self.imgV.image = [UIImage imageNamed:@"selected.png"];
+}
+    else
+    {
+        self.imgV.image = [UIImage imageNamed:@"blank.png"];
+
+        
+    }
+    
     return view;
 }
 //设置每组的cell的边界
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(10, 10, 10, 10);
+    return UIEdgeInsetsMake(0, 10, 0, 10);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    self.mInt_select_send = 0;
     //找到当前点击的cell，然后改变选中值，重置界面
-    
+    NSNumber *num = [NSNumber numberWithInteger:indexPath.section ];
+
+    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
     if (self.mInt_where == 2){//短信直通车
         SMSTreeArrayModel *model = [self.mArr_SMS objectAtIndex:indexPath.section];
         SMSTreeUnitModel *smsModel = [model.smsTree objectAtIndex:indexPath.row];
@@ -1631,17 +1951,97 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     }else{
         groupselit_selitModel *groupModel;
         if (self.mInt_where == 0) {//发送消息
-            UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+ 
             groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
         }else if (self.mInt_where == 1){//下发通知
             UserListModel *model = [self.mArr_nowNotice objectAtIndex:indexPath.section];
             groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
         }
         if (groupModel.selit.length>0) {
+        Forward_section *sectionView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDetailedViewControllerID forIndexPath:indexPath];
             if (groupModel.mInt_select == 0) {
                 groupModel.mInt_select = 1;
+                for(int i=0;i<model.groupselit_selit.count;i++)
+                {
+                    groupselit_selitModel *tmpGroupModel = [model.groupselit_selit objectAtIndex:i];
+                    sectionView.sel_symbol =1;
+                    if(tmpGroupModel.mInt_select == 0)
+                    {
+                        sectionView.sel_symbol = 0;
+                        break;
+                    }
+
+                }
+
+                if(sectionView.sel_symbol == 0)
+                {
+                    if(!([dm getInstance].sectionSet2))
+                    {
+                        [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                        
+                    }
+                    if(![[dm getInstance].sectionSet2 containsObject:num] )
+                    {
+//                        [[dm getInstance].sectionSet addObject:num];
+//                        NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+                        
+                        
+                    }
+                    else
+                    {
+                        [[dm getInstance].sectionSet2 removeObject:num];
+                    }
+
+
+                    
+                }
+                else
+                {
+                    if(!([dm getInstance].sectionSet2))
+                    {
+                        [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                        
+                    }
+                    if(![[dm getInstance].sectionSet2 containsObject:num] )
+                    {
+                        [[dm getInstance].sectionSet2 addObject:num];
+                        NSLog(@"mSet = %@",[dm getInstance].sectionSet2);
+                        
+                        
+                    }
+                    else
+                    {
+                        //[[dm getInstance].sectionSet removeObject:num];
+                    }
+
+
+                }
+                
+                
+                
             }else{
                 groupModel.mInt_select = 0;
+  
+                if(!([dm getInstance].sectionSet2))
+                {
+                    [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                    
+                }
+                if(![[dm getInstance].sectionSet2 containsObject:num] )
+                {
+                    [[dm getInstance].sectionSet2 removeObject:num];
+
+                    //                        [[dm getInstance].sectionSet addObject:num];
+                    //                        NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+                    
+                    
+                }
+                else
+                {
+                    [[dm getInstance].sectionSet2 removeObject:num];
+                }
+
+                
             }
             [self.mCollectionV_list reloadData];
         }
@@ -1667,66 +2067,151 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //section点击事件
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
+    NSNumber *num = [NSNumber numberWithInteger:section.tag];
+    
+    if(btn.tag == 6)
+    {
+        [self CollectionReloadData];
+    }
+    else
+    {
     //找到当前点击的cell，然后改变选中值，重置界面
     if (self.mInt_where == 0) {//发送消息
         UserListModel *model = [self.mModel_myUnit.list objectAtIndex:section.tag];
+
+        if (btn.tag == 7) {
+
         for (int i=0; i<model.groupselit_selit.count; i++) {
             //得到分组
             groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
-            //判断是全选还是反选
-            if (btn.tag == 1) {
+            
                 groupModel.mInt_select = 1;
-            }else{
-                if (groupModel.mInt_select == 0) {
-                    groupModel.mInt_select = 1;
-                }else{
-                    groupModel.mInt_select = 0;
-                }
+                
+                
+                
             }
         }
-        //        }
-    }else if (self.mInt_where == 1){//下发通知
-        UserListModel *model = [self.mArr_nowNotice objectAtIndex:section.tag];
-        for (int i=0; i<model.groupselit_selit.count; i++) {
-            //得到分组
-            groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
-            //判断是全选还是反选
-            if (btn.tag == 1) {
-                if (groupModel.selit.length>0) {
-                    groupModel.mInt_select = 1;
-                }
-            }else{
-                if (groupModel.selit.length>0) {
+        else{
+            if([[section.rightBtn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"selected.png"]])
+            {
+                NSLog(@"num = %@",num);
+                [[dm getInstance].sectionSet2 removeObject:num];
+                self.mInt_select_send = 0;
+                for (int i=0; i<model.groupselit_selit.count; i++) {
+                    //得到分组
+                    groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
                     if (groupModel.mInt_select == 0) {
                         groupModel.mInt_select = 1;
+                        
+                        
                     }else{
                         groupModel.mInt_select = 0;
                     }
-                }
             }
-        }
-    }else if (self.mInt_where == 2){//短信直通车
-        SMSTreeArrayModel *model = [self.mArr_SMS objectAtIndex:section.tag];
-        for (int i=0; i<model.smsTree.count; i++) {
-            //得到分组
-            SMSTreeUnitModel *smsModel = [model.smsTree objectAtIndex:i];
-            //对权限对区分
-            if (section.tag > 0&&[smsModel.uType intValue] == 1) {;
-            }else{
-                //判断是全选还是反选
-                if (btn.tag == 1) {
-                    smsModel.mInt_select = 1;
-                }else{
-                    if (smsModel.mInt_select == 0) {
-                        smsModel.mInt_select = 1;
+            }
+            else {
+                section.sel_symbol = 1;
+                int symbol = 0;
+                for (int i=0; i<model.groupselit_selit.count; i++) {
+                    //得到分组
+                    groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
+                    if (groupModel.mInt_select == 0) {
+                        groupModel.mInt_select = 1;
+                        symbol++;
+
+
+                        
                     }else{
-                        smsModel.mInt_select = 0;
+                        groupModel.mInt_select = 0;
                     }
+                    
+                    
+                    
                 }
+                if(symbol == model.groupselit_selit.count)
+                {
+                    if(!([dm getInstance].sectionSet2))
+                    {
+                        [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+                        
+                    }
+                    if(![[dm getInstance].sectionSet2 containsObject:num] )
+                    {
+                        [[dm getInstance].sectionSet2 addObject:num];
+
+                        
+                        
+                    }
+
+                    
+                }
+                else
+                {
+                    
+                }
+            //if(section.sel_symbol == 0)
+//            {
+//                if(!([dm getInstance].sectionSet2))
+//                {
+//                    [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+//                    
+//                }
+//                if(![[dm getInstance].sectionSet2 containsObject:num] )
+//                {
+//                    //                        [[dm getInstance].sectionSet addObject:num];
+//                    //                        NSLog(@"mSet = %@",[dm getInstance].sectionSet);
+//                    
+//                    
+//                }
+//                else
+//                {
+//                    [[dm getInstance].sectionSet2 removeObject:num];
+//                    self.mInt_select_send = 0;
+//                }
+//                
+//                
+//                
+//            }
+            //else
+//            {
+//                if(!([dm getInstance].sectionSet2))
+//                {
+//                    [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
+//                    
+//                }
+//                if(![[dm getInstance].sectionSet2 containsObject:num] )
+//                {
+//                    [[dm getInstance].sectionSet2 addObject:num];
+//                    NSLog(@"mSet = %@",[dm getInstance].sectionSet2);
+//                    
+//                    
+//                }
+//                else
+//                {
+//                    //[[dm getInstance].sectionSet removeObject:num];
+//                }
+//                
+//                
+//                
+//                
+//            }
             }
         }
+
+
+
+  
+        
+        }
+        NSArray *arr = [[dm getInstance].sectionSet2 allObjects];
+        if(arr)
+        {
+            [utils logArr:arr];
+
+            
+        }
+            [self.mCollectionV_list reloadData];
     }
-    [self.mCollectionV_list reloadData];
 }
 
 //导航条点击事件
@@ -1760,6 +2245,165 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         self.mLab_tishi.hidden = NO;
     }
 }
+-(void)mBtn_send:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+//    if (btn.tag == 1) {
+//        self.mInt_select_send = 1;
+//    }else if (btn.tag == 2){
+//        self.mInt_select_send = 2;
+//    }else if (btn.tag == 3){
+        if (self.topView.mTextV_input.text.length == 0) {
+            self.mProgressV.mode = MBProgressHUDModeCustomView;
+            self.mProgressV.labelText = @"请输入内容";
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            return;
+        }
+        self.mInt_select_send = 3;
+    //}
+    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *array1 = [NSMutableArray array];
+    NSMutableArray *array2 = [NSMutableArray array];
+    
+    if (self.mInt_where == 0) {//发送短信
+        if (self.mInt_select_send == 3) {
+            //当前单位
+            myUnit *tempUnit = self.mModel_unitList.myUnit;
+            [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            //上级单位
+            for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+                [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            }
+            //下级单位
+            for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.subUnits objectAtIndex:i];
+                [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            }
+            for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+                myUnit *tempUnit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+                [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+            }
+        }else{
+            //检索当前需要发送的ID
+            for (int m=0; m<self.mModel_myUnit.list.count; m++) {
+                UserListModel *model2 = [self.mModel_myUnit.list objectAtIndex:m];
+                NSMutableArray *arr9 = model2.groupselit_selit;
+                for (int n=0; n<arr9.count; n++) {
+                    groupselit_selitModel *model3 = [arr9 objectAtIndex:n];
+                    if (self.mInt_select_send == 1) {
+                        model3.mInt_select = 1;
+                    }else if (self.mInt_select_send == 2){
+                        if (model3.mInt_select == 0) {
+                            model3.mInt_select = 1;
+                        } else {
+                            model3.mInt_select = 0;
+                        }
+                    }
+                }
+            }
+        }
+    }else if (self.mInt_where == 1){//下发通知
+        //循环遍历
+        for (int i=0; i<self.mArr_notice.count; i++) {
+            CommMsgUnitNotice *noticeModel = [self.mArr_notice objectAtIndex:i];
+            for (int a=0; a<noticeModel.selitadmintomem.count; a++) {
+                UserListModel *model = [noticeModel.selitadmintomem objectAtIndex:a];
+                for (int m=0; m<model.groupselit_selit.count; m++) {
+                    groupselit_selitModel *tempModel = [model.groupselit_selit objectAtIndex:m];
+                    if (tempModel.selit.length>0) {
+                        if (self.mInt_select_send == 1) {
+                            tempModel.mInt_select = 1;
+                        }else if (self.mInt_select_send == 2){
+                            if (tempModel.mInt_select == 0) {
+                                tempModel.mInt_select = 1;
+                            } else {
+                                tempModel.mInt_select = 0;
+                            }
+                        }else if (self.mInt_select_send == 3){
+                            if (tempModel.mInt_select == 1) {
+                                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                                [dic setValue:tempModel.flag forKey:@"flag"];
+                                [dic setValue:tempModel.selit forKey:@"selit"];
+                                [array addObject:dic];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }else if (self.mInt_where == 2){//短信直通车
+        for (int i=0; i<self.mArr_SMS.count; i++) {
+            SMSTreeArrayModel *model = [self.mArr_SMS objectAtIndex:i];
+            for (int m=0; m<model.smsTree.count; m++) {
+                SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                if (self.mInt_select_send == 1) {
+                    tempModel.mInt_select = 1;
+                }else if (self.mInt_select_send == 2){
+                    if (tempModel.mInt_select == 0) {
+                        tempModel.mInt_select = 1;
+                    } else {
+                        tempModel.mInt_select = 0;
+                    }
+                }else if (self.mInt_select_send == 3){
+                    if (i == 0) {
+                        if (tempModel.mInt_select == 1) {
+                            [array addObject:tempModel.id0];
+                            
+                        }
+                    }else if (i == 1){
+                        if (tempModel.mInt_select == 1) {
+                            [array1 addObject:tempModel.id0];
+                            
+                        }
+                    }else if (i == 2){
+                        if (tempModel.mInt_select == 1) {
+                            [array2 addObject:tempModel.id0];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (self.mInt_select_send == 1||self.mInt_select_send == 2) {
+        [self.mCollectionV_list reloadData];
+    }else if (self.mInt_select_send == 3){
+        if (array.count==0) {
+            self.mProgressV.mode = MBProgressHUDModeCustomView;
+            self.mProgressV.labelText = @"请选择人员";
+            //            self.mProgressV.userInteractionEnabled = NO;
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            return;
+        }
+        //发表
+        if (self.mInt_where == 0) {
+            NSMutableArray *array0 = [NSMutableArray array];
+            [array0 addObjectsFromArray:self.topView.mArr_accessory];
+            //[array0 addObjectsFromArray:self.mArr_photo];
+            D("array.count-====%lu",(unsigned long)array0.count);
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:self.mStr_forwardTableID access:array0];
+        }else if (self.mInt_where == 1) {//发表下发通知
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
+        }if (self.mInt_where == 2) {//发表短信直通车
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+        }
+        
+        self.mProgressV.labelText = @"加载中...";
+        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+        //        self.mProgressV.userInteractionEnabled = NO;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        
+    }
+    [self.mCollectionV_list reloadData];
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

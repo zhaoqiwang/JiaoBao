@@ -115,9 +115,9 @@ NSString *kCellID0 = @"Forward_cell";
     MsgDetail_ReaderList *model = [self.mArr_member objectAtIndex:indexPath.row];
     
     if ([model.flag integerValue] == 1) {
-        cell.mImgV_select.image = [UIImage imageNamed:@"forward_select2"];
+        cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
     }else{
-        cell.mImgV_select.image = [UIImage imageNamed:@"forward_select1"];
+        cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
     }
 //    CGSize size = [model.TrueName sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.backgroundColor = [UIColor grayColor];

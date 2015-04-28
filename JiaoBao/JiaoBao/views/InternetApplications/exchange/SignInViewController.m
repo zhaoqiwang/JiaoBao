@@ -23,6 +23,7 @@
 @property(nonatomic,strong)NSString *selcetedDateStr;//选择的日期字符串
 @property(nonatomic,strong)NSArray *groupArr;//点击导航栏右侧按钮所获列表数据
 @property(nonatomic,assign)NSUInteger selectedTag;//点击组数据列表行的标志
+@property(nonatomic,assign)NSInteger delayTime;
 
 
 @end
@@ -98,7 +99,9 @@
 {
     KxMenuItem *menuItem = sender;
     self.selectedTag = menuItem.tag;
-    self.mNav_navgationBar.label_Title.text = menuItem.title;
+   // self.mNav_navgationBar.label_Title.text = menuItem.title;
+    [self.mNav_navgationBar leftBtnAction:menuItem.title];
+
     
     
 }
@@ -109,7 +112,8 @@
 -(void)GetDelayedTime:(id)sender
 {
     NSDictionary *dic = [sender object];
-    NSLog(@"dic[2] = %@",[dic objectForKey:@"Data"]);
+    self.delayTime = [[dic objectForKey:@"Data"] integerValue];
+
 }
 //获取组数据列表
 -(void)getUnitGroups:(id)sender
@@ -149,16 +153,20 @@
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSTimeInterval  interval = 24*60*60;
+   // NSTimeInterval  interval = 24*60*60;
     
-    NSDate *destDate = [date dateByAddingTimeInterval:interval];
-    NSLog(@"destDate = %@",destDate);
-    //self.calendar.currentDateSelected = destDate;
-
-    NSLog(@"date = %@",date);
+//    NSDate *destDate = [date dateByAddingTimeInterval:interval];
+//    NSLog(@"destDate = %@",destDate);
+//    //self.calendar.currentDateSelected = destDate;
+//
+//    NSLog(@"date = %@",date);
     NSString *destDateString = [dateFormatter stringFromDate:date];
     NSLog(@"destDateString = %@",destDateString);
     self.selcetedDateStr = destDateString;
+//    NSDate *curDate = [NSDate date];
+//    NSString *destDateString2 = [dateFormatter stringFromDate:curDate];
+//    NSLog(@"curDate = %@",destDateString2);
+
     
     
 }
@@ -174,77 +182,61 @@
 //点击提交按钮所响应的方法
 - (IBAction)submitAction:(id)sender
 {
-    NSTimeZone* localzone = [NSTimeZone localTimeZone];
-    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    NSDate *curDate = [NSDate date];
-    NSLog(@"curDate = %@",curDate);
-    NSTimeInterval  interval = 24*60*60;
-    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
-    NSLog(@"destDate = %@",destDate);
-    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+//    NSTimeZone* localzone = [NSTimeZone localTimeZone];
+//    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+//    NSDate *curDate = [NSDate date];
+//    NSLog(@"curDate = %@",curDate);
+//    NSTimeInterval  interval = 24*60*60;
+//    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
+//    NSLog(@"destDate = %@",destDate);
+//    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    [dateFormatter setTimeZone:GTMzone];
-    [dateFormatter setTimeZone:localzone];
-
-    NSString *date = [dateFormatter stringFromDate:curDate];
-    NSString *date2 = [dateFormatter stringFromDate:destDate];
-    NSDate *selectDate = [dateFormatter dateFromString:date2];
-    NSDate *currDate = [dateFormatter dateFromString:date];
-    NSLog(@"selectDate = %@ currDate = %@",selectDate,currDate);
-
-//    long long currentDate = [date longLongValue];
-//    long long selectedDate = [date2 longLongValue];
-//    if(selectedDate == 0)
-//    {
-//        selectedDate = currentDate;
-//    }
-
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    NSDate *slectedDate = [dateFormatter dateFromString:self.selcetedDateStr];
+//    [dateFormatter setTimeZone:GTMzone];
+//    [dateFormatter setTimeZone:localzone];
+    NSDate *curDate = [NSDate date];
+    NSString *curDateStr = [dateFormatter stringFromDate:curDate];
+    NSDate *currDate = [dateFormatter dateFromString:curDateStr];
+    NSLog(@"selected = %@,curDate = %@",slectedDate,currDate);
+        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
     
-    unsigned int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
-    //NSDate *selectDate = [dateFormatter dateFromString:self.selcetedDateStr];
-    NSDateComponents *comps = [gregorian components:unitFlags fromDate:selectDate toDate:currDate options:0];
-    NSUInteger days = [comps day];
-    NSLog(@"days = %ld",days);
-        
-//    NSLog(@"current = %ld,selectedDate = %ld",(long)currentDate,( long)selectedDate);
-//    long long dayInterval = currentDate-selectedDate;
-//    NSLog(@"dayInterval = %ld",( long)dayInterval);
+         int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
+        NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
+    NSInteger days = [comps day] ;
+        NSLog(@"days = %ld",days);
+    
+    
 
-//    NSLog(@"current = %@,selectedDate = %@",self.calendar.currentDate,self.calendar.currentDateSelected);
-//    NSTimeInterval timeInterval = [self.calendar.currentDate timeIntervalSinceDate:self.calendar.currentDateSelected];
-//    NSLog(@"timeinterval = %f",timeInterval);
-//    NSUInteger dayInterval =   (NSUInteger) timeInterval/(24*60*60);
-//    NSLog(@"dayinterval = %ld",(unsigned long)dayInterval);
-    if(days >3)
+
+
+    
+    NSLog(@"delaytime = %lu",(unsigned long)self.delayTime);
+    
+    if(days <(-self.delayTime))
     {
         [SVProgressHUD showErrorWithStatus:@"超出期限"];
+
     }
-    else if(days <0)
+    else if(days >0)
     {
         
-        //NSLog(@"dayInterval = %ld",(unsigned long)dayInterval);
-        [SVProgressHUD showErrorWithStatus:@"不能提前提报日程"];
+            [SVProgressHUD showErrorWithStatus:@"不能提前提报日程"];
 
-        
-        
 
-        
     }
     else
     {
-        //detail.dayInterval = dayInterval;
-        
-        detail.selectedStr = self.selcetedDateStr;
-        detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
-        [utils logDic:detail.groupDic];
-        
-        [self.navigationController pushViewController:detail animated:YES];
 
+        DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+            detail.selectedStr = self.selcetedDateStr;
+            detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
+            [utils logDic:detail.groupDic];
+            
+            [self.navigationController pushViewController:detail animated:YES];
 
-        
     }
+
 
     
     

@@ -51,4 +51,7 @@
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData;
 
+//清空所有数据
+-(void)clearArray;
+
 @end

@@ -29,10 +29,10 @@
         model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
         model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
         model.FeeBackCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FeeBackCount"]];
-        model.StarJson = [dic objectForKey:@"StarJson"];
+        model.StarJson = [dic objectForKey:@"StarJson"]; 
         model.Title = [dic objectForKey:@"Title"];
         
-        NSString *Abstracts = [dic objectForKey:@"Thumbnail"];
+        NSString *Abstracts = [dic objectForKey:@"Abstracts"];
         if ([Abstracts isEqual:[NSNull null]]||[Abstracts isEqual:@"<null>"]) {
             model.Abstracts = @"";
         }else{
@@ -40,7 +40,7 @@
         }
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         NSString *thumbnail = [dic objectForKey:@"Thumbnail"];
-        NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"Thumbnail"]);
+//        NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"Thumbnail"]);
         if ([thumbnail isEqual:[NSNull null]]||[thumbnail isEqual:@"<null>"]) {
             model.Thumbnail = [NSMutableArray array];
         }else{
@@ -51,6 +51,13 @@
         model.SectionID = [dic objectForKey:@"SectionID"];
         model.UserName = [dic objectForKey:@"UserName"];
         model.UnitName = [dic objectForKey:@"UnitName"];
+        
+        model.UnitType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitType"]];
+        if ([model.UnitType intValue]==3) {//班级id，单独字段
+            model.unitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitClassID"]];
+        }else{
+            model.unitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitId"]];
+        }
         model.flag = [model.SectionID substringFromIndex:model.SectionID.length-1];
         NSString *str = [utils getLocalTimeDate];
         NSString *str2 = [dic objectForKey:@"RecDate"];
@@ -72,6 +79,21 @@
         if (arrClassID.count>1) {
             model.classID = [arrClassID objectAtIndex:0];
         }
+        [array addObject:model];
+    }
+    return array;
+}
+
+//获取当前用户可以发布动态的单位列表(含班级）
++(NSMutableArray *)parserJsonGetReleaseNewsUnits:(NSString *)json{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for (int i=0; i<arrList.count; i++) {
+        ReleaseNewsUnitsModel *model = [[ReleaseNewsUnitsModel alloc] init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.UnitName = [dic objectForKey:@"UnitName"];
+        model.UnitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitId"]];
+        model.UnitType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitType"]];
         [array addObject:model];
     }
     return array;

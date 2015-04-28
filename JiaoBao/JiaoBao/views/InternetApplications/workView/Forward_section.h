@@ -21,6 +21,11 @@
 @property (nonatomic,strong) UIButton *mBtn_all;//全选按钮
 @property (nonatomic,strong) UIButton *mBtn_invertSelect;//反选
 @property (strong,nonatomic) id<Forward_sectionDelegate> delegate;
+@property(nonatomic,strong)UIButton *addBtn;
+@property(nonatomic,strong)UIButton *triangleBtn;
+@property(nonatomic,strong)UIButton *rightBtn;
+@property(nonatomic,assign)BOOL sel_symbol;
+
 
 - (void)initWithFrame1:(CGRect)frame;
 

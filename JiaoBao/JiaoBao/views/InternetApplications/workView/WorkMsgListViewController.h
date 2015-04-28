@@ -44,6 +44,8 @@
     NSMutableArray *mArr_readList;//当前显示详情的阅读人员
     NSString *mStr_flag;//我自己发送的信息中，未读数量
 }
+@property (weak, nonatomic) IBOutlet UIButton *dropDownBtn;
+@property (weak, nonatomic) IBOutlet UILabel *dropDownLabel;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_detail;//详情列表

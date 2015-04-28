@@ -57,7 +57,8 @@
             self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
+//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务",@"学校圈",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
         }
         
@@ -81,7 +82,6 @@
     [self addSubview:tempLab];
     
     for (int i = 0; i < [self.self.mArr_name count]; i++) {
-        
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
         [button setTag:i+100];
@@ -95,14 +95,21 @@
         [button setTitleColor:[UIColor colorWithRed:91/255.0 green:178/255.0 blue:57/255.0 alpha:1] forState:UIControlStateSelected];
         [button setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
         //设置标题位置
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i]] forState:UIControlStateNormal];
-        [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i]] forState:UIControlStateSelected];
+        if (i>=1) {
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+2]] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+2]] forState:UIControlStateSelected];
+        }else{
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+1]] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+1]] forState:UIControlStateSelected];
+        }
+        
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
         //    在UIButton中有三个对EdgeInsets的设置：ContentEdgeInsets、titleEdgeInsets、imageEdgeInsets
         button.imageEdgeInsets = UIEdgeInsetsMake(4,(tempWidth-25)/2,21,(tempWidth-25)/2);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
         button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
-        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
+//        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
+        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2+10, 4, 0);
 //        button.imageEdgeInsets = UIEdgeInsetsMake(4,0,21,(tempWidth-25)/2);
 //        button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
 //        button.titleEdgeInsets = UIEdgeInsetsMake(32, (tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
@@ -179,20 +186,22 @@
         mInt_userSelectedChannelID = sender.tag;
     }
     [InternetAppRootScrollView shareInstance].mInt = (int)sender.tag - 100;
-    [self sendRequest];
     //按钮选中状态
     if (!sender.selected) {
         sender.selected = YES;
         [UIView animateWithDuration:0.25 animations:^{
             
             [self.mImgV_slide setFrame:CGRectMake(sender.frame.origin.x, 38, [dm getInstance].width/self.mArr_name.count, 2)];
+
             
         } completion:^(BOOL finished) {
             if (finished) {
                 //设置页出现
-                [[InternetAppRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:YES];
+            [[InternetAppRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
                 //赋值滑动列表选择ID
                 mInt_scrollViewSelectedChannelID = sender.tag;
+                [self sendRequest];
+
             }
         }];
     }
@@ -230,8 +239,11 @@
 }
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
-    self.timer = nil;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol:) userInfo:nil repeats:NO];
+//    [self.timer invalidate];
+//
+//    self.timer = nil;
+
+
     if (mInt_userSelectedChannelID == 100) {
         [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
     }else{
@@ -239,13 +251,16 @@
     }
     if (SHOWRONGYUN == 1) {
         if (mInt_userSelectedChannelID == 100) {
+ 
             if (mInt_show == 0) {
                 //获取所有单位
                 [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];
 //                [[InternetAppRootScrollView shareInstance].exchangeView ProgressViewLoad];
                 mInt_show = 1;
             }
-        }else if (mInt_userSelectedChannelID == 101) {//事务
+        }
+        else if (mInt_userSelectedChannelID == 101) {//事务
+            
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
 //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
             }
@@ -262,12 +277,12 @@
                 mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 102) {//分享
-            if (mInt_share == 0) {
-                //获取同事、关注人、好友的分享文章
-                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
-                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
-                mInt_share = 1;
-            }
+//            if (mInt_share == 0) {
+//                //获取同事、关注人、好友的分享文章
+//                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
+//                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
+//                mInt_share = 1;
+//            }
         }else if (mInt_userSelectedChannelID == 103){
             [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
             //展示
@@ -291,7 +306,21 @@
         }
     }else{
         if (mInt_userSelectedChannelID == 100) {//事务
-            [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+
+
+            
+            
+
+            if(self.mInt_unReadMsg == 0)
+            {
+                self.timer0 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol0:) userInfo:nil repeats:NO];
+                //[self.timer0 setFireDate:[NSDate date]];
+                //[self.timer0 setFireDate:[NSDate distantPast]];
+                [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+                self.mInt_unReadMsg = 1;
+
+                
+            }
             if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
 //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
             }
@@ -308,17 +337,37 @@
                 mInt_work_sendToMe = 1;
             }
         }else if (mInt_userSelectedChannelID == 101) {//分享
-            if (mInt_share == 0) {
-                //获取同事、关注人、好友的分享文章
-                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
-                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
-                mInt_share = 1;
-            }
-        }else if (mInt_userSelectedChannelID == 102){//展示
-            if(mInt_show == 0)
-            {
+
+
+
+
+
+            if (mInt_show == 0) {
+                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];
                 mInt_show = 1;
                 [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
+                //获取同事、关注人、好友的分享文章
+//                self.timer1 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol1:) userInfo:nil repeats:NO];
+//                mInt_share = 1;
+//                NSLog(@"mIntShare = %ld",(long)mInt_share);
+//
+//                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
+//                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
+            }
+        }else if (mInt_userSelectedChannelID == 102){//展示
+
+
+                
+
+            if(mInt_theme == 0)
+            {
+                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
+                mInt_theme = 1;
+                //取我关注的和我所参与的主题
+                [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
+                [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
+//                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];                mInt_show = 1;
+//                [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
 
                 
             }
@@ -333,7 +382,11 @@
 //                [[InternetAppRootScrollView shareInstance].showView ProgressViewLoad];
 //            }
         }else if (mInt_userSelectedChannelID == 103){//主题
+
+
+
             if (mInt_theme == 0) {
+                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
                 mInt_theme = 1;
                 //取我关注的和我所参与的主题
                 [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
@@ -344,14 +397,38 @@
     
 }
 
--(void)updateRequestSymbol:(id)sender
+-(void)updateRequestSymbol0:(id)sender
 {
-    self.mInt_share = 0;
-    self.mInt_show = 0;
-    self.mInt_show2 = 0;
-    self.mInt_theme = 0;
+
     self.mInt_work_mysend = 0;
     self.mInt_work_sendToMe = 0;
+    self.mInt_unReadMsg = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+}
+-(void)updateRequestSymbol1:(id)sender
+{
+    
+    mInt_share = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+
+}
+-(void)updateRequestSymbol2:(id)sender
+{
+    
+    self.mInt_show = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+}
+-(void)updateRequestSymbol3:(id)sender
+{
+    
+
+    self.mInt_theme = 0;
+    NSTimer *timer = (NSTimer*)sender;
+    [timer invalidate];
+
 }
 
 @end
