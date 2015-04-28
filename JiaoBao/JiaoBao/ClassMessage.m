@@ -14,7 +14,12 @@ NSString *kCell = @"Forward_cell2";
 - (instancetype)initWithFrame:(CGRect)frame
 {
    self = [super initWithFrame:frame];
-    self.datasource = [[NSMutableArray alloc]initWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
+    //通知界面更新，获取事务信息接收单位列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+
+
+    self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
     headerView.backgroundColor = [UIColor lightGrayColor];
@@ -26,6 +31,7 @@ NSString *kCell = @"Forward_cell2";
     //self.view.backgroundColor = [UIColor lightGrayColor];
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;//滚动方向
+    
 
 //    
     self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 300) collectionViewLayout:flowLayout];
@@ -37,6 +43,8 @@ NSString *kCell = @"Forward_cell2";
     [self.mCollectionV_list registerClass:[Forward_cell class] forCellWithReuseIdentifier:kCell];
     self.mCollectionV_list.delegate = self;
     self.mCollectionV_list.dataSource = self;
+    self.mCollectionV_list.allowsMultipleSelection = YES;
+    
     
     return self;
     
@@ -50,7 +58,7 @@ NSString *kCell = @"Forward_cell2";
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
     
-    return 9;
+    return self.datasource.count;
 }
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -60,9 +68,18 @@ NSString *kCell = @"Forward_cell2";
         
     }
     
+    myUnit *myunit = [self.datasource objectAtIndex:indexPath.row];
+    cell.mLab_name.text = myunit.UintName;
+    if(myunit.isSelected == YES)
+    {
+        [cell.mImgV_select setImage:[UIImage imageNamed:@"selected.png"]];
+    }
+    else
+    {
+        [cell.mImgV_select setImage:[UIImage imageNamed:@"blank.png"]];
 
-        cell.mLab_name.text = @"班级名称";
-        
+    }
+    
     
     
     
@@ -75,6 +92,10 @@ NSString *kCell = @"Forward_cell2";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    myUnit *myuint = [self.datasource objectAtIndex:indexPath.row];
+    myuint.isSelected = !myuint.isSelected;
+    [self.mCollectionV_list reloadData];
+
     
   }
 //每一个cell的大小
@@ -94,6 +115,20 @@ NSString *kCell = @"Forward_cell2";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(120, 0);
 }
+//通知界面更新，获取事务信息接收单位列表
+-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    self.mModel_unitList = noti.object;
+    
+    self.datasource = self.mModel_unitList.UnitClass;
+    for(int i=0;i<self.datasource.count;i++)
+    {
+        
+    }
+    [self.mCollectionV_list reloadData];
+
+}
+
 
 
 /*

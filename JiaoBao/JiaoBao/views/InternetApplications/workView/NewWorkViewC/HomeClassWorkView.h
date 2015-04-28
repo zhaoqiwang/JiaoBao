@@ -20,6 +20,7 @@
 
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//放所有控件
 @property (nonatomic,strong) NewWorkTopView *mViewTop;//上半部分
+@property(nonatomic,strong)UIView *bottomView;
 
 - (id)initWithFrame1:(CGRect)frame;
 

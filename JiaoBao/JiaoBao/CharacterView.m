@@ -15,7 +15,11 @@ NSString *kSection = @"Forward_section";
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    self.datasource = [[NSMutableArray alloc]initWithObjects:@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"",@"", nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+    self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
     headerView.backgroundColor = [UIColor lightGrayColor];
@@ -40,6 +44,8 @@ NSString *kSection = @"Forward_section";
     self.mCollectionV_list.delegate = self;
     self.mCollectionV_list.dataSource = self;
     
+    
+    
     return self;
     
 }
@@ -47,12 +53,19 @@ NSString *kSection = @"Forward_section";
 //collectionView里有多少个组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    return 2;
+    NSLog(@"count = %d",self.mModel_myUnit.list.count);
+    return self.mModel_myUnit.list.count;
 }
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
+        for (int i=0; i<self.mModel_myUnit.list.count; i++) {
+            if (section == i) {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                return model.groupselit_selit.count;
+            }
+        }
+    return 0;
     
-    return 6;
 }
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -62,8 +75,27 @@ NSString *kSection = @"Forward_section";
         
     }
     
-    
-    cell.mLab_name.text = @"班级名称";
+    groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+        UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+        groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
+  
+    if (groupModel.selit.length>0) {
+        cell.mLab_name.textColor = [UIColor blackColor];
+        if (groupModel.mInt_select == 0) {
+            cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
+        } else {
+            cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
+        }
+    }else{
+        cell.mLab_name.textColor = [UIColor grayColor];
+        cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
+    }
+    CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
+    if (size.width>cell.mLab_name.frame.size.width) {
+        cell.mLab_name.numberOfLines = 2;
+    }
+    cell.mLab_name.text = groupModel.Name;
+
     
     
     
@@ -98,10 +130,21 @@ NSString *kSection = @"Forward_section";
         [view.triangleBtn setImage:[UIImage imageNamed:@"rTri.png"] forState:UIControlStateNormal];
         
     }
-    
-    
+    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+//    if(myunit.isSelected == YES)
+//    {
+//        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
+//    }
+//    else
+//    {
+//        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"]forState:UIControlStateNormal];
+//        
+//    }
+    view.mLab_name.text = model.GroupName;
     view.delegate = self;
     view.tag = indexPath.section;
+    view.rightBtn.hidden = YES;
+    view.mBtn_all.hidden = YES;
 
 
     return view;
@@ -118,6 +161,9 @@ NSString *kSection = @"Forward_section";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    myUnit *myuint = [self.mModel_unitList.UnitClass objectAtIndex:indexPath.row];
+    myuint.isSelected = !myuint.isSelected;
+    [self.mCollectionV_list reloadData];
     
 }
 //每一个cell的大小
@@ -133,6 +179,71 @@ NSString *kSection = @"Forward_section";
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 5;
 }
+-(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
+//    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:section.tag];
+//    groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
+//    myUnit *unit = [self.datasource objectAtIndex:section.tag];
+//    unit.isSelected = !unit.isSelected;
+}
+//通知界面更新，获取事务信息接收单位列表
+-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    self.mModel_unitList = noti.object;
+    //获取当前单位的人员数组
+    if ([dm getInstance].uType ==3) {
+        [[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
+    }else{
+        [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
+    }
+
+    
+
+    //[self.mCollectionV_list reloadData];
+    
+}
+
+-(void)GetUnitRevicer:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    NSDictionary *dic = noti.object;
+    NSString *unitID = [dic objectForKey:@"unitID"];
+    NSArray *array = [dic objectForKey:@"array"];
+    //找到当前这个单位，塞入数组
+    
+    //当前单位
+    if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
+        self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+        self.mModel_myUnit = self.mModel_unitList.myUnit;
+    }
+    //上级单位
+    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+        myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+        if ([unit.TabID intValue] == [unitID intValue]) {
+            unit.list = [NSMutableArray arrayWithArray:array];
+            self.mModel_myUnit = unit;
+        }
+    }
+    //下级单位
+    for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+        myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
+        if ([unit.TabID intValue] == [unitID intValue]) {
+            unit.list = [NSMutableArray arrayWithArray:array];
+            self.mModel_myUnit = unit;
+        }
+    }
+    //班级
+    for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+        if ([unit.TabID intValue] == [unitID intValue]) {
+            unit.list = [NSMutableArray arrayWithArray:array];
+            self.mModel_myUnit = unit;
+        }
+    }
+    //    //刷新
+        [self.mCollectionV_list reloadData];
+}
+
+
+
 
 
 /*

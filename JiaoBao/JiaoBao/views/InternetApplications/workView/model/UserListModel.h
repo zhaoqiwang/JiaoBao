@@ -15,7 +15,9 @@
 }
 @property (nonatomic,strong) NSString *GroupName;//分组名称
 @property (nonatomic,strong) NSString *MCount;//本组人数
-@property (nonatomic,strong) NSMutableArray *groupselit_selit; //需要把GroupSelit[]中的selit以seleit为name提交给api
+@property (nonatomic,strong) NSMutableArray *groupselit_selit;
+@property(nonatomic,assign)int sectionSelSymbol;//0为全空；1为全选；2为非全选；
+//需要把GroupSelit[]中的selit以seleit为name提交给api
 
 @end
 //"UserList":[{"GroupName":"基本人员",
