@@ -41,6 +41,8 @@
 @property (nonatomic,strong) NSString *TabIDStr;
 @property (nonatomic,strong) NSString *flag;
 @property (nonatomic,strong) NSMutableArray *list;
+@property(nonatomic,assign)BOOL isSelected;
+
 
 @end
 

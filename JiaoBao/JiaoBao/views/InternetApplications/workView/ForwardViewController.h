@@ -128,6 +128,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *imgV;
 @property(nonatomic,strong)UIView *headView;
 @property(nonatomic,strong)NewWorkTopView *topView;
+@property(nonatomic,assign)BOOL showTopView;
 
 //附件按钮点击事件
 -(IBAction)mBtn_accessory:(UIButton *)btn;

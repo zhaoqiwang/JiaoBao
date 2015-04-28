@@ -36,9 +36,9 @@
         [self setBackgroundColor:[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1]];
         userContentOffsetX = 0;
         self.mInt = 0;
-        //内部事务
-        self.insideView = [[InsideWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.insideView];
+//        //内部事务
+//        self.insideView = [[InsideWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
+//        [self addSubview:self.insideView];
         //家校互动
         self.homeClassView = [[HomeClassWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
         [self addSubview:self.homeClassView];

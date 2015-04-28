@@ -35,13 +35,19 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //    NSLog(@"y = %f",self.topView.frame.origin.y);
     [self setFrame];
 }
+//-(void)refreshHomeClass:(id)sender
+//{
+//
+//}
 -(void)viewWillAppear:(BOOL)animated{
 //    self.topView.frame = self.insideWorkV.mView_top.frame;
 //    NSLog(@"y = %f",self.topView.frame.origin.y);
     [self setFrame];
-
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
+
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshHomeClass:) name:@"refreshHomeClass" object:nil];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshHomeClass" object:nil];
     //向转发界面传递得到的人员单位列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
@@ -182,8 +188,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mLab_currentUnit.text = [dm getInstance].mStr_unit;
     
     //接收人，全选，反选，发表
+
     self.topView = [[NewWorkTopView alloc]init];
     self.topView.delegate = self;
+    
     [self.mScrollV_all addSubview:self.topView];
     NSLog(@"topView = %@",self.topView);
     self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+10, [dm getInstance].width, 28)];

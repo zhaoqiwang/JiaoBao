@@ -125,6 +125,8 @@
                 
             }
         }];
+//        NSNumber *num = [NSNumber numberWithInteger:sender.tag];
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshHomeClass" object:num];
     }
     //重复点击选中按钮
     else {
@@ -153,6 +155,7 @@
             if (!button.selected) {
                 button.selected = YES;
                 mInt_userSelectedChannelID = button.tag;
+
                 [self sendRequest];
             }
         }
@@ -160,6 +163,7 @@
 }
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
+
     
 }
 

@@ -720,6 +720,8 @@
 		F7502A271AEE1E50004F822F /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A051AEE1E50004F822F /* selected.png */; };
 		F7502A281AEE1E50004F822F /* selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A061AEE1E50004F822F /* selected@2x.png */; };
 		F7502A291AEE1E50004F822F /* selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A071AEE1E50004F822F /* selected@3x.png */; };
+		F7601E411AEF33FB00E6C277 /* CustomWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */; };
+		F7601E421AEF33FB00E6C277 /* CustomWorkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */; };
 		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
@@ -1049,13 +1051,13 @@
 		A749B9FB19F8F4060036F480 /* TreeView_Level2_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TreeView_Level2_Cell.h; path = views/InternetApplications/workView/work0/TreeView_Level2_Cell.h; sourceTree = "<group>"; };
 		A749B9FC19F8F4060036F480 /* TreeView_Level2_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TreeView_Level2_Cell.m; path = views/InternetApplications/workView/work0/TreeView_Level2_Cell.m; sourceTree = "<group>"; };
 		A749B9FD19F8F4060036F480 /* TreeView_Level2_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TreeView_Level2_Cell.xib; path = views/InternetApplications/workView/work0/TreeView_Level2_Cell.xib; sourceTree = "<group>"; };
-		A74C118B1A01D23F00925230 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = JiaoBao/Default.png; sourceTree = "<group>"; };
-		A74C118C1A01D23F00925230 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "JiaoBao/Default@2x.png"; sourceTree = "<group>"; };
-		A74C11921A01D7CE00925230 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "JiaoBao/Default-568h@2x.png"; sourceTree = "<group>"; };
-		A74C11941A01D9FC00925230 /* icon_ios7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon_ios7.png; path = JiaoBao/icon_ios7.png; sourceTree = "<group>"; };
-		A74C11951A01D9FC00925230 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = JiaoBao/icon.png; sourceTree = "<group>"; };
-		A74C11961A01D9FC00925230 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "JiaoBao/icon@2x.png"; sourceTree = "<group>"; };
-		A74C11971A01D9FC00925230 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@3x.png"; path = "JiaoBao/icon@3x.png"; sourceTree = "<group>"; };
+		A74C118B1A01D23F00925230 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A74C118C1A01D23F00925230 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A74C11921A01D7CE00925230 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A74C11941A01D9FC00925230 /* icon_ios7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_ios7.png; sourceTree = "<group>"; };
+		A74C11951A01D9FC00925230 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		A74C11961A01D9FC00925230 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		A74C11971A01D9FC00925230 /* icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@3x.png"; sourceTree = "<group>"; };
 		A74C119C1A02180D00925230 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = Common/MBProgressHUD.h; sourceTree = "<group>"; };
 		A74C119D1A02180E00925230 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = Common/MBProgressHUD.m; sourceTree = "<group>"; };
 		A74C802A1A30466C0043D335 /* rootNav_rongYun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rootNav_rongYun.png; path = Image/InternetApp/nav/rootNav_rongYun.png; sourceTree = "<group>"; };
@@ -1766,6 +1768,9 @@
 		F7502A051AEE1E50004F822F /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/selected.png; sourceTree = "<group>"; };
 		F7502A061AEE1E50004F822F /* selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/selected@2x.png"; sourceTree = "<group>"; };
 		F7502A071AEE1E50004F822F /* selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/selected@3x.png"; sourceTree = "<group>"; };
+		F7601E3E1AEF33FB00E6C277 /* CustomWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomWorkViewController.h; sourceTree = "<group>"; };
+		F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomWorkViewController.m; sourceTree = "<group>"; };
+		F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomWorkViewController.xib; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -2419,13 +2424,6 @@
 		A755E66419F2492700BBDF3D = {
 			isa = PBXGroup;
 			children = (
-				A74C11941A01D9FC00925230 /* icon_ios7.png */,
-				A74C11951A01D9FC00925230 /* icon.png */,
-				A74C11961A01D9FC00925230 /* icon@2x.png */,
-				A74C11971A01D9FC00925230 /* icon@3x.png */,
-				A74C11921A01D7CE00925230 /* Default-568h@2x.png */,
-				A74C118B1A01D23F00925230 /* Default.png */,
-				A74C118C1A01D23F00925230 /* Default@2x.png */,
 				A755E66F19F2492700BBDF3D /* JiaoBao */,
 				A755E69719F24AC500BBDF3D /* Frameworks */,
 				A755E66E19F2492700BBDF3D /* Products */,
@@ -2443,9 +2441,9 @@
 		A755E66F19F2492700BBDF3D /* JiaoBao */ = {
 			isa = PBXGroup;
 			children = (
+				A755E69819F24AE500BBDF3D /* views */,
 				A755E6B419F25E9F00BBDF3D /* Image */,
 				A755E6B019F25B5500BBDF3D /* Common */,
-				A755E69819F24AE500BBDF3D /* views */,
 				A755E67419F2492800BBDF3D /* AppDelegate.h */,
 				A755E67519F2492800BBDF3D /* AppDelegate.m */,
 				A755E67019F2492700BBDF3D /* Supporting Files */,
@@ -2499,11 +2497,12 @@
 		A755E69819F24AE500BBDF3D /* views */ = {
 			isa = PBXGroup;
 			children = (
+				A749B9DA19F89F050036F480 /* workView */,
+				A7AD8C2F19F63C8F002E65FB /* InternetApplications */,
 				A748219A19FF304F00234020 /* MyNavigationBar.h */,
 				A748219B19FF304F00234020 /* MyNavigationBar.m */,
 				A7AD8C3B19F63D83002E65FB /* ApplicationCenter */,
 				A7AD8C3519F63D28002E65FB /* StudentFile */,
-				A7AD8C2F19F63C8F002E65FB /* InternetApplications */,
 				A755E69E19F24D2C00BBDF3D /* RootViewController.h */,
 				A755E69F19F24D2C00BBDF3D /* RootViewController.m */,
 				A755E6A019F24D2C00BBDF3D /* RootViewController.xib */,
@@ -2578,6 +2577,13 @@
 		A755E6B419F25E9F00BBDF3D /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				A74C11941A01D9FC00925230 /* icon_ios7.png */,
+				A74C11951A01D9FC00925230 /* icon.png */,
+				A74C11961A01D9FC00925230 /* icon@2x.png */,
+				A74C11971A01D9FC00925230 /* icon@3x.png */,
+				A74C11921A01D7CE00925230 /* Default-568h@2x.png */,
+				A74C118B1A01D23F00925230 /* Default.png */,
+				A74C118C1A01D23F00925230 /* Default@2x.png */,
 				A7AAC4C519F75D6E00A0ED40 /* InternetApp */,
 				A7AD8C4119F6447A002E65FB /* root */,
 				A755E6B519F25EC300BBDF3D /* register */,
@@ -3134,6 +3140,9 @@
 				F75029E01AEDD9BA004F822F /* SchoolMessage.m */,
 				F75029E21AEDD9FB004F822F /* PatriarchView.h */,
 				F75029E31AEDD9FB004F822F /* PatriarchView.m */,
+				F7601E3E1AEF33FB00E6C277 /* CustomWorkViewController.h */,
+				F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */,
+				F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */,
 			);
 			name = NewWorkViewC;
 			sourceTree = "<group>";
@@ -3329,7 +3338,6 @@
 				A762FFF11A2804A700A78B5C /* notice */,
 				A7700A911A26D3A2003B532A /* show */,
 				A7141DBD1A16F34500940A3E /* share */,
-				A749B9DA19F89F050036F480 /* workView */,
 				A7AD8C3019F63CC7002E65FB /* InternetApplicationsViewController.h */,
 				A7AD8C3119F63CC7002E65FB /* InternetApplicationsViewController.m */,
 				A7AD8C3219F63CC7002E65FB /* InternetApplicationsViewController.xib */,
@@ -3967,6 +3975,7 @@
 				A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */,
 				A757DFE31A80C7B9001172A4 /* appNav_changeUser@2x.png in Resources */,
 				A749B9C319F89A530036F480 /* root_addBtn@2x.png in Resources */,
+				F7601E421AEF33FB00E6C277 /* CustomWorkViewController.xib in Resources */,
 				A75E6EBF1ABACDBD00B51B18 /* classView_2@2x.png in Resources */,
 				A76ED5B51AD67855006F3E0B /* workView_1.png in Resources */,
 				A74821A719FF452200234020 /* msgDetail_textF@2x.png in Resources */,
@@ -4348,6 +4357,7 @@
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
+				F7601E411AEF33FB00E6C277 /* CustomWorkViewController.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,
