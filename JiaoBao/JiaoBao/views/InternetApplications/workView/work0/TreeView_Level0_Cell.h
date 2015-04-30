@@ -21,6 +21,8 @@
     UIImageView *mImgV_number;//未读条数图片
     UILabel *mLab_number;//未读条数
     id<TreeView_Level0_CellDelegate> delegate;//代理
+    UIButton *mBtn_all;//全选
+    UIButton *mBtn_reverse;//反选
 }
 @property (strong,nonatomic) TreeView_node *mNode;
 @property (strong,nonatomic) IBOutlet UIImageView *mImgV_head;
@@ -30,6 +32,8 @@
 @property (strong,nonatomic) IBOutlet UIImageView *mImgV_number;
 @property (strong,nonatomic) IBOutlet UILabel *mLab_number;
 @property (strong,nonatomic) id<TreeView_Level0_CellDelegate> delegate;
+@property (strong,nonatomic) IBOutlet UIButton *mBtn_all;//全选
+@property (strong,nonatomic) IBOutlet UIButton *mBtn_reverse;//反选
 
 -(IBAction)clickBtn;
 
