@@ -574,6 +574,13 @@
 		A79C20791A2DB60A00D0AA27 /* ExchangeHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */; };
 		A79C207D1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207C1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m */; };
 		A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207F1A2DC67500D0AA27 /* ParserJson_exchange.m */; };
+		A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7ADD1AF22ACB00E9D30A /* newWork_allSelect.png */; };
+		A79C7AE41AF22ACB00E9D30A /* newWork_allSelect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7ADE1AF22ACB00E9D30A /* newWork_allSelect@2x.png */; };
+		A79C7AE51AF22ACB00E9D30A /* newWork_allSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7ADF1AF22ACB00E9D30A /* newWork_allSelect@3x.png */; };
+		A79C7AE61AF22ACB00E9D30A /* newWork_reverseSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE01AF22ACB00E9D30A /* newWork_reverseSelect.png */; };
+		A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE11AF22ACB00E9D30A /* newWork_reverseSelect@2x.png */; };
+		A79C7AE81AF22ACB00E9D30A /* newWork_reverseSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */; };
+		A7A15CC31AF08DC700843CB3 /* NewWorkTree_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */; };
 		A7A74DB71A7638AE0014CCE9 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A74DB41A7638AE0014CCE9 /* ChineseString.m */; };
 		A7A74DB81A7638AE0014CCE9 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A7A74DB51A7638AE0014CCE9 /* pinyin.c */; };
 		A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A8CDDD1A232CCD00A96453 /* UploadImgModel.m */; };
@@ -1569,6 +1576,14 @@
 		A79C207C1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExchangeUnitGroupsModel.m; path = views/InternetApplications/exchange/model/ExchangeUnitGroupsModel.m; sourceTree = "<group>"; };
 		A79C207E1A2DC67500D0AA27 /* ParserJson_exchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserJson_exchange.h; path = views/InternetApplications/exchange/model/ParserJson_exchange.h; sourceTree = "<group>"; };
 		A79C207F1A2DC67500D0AA27 /* ParserJson_exchange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserJson_exchange.m; path = views/InternetApplications/exchange/model/ParserJson_exchange.m; sourceTree = "<group>"; };
+		A79C7ADD1AF22ACB00E9D30A /* newWork_allSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newWork_allSelect.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_allSelect.png; sourceTree = "<group>"; };
+		A79C7ADE1AF22ACB00E9D30A /* newWork_allSelect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_allSelect@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_allSelect@2x.png"; sourceTree = "<group>"; };
+		A79C7ADF1AF22ACB00E9D30A /* newWork_allSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_allSelect@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_allSelect@3x.png"; sourceTree = "<group>"; };
+		A79C7AE01AF22ACB00E9D30A /* newWork_reverseSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newWork_reverseSelect.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect.png; sourceTree = "<group>"; };
+		A79C7AE11AF22ACB00E9D30A /* newWork_reverseSelect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_reverseSelect@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect@2x.png"; sourceTree = "<group>"; };
+		A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_reverseSelect@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect@3x.png"; sourceTree = "<group>"; };
+		A7A15CC11AF08DC700843CB3 /* NewWorkTree_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkTree_model.h; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTree_model.h; sourceTree = "<group>"; };
+		A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkTree_model.m; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTree_model.m; sourceTree = "<group>"; };
 		A7A74DB31A7638AD0014CCE9 /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChineseString.h; path = Common/ChineseString.h; sourceTree = "<group>"; };
 		A7A74DB41A7638AE0014CCE9 /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChineseString.m; path = Common/ChineseString.m; sourceTree = "<group>"; };
 		A7A74DB51A7638AE0014CCE9 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pinyin.c; path = Common/pinyin.c; sourceTree = "<group>"; };
@@ -3139,6 +3154,11 @@
 				F75029E01AEDD9BA004F822F /* SchoolMessage.m */,
 				F75029E21AEDD9FB004F822F /* PatriarchView.h */,
 				F75029E31AEDD9FB004F822F /* PatriarchView.m */,
+				F7601E3E1AEF33FB00E6C277 /* CustomWorkViewController.h */,
+				F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */,
+				F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */,
+				A7A15CC11AF08DC700843CB3 /* NewWorkTree_model.h */,
+				A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */,
 				F77EC9121AF1FFC6005C2221 /* CustomCell.h */,
 				F77EC9131AF1FFC6005C2221 /* CustomCell.m */,
 				F77EC9141AF1FFC6005C2221 /* CustomCell.xib */,
@@ -3493,6 +3513,12 @@
 		F75029E51AEE1CB3004F822F /* insideworkImage */ = {
 			isa = PBXGroup;
 			children = (
+				A79C7ADD1AF22ACB00E9D30A /* newWork_allSelect.png */,
+				A79C7ADE1AF22ACB00E9D30A /* newWork_allSelect@2x.png */,
+				A79C7ADF1AF22ACB00E9D30A /* newWork_allSelect@3x.png */,
+				A79C7AE01AF22ACB00E9D30A /* newWork_reverseSelect.png */,
+				A79C7AE11AF22ACB00E9D30A /* newWork_reverseSelect@2x.png */,
+				A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */,
 				F75029E61AEE1E50004F822F /* add.png */,
 				F75029E71AEE1E50004F822F /* add@2x.png */,
 				F75029E81AEE1E50004F822F /* add@3x.png */,
@@ -3775,6 +3801,7 @@
 				A72B581A1A3D3E14004D8920 /* RelatedUnitViewController.xib in Resources */,
 				A753FAF21A1DDC0300AB5F22 /* share_tableV_school@2x.png in Resources */,
 				A74C11981A01D9FC00925230 /* icon_ios7.png in Resources */,
+				A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */,
 				A757DFD61A80BDEF001172A4 /* appNav_groupChat.png in Resources */,
 				A7781F451AE8A0F300F03AEB /* NewWorkView_2.png in Resources */,
 				A7AD8C5919F644A2002E65FB /* tabbar_student2@2x.png in Resources */,
@@ -3796,6 +3823,7 @@
 				A76ED5B21AD67855006F3E0B /* workView_0.png in Resources */,
 				F7502A211AEE1E50004F822F /* plus.png in Resources */,
 				A761D4041A7F697900DCAEB9 /* rootTableSelect_3.png in Resources */,
+				A79C7AE51AF22ACB00E9D30A /* newWork_allSelect@3x.png in Resources */,
 				A70179881AB91D2100E7093F /* work_accessory@2x.png in Resources */,
 				F7502A0F1AEE1E50004F822F /* bTri@2x.png in Resources */,
 				A78D65E31A8A04E800BE6326 /* workMsg@2x.png in Resources */,
@@ -3874,6 +3902,7 @@
 				F7502A251AEE1E50004F822F /* rTri@2x.png in Resources */,
 				A7AD8C5419F644A2002E65FB /* tabbar_center2.png in Resources */,
 				A7AC7B671A008FEA0072CF05 /* MsgDetail_Cell.xib in Resources */,
+				A79C7AE41AF22ACB00E9D30A /* newWork_allSelect@2x.png in Resources */,
 				A7781F4F1AE8A0F300F03AEB /* NewWorkView_click_2@2x.png in Resources */,
 				A76829801AC69B21003B31EB /* classView_4@2x.png in Resources */,
 				A7781F501AE8A0F300F03AEB /* NewWorkView_click_2@3x.png in Resources */,
@@ -4093,18 +4122,21 @@
 				A7CE67361AA70A250038D0C5 /* showArticle@2x.png in Resources */,
 				A761D3F21A7F697900DCAEB9 /* rootTable_2.png in Resources */,
 				A7CE67331AA70A250038D0C5 /* shareArticle@2x.png in Resources */,
+				A79C7AE61AF22ACB00E9D30A /* newWork_reverseSelect.png in Resources */,
 				A74937E11ACA8A4F00F96741 /* ClassTopViewController.xib in Resources */,
 				A75A37381A087C76009D2464 /* ForwardViewController.xib in Resources */,
 				A727C7D71A6F93780019C4CD /* share_likeBig_0.png in Resources */,
 				F7502A0C1AEE1E50004F822F /* blank@2x.png in Resources */,
 				F7502A141AEE1E50004F822F /* HomeClass_2@2x.png in Resources */,
 				F79D84DA1ABD4DC000897477 /* RecordViewController.xib in Resources */,
+				A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */,
 				A757DFE01A80C7B9001172A4 /* appNav_changeUnit@2x.png in Resources */,
 				A757DFE21A80C7B9001172A4 /* appNav_changeUser.png in Resources */,
 				A7781F481AE8A0F300F03AEB /* NewWorkView_click_0.png in Resources */,
 				A75E6EC21ABACDBD00B51B18 /* classView_3@2x.png in Resources */,
 				F7502A111AEE1E50004F822F /* HomeClass_1.png in Resources */,
 				F7502A241AEE1E50004F822F /* rTri.png in Resources */,
+				A79C7AE81AF22ACB00E9D30A /* newWork_reverseSelect@3x.png in Resources */,
 				A76ED5BB1AD67855006F3E0B /* workView_3.png in Resources */,
 				A761D3FE1A7F697900DCAEB9 /* rootTableSelect_1.png in Resources */,
 				A761D3FC1A7F697900DCAEB9 /* rootTableSelect_0@2x.png in Resources */,
@@ -4193,6 +4225,7 @@
 				A7557BFD19FA31920057835B /* Identity_model.m in Sources */,
 				A7595E941A5FC2F30027848E /* MWPhotoBrowser.m in Sources */,
 				A77FF02F1A650B3F00DB85E3 /* JSONKeyMapper.m in Sources */,
+				A7A15CC31AF08DC700843CB3 /* NewWorkTree_model.m in Sources */,
 				A72B582A1A3D867A004D8920 /* UnitDetailViewController.m in Sources */,
 				A7595EA91A5FC2F30027848E /* README.md in Sources */,
 				A74D12821A3C19F600A93CAC /* ShowViewNew.m in Sources */,

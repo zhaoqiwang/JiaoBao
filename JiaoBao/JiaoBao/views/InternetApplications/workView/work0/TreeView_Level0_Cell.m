@@ -9,7 +9,7 @@
 #import "TreeView_Level0_Cell.h"
 
 @implementation TreeView_Level0_Cell
-@synthesize mBtn_detail,mImgV_open_close,mImgV_head,mImgV_number,mLab_name,mLab_number,mNode,delegate;
+@synthesize mBtn_detail,mImgV_open_close,mImgV_head,mImgV_number,mLab_name,mLab_number,mNode,delegate,mBtn_all,mBtn_reverse;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

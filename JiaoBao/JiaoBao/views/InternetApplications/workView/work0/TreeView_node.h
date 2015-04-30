@@ -20,5 +20,6 @@
 @property (nonatomic) int readflag;//阅读标记
 @property (nonatomic,strong) NSString *UID;//交流时，单位ID
 @property (nonatomic,assign) int mInt_select;//是否被选中，默认0，选中为1
+@property (nonatomic,strong) NSString *flag;//节点标记
 
 @end
