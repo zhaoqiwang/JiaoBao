@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SchoolMessage : UIView
+@property(nonatomic,strong)UIButton* rightBtn;
+
 
 @end

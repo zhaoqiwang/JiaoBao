@@ -41,6 +41,8 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
         self.delegate = self;
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
@@ -225,10 +227,26 @@
 
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
-    [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+
+        
+    }
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        [[LoginSendHttp getInstance]ReceiveListWithFlag:0 all:1];
+    }
 
 
     
+}
+-(void)CMRevicer:(NSNotification *)noti{
+
+       NSArray *arr = [noti object];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+
+
 }
 
 /*

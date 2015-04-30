@@ -720,8 +720,8 @@
 		F7502A271AEE1E50004F822F /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A051AEE1E50004F822F /* selected.png */; };
 		F7502A281AEE1E50004F822F /* selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A061AEE1E50004F822F /* selected@2x.png */; };
 		F7502A291AEE1E50004F822F /* selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A071AEE1E50004F822F /* selected@3x.png */; };
-		F7601E411AEF33FB00E6C277 /* CustomWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */; };
-		F7601E421AEF33FB00E6C277 /* CustomWorkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */; };
+		F77EC9151AF1FFC6005C2221 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F77EC9131AF1FFC6005C2221 /* CustomCell.m */; };
+		F77EC9161AF1FFC6005C2221 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77EC9141AF1FFC6005C2221 /* CustomCell.xib */; };
 		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
@@ -1768,9 +1768,9 @@
 		F7502A051AEE1E50004F822F /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = selected.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/selected.png; sourceTree = "<group>"; };
 		F7502A061AEE1E50004F822F /* selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/selected@2x.png"; sourceTree = "<group>"; };
 		F7502A071AEE1E50004F822F /* selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selected@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/selected@3x.png"; sourceTree = "<group>"; };
-		F7601E3E1AEF33FB00E6C277 /* CustomWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomWorkViewController.h; sourceTree = "<group>"; };
-		F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomWorkViewController.m; sourceTree = "<group>"; };
-		F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomWorkViewController.xib; sourceTree = "<group>"; };
+		F77EC9121AF1FFC6005C2221 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		F77EC9131AF1FFC6005C2221 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		F77EC9141AF1FFC6005C2221 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -3139,9 +3139,9 @@
 				F75029E01AEDD9BA004F822F /* SchoolMessage.m */,
 				F75029E21AEDD9FB004F822F /* PatriarchView.h */,
 				F75029E31AEDD9FB004F822F /* PatriarchView.m */,
-				F7601E3E1AEF33FB00E6C277 /* CustomWorkViewController.h */,
-				F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */,
-				F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */,
+				F77EC9121AF1FFC6005C2221 /* CustomCell.h */,
+				F77EC9131AF1FFC6005C2221 /* CustomCell.m */,
+				F77EC9141AF1FFC6005C2221 /* CustomCell.xib */,
 			);
 			name = NewWorkViewC;
 			sourceTree = "<group>";
@@ -3975,7 +3975,6 @@
 				A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */,
 				A757DFE31A80C7B9001172A4 /* appNav_changeUser@2x.png in Resources */,
 				A749B9C319F89A530036F480 /* root_addBtn@2x.png in Resources */,
-				F7601E421AEF33FB00E6C277 /* CustomWorkViewController.xib in Resources */,
 				A75E6EBF1ABACDBD00B51B18 /* classView_2@2x.png in Resources */,
 				A76ED5B51AD67855006F3E0B /* workView_1.png in Resources */,
 				A74821A719FF452200234020 /* msgDetail_textF@2x.png in Resources */,
@@ -4084,6 +4083,7 @@
 				F7502A231AEE1E50004F822F /* plus@3x.png in Resources */,
 				A72B582B1A3D867A004D8920 /* UnitDetailViewController.xib in Resources */,
 				A7781F4D1AE8A0F300F03AEB /* NewWorkView_click_1@3x.png in Resources */,
+				F77EC9161AF1FFC6005C2221 /* CustomCell.xib in Resources */,
 				A7595EA81A5FC2F30027848E /* LICENSE in Resources */,
 				A71D61EF1A1C96A400B8D33D /* share_school1.png in Resources */,
 				A74370421A3ED555008AF29B /* PersonalSpaceViewController.xib in Resources */,
@@ -4337,6 +4337,7 @@
 				A7595E961A5FC2F30027848E /* MWTapDetectingView.m in Sources */,
 				A755E70819F278B900BBDF3D /* ASINetworkQueue.m in Sources */,
 				A755E70D19F278B900BBDF3D /* ASICloudFilesContainerXMLParserDelegate.m in Sources */,
+				F77EC9151AF1FFC6005C2221 /* CustomCell.m in Sources */,
 				A73CAD6D1A07755B00D6C5AA /* MJRefreshBaseView.m in Sources */,
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
 				F79D84D61ABD4DC000897477 /* ParserJson_SignIn.m in Sources */,
@@ -4357,7 +4358,6 @@
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
-				F7601E411AEF33FB00E6C277 /* CustomWorkViewController.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,

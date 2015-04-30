@@ -185,10 +185,23 @@ NSString *kSection = @"Forward_section";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-//    myUnit *myuint = [self.mModel_unitList.UnitClass objectAtIndex:indexPath.row];
-//    myuint.isSelected = !myuint.isSelected;
-//    [self.mCollectionV_list reloadData];
+    groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+    UserListModel *model = [self.datasource objectAtIndex:indexPath.section];
     
+    groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
+    if(groupModel.mInt_select == 1)
+    {
+        groupModel.mInt_select = 0;
+    }
+    else
+    {
+        groupModel.mInt_select = 1;
+    }
+
+    
+        [self.mCollectionV_list reloadData];
+    
+
 }
 //每一个cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -204,61 +217,31 @@ NSString *kSection = @"Forward_section";
     return 5;
 }
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
-//    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:section.tag];
-//    groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
-//    myUnit *unit = [self.datasource objectAtIndex:section.tag];
-//    unit.isSelected = !unit.isSelected;
+    if(btn.tag == 2)
+    {
+        groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+        UserListModel *model = [self.datasource objectAtIndex:section.tag];
+        for(int i=0;i<model.groupselit_selit.count;i++)
+        {
+            groupModel = [model.groupselit_selit objectAtIndex:i];
+            if(groupModel.mInt_select == 1)
+            {
+                groupModel.mInt_select = 0;
+            }
+            else
+            {
+                groupModel.mInt_select = 1;
+            }
+
+            
+        }
+
+        [self.mCollectionV_list reloadData];
+        
+    }
+
 }
-//通知界面更新，获取事务信息接收单位列表
-//-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-//    [self.mProgressV hide:YES];
-//    self.mModel_unitList = noti.object;
-//    
-////    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
-////    {
-//    NSLog(@"notificationSymbol = %d",[dm getInstance].notificationSymbol);
-//    if([dm getInstance].notificationSymbol == 101)
-//    {
-//        
-//        if(self.mModel_unitList.UnitClass.count>0)
-//        {
-//            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:0];
-//            
-//            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
-//            
-//        }
-//        
-//    }
-//
-//
-//        
-//    //}
-//
-//
-//    
-//
-//    //[self.mCollectionV_list reloadData];
-//    
-//}
-//
-//-(void)GetUnitRevicer:(NSNotification *)noti{
-//    [self.mProgressV hide:YES];
-//    NSDictionary *dic = noti.object;
-//    NSArray *array = [dic objectForKey:@"array"];
-//    self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-//    for(int i=0;i<array.count;i++)
-//    {
-//        UserListModel *model = [self.mModel_unitList.myUnit.list objectAtIndex:i];
-//        if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
-//        {
-//            [self.mModel_unitList.myUnit.list removeObject:model];
-//        }
-// 
-//    }
-//    
-//
-//        [self.mCollectionV_list reloadData];
-//}
+
 
 
 
