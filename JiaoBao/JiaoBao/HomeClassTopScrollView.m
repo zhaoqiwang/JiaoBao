@@ -37,6 +37,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
         self.delegate = self;
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
@@ -98,6 +104,8 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
+    [dm getInstance].notificationSymbol = sender.tag;
+    NSLog(@"slectBtn = %d",sender.tag);
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -161,10 +169,84 @@
         }
     }];
 }
-//当第一次到达页面时，发送请求
--(void)sendRequest{
+//通知界面更新，获取事务信息接收单位列表
+-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+    self.mModel_unitList = noti.object;
+    
+    //    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
+    //    {
+    NSLog(@"notificationSymbol = %d",[dm getInstance].notificationSymbol);
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        
+        if(self.mModel_unitList.UnitClass.count>0)
+        {
+            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:0];
+            
+            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+            
+        }
+        
+    }
+    
+    
+    
+    //}
+    
+    
+    
+    
+    //[self.mCollectionV_list reloadData];
+    
+}
+
+-(void)GetUnitRevicer:(NSNotification *)noti{
+    if([dm getInstance].notificationSymbol == 101)
+
+    {
+        NSDictionary *dic = noti.object;
+        NSArray *array = [dic objectForKey:@"array"];
+        
+        NSArray *arr = [NSMutableArray arrayWithArray:array];
+        for(int i=0;i<array.count;i++)
+        {
+            UserListModel *model = [array objectAtIndex:i];
+            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+            {
+                [self.mModel_unitList.myUnit.list removeObject:model];
+            }
+            
+        }
+        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:arr];
+        
+    }
 
     
+    
+}
+
+//当第一次到达页面时，发送请求
+-(void)sendRequest{
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+
+        
+    }
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        [[LoginSendHttp getInstance]ReceiveListWithFlag:0 all:1];
+    }
+
+
+    
+}
+-(void)CMRevicer:(NSNotification *)noti{
+
+       NSArray *arr = [noti object];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+
+
 }
 
 /*

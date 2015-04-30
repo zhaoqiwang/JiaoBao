@@ -14,7 +14,6 @@ NSString *kCell = @"Forward_cell2";
 - (instancetype)initWithFrame:(CGRect)frame
 {
    self = [super initWithFrame:frame];
-    //通知界面更新，获取事务信息接收单位列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
 
@@ -119,15 +118,38 @@ NSString *kCell = @"Forward_cell2";
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
     [self.mProgressV hide:YES];
     self.mModel_unitList = noti.object;
-    
-    self.datasource = self.mModel_unitList.UnitClass;
-    for(int i=0;i<self.datasource.count;i++)
-    {
-        
-    }
     [self.mCollectionV_list reloadData];
+    self.datasource = self.mModel_unitList.UnitClass;
 
+    
+    //[[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
+    
+    
+    
+    
 }
+//
+//-(void)GetUnitRevicer:(NSNotification *)noti{
+//    [self.mProgressV hide:YES];
+//    NSDictionary *dic = noti.object;
+//    NSArray *array = [dic objectForKey:@"array"];
+//    self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+////    for(int i=0;i<array.count;i++)
+////    {
+////        UserListModel *model = [self.mModel_unitList.myUnit.list objectAtIndex:i];
+////        NSLog(@"groupName = %@",model.GroupName);
+////        if([model.GroupName isEqualToString:@"本班家长"])
+////        {
+////            
+////            //self.datasource = model.groupselit_selit;
+////            
+////        }
+////
+////    }
+//    
+//    
+//
+//}
 
 
 

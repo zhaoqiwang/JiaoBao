@@ -19,6 +19,6 @@
 @property(nonatomic,strong)NSMutableArray *datasource;
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;//
-@property(nonatomic,strong)myUnit *mModel_myUnit;
+//@property(nonatomic,strong)myUnit *mModel_myUnit;
 
 @end

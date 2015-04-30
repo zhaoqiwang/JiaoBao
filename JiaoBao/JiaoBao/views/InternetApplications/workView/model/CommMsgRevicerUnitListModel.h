@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
 @class myUnit;
+@class UnitClass;
 
 @interface CommMsgRevicerUnitListModel : NSObject{
     myUnit *myUnit;
