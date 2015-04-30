@@ -2497,7 +2497,6 @@
 		A755E69819F24AE500BBDF3D /* views */ = {
 			isa = PBXGroup;
 			children = (
-				A749B9DA19F89F050036F480 /* workView */,
 				A7AD8C2F19F63C8F002E65FB /* InternetApplications */,
 				A748219A19FF304F00234020 /* MyNavigationBar.h */,
 				A748219B19FF304F00234020 /* MyNavigationBar.m */,
@@ -3332,6 +3331,7 @@
 		A7AD8C2F19F63C8F002E65FB /* InternetApplications */ = {
 			isa = PBXGroup;
 			children = (
+				A749B9DA19F89F050036F480 /* workView */,
 				A75E6EA21ABA6A0100B51B18 /* class */,
 				A7357A2C1A401FFB00A195C5 /* theme */,
 				A76FED811A2D9BFA009DB8C0 /* exchange */,

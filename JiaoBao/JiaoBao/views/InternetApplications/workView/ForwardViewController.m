@@ -28,6 +28,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //界面消失时，移除通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.mProgressV hide:YES];
+    NSLog(@"22222222222");
+
+    [self removeFromParentViewController];
 }
 -(void)refreshWorkView:(id)sender
 {
@@ -73,6 +76,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [dm getInstance].notificationSymbol = 1;
 
   
     // Do any additional setup after loading the view from its nib.
@@ -1135,11 +1139,17 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     if (self.mInt_where == 0) {//发送消息
         self.mModel_unitList = noti.object;
         //获取当前单位的人员数组
-        if ([dm getInstance].uType ==3) {
-            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-        }else{
-            [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
+//        if ([dm getInstance].uType ==2|[dm getInstance].uType ==3) {
+//            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
+//            NSLog(@"flag = %@",self.mModel_unitList.myUnit.flag);
+//
+//        }else{
+        if([dm getInstance].notificationSymbol ==1)
+        {
+             [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
         }
+
+        //}
     }else if (self.mInt_where == 1){//下发通知
         if (self.mStr_unit.length==0) {
             self.mModel_unitList = noti.object;
@@ -1855,7 +1865,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     NSArray *arr = [[dm getInstance].sectionSet2 allObjects];
     if(arr)
     {
-        [utils logArr:arr];
 
         
     }
@@ -2206,7 +2215,6 @@ if([dm getInstance].sectionSet2.count ==self.mModel_myUnit.list.count)
         NSArray *arr = [[dm getInstance].sectionSet2 allObjects];
         if(arr)
         {
-            [utils logArr:arr];
 
             
         }

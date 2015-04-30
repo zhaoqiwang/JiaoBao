@@ -110,6 +110,7 @@
 
 //获取班级接收人
 -(void)login_GetUnitClassRevicer:(NSString *)classID Flag:(NSString *)flag;
+//-(void)getUnitClassRevicer:(NSString *)classID Flag:(NSString *)flag;
 
 //获取群发权限
 -(void)login_GetMsgAllReviceUnitList;

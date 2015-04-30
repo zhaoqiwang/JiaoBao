@@ -625,6 +625,27 @@ static LoginSendHttp *loginSendHttp = nil;
     [request setDelegate:self];
     [request startAsynchronous];
 }
+//-(void)getUnitClassRevicer:(NSString *)classID Flag:(NSString *)flag
+//{
+//    NSString *urlString = [NSString stringWithFormat:@"%@CommMsg/GetUnitClassRevicer",MAINURL];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+//    request.timeOutSeconds = TIMEOUT;
+//    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+//    [request addRequestHeader:@"charset" value:@"UTF8"];
+//    [request setRequestMethod:@"POST"];
+//    [request addPostValue:classID forKey:@"unitclassId"];
+//    [request addPostValue:flag forKey:@"flag"];
+//    if ([classID intValue]>0) {
+//        request.userInfo = [NSDictionary dictionaryWithObject:classID forKey:@"unitID"];
+//    }
+//    request.tag = 1000;//设置请求tag
+//    self.flag_request = 0;
+//    [request setDelegate:self];
+//    [request startAsynchronous];
+//    
+//}
+
 
 //获取群发权限
 -(void)login_GetMsgAllReviceUnitList{
@@ -1126,7 +1147,7 @@ static LoginSendHttp *loginSendHttp = nil;
     }else if (_request.tag == 20){//获取事务信息接收单位列表
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
-        D("str00=login==20=>>>>==%@",str);
+        D("str00=login==20=>>>>==%@",str);     
         CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        id data2 = [str objectFromJSONStringWithParseOptions:JKParseOptionLooseUnicode];
 //        UnitListJsonModel* model = [[UnitListJsonModel alloc] initWithString:str error:nil];
@@ -1154,11 +1175,37 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         [dic2 setValue:unitID forKey:@"unitID"];
         NSMutableArray *array = [ParserJson parserUserListClass_json:str];
+        NSLog(@"rselut = %@",array);
         [dic2 setValue:array forKey:@"array"];
 //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        //通知界面更新，获取事务信息接收单位列表
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
-    }else if (_request.tag == 23){//获取群发权限
+    }
+    //else if (_request.tag == 1000){//获取班级接收人
+//        NSData *responseData = [_request responseData];
+//        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+//        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+//        NSLog(@"UpLoadResult1111111 = %@",dataString);
+//        NSDictionary *dic = [dataString objectFromJSONString];
+//        NSDictionary *dic2 = [dic objectForKey:@"Data"];
+//        NSString *genselit = [dic2 objectForKey:@"genselit"];
+//        NSArray *selitArr = [genselit objectFromJSONString];
+//        NSLog(@"selitArr = %@",selitArr);
+//
+//
+//        
+//        //NSArray *dataList = [dicList  objectForKey:@"Data"];
+////        D("str00=login==22=>>>>==%@",str);
+////        NSString *unitID = [_request.userInfo objectForKey:@"unitID"];
+////        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+////        [dic2 setValue:unitID forKey:@"unitID"];
+////        NSMutableArray *array = [ParserJson parserUserListClass_json:str];
+////        [dic2 setValue:array forKey:@"array"];
+////        //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
+////        //        //通知界面更新，获取事务信息接收单位列表
+//        //[[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
+//    }
+    else if (_request.tag == 23){//获取群发权限
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=login==23=>>>>==%@",str);

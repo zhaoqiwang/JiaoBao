@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "dm.h"
 #import "HomeClassRootScrollView.h"
+#import "utils.h"
+#import "LoginSendHttp.h"
+#import "Forward_cell.h"
+#import "MBProgressHUD.h"
+#import "Forward_section.h"
 
 @interface HomeClassTopScrollView : UIScrollView<UIScrollViewDelegate>{
     UIImageView *mImgV_slide;//蓝色滑块
@@ -21,6 +26,7 @@
 @property (strong,nonatomic) NSArray *mArr_name;//名称数组
 @property (assign,nonatomic) NSInteger mInt_userSelectedChannelID;//点击按钮选择名字ID
 @property (assign,nonatomic) NSInteger mInt_scrollViewSelectedChannelID;//滑动列表选择名字ID
+@property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;//
 
 
 + (HomeClassTopScrollView *)shareInstance;

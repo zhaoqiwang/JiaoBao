@@ -12,13 +12,35 @@ NSString *kCell3 = @"Forward_cell3";
 NSString *kSection = @"Forward_section";
 
 @implementation CharacterView
+-(void)selSecBtn:(id)sender
+{
+        self.datasource = [NSMutableArray arrayWithArray:[sender object] ];
+        for(int i=0;i<self.datasource.count;i++)
+        {
+            UserListModel *model = [self.datasource objectAtIndex:i];
+            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+            {
+                [self.datasource removeObject:model];
+            }
+            for(int i=0;i<model.groupselit_selit.count;i++)
+            {
+                groupselit_selitModel *model2 = [model.groupselit_selit objectAtIndex:i];
+                NSLog(@"555555 = %@",model2.Name);
+            }
+    
+        }
+    
+    
+            [self.mCollectionV_list reloadData];
+    }
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selSecBtn:) name:@"selSecBtn" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
@@ -43,6 +65,8 @@ NSString *kSection = @"Forward_section";
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSection];
     self.mCollectionV_list.delegate = self;
     self.mCollectionV_list.dataSource = self;
+    [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+
     
     
     
@@ -53,14 +77,13 @@ NSString *kSection = @"Forward_section";
 //collectionView里有多少个组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    NSLog(@"count = %d",self.mModel_myUnit.list.count);
-    return self.mModel_myUnit.list.count;
+    return self.datasource.count;
 }
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
-        for (int i=0; i<self.mModel_myUnit.list.count; i++) {
+        for (int i=0; i<self.datasource.count; i++) {
             if (section == i) {
-                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                UserListModel *model = [self.datasource objectAtIndex:i];
                 return model.groupselit_selit.count;
             }
         }
@@ -76,7 +99,8 @@ NSString *kSection = @"Forward_section";
     }
     
     groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
-        UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+        UserListModel *model = [self.datasource objectAtIndex:indexPath.section];
+    
         groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
   
     if (groupModel.selit.length>0) {
@@ -130,7 +154,7 @@ NSString *kSection = @"Forward_section";
         [view.triangleBtn setImage:[UIImage imageNamed:@"rTri.png"] forState:UIControlStateNormal];
         
     }
-    UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+    UserListModel *model = [self.datasource objectAtIndex:indexPath.section];
 //    if(myunit.isSelected == YES)
 //    {
 //        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
@@ -161,9 +185,9 @@ NSString *kSection = @"Forward_section";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    myUnit *myuint = [self.mModel_unitList.UnitClass objectAtIndex:indexPath.row];
-    myuint.isSelected = !myuint.isSelected;
-    [self.mCollectionV_list reloadData];
+//    myUnit *myuint = [self.mModel_unitList.UnitClass objectAtIndex:indexPath.row];
+//    myuint.isSelected = !myuint.isSelected;
+//    [self.mCollectionV_list reloadData];
     
 }
 //每一个cell的大小
@@ -186,72 +210,56 @@ NSString *kSection = @"Forward_section";
 //    unit.isSelected = !unit.isSelected;
 }
 //通知界面更新，获取事务信息接收单位列表
--(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    self.mModel_unitList = noti.object;
-    //获取当前单位的人员数组
-    if ([dm getInstance].uType ==3) {
-        [[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-    }else{
-        [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-    }
-
-    
-
-    //[self.mCollectionV_list reloadData];
-    
-}
-
--(void)GetUnitRevicer:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    NSDictionary *dic = noti.object;
-    NSString *unitID = [dic objectForKey:@"unitID"];
-    NSArray *array = [dic objectForKey:@"array"];
-    //找到当前这个单位，塞入数组
-    
-    //当前单位
-    if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
-        self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-        self.mModel_myUnit = self.mModel_unitList.myUnit;
-    }
-    //上级单位
-    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
-        myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = unit;
-        }
-    }
-    //下级单位
-    for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
-        myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = unit;
-        }
-    }
-    //班级
-    for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
-        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = unit;
-        }
-    }
-    //    //刷新
-        [self.mCollectionV_list reloadData];
-}
+//-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+//    [self.mProgressV hide:YES];
+//    self.mModel_unitList = noti.object;
+//    
+////    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
+////    {
+//    NSLog(@"notificationSymbol = %d",[dm getInstance].notificationSymbol);
+//    if([dm getInstance].notificationSymbol == 101)
+//    {
+//        
+//        if(self.mModel_unitList.UnitClass.count>0)
+//        {
+//            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:0];
+//            
+//            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+//            
+//        }
+//        
+//    }
+//
+//
+//        
+//    //}
+//
+//
+//    
+//
+//    //[self.mCollectionV_list reloadData];
+//    
+//}
+//
+//-(void)GetUnitRevicer:(NSNotification *)noti{
+//    [self.mProgressV hide:YES];
+//    NSDictionary *dic = noti.object;
+//    NSArray *array = [dic objectForKey:@"array"];
+//    self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+//    for(int i=0;i<array.count;i++)
+//    {
+//        UserListModel *model = [self.mModel_unitList.myUnit.list objectAtIndex:i];
+//        if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+//        {
+//            [self.mModel_unitList.myUnit.list removeObject:model];
+//        }
+// 
+//    }
+//    
+//
+//        [self.mCollectionV_list reloadData];
+//}
 
 
-
-
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end
