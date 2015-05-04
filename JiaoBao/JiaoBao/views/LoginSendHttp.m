@@ -461,6 +461,8 @@ static LoginSendHttp *loginSendHttp = nil;
         [request addPostValue:@"false" forKey:@"grsms"];
         for (int i=0; i<array.count; i++) {
             NSMutableDictionary *dic = [array objectAtIndex:i];
+            D("[dic objectForKey:-===%@,%@",[dic objectForKey:@"selit"],[dic objectForKey:@"flag"]);
+
             [request addPostValue:[dic objectForKey:@"selit"] forKey:[dic objectForKey:@"flag"]];
         }
     }else{
@@ -468,6 +470,7 @@ static LoginSendHttp *loginSendHttp = nil;
         for (int i=0; i<array.count; i++) {
             NSString *str = [array objectAtIndex:i];
             [request addPostValue:str forKey:@"selit"];
+           
         }
     }
     //判断是否有附件
