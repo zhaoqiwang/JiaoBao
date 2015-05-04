@@ -122,43 +122,11 @@ NSString *kCell = @"Forward_cell2";
     self.datasource = self.mModel_unitList.UnitClass;
 
     
-    //[[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-    
     
     
     
 }
-//
-//-(void)GetUnitRevicer:(NSNotification *)noti{
-//    [self.mProgressV hide:YES];
-//    NSDictionary *dic = noti.object;
-//    NSArray *array = [dic objectForKey:@"array"];
-//    self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-////    for(int i=0;i<array.count;i++)
-////    {
-////        UserListModel *model = [self.mModel_unitList.myUnit.list objectAtIndex:i];
-////        NSLog(@"groupName = %@",model.GroupName);
-////        if([model.GroupName isEqualToString:@"本班家长"])
-////        {
-////            
-////            //self.datasource = model.groupselit_selit;
-////            
-////        }
-////
-////    }
-//    
-//    
-//
-//}
 
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 @end

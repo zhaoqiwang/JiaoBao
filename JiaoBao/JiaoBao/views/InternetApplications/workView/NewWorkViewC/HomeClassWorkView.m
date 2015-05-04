@@ -41,6 +41,10 @@
 
 //点击发送按钮
 -(void)mBtn_send:(UIButton *)btn{
+    [[LoginSendHttp getInstance] creatCommMsgWith:@"www" SMSFlag:0 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:[HomeClassTopScrollView shareInstance].genseliArr.count grsms:0 array:[HomeClassTopScrollView shareInstance].genseliArr forwardMsgID:nil access:nil];
+    
+
+    
     
     
 }

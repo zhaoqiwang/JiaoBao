@@ -64,6 +64,8 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NewWorkTopScrollView shareInstance]removeFromSuperview];
+    [[NewWorkRootScrollView shareInstance]removeFromSuperview];
     [utils popViewControllerAnimated:YES];
 }
 

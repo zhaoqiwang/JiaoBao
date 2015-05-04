@@ -76,6 +76,8 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
         [button setTag:i+100];
+        [dm getInstance].notificationSymbol = button.tag;
+
         if (i+100 == mInt_scrollViewSelectedChannelID) {
             button.selected = YES;
         }
@@ -171,11 +173,17 @@
 }
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+    NSLog(@"notificationSymbol = %d",[dm getInstance].notificationSymbol);
     self.mModel_unitList = noti.object;
+
+    if([dm getInstance].notificationSymbol == 100)
+    {
+
+        
+    }
     
     //    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
     //    {
-    NSLog(@"notificationSymbol = %d",[dm getInstance].notificationSymbol);
     if([dm getInstance].notificationSymbol == 101)
     {
         
@@ -185,6 +193,11 @@
             
             [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
             
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:nil];
+
         }
         
     }
@@ -202,24 +215,84 @@
 
 -(void)GetUnitRevicer:(NSNotification *)noti{
     if([dm getInstance].notificationSymbol == 101)
-
     {
         NSDictionary *dic = noti.object;
+        NSString *unitID = [dic objectForKey:@"unitID"];
         NSArray *array = [dic objectForKey:@"array"];
+        self.genseliArr = [NSMutableArray array];
+        //找到当前这个单位，塞入数组
         
-        NSArray *arr = [NSMutableArray arrayWithArray:array];
-        for(int i=0;i<array.count;i++)
-        {
-            UserListModel *model = [array objectAtIndex:i];
-            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
-            {
-                [self.mModel_unitList.myUnit.list removeObject:model];
+        //当前单位
+        if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
+            self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+            self.mModel_myUnit = self.mModel_unitList.myUnit;
+        }
+        //上级单位
+        for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+            myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+            if ([unit.TabID intValue] == [unitID intValue]) {
+                unit.list = [NSMutableArray arrayWithArray:array];
+                self.mModel_myUnit = unit;
             }
+        }
+        //下级单位
+        for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+            myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
+            if ([unit.TabID intValue] == [unitID intValue]) {
+                unit.list = [NSMutableArray arrayWithArray:array];
+                self.mModel_myUnit = unit;
+            }
+        }
+        //班级
+        for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+            if ([unit.TabID intValue] == [unitID intValue]) {
+                unit.list = [NSMutableArray arrayWithArray:array];
+                self.mModel_myUnit = unit;
+            }
+        }
+        for(int i=0;i<self.mModel_unitList.myUnit.list.count;i++)
+        {
+            UserListModel *model = [self.mModel_unitList.myUnit.list objectAtIndex:i];
+            for(int i=0;i<model.groupselit_selit.count;i++)
+            {
+                groupselit_selitModel *model2  = [model.groupselit_selit objectAtIndex:i];
+                self.genseliStr = model2.selit;
+                [self.genseliArr addObject:self.genseliArr];
+                
+                
+            }
+
             
         }
-        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:arr];
+        self.curunitid = self.mModel_unitList.myUnit.TabIDStr;
+
+        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:array];
+        
+
         
     }
+
+ 
+//    if([dm getInstance].notificationSymbol == 101)
+//
+//    {
+//        NSDictionary *dic = noti.object;
+//        NSArray *array = [dic objectForKey:@"array"];
+//        
+//        NSArray *arr = [NSMutableArray arrayWithArray:array];
+//        for(int i=0;i<array.count;i++)
+//        {
+//            UserListModel *model = [array objectAtIndex:i];
+//            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+//            {
+//                [self.mModel_unitList.myUnit.list removeObject:model];
+//            }
+//            
+//        }
+//        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:arr];
+//        
+//    }
 
     
     
