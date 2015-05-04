@@ -428,23 +428,20 @@
         cell0.mBtn_detail.hidden = YES;
         cell0.mBtn_reverse.hidden = YES;
         cell0.mBtn_all.hidden = YES;
-        
         if (node.isExpanded) {
-            [cell0.mImgV_head setImage:[UIImage imageNamed:@"bTri"]];
-            [cell0.mImgV_open_close setImage:[UIImage imageNamed:@"plus"]];
+            [cell0.mImgV_head setImage:[UIImage imageNamed:@"selected"]];
         } else {
-            [cell0.mImgV_head setImage:[UIImage imageNamed:@"rTri"]];
-            [cell0.mImgV_open_close setImage:[UIImage imageNamed:@"add"]];
+            [cell0.mImgV_head setImage:[UIImage imageNamed:@"blank"]];
         }
         //定位
         CGSize nameSize = [nodeData.mStr_name sizeWithFont:[UIFont systemFontOfSize:15]];
         cell0.mImgV_head.frame = CGRectMake(10*node.type+10, 20, 10, 10);
-        cell0.mLab_name.frame = CGRectMake(cell0.mImgV_head.frame.origin.x+10, cell0.mLab_name.frame.origin.y, nameSize.width, cell0.mLab_name.frame.size.height);
+        cell0.mLab_name.frame = CGRectMake(cell0.mImgV_head.frame.origin.x+20, cell0.mLab_name.frame.origin.y, nameSize.width, cell0.mLab_name.frame.size.height);
         cell0.mImgV_open_close.frame = CGRectMake(cell0.mLab_name.frame.origin.x+nameSize.width, 20, 10, 10);
         cell0.mImgV_number.hidden = YES;
         cell0.mLab_number.hidden = YES;
         cell0.mBtn_detail.hidden = YES;
-        cell0.mImgV_open_close.hidden = NO;
+        cell0.mImgV_open_close.hidden = YES;
     }
 }
 
@@ -474,6 +471,10 @@
     
     D("indexPath.row-== %ld,%@,%d",(long)indexPath.row,node.flag,node.type);
     if(node.type == 3){
+//        if (node.isExpanded) {
+            node.isExpanded = !node.isExpanded;
+//        }
+        [self.mTableV_work reloadData];
 //        TreeView_Level2_Model *nodeData = node.nodeData;
 //        MsgDetailViewController *msgDetailVC = [[MsgDetailViewController alloc] init];
 //        msgDetailVC.mModel_tree2 = nodeData;

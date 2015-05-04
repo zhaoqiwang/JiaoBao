@@ -3154,9 +3154,6 @@
 				F75029E01AEDD9BA004F822F /* SchoolMessage.m */,
 				F75029E21AEDD9FB004F822F /* PatriarchView.h */,
 				F75029E31AEDD9FB004F822F /* PatriarchView.m */,
-				F7601E3E1AEF33FB00E6C277 /* CustomWorkViewController.h */,
-				F7601E3F1AEF33FB00E6C277 /* CustomWorkViewController.m */,
-				F7601E401AEF33FB00E6C277 /* CustomWorkViewController.xib */,
 				A7A15CC11AF08DC700843CB3 /* NewWorkTree_model.h */,
 				A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */,
 				F77EC9121AF1FFC6005C2221 /* CustomCell.h */,
@@ -4486,7 +4483,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "e0b823f4-ec9c-4fa3-a6ca-8d5e59250e30";
+				PROVISIONING_PROFILE = "b0e17534-61fd-4fcb-bcbe-cebdb92e8159";
 				SDKROOT = iphoneos8.2;
 			};
 			name = Debug;
@@ -4522,7 +4520,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "e0b823f4-ec9c-4fa3-a6ca-8d5e59250e30";
+				PROVISIONING_PROFILE = "b0e17534-61fd-4fcb-bcbe-cebdb92e8159";
 				SDKROOT = iphoneos8.2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4550,7 +4549,8 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "e0b823f4-ec9c-4fa3-a6ca-8d5e59250e30";
+				PROVISIONING_PROFILE = "b0e17534-61fd-4fcb-bcbe-cebdb92e8159";
 			};
 			name = Debug;
 		};
@@ -4576,7 +4576,8 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "e0b823f4-ec9c-4fa3-a6ca-8d5e59250e30";
+				PROVISIONING_PROFILE = "b0e17534-61fd-4fcb-bcbe-cebdb92e8159";
 			};
 			name = Release;
 		};
