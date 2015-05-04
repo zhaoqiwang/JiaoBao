@@ -278,7 +278,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil] lastObject];
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, 48);
         }
-//        cell.delegate = self;
+        cell.delegate = self;
         cell.mNode = node;
         cell.mBtn_detail.userInteractionEnabled = NO;
         [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -302,7 +302,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil] lastObject];
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, 48);
         }
-        //        cell.delegate = self;
+        cell.delegate = self;
         cell.mNode = node;
         cell.mBtn_detail.userInteractionEnabled = NO;
         [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -359,7 +359,12 @@
         cell0.mBtn_reverse.frame = CGRectMake([dm getInstance].width-40, 0, 30, cell.frame.size.height);
         [cell0.mBtn_reverse setTitle:@"反选" forState:UIControlStateNormal];
         cell0.mBtn_all.frame = CGRectMake(cell0.mBtn_reverse.frame.origin.x-78, 9, 68, 30);
-        [cell0.mBtn_all setBackgroundImage:[UIImage imageNamed:@"newWork_allSelect"] forState:UIControlStateNormal];
+        if (node.mInt_select == 0) {
+            [cell0.mBtn_all setBackgroundImage:[UIImage imageNamed:@"newWork_reverseSelect"] forState:UIControlStateNormal];
+        }else{
+            [cell0.mBtn_all setBackgroundImage:[UIImage imageNamed:@"newWork_allSelect"] forState:UIControlStateNormal];
+        }
+        
     }
     
     else if(node.type == 1){
@@ -419,7 +424,11 @@
         cell0.mBtn_reverse.frame = CGRectMake([dm getInstance].width-40, 0, 30, cell.frame.size.height);
         [cell0.mBtn_reverse setTitle:@"反选" forState:UIControlStateNormal];
         cell0.mBtn_all.frame = CGRectMake(cell0.mBtn_reverse.frame.origin.x-78, 9, 68, 30);
-        [cell0.mBtn_all setBackgroundImage:[UIImage imageNamed:@"newWork_allSelect"] forState:UIControlStateNormal];
+        if (node.mInt_select == 0) {
+            [cell0.mBtn_all setBackgroundImage:[UIImage imageNamed:@"newWork_reverseSelect"] forState:UIControlStateNormal];
+        }else{
+            [cell0.mBtn_all setBackgroundImage:[UIImage imageNamed:@"newWork_allSelect"] forState:UIControlStateNormal];
+        }
     }else if(node.type == 3){
         TreeView_Level0_Cell *cell0 = (TreeView_Level0_Cell*)cell;
         NewWorkTree_model *nodeData = node.nodeData;
@@ -428,7 +437,7 @@
         cell0.mBtn_detail.hidden = YES;
         cell0.mBtn_reverse.hidden = YES;
         cell0.mBtn_all.hidden = YES;
-        if (node.isExpanded) {
+        if (node.mInt_select == 1) {
             [cell0.mImgV_head setImage:[UIImage imageNamed:@"selected"]];
         } else {
             [cell0.mImgV_head setImage:[UIImage imageNamed:@"blank"]];
@@ -471,9 +480,11 @@
     
     D("indexPath.row-== %ld,%@,%d",(long)indexPath.row,node.flag,node.type);
     if(node.type == 3){
-//        if (node.isExpanded) {
-            node.isExpanded = !node.isExpanded;
-//        }
+        if (node.mInt_select == 0) {
+            node.mInt_select = 1;
+        }else{
+            node.mInt_select = 0;
+        }
         [self.mTableV_work reloadData];
 //        TreeView_Level2_Model *nodeData = node.nodeData;
 //        MsgDetailViewController *msgDetailVC = [[MsgDetailViewController alloc] init];
@@ -527,12 +538,21 @@
         [tmp addObject:node];
         if(node.isExpanded){
             for(TreeView_node *node2 in node.sonNodes){
+//                if (node.mInt_select == 1) {
+//                    node2.mInt_select = 1;
+//                }
                 [tmp addObject:node2];
                 if(node2.isExpanded){
                     for(TreeView_node *node3 in node2.sonNodes){
+//                        if (node2.mInt_select == 1) {
+//                            node3.mInt_select = 1;
+//                        }
                         [tmp addObject:node3];
                         if(node3.isExpanded){
                             for(TreeView_node *node4 in node3.sonNodes){
+//                                if (node3.mInt_select == 1) {
+//                                    node4.mInt_select = 1;
+//                                }
                                 [tmp addObject:node4];
                             }
                         }
@@ -567,6 +587,116 @@
         }
     }
     [self reloadDataForDisplayArray];
+}
+
+//全选
+-(void)selectedmBtn_all:(TreeView_Level0_Cell *)cell{
+    NSString *flag = cell.mNode.flag;
+    for (TreeView_node *node in self.mArr_sumData) {
+        if([node.flag isEqual:flag]){
+            node.mInt_select = 1;
+            for(TreeView_node *node2 in node.sonNodes){
+                node2.mInt_select = 1;
+                for(TreeView_node *node3 in node2.sonNodes){
+                    node3.mInt_select = 1;
+                    for(TreeView_node *node4 in node3.sonNodes){
+                        node4.mInt_select = 1;
+                    }
+                }
+            }
+        }else{
+            for(TreeView_node *node2 in node.sonNodes){
+                if([node2.flag isEqual:flag]){
+                    node2.mInt_select = 1;
+                    for(TreeView_node *node3 in node2.sonNodes){
+                        node3.mInt_select = 1;
+                        for(TreeView_node *node4 in node3.sonNodes){
+                            node4.mInt_select = 1;
+                        }
+                    }
+                }else{
+                    for(TreeView_node *node3 in node2.sonNodes){
+                         if([node3.flag isEqual:flag]){
+                             node3.mInt_select = 1;
+                             for(TreeView_node *node4 in node3.sonNodes){
+                                 node4.mInt_select = 1;
+                             }
+                         }
+                    }
+                }
+            }
+        }
+    }
+//    [self selectAllBtn:self.mArr_sumData Flag:flag];
+    [self reloadDataForDisplayArray];
+}
+
+-(void)selectAllBtn:(NSArray *)array Flag:(NSString *)flag{
+    for (TreeView_node *node in array) {
+        D("lsdgohsgjla-===%@,%@",node.flag,flag);
+        if([node.flag isEqual:flag]){
+            node.mInt_select = 1;
+            [self selectAllBtn2:node.sonNodes];
+        }else{
+            [self selectAllBtn:node.sonNodes Flag:flag];
+        }
+    }
+}
+
+-(void)selectAllBtn2:(NSArray *)array{
+    for(TreeView_node *node in array){
+        node.mInt_select = 1;
+        [self selectAllBtn2:node.sonNodes];
+    }
+}
+
+//反选
+-(void)selectedmBtn_reverse:(TreeView_Level0_Cell *)cell{
+    NSString *flag = cell.mNode.flag;
+    for (TreeView_node *node in self.mArr_sumData) {
+        if([node.flag isEqual:flag]){
+            node.mInt_select = 0;
+            for(TreeView_node *node2 in node.sonNodes){
+                [self reverseBtn:node2];
+                for(TreeView_node *node3 in node2.sonNodes){
+                    [self reverseBtn:node3];
+                    for(TreeView_node *node4 in node3.sonNodes){
+                        [self reverseBtn:node4];
+                    }
+                }
+            }
+        }else{
+            for(TreeView_node *node2 in node.sonNodes){
+                if([node2.flag isEqual:flag]){
+                    node2.mInt_select = 0;
+                    for(TreeView_node *node3 in node2.sonNodes){
+                        [self reverseBtn:node3];
+                        for(TreeView_node *node4 in node3.sonNodes){
+                            [self reverseBtn:node4];
+                        }
+                    }
+                }else{
+                    for(TreeView_node *node3 in node2.sonNodes){
+                        if([node3.flag isEqual:flag]){
+                            node3.mInt_select = 0;
+                            for(TreeView_node *node4 in node3.sonNodes){
+                                [self reverseBtn:node4];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    [self reloadDataForDisplayArray];
+}
+
+-(void)reverseBtn:(TreeView_node *)node{
+    if (node.mInt_select == 0) {
+        node.mInt_select = 1;
+    }else{
+        node.mInt_select = 0;
+    }
 }
 
 @end

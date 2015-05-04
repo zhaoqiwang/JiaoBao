@@ -27,6 +27,20 @@
     }
 }
 
+//全选
+-(IBAction)mBtn_allClick:(UIButton *)btn{
+    if (delegate && [delegate respondsToSelector:@selector(selectedmBtn_all:)]){
+        [delegate selectedmBtn_all:self];
+    }
+}
+
+//反选
+-(IBAction)mBtn_reverseClick:(UIButton *)btn{
+    if (delegate && [delegate respondsToSelector:@selector(selectedmBtn_reverse:)]){
+        [delegate selectedmBtn_reverse:self];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
