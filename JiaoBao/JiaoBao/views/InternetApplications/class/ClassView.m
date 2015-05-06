@@ -192,7 +192,7 @@
         if (self.mInt_flag == 1) {
             [self.mArr_sum removeAllObjects];
         }
-        self.mArr_sum = array;
+        [self.mArr_sum addObjectsFromArray:array];
     }else{//本地
         //如果是刷新，将数据清除
         if (self.mInt_flag == 1) {

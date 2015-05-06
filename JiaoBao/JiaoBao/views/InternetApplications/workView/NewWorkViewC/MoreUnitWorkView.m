@@ -105,12 +105,10 @@
                     if (node4.mInt_select == 1) {
                         NewWorkTree_model *model = node4.nodeData;
                         groupselit_selitModel *model3 = model.mModel_people;
-                        if (model3.mInt_select == 1) {
-                            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                            [dic setValue:model3.flag forKey:@"flag"];
-                            [dic setValue:model3.selit forKey:@"selit"];
-                            [array addObject:dic];
-                        }
+                        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                        [dic setValue:model3.flag forKey:@"flag"];
+                        [dic setValue:model3.selit forKey:@"selit"];
+                        [array addObject:dic];
                     }
                 }
             }
@@ -124,10 +122,6 @@
         return;
     }
     //发表
-//        NSMutableArray *array0 = [NSMutableArray array];
-//        [array0 addObjectsFromArray:self.mArr_accessory];
-//        [array0 addObjectsFromArray:self.mArr_photo];
-//        D("array.count-====%lu",(unsigned long)array0.count);
     [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:self.mViewTop.mArr_accessory];
 }
 
@@ -749,7 +743,7 @@
     NSString *flag = cell.mNode.flag;
     for (TreeView_node *node in self.mArr_sumData) {
         if([node.flag isEqual:flag]){
-            node.mInt_select = 0;
+//            node.mInt_select = 0;
             for(TreeView_node *node2 in node.sonNodes){
                 [self reverseBtn:node2];
                 for(TreeView_node *node3 in node2.sonNodes){
@@ -762,7 +756,7 @@
         }else{
             for(TreeView_node *node2 in node.sonNodes){
                 if([node2.flag isEqual:flag]){
-                    node2.mInt_select = 0;
+//                    node2.mInt_select = 0;
                     for(TreeView_node *node3 in node2.sonNodes){
                         [self reverseBtn:node3];
                         for(TreeView_node *node4 in node3.sonNodes){
@@ -772,7 +766,7 @@
                 }else{
                     for(TreeView_node *node3 in node2.sonNodes){
                         if([node3.flag isEqual:flag]){
-                            node3.mInt_select = 0;
+//                            node3.mInt_select = 0;
                             for(TreeView_node *node4 in node3.sonNodes){
                                 [self reverseBtn:node4];
                             }
@@ -782,7 +776,7 @@
             }
         }
     }
-    [self selectedNowBtn:cell.mNode.nodeFlag];
+    [self selectedNowBtn:[NSString stringWithFormat:@"%@-6",cell.mNode.nodeFlag]];
     [self reloadDataForDisplayArray];
 }
 
