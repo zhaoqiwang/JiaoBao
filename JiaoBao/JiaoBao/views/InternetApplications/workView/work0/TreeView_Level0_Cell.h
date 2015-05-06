@@ -37,11 +37,23 @@
 
 -(IBAction)clickBtn;
 
+//全选
+-(IBAction)mBtn_allClick:(UIButton *)btn;
+
+//反选
+-(IBAction)mBtn_reverseClick:(UIButton *)btn;
+
 @end
 
 @protocol TreeView_Level0_CellDelegate <NSObject>
 
 //点击编辑按钮
 -(void)selectedMoreBtn0:(TreeView_Level0_Cell *)cell;
+
+//全选
+-(void)selectedmBtn_all:(TreeView_Level0_Cell *)cell;
+
+//反选
+-(void)selectedmBtn_reverse:(TreeView_Level0_Cell *)cell;
 
 @end

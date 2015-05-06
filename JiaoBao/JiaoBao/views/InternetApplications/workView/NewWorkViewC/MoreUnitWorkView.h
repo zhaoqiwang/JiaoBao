@@ -16,8 +16,9 @@
 #import "TreeView_Level1_Cell.h"
 #import "TreeView_Level2_Cell.h"
 #import "NewWorkTree_model.h"
+#import "MBProgressHUD.h"
 
-@interface MoreUnitWorkView : UIView<NewWorkTopViewProtocol,UITableViewDataSource,UITableViewDelegate>{
+@interface MoreUnitWorkView : UIView<NewWorkTopViewProtocol,UITableViewDataSource,UITableViewDelegate,TreeView_Level0_CellDelegate,MBProgressHUDDelegate>{
     UIScrollView *mScrollV_all;//放所有控件
     NewWorkTopView *mViewTop;//上半部分
     CommMsgRevicerUnitListModel *mModel_unitList;//
@@ -25,6 +26,9 @@
     NSArray *mArr_display;//保存要显示在界面上的数据的数组
     UITableView *mTableV_work;//
     int mInt_readflag;//标注cell中的readflag
+    int mInt_requestCount;//请求数量
+    int mInt_requestCount2;//请求数量
+    MBProgressHUD *mProgressV;//
 }
 
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//放所有控件
@@ -34,6 +38,9 @@
 @property(strong,nonatomic) NSArray *mArr_display;//保存要显示在界面上的数据的数组
 @property (strong,nonatomic) UITableView *mTableV_work;//
 @property (nonatomic,assign) int mInt_readflag;//标注cell中的readflag
+@property (nonatomic,assign) int mInt_requestCount;//请求数量
+@property (nonatomic,assign) int mInt_requestCount2;//请求数量
+@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 
 - (id)initWithFrame1:(CGRect)frame;
