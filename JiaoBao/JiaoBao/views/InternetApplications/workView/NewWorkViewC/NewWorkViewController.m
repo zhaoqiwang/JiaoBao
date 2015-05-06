@@ -68,6 +68,7 @@
     [HomeClassTopScrollView shareInstance].requestSymbol1 =YES;
     [HomeClassTopScrollView shareInstance].requestSymbol2 =YES;
     [HomeClassTopScrollView shareInstance].requestSymbol3 =YES;
+    [HomeClassTopScrollView shareInstance].dataArr = [[NSMutableArray alloc]initWithCapacity:0];
     [utils popViewControllerAnimated:YES];
 
 

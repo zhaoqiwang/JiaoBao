@@ -26,7 +26,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 -(void)viewDidDisappear:(BOOL)animated{
     //界面消失时，移除通知
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.mProgressV hide:YES];
     NSLog(@"22222222222");
 
@@ -35,7 +35,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)refreshWorkView:(id)sender
 {
 //    self.topView.frame = self.topView.mView_top.frame;
-//    NSLog(@"y = %f",self.topView.frame.origin.y);
+    NSLog(@"y = %f",self.topView.frame.origin.y);
     [self setFrame];
 }
 //-(void)refreshHomeClass:(id)sender
@@ -1050,8 +1050,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         //发表
         if (self.mInt_where == 0) {
             NSMutableArray *array0 = [NSMutableArray array];
-            [array0 addObjectsFromArray:self.mArr_accessory];
-            [array0 addObjectsFromArray:self.mArr_photo];
+            [array0 addObjectsFromArray:self.topView.mArr_accessory];
+            //[array0 addObjectsFromArray:self.topView.mArr_photo];
             D("array.count-====%lu",(unsigned long)array0.count);
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:self.mStr_forwardTableID access:array0];
         }else if (self.mInt_where == 1) {//发表下发通知
@@ -1930,6 +1930,9 @@ if([dm getInstance].sectionSet2.count ==self.mModel_myUnit.list.count)
 
         
     }
+    CGSize size = [view.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
+
+    view.addBtn.frame = CGRectMake(view.mLab_name.frame.origin.x+size.width, 5, 30, 30);
     
     return view;
 }

@@ -25,11 +25,14 @@
         D("Forward_section-=tag=%ld==%@",(long)self.tag,NSStringFromCGRect(self.frame));
         //self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         // Initialization code
+
         self.mLab_name = [[UILabel alloc] init];
         self.mLab_name.font = [UIFont systemFontOfSize:12];
+        //CGSize size = [self.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
+
         self.mLab_name.frame = CGRectMake(30, 0, 200, 40);
         [self addSubview:self.mLab_name];
-        
+
         self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.addBtn.frame = CGRectMake(50+30, 5, 30, 30);
         self.addBtn.tag = 3;

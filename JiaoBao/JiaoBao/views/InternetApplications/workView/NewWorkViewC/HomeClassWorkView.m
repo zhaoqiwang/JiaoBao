@@ -12,16 +12,22 @@
 
 @implementation HomeClassWorkView
 @synthesize mViewTop,mScrollV_all;
-
+-(void)refreshWorkView:(id)sender
+{
+    [self setFrame];
+}
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
         //总框
         self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 10, [dm getInstance].width, self.frame.size.height)];
-        self.mScrollV_all.contentSize = CGSizeMake(320, 800);
+        self.mScrollV_all.contentSize = CGSizeMake(320, 1000);
         [self addSubview:self.mScrollV_all];
+        //self.mScrollV_all.backgroundColor = [UIColor redColor];
         //上半部分
         self.mViewTop = [[NewWorkTopView alloc] init];
         self.mViewTop.delegate = self;
@@ -33,7 +39,9 @@
         [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+10, [dm getInstance].width, 48);
 //        self.bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 300)];
 //        [self addSubview:self.bottomView];
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 800);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 1000);
+        //[HomeClassRootScrollView shareInstance].backgroundColor = [UIColor blueColor];
+        
         [HomeClassRootScrollView shareInstance].scrollEnabled = NO;
         //[HomeClassRootScrollView shareInstance].backgroundColor = [UIColor redColor];
 
@@ -41,6 +49,15 @@
         
     }
     return self;
+}
+-(void)setFrame
+{
+    [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+10, [dm getInstance].width, 48);
+    //        self.bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 300)];
+    //        [self addSubview:self.bottomView];
+    [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 1000);
+
+    
 }
 
 //点击发送按钮
@@ -58,6 +75,8 @@
         return;
     }
     NSMutableArray *genArr = [[NSMutableArray alloc]initWithCapacity:0];
+    NSMutableArray *array0 = [NSMutableArray array];
+    [array0 addObjectsFromArray:self.mViewTop.mArr_accessory];
 
 if([dm getInstance].notificationSymbol == 100)
 {
@@ -88,7 +107,7 @@ if([dm getInstance].notificationSymbol == 100)
     }
         int num = (int)genArr.count;
         NSLog(@"num = %d",num);
-        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:nil];
+        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
 
 
     
@@ -117,7 +136,7 @@ if([dm getInstance].notificationSymbol == 100)
             }
             
         }
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:nil];
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
     }
     if([dm getInstance].notificationSymbol == 102)
@@ -139,7 +158,7 @@ if([dm getInstance].notificationSymbol == 100)
             }
             }
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:nil];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
             
             
         }

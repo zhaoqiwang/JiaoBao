@@ -24,7 +24,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
-        self.contentSize = CGSizeMake([dm getInstance].width*4, [dm getInstance].height-43-[dm getInstance].statusBar-44);
+        self.contentSize = CGSizeMake([dm getInstance].width*4, 1000);
         
         self.pagingEnabled = NO;
         self.userInteractionEnabled = YES;
@@ -41,6 +41,7 @@
         //self.classMessageView.backgroundColor = [UIColor redColor];
         self.characterView = [[CharacterView alloc] initWithFrame:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
         [self addSubview:self.characterView];
+        //self.characterView.backgroundColor = [UIColor blackColor];
         self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
         [self addSubview:self.schoolMessage];
         self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
