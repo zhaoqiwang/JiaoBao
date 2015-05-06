@@ -156,10 +156,10 @@
                             </connections>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bae-zF-XCz">
-                            <rect key="frame" x="60" y="170" width="80" height="24"/>
+                            <rect key="frame" x="60" y="170" width="80" height="29"/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="24" id="13c-66-Kn2"/>
+                                <constraint firstAttribute="height" constant="29" id="13c-66-Kn2"/>
                                 <constraint firstAttribute="width" constant="80" id="t2W-py-yNs"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -171,8 +171,8 @@
                                 <action selector="cameraBtnAction:" destination="-1" eventType="touchUpInside" id="PYW-ge-74e"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
-                            <rect key="frame" x="180" y="170" width="80" height="24"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
+                            <rect key="frame" x="180" y="170" width="80" height="29"/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="相册取图">
@@ -206,7 +206,7 @@
                         <constraint firstItem="W5t-Wo-Bcq" firstAttribute="leading" secondItem="bae-zF-XCz" secondAttribute="trailing" constant="40" id="Erv-dY-pxh"/>
                         <constraint firstItem="bae-zF-XCz" firstAttribute="leading" secondItem="QRk-rb-CI8" secondAttribute="leading" constant="60" id="O7d-xZ-SaJ"/>
                         <constraint firstItem="Du8-IG-Nug" firstAttribute="centerX" secondItem="QRk-rb-CI8" secondAttribute="centerX" id="Unw-ao-ezq"/>
-                        <constraint firstAttribute="bottom" secondItem="bae-zF-XCz" secondAttribute="bottom" constant="25" id="X7Q-bX-JOV"/>
+                        <constraint firstAttribute="bottom" secondItem="bae-zF-XCz" secondAttribute="bottom" constant="20" id="X7Q-bX-JOV"/>
                         <constraint firstItem="bae-zF-XCz" firstAttribute="top" secondItem="BBf-Ty-Qge" secondAttribute="bottom" constant="77" id="d6c-pU-z6l"/>
                         <constraint firstItem="Du8-IG-Nug" firstAttribute="top" secondItem="QRk-rb-CI8" secondAttribute="top" constant="10" id="d9y-Cp-Uel"/>
                         <constraint firstItem="Du8-IG-Nug" firstAttribute="leading" secondItem="QRk-rb-CI8" secondAttribute="leading" constant="10" id="efv-po-jGZ"/>

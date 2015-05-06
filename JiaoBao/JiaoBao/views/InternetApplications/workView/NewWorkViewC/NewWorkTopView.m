@@ -149,6 +149,7 @@
     }
     self.mView_accessory.frame = CGRectMake(self.mView_accessory.frame.origin.x, self.mView_accessory.frame.origin.y, self.mView_accessory.frame.size.width, rect0.origin.y);
     self.frame = CGRectMake(0, 0, self.frame.size.width, self.mView_accessory.frame.origin.y+self.mView_accessory.frame.size.height);
+    NSLog(@"height = %f",self.frame.size.height);
     [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshWorkView" object:nil];
 
     //[self setFrame];

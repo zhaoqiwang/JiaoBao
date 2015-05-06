@@ -236,6 +236,26 @@
                 [self.dataArr addObject:unit];
             }
         }
+//        for(int i=0;i<self.dataArr.count;i++)
+//        {
+//            myUnit *unit = [self.dataArr objectAtIndex:i];
+//            for(int j=0;j<unit.list.count;j++)
+//            {
+//                UserListModel *model = [unit.list objectAtIndex:j];
+//                for(int z=0;z<model.groupselit_selit.count;z++)
+//                {
+//                    
+//                    groupselit_selitModel *model2 = [model.groupselit_selit objectAtIndex:z];
+//                    NSLog(@"555555[%d][%d][%d] = %@",i,j,z,model2.Name);
+//                }
+//
+//                
+//            }
+//
+//
+//
+//            
+//        }
 
 
 

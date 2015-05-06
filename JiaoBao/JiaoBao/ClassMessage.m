@@ -35,7 +35,7 @@ NSString *kCell = @"Forward_cell2";
     
 
 //    
-    self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 300) collectionViewLayout:flowLayout];
+    self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 600) collectionViewLayout:flowLayout];
     [self addSubview:self.mCollectionV_list];
 
     self.mCollectionV_list.backgroundColor = [UIColor whiteColor];
