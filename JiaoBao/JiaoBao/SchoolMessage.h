@@ -10,6 +10,7 @@
 
 @interface SchoolMessage : UIView
 @property(nonatomic,strong)UIButton* rightBtn;
+@property(nonatomic,assign)BOOL allSelected;
 
 
 @end

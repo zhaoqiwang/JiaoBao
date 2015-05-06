@@ -37,6 +37,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
@@ -55,6 +57,11 @@
         
         mInt_userSelectedChannelID = 100;
         mInt_scrollViewSelectedChannelID = 100;
+        self.requestSymbol0 = YES;
+        self.requestSymbol1 = YES;
+        self.requestSymbol2 = YES;
+        self.requestSymbol3 = YES;
+
         
         [self initWithNameButtons];
     }
@@ -107,7 +114,6 @@
 
 - (void)selectNameButton:(UIButton *)sender{
     [dm getInstance].notificationSymbol = sender.tag;
-    NSLog(@"slectBtn = %d",sender.tag);
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -173,7 +179,6 @@
 }
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    NSLog(@"notificationSymbol = %d",[dm getInstance].notificationSymbol);
     self.mModel_unitList = noti.object;
 
     if([dm getInstance].notificationSymbol == 100)
@@ -182,16 +187,20 @@
         
     }
     
-    //    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
-    //    {
+
     if([dm getInstance].notificationSymbol == 101)
     {
-        
+        self.curunitid = self.mModel_unitList.myUnit.TabIDStr;
         if(self.mModel_unitList.UnitClass.count>0)
         {
-            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:0];
-            
-            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+            for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
+            {
+                myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+                
+                [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+                
+            }
+
             
         }
         else
@@ -204,16 +213,12 @@
     
     
     
-    //}
-    
-    
-    
-    
-    //[self.mCollectionV_list reloadData];
+
     
 }
 
--(void)GetUnitRevicer:(NSNotification *)noti{
+-(void)GetUnitRevicer:(NSNotification *)noti
+{
     if([dm getInstance].notificationSymbol == 101)
     {
         NSDictionary *dic = noti.object;
@@ -221,78 +226,26 @@
         NSArray *array = [dic objectForKey:@"array"];
         self.genseliArr = [NSMutableArray array];
         //找到当前这个单位，塞入数组
-        
-        //当前单位
-        if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
-            self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = self.mModel_unitList.myUnit;
-        }
-        //上级单位
-        for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
-            myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
-            if ([unit.TabID intValue] == [unitID intValue]) {
-                unit.list = [NSMutableArray arrayWithArray:array];
-                self.mModel_myUnit = unit;
-            }
-        }
-        //下级单位
-        for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
-            myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
-            if ([unit.TabID intValue] == [unitID intValue]) {
-                unit.list = [NSMutableArray arrayWithArray:array];
-                self.mModel_myUnit = unit;
-            }
-        }
+
         //班级
-        for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+        for (int i=0; i<self.mModel_unitList.UnitClass.count; i++)
+        {
             myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
             if ([unit.TabID intValue] == [unitID intValue]) {
                 unit.list = [NSMutableArray arrayWithArray:array];
-                self.mModel_myUnit = unit;
+                [self.dataArr addObject:unit];
             }
         }
-        for(int i=0;i<self.mModel_unitList.myUnit.list.count;i++)
-        {
-            UserListModel *model = [self.mModel_unitList.myUnit.list objectAtIndex:i];
-            for(int i=0;i<model.groupselit_selit.count;i++)
-            {
-                groupselit_selitModel *model2  = [model.groupselit_selit objectAtIndex:i];
-                self.genseliStr = model2.selit;
-                [self.genseliArr addObject:self.genseliArr];
-                
-                
-            }
 
-            
-        }
-        self.curunitid = self.mModel_unitList.myUnit.TabIDStr;
 
-        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:array];
+
+        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
         
 
         
     }
 
- 
-//    if([dm getInstance].notificationSymbol == 101)
-//
-//    {
-//        NSDictionary *dic = noti.object;
-//        NSArray *array = [dic objectForKey:@"array"];
-//        
-//        NSArray *arr = [NSMutableArray arrayWithArray:array];
-//        for(int i=0;i<array.count;i++)
-//        {
-//            UserListModel *model = [array objectAtIndex:i];
-//            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
-//            {
-//                [self.mModel_unitList.myUnit.list removeObject:model];
-//            }
-//            
-//        }
-//        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:arr];
-//        
-//    }
+
 
     
     
@@ -302,14 +255,44 @@
 -(void)sendRequest{
     if([dm getInstance].notificationSymbol == 101)
     {
+        if(self.requestSymbol0 == YES)
+        {
+            self.requestSymbol0 =NO;
+        }
+        
+    }
+
+
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        if(self.requestSymbol1 ==YES)
+        {
         [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 
         
+         }
+        self.requestSymbol1 = NO;
     }
+    if([dm getInstance].notificationSymbol == 102)
+    {
+        if(self.requestSymbol2 == YES)
+        {
+            
+            [[LoginSendHttp getInstance]ReceiveListWithFlag:0 all:1];
+        }
+        self.requestSymbol2 = NO;
+        
+    }
+
     if([dm getInstance].notificationSymbol == 103)
     {
-        [[LoginSendHttp getInstance]ReceiveListWithFlag:0 all:1];
+        if(self.requestSymbol3 == YES)
+        {
+            [[LoginSendHttp getInstance]ReceiveListWithFlag:0 all:1];
+        }
+        self.requestSymbol3 = NO;
     }
+    
 
 
     
@@ -317,7 +300,13 @@
 -(void)CMRevicer:(NSNotification *)noti{
 
        NSArray *arr = [noti object];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+       self.thirdArr = arr;
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+
+        
+    }
 
 
 }

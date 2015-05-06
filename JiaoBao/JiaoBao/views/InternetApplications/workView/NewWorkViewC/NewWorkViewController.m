@@ -64,9 +64,13 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
-    [[NewWorkTopScrollView shareInstance]removeFromSuperview];
-    [[NewWorkRootScrollView shareInstance]removeFromSuperview];
+    [HomeClassTopScrollView shareInstance].requestSymbol0 =YES;
+    [HomeClassTopScrollView shareInstance].requestSymbol1 =YES;
+    [HomeClassTopScrollView shareInstance].requestSymbol2 =YES;
+    [HomeClassTopScrollView shareInstance].requestSymbol3 =YES;
     [utils popViewControllerAnimated:YES];
+
+
 }
 
 - (void)didReceiveMemoryWarning {

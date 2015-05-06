@@ -1058,7 +1058,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
         }if (self.mInt_where == 2) {//发表短信直通车
 //            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+//            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
         }
         
         self.mProgressV.labelText = @"加载中...";
@@ -1177,34 +1177,34 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //找到当前这个单位，塞入数组
     
     //当前单位
-    if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
+    if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
         self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
         self.mModel_myUnit = self.mModel_unitList.myUnit;
     }
-    //上级单位
-    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
-        myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = unit;
-        }
-    }
-    //下级单位
-    for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
-        myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = unit;
-        }
-    }
+//    //上级单位
+//    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+//        myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+//        if ([unit.TabID intValue] == [unitID intValue]) {
+//            unit.list = [NSMutableArray arrayWithArray:array];
+//            self.mModel_myUnit = unit;
+//        }
+//    }
+//    //下级单位
+//    for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+//        myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
+//        if ([unit.TabID intValue] == [unitID intValue]) {
+//            unit.list = [NSMutableArray arrayWithArray:array];
+//            self.mModel_myUnit = unit;
+//        }
+//    }
     //班级
-    for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
-        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = unit;
-        }
-    }
+//    for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+//        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+//        if ([unit.TabID intValue] == [unitID intValue]) {
+//            unit.list = [NSMutableArray arrayWithArray:array];
+//            self.mModel_myUnit = unit;
+//        }
+//    }
     //刷新
     [self CollectionReloadData];
 }
@@ -2398,7 +2398,7 @@ if([dm getInstance].sectionSet2.count ==self.mModel_myUnit.list.count)
         }else if (self.mInt_where == 1) {//发表下发通知
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:(int)array.count grsms:1 arrMem:array arrGen:array1 forwardMsgID:self.mStr_forwardTableID];
         }if (self.mInt_where == 2) {//发表短信直通车
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
+//            [[LoginSendHttp getInstance] creatCommMsgWith:self.mTextV_enter.text SMSFlag:self.mInt_sendMsg unitid:[dm getInstance].mStr_tableID classCount:0 grsms:2 arrMem:array arrGen:array1 arrStu:array2];
         }
         
         self.mProgressV.labelText = @"加载中...";

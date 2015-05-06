@@ -32,6 +32,9 @@
 @property(nonatomic,strong)NSString *genseliStr;
 @property(nonatomic,strong)NSMutableArray *genseliArr;
 @property(nonatomic,strong)NSString *curunitid;
+@property(nonatomic,strong)NSMutableArray *dataArr;
+@property(nonatomic,assign)BOOL requestSymbol0,requestSymbol1,requestSymbol2,requestSymbol3;
+@property(nonatomic,strong)NSArray *thirdArr;
 
 
 

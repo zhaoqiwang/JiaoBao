@@ -51,12 +51,14 @@
     if([[self.rightBtn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"blank.png"]])
     {
         [self.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
+        self.allSelected = YES;
 
         
     }
     else
     {
         [self.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+        self.allSelected = NO;
 
         
     }

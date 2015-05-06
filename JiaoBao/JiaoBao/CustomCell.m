@@ -11,6 +11,8 @@
 @implementation CustomCell
 
 - (void)awakeFromNib {
+    [self.rightBtn setEnabled:NO];
+    //[self.rightBtn setImage:[UIImage imageNamed:@"balnk.png"] forState:UIControlStateNormal];
     // Initialization code
 }
 

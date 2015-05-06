@@ -17,10 +17,12 @@ NSString *kSection = @"Forward_section";
         self.datasource = [NSMutableArray arrayWithArray:[sender object] ];
         for(int i=0;i<self.datasource.count;i++)
         {
-            UserListModel *model = [self.datasource objectAtIndex:i];
+            myUnit *unit = [self.datasource objectAtIndex:i];
+
+            UserListModel *model = [unit.list objectAtIndex:i];
             if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
             {
-                [self.datasource removeObject:model];
+                [unit.list removeObject:model];
             }
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
@@ -55,8 +57,9 @@ NSString *kSection = @"Forward_section";
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;//滚动方向
     
     //
-    self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 300) collectionViewLayout:flowLayout];
+    self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 800) collectionViewLayout:flowLayout];
     [self addSubview:self.mCollectionV_list];
+    self.mCollectionV_list.scrollEnabled = NO;
     
     self.mCollectionV_list.backgroundColor = [UIColor whiteColor];
     self.mCollectionV_list.layer.borderWidth = 1;
@@ -80,15 +83,13 @@ NSString *kSection = @"Forward_section";
     return self.datasource.count;
 }
 //每一组有多少个cell
-- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
-        for (int i=0; i<self.datasource.count; i++) {
-            if (section == i) {
-                UserListModel *model = [self.datasource objectAtIndex:i];
-                return model.groupselit_selit.count;
-            }
-        }
-    return 0;
-    
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
+{
+        myUnit *unit = [self.datasource objectAtIndex:section];
+        UserListModel *model = [unit.list objectAtIndex:0];
+    NSLog(@"count = %lu",(unsigned long)model.groupselit_selit.count);
+        return model.groupselit_selit.count;
+
 }
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -97,28 +98,28 @@ NSString *kSection = @"Forward_section";
     if (!cell) {
         
     }
-    
-    groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
-        UserListModel *model = [self.datasource objectAtIndex:indexPath.section];
-    
+    myUnit *unit = [self.datasource objectAtIndex:indexPath.section];
+    for(int i=0;i<unit.list.count;i++)
+    {
+        UserListModel *model = [unit.list objectAtIndex:i];
+        groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
         groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
-  
-    if (groupModel.selit.length>0) {
-        cell.mLab_name.textColor = [UIColor blackColor];
         if (groupModel.mInt_select == 0) {
             cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
         } else {
             cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
         }
-    }else{
-        cell.mLab_name.textColor = [UIColor grayColor];
-        cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
+        CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
+        if (size.width>cell.mLab_name.frame.size.width) {
+            cell.mLab_name.numberOfLines = 2;
+        }
+        cell.mLab_name.text = groupModel.Name;
+
+        
+
+        
     }
-    CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
-    if (size.width>cell.mLab_name.frame.size.width) {
-        cell.mLab_name.numberOfLines = 2;
-    }
-    cell.mLab_name.text = groupModel.Name;
+    
 
     
     
@@ -154,7 +155,8 @@ NSString *kSection = @"Forward_section";
         [view.triangleBtn setImage:[UIImage imageNamed:@"rTri.png"] forState:UIControlStateNormal];
         
     }
-    UserListModel *model = [self.datasource objectAtIndex:indexPath.section];
+    myUnit *unit = [self.datasource objectAtIndex:indexPath.section];
+   // UserListModel *model = [unit.list objectAtIndex:indexPath.section];
 //    if(myunit.isSelected == YES)
 //    {
 //        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
@@ -164,7 +166,7 @@ NSString *kSection = @"Forward_section";
 //        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"]forState:UIControlStateNormal];
 //        
 //    }
-    view.mLab_name.text = model.GroupName;
+    view.mLab_name.text = unit.UintName ;
     view.delegate = self;
     view.tag = indexPath.section;
     view.rightBtn.hidden = YES;
@@ -185,9 +187,9 @@ NSString *kSection = @"Forward_section";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    myUnit *unit = [self.datasource objectAtIndex:indexPath.section];
+    UserListModel *model = [unit.list objectAtIndex:0];
     groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
-    UserListModel *model = [self.datasource objectAtIndex:indexPath.section];
-    
     groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
     if(groupModel.mInt_select == 1)
     {
@@ -220,7 +222,9 @@ NSString *kSection = @"Forward_section";
     if(btn.tag == 2)
     {
         groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
-        UserListModel *model = [self.datasource objectAtIndex:section.tag];
+        myUnit *unit = [self.datasource objectAtIndex:section.tag];
+
+        UserListModel *model = [unit.list objectAtIndex:0];
         for(int i=0;i<model.groupselit_selit.count;i++)
         {
             groupModel = [model.groupselit_selit objectAtIndex:i];

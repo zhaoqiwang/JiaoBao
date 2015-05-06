@@ -100,7 +100,7 @@
 -(void)creatCommMsgWith:(NSString *)content SMSFlag:(int)sms unitid:(NSString *)unit classCount:(int)count grsms:(int)grsms arrMem:(NSMutableArray *)memArr arrGen:(NSMutableArray *)genArr forwardMsgID:(NSString *)msgid;
 
 //发表短信直通车,内容                                是否发生短信      单位加密ID                  接收班级总人数         是否短信直通车     单位人员数组,家长，学生
--(void)creatCommMsgWith:(NSString *)content SMSFlag:(int)sms unitid:(NSString *)unit classCount:(int)count grsms:(int)grsms arrMem:(NSMutableArray *)memArr arrGen:(NSMutableArray *)genArr arrStu:(NSMutableArray *)stuArr;
+-(void)creatCommMsgWith:(NSString *)content SMSFlag:(int)sms unitid:(NSString *)unit classCount:(int)count grsms:(int)grsms arrMem:(NSMutableArray *)memArr arrGen:(NSMutableArray *)genArr arrStu:(NSMutableArray *)stuArr access:(NSMutableArray *)arrayAccess;
 
 //获取事务信息接收单位列表
 -(void)login_CommMsgRevicerUnitList;

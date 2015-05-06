@@ -46,7 +46,8 @@
     self.tableView.dataSource = self;
     [self addSubview:self.tableView];
     self.tableView.tableFooterView=[[UIView alloc]init];
-    self.tableView.allowsSelection = NO;
+    self.tableView.allowsSelection = YES;
+    
 
     return self;
     
@@ -59,16 +60,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    SMSTreeArrayModel *model =[self.datasource objectAtIndex:0];
+    SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
     
     
     return model.smsTree.count;
 }
 - (void)configureCell:(CustomCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    SMSTreeArrayModel *model =[self.datasource objectAtIndex:0];
+    SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
     SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:indexPath.row];
     cell.nameLabel.text =subModel.name;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     
     
@@ -92,6 +94,28 @@
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
+    
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CustomCell *cell = (CustomCell*)[tableView cellForRowAtIndexPath:indexPath];
+    SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
+    SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:indexPath.row];
+    if(![[cell.rightBtn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"selected.png"]])
+    {
+        [cell.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
+        subModel.mInt_select = 1;
+        
+
+        
+    }
+    else
+    {
+        [cell.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+        subModel.mInt_select = 0;
+
+        
+    }
     
 }
 
