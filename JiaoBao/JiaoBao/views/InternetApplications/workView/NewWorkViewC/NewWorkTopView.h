@@ -30,7 +30,7 @@
 
 @end
 
-@interface NewWorkTopView : UIView<UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,AccessoryViewControllerProtocol>{
+@interface NewWorkTopView : UIView<UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,AccessoryViewControllerProtocol,UITextViewDelegate>{
     UITextView *mTextV_input;//输入内容
     UIButton *mBtn_accessory;//附件按钮
     UIButton *mBtn_photos;//拍照按钮

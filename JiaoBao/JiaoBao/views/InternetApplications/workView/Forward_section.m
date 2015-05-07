@@ -25,11 +25,14 @@
         D("Forward_section-=tag=%ld==%@",(long)self.tag,NSStringFromCGRect(self.frame));
         //self.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         // Initialization code
+
         self.mLab_name = [[UILabel alloc] init];
         self.mLab_name.font = [UIFont systemFontOfSize:12];
+        //CGSize size = [self.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
+
         self.mLab_name.frame = CGRectMake(30, 0, 200, 40);
         [self addSubview:self.mLab_name];
-        
+
         self.addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         self.addBtn.frame = CGRectMake(50+30, 5, 30, 30);
         self.addBtn.tag = 3;
@@ -99,42 +102,13 @@
 
 //按钮点击事件
 -(void)clickBtn:(UIButton *)btn{
-    NSLog(@"11111111111");
     
     
- 
-        
-        
-    
-
     NSNumber *num = [NSNumber numberWithInteger:self.tag];
-
-
-    if(btn.tag == 7)//全选bigButton
-    {
-        if(!([dm getInstance].sectionSet2))
-        {
-            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
-            
-        }
-        if(![[dm getInstance].sectionSet2 containsObject:num] )
-        {
-            [[dm getInstance].sectionSet2 addObject:num];
-            NSLog(@"mSet = %@",[dm getInstance].sectionSet);
-            
-            
-        }
-        else
-        {
-            //[[dm getInstance].sectionSet2 removeObject:num];
-        }
         
-    }
-
-    if(btn.tag == 2)//反选button
-    {
         
-    }
+    
+
     if(btn.tag == 6)//三角 加号 bigButton
     {
         if(!([dm getInstance].sectionSet))

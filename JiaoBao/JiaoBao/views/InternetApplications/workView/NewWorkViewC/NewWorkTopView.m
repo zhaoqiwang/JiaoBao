@@ -25,6 +25,8 @@
         //将图层的边框设置为圆脚
         self.mTextV_input.layer.cornerRadius = 4;
         self.mTextV_input.layer.masksToBounds = YES;
+        self.mTextV_input.delegate = self;
+        self.mTextV_input.returnKeyType = UIReturnKeyDone;//return键的类型
         [self addSubview:self.mTextV_input];
         //计算间隙
         int a = ([dm getInstance].width-60*3+10-90-20)/3;
@@ -149,6 +151,7 @@
     }
     self.mView_accessory.frame = CGRectMake(self.mView_accessory.frame.origin.x, self.mView_accessory.frame.origin.y, self.mView_accessory.frame.size.width, rect0.origin.y);
     self.frame = CGRectMake(0, 0, self.frame.size.width, self.mView_accessory.frame.origin.y+self.mView_accessory.frame.size.height);
+    NSLog(@"height = %f",self.frame.size.height);
     [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshWorkView" object:nil];
 
     //[self setFrame];
@@ -349,6 +352,20 @@
     }
     //添加显示附件
     [self addAccessoryPhoto];
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    // Any new character added is passed in as the "text" parameter
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return TRUE;
 }
 
 @end

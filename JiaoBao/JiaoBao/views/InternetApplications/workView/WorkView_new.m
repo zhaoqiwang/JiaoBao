@@ -149,12 +149,10 @@
     }
     D("点击新建事务、发布通知按钮");
     ForwardViewController *forward = [[ForwardViewController alloc] init];
-    forward.mStr_navName = @"新建事务";
     forward.mInt_forwardFlag = 1;
     forward.mInt_forwardAll = 2;
     forward.mInt_flag = 1;
     forward.mInt_all = 2;
-    forward.mInt_where = 0;
     [utils pushViewController:forward animated:YES];
 }
 

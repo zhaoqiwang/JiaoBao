@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
 @class myUnit;
+@class UnitClass;
 
 @interface CommMsgRevicerUnitListModel : NSObject{
     myUnit *myUnit;
@@ -41,6 +42,8 @@
 @property (nonatomic,strong) NSString *TabIDStr;
 @property (nonatomic,strong) NSString *flag;
 @property (nonatomic,strong) NSMutableArray *list;
+@property(nonatomic,assign)BOOL isSelected;
+
 
 @end
 

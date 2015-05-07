@@ -9,7 +9,7 @@
 #import "TreeView_Level0_Cell.h"
 
 @implementation TreeView_Level0_Cell
-@synthesize mBtn_detail,mImgV_open_close,mImgV_head,mImgV_number,mLab_name,mLab_number,mNode,delegate;
+@synthesize mBtn_detail,mImgV_open_close,mImgV_head,mImgV_number,mLab_name,mLab_number,mNode,delegate,mBtn_all,mBtn_reverse;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -24,6 +24,20 @@
 -(IBAction)clickBtn{
     if (delegate && [delegate respondsToSelector:@selector(selectedMoreBtn0:)]){
         [delegate selectedMoreBtn0:self];
+    }
+}
+
+//全选
+-(IBAction)mBtn_allClick:(UIButton *)btn{
+    if (delegate && [delegate respondsToSelector:@selector(selectedmBtn_all:)]){
+        [delegate selectedmBtn_all:self];
+    }
+}
+
+//反选
+-(IBAction)mBtn_reverseClick:(UIButton *)btn{
+    if (delegate && [delegate respondsToSelector:@selector(selectedmBtn_reverse:)]){
+        [delegate selectedmBtn_reverse:self];
     }
 }
 

@@ -20,6 +20,7 @@
 @synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mProgressV,mInt_flag;
 
 -(void)viewWillAppear:(BOOL)animated{
+    [dm getInstance].sectionSet = nil;
     [dm getInstance].tableSymbol =NO;
     if (self.mInt_flag == 0) {
         self.mInt_flag = 1;
@@ -188,7 +189,8 @@
                 if ([userUnitsModel.UnitID intValue] == [str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
-                    [dm getInstance].uType = i+1;
+//                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -201,7 +203,8 @@
                 if ([userUnitsModel.ClassID intValue]==[str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.ClassID intValue];
-                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = 3;
+//                    [dm getInstance].uType = [userUnitsModel.UnitType intValue]
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -226,7 +229,8 @@
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
-                    [dm getInstance].uType = i+1;
+//                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -237,7 +241,7 @@
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.ClassID intValue];
-                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = 3;
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }

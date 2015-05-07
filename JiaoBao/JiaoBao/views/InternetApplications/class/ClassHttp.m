@@ -57,7 +57,10 @@ static ClassHttp *classHttp = nil;
     [request addPostValue:page forKey:@"pageNum"];
     [request addPostValue:num forKey:@"numPerPage"];
     [request addPostValue:topFlags forKey:@"topFlags"];
-    [request addPostValue:flag forKey:@"flag"];
+    if (flag.length>0) {
+        [request addPostValue:flag forKey:@"flag"];
+    }
+    
     request.userInfo = [NSDictionary dictionaryWithObject:ReFlag forKey:@"flag"];
     request.tag = 2;//设置请求tag
     [request setDelegate:self];

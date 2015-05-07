@@ -192,7 +192,7 @@
         if (self.mInt_flag == 1) {
             [self.mArr_sum removeAllObjects];
         }
-        self.mArr_sum = array;
+        [self.mArr_sum addObjectsFromArray:array];
     }else{//本地
         //如果是刷新，将数据清除
         if (self.mInt_flag == 1) {
@@ -473,8 +473,9 @@
         }
         cell.mLab_class.hidden = NO;
     }
-    CGSize unitSize = [tempUnit sizeWithFont:[UIFont systemFontOfSize:14]];
-    cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, unitSize.width, cell.mLab_class.frame.size.height);
+//    CGSize unitSize = [tempUnit sizeWithFont:[UIFont systemFontOfSize:14]];
+//    cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, unitSize.width, cell.mLab_class.frame.size.height);
+    cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-10, cell.mLab_class.frame.size.height);
     cell.mLab_class.text = tempUnit;
     
     //判断是否隐藏

@@ -461,6 +461,8 @@ static LoginSendHttp *loginSendHttp = nil;
         [request addPostValue:@"false" forKey:@"grsms"];
         for (int i=0; i<array.count; i++) {
             NSMutableDictionary *dic = [array objectAtIndex:i];
+            D("[dic objectForKey:-===%@,%@",[dic objectForKey:@"selit"],[dic objectForKey:@"flag"]);
+
             [request addPostValue:[dic objectForKey:@"selit"] forKey:[dic objectForKey:@"flag"]];
         }
     }else{
@@ -468,6 +470,7 @@ static LoginSendHttp *loginSendHttp = nil;
         for (int i=0; i<array.count; i++) {
             NSString *str = [array objectAtIndex:i];
             [request addPostValue:str forKey:@"selit"];
+           
         }
     }
     //判断是否有附件
@@ -519,12 +522,12 @@ static LoginSendHttp *loginSendHttp = nil;
         D("[dic objectForKey:-===%@,%@",[dic objectForKey:@"selit"],[dic objectForKey:@"flag"]);
         [request addPostValue:[dic objectForKey:@"selit"] forKey:[dic objectForKey:@"flag"]];
     }
-//    for (int i=0; i<genArr.count; i++) {
-////        NSString *str = [genArr objectAtIndex:i];
-////        [request addPostValue:str forKey:@"selitadmintogen"];
-//        NSMutableDictionary *dic = [genArr objectAtIndex:i];
-//        [request addPostValue:[dic objectForKey:@"selit"] forKey:[dic objectForKey:@"flag"]];
-//    }
+    for (int i=0; i<genArr.count; i++) {
+//        NSString *str = [genArr objectAtIndex:i];
+//        [request addPostValue:str forKey:@"selitadmintogen"];
+        NSMutableDictionary *dic = [genArr objectAtIndex:i];
+        [request addPostValue:[dic objectForKey:@"selit"] forKey:[dic objectForKey:@"flag"]];
+    }
     if (msgid.length>0) {
         [request addPostValue:msgid forKey:@"tomsgid"];
     }
@@ -535,7 +538,7 @@ static LoginSendHttp *loginSendHttp = nil;
 }
 
 //发表短信直通车,内容                                是否发生短信      单位加密ID                  接收班级总人数         是否短信直通车     单位人员数组,家长，学生
--(void)creatCommMsgWith:(NSString *)content SMSFlag:(int)sms unitid:(NSString *)unit classCount:(int)count grsms:(int)grsms arrMem:(NSMutableArray *)memArr arrGen:(NSMutableArray *)genArr arrStu:(NSMutableArray *)stuArr{
+-(void)creatCommMsgWith:(NSString *)content SMSFlag:(int)sms unitid:(NSString *)unit classCount:(int)count grsms:(int)grsms arrMem:(NSMutableArray *)memArr arrGen:(NSMutableArray *)genArr arrStu:(NSMutableArray *)stuArr access:(NSMutableArray *)arrayAccess{
     NSString *urlString = [NSString stringWithFormat:@"%@CommMsg/CreateCommMsg",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -564,6 +567,17 @@ static LoginSendHttp *loginSendHttp = nil;
     for (int i=0; i<stuArr.count; i++) {
         NSString *str = [stuArr objectAtIndex:i];
         [request addPostValue:str forKey:@"StuUnit"];
+    }
+    //判断是否有附件
+    if (arrayAccess.count>0) {
+        //文件名
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        for (int i=0; i<arrayAccess.count; i++) {
+            NSString *imgPath=[tempPath stringByAppendingPathComponent:[arrayAccess objectAtIndex:i]];
+            [request setFile:imgPath forKey:[NSString stringWithFormat:@"ATTfileList%d",i]];
+            D("imgegpaht-===%@",imgPath);
+        }
     }
     request.tag = 17;//设置请求tag
     self.flag_request = 0;
@@ -625,6 +639,27 @@ static LoginSendHttp *loginSendHttp = nil;
     [request setDelegate:self];
     [request startAsynchronous];
 }
+//-(void)getUnitClassRevicer:(NSString *)classID Flag:(NSString *)flag
+//{
+//    NSString *urlString = [NSString stringWithFormat:@"%@CommMsg/GetUnitClassRevicer",MAINURL];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+//    request.timeOutSeconds = TIMEOUT;
+//    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+//    [request addRequestHeader:@"charset" value:@"UTF8"];
+//    [request setRequestMethod:@"POST"];
+//    [request addPostValue:classID forKey:@"unitclassId"];
+//    [request addPostValue:flag forKey:@"flag"];
+//    if ([classID intValue]>0) {
+//        request.userInfo = [NSDictionary dictionaryWithObject:classID forKey:@"unitID"];
+//    }
+//    request.tag = 1000;//设置请求tag
+//    self.flag_request = 0;
+//    [request setDelegate:self];
+//    [request startAsynchronous];
+//    
+//}
+
 
 //获取群发权限
 -(void)login_GetMsgAllReviceUnitList{
@@ -1126,7 +1161,7 @@ static LoginSendHttp *loginSendHttp = nil;
     }else if (_request.tag == 20){//获取事务信息接收单位列表
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
-        D("str00=login==20=>>>>==%@",str);
+        D("str00=login==20=>>>>==%@",str);     
         CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        id data2 = [str objectFromJSONStringWithParseOptions:JKParseOptionLooseUnicode];
 //        UnitListJsonModel* model = [[UnitListJsonModel alloc] initWithString:str error:nil];
@@ -1154,11 +1189,37 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         [dic2 setValue:unitID forKey:@"unitID"];
         NSMutableArray *array = [ParserJson parserUserListClass_json:str];
+        NSLog(@"rselut = %@",array);
         [dic2 setValue:array forKey:@"array"];
 //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        //通知界面更新，获取事务信息接收单位列表
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
-    }else if (_request.tag == 23){//获取群发权限
+    }
+    //else if (_request.tag == 1000){//获取班级接收人
+//        NSData *responseData = [_request responseData];
+//        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+//        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+//        NSLog(@"UpLoadResult1111111 = %@",dataString);
+//        NSDictionary *dic = [dataString objectFromJSONString];
+//        NSDictionary *dic2 = [dic objectForKey:@"Data"];
+//        NSString *genselit = [dic2 objectForKey:@"genselit"];
+//        NSArray *selitArr = [genselit objectFromJSONString];
+//        NSLog(@"selitArr = %@",selitArr);
+//
+//
+//        
+//        //NSArray *dataList = [dicList  objectForKey:@"Data"];
+////        D("str00=login==22=>>>>==%@",str);
+////        NSString *unitID = [_request.userInfo objectForKey:@"unitID"];
+////        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+////        [dic2 setValue:unitID forKey:@"unitID"];
+////        NSMutableArray *array = [ParserJson parserUserListClass_json:str];
+////        [dic2 setValue:array forKey:@"array"];
+////        //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
+////        //        //通知界面更新，获取事务信息接收单位列表
+//        //[[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
+//    }
+    else if (_request.tag == 23){//获取群发权限
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=login==23=>>>>==%@",str);

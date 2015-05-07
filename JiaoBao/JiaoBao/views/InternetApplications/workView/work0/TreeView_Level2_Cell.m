@@ -12,7 +12,7 @@
 @synthesize mLab_name,mNode,mImgV_head,mLab_detail,mLab_time,mImgV_select,delegate;
 
 - (void)initWithSelectImg{
-    UIImage *img = [UIImage imageNamed:@"forward_select1"];
+    UIImage *img = [UIImage imageNamed:@"blank"];
     [self.mImgV_select setImage:img];
     self.mImgV_select.hidden = NO;
     self.mImgV_select.frame = CGRectMake(13, 11, 22, 22);

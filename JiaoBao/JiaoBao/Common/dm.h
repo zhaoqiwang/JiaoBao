@@ -35,6 +35,7 @@
     NSMutableArray *mArr_myFriends;//自己所有的好友分组、好友
     NSString *uuid;//启动时设置，注册成功后，添加到key中
     BOOL tableSymbol;
+    
 }
 
 @property (nonatomic,assign) int width;//界面宽度
@@ -62,7 +63,7 @@
 @property (nonatomic,strong) NSString *uuid;//启动时设置，注册成功后，添加到key中
 @property(nonatomic,assign)BOOL tableSymbol;
 @property(nonatomic,strong)NSMutableSet *sectionSet;
-@property(nonatomic,strong)NSMutableSet *sectionSet2;
+@property(nonatomic,assign)NSUInteger notificationSymbol;
 
 
 + (dm*) getInstance;

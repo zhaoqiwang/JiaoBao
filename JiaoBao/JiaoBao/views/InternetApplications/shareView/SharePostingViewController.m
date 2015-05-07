@@ -42,6 +42,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mTextV_content.inputAccessoryView = self.toolBar;
     self.view.backgroundColor = [UIColor colorWithRed:240/255.0 green:239/255.0 blue:245/255.0 alpha:1];
     self.isOpen = NO;
     self.view.tag = 5;
@@ -592,7 +593,11 @@
     
     [self presentViewController:elcPicker animated:YES completion:nil];
 }
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
 {    if (![text isEqualToString:@""])
@@ -613,5 +618,12 @@
     
     return YES;
     
+}
+- (IBAction)cancelAction:(id)sender {
+    [self.view endEditing:YES];
+}
+
+- (IBAction)doneAction:(id)sender {
+    [self.view endEditing:YES];
 }
 @end

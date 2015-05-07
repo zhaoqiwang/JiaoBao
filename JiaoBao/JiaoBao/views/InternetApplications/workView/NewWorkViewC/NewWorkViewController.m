@@ -29,24 +29,49 @@
     [self.view addSubview:[NewWorkTopScrollView shareInstance]];
     //root
     [self.view addSubview:[NewWorkRootScrollView shareInstance]];
+    
     ForwardViewController *forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
-    forward.mStr_navName = @"新建事务";
+    //forward.mStr_navName = @"新建事务";
     forward.mInt_forwardFlag = 1;
     forward.mInt_forwardAll = 2;
     forward.mInt_flag = 1;
     forward.mInt_all = 2;
-    forward.mInt_where = 0;
+    //forward.mInt_where = 0;
     [self addChildViewController:forward];
     [forward didMoveToParentViewController:self];
     //[self addChild:leftTableVC withChildToRemove:nil];
     [[NewWorkRootScrollView shareInstance] addSubview:forward.view];
+    
+//    ForwardViewController *forward2 = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
+//    forward2.mStr_navName = @"新建事务";
+//    forward2.mInt_forwardFlag = 1;
+//    forward2.mInt_forwardAll = 2;
+//    forward2.mInt_flag = 1;
+//    forward2.mInt_all = 2;
+//    forward2.mInt_where = 0;
+//    forward2.showTopView = NO;
+//    [self addChildViewController:forward2];
+//    [forward2 didMoveToParentViewController:self];
+//
+//    //[self addChild:leftTableVC withChildToRemove:nil];
+//    [[NewWorkRootScrollView shareInstance].homeClassView.bottomView addSubview:forward2.view];
+
+    
 
     
 }
 
+
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [HomeClassTopScrollView shareInstance].requestSymbol0 =YES;
+    [HomeClassTopScrollView shareInstance].requestSymbol1 =YES;
+    [HomeClassTopScrollView shareInstance].requestSymbol2 =YES;
+    [HomeClassTopScrollView shareInstance].requestSymbol3 =YES;
+    [HomeClassTopScrollView shareInstance].dataArr = [[NSMutableArray alloc]initWithCapacity:0];
     [utils popViewControllerAnimated:YES];
+
+
 }
 
 - (void)didReceiveMemoryWarning {

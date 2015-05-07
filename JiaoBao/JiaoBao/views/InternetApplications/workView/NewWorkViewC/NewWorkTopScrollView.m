@@ -98,6 +98,7 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
+
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
