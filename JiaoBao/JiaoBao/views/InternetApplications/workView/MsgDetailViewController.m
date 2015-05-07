@@ -383,14 +383,14 @@
     }
     D("点击转发按钮");
     ForwardViewController *forward = [[ForwardViewController alloc] init];
-    forward.mStr_navName = @"转发";
+    //forward.mStr_navName = @"转发";
     forward.mInt_forwardFlag = 1;
     forward.mInt_forwardAll = 1;
     forward.mInt_flag = 1;
     forward.mInt_all = 1;
-    forward.mInt_where = 1;
-    forward.mStr_forwardContent = self.mModel_unReadMsg.MsgContent;
-    forward.mStr_forwardTableID = self.mModel_unReadMsg.TabIDStr;
+//    forward.mInt_where = 1;
+//    forward.mStr_forwardContent = self.mModel_unReadMsg.MsgContent;
+//    forward.mStr_forwardTableID = self.mModel_unReadMsg.TabIDStr;
     [utils pushViewController:forward animated:YES];
 }
 

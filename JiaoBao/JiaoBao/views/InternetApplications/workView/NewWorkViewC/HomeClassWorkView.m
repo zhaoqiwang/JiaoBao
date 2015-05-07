@@ -16,11 +16,43 @@
 {
     [self setFrame];
 }
+//发表消息成功
+-(void)creatCommMsg:(NSNotification *)noti{
+    NSString *str = noti.object;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = str;
+    //    self.mProgressV.userInteractionEnabled = NO;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    self.mViewTop.mTextV_input.text = @"";
+    [self.mViewTop.mArr_accessory removeAllObjects];
+    if([dm getInstance].notificationSymbol == 100)
+    {
+        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.dataArr;
+        for(int i=0;i<dataArr.count;i++)
+        {
+            myUnit *unit = [dataArr objectAtIndex:i];
+            unit.isSelected = NO;
+  
+            
+            
+        }
+        [[HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list reloadData];
+        
+        
+    }
+    
+}
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
+        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
+        [self addSubview:self.mProgressV];
+        //self.mProgressV.delegate = self;
         [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
         //总框
@@ -107,7 +139,7 @@ if([dm getInstance].notificationSymbol == 100)
     }
         int num = (int)genArr.count;
         NSLog(@"num = %d",num);
-        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
 
 
     
@@ -118,7 +150,7 @@ if([dm getInstance].notificationSymbol == 100)
         for(int i=0;i<dataArr.count;i++)
         {
             myUnit *unit = [dataArr objectAtIndex:i];
-            UserListModel *model = [unit.list objectAtIndex:0];
+            UserListModel *model = [unit.list objectAtIndex:1];
             groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
@@ -136,7 +168,9 @@ if([dm getInstance].notificationSymbol == 100)
             }
             
         }
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        int num = (int)genArr.count;
+        NSLog(@"num = %d",num);
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
     }
     if([dm getInstance].notificationSymbol == 102)
@@ -158,7 +192,7 @@ if([dm getInstance].notificationSymbol == 100)
             }
             }
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
             
             
         }
@@ -190,7 +224,7 @@ if([dm getInstance].notificationSymbol == 100)
                 }
             
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:nil];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:nil];
             
             
         }

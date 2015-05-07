@@ -17,7 +17,7 @@
     [self addSubview:headerView];
     headerView.backgroundColor = [UIColor lightGrayColor];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
-    label.backgroundColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     label.text = [NSString stringWithFormat:@"%@【全校家长】",[dm getInstance].mStr_unit] ;
     label.font = [UIFont systemFontOfSize:13];
     [headerView addSubview:label];

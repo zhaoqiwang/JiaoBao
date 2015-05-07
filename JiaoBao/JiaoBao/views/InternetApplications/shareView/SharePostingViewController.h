@@ -16,7 +16,7 @@
 #import "ELCImagePickerHeader.h"
 #import "ReleaseNewsUnitsModel.h"
 
-@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextViewDelegate>{
+@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextViewDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITextView *mTextV_content;//内容
     MBProgressHUD *mProgressV;//
@@ -62,5 +62,8 @@
 - (IBAction)cameraBtnAction:(id)sender;
 - (IBAction)albumBtnAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *secondVIew;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+- (IBAction)cancelAction:(id)sender;
+- (IBAction)doneAction:(id)sender;
 
 @end

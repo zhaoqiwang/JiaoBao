@@ -11,9 +11,11 @@
 NSString *kCell = @"Forward_cell2";
 
 @implementation ClassMessage
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
    self = [super initWithFrame:frame];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
@@ -23,9 +25,9 @@ NSString *kCell = @"Forward_cell2";
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
-    headerView.backgroundColor = [UIColor lightGrayColor];
+    headerView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
-    label.backgroundColor = [UIColor lightGrayColor];
+    label.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     label.text = @"所在班级家长";
     label.font = [UIFont systemFontOfSize:13];
     [headerView addSubview:label];

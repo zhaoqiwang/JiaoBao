@@ -20,5 +20,8 @@
 @property(nonatomic,strong)NSArray *datasource;
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property(nonatomic,strong)UITableView *tableView;
+@property(nonatomic,strong)UIButton *mBtn_all;
+@property(nonatomic,assign)NSUInteger allSelSymbol;
+@property(nonatomic,strong)UIButton * rightBtn;
 
 @end
