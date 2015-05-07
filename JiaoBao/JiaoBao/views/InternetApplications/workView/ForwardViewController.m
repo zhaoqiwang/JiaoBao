@@ -87,13 +87,11 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
     self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
-    //self.mBtn_all.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_all.tag = 1;
-    [self.mBtn_all addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.mBtn_all addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
     self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60+15, self.mLab_4.frame.origin.y, 45, 29);
-    //self.mBtn_invertSelect.backgroundColor = [UIColor lightGrayColor];
     self.mBtn_invertSelect.tag = 2;
-    [self.mBtn_invertSelect addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.mBtn_invertSelect addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
 
   
     
@@ -114,6 +112,109 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [self.topView addGestureRecognizer:tap2];
     
     [self sendRequest];
+}
+-(void)clickBtn:(id)sender
+{
+    UIButton *btn = sender;
+    if(btn.tag ==1)
+       {
+           self.allSelected =1;
+           for(int i=0;i<self.mModel_myUnit.list.count;i++)
+           {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+               model.sectionSelSymbol = 1;
+               for(int i=0;i<model.groupselit_selit.count;i++)
+               {
+                   groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+                   subModel.mInt_select = 1;
+               }
+               
+           }
+
+           
+       }
+    else
+    {
+        if(self.allSelected ==0)
+        {
+            self.allSelected = 1;
+            for(int i=0;i<self.mModel_myUnit.list.count;i++)
+            {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                model.sectionSelSymbol = 1;
+                for(int i=0;i<model.groupselit_selit.count;i++)
+                {
+                    groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+                    subModel.mInt_select = 1;
+                }
+                
+            }
+        }
+        else if(self.allSelected ==1)
+        {
+            self.allSelected = 0;
+            for(int i=0;i<self.mModel_myUnit.list.count;i++)
+            {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                model.sectionSelSymbol = 0;
+                for(int i=0;i<model.groupselit_selit.count;i++)
+                {
+                    groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+                    subModel.mInt_select = 0;
+                }
+                
+            }
+            
+        }
+        else
+        {
+            for(int i=0;i<self.mModel_myUnit.list.count;i++)
+            {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                if(model.sectionSelSymbol == 0)
+                {
+                    model.sectionSelSymbol = 1;
+                }
+                else if(model.sectionSelSymbol == 1)
+                {
+                    model.sectionSelSymbol = 0;
+
+                    
+                }
+                else{
+                    
+                }
+                
+                for(int i=0;i<model.groupselit_selit.count;i++)
+                {
+                    groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+                    if(subModel.mInt_select == 0)
+                    {
+                        subModel.mInt_select = 1;
+
+                        
+                    }
+                    else
+                    {
+                        subModel.mInt_select = 0;
+                    }
+                }
+                
+            }
+            
+        }
+    }
+    if(self.allSelected ==1)
+    {
+        self.imgV.image = [UIImage imageNamed:@"selected.png"];
+
+    }
+    else
+    {
+        self.imgV.image = [UIImage imageNamed:@"blank.png"];
+
+    }
+    [self.mCollectionV_list reloadData];
 }
 
 -(void)setFrame
@@ -242,13 +343,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 #pragma mark - Collection View Data Source
 //collectionView里有多少个组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-        int a;
-//        if (self.mInt_classNext == 1){
-//            return 1;
-//        }else {
-            a = (int)self.mModel_myUnit.list.count;
-//        }
-        return a;
+    
+        return self.mModel_myUnit.list.count;
    
 }
 //每一组有多少个cell
@@ -262,17 +358,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     {
         return 0;
     }
-//        if (self.mInt_classNext == 1){
-////            return self.mModel_class.studentgens_genselit.count;
-//            return self.mModel_myUnit.list.count;
-//        }else {
-            for (int i=0; i<self.mModel_myUnit.list.count; i++) {
-                if (section == i) {
+
+            for (int i=0; i<self.mModel_myUnit.list.count; i++)
+            {
+                if (section == i)
+                {
                     UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
                     return model.groupselit_selit.count;
                 }
             }
-//        }
     
     return 0;
 }
@@ -283,29 +377,25 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         
     }
     
-          groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
-            UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
-            groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
+
+        UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+        groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
     
-        if (groupModel.selit.length>0) {
             cell.mLab_name.textColor = [UIColor blackColor];
+            NSLog(@"mInt_select = %d",groupModel.mInt_select);
+
             if (groupModel.mInt_select == 0) {
                 cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
             } else {
                 cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
             }
-        }else{
-            cell.mLab_name.textColor = [UIColor grayColor];
-            cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
-        }
+    
         CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
         if (size.width>cell.mLab_name.frame.size.width) {
             cell.mLab_name.numberOfLines = 2;
         }
         cell.mLab_name.text = groupModel.Name;
         
-    
-    
     
     return cell;
 }
@@ -359,17 +449,84 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     return UIEdgeInsetsMake(0, 10, 0, 10);
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSNumber *num = [NSNumber numberWithInteger:indexPath.section ];
-
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
     UserListModel *model = [self.mModel_myUnit.list objectAtIndex:indexPath.section];
+    groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
+    if(groupModel.mInt_select == 0)
+    {
+        groupModel.mInt_select = 1;
+    }
+    else
+    {
+        groupModel.mInt_select = 0;
+    }
+    NSUInteger subSymbol = 0;
+    for(int i=0;i<model.groupselit_selit.count;i++)
+    {
+        groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+        subSymbol = subSymbol + subModel.mInt_select;
+        
+    }
+    if(subSymbol == model.groupselit_selit.count)
+    {
+        model.sectionSelSymbol = 1;
+    }
+    else if (subSymbol == 0)
+    {
+        model.sectionSelSymbol = 0;
+        
+        
+    }
+    else{
+        model.sectionSelSymbol = 2;
+    }
+    NSUInteger modelSymbol = 0;
 
-        groupselit_selitModel *groupModel;
-        groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
-  
-
-            [self.mCollectionV_list reloadData];
+    for(int i=0;i<self.mModel_myUnit.list.count;i++)
+    {
+        UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+       if(model.sectionSelSymbol ==2)
+       {
+           self.allSelected = 2;
+           modelSymbol = 10000;
+           break;
+       }
+        else
+        {
+            modelSymbol = modelSymbol + model.sectionSelSymbol;
         }
+        
+    }
+    if(modelSymbol == self.self.mModel_myUnit.list.count)
+    {
+        self.allSelected = 1;
+ 
+    }
+    else if (modelSymbol == 0)
+    {
+        self.allSelected = 0;
+
+    }
+    else
+    {
+        self.allSelected = 2;
+    }
+    
+    if(self.allSelected ==1)
+    {
+        self.imgV.image = [UIImage imageNamed:@"selected.png"];
+        
+    }
+    else
+    {
+        self.imgV.image = [UIImage imageNamed:@"blank.png"];
+        
+    }
+    NSLog(@"self.allSelected = %lu",(unsigned long)self.allSelected);
+
+    [self.mCollectionV_list reloadData];
+}
     
 
 //每一个cell的大小
@@ -443,7 +600,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }
         else if(model.sectionSelSymbol == 2)
         {
-            model.sectionSelSymbol = 0;
+            model.sectionSelSymbol = 2;
             for (int i=0; i<model.groupselit_selit.count; i++)
             {
                 groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:i];
@@ -464,14 +621,46 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }
         
     }
-    BOOL isAll=NO;
+    NSInteger isAll = 0;
     for(int i=0;i<self.mModel_myUnit.list.count;i++)
     {
         UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
-        isAll = model.sectionSelSymbol;
+        if(model.sectionSelSymbol == 2)
+        {
+            self.allSelected = 2;
+            break;
+        }
+
+        isAll = isAll+model.sectionSelSymbol;
 
         
     }
+    if(isAll == 0)
+    {
+        self.allSelected = 0;
+        
+    }
+    else if(isAll == self.mModel_myUnit.list.count)
+    {
+        self.allSelected = 1;
+        
+    
+    }
+    else
+    {
+        self.allSelected = 2;
+    }
+    if(self.allSelected ==1)
+    {
+        self.imgV.image = [UIImage imageNamed:@"selected.png"];
+    }
+    else
+    {
+        self.imgV.image = [UIImage imageNamed:@"blank.png"];
+
+        
+    }
+
     
 
             [self.mCollectionV_list reloadData];
@@ -511,8 +700,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         btn.tag = 3;
     //}
     NSMutableArray *array = [NSMutableArray array];
-    NSMutableArray *array1 = [NSMutableArray array];
-    NSMutableArray *array2 = [NSMutableArray array];
     
       if (btn.tag == 1||btn.tag == 2) {
         [self.mCollectionV_list reloadData];
