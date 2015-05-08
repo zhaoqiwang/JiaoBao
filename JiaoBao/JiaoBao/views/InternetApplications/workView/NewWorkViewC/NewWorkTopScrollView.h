@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "dm.h"
 #import "NewWorkRootScrollView.h"
+#import "MBProgressHUD.h"
 
-@interface NewWorkTopScrollView : UIScrollView<UIScrollViewDelegate>{
+@interface NewWorkTopScrollView : UIScrollView<UIScrollViewDelegate,MBProgressHUDDelegate>{
     UIImageView *mImgV_slide;//蓝色滑块
     NSArray *mArr_name;//名称数组
     NSInteger mInt_userSelectedChannelID;//点击按钮选择名字ID
@@ -22,6 +23,7 @@
 @property (assign,nonatomic) NSInteger mInt_userSelectedChannelID;//点击按钮选择名字ID
 @property (assign,nonatomic) NSInteger mInt_scrollViewSelectedChannelID;//滑动列表选择名字ID
 @property(nonatomic,assign)NSUInteger firstSel;
+@property(nonatomic,strong)MBProgressHUD *mProgressV;
 
 
 + (NewWorkTopScrollView *)shareInstance;

@@ -35,8 +35,10 @@ NSString *kCell = @"Forward_cell2";
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;//滚动方向
     
-
-//    
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
+    [self addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
+//
     self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 600) collectionViewLayout:flowLayout];
     [self addSubview:self.mCollectionV_list];
 
@@ -118,6 +120,14 @@ NSString *kCell = @"Forward_cell2";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(120, 0);
 }
+- (void)Loading {
+    sleep(TIMEOUT);
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    //    self.mProgressV.userInteractionEnabled = NO;
+    sleep(2);
+}
+
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
     if([dm getInstance].notificationSymbol ==100)
@@ -125,7 +135,7 @@ NSString *kCell = @"Forward_cell2";
     [self.mProgressV hide:YES];
     self.mModel_unitList = noti.object;
     self.datasource = self.mModel_unitList.UnitClass;
-        [self.mCollectionV_list reloadData];
+    [self.mCollectionV_list reloadData];
 
     self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
     for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
@@ -133,9 +143,6 @@ NSString *kCell = @"Forward_cell2";
         myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
         [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
 
-
-
-        
     }
     }
     
@@ -148,6 +155,7 @@ NSString *kCell = @"Forward_cell2";
 -(void)GetUnitRevicer:(NSNotification *)noti{
     if([dm getInstance].notificationSymbol == 100)
     {
+        
         NSDictionary *dic = noti.object;
         NSString *unitID = [dic objectForKey:@"unitID"];
         NSArray *array = [dic objectForKey:@"array"];

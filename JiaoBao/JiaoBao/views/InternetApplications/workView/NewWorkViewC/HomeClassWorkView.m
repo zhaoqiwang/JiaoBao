@@ -20,6 +20,10 @@
 -(void)creatCommMsg:(NSNotification *)noti{
     NSString *str = noti.object;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
+    if(str.length == 0)
+    {
+        str = @"成功";
+    }
     NSLog(@"str = %@",str);
     self.mProgressV.labelText = str;
     //    self.mProgressV.userInteractionEnabled = NO;
@@ -325,7 +329,7 @@ if([dm getInstance].notificationSymbol == 100)
                 }
             
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:nil];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
             
             
         }
@@ -338,7 +342,7 @@ if([dm getInstance].notificationSymbol == 100)
 
 
     
-    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.labelText = @"正在上传...";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     //        self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];

@@ -328,6 +328,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     {
     NSString *str = noti.object;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
+        if(str.length == 0)
+        {
+            str = @"成功";
+        }
     self.mProgressV.labelText = str;
 //    self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];

@@ -38,6 +38,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
+        self.mProgressV = [[MBProgressHUD alloc]initWithView:self.superview];
+        [self.superview addSubview:self.mProgressV];
+        self.mProgressV.delegate = self;
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
         self.pagingEnabled = NO;
@@ -96,6 +99,13 @@
         [self addSubview:button];
     }
 }
+- (void)Loading {
+    sleep(TIMEOUT);
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    //    self.mProgressV.userInteractionEnabled = NO;
+    sleep(2);
+}
 
 - (void)selectNameButton:(UIButton *)sender{
 
@@ -119,6 +129,11 @@
                 [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
                 [dm getInstance].notificationSymbol =100;
+                self.mProgressV.labelText = @"正在加载";
+                self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+                //        self.mProgressV.userInteractionEnabled = NO;
+                [self.mProgressV show:YES];
+                [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
                 
             }
 
