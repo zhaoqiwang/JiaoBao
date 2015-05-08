@@ -53,6 +53,9 @@
 @property (retain,nonatomic) id <NewWorkTopViewProtocol > delegate;
 -(void)addAccessoryPhoto;
 
+//刷新显示附件
+-(void)addAccessoryPhoto;
+
 //- (id)initWithFrame1:(CGRect)frame;
 
 @end

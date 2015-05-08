@@ -42,7 +42,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mTextV_content.inputAccessoryView = self.toolBar;
     self.view.backgroundColor = [UIColor colorWithRed:240/255.0 green:239/255.0 blue:245/255.0 alpha:1];
     self.isOpen = NO;
     self.view.tag = 5;
@@ -151,6 +150,8 @@
     [self.view addSubview:self.mNav_navgationBar];
     //标题
     //self.mTextF_title.frame = CGRectMake(10, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width-20, self.mTextF_title.frame.size.height);
+    self.mTextF_title.delegate = self;
+    self.mTextF_title.returnKeyType = UIReturnKeyDone;//return键的类型
     //内容
     //self.mTextV_content.frame = CGRectMake(10, self.mTextF_title.frame.origin.y+self.mTextF_title.frame.size.height+15, [dm getInstance].width-20, 80);
     //添加边框
@@ -159,6 +160,8 @@
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 8;
     self.mTextV_content.layer.masksToBounds = YES;
+    self.mTextV_content.delegate = self;
+    self.mTextV_content.returnKeyType = UIReturnKeyDone;//return键的类型
     //发表按钮
     //self.mBtn_send.frame = CGRectMake(10, self.mBtn_send.frame.origin.y, [dm getInstance].width-20, self.mBtn_send.frame.size.height);
     [self.mBtn_send addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
@@ -579,8 +582,6 @@
 }
 
 - (IBAction)albumBtnAction:(id)sender {
-
-
     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
     
     elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
@@ -593,37 +594,31 @@
     
     [self presentViewController:elcPicker animated:YES completion:nil];
 }
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 
-{    if (![text isEqualToString:@""])
-    
-{
-    
-    self._placeholdLabel.hidden = YES;
-    
-}
-    
-    if ([text isEqualToString:@""] && range.location == 0 && range.length == 1)
-        
-    {
-        
-        self._placeholdLabel.hidden = NO;
-        
+- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {  // 这个方法是UITextFieldDelegate协议里面的
+    if (theTextField == self.mTextF_title) {
+        [theTextField resignFirstResponder]; //这句代码可以隐藏 键盘
     }
-    
     return YES;
-    
-}
-- (IBAction)cancelAction:(id)sender {
-    [self.view endEditing:YES];
 }
 
-- (IBAction)doneAction:(id)sender {
-    [self.view endEditing:YES];
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if (![text isEqualToString:@""]){
+        self._placeholdLabel.hidden = YES;
+    }
+    if ([text isEqualToString:@""] && range.location == 0 && range.length == 1) {
+        self._placeholdLabel.hidden = NO;
+    }
+
+    // Any new character added is passed in as the "text" parameter
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return TRUE;
 }
 @end

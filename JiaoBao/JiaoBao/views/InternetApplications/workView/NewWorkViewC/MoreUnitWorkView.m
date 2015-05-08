@@ -24,12 +24,18 @@
         //获取到每个单位中的人员
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+        //添加附件后重置界面
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshMoreUnitView) name:@"refreshWorkView" object:nil];
+        //发表消息成功推送
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
         
         self.mInt_readflag = 0;
         self.mInt_requestCount = 0;
         self.mInt_requestCount2 = 0;
         //总框
-        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 10, [dm getInstance].width, self.frame.size.height-10)];
+        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height-0)];
         [self addSubview:self.mScrollV_all];
         //上半部分
         self.mViewTop = [[NewWorkTopView alloc] init];
@@ -52,6 +58,45 @@
 //        [self sendRequest];
     }
     return self;
+}
+
+//添加附件后重置界面
+-(void)refreshMoreUnitView{
+    self.mViewTop.frame = CGRectMake(0, 0, [dm getInstance].width, self.mViewTop.frame.size.height);
+    self.mTableV_work.frame = CGRectMake(0, self.mViewTop.frame.origin.y+self.mViewTop.frame.size.height, [dm getInstance].width, self.mTableV_work.contentSize.height);
+    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_work.frame.origin.y+self.mTableV_work.contentSize.height);
+}
+
+//发表消息成功
+-(void)creatCommMsg:(NSNotification *)noti{
+    NSString *str = noti.object;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = str;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    self.mViewTop.mTextV_input.text = @"";
+    [self.mViewTop.mArr_accessory removeAllObjects];
+    //[self.mArr_photo removeAllObjects];
+    //刷新界面
+    [self.mViewTop addAccessoryPhoto];
+    //刷新界面
+    [self refreshMoreUnitView];
+    //重置数据
+    for (TreeView_node *node in self.mArr_sumData) {
+        node.mInt_select = 0;
+        for(TreeView_node *node2 in node.sonNodes){
+            node2.mInt_select = 0;
+            for(TreeView_node *node3 in node2.sonNodes){
+                node3.mInt_select = 0;
+                for(TreeView_node *node4 in node3.sonNodes){
+                    node4.mInt_select = 0;
+                }
+            }
+        }
+    }
+    //刷新
+    [self reloadDataForDisplayArray];
+    
 }
 
 -(void)sendRequest{
@@ -458,7 +503,7 @@
         
         cell0.mBtn_reverse.hidden = NO;
         cell0.mBtn_all.hidden = NO;
-        cell0.mBtn_reverse.frame = CGRectMake([dm getInstance].width-40, 0, 30, cell.frame.size.height);
+        cell0.mBtn_reverse.frame = CGRectMake([dm getInstance].width-40, 0, 40, 48);
         [cell0.mBtn_reverse setTitle:@"反选" forState:UIControlStateNormal];
         cell0.mBtn_all.frame = CGRectMake(cell0.mBtn_reverse.frame.origin.x-78, 9, 68, 30);
         if (node.mInt_select == 0) {
@@ -523,7 +568,7 @@
         
         cell0.mBtn_reverse.hidden = NO;
         cell0.mBtn_all.hidden = NO;
-        cell0.mBtn_reverse.frame = CGRectMake([dm getInstance].width-40, 0, 30, cell.frame.size.height);
+        cell0.mBtn_reverse.frame = CGRectMake([dm getInstance].width-40, 0, 40, 48);
         [cell0.mBtn_reverse setTitle:@"反选" forState:UIControlStateNormal];
         cell0.mBtn_all.frame = CGRectMake(cell0.mBtn_reverse.frame.origin.x-78, 9, 68, 30);
         if (node.mInt_select == 0) {
@@ -589,31 +634,14 @@
         }
         [self selectedNowBtn:node.nodeFlag];
         [self.mTableV_work reloadData];
-//        TreeView_Level2_Model *nodeData = node.nodeData;
-//        MsgDetailViewController *msgDetailVC = [[MsgDetailViewController alloc] init];
-//        msgDetailVC.mModel_tree2 = nodeData;
-//        [utils pushViewController:msgDetailVC animated:YES];
     }
     else {
-        //检查当前网络是否可用
-//        if ([self checkNetWork]) {
-//            return;
-//        }
-        if (node.type == 1) {
-//            NewWorkTree_model *tempModel = node.nodeData;
-//            myUnit *temp = tempModel.mModel_unit;
-//            [self sendRequest_member2:temp flag:0];
-        }
         [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
     }
 }
 
 //获取当前单位中的人员
 -(void)sendRequest_member2:(myUnit *)tempUnit flag:(int)a{//a==0是获取老师的单位，a==1获取老师的执教班级
-    //检查当前网络是否可用
-//    if ([self checkNetWork]) {
-//        return;
-//    }
     //获取当前单位的人员数组
     if ([dm getInstance].uType == 0||[dm getInstance].uType == 1) {
 //        if (a==0) {
@@ -747,11 +775,10 @@
     NSString *flag = cell.mNode.flag;
     for (TreeView_node *node in self.mArr_sumData) {
         if([node.flag isEqual:flag]){
-//            node.mInt_select = 0;
             for(TreeView_node *node2 in node.sonNodes){
-                [self reverseBtn:node2];
+//                [self reverseBtn:node2];
                 for(TreeView_node *node3 in node2.sonNodes){
-                    [self reverseBtn:node3];
+//                    [self reverseBtn:node3];
                     for(TreeView_node *node4 in node3.sonNodes){
                         [self reverseBtn:node4];
                     }
@@ -760,9 +787,8 @@
         }else{
             for(TreeView_node *node2 in node.sonNodes){
                 if([node2.flag isEqual:flag]){
-//                    node2.mInt_select = 0;
                     for(TreeView_node *node3 in node2.sonNodes){
-                        [self reverseBtn:node3];
+//                        [self reverseBtn:node3];
                         for(TreeView_node *node4 in node3.sonNodes){
                             [self reverseBtn:node4];
                         }
@@ -780,8 +806,39 @@
             }
         }
     }
-    [self selectedNowBtn:[NSString stringWithFormat:@"%@-6",cell.mNode.nodeFlag]];
+    
+    if (cell.mNode.type==0&&cell.mNode.sonNodes.count==0) {
+        if (cell.mNode.sonNodes.count==0) {
+            if (cell.mNode.mInt_select == 0) {
+                cell.mNode.mInt_select = 1;
+            }else{
+                cell.mNode.mInt_select = 0;
+            }
+        }
+    }else{
+        [self test:cell.mNode];
+        [self selectedNowBtn:[NSString stringWithFormat:@"%@",cell.mNode.nodeFlag]];
+        [self test:cell.mNode];
+    }
+    
     [self reloadDataForDisplayArray];
+}
+
+-(void)test:(TreeView_node *)node{
+    if (node.type !=3) {
+        int a=0;
+        for (TreeView_node *node2 in node.sonNodes) {
+            [self test:node2];
+            if (node2.mInt_select == 0) {
+                a++;
+            }
+        }
+        if (a==0) {
+            node.mInt_select = 1;
+        }else{
+            node.mInt_select = 0;
+        }
+    }
 }
 
 -(void)reverseBtn:(TreeView_node *)node{
@@ -823,7 +880,6 @@
             if ([tempNodeStr isEqual:tempStr]) {
                 node.mInt_select = 0;
             }
-            
         }
         NSArray *array2 = [tempStr componentsSeparatedByString:@"-"];
         if (array2.count>1) {

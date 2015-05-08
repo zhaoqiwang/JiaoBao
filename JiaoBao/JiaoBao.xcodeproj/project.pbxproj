@@ -533,6 +533,15 @@
 		A7781F4F1AE8A0F300F03AEB /* NewWorkView_click_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7781F3D1AE8A0F300F03AEB /* NewWorkView_click_2@2x.png */; };
 		A7781F501AE8A0F300F03AEB /* NewWorkView_click_2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7781F3E1AE8A0F300F03AEB /* NewWorkView_click_2@3x.png */; };
 		A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A778389D1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m */; };
+		A77F9F3D1AFCAAC90003E579 /* appNav_dongtai.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F341AFCAAC90003E579 /* appNav_dongtai.png */; };
+		A77F9F3E1AFCAAC90003E579 /* appNav_dongtai@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F351AFCAAC90003E579 /* appNav_dongtai@2x.png */; };
+		A77F9F3F1AFCAAC90003E579 /* appNav_dongtai@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F361AFCAAC90003E579 /* appNav_dongtai@3x.png */; };
+		A77F9F401AFCAAC90003E579 /* appNav_share.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F371AFCAAC90003E579 /* appNav_share.png */; };
+		A77F9F411AFCAAC90003E579 /* appNav_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F381AFCAAC90003E579 /* appNav_share@2x.png */; };
+		A77F9F421AFCAAC90003E579 /* appNav_share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F391AFCAAC90003E579 /* appNav_share@3x.png */; };
+		A77F9F431AFCAAC90003E579 /* appNav_work.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F3A1AFCAAC90003E579 /* appNav_work.png */; };
+		A77F9F441AFCAAC90003E579 /* appNav_work@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F3B1AFCAAC90003E579 /* appNav_work@2x.png */; };
+		A77F9F451AFCAAC90003E579 /* appNav_work@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77F9F3C1AFCAAC90003E579 /* appNav_work@3x.png */; };
 		A77FF00C1A65093300DB85E3 /* UnitListJsonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF00B1A65093300DB85E3 /* UnitListJsonModel.m */; };
 		A77FF0271A650B3F00DB85E3 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0101A650B3F00DB85E3 /* JSONModel.m */; };
 		A77FF0281A650B3F00DB85E3 /* JSONModelArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0121A650B3F00DB85E3 /* JSONModelArray.m */; };
@@ -1516,6 +1525,15 @@
 		A7781F3E1AE8A0F300F03AEB /* NewWorkView_click_2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWorkView_click_2@3x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWorkView_click_2@3x.png"; sourceTree = "<group>"; };
 		A778389C1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReleaseNewsUnitsModel.h; path = views/InternetApplications/class/model/ReleaseNewsUnitsModel.h; sourceTree = "<group>"; };
 		A778389D1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReleaseNewsUnitsModel.m; path = views/InternetApplications/class/model/ReleaseNewsUnitsModel.m; sourceTree = "<group>"; };
+		A77F9F341AFCAAC90003E579 /* appNav_dongtai.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appNav_dongtai.png; path = Image/InternetApp/nav/appNav_dongtai.png; sourceTree = "<group>"; };
+		A77F9F351AFCAAC90003E579 /* appNav_dongtai@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_dongtai@2x.png"; path = "Image/InternetApp/nav/appNav_dongtai@2x.png"; sourceTree = "<group>"; };
+		A77F9F361AFCAAC90003E579 /* appNav_dongtai@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_dongtai@3x.png"; path = "Image/InternetApp/nav/appNav_dongtai@3x.png"; sourceTree = "<group>"; };
+		A77F9F371AFCAAC90003E579 /* appNav_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appNav_share.png; path = Image/InternetApp/nav/appNav_share.png; sourceTree = "<group>"; };
+		A77F9F381AFCAAC90003E579 /* appNav_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_share@2x.png"; path = "Image/InternetApp/nav/appNav_share@2x.png"; sourceTree = "<group>"; };
+		A77F9F391AFCAAC90003E579 /* appNav_share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_share@3x.png"; path = "Image/InternetApp/nav/appNav_share@3x.png"; sourceTree = "<group>"; };
+		A77F9F3A1AFCAAC90003E579 /* appNav_work.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appNav_work.png; path = Image/InternetApp/nav/appNav_work.png; sourceTree = "<group>"; };
+		A77F9F3B1AFCAAC90003E579 /* appNav_work@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_work@2x.png"; path = "Image/InternetApp/nav/appNav_work@2x.png"; sourceTree = "<group>"; };
+		A77F9F3C1AFCAAC90003E579 /* appNav_work@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_work@3x.png"; path = "Image/InternetApp/nav/appNav_work@3x.png"; sourceTree = "<group>"; };
 		A77FF00A1A65093300DB85E3 /* UnitListJsonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitListJsonModel.h; path = views/InternetApplications/workView/model/UnitListJsonModel.h; sourceTree = "<group>"; };
 		A77FF00B1A65093300DB85E3 /* UnitListJsonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitListJsonModel.m; path = views/InternetApplications/workView/model/UnitListJsonModel.m; sourceTree = "<group>"; };
 		A77FF00F1A650B3F00DB85E3 /* JSONModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONModel.h; sourceTree = "<group>"; };
@@ -3311,6 +3329,15 @@
 		A7AAC4C619F75D8400A0ED40 /* nav */ = {
 			isa = PBXGroup;
 			children = (
+				A77F9F341AFCAAC90003E579 /* appNav_dongtai.png */,
+				A77F9F351AFCAAC90003E579 /* appNav_dongtai@2x.png */,
+				A77F9F361AFCAAC90003E579 /* appNav_dongtai@3x.png */,
+				A77F9F371AFCAAC90003E579 /* appNav_share.png */,
+				A77F9F381AFCAAC90003E579 /* appNav_share@2x.png */,
+				A77F9F391AFCAAC90003E579 /* appNav_share@3x.png */,
+				A77F9F3A1AFCAAC90003E579 /* appNav_work.png */,
+				A77F9F3B1AFCAAC90003E579 /* appNav_work@2x.png */,
+				A77F9F3C1AFCAAC90003E579 /* appNav_work@3x.png */,
 				A757DFD91A80C7B9001172A4 /* appNav_changeUnit.png */,
 				A757DFDA1A80C7B9001172A4 /* appNav_changeUnit@2x.png */,
 				A757DFDB1A80C7B9001172A4 /* appNav_changeUnit@3x.png */,
@@ -3727,6 +3754,7 @@
 				A749B9D319F89A530036F480 /* root_sendNotice@2x.png in Resources */,
 				A76D74771A69095A008F5856 /* share_like_1@2x.png in Resources */,
 				A76ED5CB1AD67855006F3E0B /* workView_click_3@2x.png in Resources */,
+				A77F9F431AFCAAC90003E579 /* appNav_work.png in Resources */,
 				A749B9FF19F8F4060036F480 /* TreeView_Level2_Cell.xib in Resources */,
 				A757DFDF1A80C7B9001172A4 /* appNav_changeUnit.png in Resources */,
 				A71D61DF1A1C96A400B8D33D /* share_education1.png in Resources */,
@@ -3759,6 +3787,8 @@
 				A7AD8C4E19F644A2002E65FB /* tabbar_app1.png in Resources */,
 				A727C7DE1A6F93780019C4CD /* share_lookBig@2x.png in Resources */,
 				F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */,
+				A77F9F3E1AFCAAC90003E579 /* appNav_dongtai@2x.png in Resources */,
+				A77F9F451AFCAAC90003E579 /* appNav_work@3x.png in Resources */,
 				A73D9C121A368EDF004CE4D5 /* RongYun_discussion@2x.png in Resources */,
 				A71D61E31A1C96A400B8D33D /* share_new1.png in Resources */,
 				F7502A281AEE1E50004F822F /* selected@2x.png in Resources */,
@@ -3894,6 +3924,7 @@
 				A749B9C219F89A530036F480 /* root_addBtn.png in Resources */,
 				A76ED5C71AD67855006F3E0B /* workView_click_2.png in Resources */,
 				A7781F431AE8A0F300F03AEB /* NewWorkView_1@2x.png in Resources */,
+				A77F9F411AFCAAC90003E579 /* appNav_share@2x.png in Resources */,
 				A74C118F1A01D23F00925230 /* Default@2x.png in Resources */,
 				A78D65D21A89B35500BE6326 /* WorkMsgListViewController.xib in Resources */,
 				F7502A251AEE1E50004F822F /* rTri@2x.png in Resources */,
@@ -3920,6 +3951,7 @@
 				A71D61E01A1C96A400B8D33D /* share_education1@2x.png in Resources */,
 				A749B9CF19F89A530036F480 /* root_processed@2x.png in Resources */,
 				A75046961A0A14BC00C54ECC /* forward_sendMsg2@2x.png in Resources */,
+				A77F9F441AFCAAC90003E579 /* appNav_work@2x.png in Resources */,
 				A750468F1A0A14BC00C54ECC /* forward_select1.png in Resources */,
 				F7502A091AEE1E50004F822F /* add@2x.png in Resources */,
 				A76829911AC69B21003B31EB /* classView_click_3@3x.png in Resources */,
@@ -4033,6 +4065,7 @@
 				A7BB180919F4F91E00A81286 /* Regiser_passwd_2@2x.png in Resources */,
 				A76C699A1A889ABC0069BA63 /* WorkViewListCell.xib in Resources */,
 				A749B9C619F89A530036F480 /* root_detail.png in Resources */,
+				A77F9F421AFCAAC90003E579 /* appNav_share@3x.png in Resources */,
 				A76B6A6E1AB2C98F00B6ED12 /* AccessoryViewController.xib in Resources */,
 				A76ED5B41AD67855006F3E0B /* workView_0@3x.png in Resources */,
 				A7BB180819F4F91E00A81286 /* Regiser_passwd_2.png in Resources */,
@@ -4046,6 +4079,7 @@
 				A73AD8351A20824C00F68C47 /* share_tableV_class@2x.png in Resources */,
 				A7BB17E819F4B22000A81286 /* jsyiamsCA.cer in Resources */,
 				A76ED5C31AD67855006F3E0B /* workView_click_0@3x.png in Resources */,
+				A77F9F3F1AFCAAC90003E579 /* appNav_dongtai@3x.png in Resources */,
 				A753FAEE1A1DDC0300AB5F22 /* share_tableV_education@2x.png in Resources */,
 				A72B56521A81CC27005EEA9C /* forward_select2@3x.png in Resources */,
 				A76829831AC69B21003B31EB /* classView_click_0@2x.png in Resources */,
@@ -4071,6 +4105,7 @@
 				A7AAC4D219F75DB200A0ED40 /* appNav_setting@2x.png in Resources */,
 				A749B9D219F89A530036F480 /* root_sendNotice.png in Resources */,
 				A749B9C919F89A530036F480 /* root_dian@2x.png in Resources */,
+				A77F9F3D1AFCAAC90003E579 /* appNav_dongtai.png in Resources */,
 				A746CB691A4AAD600003657A /* CreatAlbumsViewController.xib in Resources */,
 				A761D3F61A7F697900DCAEB9 /* rootTable_3@2x.png in Resources */,
 				A76976A41A8372C3002A4FB3 /* message.wav in Resources */,
@@ -4098,6 +4133,7 @@
 				A749B9C819F89A530036F480 /* root_dian.png in Resources */,
 				A757DFD41A80BDEF001172A4 /* appNav_contact@2x.png in Resources */,
 				A757DFD81A80BDEF001172A4 /* appNav_groupChat@3x.png in Resources */,
+				A77F9F401AFCAAC90003E579 /* appNav_share.png in Resources */,
 				A761D3EC1A7F697900DCAEB9 /* rootTable_0.png in Resources */,
 				A757DFD31A80BDEF001172A4 /* appNav_contact.png in Resources */,
 				A78D65DF1A8A04E800BE6326 /* workDetail.png in Resources */,

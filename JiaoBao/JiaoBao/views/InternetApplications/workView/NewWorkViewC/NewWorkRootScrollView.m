@@ -12,21 +12,24 @@
 @synthesize mInt,moreUnitView,insideView,homeClassView;
 #define POSITIONID (int)self.contentOffset.x/[dm getInstance].width
 
-+ (NewWorkRootScrollView *)shareInstance {
-    static NewWorkRootScrollView *__singletion;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44)];
-    });
-    return __singletion;
-}
+//+ (NewWorkRootScrollView *)shareInstance {
+//    static NewWorkRootScrollView *__singletion;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44)];
+//    });
+//    return __singletion;
+//}
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame{
+    CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44);
+    
     self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
         self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44);
-        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"selectNameButton" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectNameButton:) name:@"selectNameButton" object:nil];
         self.pagingEnabled = YES;
         self.userInteractionEnabled = YES;
         self.bounces = YES;
@@ -49,6 +52,12 @@
     return self;
 }
 
+-(void)selectNameButton:(NSNotification *)noti{
+    int a = [noti.object intValue];
+    self.mInt = a;
+    [self setContentOffset:CGPointMake(a*[dm getInstance].width, 0) animated:NO];
+}
+
 //开始滑动
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     userContentOffsetX = self.contentOffset.x;
@@ -68,28 +77,30 @@
     self.mInt = scrollView.contentOffset.x/[dm getInstance].width;
     //调整顶部滑条按钮状态
     [self adjustTopScrollViewButton:scrollView];
-    if (isLeftScroll) {
-        if (self.contentOffset.x <= [dm getInstance].width*5) {
-            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake(0, 0) animated:YES];
-        }
-        else {
-            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake((POSITIONID-4)*64+45, 0) animated:YES];
-        }
-    }
-    else {
-        if (self.contentOffset.x >= [dm getInstance].width*5) {
-            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake(2*64+45, 0) animated:YES];
-        }
-        else {
-            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake(0, 0) animated:YES];
-        }
-    }
+//    if (isLeftScroll) {
+//        if (self.contentOffset.x <= [dm getInstance].width*5) {
+//            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake(0, 0) animated:YES];
+//        }
+//        else {
+//            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake((POSITIONID-4)*64+45, 0) animated:YES];
+//        }
+//    }
+//    else {
+//        if (self.contentOffset.x >= [dm getInstance].width*5) {
+//            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake(2*64+45, 0) animated:YES];
+//        }
+//        else {
+//            [[NewWorkTopScrollView shareInstance] setContentOffset:CGPointMake(0, 0) animated:YES];
+//        }
+//    }
 }
 //滑动结束后调用改变值
 - (void)adjustTopScrollViewButton:(UIScrollView *)scrollView{
-    [[NewWorkTopScrollView shareInstance] setButtonUnSelect];
-    [NewWorkTopScrollView shareInstance].mInt_scrollViewSelectedChannelID = POSITIONID+100;
-    [[NewWorkTopScrollView shareInstance] setButtonSelect];
+    NSString *a = [NSString stringWithFormat:@"%d",POSITIONID+100];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"adjustTopScrollViewButton" object:a];
+//    [[NewWorkTopScrollView shareInstance] setButtonUnSelect];
+//    [NewWorkTopScrollView shareInstance].mInt_scrollViewSelectedChannelID = POSITIONID+100;
+//    [[NewWorkTopScrollView shareInstance] setButtonSelect];
 }
 
 @end
