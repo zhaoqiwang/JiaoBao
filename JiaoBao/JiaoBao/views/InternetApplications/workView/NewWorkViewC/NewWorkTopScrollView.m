@@ -106,7 +106,24 @@
         lastButton.selected = NO;
         //赋值按钮ID
         mInt_userSelectedChannelID = sender.tag;
-        [dm getInstance].notificationSymbol = mInt_scrollViewSelectedChannelID-99;
+        if(sender.tag == 100)
+        {
+            [dm getInstance].notificationSymbol = 1;
+
+            
+        }
+        if(sender.tag == 101)
+        {
+            if(self.firstSel == 0)
+            {
+                [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+                self.firstSel = 1;
+                [dm getInstance].notificationSymbol =100;
+                
+            }
+
+            
+        }
     }
     [NewWorkRootScrollView shareInstance].mInt = (int)sender.tag - 100;
     //按钮选中状态

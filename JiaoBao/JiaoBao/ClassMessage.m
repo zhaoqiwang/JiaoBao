@@ -120,9 +120,9 @@ NSString *kCell = @"Forward_cell2";
 }
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    if([dm getInstance].notificationSymbol ==1)
+    if([dm getInstance].notificationSymbol ==100)
     {
+    [self.mProgressV hide:YES];
     self.mModel_unitList = noti.object;
     self.datasource = self.mModel_unitList.UnitClass;
         [self.mCollectionV_list reloadData];
@@ -131,8 +131,6 @@ NSString *kCell = @"Forward_cell2";
     for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
     {
         myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-        [dm getInstance].notificationSymbol = 100;
-
         [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
 
 
