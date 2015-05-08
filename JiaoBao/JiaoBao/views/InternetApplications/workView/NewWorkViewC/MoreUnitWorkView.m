@@ -806,9 +806,21 @@
             }
         }
     }
-    [self test:cell.mNode];
-    [self selectedNowBtn:[NSString stringWithFormat:@"%@",cell.mNode.nodeFlag]];
-    [self test:cell.mNode];
+    
+    if (cell.mNode.type==0&&cell.mNode.sonNodes.count==0) {
+        if (cell.mNode.sonNodes.count==0) {
+            if (cell.mNode.mInt_select == 0) {
+                cell.mNode.mInt_select = 1;
+            }else{
+                cell.mNode.mInt_select = 0;
+            }
+        }
+    }else{
+        [self test:cell.mNode];
+        [self selectedNowBtn:[NSString stringWithFormat:@"%@",cell.mNode.nodeFlag]];
+        [self test:cell.mNode];
+    }
+    
     [self reloadDataForDisplayArray];
 }
 
