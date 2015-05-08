@@ -16,7 +16,7 @@
 #import "ELCImagePickerHeader.h"
 #import "ReleaseNewsUnitsModel.h"
 
-@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextViewDelegate>{
+@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITextView *mTextV_content;//内容
     MBProgressHUD *mProgressV;//

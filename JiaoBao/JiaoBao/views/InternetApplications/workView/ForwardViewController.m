@@ -1656,12 +1656,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     if (tableView.tag == 100) {
         return [dm getInstance].identity.count;
     }else if (tableView.tag == 101){
-        Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
-        if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
-            return idenModel.UserUnits.count;
-        }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
-            return idenModel.UserClasses.count;
+        if ([dm getInstance].identity.count>self.mInt_defaultTV_index) {
+            Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
+            if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
+                return idenModel.UserUnits.count;
+            }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
+                return idenModel.UserClasses.count;
+            }
         }
+        
     }
     return 0;
 }

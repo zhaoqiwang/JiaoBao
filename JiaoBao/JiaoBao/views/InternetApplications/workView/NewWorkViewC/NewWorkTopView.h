@@ -52,6 +52,9 @@
 @property (nonatomic,assign) int mInt_sendMsg;//是否发送短信，0发送，1不发送
 @property (retain,nonatomic) id <NewWorkTopViewProtocol > delegate;
 
+//刷新显示附件
+-(void)addAccessoryPhoto;
+
 //- (id)initWithFrame1:(CGRect)frame;
 
 @end
