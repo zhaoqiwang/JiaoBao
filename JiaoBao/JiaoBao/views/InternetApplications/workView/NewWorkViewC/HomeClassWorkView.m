@@ -8,6 +8,7 @@
 
 #import "HomeClassWorkView.h"
 #import "Reachability.h"
+#import "SVProgressHUD.h"
 
 
 @implementation HomeClassWorkView
@@ -119,11 +120,24 @@
     
     
 }
+-(void)progress:(id)sender
+{
+    [SVProgressHUD show];
+//    self.mProgressV.labelText = @"正在加载...";
+//    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+//    //        self.mProgressV.userInteractionEnabled = NO;
+//    [self.mProgressV show:YES];
+//    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    
+}
+
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(progress:) name:@"progress" object:nil];
+
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
 
