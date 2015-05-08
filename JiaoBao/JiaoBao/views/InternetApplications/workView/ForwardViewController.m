@@ -279,14 +279,19 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    if([dm getInstance].notificationSymbol ==1)
+    {
+        [self.mProgressV hide:YES];
         self.mModel_unitList = noti.object;
-
+        
         if([dm getInstance].notificationSymbol ==1)
         {
-             [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
+            [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
             
         }
+        
+    }
+
 
     
 
@@ -295,23 +300,32 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //获取到每个单位中的人员
 -(void)GetUnitRevicer:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    NSDictionary *dic = noti.object;
-    NSString *unitID = [dic objectForKey:@"unitID"];
-    NSArray *array = [dic objectForKey:@"array"];
     
-    //当前单位
-    if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
-        self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-        self.mModel_myUnit = self.mModel_unitList.myUnit;
+    if([dm getInstance].notificationSymbol == 1)
+    {
+        [self.mProgressV hide:YES];
+        
+        NSDictionary *dic = noti.object;
+        NSString *unitID = [dic objectForKey:@"unitID"];
+        NSArray *array = [dic objectForKey:@"array"];
+        
+        //当前单位
+        if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
+            self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+            self.mModel_myUnit = self.mModel_unitList.myUnit;
+        }
+        
+        //刷新
+        [self CollectionReloadData];
+        
     }
 
-    //刷新
-    [self CollectionReloadData];
 }
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
+    if([dm getInstance].notificationSymbol ==1 )
+    {
     NSString *str = noti.object;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = str;
@@ -320,10 +334,21 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     self.topView.mTextV_input.text = @"";
     [self.topView.mArr_accessory removeAllObjects];
-    //[self.mArr_photo removeAllObjects];
-
-    //
+    [self.topView addAccessoryPhoto];
+    for (int i=0; i<self.mModel_myUnit.list.count; i++)
+    {
+        
+        UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+        model.sectionSelSymbol = 0;
+        for (int i=0; i<model.groupselit_selit.count; i++) {
+            groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+            subModel.mInt_select = 0;
+        }
+    }
+    self.imgV.image = [UIImage imageNamed:@"blank.png"];
+    
     [self.mCollectionV_list reloadData];
+    }
     
 }
 -(void)noMore{
@@ -685,25 +710,21 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     if ([self checkNetWork]) {
         return;
     }
-//    if (btn.tag == 1) {
-//        btn.tag = 1;
-//    }else if (btn.tag == 2){
-//        btn.tag = 2;
-//    }else if (btn.tag == 3){
-        if (self.topView.mTextV_input.text.length == 0) {
+
+        if (self.topView.mTextV_input.text.length == 0)
+        {
             self.mProgressV.mode = MBProgressHUDModeCustomView;
             self.mProgressV.labelText = @"请输入内容";
             [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
             return;
         }
-        btn.tag = 3;
-    //}
     NSMutableArray *array = [NSMutableArray array];
+
+    myUnit *tempUnit = self.mModel_unitList.myUnit;
     
-      if (btn.tag == 1||btn.tag == 2) {
-        [self.mCollectionV_list reloadData];
-    }else if (btn.tag == 3){
+    [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+    
         if (array.count==0) {
             self.mProgressV.mode = MBProgressHUDModeCustomView;
             self.mProgressV.labelText = @"请选择人员";
@@ -712,12 +733,11 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
             return;
         }
+    
         //发表
-            NSMutableArray *array0 = [NSMutableArray array];
-            [array0 addObjectsFromArray:self.topView.mArr_accessory];
-            //[array0 addObjectsFromArray:self.mArr_photo];
-            D("array.count-====%lu",(unsigned long)array.count);
-//            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:self.mStr_forwardTableID access:array0];
+            NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
+            [array1 addObjectsFromArray:self.topView.mArr_accessory];
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
         
         self.mProgressV.labelText = @"加载中...";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;
@@ -725,9 +745,28 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         [self.mProgressV show:YES];
         [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
         
-    }
+    
     [self.mCollectionV_list reloadData];
     
+}
+//加载新建事务的勾选人员
+-(NSMutableArray *)addMyUnitMember:(myUnit *)tempUnit{
+    
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<tempUnit.list.count; i++) {
+        UserListModel *model2 = [tempUnit.list objectAtIndex:i];
+        NSMutableArray *arr9 = model2.groupselit_selit;
+        for (int n=0; n<arr9.count; n++) {
+            groupselit_selitModel *model3 = [arr9 objectAtIndex:n];
+            if (model3.mInt_select == 1) {
+                NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                [dic setValue:model3.flag forKey:@"flag"];
+                [dic setValue:model3.selit forKey:@"selit"];
+                [array addObject:dic];
+            }
+        }
+    }
+    return array;
 }
 
 

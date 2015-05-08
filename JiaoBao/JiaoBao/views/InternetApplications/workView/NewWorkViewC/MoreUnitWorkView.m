@@ -123,6 +123,10 @@
     }
     //发表
     [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:self.mViewTop.mArr_accessory];
+    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
 }
 
 //通知界面更新，获取事务信息接收单位列表
