@@ -739,7 +739,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             [array1 addObjectsFromArray:self.topView.mArr_accessory];
             [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
         
-        self.mProgressV.labelText = @"加载中...";
+        self.mProgressV.labelText = @"正在发送";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;
         //        self.mProgressV.userInteractionEnabled = NO;
         [self.mProgressV show:YES];
