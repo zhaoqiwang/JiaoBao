@@ -91,12 +91,12 @@
     }
     D("点击新建事务、发布通知按钮");
     ForwardViewController *forward = [[ForwardViewController alloc] init];
-    forward.mStr_navName = @"新建事务";
+    //forward.mStr_navName = @"新建事务";
     forward.mInt_forwardFlag = 1;
     forward.mInt_forwardAll = 2;
     forward.mInt_flag = 1;
     forward.mInt_all = 2;
-    forward.mInt_where = 0;
+    //forward.mInt_where = 0;
     [utils pushViewController:forward animated:YES];
 }
 -(void)UnReadMsg{
@@ -550,21 +550,21 @@
             [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
         }else if (node.readflag == 3){
             ForwardViewController *forward = [[ForwardViewController alloc] init];
-            forward.mStr_navName = @"下发通知";
+            //forward.mStr_navName = @"下发通知";
             forward.mInt_forwardFlag = 1;
             forward.mInt_forwardAll = 1;
             forward.mInt_flag = 1;
             forward.mInt_all = 1;
-            forward.mInt_where = 1;
+            //forward.mInt_where = 1;
             [utils pushViewController:forward animated:YES];
         }else if (node.readflag == 5){
             ForwardViewController *forward = [[ForwardViewController alloc] init];
-            forward.mStr_navName = @"短信直通车";
+            //forward.mStr_navName = @"短信直通车";
             forward.mInt_forwardFlag = 2;
             forward.mInt_forwardAll = 2;
             forward.mInt_flag = 2;
             forward.mInt_all = 2;
-            forward.mInt_where = 2;
+            //forward.mInt_where = 2;
             [utils pushViewController:forward animated:YES];
         }
 //        if (node.type == 0) {

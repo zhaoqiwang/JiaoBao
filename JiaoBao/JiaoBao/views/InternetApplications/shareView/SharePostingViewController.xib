@@ -21,6 +21,7 @@
                 <outlet property="mTextV_content" destination="9XG-IG-Z0o" id="vOw-3M-OtU"/>
                 <outlet property="pullDownBtn" destination="tzW-eT-F2h" id="mDT-oe-PG3"/>
                 <outlet property="secondVIew" destination="Pyi-Gv-iDg" id="YHM-mk-zeu"/>
+                <outlet property="toolBar" destination="D9t-oY-YHt" id="lMZ-YQ-VXh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -186,7 +187,10 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入标题" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Du8-IG-Nug">
                             <rect key="frame" x="10" y="10" width="300" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="KNC-XL-gbj"/>
+                            </connections>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入内容" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBf-Ty-Qge">
                             <rect key="frame" x="18" y="72" width="66" height="21"/>
@@ -257,6 +261,24 @@
             </constraints>
             <point key="canvasLocation" x="482" y="153"/>
         </view>
+        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="D9t-oY-YHt">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <items>
+                <barButtonItem title="取消" id="rn3-XD-osh">
+                    <connections>
+                        <action selector="cancelAction:" destination="-1" id="6bP-Gd-4ht"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="plain" systemItem="flexibleSpace" id="pgp-IE-FBd"/>
+                <barButtonItem title="确定" id="fdS-c9-t13">
+                    <connections>
+                        <action selector="doneAction:" destination="-1" id="T0z-V8-GWm"/>
+                    </connections>
+                </barButtonItem>
+            </items>
+            <point key="canvasLocation" x="871" y="32"/>
+        </toolbar>
     </objects>
     <resources>
         <image name="triangle.png" width="10" height="10"/>

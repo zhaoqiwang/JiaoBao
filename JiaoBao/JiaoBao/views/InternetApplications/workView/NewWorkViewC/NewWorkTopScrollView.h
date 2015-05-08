@@ -21,6 +21,7 @@
 @property (strong,nonatomic) NSArray *mArr_name;//名称数组
 @property (assign,nonatomic) NSInteger mInt_userSelectedChannelID;//点击按钮选择名字ID
 @property (assign,nonatomic) NSInteger mInt_scrollViewSelectedChannelID;//滑动列表选择名字ID
+@property(nonatomic,assign)NSUInteger firstSel;
 
 
 + (NewWorkTopScrollView *)shareInstance;

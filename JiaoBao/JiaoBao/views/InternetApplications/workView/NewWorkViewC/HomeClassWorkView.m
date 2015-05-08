@@ -16,11 +16,113 @@
 {
     [self setFrame];
 }
+//发表消息成功
+-(void)creatCommMsg:(NSNotification *)noti{
+    NSString *str = noti.object;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    NSLog(@"str = %@",str);
+    self.mProgressV.labelText = str;
+    //    self.mProgressV.userInteractionEnabled = NO;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    self.mViewTop.mTextV_input.text = @"";
+    [self.mViewTop.mArr_accessory removeAllObjects];
+    [self.mViewTop addAccessoryPhoto]; 
+    if([dm getInstance].notificationSymbol == 100)
+    {
+        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.dataArr;
+        for(int i=0;i<dataArr.count;i++)
+        {
+            myUnit *unit = [dataArr objectAtIndex:i];
+            unit.isSelected = NO;
+  
+            
+            
+        }
+        [[HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list reloadData];
+        
+        
+    }
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].characterView.datasource;
+        for(int i=0;i<dataArr.count;i++)
+        {
+            myUnit *unit = [dataArr objectAtIndex:i];
+            UserListModel *model;
+            if(unit.list.count>1)
+            {
+                model = [unit.list objectAtIndex:1];
+                
+                
+            }
+            else
+            {
+                model = [unit.list objectAtIndex:0];
+                
+                
+            }            groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+            for(int i=0;i<model.groupselit_selit.count;i++)
+            {
+                groupModel = [model.groupselit_selit objectAtIndex:i];
+                if(groupModel.mInt_select == 1)
+                {
+                    groupModel.mInt_select =0;
+
+                }
+                
+                
+            }
+            
+        }
+        [[HomeClassRootScrollView shareInstance].characterView.mCollectionV_list reloadData];
+        
+    }
+    if([dm getInstance].notificationSymbol == 102)
+    {
+        
+        [[HomeClassRootScrollView shareInstance].schoolMessage.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+        
+        
+    }
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        NSArray *arr = [HomeClassRootScrollView shareInstance].patriarchView.datasource;
+        
+        for (int i=0; i<arr.count; i++) {
+            SMSTreeArrayModel *model = [arr objectAtIndex:i];
+            for (int m=0; m<model.smsTree.count; m++) {
+                SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                if (i == 1)
+                {
+                    if(tempModel.mInt_select == 1)
+                    {
+                        tempModel.mInt_select =0;
+                    }
+                    
+                }
+                
+            }
+            [[HomeClassRootScrollView shareInstance].patriarchView.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+            [[HomeClassRootScrollView shareInstance].patriarchView.tableView reloadData];
+            
+        
+    }
+    }
+    [self setFrame];
+
+
+    
+    
+}
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
+
         [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
         //总框
@@ -44,6 +146,9 @@
         
         [HomeClassRootScrollView shareInstance].scrollEnabled = NO;
         //[HomeClassRootScrollView shareInstance].backgroundColor = [UIColor redColor];
+        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
+        [self addSubview:self.mProgressV];
+        self.mProgressV.delegate = self;
 
 
         
@@ -59,6 +164,7 @@
 
     
 }
+
 
 //点击发送按钮
 -(void)mBtn_send:(UIButton *)btn{
@@ -77,6 +183,10 @@
     NSMutableArray *genArr = [[NSMutableArray alloc]initWithCapacity:0];
     NSMutableArray *array0 = [NSMutableArray array];
     [array0 addObjectsFromArray:self.mViewTop.mArr_accessory];
+    if([dm getInstance].notificationSymbol == 1)
+    {
+        [dm getInstance].notificationSymbol = [HomeClassTopScrollView shareInstance].mInt_userSelectedChannelID;
+    }
 
 if([dm getInstance].notificationSymbol == 100)
 {
@@ -86,7 +196,19 @@ if([dm getInstance].notificationSymbol == 100)
         myUnit *unit = [dataArr objectAtIndex:i];
         if(unit.isSelected == YES)
         {
-            UserListModel *model = [unit.list objectAtIndex:0];
+            UserListModel *model;
+            if(unit.list.count>1)
+            {
+                model = [unit.list objectAtIndex:1];
+
+                
+            }
+            else
+            {
+                model = [unit.list objectAtIndex:0];
+
+                
+            }
             groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
@@ -107,7 +229,7 @@ if([dm getInstance].notificationSymbol == 100)
     }
         int num = (int)genArr.count;
         NSLog(@"num = %d",num);
-        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
 
 
     
@@ -118,8 +240,19 @@ if([dm getInstance].notificationSymbol == 100)
         for(int i=0;i<dataArr.count;i++)
         {
             myUnit *unit = [dataArr objectAtIndex:i];
-            UserListModel *model = [unit.list objectAtIndex:0];
-            groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+            UserListModel *model;
+            if(unit.list.count>1)
+            {
+                model = [unit.list objectAtIndex:1];
+                
+                
+            }
+            else
+            {
+                model = [unit.list objectAtIndex:0];
+                
+                
+            }            groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
                 groupModel = [model.groupselit_selit objectAtIndex:i];
@@ -136,7 +269,9 @@ if([dm getInstance].notificationSymbol == 100)
             }
             
         }
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        int num = (int)genArr.count;
+        NSLog(@"num = %d",num);
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
     }
     if([dm getInstance].notificationSymbol == 102)
@@ -158,7 +293,7 @@ if([dm getInstance].notificationSymbol == 100)
             }
             }
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
             
             
         }
@@ -190,7 +325,7 @@ if([dm getInstance].notificationSymbol == 100)
                 }
             
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:1 unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:nil];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:nil];
             
             
         }

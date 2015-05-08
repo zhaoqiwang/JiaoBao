@@ -14,7 +14,7 @@
 #import "HomeClassTopScrollView.h"
 #import "HomeClassRootScrollView.h"
 
-@interface HomeClassWorkView : UIView<NewWorkTopViewProtocol>{
+@interface HomeClassWorkView : UIView<NewWorkTopViewProtocol,MBProgressHUDDelegate>{
     UIScrollView *mScrollV_all;//放所有控件
     NewWorkTopView *mViewTop;//上半部分
 }

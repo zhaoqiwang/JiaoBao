@@ -102,42 +102,13 @@
 
 //按钮点击事件
 -(void)clickBtn:(UIButton *)btn{
-    NSLog(@"11111111111");
     
     
- 
-        
-        
-    
-
     NSNumber *num = [NSNumber numberWithInteger:self.tag];
-
-
-    if(btn.tag == 7)//全选bigButton
-    {
-        if(!([dm getInstance].sectionSet2))
-        {
-            [dm getInstance].sectionSet2 = [[NSMutableSet alloc]initWithCapacity:0];
-            
-        }
-        if(![[dm getInstance].sectionSet2 containsObject:num] )
-        {
-            [[dm getInstance].sectionSet2 addObject:num];
-            NSLog(@"mSet = %@",[dm getInstance].sectionSet);
-            
-            
-        }
-        else
-        {
-            //[[dm getInstance].sectionSet2 removeObject:num];
-        }
         
-    }
-
-    if(btn.tag == 2)//反选button
-    {
         
-    }
+    
+
     if(btn.tag == 6)//三角 加号 bigButton
     {
         if(!([dm getInstance].sectionSet))
