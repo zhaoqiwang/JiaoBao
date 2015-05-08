@@ -26,9 +26,13 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     //top
-    [self.view addSubview:[NewWorkTopScrollView shareInstance]];
+    NewWorkTopScrollView *top = [[NewWorkTopScrollView alloc] initWithFrame];
+    [self.view addSubview:top];
+//    [self.view addSubview:[NewWorkTopScrollView shareInstance]];
     //root
-    [self.view addSubview:[NewWorkRootScrollView shareInstance]];
+    NewWorkRootScrollView *root = [[NewWorkRootScrollView alloc] initWithFrame];
+    [self.view addSubview:root];
+//    [self.view addSubview:[NewWorkRootScrollView shareInstance]];
     
     ForwardViewController *forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
     //forward.mStr_navName = @"新建事务";
@@ -40,7 +44,8 @@
     [self addChildViewController:forward];
     [forward didMoveToParentViewController:self];
     //[self addChild:leftTableVC withChildToRemove:nil];
-    [[NewWorkRootScrollView shareInstance] addSubview:forward.view];
+//    [[NewWorkRootScrollView shareInstance] addSubview:forward.view];
+    [root addSubview:forward.view];
     
 //    ForwardViewController *forward2 = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
 //    forward2.mStr_navName = @"新建事务";

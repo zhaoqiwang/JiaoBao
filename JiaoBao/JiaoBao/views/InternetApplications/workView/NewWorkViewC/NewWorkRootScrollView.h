@@ -28,6 +28,7 @@
 @property (strong,nonatomic) HomeClassWorkView *homeClassView;//家校互动
 @property (strong,nonatomic) MoreUnitWorkView *moreUnitView;//多单位事务
 
-+ (NewWorkRootScrollView *)shareInstance;
+//+ (NewWorkRootScrollView *)shareInstance;
+- (id)initWithFrame;
 
 @end

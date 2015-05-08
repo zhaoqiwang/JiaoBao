@@ -24,19 +24,22 @@
 
 
 
-+ (NewWorkTopScrollView *)shareInstance {
-    static NewWorkTopScrollView *__singletion;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48)];
-    });
-    return __singletion;
-}
+//+ (NewWorkTopScrollView *)shareInstance {
+//    static NewWorkTopScrollView *__singletion;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48)];
+//    });
+//    return __singletion;
+//}
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame
 {
+    CGRect frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48);
     self = [super initWithFrame:frame];
     if (self) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"adjustTopScrollViewButton" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustTopScrollViewButton:) name:@"adjustTopScrollViewButton" object:nil];
         self.delegate = self;
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
@@ -53,6 +56,12 @@
         [self initWithNameButtons];
     }
     return self;
+}
+
+-(void)adjustTopScrollViewButton:(NSNotification *)noti{
+    [self setButtonUnSelect];
+    self.mInt_scrollViewSelectedChannelID = [noti.object intValue];
+    [self setButtonSelect];
 }
 
 - (void)initWithNameButtons
@@ -125,7 +134,8 @@
             
         }
     }
-    [NewWorkRootScrollView shareInstance].mInt = (int)sender.tag - 100;
+//    [NewWorkRootScrollView shareInstance].mInt = (int)sender.tag - 100;
+    NSString *a = [NSString stringWithFormat:@"%d",(int)sender.tag - 100];
     //按钮选中状态
     if (!sender.selected) {
         sender.selected = YES;
@@ -137,7 +147,8 @@
         } completion:^(BOOL finished) {
             if (finished) {
                 //设置页出现
-                [[NewWorkRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
+//                [[NewWorkRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"selectNameButton" object:a];
                 //赋值滑动列表选择ID
                 mInt_scrollViewSelectedChannelID = sender.tag;
                 [self sendRequest];

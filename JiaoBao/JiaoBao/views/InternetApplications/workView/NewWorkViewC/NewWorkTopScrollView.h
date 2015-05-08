@@ -24,11 +24,13 @@
 @property(nonatomic,assign)NSUInteger firstSel;
 
 
-+ (NewWorkTopScrollView *)shareInstance;
+//+ (NewWorkTopScrollView *)shareInstance;
 //滑动撤销选中按钮
 - (void)setButtonUnSelect;
 //滑动选择按钮
 - (void)setButtonSelect;
 - (void)initWithNameButtons;
+
+- (id)initWithFrame;
 
 @end

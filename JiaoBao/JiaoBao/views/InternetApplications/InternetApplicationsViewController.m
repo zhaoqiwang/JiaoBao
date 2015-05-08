@@ -281,16 +281,16 @@
         NSArray *menuItems =
         @[
           [KxMenuItem menuItem:@"新建事务"
-                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                         image:[UIImage imageNamed:@"appNav_work"]
                         target:self
                         action:@selector(pushMenuItem6:)],
           
           [KxMenuItem menuItem:@"发表动态"
-                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                         image:[UIImage imageNamed:@"appNav_dongtai"]
                         target:self
                         action:@selector(pushMenuItem4:)],
           [KxMenuItem menuItem:@"发表分享"
-                         image:[UIImage imageNamed:@"appNav_changeUser"]
+                         image:[UIImage imageNamed:@"appNav_share"]
                         target:self
                         action:@selector(pushMenuItem5:)],
           
