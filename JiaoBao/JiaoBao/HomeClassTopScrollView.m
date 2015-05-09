@@ -273,7 +273,7 @@
 
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
-    if([dm getInstance].notificationSymbol == 101)
+    if([dm getInstance].notificationSymbol == 100)
     {
         if(self.requestSymbol0 == YES)
         {
@@ -295,6 +295,7 @@
     }
     if([dm getInstance].notificationSymbol == 102)
     {
+        [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
         if(self.requestSymbol2 == YES)
         {
             

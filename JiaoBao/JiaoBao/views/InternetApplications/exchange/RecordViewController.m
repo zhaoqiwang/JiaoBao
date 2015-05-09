@@ -35,7 +35,12 @@
 }
 -(void)GetSignInList:(id)sender
 {
+    NSLog(@"sender = %@",sender);
+    if(sender)
+    {
+
     NSArray *arr = [sender object];
+    
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     self.selectedArrSymbol = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<arr.count;i++)
@@ -79,6 +84,7 @@
     else
     {
         self.dicArr = nil;
+    }
     }
 
     

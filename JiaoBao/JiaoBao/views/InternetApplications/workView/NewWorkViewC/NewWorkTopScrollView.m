@@ -43,7 +43,7 @@
         self.delegate = self;
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self.superview];
         [self.superview addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
+        self.mProgressV.delegate = self.superview;
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
         self.pagingEnabled = NO;
@@ -138,11 +138,14 @@
                 [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
                 [dm getInstance].notificationSymbol =100;
-                self.mProgressV.labelText = @"正在加载";
-                self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-                //        self.mProgressV.userInteractionEnabled = NO;
-                [self.mProgressV show:YES];
-                [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:nil];
+                [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
+
+//                self.mProgressV.labelText = @"正在加载";
+//                self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+//                //        self.mProgressV.userInteractionEnabled = NO;
+//                [self.mProgressV show:YES];
+//                [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
                 
             }
 

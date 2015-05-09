@@ -8,6 +8,7 @@
 
 #import "ClassMessage.h"
 #import "Forward_cell.h"
+#import "SVProgressHUD.h"
 NSString *kCell = @"Forward_cell2";
 
 @implementation ClassMessage
@@ -132,8 +133,8 @@ NSString *kCell = @"Forward_cell2";
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
     if([dm getInstance].notificationSymbol ==100)
     {
-    [self.mProgressV hide:YES];
-    self.mModel_unitList = noti.object;
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
+        self.mModel_unitList = noti.object;
     self.datasource = self.mModel_unitList.UnitClass;
     [self.mCollectionV_list reloadData];
 

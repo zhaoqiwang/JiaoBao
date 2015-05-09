@@ -16,11 +16,11 @@
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
     headerView.backgroundColor = [UIColor lightGrayColor];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
-    label.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-    label.text = [NSString stringWithFormat:@"%@【全校家长】",[dm getInstance].mStr_unit] ;
-    label.font = [UIFont systemFontOfSize:13];
-    [headerView addSubview:label];
+    self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
+    self.label.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    self.label.text = [NSString stringWithFormat:@"%@【全校家长】",[dm getInstance].mStr_unit] ;
+    self.label.font = [UIFont systemFontOfSize:13];
+    [headerView addSubview:self.label];
     self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.rightBtn.frame = CGRectMake(self.frame.size.width-50, 12, 14, 14);
     self.rightBtn.tag = 1;

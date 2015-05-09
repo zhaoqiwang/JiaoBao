@@ -411,7 +411,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
     
             cell.mLab_name.textColor = [UIColor blackColor];
-            NSLog(@"mInt_select = %d",groupModel.mInt_select);
 
             if (groupModel.mInt_select == 0) {
                 cell.mImgV_select.image = [UIImage imageNamed:@"blank"];
@@ -552,6 +551,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         self.imgV.image = [UIImage imageNamed:@"blank.png"];
         
     }
+    NSLog(@"section.seleted = %lu",(unsigned long)self.allSelected);
     NSLog(@"self.allSelected = %lu",(unsigned long)self.allSelected);
 
     [self.mCollectionV_list reloadData];
@@ -657,8 +657,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         if(model.sectionSelSymbol == 2)
         {
             self.allSelected = 2;
+            isAll = 10000;
             break;
         }
+        NSLog(@"isAll = %d",isAll);
 
         isAll = isAll+model.sectionSelSymbol;
 
@@ -689,10 +691,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
         
     }
+    NSLog(@"self.allSelected = %lu",(unsigned long)self.allSelected);
 
-    
-
-            [self.mCollectionV_list reloadData];
+[self.mCollectionV_list reloadData];
     
 }
 
