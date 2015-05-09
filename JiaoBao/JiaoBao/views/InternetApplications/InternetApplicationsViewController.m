@@ -180,7 +180,7 @@
         Identity_model *idenModel = [tempArr objectAtIndex:i];
         NSString *str_default = idenModel.DefaultUnitId;
         
-        if (i==0||i==1) {
+        if ([idenModel.RoleIdentity intValue]==0||[idenModel.RoleIdentity intValue]==1) {
             NSMutableArray *array = [NSMutableArray array];
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
@@ -189,13 +189,14 @@
                 if ([userUnitsModel.UnitID intValue] == [str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
-//                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+                    break;
                 }
             }
-        }else if(i==2||i==3){
+        }else if([idenModel.RoleIdentity intValue]==2||[idenModel.RoleIdentity intValue]==3){
             NSMutableArray *array = [NSMutableArray array];
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
@@ -203,10 +204,11 @@
                 if ([userUnitsModel.ClassID intValue]==[str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.ClassID intValue];
-                    [dm getInstance].uType = 3;
+                    [dm getInstance].uType = [idenModel.RoleIdentity intValue];
 //                    [dm getInstance].uType = [userUnitsModel.UnitType intValue]
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+                    break;
                 }
             }
         }
@@ -278,33 +280,60 @@
 -(void)Nav_internetAppViewClickBtnWith:(UIButton *)btn{
     D("点击的button是  %ld",(long)btn.tag);
     if (btn.tag == 1) {//点击设置按钮
-        NSArray *menuItems =
-        @[
-          [KxMenuItem menuItem:@"新建事务"
-                         image:[UIImage imageNamed:@"appNav_work"]
-                        target:self
-                        action:@selector(pushMenuItem6:)],
-          
-          [KxMenuItem menuItem:@"发表动态"
-                         image:[UIImage imageNamed:@"appNav_dongtai"]
-                        target:self
-                        action:@selector(pushMenuItem4:)],
-          [KxMenuItem menuItem:@"发表分享"
-                         image:[UIImage imageNamed:@"appNav_share"]
-                        target:self
-                        action:@selector(pushMenuItem5:)],
-          
-          [KxMenuItem menuItem:@"切换单位"
-                         image:[UIImage imageNamed:@"appNav_changeUnit"]
-                        target:self
-                        action:@selector(pushMenuItem2:)],
-          
-          [KxMenuItem menuItem:@"切换账号"
-                         image:[UIImage imageNamed:@"appNav_changeUser"]
-                        target:self
-                        action:@selector(pushMenuItem3:)],
-          
-          ];
+        NSArray *menuItems = [NSArray array];
+        if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
+            menuItems =
+            @[
+              [KxMenuItem menuItem:@"发表动态"
+                             image:[UIImage imageNamed:@"appNav_dongtai"]
+                            target:self
+                            action:@selector(pushMenuItem4:)],
+              [KxMenuItem menuItem:@"发表分享"
+                             image:[UIImage imageNamed:@"appNav_share"]
+                            target:self
+                            action:@selector(pushMenuItem5:)],
+              
+              [KxMenuItem menuItem:@"切换单位"
+                             image:[UIImage imageNamed:@"appNav_changeUnit"]
+                            target:self
+                            action:@selector(pushMenuItem2:)],
+              
+              [KxMenuItem menuItem:@"切换账号"
+                             image:[UIImage imageNamed:@"appNav_changeUser"]
+                            target:self
+                            action:@selector(pushMenuItem3:)],
+              
+              ];
+        }else{
+            menuItems =
+            @[
+              [KxMenuItem menuItem:@"新建事务"
+                             image:[UIImage imageNamed:@"appNav_work"]
+                            target:self
+                            action:@selector(pushMenuItem6:)],
+              
+              [KxMenuItem menuItem:@"发表动态"
+                             image:[UIImage imageNamed:@"appNav_dongtai"]
+                            target:self
+                            action:@selector(pushMenuItem4:)],
+              [KxMenuItem menuItem:@"发表分享"
+                             image:[UIImage imageNamed:@"appNav_share"]
+                            target:self
+                            action:@selector(pushMenuItem5:)],
+              
+              [KxMenuItem menuItem:@"切换单位"
+                             image:[UIImage imageNamed:@"appNav_changeUnit"]
+                            target:self
+                            action:@selector(pushMenuItem2:)],
+              
+              [KxMenuItem menuItem:@"切换账号"
+                             image:[UIImage imageNamed:@"appNav_changeUser"]
+                            target:self
+                            action:@selector(pushMenuItem3:)],
+              
+              ];
+        }
+        
         
         [KxMenu showMenuInView:self.view
                       fromRect:btn.frame
@@ -484,8 +513,6 @@
     self.mView_all.hidden = NO;
     self.mTableV_left.hidden = NO;
     self.mTableV_right.hidden = NO;
-    NSLog(@"%@",self.mView_all);
-    NSLog(@"%d",self.mView_all.hidden);
     //self.mView_all.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.mView_all];
     [self.mTableV_left reloadData];
@@ -502,6 +529,8 @@
     [InternetAppTopScrollView shareInstance].mInt_theme = 0;
     [InternetAppTopScrollView shareInstance].mInt_work_sendToMe = 0;
     [InternetAppTopScrollView shareInstance].mInt_work_mysend = 0;
+    [dm getInstance].mStr_unit = @"";
+    [dm getInstance].name = @"";
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
