@@ -225,6 +225,7 @@
     UploadImgModel *model = noti.object;
     [self.mArr_pic addObject:model];
     self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
+    self._placeholdLabel.hidden = YES;
 }
 
 -(void)SavePublishArticle:(NSNotification *)noti{

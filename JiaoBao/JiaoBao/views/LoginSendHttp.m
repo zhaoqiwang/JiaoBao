@@ -828,15 +828,20 @@ static LoginSendHttp *loginSendHttp = nil;
             NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
             //通知登录界面，是否记住密码
             [self.delegate LoginSendHttpMember:@"1"];
-            D("str-=== %@",str000);
+            D("str-=flag_request5== %@",str000);
             NSDictionary *dic = [str000 objectFromJSONString];
             [dm getInstance].jiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
-            [dm getInstance].name = [dic objectForKey:@"TrueName"];
+            NSString *name = [dic objectForKey:@"TrueName"];
+            if ([name isKindOfClass:[NSNull class]]||[name isEqual:@"null"]) {
+                [dm getInstance].name = [dic objectForKey:@"Nickname"];
+            }else{
+                [dm getInstance].name = [dic objectForKey:@"TrueName"];
+            }
             [dm getInstance].TrueName = [dic objectForKey:@"TrueName"];
             //请求融云用户token
-            if (SHOWRONGYUN == 1) {
-                [[ExchangeHttp getInstance] exchangeHttpRongYunGetToken:[dm getInstance].jiaoBaoHao TrueName:[dm getInstance].TrueName];
-            }
+//            if (SHOWRONGYUN == 1) {
+//                [[ExchangeHttp getInstance] exchangeHttpRongYunGetToken:[dm getInstance].jiaoBaoHao TrueName:[dm getInstance].TrueName];
+//            }
             //跳转到主界面
             if (self.flag_skip == 1) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"registeredSuccessfully" object:nil];//切换界面
@@ -856,7 +861,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSString *time = [jsonDic objectForKey:@"Data"];
         D("flag_request==6 == %@",time);
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        D("str-=== %@",str000);
+        D("str-=flag_request6== %@",str000);
         NSArray *arrlist=[str000 objectFromJSONString];
         D("%lu",(unsigned long)[arrlist count]);
         for (int i=0; i<[arrlist count]; i++) {
@@ -871,7 +876,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSString *time = [jsonDic objectForKey:@"Data"];
         D("flag_request==7 == %@",time);
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        D("str-=== %@",str000);
+        D("str-=flag_request7== %@",str000);
         //验证Token
         [self validateToken:str000];
     }else if (flag_request == 8){//验证Token回调
@@ -1152,10 +1157,30 @@ static LoginSendHttp *loginSendHttp = nil;
         D("tag-=== 19=== %@",str000);
         UserInfoModel *model = [ParserJson parserJsonUserInfoWith:str000];
         [dm getInstance].userInfo = model;
-        NSString *name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,model.UserName];
+        //判断当前单位显示
+        if ([[dm getInstance].mStr_unit isKindOfClass:[NSNull class]]||[[dm getInstance].mStr_unit isEqual:@"null"]||[[dm getInstance].mStr_unit isEqual:@"nil"]||[dm getInstance].mStr_unit == Nil||[dm getInstance].mStr_unit.length==0) {
+            for (Identity_model *model in [dm getInstance].identity) {
+                if ([model.RoleIdentity intValue] == 3||[model.RoleIdentity intValue]==4) {
+                    if (model.UserClasses.count>0) {
+                        Identity_UserClasses_model *temp = [model.UserClasses objectAtIndex:0];
+                        [dm getInstance].mStr_unit = temp.ClassName;
+                        [dm getInstance].uType = [model.RoleIdentity intValue];
+                        break;
+                    }
+                }
+            }
+        }
+        NSString *name;
+        if ([str000 isKindOfClass:[NSNull class]]||[str000 isEqual:@"null"]) {
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
+        }else{
+            [dm getInstance].name = model.UserName;
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,model.UserName];
+        }
         CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
         [Nav_internetAppView getInstance].mLab_name.text = name;
         [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
+        
         //通知internetApp界面，获取成功
         [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:nil];
     }else if (_request.tag == 20){//获取事务信息接收单位列表
