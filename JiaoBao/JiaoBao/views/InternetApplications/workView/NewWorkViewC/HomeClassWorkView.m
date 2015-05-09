@@ -122,20 +122,33 @@
 }
 -(void)progress:(id)sender
 {
-    [SVProgressHUD show];
-//    self.mProgressV.labelText = @"正在加载...";
-//    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//    //        self.mProgressV.userInteractionEnabled = NO;
-//    [self.mProgressV show:YES];
-//    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    //[SVProgressHUD show];
+    self.mProgressV.labelText = @"正在加载...";
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    self.mProgressV.userInteractionEnabled = NO;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
     
 }
+-(void)progress2:(id)sender
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.mProgressV hide:YES];
+
+
+                               });
+        
+
+}
+
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(progress2:) name:@"progress" object:nil];
+
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(progress:) name:@"progress" object:nil];
 
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];

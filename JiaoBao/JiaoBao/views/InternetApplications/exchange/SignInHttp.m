@@ -357,8 +357,8 @@ static  SignInHttp*__instance;
             [SVProgressHUD showErrorWithStatus:@"签报失败"];
         }
         
-        NSArray *arr = [dicList objectForKey:@"Data"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
+//        NSArray *arr = [dicList objectForKey:@"Data"];
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
         
     }
 

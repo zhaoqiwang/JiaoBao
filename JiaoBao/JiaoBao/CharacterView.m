@@ -140,6 +140,7 @@ NSString *kSection = @"Forward_section";
         } else {
             cell.mImgV_select.image = [UIImage imageNamed:@"selected.png"];
         }
+    
         CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
         if (size.width>cell.mLab_name.frame.size.width) {
             cell.mLab_name.numberOfLines = 2;
@@ -194,6 +195,9 @@ NSString *kSection = @"Forward_section";
     view.tag = indexPath.section;
     view.rightBtn.hidden = YES;
     view.mBtn_all.hidden = YES;
+    CGSize size = [view.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
+    
+    view.addBtn.frame = CGRectMake(view.mLab_name.frame.origin.x+size.width, 5, 30, 30);
 
 
     return view;

@@ -139,6 +139,8 @@
                 self.firstSel = 1;
                 [dm getInstance].notificationSymbol =100;
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:nil];
+                [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
+
 //                self.mProgressV.labelText = @"正在加载";
 //                self.mProgressV.mode = MBProgressHUDModeIndeterminate;
 //                //        self.mProgressV.userInteractionEnabled = NO;

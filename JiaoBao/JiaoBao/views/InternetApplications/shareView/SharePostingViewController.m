@@ -398,6 +398,8 @@
     NSData *imageData = UIImageJPEGRepresentation(image,0.75);
     NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
     D("图片路径是：%@",imgPath);
+
+
     BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
     if (!yesNo) {//不存在，则直接写入后通知界面刷新
         BOOL result = [imageData writeToFile:imgPath atomically:YES];
@@ -508,12 +510,26 @@
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                NSData *imageData = UIImageJPEGRepresentation(image,0.75);
+                
+
+                
+                NSData *imageData = UIImageJPEGRepresentation(image,1);
+                if(imageData.length>1000000)
+                {
+                    imageData = UIImageJPEGRepresentation(image,0.75);
+                }
+                else
+                {
+                    imageData = UIImageJPEGRepresentation(image, 1);
+                }
+                NSLog(@"%lu",(unsigned long)imageData.length);
+
                 NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
                 
                 //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
                 //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
                 D("图片路径是：%@",imgPath);
+
                 BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
                 if (!yesNo) {//不存在，则直接写入后通知界面刷新
                     BOOL result = [imageData writeToFile:imgPath atomically:YES];
