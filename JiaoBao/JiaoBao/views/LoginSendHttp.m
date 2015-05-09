@@ -1165,6 +1165,7 @@ static LoginSendHttp *loginSendHttp = nil;
                         Identity_UserClasses_model *temp = [model.UserClasses objectAtIndex:0];
                         [dm getInstance].mStr_unit = temp.ClassName;
                         [dm getInstance].uType = [model.RoleIdentity intValue];
+                        [dm getInstance].UID = [temp.ClassID intValue];
                         break;
                     }
                 }
