@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation MoreUnitWorkView
-@synthesize mViewTop,mScrollV_all,mModel_unitList,mArr_display,mArr_sumData,mTableV_work,mInt_readflag,mInt_requestCount,mInt_requestCount2,mProgressV;
+@synthesize mViewTop,mScrollV_all,mModel_unitList,mArr_display,mArr_sumData,mTableV_work,mInt_readflag,mInt_requestCount,mInt_requestCount2,mProgressV,mInt_flag;
 
 
 - (id)initWithFrame1:(CGRect)frame{
@@ -30,6 +30,9 @@
         //发表消息成功推送
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
+        //第一次进入此界面，发送数据请求
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fristGotoMoreUnit" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fristGotoMoreUnit) name:@"fristGotoMoreUnit" object:nil];
         
         self.mInt_readflag = 0;
         self.mInt_requestCount = 0;
@@ -58,6 +61,14 @@
 //        [self sendRequest];
     }
     return self;
+}
+
+//第一次进入此界面，发送数据请求
+-(void)fristGotoMoreUnit{
+    if (self.mInt_flag ==0) {
+        self.mInt_flag = 1;
+        [self sendRequest];
+    }
 }
 
 //添加附件后重置界面
@@ -100,18 +111,44 @@
 }
 
 -(void)sendRequest{
-    for (TreeView_node *node in self.mArr_sumData) {
-        
-        for(TreeView_node *node2 in node.sonNodes){
-//            if (node2.type == 1&&node2.sonNodes.count==0) {
-                self.mInt_requestCount ++;
-                NewWorkTree_model *tempModel = node2.nodeData;
-                myUnit *temp = tempModel.mModel_unit;
-                D("temp.tabld-====%@",temp.TabID);
-                [self sendRequest_member2:temp flag:0];
-//            }
+    self.mInt_requestCount = 0;
+    self.mInt_requestCount2 = 0;
+    //上级单位
+    TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
+    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+        for(TreeView_node *node2 in node1.sonNodes){
+            NewWorkTree_model *tempModel = node2.nodeData;
+            myUnit *temp = tempModel.mModel_unit;
+            self.mInt_requestCount ++;
+            if ([dm getInstance].uType == 1||[dm getInstance].uType == 2) {
+                [[LoginSendHttp getInstance] login_GetUnitRevicer:temp.TabID Flag:temp.flag];
+            }else{
+                [[LoginSendHttp getInstance] login_GetUnitClassRevicer:temp.TabID Flag:temp.flag];
+            }
         }
     }
+    //下级单位
+    TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
+    //判断是子类还是班级
+    NSMutableArray *sub_unit = [NSMutableArray array];
+    if (self.mModel_unitList.subUnits.count>0) {
+        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
+    }else{
+        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
+    }
+    for (int i=0; i<sub_unit.count; i++) {
+        for(TreeView_node *node3 in node2.sonNodes){
+            self.mInt_requestCount ++;
+            NewWorkTree_model *tempModel = node3.nodeData;
+            myUnit *temp = tempModel.mModel_unit;
+            if (self.mModel_unitList.subUnits.count>0) {
+                [[LoginSendHttp getInstance] login_GetUnitRevicer:temp.TabID Flag:temp.flag];
+            }else{
+                [[LoginSendHttp getInstance] login_GetUnitClassRevicer:temp.TabID Flag:temp.flag];
+            }
+        }
+    }
+    
     self.mProgressV.labelText = @"加载中...";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     [self.mProgressV show:YES];
@@ -176,20 +213,7 @@
 
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-//    self.mInt_requestCount2++;
-//    if (self.mInt_requestCount == self.mInt_requestCount2) {
-//        [self.mProgressV hide:YES];
-//    }
-//    [self.mProgressV hide:YES];
-        self.mModel_unitList = noti.object;
-        //获取当前单位的人员数组
-//        if ([dm getInstance].uType ==3) {
-//            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-//        }else{
-//            [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-//        }
-    //加载单位目录
-//    [self addUnit];
+    self.mModel_unitList = noti.object;
     
     TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
     //当前单位
@@ -229,11 +253,11 @@
         temp.mStr_img_open_close = @"root_close";
         node.nodeData = temp;
         [tempArr addObject:node];
-        if ([dm getInstance].uType == 0||[dm getInstance].uType == 1) {
-            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
-        }else{
-            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
-        }
+//        if ([dm getInstance].uType == 1||[dm getInstance].uType == 2) {
+//            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
+//        }else{
+//            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
+//        }
     }
     
     node1.sonNodes = [NSMutableArray arrayWithArray:tempArr];
@@ -241,8 +265,17 @@
     //下级单位
     NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
     TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
-    for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
-        myUnit *tempUnit = [self.mModel_unitList.subUnits objectAtIndex:i];
+    //判断是子类还是班级
+    NSMutableArray *sub_unit = [NSMutableArray array];
+    if (self.mModel_unitList.subUnits.count>0) {
+        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
+    }else{
+        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
+        NewWorkTree_model *temp2 = node2.nodeData;
+        temp2.mStr_name = @"所有班级";
+    }
+    for (int i=0; i<sub_unit.count; i++) {
+        myUnit *tempUnit = [sub_unit objectAtIndex:i];
         //第1根节点
         TreeView_node *node = [[TreeView_node alloc]init];
         node.nodeLevel = 1;
@@ -257,11 +290,11 @@
         temp.mStr_img_open_close = @"root_close";
         node.nodeData = temp;
         [tempArr2 addObject:node];
-        if ([dm getInstance].uType == 0||[dm getInstance].uType == 1) {
-            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
-        }else{
-            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
-        }
+//        if (self.mModel_unitList.subUnits.count>0) {
+//            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
+//        }else{
+//            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
+//        }
     }
     
     node2.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
@@ -271,7 +304,10 @@
 
 //获取到每个单位中的人员
 -(void)GetUnitRevicer:(NSNotification *)noti{
-//    [self.mProgressV hide:YES];
+    self.mInt_requestCount2 ++;
+    if (self.mInt_requestCount == self.mInt_requestCount2) {
+        [self.mProgressV hide:YES];
+    }
     NSDictionary *dic = noti.object;
     NSString *unitID = [dic objectForKey:@"unitID"];
     D("jksg;lk-===%@",unitID);
@@ -643,7 +679,7 @@
 //获取当前单位中的人员
 -(void)sendRequest_member2:(myUnit *)tempUnit flag:(int)a{//a==0是获取老师的单位，a==1获取老师的执教班级
     //获取当前单位的人员数组
-    if ([dm getInstance].uType == 0||[dm getInstance].uType == 1) {
+    if ([dm getInstance].uType == 1||[dm getInstance].uType == 2) {
 //        if (a==0) {
             [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
 //        }else{

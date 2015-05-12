@@ -208,7 +208,9 @@
 }
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
-    
+    if (mInt_userSelectedChannelID == 102) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fristGotoMoreUnit" object:nil];
+    }
 }
 
 @end

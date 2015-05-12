@@ -47,6 +47,7 @@
 
 @protocol TreeView_Level0_CellDelegate <NSObject>
 
+@optional
 //点击编辑按钮
 -(void)selectedMoreBtn0:(TreeView_Level0_Cell *)cell;
 

@@ -27,6 +27,7 @@ static dm* dmone = nil;
         self.mArr_rongYunGroup = [[NSMutableArray alloc] init];
         self.mArr_unit_member = [[NSMutableArray alloc] init];
         self.mArr_myFriends = [[NSMutableArray alloc] init];
+        self.mStr_unit = @"";
     }
     return self;
 }
