@@ -33,8 +33,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 -(void)refreshWorkView:(id)sender
 {
-    [self setFrame];
-    [self CollectionReloadData];
+    if([dm getInstance].notificationSymbol ==1)
+    {
+        [self setFrame];
+        [self CollectionReloadData];
+        
+    }
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -46,9 +51,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //发表消息成功推送
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
-    //通知界面更新，获取事务信息接收单位列表
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+//    //通知界面更新，获取事务信息接收单位列表
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     //获取到每个单位中的人员
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
@@ -73,7 +78,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mProgressV.delegate = self;
 
     //大scrollview的坐标
-    self.mScrollV_all.frame = CGRectMake(0, 20, [dm getInstance].width, [dm getInstance].height-44-10);
+    self.mScrollV_all.frame = CGRectMake(0, 0, [dm getInstance].width, [dm getInstance].height-44-10);
 
     //接收人，全选，反选，发表
 
@@ -82,10 +87,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
     [self.mScrollV_all addSubview:self.topView];
     NSLog(@"topView = %@",self.topView);
-    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+10, [dm getInstance].width, 28)];
+    self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28)];
     self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
-    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y+10, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y, self.mLab_4.frame.size.width, 29);
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
     self.mBtn_all.tag = 1;
     [self.mBtn_all addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -111,7 +116,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     tap2.delegate = self;
     [self.topView addGestureRecognizer:tap2];
     
-    [self sendRequest];
+   // [self sendRequest];
 }
 -(void)clickBtn:(id)sender
 {
@@ -222,34 +227,19 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //放单位信息的
     
     //接收人，全选，反选，发表
-    self.headView.frame = CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y+20, [dm getInstance].width, 28);
-    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.origin.y+self.topView.frame.size.height+20, self.mLab_4.frame.size.width, 29);
+    self.headView.frame = CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28);
+    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.origin.y+self.topView.frame.size.height, self.mLab_4.frame.size.width, 29);
     self.imgV.frame = CGRectMake([dm getInstance].width-15-100+15, self.mLab_4.frame.origin.y+7, 14, 14);
     self.imgV.image = [UIImage imageNamed:@"blank.png"];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
     self.mBtn_invertSelect.frame = CGRectMake([dm getInstance].width-60+15, self.mLab_4.frame.origin.y, 45, 29);
-
-       self.mCollectionV_list.frame = CGRectMake(Margin, self.headView.frame.origin.y+self.headView.frame.size.height, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
+    self.mCollectionV_list.frame = CGRectMake(Margin, self.headView.frame.origin.y+self.headView.frame.size.height, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
 }
 
 
 
 
 
--(void)sendRequest{
-    //检查当前网络是否可用
-    if ([self checkNetWork]) {
-        return;
-    }
-    //发送获取接收人员列表请求
-    [LoginSendHttp getInstance].mInt_forwardFlag = self.mInt_forwardFlag;
-    [LoginSendHttp getInstance].mInt_forwardAll = self.mInt_forwardAll;
-    [[LoginSendHttp getInstance] changeCurUnit];
-    
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
@@ -277,48 +267,30 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     sleep(2);
 }
 
-//通知界面更新，获取事务信息接收单位列表
--(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    if([dm getInstance].notificationSymbol ==1)
-    {
-        [self.mProgressV hide:YES];
-        self.mModel_unitList = noti.object;
-        
-        if([dm getInstance].notificationSymbol ==1)
-        {
-            [[LoginSendHttp getInstance] login_GetUnitRevicer:self.mModel_unitList.myUnit.TabID Flag:self.mModel_unitList.myUnit.flag];
-            
-        }
-        
-    }
 
-
-    
-
-    
-}
 
 //获取到每个单位中的人员
 -(void)GetUnitRevicer:(NSNotification *)noti{
-    
     if([dm getInstance].notificationSymbol == 1)
     {
-        [self.mProgressV hide:YES];
+        [[dm getInstance].progress hide:YES];
         
         NSDictionary *dic = noti.object;
         NSString *unitID = [dic objectForKey:@"unitID"];
         NSArray *array = [dic objectForKey:@"array"];
         
         //当前单位
-        if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
-            self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = self.mModel_unitList.myUnit;
+        if ([[dm getInstance].mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
+            [dm getInstance].mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+            self.mModel_myUnit = [dm getInstance].mModel_unitList.myUnit;
         }
         
         //刷新
         [self CollectionReloadData];
         
     }
+    
+
 
 }
 
@@ -364,8 +336,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)CollectionReloadData{
     [self.mCollectionV_list reloadData];
     self.mCollectionV_list.frame = CGRectMake(self.mCollectionV_list.frame.origin.x, self.mCollectionV_list.frame.origin.y, self.mCollectionV_list.frame.size.width, self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
-    float height = self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height;
-    NSLog(@"height = %f",height);
+    //float height = self.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height;
+    //NSLog(@"height = %f",height);
     self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mCollectionV_list.frame.origin.y+self.mCollectionV_list.frame.size.height+150);
 }
 
@@ -726,7 +698,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         }
     NSMutableArray *array = [NSMutableArray array];
 
-    myUnit *tempUnit = self.mModel_unitList.myUnit;
+    myUnit *tempUnit = [dm getInstance].mModel_unitList.myUnit;
     
     [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
     
@@ -742,7 +714,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         //发表
             NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
             [array1 addObjectsFromArray:self.topView.mArr_accessory];
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
         
         self.mProgressV.labelText = @"正在发送";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;

@@ -35,6 +35,7 @@
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,assign)BOOL requestSymbol0,requestSymbol1,requestSymbol2,requestSymbol3;
 @property(nonatomic,strong)NSArray *thirdArr;
++ (void)destroyDealloc;
 
 
 

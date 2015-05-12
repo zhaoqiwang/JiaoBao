@@ -25,7 +25,7 @@
     {
         str = @"成功";
     }
-    NSLog(@"str = %@",str);
+    //NSLog(@"str = %@",str);
     self.mProgressV.labelText = str;
     //    self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];
@@ -157,7 +157,7 @@
         [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
         //总框
-        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 10, [dm getInstance].width, self.frame.size.height)];
+        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
         self.mScrollV_all.contentSize = CGSizeMake(320, 1000);
         [self addSubview:self.mScrollV_all];
         //self.mScrollV_all.backgroundColor = [UIColor redColor];
@@ -169,10 +169,10 @@
 
 //        //root
         [self.mScrollV_all addSubview:[HomeClassTopScrollView shareInstance]];
-        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+10, [dm getInstance].width, 48);
+        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
 //        self.bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 300)];
 //        [self addSubview:self.bottomView];
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 1000);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
         //[HomeClassRootScrollView shareInstance].backgroundColor = [UIColor blueColor];
         
         [HomeClassRootScrollView shareInstance].scrollEnabled = NO;
@@ -188,10 +188,10 @@
 }
 -(void)setFrame
 {
-    [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+10, [dm getInstance].width, 48);
+    [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
     //        self.bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 300)];
     //        [self addSubview:self.bottomView];
-    [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48+10, [dm getInstance].width, 1000);
+    [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
 
     
 }
@@ -260,7 +260,7 @@ if([dm getInstance].notificationSymbol == 100)
     }
         int num = (int)genArr.count;
         NSLog(@"num = %d",num);
-        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassRootScrollView shareInstance].classMessageView.unitStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
 
 
     
@@ -302,7 +302,7 @@ if([dm getInstance].notificationSymbol == 100)
         }
         int num = (int)genArr.count;
         NSLog(@"num = %d",num);
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
     }
     if([dm getInstance].notificationSymbol == 102)
@@ -318,13 +318,14 @@ if([dm getInstance].notificationSymbol == 100)
                     if (i == 1)
                     {
                         [genArr addObject:tempModel.id0];
+                        NSLog(@"id0 = %@",tempModel.id0);
                         
                     }
 
             }
             }
             
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
             
             
         }
@@ -349,17 +350,16 @@ if([dm getInstance].notificationSymbol == 100)
                         if(tempModel.mInt_select == 1)
                         {
                         [genArr addObject:tempModel.id0];
+                        NSLog(@"id0 = %@",tempModel.id0);
+
                         }
                         
                     }
                     
                 }
-            
-            
-            [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[HomeClassTopScrollView shareInstance].curunitid classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
-            
-            
+
         }
+                    [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
         
     }
    

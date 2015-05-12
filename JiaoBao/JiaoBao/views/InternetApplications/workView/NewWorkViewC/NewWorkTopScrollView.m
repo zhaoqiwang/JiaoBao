@@ -41,9 +41,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"adjustTopScrollViewButton" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustTopScrollViewButton:) name:@"adjustTopScrollViewButton" object:nil];
         self.delegate = self;
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self.superview];
-        [self.superview addSubview:self.mProgressV];
-        self.mProgressV.delegate = self.superview;
+
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
         self.pagingEnabled = NO;
@@ -135,17 +133,21 @@
         {
             if(self.firstSel == 0)
             {
-                [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+                //[dm getInstance].notificationSymbol = 2;
+
+                //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
+                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
+                {
+                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+                    
+                }
+                //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
                 [dm getInstance].notificationSymbol =100;
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:nil];
                 [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
-//                self.mProgressV.labelText = @"正在加载";
-//                self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//                //        self.mProgressV.userInteractionEnabled = NO;
-//                [self.mProgressV show:YES];
-//                [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
                 
             }
 

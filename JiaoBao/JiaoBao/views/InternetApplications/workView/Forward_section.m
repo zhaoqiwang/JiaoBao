@@ -51,6 +51,7 @@
         bigButton.frame = CGRectMake(0, 0, 120, 40);
         [bigButton addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         bigButton.tag = 6;
+        //[bigButton setBackgroundColor:[UIColor redColor]];
         [self addSubview:bigButton];
         
         self.rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -562,6 +562,7 @@ static LoginSendHttp *loginSendHttp = nil;
     }
     for (int i=0; i<genArr.count; i++) {
         NSString *str = [genArr objectAtIndex:i];
+        NSLog(@"str999999 = %@",str);
         [request addPostValue:str forKey:@"GenUnit"];
     }
     for (int i=0; i<stuArr.count; i++) {

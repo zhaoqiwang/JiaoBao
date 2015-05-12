@@ -9,7 +9,7 @@
 #import "CharacterView.h"
 #import "Forward_cell.h"
 NSString *kCell3 = @"Forward_cell3";
-NSString *kSection = @"Forward_section";
+NSString *kSection = @"Forward_section3";
 
 @implementation CharacterView
 -(void)selSecBtn:(id)sender
@@ -75,7 +75,7 @@ NSString *kSection = @"Forward_section";
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSection];
     self.mCollectionV_list.delegate = self;
     self.mCollectionV_list.dataSource = self;
-    [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+//[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 
     
     
@@ -86,13 +86,12 @@ NSString *kSection = @"Forward_section";
 #pragma mark - Collection View Data Source
 //collectionView里有多少个组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    
     return self.datasource.count;
 }
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-        myUnit *unit = [self.datasource objectAtIndex:section];
+    myUnit *unit = [self.datasource objectAtIndex:section];
     UserListModel *model;
     if(unit.list.count == 1)
     {
@@ -147,15 +146,7 @@ NSString *kSection = @"Forward_section";
         }
         cell.mLab_name.text = groupModel.Name;
 
-        
 
-        
-    
-    
-
-    
-    
-    
     
     return cell;
 }
@@ -190,9 +181,10 @@ NSString *kSection = @"Forward_section";
 //        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"]forState:UIControlStateNormal];
 //        
 //    }
-    view.mLab_name.text = unit.UintName ;
     view.delegate = self;
     view.tag = indexPath.section;
+    view.mLab_name.text = unit.UintName ;
+
     view.rightBtn.hidden = YES;
     view.mBtn_all.hidden = YES;
     CGSize size = [view.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
@@ -256,6 +248,7 @@ NSString *kSection = @"Forward_section";
     return 5;
 }
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
+    
     if(btn.tag == 2)
     {
         groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
@@ -272,7 +265,8 @@ NSString *kSection = @"Forward_section";
             model = [unit.list objectAtIndex:1];
             
             
-        }        for(int i=0;i<model.groupselit_selit.count;i++)
+        }
+        for(int i=0;i<model.groupselit_selit.count;i++)
         {
             groupModel = [model.groupselit_selit objectAtIndex:i];
             if(groupModel.mInt_select == 1)
@@ -292,7 +286,7 @@ NSString *kSection = @"Forward_section";
     }
     if(btn.tag ==6)
     {
-        groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+        //groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
         myUnit *unit = [self.datasource objectAtIndex:section.tag];
         
         UserListModel *model;
@@ -306,7 +300,8 @@ NSString *kSection = @"Forward_section";
             model = [unit.list objectAtIndex:1];
             
             
-        }        if(model.sectionSelSymbol == 0)
+        }
+        if(model.sectionSelSymbol == 0)
         {
             model.sectionSelSymbol = 1;
 

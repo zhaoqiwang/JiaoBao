@@ -10,13 +10,19 @@
 
 @implementation HomeClassRootScrollView
 #define POSITIONID (int)self.contentOffset.x/[dm getInstance].width
+static HomeClassRootScrollView *__singletion;
 
 + (HomeClassRootScrollView *)shareInstance {
-    static HomeClassRootScrollView *__singletion;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44)];
-    });
+    @synchronized ([HomeClassRootScrollView class])
+    {
+        if (!__singletion)
+        {
+            __singletion=[[HomeClassRootScrollView alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 1000)];
+            
+        }
+        
+    }
+    
     return __singletion;
 }
 
@@ -101,5 +107,8 @@
     // Drawing code
 }
 */
-
++ (void)destroyDealloc
+{
+    __singletion = nil;
+}
 @end

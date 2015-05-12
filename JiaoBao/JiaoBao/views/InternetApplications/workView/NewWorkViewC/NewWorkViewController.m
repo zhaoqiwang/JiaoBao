@@ -20,15 +20,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"新建事务"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     //top
-    NewWorkTopScrollView *top = [[NewWorkTopScrollView alloc] initWithFrame];
-    [self.view addSubview:top];
+    self.top = [[NewWorkTopScrollView alloc] initWithFrame];
+    [self.view addSubview:self.top];
 //    [self.view addSubview:[NewWorkTopScrollView shareInstance]];
     //root
     NewWorkRootScrollView *root = [[NewWorkRootScrollView alloc] initWithFrame];
@@ -44,27 +45,39 @@
     //forward.mInt_where = 0;
     [self addChildViewController:forward];
     [forward didMoveToParentViewController:self];
-    //[self addChild:leftTableVC withChildToRemove:nil];
-//    [[NewWorkRootScrollView shareInstance] addSubview:forward.view];
+
     [root addSubview:forward.view];
+    [dm getInstance].notificationSymbol = 1;
+    [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
     
-//    ForwardViewController *forward2 = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
-//    forward2.mStr_navName = @"新建事务";
-//    forward2.mInt_forwardFlag = 1;
-//    forward2.mInt_forwardAll = 2;
-//    forward2.mInt_flag = 1;
-//    forward2.mInt_all = 2;
-//    forward2.mInt_where = 0;
-//    forward2.showTopView = NO;
-//    [self addChildViewController:forward2];
-//    [forward2 didMoveToParentViewController:self];
-//
-//    //[self addChild:leftTableVC withChildToRemove:nil];
-//    [[NewWorkRootScrollView shareInstance].homeClassView.bottomView addSubview:forward2.view];
+    [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:[dm getInstance].progress];
+    [dm getInstance].progress.delegate = self;
+    [dm getInstance].progress.labelText = @"加载中...";
+    [dm getInstance].progress.userInteractionEnabled = YES;
+    [[dm getInstance].progress show:YES];
+    [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+
+}
+//通知界面更新，获取事务信息接收单位列表
+-(void)CommMsgRevicerUnitList:(NSNotification *)noti
+{
+    if([dm getInstance].notificationSymbol ==1)
+    {
+        [dm getInstance].mModel_unitList = noti.object;
+        [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
+        
+    }
+
 
     
-
-    
+}
+- (void)Loading {
+    sleep(TIMEOUT);
+    [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+    [dm getInstance].progress.labelText = @"加载超时";
+    //    self.mProgressV.userInteractionEnabled = NO;
+    sleep(2);
 }
 
 
@@ -75,6 +88,10 @@
     [HomeClassTopScrollView shareInstance].requestSymbol2 =YES;
     [HomeClassTopScrollView shareInstance].requestSymbol3 =YES;
     [HomeClassTopScrollView shareInstance].dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+    [HomeClassTopScrollView destroyDealloc];
+    [HomeClassRootScrollView destroyDealloc];
+    self.top.firstSel = 0;
+    
     [utils popViewControllerAnimated:YES];
 
 
