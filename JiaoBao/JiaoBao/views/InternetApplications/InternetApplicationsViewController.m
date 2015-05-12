@@ -165,6 +165,12 @@
     }
     [self.mProgressV hide:YES];
     [[InternetAppTopScrollView shareInstance] sendRequest];
+    //是否隐藏加号
+    if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
+        [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
+    }else{
+        [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
+    }
 }
 
 //获取到个人信息的通知
@@ -180,7 +186,7 @@
         Identity_model *idenModel = [tempArr objectAtIndex:i];
         NSString *str_default = idenModel.DefaultUnitId;
         
-        if ([idenModel.RoleIdentity intValue]==0||[idenModel.RoleIdentity intValue]==1) {
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             NSMutableArray *array = [NSMutableArray array];
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
@@ -190,20 +196,20 @@
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
-                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
+//                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                     break;
                 }
             }
-        }else if([idenModel.RoleIdentity intValue]==2||[idenModel.RoleIdentity intValue]==3){
+        }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){
             NSMutableArray *array = [NSMutableArray array];
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
                 if ([userUnitsModel.ClassID intValue]==[str_default intValue]) {
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
-                    [dm getInstance].UID = [userUnitsModel.ClassID intValue];
+                    [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
 //                    [dm getInstance].uType = [userUnitsModel.UnitType intValue]
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
@@ -224,26 +230,26 @@
             Identity_model *idenModel = [[Identity_model alloc] init];
             idenModel = [tempArr objectAtIndex:i];
             NSString *name = @"";
-            if (i==0||i==1) {
+           if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
                 NSMutableArray *array = [NSMutableArray array];
                 array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                 if (array.count>0) {
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
-//                    [dm getInstance].uType = i+1;
+                    [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
-            }else if(i==2||i==3){
+            }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){
                 NSMutableArray *array = [NSMutableArray array];
                 array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                 if (array.count>0) {
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
-                    [dm getInstance].UID = [userUnitsModel.ClassID intValue];
-                    [dm getInstance].uType = 3;
+                    [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
+                    [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }

@@ -29,6 +29,7 @@
     int mInt_requestCount;//请求数量
     int mInt_requestCount2;//请求数量
     MBProgressHUD *mProgressV;//
+    int mInt_flag;//判断是否第一次进入此界面，发送数据请求
 }
 
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//放所有控件
@@ -41,6 +42,7 @@
 @property (nonatomic,assign) int mInt_requestCount;//请求数量
 @property (nonatomic,assign) int mInt_requestCount2;//请求数量
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
+@property (nonatomic,assign) int mInt_flag;//判断是否第一次进入此界面，发送数据请求
 
 
 - (id)initWithFrame1:(CGRect)frame;
