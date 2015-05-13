@@ -38,5 +38,6 @@
 
 
 + (HomeClassRootScrollView *)shareInstance;
++ (void)destroyDealloc;
 
 @end

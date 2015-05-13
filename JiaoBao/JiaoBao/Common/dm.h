@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "UserInfoModel.h"
 #import "RongYunTokenModel.h"
+#import "CommMsgRevicerUnitListModel.h"
+#import "MBProgressHUD.h"
 
 @interface dm : NSObject{
     int width;//界面宽度
@@ -64,8 +66,12 @@
 @property(nonatomic,assign)BOOL tableSymbol;
 @property(nonatomic,strong)NSMutableSet *sectionSet;
 @property(nonatomic,assign)NSUInteger notificationSymbol;
+@property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;
+@property(nonatomic,strong)MBProgressHUD *progress;
+@property(nonatomic,assign)NSUInteger topButtonSymbol;
 
 
 + (dm*) getInstance;
+
 
 @end

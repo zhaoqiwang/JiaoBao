@@ -17,10 +17,12 @@ NSString *kCell = @"Forward_cell2";
 {
    self = [super initWithFrame:frame];
 
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selSecBtn:) name:@"selSecBtn" object:nil];
+
 
     self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
@@ -129,84 +131,98 @@ NSString *kCell = @"Forward_cell2";
     sleep(2);
 }
 
-//通知界面更新，获取事务信息接收单位列表
--(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    if([dm getInstance].notificationSymbol ==100)
-    {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
-        self.mModel_unitList = noti.object;
-    self.datasource = self.mModel_unitList.UnitClass;
-    [self.mCollectionV_list reloadData];
+////通知界面更新，获取事务信息接收单位列表
+//-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+//    if([dm getInstance].notificationSymbol ==100)
+//    {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
+//        self.mModel_unitList = noti.object;
+//    self.datasource = self.mModel_unitList.UnitClass;
+//    [self.mCollectionV_list reloadData];
+//
+//    self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
+//    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
+//    {
+//        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+//        [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+//
+//    }
+//    }
+//
+//    
+//}
+-(void)selSecBtn:(id)sender
+{
+    self.datasource = [dm getInstance].mModel_unitList.UnitClass;
+    self.dataArr = [NSMutableArray arrayWithArray:[sender object] ];
 
-    self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
-    for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
+    for(int i=0;i<self.dataArr.count;i++)
     {
-        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-        [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
-
-    }
-    }
-    
-
-    
-    
-    
-    
-}
--(void)GetUnitRevicer:(NSNotification *)noti{
-    if([dm getInstance].notificationSymbol == 100)
-    {
-        
-        NSDictionary *dic = noti.object;
-        NSString *unitID = [dic objectForKey:@"unitID"];
-        NSArray *array = [dic objectForKey:@"array"];
-        //找到当前这个单位，塞入数组
-        
-        //班级
-        for (int i=0; i<self.mModel_unitList.UnitClass.count; i++)
+        myUnit *unit = [self.dataArr objectAtIndex:i];
+        for(int i =0;i<unit.list.count ;i++)
         {
-            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-            if ([unit.TabID intValue] == [unitID intValue]) {
-
-            unit.list = [NSMutableArray arrayWithArray:array];
-            [self.dataArr addObject:unit];
-            }
-            
-            
-
-        }
-        for(int i=0;i<self.dataArr.count;i++)
-        {
-            myUnit *unit = [self.dataArr objectAtIndex:i];
-            for(int i =0;i<unit.list.count ;i++)
+            UserListModel *model = [unit.list objectAtIndex:i];
+            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
             {
-                UserListModel *model = [unit.list objectAtIndex:i];
-                if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
-                {
-                    [unit.list removeObject:model];
-                }
-                
+                [unit.list removeObject:model];
             }
-            NSLog(@"dataArrCount = %lu",(unsigned long)self.dataArr.count);
-
-
             
         }
-
-
-        
-        
-        
+        NSLog(@"dataArrCount = %lu",(unsigned long)self.dataArr.count);
         
         
         
     }
+           [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
+
     
-    
-    
-    
-    
+    [self.mCollectionV_list reloadData];
 }
+//-(void)GetUnitRevicer:(NSNotification *)noti{
+//    if([dm getInstance].notificationSymbol == 2)
+//    {
+//        
+//        NSDictionary *dic = noti.object;
+//        NSString *unitID = [dic objectForKey:@"unitID"];
+//        NSArray *array = [dic objectForKey:@"array"];
+//        
+//        //班级
+//        for (int i=0; i<[dm getInstance].mModel_unitList.UnitClass.count; i++)
+//        {
+//            myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+//            if ([unit.TabID intValue] == [unitID intValue]) {
+//
+//            unit.list = [NSMutableArray arrayWithArray:array];
+//            [self.dataArr addObject:unit];
+//            }
+//            
+//            
+//
+//        }
+//        for(int i=0;i<self.dataArr.count;i++)
+//        {
+//            myUnit *unit = [self.dataArr objectAtIndex:i];
+//            for(int i =0;i<unit.list.count ;i++)
+//            {
+//                UserListModel *model = [unit.list objectAtIndex:i];
+//                if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+//                {
+//                    [unit.list removeObject:model];
+//                }
+//                
+//            }
+//            NSLog(@"dataArrCount = %lu",(unsigned long)self.dataArr.count);
+//
+//
+//            
+//        }
+//
+//
+//        
+//    }
+//    
+//
+//}
 
 
 

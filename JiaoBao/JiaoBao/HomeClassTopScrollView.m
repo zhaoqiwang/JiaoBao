@@ -23,13 +23,19 @@
 #define BUTTONID (sender.tag-100)
 
 
+static HomeClassTopScrollView *__singletion;
 
 + (HomeClassTopScrollView *)shareInstance {
-    static HomeClassTopScrollView *__singletion;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48)];
-    });
+    @synchronized ([HomeClassTopScrollView class])
+    {
+        if (!__singletion)
+        {
+            __singletion=[[HomeClassTopScrollView alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48)];
+            
+        }
+        
+    }
+
     return __singletion;
 }
 
@@ -39,8 +45,8 @@
     if (self) {
         self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
 
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
@@ -114,6 +120,8 @@
 
 - (void)selectNameButton:(UIButton *)sender{
     [dm getInstance].notificationSymbol = sender.tag;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
+
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -132,7 +140,8 @@
             
             
         } completion:^(BOOL finished) {
-            if (finished) {
+            if (finished)
+            {
                 //设置页出现
                 [[HomeClassRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
                 //赋值滑动列表选择ID
@@ -177,50 +186,51 @@
         }
     }];
 }
-//通知界面更新，获取事务信息接收单位列表
--(void)CommMsgRevicerUnitList:(NSNotification *)noti{
-    self.mModel_unitList = noti.object;
-
-    if([dm getInstance].notificationSymbol == 100)
-    {
-
-        
-    }
-    
-
-    if([dm getInstance].notificationSymbol == 101)
-    {
-        self.curunitid = self.mModel_unitList.myUnit.TabIDStr;
-        if(self.mModel_unitList.UnitClass.count>0)
-        {
-            for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
-            {
-                myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-                
-                [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
-                
-            }
-
-            
-        }
-        else
-        {
-            [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:nil];
-
-        }
-        
-    }
-    
-    
-    
-
-    
-}
+////通知界面更新，获取事务信息接收单位列表
+//-(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+//    self.mModel_unitList = noti.object;
+//
+//    if([dm getInstance].notificationSymbol == 100)
+//    {
+//
+//        
+//    }
+//    
+//
+//    if([dm getInstance].notificationSymbol == 101)
+//    {
+//        self.curunitid = self.mModel_unitList.myUnit.TabIDStr;
+//        if(self.mModel_unitList.UnitClass.count>0)
+//        {
+//            for(int i=0;i<self.mModel_unitList.UnitClass.count;i++)
+//            {
+//                myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+//                
+//                [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+//                
+//            }
+//
+//            
+//        }
+//        else
+//        {
+//            [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:nil];
+//
+//        }
+//        
+//    }
+//    
+//    
+//    
+//
+//    
+//}
 
 -(void)GetUnitRevicer:(NSNotification *)noti
 {
-    if([dm getInstance].notificationSymbol == 101)
+    if([dm getInstance].notificationSymbol == 100)
     {
+        NSLog(@"getData");
         NSDictionary *dic = noti.object;
         NSString *unitID = [dic objectForKey:@"unitID"];
         NSArray *array = [dic objectForKey:@"array"];
@@ -228,9 +238,9 @@
         //找到当前这个单位，塞入数组
 
         //班级
-        for (int i=0; i<self.mModel_unitList.UnitClass.count; i++)
+        for (int i=0; i<[dm getInstance].mModel_unitList.UnitClass.count; i++)
         {
-            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+            myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
             if ([unit.TabID intValue] == [unitID intValue]) {
                 unit.list = [NSMutableArray arrayWithArray:array];
                 [self.dataArr addObject:unit];
@@ -258,7 +268,8 @@
 //        }
 
 
-
+        self.requestSymbol0 = NO;
+        self.requestSymbol1 = NO;
         [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
         
 
@@ -287,7 +298,7 @@
     {
         if(self.requestSymbol1 ==YES)
         {
-        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+        //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 
         
          }
@@ -330,6 +341,10 @@
     }
 
 
+}
++ (void)destroyDealloc
+{
+    __singletion = nil;
 }
 
 /*

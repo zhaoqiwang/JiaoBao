@@ -394,7 +394,6 @@
             }
         }
     }
-    
 }
 
 -(void)updateRequestSymbol0:(id)sender

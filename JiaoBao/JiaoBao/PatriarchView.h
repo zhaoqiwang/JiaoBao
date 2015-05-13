@@ -24,4 +24,5 @@
 @property(nonatomic,assign)NSUInteger allSelSymbol;
 @property(nonatomic,strong)UIButton * rightBtn;
 
+
 @end

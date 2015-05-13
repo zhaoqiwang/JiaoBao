@@ -10,13 +10,19 @@
 
 @implementation HomeClassRootScrollView
 #define POSITIONID (int)self.contentOffset.x/[dm getInstance].width
+static HomeClassRootScrollView *__singletion;
 
 + (HomeClassRootScrollView *)shareInstance {
-    static HomeClassRootScrollView *__singletion;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44)];
-    });
+    @synchronized ([HomeClassRootScrollView class])
+    {
+        if (!__singletion)
+        {
+            __singletion=[[HomeClassRootScrollView alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 1000)];
+            
+        }
+        
+    }
+    
     return __singletion;
 }
 
@@ -42,10 +48,18 @@
         self.characterView = [[CharacterView alloc] initWithFrame:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
         [self addSubview:self.characterView];
         //self.characterView.backgroundColor = [UIColor blackColor];
-        self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.schoolMessage];
-        self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.patriarchView];
+        NSLog(@"isAdmin = %@",[dm getInstance].userInfo.isAdmin);
+        NSUInteger isAdmin = [[dm getInstance].userInfo.isAdmin integerValue];
+        if(isAdmin == 2|isAdmin == 3)
+        {
+            self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+            [self addSubview:self.schoolMessage];
+            self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
+            [self addSubview:self.patriarchView];
+            
+        }
+
+
     }
     return self;
 }
@@ -101,5 +115,8 @@
     // Drawing code
 }
 */
-
++ (void)destroyDealloc
+{
+    __singletion = nil;
+}
 @end
