@@ -131,9 +131,10 @@
         }
         if(sender.tag == 101)
         {
+
             if(self.firstSel == 0)
             {
-                //[dm getInstance].notificationSymbol = 2;
+                [dm getInstance].notificationSymbol = 100;
 
                 //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
                 for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
@@ -144,14 +145,26 @@
                 }
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
-                [dm getInstance].notificationSymbol =100;
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:nil];
                 [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
                 
             }
+            else
+            {
+                [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
+
+                
+            }
 
             
+        }
+        
+        if(sender.tag ==102)
+        {
+            [dm getInstance].topButtonSymbol = [dm getInstance].notificationSymbol;
+            [dm getInstance].notificationSymbol = 3;
+ 
         }
     }
 //    [NewWorkRootScrollView shareInstance].mInt = (int)sender.tag - 100;

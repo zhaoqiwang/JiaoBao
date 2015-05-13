@@ -51,7 +51,7 @@ static Nav_internetAppView *loginSendHttp = nil;
             self.mBtn_add.tag = 2;
             [self.mBtn_add addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
             [self addSubview:self.mBtn_add];
-        
+               
         
 //        //搜索按钮
 //        self.mBtn_search = [UIButton buttonWithType:UIButtonTypeCustom];

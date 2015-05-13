@@ -120,6 +120,8 @@ static HomeClassTopScrollView *__singletion;
 
 - (void)selectNameButton:(UIButton *)sender{
     [dm getInstance].notificationSymbol = sender.tag;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
+
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -138,7 +140,8 @@ static HomeClassTopScrollView *__singletion;
             
             
         } completion:^(BOOL finished) {
-            if (finished) {
+            if (finished)
+            {
                 //设置页出现
                 [[HomeClassRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
                 //赋值滑动列表选择ID
@@ -295,7 +298,7 @@ static HomeClassTopScrollView *__singletion;
     {
         if(self.requestSymbol1 ==YES)
         {
-        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+        //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 
         
          }

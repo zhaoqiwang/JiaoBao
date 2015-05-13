@@ -68,6 +68,7 @@
 @property(nonatomic,assign)NSUInteger notificationSymbol;
 @property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;
 @property(nonatomic,strong)MBProgressHUD *progress;
+@property(nonatomic,assign)NSUInteger topButtonSymbol;
 
 
 + (dm*) getInstance;

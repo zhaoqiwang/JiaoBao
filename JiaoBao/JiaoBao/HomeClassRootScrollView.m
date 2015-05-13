@@ -48,10 +48,18 @@ static HomeClassRootScrollView *__singletion;
         self.characterView = [[CharacterView alloc] initWithFrame:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
         [self addSubview:self.characterView];
         //self.characterView.backgroundColor = [UIColor blackColor];
-        self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.schoolMessage];
-        self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
-        [self addSubview:self.patriarchView];
+        NSLog(@"isAdmin = %@",[dm getInstance].userInfo.isAdmin);
+        NSUInteger isAdmin = [[dm getInstance].userInfo.isAdmin integerValue];
+        if(isAdmin == 2|isAdmin == 3)
+        {
+            self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+            [self addSubview:self.schoolMessage];
+            self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
+            [self addSubview:self.patriarchView];
+            
+        }
+
+
     }
     return self;
 }
