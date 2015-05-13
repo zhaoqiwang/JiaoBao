@@ -780,6 +780,23 @@ static LoginSendHttp *loginSendHttp = nil;
     [request startAsynchronous];
 }
 
+//获取老师的关联班级
+-(void)login_GetmyUserClass:(NSString *)uid Accid:(NSString *)accid{
+    NSString *urlString = [NSString stringWithFormat:@"%@Account/getmyUserClass",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:uid forKey:@"UID"];
+    [request addPostValue:accid forKey:@"AccID"];
+    request.tag = 30;//设置请求tag
+    self.flag_request = 0;
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
@@ -1354,6 +1371,15 @@ static LoginSendHttp *loginSendHttp = nil;
             SendToMeUserListModel *model = [ParserJson parserJsonSendToMeUserList:str];
             //传到事务界面显示
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeMsgList" object:model];
+        }
+    }else if (_request.tag == 30){//获取老师的关联班级
+        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+            NSString *str = [jsonDic objectForKey:@"Data"];
+            NSString *str000 = [DESTool decryptWithText:str Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+            D("str00=login==30=>>>>==%@",str000);
+            NSMutableArray *array = [ParserJson parserJsonGetmyUserClass:str000];
+            //传到事务界面显示
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:array];
         }
     }
 }

@@ -34,6 +34,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fristGotoMoreUnit" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fristGotoMoreUnit) name:@"fristGotoMoreUnit" object:nil];
         
+        self.mArr_sumData = [NSMutableArray array];
+        self.mArr_display = [NSArray array];
         self.mInt_readflag = 0;
         self.mInt_requestCount = 0;
         self.mInt_requestCount2 = 0;
@@ -310,7 +312,6 @@
     }
     NSDictionary *dic = noti.object;
     NSString *unitID = [dic objectForKey:@"unitID"];
-    D("jksg;lk-===%@",unitID);
     NSArray *array = [dic objectForKey:@"array"];
     //找到当前这个单位，塞入数组
     
@@ -499,7 +500,6 @@
         }
         //        cell.delegate = self;
         cell.mNode = node;
-        D("nodel-====%@",node.nodeFlag);
         cell.mBtn_detail.userInteractionEnabled = NO;
         [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
         [cell setNeedsDisplay]; //重新描绘cell
@@ -519,6 +519,13 @@
         cell0.mLab_name.text = nodeData.mStr_name;
         cell0.mImgV_head.hidden = NO;
         cell0.mBtn_detail.hidden = YES;
+        if (node.type == 0) {
+            cell0.mLab_name.textColor = [UIColor colorWithRed:255/255.0 green:103/255.0 blue:1/255.0 alpha:1];
+            cell0.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+        }else{
+            cell0.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
+            cell0.backgroundColor = [UIColor whiteColor];
+        }
         
         if (node.isExpanded) {
             [cell0.mImgV_head setImage:[UIImage imageNamed:@"bTri"]];
@@ -584,6 +591,8 @@
         cell0.mLab_name.text = nodeData.mStr_name;
         cell0.mImgV_head.hidden = NO;
         cell0.mBtn_detail.hidden = YES;
+        cell0.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
+        cell0.backgroundColor = [UIColor whiteColor];
         
         if (node.isExpanded) {
             [cell0.mImgV_head setImage:[UIImage imageNamed:@"bTri"]];
@@ -620,6 +629,8 @@
         cell0.mBtn_detail.hidden = YES;
         cell0.mBtn_reverse.hidden = YES;
         cell0.mBtn_all.hidden = YES;
+        cell0.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
+        cell0.backgroundColor = [UIColor whiteColor];
         if (node.mInt_select == 1) {
             [cell0.mImgV_head setImage:[UIImage imageNamed:@"selected"]];
         } else {
@@ -661,7 +672,6 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TreeView_node *node = [self.mArr_display objectAtIndex:indexPath.row];
     
-    D("indexPath.row-== %ld,%@,%d",(long)indexPath.row,node.flag,node.type);
     if(node.type == 3){
         if (node.mInt_select == 0) {
             node.mInt_select = 1;
@@ -789,7 +799,6 @@
 
 -(void)selectAllBtn:(NSArray *)array Flag:(NSString *)flag{
     for (TreeView_node *node in array) {
-        D("lsdgohsgjla-===%@,%@",node.flag,flag);
         if([node.flag isEqual:flag]){
             node.mInt_select = 1;
             [self selectAllBtn2:node.sonNodes];
@@ -891,21 +900,18 @@
     NSString *tempStr = [NSString stringWithFormat:@"%@-",[array objectAtIndex:0]];
     for (int i=1; i<array.count-1; i++) {
         tempStr = [NSString stringWithFormat:@"%@%@-",tempStr,[array objectAtIndex:i]];
-    }
-    D("temstr-===%@",tempStr);
+    };
     int a=0;
     for (int i=0; i<self.mArr_display.count; i++) {
         TreeView_node *node = [self.mArr_display objectAtIndex:i];
         NSString *tempNodeStr = node.nodeFlag;
         NSRange range = [tempNodeStr rangeOfString:tempStr];//判断字符串是否包含
-        D("tempNodeStr-====%@,%@",tempStr,tempNodeStr);
         if (range.length >0){//包含
             if (node.mInt_select == 0) {
                 a++;
             }
         }
     }
-    D("aaaaaaaaaaaa-====%d",a);
     
     if (a>0) {//当前级别，没有全部勾选
         tempStr = [tempStr substringToIndex:([tempStr length]-1)];
@@ -923,7 +929,6 @@
             for (int i=1; i<array2.count; i++) {
                 tempStr2 = [NSString stringWithFormat:@"%@-%@",tempStr2,[array2 objectAtIndex:i]];
             }
-            D("tempstr2-=-======%@",tempStr2);
             [self selectedNowBtn:tempStr2];
         }
     }else{
@@ -932,7 +937,6 @@
             
             TreeView_node *node = [self.mArr_display objectAtIndex:i];
             NSString *tempNodeStr = node.nodeFlag;
-            D("ldsfgjl;kdjnfg'k-====%@,%@",tempNodeStr,tempStr);
             if ([tempNodeStr isEqual:tempStr]) {
                 node.mInt_select = 1;
             }

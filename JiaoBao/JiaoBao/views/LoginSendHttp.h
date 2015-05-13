@@ -133,6 +133,9 @@
 //取单个用户发给我消息列表 new       返回数量            第几页                 发送者教宝号                    开始日期                    结束日期           阅读标志检索：不提供该参数：查全部，1：未读，2：已读未回复，3：已回复    分页标志值
 -(void)login_SendToMeMsgList:(NSString *)num Page:(NSString *)page senderAccId:(NSString *)accid sDate:(NSString *)sDate eDate:(NSString *)eDate readFlag:(NSString *)readFlag lastId:(NSString *)lastId;
 
+//获取老师的关联班级
+-(void)login_GetmyUserClass:(NSString *)uid Accid:(NSString *)accid;
+
 @end
 
 @protocol LoginSendHttpDelegate <NSObject>

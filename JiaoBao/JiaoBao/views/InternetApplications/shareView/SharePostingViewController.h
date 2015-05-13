@@ -15,6 +15,7 @@
 #import "MHImagePickerMutilSelector.h"
 #import "ELCImagePickerHeader.h"
 #import "ReleaseNewsUnitsModel.h"
+#import "GetmyUserClassModel.h"
 
 @interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,MHImagePickerMutilSelectorDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
@@ -35,6 +36,7 @@
     NSMutableArray *mArr_dynamic;//动态中的权限数组
     UILabel *mLab_hidden;//点击时输入框消失
     UILabel *_placeholderLabel;
+    NSMutableArray *pullArr;
 }
 @property (weak, nonatomic) IBOutlet UILabel *_placeholdLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pullDownBtn;
@@ -59,6 +61,9 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_hidden;//点击时输入框消失
 @property (weak, nonatomic) IBOutlet UIButton *cameraBtn;
 @property (weak, nonatomic) IBOutlet UIButton *albumBtn;
+@property (nonatomic,strong) NSMutableArray *pullArr;
+
+
 - (IBAction)cameraBtnAction:(id)sender;
 - (IBAction)albumBtnAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *secondVIew;
