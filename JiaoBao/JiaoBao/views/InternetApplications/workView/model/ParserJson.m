@@ -720,4 +720,26 @@
     return array;
 }
 
+//[{"ClassID":48529,"ClassNo":"ls","ClassName":"1201","GradeYear":2008,"GradeName":"二年级","State":1,"SchoolID":3467,"SchoolIDStr":null,"TabIDStr":null},{"ClassID":61762,"ClassNo":"1301","ClassName":"1301","GradeYear":2009,"GradeName":"小班","State":1,"SchoolID":3467,"SchoolIDStr":null,"TabIDStr":null}]
+//获取到关联的班级
++(NSMutableArray *)parserJsonGetmyUserClass:(NSString *)json{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSArray *arrlist=[json objectFromJSONString];
+    for (int i=0; i<arrlist.count; i++) {
+        GetmyUserClassModel *model = [[GetmyUserClassModel alloc] init];
+        NSDictionary *result = [arrlist objectAtIndex:i];
+        model.ClassNo = [result objectForKey:@"ClassNo"];
+        model.ClassName = [result objectForKey:@"ClassName"];
+        model.GradeName = [result objectForKey:@"GradeName"];
+        model.SchoolIDStr = [result objectForKey:@"SchoolIDStr"];
+        model.TabIDStr = [result objectForKey:@"TabIDStr"];
+        model.ClassID = [NSString stringWithFormat:@"%@",[result objectForKey:@"ClassID"]];
+        model.State = [NSString stringWithFormat:@"%@",[result objectForKey:@"State"]];
+        model.SchoolID = [NSString stringWithFormat:@"%@",[result objectForKey:@"SchoolID"]];
+        model.GradeYear = [NSString stringWithFormat:@"%@",[result objectForKey:@"GradeYear"]];
+        [array addObject:model];
+    }
+    return array;
+}
+
 @end

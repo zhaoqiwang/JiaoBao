@@ -20,7 +20,7 @@
 @end
 
 @implementation SharePostingViewController
-@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu,mArr_dynamic,mLab_hidden;
+@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu,mArr_dynamic,mLab_hidden,pullArr,pullDownBtn;
 
 -(id)init{
     self.mArr_dynamic = [NSMutableArray array];
@@ -38,6 +38,9 @@
     //通知界面发表文章成功
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SavePublishArticle" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SavePublishArticle:) name:@"SavePublishArticle" object:nil];
+    //获取到的关联班级
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetmyUserClass" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetmyUserClass:) name:@"GetmyUserClass" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -47,8 +50,20 @@
     self.view.tag = 5;
     self.mLab_hidden.frame = self.view.frame;
     
-    NSMutableArray *pullArr = [NSMutableArray array];
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
+    
+    self.pullArr = [NSMutableArray array];
     if (self.mInt_section == 0) {//分享
+        //如果是老师身份，请求关联班级
+        if ([dm getInstance].uType == 2) {
+            [[LoginSendHttp getInstance] login_GetmyUserClass:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Accid:[dm getInstance].jiaoBaoHao];
+            self.mProgressV.labelText = @"加载关联班级中...";
+            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        }
         [self.pullDownBtn setTitle:[dm getInstance].mStr_unit forState:UIControlStateNormal];
         for (int i=0; i<[dm getInstance].identity.count; i++) {
             Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
@@ -60,7 +75,7 @@
                     [dic setValue:idenModel.RoleIdentity forKey:@"type"];
                     [dic setValue:userUnitsModel.UnitID forKey:@"unitID"];
                     [dic setValue:str forKey:@"name"];
-                    [pullArr addObject:dic];
+                    [self.pullArr addObject:dic];
                 }
             }
             if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
@@ -71,7 +86,7 @@
                     [dic setValue:idenModel.RoleIdentity forKey:@"type"];
                     [dic setValue:userUnitsModel.ClassID forKey:@"unitID"];
                     [dic setValue:str forKey:@"name"];
-                    [pullArr addObject:dic];
+                    [self.pullArr addObject:dic];
                 }
             }
         }
@@ -79,13 +94,15 @@
         for (int i=0; i<self.mArr_dynamic.count; i++) {
             ReleaseNewsUnitsModel *model = [self.mArr_dynamic objectAtIndex:i];
             if (i==0) {
-                 [self.pullDownBtn setTitle:model.UnitName forState:UIControlStateNormal];
+                [self.pullDownBtn setTitle:model.UnitName forState:UIControlStateNormal];
+                self.mStr_uType = model.UnitType;
+                self.mStr_unitID = model.UnitId;
             }
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setValue:model.UnitType forKey:@"type"];
             [dic setValue:model.UnitId forKey:@"unitID"];
             [dic setValue:model.UnitName forKey:@"name"];
-            [pullArr addObject:dic];
+            [self.pullArr addObject:dic];
         }
     }
     
@@ -99,7 +116,7 @@
     self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.secondVIew.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2)];
     }
     [self.mTableV_type initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
-        return pullArr.count;
+        return self.pullArr.count;
         
     } setCellForIndexPathBlock:^UITableViewCell *(UITableView *tableView, NSIndexPath *indexPath) {
                 SelectionCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
@@ -107,17 +124,17 @@
                     cell=[[[NSBundle mainBundle]loadNibNamed:@"SelectionCell" owner:self options:nil]objectAtIndex:0];
                     [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
                 }
-        NSString *name = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
+        NSString *name = [[self.pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
          [cell.lb setText:[NSString stringWithFormat:@"%@",name]];
                 return cell;
     } setDidSelectRowBlock:^(UITableView *tableView, NSIndexPath *indexPath) {
-        NSString *name = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
+        NSString *name = [[self.pullArr objectAtIndex:indexPath.row] objectForKey:@"name"];
         [self.pullDownBtn setTitle:name forState:UIControlStateNormal];
-        self.mStr_unitID = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"unitID"];
-        self.mStr_uType = [[pullArr objectAtIndex:indexPath.row] objectForKey:@"type"];
+        self.mStr_unitID = [[self.pullArr objectAtIndex:indexPath.row] objectForKey:@"unitID"];
+        self.mStr_uType = [[self.pullArr objectAtIndex:indexPath.row] objectForKey:@"type"];
         self.mTableV_type.frame = CGRectZero;
         self.isOpen = NO;
-        self.mInt_section = (int)indexPath.row;
+//        self.mInt_section = (int)indexPath.row;
         [self.mTextF_title resignFirstResponder];
         [self.mTextV_content resignFirstResponder];
     }];
@@ -176,11 +193,6 @@
     self.mBtn_selectPic.layer.cornerRadius = 8;
     self.mBtn_selectPic.layer.masksToBounds = YES;
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
-    
     if (self.mInt_section == 0) {//分享
         self.mLab_fabu.text = @"发布到";
         self.mLab_dongtai.text = @"分享空间";
@@ -212,6 +224,23 @@
     }else{
         return NO;
     }
+}
+
+//获取到的关联班级
+-(void)GetmyUserClass:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    NSMutableArray *array = noti.object;
+    for (int i=0; i<array.count; i++) {
+        GetmyUserClassModel *model = [array objectAtIndex:i];
+        NSString *str = [NSString stringWithFormat:@"%@-%@",model.GradeName,model.ClassName];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"3" forKey:@"type"];
+        [dic setValue:model.ClassID forKey:@"unitID"];
+        [dic setValue:str forKey:@"name"];
+        D("dlkfgnd;lkgmne-===%@",str);
+        [self.pullArr addObject:dic];
+    }
+    [self.mTableV_type reloadData];
 }
 
 //上传图片回调

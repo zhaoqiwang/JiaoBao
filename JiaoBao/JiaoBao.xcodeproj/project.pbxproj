@@ -352,6 +352,7 @@
 		A75A37411A08C01F009D2464 /* unitClassAdminRevicerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A37401A08C01F009D2464 /* unitClassAdminRevicerModel.m */; };
 		A75A37441A08C2EA009D2464 /* UserListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A37431A08C2EA009D2464 /* UserListModel.m */; };
 		A75A37471A08C3F0009D2464 /* groupselit_selitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A37461A08C3F0009D2464 /* groupselit_selitModel.m */; };
+		A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A77951B03368800E06440 /* GetmyUserClassModel.m */; };
 		A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */ = {isa = PBXBuildFile; fileRef = A75E6EA81ABA75D000B51B18 /* ClassView.m */; };
 		A75E6EB81ABACDBD00B51B18 /* classView_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EAC1ABACDBD00B51B18 /* classView_0.png */; };
 		A75E6EB91ABACDBD00B51B18 /* classView_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EAD1ABACDBD00B51B18 /* classView_0@2x.png */; };
@@ -1301,6 +1302,8 @@
 		A75A37431A08C2EA009D2464 /* UserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListModel.m; path = views/InternetApplications/workView/model/UserListModel.m; sourceTree = "<group>"; };
 		A75A37451A08C3F0009D2464 /* groupselit_selitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = groupselit_selitModel.h; path = views/InternetApplications/workView/model/groupselit_selitModel.h; sourceTree = "<group>"; };
 		A75A37461A08C3F0009D2464 /* groupselit_selitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = groupselit_selitModel.m; path = views/InternetApplications/workView/model/groupselit_selitModel.m; sourceTree = "<group>"; };
+		A75A77941B03368800E06440 /* GetmyUserClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetmyUserClassModel.h; path = views/InternetApplications/workView/model/GetmyUserClassModel.h; sourceTree = "<group>"; };
+		A75A77951B03368800E06440 /* GetmyUserClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetmyUserClassModel.m; path = views/InternetApplications/workView/model/GetmyUserClassModel.m; sourceTree = "<group>"; };
 		A75E6EA71ABA75D000B51B18 /* ClassView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassView.h; path = views/InternetApplications/class/ClassView.h; sourceTree = "<group>"; };
 		A75E6EA81ABA75D000B51B18 /* ClassView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassView.m; path = views/InternetApplications/class/ClassView.m; sourceTree = "<group>"; };
 		A75E6EAC1ABACDBD00B51B18 /* classView_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classView_0.png; path = Image/InternetApp/class/classView_0.png; sourceTree = "<group>"; };
@@ -2450,6 +2453,8 @@
 				A76C698E1A8854CB0069BA63 /* SendToMeUserListModel.m */,
 				A76B6A741AB2D1BC00B6ED12 /* AccessoryModel.h */,
 				A76B6A751AB2D1BC00B6ED12 /* AccessoryModel.m */,
+				A75A77941B03368800E06440 /* GetmyUserClassModel.h */,
+				A75A77951B03368800E06440 /* GetmyUserClassModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -4408,6 +4413,7 @@
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
 				F79D84D61ABD4DC000897477 /* ParserJson_SignIn.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
+				A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */,
 				A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */,
 				A7781F1F1AE889B400F03AEB /* NewWorkTopScrollView.m in Sources */,
 				A7BB17E519F4AB4600A81286 /* LoginSendHttp.m in Sources */,
