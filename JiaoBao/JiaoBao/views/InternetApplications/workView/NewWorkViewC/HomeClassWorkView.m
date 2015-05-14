@@ -162,7 +162,7 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
         //总框
         self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
-        self.mScrollV_all.contentSize = CGSizeMake(320, 1000);
+        self.mScrollV_all.contentSize = CGSizeMake(320, self.frame.size.height);
         [self addSubview:self.mScrollV_all];
         //self.mScrollV_all.backgroundColor = [UIColor redColor];
         //上半部分
@@ -194,38 +194,46 @@
 {
     if([dm getInstance].notificationSymbol == 100)
     {
-        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
+
         
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
+        [HomeClassRootScrollView shareInstance].contentSize = CGSizeMake(320, [dm getInstance].height - self.mViewTop.frame.size.height-self.mViewTop.frame.origin.y-[HomeClassTopScrollView shareInstance].frame.size.height);
+        self.mScrollV_all.contentSize = CGSizeMake(320, self.frame.size.height);
+//        self.mScrollV_all.backgroundColor = [UIColor redColor];
+//        [HomeClassRootScrollView shareInstance].backgroundColor = [UIColor blackColor];
+
         
     }
     
     if([dm getInstance].notificationSymbol == 101)
     {
-        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
+
         
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
+        [HomeClassRootScrollView shareInstance].contentSize = CGSizeMake(320, 1000);
+        self.mScrollV_all.contentSize = CGSizeMake(320, 1000);
+
         
     }
     
     if([dm getInstance].notificationSymbol == 102)
     {
-        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
+
         
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
+        [HomeClassRootScrollView shareInstance].contentSize = CGSizeMake(320, 1000);
+        self.mScrollV_all.contentSize = CGSizeMake(320, 1000);
+
         
     }
     
     if([dm getInstance].notificationSymbol == 103)
     {
-        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
+
         
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
+        [HomeClassRootScrollView shareInstance].contentSize = CGSizeMake(320, 1000);
+        self.mScrollV_all.contentSize = CGSizeMake(320, 1000);
+
         
     }
 
-
-    
 }
 
 
@@ -401,7 +409,7 @@ if([dm getInstance].notificationSymbol == 100)
 
 
     
-    self.mProgressV.labelText = @"正在上传...";
+    self.mProgressV.labelText = @"正在发送...";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     //        self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];

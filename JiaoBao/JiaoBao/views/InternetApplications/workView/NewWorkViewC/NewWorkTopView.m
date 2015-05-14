@@ -235,7 +235,7 @@
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                NSData *imageData = UIImageJPEGRepresentation(image,1.0);
+                NSData *imageData = UIImageJPEGRepresentation(image,0);
                 
                 NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
                 [self.mArr_accessory addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
@@ -316,7 +316,7 @@
         if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
             [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
         }
-        NSData *imageData = UIImageJPEGRepresentation(chosenImage,1.0);
+        NSData *imageData = UIImageJPEGRepresentation(chosenImage,0);
         
         NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
         D("图片路径是：%@",imgPath);

@@ -62,5 +62,6 @@
 - (IBAction)cameraBtnAction:(id)sender;
 - (IBAction)albumBtnAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIView *secondVIew;
+@property(nonatomic,assign)NSUInteger imageCount;
 
 @end

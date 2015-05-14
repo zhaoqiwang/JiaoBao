@@ -29,8 +29,9 @@
     //获取到沙盒中的文件
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSLog(@"paths = %@",paths);
     //文件名
-    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+    NSString *tempPath =[paths objectAtIndex:0] ;
     NSArray *tempArr = [fileManager contentsOfDirectoryAtPath:tempPath error:nil];
     for (int i=0; i<tempArr.count; i++) {
         AccessoryModel *model = [[AccessoryModel  alloc] init];

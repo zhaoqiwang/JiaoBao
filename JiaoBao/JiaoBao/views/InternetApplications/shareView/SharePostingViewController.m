@@ -216,15 +216,21 @@
 
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"上传图片成功";
-    //    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    self.imageCount--;
+    if(self.imageCount == 0)
+    {
+            [self.mProgressV hide:YES];
+            self.mProgressV.mode = MBProgressHUDModeCustomView;
+            self.mProgressV.labelText = @"上传图片成功";
+            //    self.mProgressV.userInteractionEnabled = NO;
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        
+    }
+
     UploadImgModel *model = noti.object;
     [self.mArr_pic addObject:model];
-    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
+    //self.mTextV_content.text = [NSString stringWithFormat:@"%@[图片%d]",self.mTextV_content.text,self.];
     self._placeholdLabel.hidden = YES;
 }
 
@@ -384,8 +390,9 @@
 }
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    self.imageCount = info.count;
     [picker dismissViewControllerAnimated:YES completion:^{}];
-    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.labelText = @"z正在上传";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
@@ -409,6 +416,8 @@
                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                 
                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+
                 
                 
                 
@@ -426,6 +435,8 @@
                     NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                     
                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+
                     
                     break;
                 }
@@ -487,10 +498,11 @@
 
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
+    self.imageCount = info.count;
     [self dismissViewControllerAnimated:YES completion:nil];
     //发送选中图片上传请求
     if (info.count>0) {
-        self.mProgressV.labelText = @"处理中...";
+        self.mProgressV.labelText = @"正在上传图片";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;
         [self.mProgressV show:YES];
         [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
@@ -514,16 +526,9 @@
                 
 
                 
-                NSData *imageData = UIImageJPEGRepresentation(image,1);
-                if(imageData.length>1000000)
-                {
-                    imageData = UIImageJPEGRepresentation(image,0.75);
-                }
-                else
-                {
-                    imageData = UIImageJPEGRepresentation(image, 1);
-                }
-                NSLog(@"%lu",(unsigned long)imageData.length);
+                NSData *imageData = UIImageJPEGRepresentation(image,0);
+
+               // NSLog(@"%lu",(unsigned long)imageData.length);
 
                 NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
                 
@@ -539,6 +544,7 @@
                             NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                             
                             [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                            self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                             self.mInt_index ++;
                             
                             
@@ -557,6 +563,8 @@
                                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                                 
                                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+
                                 self.mInt_index ++;
                                 
                                 break;
@@ -573,11 +581,14 @@
         }
         timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
     }
-    [self.mProgressV hide:YES];}
+   // [self.mProgressV hide:YES];
+}
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
 {
+    
     [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (IBAction)cameraBtnAction:(id)sender {
