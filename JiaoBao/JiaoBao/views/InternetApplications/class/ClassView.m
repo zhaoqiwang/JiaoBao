@@ -465,6 +465,8 @@
             cell.mLab_class.layer.cornerRadius = 3;
             cell.mLab_class.layer.masksToBounds = YES;
         }
+        CGSize unitSize = [tempUnit sizeWithFont:[UIFont systemFontOfSize:14]];
+        cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, unitSize.width, cell.mLab_class.frame.size.height);
     }else{
         if (model.className.length>0) {
             tempUnit = [NSString stringWithFormat:@"(%@)",model.className];
@@ -472,10 +474,10 @@
             tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
         }
         cell.mLab_class.hidden = NO;
+        cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-10, cell.mLab_class.frame.size.height);
     }
-//    CGSize unitSize = [tempUnit sizeWithFont:[UIFont systemFontOfSize:14]];
-//    cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, unitSize.width, cell.mLab_class.frame.size.height);
-    cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-10, cell.mLab_class.frame.size.height);
+    
+    
     cell.mLab_class.text = tempUnit;
     
     //判断是否隐藏

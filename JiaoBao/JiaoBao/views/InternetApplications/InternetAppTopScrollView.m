@@ -243,12 +243,6 @@
 //
 //    self.timer = nil;
 
-
-    if (mInt_userSelectedChannelID == 100) {
-        [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
-    }else{
-        [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
-    }
     if (SHOWRONGYUN == 1) {
         if (mInt_userSelectedChannelID == 100) {
  

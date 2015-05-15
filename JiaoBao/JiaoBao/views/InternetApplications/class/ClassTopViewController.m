@@ -62,11 +62,7 @@
     self.mProgressV.delegate = self;
     //判断应该加载单位1还是班级2
     if (self.mInt_unit_class == 1) {
-        if ([dm getInstance].uType==1) {
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-        }else{
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-        }
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
     } else if(self.mInt_unit_class == 2) {
         [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
     }else if (self.mInt_unit_class == 3){
@@ -365,11 +361,7 @@
     //判断应该加载单位1还是班级2
     if (self.mInt_unit_class == 1) {
         //刚进入学校圈，或者下拉刷新时执行
-        if ([dm getInstance].uType==1) {
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-        }else{
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-        }
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
     } else if (self.mInt_unit_class == 2){
         [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
     }else if (self.mInt_unit_class == 3){
@@ -387,11 +379,7 @@
         //判断应该加载单位1还是班级2
         if (self.mInt_unit_class == 1) {
             int a = (int)self.mArr_list.count/20+1;
-            if ([dm getInstance].uType==1) {
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-            }else{
-                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"-%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
-            }
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
         } else if (self.mInt_unit_class == 2){
             int a = (int)self.mArr_list.count/20+1;
             [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位

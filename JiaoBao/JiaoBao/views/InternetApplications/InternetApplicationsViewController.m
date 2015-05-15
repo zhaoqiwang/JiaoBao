@@ -580,8 +580,8 @@
     SharePostingViewController *posting = [[SharePostingViewController alloc] init];
     posting.mModel_unit = model;
     posting.mInt_section = 0;
-    posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
-    posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+//    posting.mStr_uType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];
+//    posting.mStr_unitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
     [utils pushViewController:posting animated:YES];
 }
 
