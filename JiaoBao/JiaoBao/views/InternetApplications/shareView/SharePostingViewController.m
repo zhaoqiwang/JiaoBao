@@ -64,7 +64,7 @@
             [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
         }
-        [self.pullDownBtn setTitle:[dm getInstance].mStr_unit forState:UIControlStateNormal];
+        
         for (int i=0; i<[dm getInstance].identity.count; i++) {
             Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
             if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
@@ -76,6 +76,10 @@
                     [dic setValue:userUnitsModel.UnitID forKey:@"unitID"];
                     [dic setValue:str forKey:@"name"];
                     [self.pullArr addObject:dic];
+                    if (self.mStr_unitID.length == 0) {
+                        self.mStr_unitID = userUnitsModel.UnitID;
+                        self.mStr_uType = idenModel.RoleIdentity;
+                    }
                 }
             }
             if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
@@ -87,8 +91,16 @@
                     [dic setValue:userUnitsModel.ClassID forKey:@"unitID"];
                     [dic setValue:str forKey:@"name"];
                     [self.pullArr addObject:dic];
+                    if (self.mStr_unitID.length == 0) {
+                        self.mStr_unitID = userUnitsModel.ClassID;
+                        self.mStr_uType = idenModel.RoleIdentity;
+                    }
                 }
             }
+        }
+        if (self.pullArr.count>0) {
+            NSString *name = [[self.pullArr objectAtIndex:0] objectForKey:@"name"];
+            [self.pullDownBtn setTitle:name forState:UIControlStateNormal];
         }
     }else{//动态
         for (int i=0; i<self.mArr_dynamic.count; i++) {
