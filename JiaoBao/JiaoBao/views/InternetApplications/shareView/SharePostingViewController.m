@@ -313,6 +313,7 @@
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
+    NSLog(@"unitID = %@",self.mStr_unitID);
     
     if (self.mInt_section == 0) {//分享
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
