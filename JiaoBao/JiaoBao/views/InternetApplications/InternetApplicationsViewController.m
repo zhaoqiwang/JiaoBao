@@ -299,6 +299,11 @@
                             target:self
                             action:@selector(pushMenuItem5:)],
               
+              [KxMenuItem menuItem:@"附件"
+                             image:[UIImage imageNamed:@"appNav_share"]
+                            target:self
+                            action:@selector(pushMenuItem7:)],
+              
               [KxMenuItem menuItem:@"切换单位"
                              image:[UIImage imageNamed:@"appNav_changeUnit"]
                             target:self
@@ -326,6 +331,11 @@
                              image:[UIImage imageNamed:@"appNav_share"]
                             target:self
                             action:@selector(pushMenuItem5:)],
+              
+              [KxMenuItem menuItem:@"附件"
+                             image:[UIImage imageNamed:@"appNav_share"]
+                            target:self
+                            action:@selector(pushMenuItem7:)],
               
               [KxMenuItem menuItem:@"切换单位"
                              image:[UIImage imageNamed:@"appNav_changeUnit"]
@@ -514,6 +524,15 @@
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
 }
+
+//附件
+- (void) pushMenuItem7:(id)sender{
+    AccessoryViewController *access = [[AccessoryViewController alloc] init];
+    access.mInt_flag = 1;
+//    access.delegate = self;
+    [utils pushViewController:access animated:YES];
+}
+
 //切换单位
 - (void) pushMenuItem2:(id)sender{
     self.mView_all.hidden = NO;

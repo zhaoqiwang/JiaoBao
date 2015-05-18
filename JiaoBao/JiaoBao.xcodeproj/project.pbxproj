@@ -591,6 +591,8 @@
 		A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE11AF22ACB00E9D30A /* newWork_reverseSelect@2x.png */; };
 		A79C7AE81AF22ACB00E9D30A /* newWork_reverseSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */; };
 		A7A15CC31AF08DC700843CB3 /* NewWorkTree_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */; };
+		A7A379001B06E75F000C9DC5 /* OpenFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A378FE1B06E75F000C9DC5 /* OpenFileViewController.m */; };
+		A7A379011B06E75F000C9DC5 /* OpenFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7A378FF1B06E75F000C9DC5 /* OpenFileViewController.xib */; };
 		A7A74DB71A7638AE0014CCE9 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A74DB41A7638AE0014CCE9 /* ChineseString.m */; };
 		A7A74DB81A7638AE0014CCE9 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A7A74DB51A7638AE0014CCE9 /* pinyin.c */; };
 		A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A8CDDD1A232CCD00A96453 /* UploadImgModel.m */; };
@@ -1605,6 +1607,9 @@
 		A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_reverseSelect@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect@3x.png"; sourceTree = "<group>"; };
 		A7A15CC11AF08DC700843CB3 /* NewWorkTree_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkTree_model.h; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTree_model.h; sourceTree = "<group>"; };
 		A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkTree_model.m; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTree_model.m; sourceTree = "<group>"; };
+		A7A378FD1B06E75F000C9DC5 /* OpenFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenFileViewController.h; path = views/InternetApplications/workView/OpenFileViewController.h; sourceTree = "<group>"; };
+		A7A378FE1B06E75F000C9DC5 /* OpenFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenFileViewController.m; path = views/InternetApplications/workView/OpenFileViewController.m; sourceTree = "<group>"; };
+		A7A378FF1B06E75F000C9DC5 /* OpenFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenFileViewController.xib; path = views/InternetApplications/workView/OpenFileViewController.xib; sourceTree = "<group>"; };
 		A7A74DB31A7638AD0014CCE9 /* ChineseString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChineseString.h; path = Common/ChineseString.h; sourceTree = "<group>"; };
 		A7A74DB41A7638AE0014CCE9 /* ChineseString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChineseString.m; path = Common/ChineseString.m; sourceTree = "<group>"; };
 		A7A74DB51A7638AE0014CCE9 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = pinyin.c; path = Common/pinyin.c; sourceTree = "<group>"; };
@@ -2243,6 +2248,9 @@
 				A76B6A6C1AB2C98F00B6ED12 /* AccessoryViewController.xib */,
 				A76ED58F1AD6189C006F3E0B /* WorkView_new2.h */,
 				A76ED5901AD6189C006F3E0B /* WorkView_new2.m */,
+				A7A378FD1B06E75F000C9DC5 /* OpenFileViewController.h */,
+				A7A378FE1B06E75F000C9DC5 /* OpenFileViewController.m */,
+				A7A378FF1B06E75F000C9DC5 /* OpenFileViewController.xib */,
 			);
 			name = workView;
 			sourceTree = "<group>";
@@ -4014,6 +4022,7 @@
 				A750468E1A0A14BC00C54ECC /* forward_rightNav@2x.png in Resources */,
 				A74821A419FF452200234020 /* msgDetail_send.png in Resources */,
 				A701798B1AB91D2100E7093F /* work_accessoryPhoto@2x.png in Resources */,
+				A7A379011B06E75F000C9DC5 /* OpenFileViewController.xib in Resources */,
 				A74C119A1A01D9FC00925230 /* icon@2x.png in Resources */,
 				A75E6EC31ABACDBD00B51B18 /* classView_3@3x.png in Resources */,
 				A7AD8C4F19F644A2002E65FB /* tabbar_app1@2x.png in Resources */,
@@ -4328,6 +4337,7 @@
 				A755E71019F278B900BBDF3D /* ASICloudFilesRequest.m in Sources */,
 				A77FF02A1A650B3F00DB85E3 /* JSONModelError.m in Sources */,
 				A7AD8C2819F6002A002E65FB /* JSONKit.m in Sources */,
+				A7A379001B06E75F000C9DC5 /* OpenFileViewController.m in Sources */,
 				A755E6BA19F2728F00BBDF3D /* utils.m in Sources */,
 				A773FC481A4C0563005F84C2 /* ELCAlbumPickerController.m in Sources */,
 				A7595E9A1A5FC2F30027848E /* README.mdown in Sources */,

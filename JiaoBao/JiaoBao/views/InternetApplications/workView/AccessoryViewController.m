@@ -13,17 +13,24 @@
 @end
 
 @implementation AccessoryViewController
-@synthesize mTableV_file,mArr_sumFile,mNav_navgationBar,delegate;
+@synthesize mTableV_file,mArr_sumFile,mNav_navgationBar,delegate,mInt_flag;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mArr_sumFile = [NSMutableArray array];
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"选择文件"];
+    if (self.mInt_flag == 1) {//查看
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"附件"];
+        [self.mNav_navgationBar setRightBtnTitle:@"删除"];
+    }else{//选择附件
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"选择文件"];
+        [self.mNav_navgationBar setRightBtnTitle:@"确定"];
+    }
+    
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
-    [self.mNav_navgationBar setRightBtnTitle:@"确定"];
+    
     [self.view addSubview:self.mNav_navgationBar];
     
     //获取到沙盒中的文件
@@ -31,7 +38,8 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSLog(@"paths = %@",paths);
     //文件名
-    NSString *tempPath =[paths objectAtIndex:0] ;
+//    NSString *tempPath =[paths objectAtIndex:0] ;
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
     NSArray *tempArr = [fileManager contentsOfDirectoryAtPath:tempPath error:nil];
     for (int i=0; i<tempArr.count; i++) {
         AccessoryModel *model = [[AccessoryModel  alloc] init];
@@ -53,6 +61,9 @@
     if(cell == nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"AccessoryTableViewCell" owner:self options:nil] lastObject];
     }
+    cell.delegate = self;
+    cell.tag = indexPath.row;
+    [cell headImgClick];
     AccessoryModel *model = [self.mArr_sumFile objectAtIndex:indexPath.row];
     cell.mImgV_select.frame = CGRectMake(10, 10, 24, 24);
     if (model.mInt_select == 0) {
@@ -72,7 +83,85 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AccessoryModel *model = [self.mArr_sumFile objectAtIndex:indexPath.row];
+    // 1.封装图片数据
+    NSMutableArray *photos = [NSMutableArray array];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+    
+    AccessoryModel *model0 = [self.mArr_sumFile objectAtIndex:indexPath.row];
+    NSArray * rslt = [model0.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
+    NSString * str = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
+    
+    if (([str isEqual:@"png"]||[str isEqual:@"gif"]||[str isEqual:@"jpg"]||[str isEqual:@"bmp"])){
+        int a = 0;
+        for (int i = 0; i < [self.mArr_sumFile count]; i++) {
+            AccessoryModel *model = [self.mArr_sumFile objectAtIndex:i];
+            NSArray * rslt = [model.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
+            NSString * str = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
+            if (([str isEqual:@"png"]||[str isEqual:@"gif"]||[str isEqual:@"jpg"]||[str isEqual:@"bmp"])){
+                NSString * getImageStrPath = [NSString stringWithFormat:@"%@/%@",tempPath,model.mStr_name];
+                [photos addObject:[MWPhoto photoWithFilePath:getImageStrPath]];
+                //判断当前点击的这张图片，在图片列表中，是第几张
+                if ([model0.mStr_name isEqual:model.mStr_name]) {
+                    a = (int)photos.count-1;
+                }
+            }
+        }
+        self.photos = photos;
+        // Create browser
+        MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+        browser.displayActionButton = NO;//分享按钮,默认是
+        browser.displayNavArrows = NO;//左右分页切换,默认否
+        browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+        browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+        browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+        browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+        browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+        browser.startOnGrid = NO;//是否第一张,默认否
+        browser.enableSwipeToDismiss = NO;
+        [browser setCurrentPhotoIndex:a];
+        
+        double delayInSeconds = 0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+        });
+        
+        self.navigationController.title = @"";
+        [self.navigationController pushViewController:browser animated:YES];
+    }else{
+        OpenFileViewController *openFile = [[OpenFileViewController alloc] init];
+        openFile.mStr_name = model0.mStr_name;
+        [utils pushViewController:openFile animated:YES];
+    }
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _photos.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < _photos.count)
+        return [_photos objectAtIndex:index];
+    return nil;
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
+    NSLog(@"Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+}
+
+- (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
+    // If we subscribe to this method we must dismiss the view controller ourselves
+    NSLog(@"Did finish modal presentation");
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//是否选择的回调
+-(void)AccessoryTableViewCellTapPress:(AccessoryTableViewCell *)accessoryTableViewCell{
+    AccessoryModel *model = [self.mArr_sumFile objectAtIndex:accessoryTableViewCell.tag];
     if (model.mInt_select == 0) {
         model.mInt_select = 1;
     }else{
@@ -87,15 +176,40 @@
 }
 
 -(void)navigationRightAction:(UIButton *)sender{
-    NSMutableArray *tempArr = [NSMutableArray array];
-    for (int i=0; i<self.mArr_sumFile.count; i++) {
-        AccessoryModel *model = [self.mArr_sumFile objectAtIndex:i];
-        if (model.mInt_select == 1) {
-            [tempArr addObject:model.mStr_name];
+    if (self.mInt_flag == 1) {//删除附件
+        UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"确定删除？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"确定",nil];
+        [action showInView:self.view.superview];
+    }else{//选择好附件
+        NSMutableArray *tempArr = [NSMutableArray array];
+        for (int i=0; i<self.mArr_sumFile.count; i++) {
+            AccessoryModel *model = [self.mArr_sumFile objectAtIndex:i];
+            if (model.mInt_select == 1) {
+                [tempArr addObject:model.mStr_name];
+            }
         }
+        [self.delegate selectFile:tempArr];
+        [utils popViewControllerAnimated:YES];
     }
-    [self.delegate selectFile:tempArr];
-    [utils popViewControllerAnimated:YES];
+}
+
+#pragma mark UIActionsheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0){
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        //文件名
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        for (int i=0; i<self.mArr_sumFile.count; i++) {
+            AccessoryModel *model = [self.mArr_sumFile objectAtIndex:i];
+            if (model.mInt_select == 1) {
+//                [tempArr addObject:model.mStr_name];
+                NSString *temp = [NSString stringWithFormat:@"%@/%@",tempPath,model.mStr_name];
+                D("temp-===%@",temp);
+                [[NSFileManager defaultManager] removeItemAtPath:temp error:nil];
+                [self.mArr_sumFile removeObjectAtIndex:i];
+            }
+        }
+        [self.mTableV_file reloadData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

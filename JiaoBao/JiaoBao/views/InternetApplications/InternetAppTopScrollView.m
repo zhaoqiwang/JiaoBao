@@ -58,7 +58,8 @@
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务",@"学校圈",@"主题", nil];
+//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务",@"学校圈",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"学校圈",@"事务",@"主题", nil];
 //            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
         }
         
@@ -70,8 +71,7 @@
     return self;
 }
 
-- (void)initWithNameButtons
-{
+- (void)initWithNameButtons{
     for (UIView *view in self.subviews) {
         [view removeFromSuperview];
     }
@@ -192,8 +192,6 @@
         [UIView animateWithDuration:0.25 animations:^{
             
             [self.mImgV_slide setFrame:CGRectMake(sender.frame.origin.x, 38, [dm getInstance].width/self.mArr_name.count, 2)];
-
-            
         } completion:^(BOOL finished) {
             if (finished) {
                 //设置页出现
@@ -299,86 +297,39 @@
             }
         }
     }else{
-        if (mInt_userSelectedChannelID == 100) {//事务
-
-
-            
-            
-
-            if(self.mInt_unReadMsg == 0)
-            {
-                self.timer0 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol0:) userInfo:nil repeats:NO];
-                //[self.timer0 setFireDate:[NSDate date]];
-                //[self.timer0 setFireDate:[NSDate distantPast]];
-                [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
-                self.mInt_unReadMsg = 1;
-
-                
-            }
-            if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
-//                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
-            }
-            if (mInt_work_mysend == 0) {
-                //获取我发送的消息列表
-//                [[LoginSendHttp getInstance] login_GetMySendMsgList:@"1" Page:@"1" SendName:@"" sDate:@"" eDate:@""];
-//                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
-                mInt_work_mysend = 1;
-            }
-            if (mInt_work_sendToMe == 0) {
-                //取发给我消息的用户列表，new
-//                [[LoginSendHttp getInstance] login_SendToMeUserList:@"20" Page:@"1" SendName:@"" sDate:@"" eDate:@"" readFlag:@"" lastId:@""];
-//                [[InternetAppRootScrollView shareInstance].workView ProgressViewLoad];
-                mInt_work_sendToMe = 1;
-            }
-        }else if (mInt_userSelectedChannelID == 101) {//分享
-
-
-
-
+        if (mInt_userSelectedChannelID == 100) {//学校圈
 
             if (mInt_show == 0) {
                 self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];
                 mInt_show = 1;
                 [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
-                //获取同事、关注人、好友的分享文章
-//                self.timer1 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol1:) userInfo:nil repeats:NO];
-//                mInt_share = 1;
-//                NSLog(@"mIntShare = %ld",(long)mInt_share);
-//
-//                [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:@"1" viewFlag:@"shareNew"];
-//                [[InternetAppRootScrollView shareInstance].shareView ProgressViewLoad];
             }
-        }else if (mInt_userSelectedChannelID == 102){//展示
-
-
-                
-
-            if(mInt_theme == 0)
+            
+        }else if (mInt_userSelectedChannelID == 101) {//事务
+            if(self.mInt_unReadMsg == 0)
             {
+                self.timer0 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol0:) userInfo:nil repeats:NO];
+                [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
+                self.mInt_unReadMsg = 1;
+            }
+            if (mInt_work_sendToMe == 0&&mInt_work_mysend == 0) {
+                //                [[InternetAppRootScrollView shareInstance].workView.mArr_list removeAllObjects];
+            }
+            if (mInt_work_mysend == 0) {
+                mInt_work_mysend = 1;
+            }
+            if (mInt_work_sendToMe == 0) {
+                mInt_work_sendToMe = 1;
+            }
+        }else if (mInt_userSelectedChannelID == 102){//主题
+            if(mInt_theme == 0){
                 self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
                 mInt_theme = 1;
                 //取我关注的和我所参与的主题
                 [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
                 [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
-//                self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];                mInt_show = 1;
-//                [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
-
-                
             }
-//            if (mInt_show == 0) {
-//                //获取所有单位
-//                [[ShareHttp getInstance] shareHttpGetUnitSectionMessagesWith:@"1" AcdID:[dm getInstance].jiaoBaoHao];
-//                [[InternetAppRootScrollView shareInstance].showView ProgressViewLoad];
-//            }
-//            if (mInt_show2 == 0) {
-//                //获取我的关注的单位
-//                [[ShowHttp getInstance] showHttpGetMyAttUnit:[dm getInstance].jiaoBaoHao];
-//                [[InternetAppRootScrollView shareInstance].showView ProgressViewLoad];
-//            }
         }else if (mInt_userSelectedChannelID == 103){//主题
-
-
-
             if (mInt_theme == 0) {
                 self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
                 mInt_theme = 1;

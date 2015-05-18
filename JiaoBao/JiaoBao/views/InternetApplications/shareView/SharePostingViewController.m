@@ -54,8 +54,10 @@
     [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
     
+    
     self.pullArr = [NSMutableArray array];
     if (self.mInt_section == 0) {//分享
+        self.mStr_unitID = @"";
         //如果是老师身份，请求关联班级
         if ([dm getInstance].uType == 2) {
             [[LoginSendHttp getInstance] login_GetmyUserClass:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Accid:[dm getInstance].jiaoBaoHao];
@@ -76,7 +78,7 @@
                     [dic setValue:userUnitsModel.UnitID forKey:@"unitID"];
                     [dic setValue:str forKey:@"name"];
                     [self.pullArr addObject:dic];
-                    if (self.mStr_unitID.length == 0) {
+                    if ([self.mStr_unitID intValue] == 0) {
                         self.mStr_unitID = userUnitsModel.UnitID;
                         self.mStr_uType = idenModel.RoleIdentity;
                     }
@@ -91,7 +93,7 @@
                     [dic setValue:userUnitsModel.ClassID forKey:@"unitID"];
                     [dic setValue:str forKey:@"name"];
                     [self.pullArr addObject:dic];
-                    if (self.mStr_unitID.length == 0) {
+                    if ([self.mStr_unitID intValue] == 0) {
                         self.mStr_unitID = userUnitsModel.ClassID;
                         self.mStr_uType = idenModel.RoleIdentity;
                     }
