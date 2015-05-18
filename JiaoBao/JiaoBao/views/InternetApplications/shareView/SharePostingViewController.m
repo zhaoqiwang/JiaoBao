@@ -434,7 +434,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     self.imageCount = info.count;
     [picker dismissViewControllerAnimated:YES completion:^{}];
-    self.mProgressV.labelText = @"z正在上传";
+    self.mProgressV.labelText = @"正在上传";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
