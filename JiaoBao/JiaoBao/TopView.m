@@ -171,7 +171,7 @@
     if([[name pathExtension] isEqualToString:@"png"]) {  //取得后缀名这.png的文件名
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         NSString *imgPath=[tempPath stringByAppendingPathComponent:name];
         UIImage *img = [UIImage imageWithContentsOfFile:imgPath];
         UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
@@ -211,7 +211,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     //文件名
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
     //判断文件夹是否存在
     if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
         [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -298,7 +298,7 @@
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         //判断文件夹是否存在
         if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
             [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];

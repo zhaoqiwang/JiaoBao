@@ -35,7 +35,7 @@
     
     [self.mWebView setUserInteractionEnabled: YES ];  //是否支持交互
 //    [self.mWebView setContentMode:UIViewContentModeScaleAspectFill];
-//    self.mWebView.scalesPageToFit=YES;
+    [self.mWebView setScalesPageToFit:YES];
     [self.view addSubview:self.mWebView];
     
     [self openFile];
@@ -48,7 +48,7 @@
     if ([fileType isEqual:@"doc"]||[fileType isEqual: @"docx"]||[fileType isEqual:@"pdf"]||[fileType isEqual:@"mp4"]||[fileType isEqual:@"wav"]||[fileType isEqual:@"txt"]||[fileType isEqual:@"xls"]||[fileType isEqual:@"xlsx"]||[fileType isEqual:@"ppt"]||[fileType isEqual:@"pptx"]||[fileType isEqual:@"avi"]||[fileType isEqual:@"htm"]||[fileType isEqual:@"html"]||[fileType isEqual:@"pps"]) {
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         NSString * mStr_filePath = [NSString stringWithFormat:@"%@/%@",tempPath,self.mStr_name];
         
         NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];

@@ -477,7 +477,7 @@ static LoginSendHttp *loginSendHttp = nil;
     if (arrayAccess.count>0) {
         //文件名
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         for (int i=0; i<arrayAccess.count; i++) {
             NSString *imgPath=[tempPath stringByAppendingPathComponent:[arrayAccess objectAtIndex:i]];
             [request setFile:imgPath forKey:[NSString stringWithFormat:@"ATTfileList%d",i]];
@@ -573,7 +573,7 @@ static LoginSendHttp *loginSendHttp = nil;
     if (arrayAccess.count>0) {
         //文件名
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         for (int i=0; i<arrayAccess.count; i++) {
             NSString *imgPath=[tempPath stringByAppendingPathComponent:[arrayAccess objectAtIndex:i]];
             [request setFile:imgPath forKey:[NSString stringWithFormat:@"ATTfileList%d",i]];
@@ -1099,7 +1099,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //文件名
         NSFileManager* fileManager=[NSFileManager defaultManager];
         
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         //判断文件夹是否存在
         if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
             [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];

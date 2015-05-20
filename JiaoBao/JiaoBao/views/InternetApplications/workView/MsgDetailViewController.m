@@ -14,7 +14,7 @@
 @end
 
 @implementation MsgDetailViewController
-@synthesize mNav_navgationBar,mScrollV_view,mImgV_head,mLab_name,mTextV_content,mLab_time,mBtn_detail,mTableV_detail,mTextF_text,mBtn_send,mModel_tree2,mModel_unReadMsg,mArr_feeback,mInt_detail,mBtn_more,mView_text,mBtn_trun,mProgressV,mInt_page,mInt_file,mInt_more;
+@synthesize mNav_navgationBar,mScrollV_view,mImgV_head,mLab_name,mTextV_content,mLab_time,mBtn_detail,mTableV_detail,mTextF_text,mBtn_send,mModel_tree2,mModel_unReadMsg,mArr_feeback,mInt_detail,mBtn_more,mView_text,mBtn_trun,mProgressV,mInt_page,mInt_file,mInt_more,mArr_photos;
 
 //发送请求
 -(void)sendQuest{
@@ -410,7 +410,7 @@
     fileName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@""];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file"]];
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
     //判断文件夹是否存在
     if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
         [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -424,11 +424,75 @@
         alert.tag = 10;
         [alert show];
     }else {//存在
-        self.mProgressV.labelText = @"已下载此文件";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//        self.mProgressV.labelText = @"已下载此文件";
+//        self.mProgressV.mode = MBProgressHUDModeCustomView;
+//        [self.mProgressV show:YES];
+//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        // 1.封装图片数据
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+        
+        NSArray * rslt = [model.OrgFilename componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
+        NSString * str = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
+        
+        if (([str isEqual:@"png"]||[str isEqual:@"gif"]||[str isEqual:@"jpg"]||[str isEqual:@"bmp"])){
+            NSMutableArray *photos0 = [NSMutableArray array];
+            NSArray * rslt = [model.OrgFilename componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
+            NSString * str = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
+            if (([str isEqual:@"png"]||[str isEqual:@"gif"]||[str isEqual:@"jpg"]||[str isEqual:@"bmp"])){
+                NSString * getImageStrPath = [NSString stringWithFormat:@"%@/%@",tempPath,model.OrgFilename];
+                [self.mArr_photos addObject:[MWPhoto photoWithFilePath:getImageStrPath]];
+            }
+            self.mArr_photos = photos0;
+            // Create browser
+            MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+            browser.displayActionButton = NO;//分享按钮,默认是
+            browser.displayNavArrows = NO;//左右分页切换,默认否
+            browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+            browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+            browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+            browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+            browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+            browser.startOnGrid = NO;//是否第一张,默认否
+            browser.enableSwipeToDismiss = NO;
+            
+            double delayInSeconds = 0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                
+            });
+            
+            self.navigationController.title = @"";
+            [self.navigationController pushViewController:browser animated:YES];
+        }else{
+            OpenFileViewController *openFile = [[OpenFileViewController alloc] init];
+            openFile.mStr_name = model.OrgFilename;
+            [utils pushViewController:openFile animated:YES];
+        }
     }
+}
+
+#pragma mark - MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.mArr_photos.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.mArr_photos.count)
+        return [self.mArr_photos objectAtIndex:index];
+    return nil;
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
+    D("Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+}
+
+- (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
+    // If we subscribe to this method we must dismiss the view controller ourselves
+    D("Did finish modal presentation");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //UIAlertView回调
