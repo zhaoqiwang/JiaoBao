@@ -15,6 +15,7 @@ static Nav_internetAppView *loginSendHttp = nil;
 #define Nav_height 43
 
 @implementation Nav_internetAppView
+
 @synthesize mLab_name,mBtn_add,mBtn_search,mBtn_setting,mScrollV_name,delegate;
 
 +(Nav_internetAppView *)getInstance{
@@ -31,7 +32,8 @@ static Nav_internetAppView *loginSendHttp = nil;
     return self;
 }
 
--(id)initWithName:(NSString *)name{
+-(id)initWithName:(NSString *)name
+{
     self = [super init];
     if (self) {
         self.frame = CGRectMake(0, 0, [dm getInstance].width, Nav_height+[dm getInstance].statusBar);
@@ -74,7 +76,8 @@ static Nav_internetAppView *loginSendHttp = nil;
     }
     return self;
 }
--(void)clickBtn:(UIButton *)btn{
+-(void)clickBtn:(UIButton *)btn
+{
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(Nav_internetAppViewClickBtnWith:)]) {
         [self.delegate Nav_internetAppViewClickBtnWith:btn];
     }
