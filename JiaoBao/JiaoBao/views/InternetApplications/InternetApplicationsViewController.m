@@ -300,7 +300,7 @@
                             action:@selector(pushMenuItem5:)],
               
               [KxMenuItem menuItem:@"附件"
-                             image:[UIImage imageNamed:@"appNav_share"]
+                             image:[UIImage imageNamed:@"appNav_access"]
                             target:self
                             action:@selector(pushMenuItem7:)],
               
@@ -333,7 +333,7 @@
                             action:@selector(pushMenuItem5:)],
               
               [KxMenuItem menuItem:@"附件"
-                             image:[UIImage imageNamed:@"appNav_share"]
+                             image:[UIImage imageNamed:@"appNav_access"]
                             target:self
                             action:@selector(pushMenuItem7:)],
               

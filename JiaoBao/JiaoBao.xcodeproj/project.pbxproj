@@ -508,6 +508,9 @@
 		A773FC511A4C0563005F84C2 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = A773FC451A4C0563005F84C2 /* ELCAssetTablePicker.xib */; };
 		A773FC521A4C0563005F84C2 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = A773FC461A4C0563005F84C2 /* Overlay.png */; };
 		A773FC531A4C0563005F84C2 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A773FC471A4C0563005F84C2 /* Overlay@2x.png */; };
+		A77608F81B09844000A25DC3 /* appNav_access.png in Resources */ = {isa = PBXBuildFile; fileRef = A77608F51B09844000A25DC3 /* appNav_access.png */; };
+		A77608F91B09844000A25DC3 /* appNav_access@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77608F61B09844000A25DC3 /* appNav_access@2x.png */; };
+		A77608FA1B09844000A25DC3 /* appNav_access@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77608F71B09844000A25DC3 /* appNav_access@3x.png */; };
 		A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7781F191AE888F800F03AEB /* NewWorkViewController.m */; };
 		A7781F1C1AE888F800F03AEB /* NewWorkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7781F1A1AE888F800F03AEB /* NewWorkViewController.xib */; };
 		A7781F1F1AE889B400F03AEB /* NewWorkTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7781F1E1AE889B400F03AEB /* NewWorkTopScrollView.m */; };
@@ -1497,6 +1500,9 @@
 		A773FC451A4C0563005F84C2 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
 		A773FC461A4C0563005F84C2 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		A773FC471A4C0563005F84C2 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		A77608F51B09844000A25DC3 /* appNav_access.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appNav_access.png; path = Image/InternetApp/nav/appNav_access.png; sourceTree = "<group>"; };
+		A77608F61B09844000A25DC3 /* appNav_access@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_access@2x.png"; path = "Image/InternetApp/nav/appNav_access@2x.png"; sourceTree = "<group>"; };
+		A77608F71B09844000A25DC3 /* appNav_access@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appNav_access@3x.png"; path = "Image/InternetApp/nav/appNav_access@3x.png"; sourceTree = "<group>"; };
 		A7781F181AE888F800F03AEB /* NewWorkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkViewController.h; path = views/InternetApplications/workView/NewWorkViewC/NewWorkViewController.h; sourceTree = "<group>"; };
 		A7781F191AE888F800F03AEB /* NewWorkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkViewController.m; path = views/InternetApplications/workView/NewWorkViewC/NewWorkViewController.m; sourceTree = "<group>"; };
 		A7781F1A1AE888F800F03AEB /* NewWorkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewWorkViewController.xib; path = views/InternetApplications/workView/NewWorkViewC/NewWorkViewController.xib; sourceTree = "<group>"; };
@@ -3342,6 +3348,9 @@
 		A7AAC4C619F75D8400A0ED40 /* nav */ = {
 			isa = PBXGroup;
 			children = (
+				A77608F51B09844000A25DC3 /* appNav_access.png */,
+				A77608F61B09844000A25DC3 /* appNav_access@2x.png */,
+				A77608F71B09844000A25DC3 /* appNav_access@3x.png */,
 				A77F9F341AFCAAC90003E579 /* appNav_dongtai.png */,
 				A77F9F351AFCAAC90003E579 /* appNav_dongtai@2x.png */,
 				A77F9F361AFCAAC90003E579 /* appNav_dongtai@3x.png */,
@@ -3896,6 +3905,7 @@
 				A7AD8C5219F644A2002E65FB /* tabbar_center1.png in Resources */,
 				A727C7DD1A6F93780019C4CD /* share_lookBig.png in Resources */,
 				A76ED5CA1AD67855006F3E0B /* workView_click_3.png in Resources */,
+				A77608F81B09844000A25DC3 /* appNav_access.png in Resources */,
 				A7AD8C5819F644A2002E65FB /* tabbar_student2.png in Resources */,
 				A753FAED1A1DDC0300AB5F22 /* share_tableV_education.png in Resources */,
 				F7502A291AEE1E50004F822F /* selected@3x.png in Resources */,
@@ -3965,6 +3975,7 @@
 				A749B9CF19F89A530036F480 /* root_processed@2x.png in Resources */,
 				A75046961A0A14BC00C54ECC /* forward_sendMsg2@2x.png in Resources */,
 				A77F9F441AFCAAC90003E579 /* appNav_work@2x.png in Resources */,
+				A77608FA1B09844000A25DC3 /* appNav_access@3x.png in Resources */,
 				A750468F1A0A14BC00C54ECC /* forward_select1.png in Resources */,
 				F7502A091AEE1E50004F822F /* add@2x.png in Resources */,
 				A76829911AC69B21003B31EB /* classView_click_3@3x.png in Resources */,
@@ -4183,6 +4194,7 @@
 				A75E6EC21ABACDBD00B51B18 /* classView_3@2x.png in Resources */,
 				F7502A111AEE1E50004F822F /* HomeClass_1.png in Resources */,
 				F7502A241AEE1E50004F822F /* rTri.png in Resources */,
+				A77608F91B09844000A25DC3 /* appNav_access@2x.png in Resources */,
 				A79C7AE81AF22ACB00E9D30A /* newWork_reverseSelect@3x.png in Resources */,
 				A76ED5BB1AD67855006F3E0B /* workView_3.png in Resources */,
 				A761D3FE1A7F697900DCAEB9 /* rootTableSelect_1.png in Resources */,

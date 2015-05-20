@@ -19,7 +19,7 @@
 #import "ForwardViewController.h"
 #import "Loger.h"
 
-@interface MsgDetailViewController : UIViewController<MyNavigationDelegate,UIGestureRecognizerDelegate,MBProgressHUDDelegate>{
+@interface MsgDetailViewController : UIViewController<MyNavigationDelegate,UIGestureRecognizerDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UIScrollView *mScrollV_view;//放所有控件
     UIImageView *mImgV_head;//头像
@@ -41,6 +41,7 @@
     int mInt_page;//记录当前请求的详情数据，是第几页
     int mInt_file;//记录当前点击的文件索引
     int mInt_more;//是否显示加载更多按钮，0显示，1不显示
+    NSMutableArray *mArr_photos;
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -64,5 +65,6 @@
 @property (nonatomic,assign) int mInt_page;//记录当前请求的详情数据，是第几页
 @property (nonatomic,assign) int mInt_file;//记录当前点击的文件索引
 @property (nonatomic,assign) int mInt_more;//是否显示加载更多按钮，0显示，1不显示
+@property (nonatomic,strong) NSMutableArray *mArr_photos;
 
 @end

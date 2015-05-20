@@ -20,7 +20,7 @@
 #import "TreeView_Level2_Model.h"
 
 
-@interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate>{
+@interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_detail;//详情列表
     UITextField *mTextF_text;//输入框
@@ -43,6 +43,7 @@
     int mInt_msg;//消息列表第几页
     NSMutableArray *mArr_readList;//当前显示详情的阅读人员
     NSString *mStr_flag;//我自己发送的信息中，未读数量
+    NSMutableArray *mArr_photos;
 }
 @property (weak, nonatomic) IBOutlet UIButton *dropDownBtn;
 @property (weak, nonatomic) IBOutlet UILabel *dropDownLabel;
@@ -69,5 +70,6 @@
 @property (nonatomic,assign) int mInt_msg;//消息列表
 @property (nonatomic,strong) NSMutableArray *mArr_readList;//当前显示详情的阅读人员
 @property (nonatomic,strong) NSString *mStr_flag;//我自己发送的信息中，未读数量
+@property (nonatomic,strong) NSMutableArray *mArr_photos;
 
 @end
