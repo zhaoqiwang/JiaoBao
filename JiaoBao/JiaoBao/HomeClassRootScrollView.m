@@ -49,7 +49,7 @@ static HomeClassRootScrollView *__singletion;
         [self addSubview:self.characterView];
         //self.characterView.backgroundColor = [UIColor blackColor];
         NSUInteger utype = [dm getInstance].uType ;
-        if(utype == 3||utype == 2)
+        if(utype == 1||utype == 2)
         {
             self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.schoolMessage];
