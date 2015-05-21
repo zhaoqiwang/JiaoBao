@@ -474,6 +474,7 @@
             tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
         }
         cell.mLab_class.hidden = NO;
+        //cell.tableview.frame = CGRectMake(0, cell.mLab_class.frame.origin, <#CGFloat width#>, <#CGFloat height#>)
         cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-10, cell.mLab_class.frame.size.height);
     }
     
@@ -574,8 +575,8 @@
     cell.mLab_clickCount.frame = CGRectMake(cell.mLab_assess.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_clickCount.frame.size.height);
     cell.mLab_clickCount.text = model.ClickCount;
     cell.mLab_click.frame = CGRectMake(cell.mLab_clickCount.frame.origin.x-cell.mLab_click.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_click.frame.size.width, cell.mLab_click.frame.size.height);
-    
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height);
+    cell.tableview.frame = CGRectMake(0, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width, cell.tableview.contentSize.height);
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+cell.tableview.frame.size.height);
     return cell;
 }
 

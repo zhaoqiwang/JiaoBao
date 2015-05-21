@@ -7,11 +7,17 @@
 //
 
 #import "ClassTableViewCell.h"
+#import "CommentCell.h"
 
 @implementation ClassTableViewCell
+
 @synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate,headImgDelegate;
 
 - (void)awakeFromNib {
+    self.tableview.delegate = self;
+    self.tableview.dataSource = self;
+    self.tableview.scrollEnabled = NO;
+    self.arr = [NSArray arrayWithObjects:@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa", nil];
     // Initialization code
 }
 
@@ -20,6 +26,46 @@
 
     // Configure the view for the selected state
 }
+
+#pragma mark - TableViewdelegate&&TableViewdataSource
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//    return nil;
+//}
+//每个cell返回的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    if (cell) {
+        return cell.frame.size.height;
+        
+    }
+    return 30;
+}
+
+//在每个section中，显示多少cell
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return self.arr.count;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *indentifier = @"CommentCell";
+    CommentCell *cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+    if(cell == nil){
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil] lastObject];
+    }
+    
+    
+    
+    
+    
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 
 //给头像添加点击事件
 -(void)thumbImgClick{

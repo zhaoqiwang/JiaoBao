@@ -7,9 +7,11 @@
 //
 
 #import "WorkViewListCell.h"
+#import "CommentCell.h"
 
 @implementation WorkViewListCell
 @synthesize mImgV_head,mLab_content,mLab_line,mLab_name,mLab_time,mImgV_unRead,mLab_unRead,delegate,mLab_unit;
+
 
 //给头像添加点击事件
 -(void)headImgClick{
