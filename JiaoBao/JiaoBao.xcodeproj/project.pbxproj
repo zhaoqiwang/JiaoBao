@@ -754,6 +754,8 @@
 		F7502A291AEE1E50004F822F /* selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A071AEE1E50004F822F /* selected@3x.png */; };
 		F77EC9151AF1FFC6005C2221 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F77EC9131AF1FFC6005C2221 /* CustomCell.m */; };
 		F77EC9161AF1FFC6005C2221 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F77EC9141AF1FFC6005C2221 /* CustomCell.xib */; };
+		F78F610E1B0C745B00C25252 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78F610C1B0C745B00C25252 /* CommentCell.m */; };
+		F78F610F1B0C745B00C25252 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78F610D1B0C745B00C25252 /* CommentCell.xib */; };
 		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
@@ -1839,6 +1841,9 @@
 		F77EC9121AF1FFC6005C2221 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		F77EC9131AF1FFC6005C2221 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		F77EC9141AF1FFC6005C2221 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		F78F610B1B0C745B00C25252 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		F78F610C1B0C745B00C25252 /* CommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
+		F78F610D1B0C745B00C25252 /* CommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentCell.xib; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -2278,6 +2283,9 @@
 				A7A378FD1B06E75F000C9DC5 /* OpenFileViewController.h */,
 				A7A378FE1B06E75F000C9DC5 /* OpenFileViewController.m */,
 				A7A378FF1B06E75F000C9DC5 /* OpenFileViewController.xib */,
+				F78F610B1B0C745B00C25252 /* CommentCell.h */,
+				F78F610C1B0C745B00C25252 /* CommentCell.m */,
+				F78F610D1B0C745B00C25252 /* CommentCell.xib */,
 			);
 			name = workView;
 			sourceTree = "<group>";
@@ -4209,6 +4217,7 @@
 				A757DFD31A80BDEF001172A4 /* appNav_contact.png in Resources */,
 				A78D65DF1A8A04E800BE6326 /* workDetail.png in Resources */,
 				A782AEBE1AE9D71A00547B0F /* NewWork_accessory@3x.png in Resources */,
+				F78F610F1B0C745B00C25252 /* CommentCell.xib in Resources */,
 				A76ED5BF1AD67855006F3E0B /* workView_4@2x.png in Resources */,
 				A7BEEA1A1A441E10003C9EAD /* UnintAlbumsListViewController.xib in Resources */,
 				A75E6EBB1ABACDBD00B51B18 /* classView_1.png in Resources */,
@@ -4356,6 +4365,7 @@
 				F71803231AB3C46300E6167F /* JTCalendarMenuView.m in Sources */,
 				A76E432A1A61085F00699F92 /* CommMsgRevicerUnitListModel.m in Sources */,
 				F75029E11AEDD9BA004F822F /* SchoolMessage.m in Sources */,
+				F78F610E1B0C745B00C25252 /* CommentCell.m in Sources */,
 				A773FC491A4C0563005F84C2 /* ELCAsset.m in Sources */,
 				A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */,
 				F75029AE1AEDC564004F822F /* HomeClassRootScrollView.m in Sources */,
@@ -4653,7 +4663,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = JiaoBao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4679,7 +4689,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = JiaoBao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

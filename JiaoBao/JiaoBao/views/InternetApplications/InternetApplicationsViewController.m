@@ -218,7 +218,8 @@
                 }
             }
         }
-        if (name.length>0) {
+        if (name.length>0)
+        {
             CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
             [Nav_internetAppView getInstance].mLab_name.text = name;
             [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);

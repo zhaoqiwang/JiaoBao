@@ -12,7 +12,8 @@
 @protocol ClassTableViewCellDelegate;
 @protocol ClassTableViewCellClassDelegate,ClassTableViewCellHeadImgDelegate;
 
-@interface ClassTableViewCell : UITableViewCell{
+@interface ClassTableViewCell : UITableViewCell<UITableViewDataSource,UITableViewDelegate>
+{
     UIImageView *mImgV_head;//单位logo
     UILabel *mLab_name;//姓名
     UILabel *mLab_class;//班级
@@ -64,6 +65,8 @@
 @property (nonatomic,strong) ClassModel *mModel_class;//
 @property (strong,nonatomic) id<ClassTableViewCellClassDelegate> ClassDelegate;
 @property (strong,nonatomic) id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
+@property(nonatomic,strong)NSArray *arr;
 
 //给图片添加点击事件
 -(void)thumbImgClick;

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 @protocol WorkViewListCellDelegate;
 
-@interface WorkViewListCell : UITableViewCell{
+@interface WorkViewListCell : UITableViewCell<UITableViewDelegate,UITableViewDataSource>
+{
     UIImageView *mImgV_head;
     UILabel *mLab_name;
     UILabel *mLab_time;

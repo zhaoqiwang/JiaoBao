@@ -224,9 +224,9 @@
     //内容
     cell.mLab_content.text = model.MsgContent;
     cell.mLab_content.frame = CGRectMake(cell.mLab_name.frame.origin.x, cell.mLab_name.frame.origin.y+25, [dm getInstance].width-cell.mImgV_head.frame.size.width-30, 20);
+
     //分割线
     cell.mLab_line.frame = CGRectMake(0, 64, [dm getInstance].width, .5);
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, 65);
     
     return cell;
 }
