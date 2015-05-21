@@ -32,6 +32,7 @@
     UIImageView *mImgV_0;
     UIImageView *mImgV_1;
     UIImageView *mImgV_2;
+    UIButton *mBtn_comment;//弹出点赞和评论
     id<ClassTableViewCellDelegate> delegate;
     ClassModel *mModel_class;//
     id<ClassTableViewCellClassDelegate> ClassDelegate;
@@ -57,6 +58,7 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_0;
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_1;
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_2;
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_comment;//弹出点赞和评论
 
 @property (strong,nonatomic) id<ClassTableViewCellDelegate> delegate;
 @property (nonatomic,strong) ClassModel *mModel_class;//

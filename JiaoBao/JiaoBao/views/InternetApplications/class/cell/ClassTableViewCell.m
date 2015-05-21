@@ -9,7 +9,7 @@
 #import "ClassTableViewCell.h"
 
 @implementation ClassTableViewCell
-@synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate,headImgDelegate;
+@synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate,headImgDelegate,mBtn_comment;
 
 - (void)awakeFromNib {
     // Initialization code

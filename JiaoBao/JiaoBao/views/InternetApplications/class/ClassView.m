@@ -103,8 +103,16 @@
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
         [self addSubview:self.mProgressV];
         self.mProgressV.delegate = self;
+        
+//        PopupWindow *pop = [[PopupWindow alloc] init];
+//        pop.delegate = self;
+//        [self addSubview:pop];
     }
     return self;
+}
+
+-(void)PopupWindowClickBtn:(PopupWindow *)PopupWindow Button:(UIButton *)btn{
+    D("btn.tag-=======%ld",(long)btn.tag);
 }
 
 //切换账号时，更新数据
@@ -541,8 +549,7 @@
                 [cell.mImgV_0 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }else if (i==1){
                 cell.mImgV_1.hidden = NO;
-                [cell.mImgV_1 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
-                [cell.mImgV_1 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+                [cell.mImgV_1 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];                [cell.mImgV_1 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }else if (i==2){
                 cell.mImgV_2.hidden = NO;
                 [cell.mImgV_2 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
@@ -550,7 +557,6 @@
             }
         }
         cell.mView_img.frame = CGRectMake(62, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height, [dm getInstance].width-72, m+10);
-        
     }else{
         cell.mView_img.hidden = YES;
         cell.mView_img.frame = cell.mView_background.frame;
