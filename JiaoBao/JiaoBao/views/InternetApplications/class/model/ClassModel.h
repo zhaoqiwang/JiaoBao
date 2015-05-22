@@ -31,6 +31,7 @@
     NSString *classID;//班级号
     NSString *UnitType;//类型
     NSString *unitId;//单位号
+    NSMutableArray *mArr_comment;//当前文章的前N条评论
 }
 
 @property (nonatomic,strong) NSString *TabIDStr;
@@ -55,6 +56,7 @@
 @property (nonatomic,strong) NSString *classID;//班级号
 @property (nonatomic,strong) NSString *UnitType;//类型
 @property (nonatomic,strong) NSString *unitId;//单位号
+@property (nonatomic,strong) NSMutableArray *mArr_comment;//当前文章的前N条评论
 
 @end
 

@@ -19,8 +19,9 @@
 #import "MJPhotoBrowser.h"
 #import "UnitSpaceViewController.h"
 #import "MWPhotoBrowser.h"
+#import "PopupWindow.h"
 
-@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate>{
+@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate,PopupWindowDelegate>{
     UIView *mView_button;//放四个按钮
     UITableView *mTableV_list;//表格
     NSMutableArray *mArr_unit;//本单位
@@ -38,6 +39,7 @@
     NSMutableArray *mArr_sumTop;//全部
     MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新,1是在刷新
+    PopupWindow *mView_popup;//点赞评论弹出框
 }
 
 @property (nonatomic,strong) UIView *mView_button;//放四个按钮
@@ -60,6 +62,7 @@
 @property (nonatomic, strong) NSMutableArray *photos;
 @property(nonatomic,strong)NSArray *commentArr;
 @property(nonatomic,strong)NSArray *nameArr;
+@property (nonatomic,strong) PopupWindow *mView_popup;//点赞评论弹出框
 
 - (id)initWithFrame1:(CGRect)frame;
 

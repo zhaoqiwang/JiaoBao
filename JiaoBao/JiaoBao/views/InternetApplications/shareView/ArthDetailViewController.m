@@ -148,7 +148,7 @@
     //判断文章是否有评论
     if (self.mModel_arthInfo.FeeBackCount>0) {
         //获取文章评论
-        [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20"];
+        [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
     }
     [self setArthInfo];
 }
@@ -269,7 +269,7 @@
         self.mTextF_text.text = @"";
     }
     //获取文章评论
-    [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20"];
+    [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
     [self progressViewShow:@"评论成功，刷新列表中"];
     [self.mModel_commentList.commentsList removeAllObjects];
     [self.mModel_commentList.refcomments removeAllObjects];
@@ -334,7 +334,7 @@
     int a = (int)self.mModel_commentList.commentsList.count;
     int b = a/20+1;
     //获取文章评论
-    [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:[NSString stringWithFormat:@"%d",b] Num:@"20"];
+    [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:[NSString stringWithFormat:@"%d",b] Num:@"20" Flag:@""];
     [self progressViewShow:@"获取中"];
 }
 

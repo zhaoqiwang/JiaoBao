@@ -71,8 +71,8 @@
 //文章点赞                      文章加密id
 -(void)shareHttpAirthLikeIt:(NSString *)aid Flag:(NSString *)flag;
 
-//获取文章评论列表              文章加密id
--(void)shareHttpAirthCommentsList:(NSString *)aid Page:(NSString *)page Num:(NSString *)num;
+//获取文章评论列表              文章加密id                                                      来自哪个页面的请求
+-(void)shareHttpAirthCommentsList:(NSString *)aid Page:(NSString *)page Num:(NSString *)num Flag:(NSString *)flag;
 
 //发表评论                  文章加密id                                              加密的引用评语ID
 -(void)shareHttpAirthAddComment:(NSString *)aid content:(NSString *)comment refid:(NSString *)refid;
