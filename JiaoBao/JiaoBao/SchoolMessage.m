@@ -8,11 +8,31 @@
 
 #import "SchoolMessage.h"
 #import "dm.h"
+#import "SMSTreeArrayModel.h"
 
 @implementation SchoolMessage
+-(void)seleForuth:(id)sender
+{
+    NSArray *arr = [sender object];
+    for(int i=0;i<arr.count;i++)
+    {
+        SMSTreeArrayModel *model =[arr objectAtIndex:i];
+        if(model.smsTree.count == 0)
+        {
+            [self removeFromSuperview];
+        }
+
+        
+    }
+    
+    
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(seleForuth:) name:@"seleForuth" object:nil];
+
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     [self addSubview:headerView];
     headerView.backgroundColor = [UIColor lightGrayColor];

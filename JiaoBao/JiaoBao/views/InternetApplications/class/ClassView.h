@@ -58,6 +58,8 @@
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property (nonatomic, strong) NSMutableArray *photos;
+@property(nonatomic,strong)NSArray *commentArr;
+@property(nonatomic,strong)NSArray *nameArr;
 
 - (id)initWithFrame1:(CGRect)frame;
 

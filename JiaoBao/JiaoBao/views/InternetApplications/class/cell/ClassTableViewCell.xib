@@ -13,24 +13,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="172"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WRT-Dl-oiF">
-                        <rect key="frame" x="0.0" y="-198" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <connections>
-                            <outlet property="dataSource" destination="-1" id="6S5-4F-Fqg"/>
-                            <outlet property="delegate" destination="-1" id="n75-h1-m6u"/>
-                        </connections>
-                    </tableView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="YKi-nW-AQK">
                         <rect key="frame" x="8" y="8" width="42" height="42"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="uCW-e3-b5c">
+                        <rect key="frame" x="40" y="22" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wowow" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F8G-K9-kmi">
                         <rect key="frame" x="64" y="13" width="63" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.19485629562043796" green="0.15967153284671534" blue="0.79299726277372262" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.19607843137254902" green="0.16078431372549021" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eWO-ZO-LLA">
@@ -131,9 +126,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WRT-Dl-oiF">
+                        <rect key="frame" x="0.0" y="-198" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="-1" id="6S5-4F-Fqg"/>
+                            <outlet property="delegate" destination="-1" id="n75-h1-m6u"/>
+                        </connections>
+                    </tableView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="backImgV" destination="uCW-e3-b5c" id="jaM-6a-xLf"/>
                 <outlet property="mImgV_0" destination="reG-DT-qmd" id="7VI-53-PhM"/>
                 <outlet property="mImgV_1" destination="EBZ-bj-4U5" id="ebx-8b-WRr"/>
                 <outlet property="mImgV_2" destination="6MQ-rQ-iTV" id="SoI-aD-eu1"/>

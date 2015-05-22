@@ -48,15 +48,22 @@ static HomeClassRootScrollView *__singletion;
         self.characterView = [[CharacterView alloc] initWithFrame:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
         [self addSubview:self.characterView];
         //self.characterView.backgroundColor = [UIColor blackColor];
-        NSUInteger utype = [dm getInstance].uType ;
-        if(utype == 1||utype == 2)
-        {
-            self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.schoolMessage];
-            self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.patriarchView];
+//        NSUInteger utype = [dm getInstance].uType ;
+//        NSUInteger isAdmin = [[dm getInstance].userInfo.isAdmin integerValue];
+//        if(utype == 1||utype == 2)
+//        {
+//            if(isAdmin != 0)
+//            {
+                self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+                [self addSubview:self.schoolMessage];
+                self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
+                [self addSubview:self.patriarchView];
+                
+            //}
             
-        }
+
+            
+        //}
 
 
     }

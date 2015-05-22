@@ -8,6 +8,7 @@
 
 #import "ClassTableViewCell.h"
 #import "CommentCell.h"
+#import "dm.h"
 
 @implementation ClassTableViewCell
 
@@ -17,8 +18,8 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
-    self.arr = [NSArray arrayWithObjects:@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa",@"aaaaaaaaaaaaaa", nil];
-    // Initialization code
+    self.commentArr = [NSArray arrayWithObjects:@"明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了",@"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",@"ccccccccccccccccccccccccccc",@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"aaaaaaaaaaaaaaaaaaaaa", nil];
+    self.nameArr = [NSArray arrayWithObjects:@"心随影动",@"abc",@"心随abc",@"abc",@"心随影动", nil];    // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -28,13 +29,12 @@
 }
 
 #pragma mark - TableViewdelegate&&TableViewdataSource
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-//    return nil;
-//}
-//每个cell返回的高度
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    if (cell) {
+    if (cell)
+    {
+
         return cell.frame.size.height;
         
     }
@@ -44,7 +44,7 @@
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return self.arr.count;
+    return self.nameArr.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -53,9 +53,29 @@
     if(cell == nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil] lastObject];
     }
-    
-    
-    
+    NSString *string1 = [self.nameArr objectAtIndex:indexPath.row ];
+    NSString *string2 = [self.commentArr objectAtIndex:indexPath.row];
+
+    NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+
+    NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+
+
+    CGRect rect=[string boundingRectWithSize:CGSizeMake([dm getInstance].width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
+                                  attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+
+    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, rect.size.height);
+    NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
+    [row4 setObject:name forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
+    cell.contentLabel.componentsAndPlainText = componentsDS;
+
+
+    //cell.contentLabel.text = string;
+
+
+
+    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, rect.size.height);
     
     
     return cell;
@@ -115,6 +135,20 @@
 
 -(void)headImgClick:(UIGestureRecognizer *)gest{
     [headImgDelegate ClassTableViewCellHeadImgTapPress:self];
+}
+
+//设置不同字体颜色
+-(void)fuwenbenLabel:(UILabel *)labell FontNumber:(id)font AndRange:(NSRange)range AndColor:(UIColor *)vaColor
+{
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:labell.text];
+    
+    //设置字号
+    [str addAttribute:NSFontAttributeName value:font range:range];
+    
+    //设置文字颜色
+    [str addAttribute:NSForegroundColorAttributeName value:vaColor range:range];
+    
+    labell.attributedText = str;
 }
 
 @end
