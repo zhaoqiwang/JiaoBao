@@ -88,6 +88,9 @@
 
 - (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
 
+//点击点赞评论按钮
+-(void) ClassTableViewCellCommentBtn:(ClassTableViewCell *) topArthListCell Btn:(UIButton *)btn;
+
 @end
 
 //向cell班级显示中添加点击手势

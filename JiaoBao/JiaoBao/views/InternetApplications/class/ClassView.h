@@ -39,6 +39,7 @@
     NSMutableArray *mArr_sumTop;//全部
     MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新,1是在刷新
+    PopupWindow *mView_popup;//点赞评论弹出框
 }
 
 @property (nonatomic,strong) UIView *mView_button;//放四个按钮
@@ -59,6 +60,7 @@
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property (nonatomic, strong) NSMutableArray *photos;
+@property (nonatomic,strong) PopupWindow *mView_popup;//点赞评论弹出框
 
 - (id)initWithFrame1:(CGRect)frame;
 

@@ -339,8 +339,8 @@ static ShareHttp *shareHttp = nil;
     [request startAsynchronous];
 }
 
-//获取文章评论列表              文章加密id
--(void)shareHttpAirthCommentsList:(NSString *)aid Page:(NSString *)page Num:(NSString *)num{
+//获取文章评论列表              文章加密id                                                      来自哪个页面的请求
+-(void)shareHttpAirthCommentsList:(NSString *)aid Page:(NSString *)page Num:(NSString *)num Flag:(NSString *)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@Sections/CommentsList",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -351,6 +351,8 @@ static ShareHttp *shareHttp = nil;
     [request addPostValue:num forKey:@"numPerPage"];
     [request addPostValue:page forKey:@"pageNum"];
     [request addPostValue:aid forKey:@"aid"];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:aid,@"tableID",flag,@"flag", nil];
+    request.userInfo = dic;
     request.tag = 14;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -600,10 +602,20 @@ static ShareHttp *shareHttp = nil;
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00===14=>>>>==%@",str000);
         CommentsListObjModel *model = [ParserJson_share parserJsonCommentsListWith:str000];
-        //获取头像
-        [self getFaceImg:model.commentsList flag:3];
-        //将获取到的评论列表传到界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList" object:model];
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
+        if ([flag intValue]==2) {//学校圈总界面
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setValue:model forKey:@"model"];
+            [dic setValue:tableID forKey:@"tableID"];
+            //将获取到的评论列表传到界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList2" object:dic];
+        }else{//详情界面
+            //获取头像
+            [self getFaceImg:model.commentsList flag:3];
+            //将获取到的评论列表传到界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList" object:model];
+        }
     }else if (_request.tag == 15) {//文章评论
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
         NSString *str;
