@@ -16,6 +16,10 @@
     for(int i=0;i<self.datasource.count;i++)
     {
         SMSTreeArrayModel *model =[self.datasource objectAtIndex:i];
+        if(model.smsTree.count == 0)
+        {
+            [self removeFromSuperview];
+        }
         for(int i=0;i<model.smsTree.count;i++)
         {
             SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];

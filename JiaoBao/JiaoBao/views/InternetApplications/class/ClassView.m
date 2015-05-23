@@ -11,14 +11,22 @@
 
 @implementation ClassView
 @synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mProgressV,mInt_flag,mView_popup;
+-(void)refreshClassView:(id)sender
+{
+    [self.mTableV_list reloadData];
+}
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
     if (self) {
         // Initialization code
         self.frame = frame;
+        self.commentArr = [NSArray arrayWithObjects:@"心随影动心随影动心随影动心随影动心随影动心随影动心随影动心随影动aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",@"ccccccccccccccccccccccccccc",@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"aaaaaaaaaaaaaaaaaaaaa", nil];
+        self.nameArr = [NSArray arrayWithObjects:@"心随影动",@"abc",@"心随abc",@"abc",@"心随影动", nil];
         self.backgroundColor = [UIColor whiteColor];
-        
+
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshClassView" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshClassView:) name:@"refreshClassView" object:nil];
         //通知学校界面，获取到的单位和个人数据,本单位或本班
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnitArthListIndex" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnitArthListIndex:) name:@"UnitArthListIndex" object:nil];
@@ -127,7 +135,7 @@
     CommentsListObjModel *model = [noti.object objectForKey:@"model"];
     for (int i=0; i<model.commentsList.count; i++) {
         commentsListModel *tempModel = [model.commentsList objectAtIndex:i];
-        D("jdjfjdlsjfjfjjfjffjfjfjfjfj-=====%@,%@",tempModel.UserName,tempModel.Commnets);
+        D("jdjfjdlsjfjfjjfjffjfjfjfjfj-===== %d %@,%@",i,tempModel.UserName,tempModel.Commnets);
     }
     NSString *tableID = [noti.object objectForKey:@"tableID"];
     if (self.mInt_index == 0) {
@@ -185,6 +193,8 @@
             }
         }
     }
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"subCellArr" object:@[self.mArr_unitTop,self.mArr_unit]];
+    
     [self.mTableV_list reloadData];
 }
 
@@ -597,11 +607,14 @@
     return 0;
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *indentifier = @"ClassTableViewCell";
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell == nil){
+    if(cell == nil)
+    {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] lastObject];
+
     }
     //找到当前应该显示的数组
     NSMutableArray *array = [NSMutableArray array];
@@ -791,8 +804,51 @@
     cell.mLab_clickCount.frame = CGRectMake(cell.mLab_assess.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_clickCount.frame.size.height);
     cell.mLab_clickCount.text = model.ClickCount;
     cell.mLab_click.frame = CGRectMake(cell.mLab_clickCount.frame.origin.x-cell.mLab_click.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_click.frame.size.width, cell.mLab_click.frame.size.height);
-    cell.tableview.frame = CGRectMake(0, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width, cell.tableview.contentSize.height);
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+cell.tableview.frame.size.height);
+    NSUInteger h = 0;
+    for(int i=0;i<model.mArr_comment.count;i++)
+    {
+        commentsListModel *tempModel = [model.mArr_comment objectAtIndex:i];
+        
+        NSString *string1 = tempModel.UserName;
+        NSString *string2 = tempModel.Commnets;
+//        NSString *string1 = [self.nameArr objectAtIndex:i ];
+//        NSString *string2 = [self.commentArr objectAtIndex:i];
+        NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+//        NSAttributedString* atrString = [[NSAttributedString alloc] initWithString:string];
+//        NSRange range = NSMakeRange(0, atrString.length);
+//        NSDictionary* dic = [atrString attributesAtIndex:0 effectiveRange:&range];
+        CGRect rect=[string boundingRectWithSize:CGSizeMake(cell.frame.size.width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
+                                                                                                            attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+
+        h = h+rect.size.height;
+        
+    }
+
+    if(model.mArr_comment.count == 0)
+    {
+        cell.tableview.frame = CGRectZero;
+        cell.backImgV.frame = CGRectZero;
+        
+    }
+    else
+    {
+        cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width-65, h+2);
+        cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4, [dm getInstance].width-65, h+8);
+        cell.backImgV.image = [UIImage imageNamed:@"bj.png"];
+        
+    }
+
+
+    cell.tableview.backgroundColor = [UIColor clearColor];
+    
+    
+    //cell.tableBackView.frame = CGRectMake(0, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width, h+10+10);
+    //cell.tableview.backgroundColor = [UIColor redColor];
+    //cell.tableBackView.backgroundColor = [UIColor lightGrayColor];
+
+
+    
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+10);
     return cell;
 }
 

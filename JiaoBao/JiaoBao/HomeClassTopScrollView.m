@@ -332,11 +332,18 @@ static HomeClassTopScrollView *__singletion;
 -(void)CMRevicer:(NSNotification *)noti{
 
        NSArray *arr = [noti object];
-       self.thirdArr = arr;
-    if([dm getInstance].notificationSymbol == 103)
+       //self.thirdArr = arr;
+    NSLog(@"arr = %@",arr);
+    if([dm getInstance].notificationSymbol == 102)
     {
         [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
 
+        
+    }
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+        
         
     }
 

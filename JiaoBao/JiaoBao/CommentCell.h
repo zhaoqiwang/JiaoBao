@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RCLabel.h"
 
 @interface CommentCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (strong, nonatomic) IBOutlet RCLabel *contentLabel;
 
 @end
