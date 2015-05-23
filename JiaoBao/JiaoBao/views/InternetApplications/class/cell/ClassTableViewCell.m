@@ -9,17 +9,29 @@
 #import "ClassTableViewCell.h"
 #import "CommentCell.h"
 #import "dm.h"
+#import "ClassTableViewCell.h"
+#import "utils.h"
 
 @implementation ClassTableViewCell
 
 @synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate,headImgDelegate,mBtn_comment;
 
 - (void)awakeFromNib {
+    [[NSNotificationCenter defaultCenter]addObserverForName:@"subCellArr" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSArray *arr = [note object];
+        self.topArr = [arr objectAtIndex:0];
+        self.unitArr = [arr objectAtIndex:1];
+        
+        
+        
+        
+    }];
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
     self.commentArr = [NSArray arrayWithObjects:@"明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了",@"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",@"ccccccccccccccccccccccccccc",@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"aaaaaaaaaaaaaaaaaaaaa", nil];
     self.nameArr = [NSArray arrayWithObjects:@"心随影动",@"abc",@"心随abc",@"abc",@"心随影动", nil];    // Initialization code
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -31,6 +43,8 @@
 #pragma mark - TableViewdelegate&&TableViewdataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    NSLog(@"model = %@",self.mModel_class.mArr_comment);
+//    [utils logArr:self.mModel_class.mArr_comment];
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
     if (cell)
     {
@@ -43,23 +57,28 @@
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return self.nameArr.count;
+    NSUInteger num = self.mModel_class.mArr_comment.count;
+    return num;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"tableview_superview = %@",[[tableView superview]superview]);
+    ClassTableViewCell *classCell = (ClassTableViewCell*)[[tableView superview]superview];
+    NSLog(@"cell = %@",classCell);
     static NSString *indentifier = @"CommentCell";
     CommentCell *cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell == nil){
+    if(cell == nil)
+    {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil] lastObject];
     }
-    NSString *string1 = [self.nameArr objectAtIndex:indexPath.row ];
-    NSString *string2 = [self.commentArr objectAtIndex:indexPath.row];
+    commentsListModel *tempModel = [self.mModel_class.mArr_comment objectAtIndex:indexPath.row];
 
+    NSString *string1 = tempModel.UserName;
+    NSString *string2 = tempModel.Commnets;
+    
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
 
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-
 
     CGRect rect=[string boundingRectWithSize:CGSizeMake([dm getInstance].width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
                                   attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
@@ -69,7 +88,15 @@
     [row4 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
     cell.contentLabel.componentsAndPlainText = componentsDS;
-
+//    if(self.mModel_class.mArr_comment.count<indexPath.row)
+//    {
+//        
+//    }
+//    else
+//    {
+//    NSArray *arr = [ self.mModel_class.mArr_comment objectAtIndex:indexPath.row];
+//    [utils logArr:arr];
+//    }
 
     //cell.contentLabel.text = string;
 
