@@ -718,10 +718,21 @@
         h = h+rect.size.height;
         
     }
-    cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width-65, h+2);
-    NSLog(@"tableView = %@",cell.tableview);
-    cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4, [dm getInstance].width-65, h+8);
-    cell.backImgV.image = [UIImage imageNamed:@"bj.png"];
+
+    if(model.mArr_comment.count == 0)
+    {
+        cell.tableview.frame = CGRectZero;
+        cell.backImgV.frame = CGRectZero;
+        
+    }
+    else
+    {
+        cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width-65, h+2);
+        cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4, [dm getInstance].width-65, h+8);
+        cell.backImgV.image = [UIImage imageNamed:@"bj.png"];
+        
+    }
+
 
     cell.tableview.backgroundColor = [UIColor clearColor];
     
