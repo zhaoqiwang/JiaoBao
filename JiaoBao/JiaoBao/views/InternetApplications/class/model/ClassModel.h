@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GetArthInfoModel.h"
 
 @interface ClassModel : NSObject{
     NSString *TabIDStr;//加密ID
@@ -32,6 +33,7 @@
     NSString *UnitType;//类型
     NSString *unitId;//单位号
     NSMutableArray *mArr_comment;//当前文章的前N条评论
+    GetArthInfoModel *mModel_info;//附加信息
 }
 
 @property (nonatomic,strong) NSString *TabIDStr;
@@ -57,6 +59,7 @@
 @property (nonatomic,strong) NSString *UnitType;//类型
 @property (nonatomic,strong) NSString *unitId;//单位号
 @property (nonatomic,strong) NSMutableArray *mArr_comment;//当前文章的前N条评论
+@property (nonatomic,strong) GetArthInfoModel *mModel_info;//附加信息
 
 @end
 

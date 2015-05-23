@@ -9,11 +9,12 @@
 #import "ClassModel.h"
 
 @implementation ClassModel
-@synthesize TabIDStr,ClickCount,Context,JiaoBaoHao,LikeCount,RecDate,Source,StarJson,State,Title,Abstracts,Thumbnail,ViewCount,SectionID,FeeBackCount,UserName,UnitName,flag,className,classID,unitId,UnitType,mArr_comment;
+@synthesize TabIDStr,ClickCount,Context,JiaoBaoHao,LikeCount,RecDate,Source,StarJson,State,Title,Abstracts,Thumbnail,ViewCount,SectionID,FeeBackCount,UserName,UnitName,flag,className,classID,unitId,UnitType,mArr_comment,mModel_info;
 
 -(id)init{
     self.Thumbnail = [NSMutableArray array];
     self.mArr_comment = [NSMutableArray array];
+    self.mModel_info = [[GetArthInfoModel alloc] init];
     self.TabIDStr = @"";
     self.ClickCount = @"";
     self.Context = @"";

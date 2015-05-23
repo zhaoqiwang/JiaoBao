@@ -9,6 +9,6 @@
 #import "GetArthInfoModel.h"
 
 @implementation GetArthInfoModel
-@synthesize TabID,ClickCount,LikeCount,Likeflag,StarJson,State,ViewCount,FeeBackCount;
+@synthesize TabID,ClickCount,LikeCount,Likeflag,StarJson,State,ViewCount,FeeBackCount,TabIDStr;
 
 @end
