@@ -21,8 +21,7 @@
     if (self) {
         // Initialization code
         self.frame = frame;
-        self.commentArr = [NSArray arrayWithObjects:@"心随影动心随影动心随影动心随影动心随影动心随影动心随影动心随影动aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",@"ccccccccccccccccccccccccccc",@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"aaaaaaaaaaaaaaaaaaaaa", nil];
-        self.nameArr = [NSArray arrayWithObjects:@"心随影动",@"abc",@"心随abc",@"abc",@"心随影动", nil];
+
         self.backgroundColor = [UIColor whiteColor];
 
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshClassView" object:nil];
@@ -187,7 +186,6 @@
                 }
             }
         }
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"subCellArr" object:@[self.mArr_unitTop,self.mArr_unit]];
     
     [self.mTableV_list reloadData];
 }
@@ -733,16 +731,8 @@
         
     }
 
-
     cell.tableview.backgroundColor = [UIColor clearColor];
-    
-    
-    //cell.tableBackView.frame = CGRectMake(0, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height, [dm getInstance].width, h+10+10);
-    //cell.tableview.backgroundColor = [UIColor redColor];
-    //cell.tableBackView.backgroundColor = [UIColor lightGrayColor];
 
-
-    
     cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+10);
     return cell;
 }

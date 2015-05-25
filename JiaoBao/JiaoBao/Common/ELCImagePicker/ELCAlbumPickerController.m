@@ -176,7 +176,8 @@
     
     //
     NSString *name = [g valueForProperty:ALAssetsGroupPropertyName];
-    if ([name isEqual:@"Camera Roll"]) {
+    if ([name isEqual:@"Camera Roll"])
+    {
         name = @"相册";
     }
     

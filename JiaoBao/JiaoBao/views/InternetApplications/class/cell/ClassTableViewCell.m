@@ -17,20 +17,11 @@
 @synthesize mImgV_head,mLab_name,mLab_class,mLab_assessContent,mView_background,mImgV_airPhoto,mLab_content,mLab_time,mLab_click,mLab_clickCount,mLab_assess,mLab_assessCount,mLab_like,mLab_likeCount,mView_img,mImgV_0,mImgV_1,mImgV_2,delegate,mModel_class,ClassDelegate,headImgDelegate,mBtn_comment;
 
 - (void)awakeFromNib {
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"subCellArr" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSArray *arr = [note object];
-        self.topArr = [arr objectAtIndex:0];
-        self.unitArr = [arr objectAtIndex:1];
-        
-        
-        
-        
-    }];
+
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
-    self.commentArr = [NSArray arrayWithObjects:@"明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了明天周六了",@"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",@"ccccccccccccccccccccccccccc",@"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",@"aaaaaaaaaaaaaaaaaaaaa", nil];
-    self.nameArr = [NSArray arrayWithObjects:@"心随影动",@"abc",@"心随abc",@"abc",@"心随影动", nil];    // Initialization code
+   // Initialization code
     
 }
 
