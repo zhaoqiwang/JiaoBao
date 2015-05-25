@@ -50,6 +50,12 @@
         //将获取到的评论列表传到界面
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthCommentsList2" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthCommentsList2:) name:@"AirthCommentsList2" object:nil];
+        //获取文章的附加信息
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetArthInfo" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetArthInfo:) name:@"GetArthInfo" object:nil];
+        //通知文章详情界面刷新点赞
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthLikeIt" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthLikeIt:) name:@"AirthLikeIt" object:nil];
         
         self.mArr_unit = [NSMutableArray array];
         self.mArr_class = [NSMutableArray array];
@@ -131,61 +137,62 @@
         D("jdjfjdlsjfjfjjfjffjfjfjfjfj-===== %d %@,%@",i,tempModel.UserName,tempModel.Commnets);
     }
     NSString *tableID = [noti.object objectForKey:@"tableID"];
-        if (self.mInt_index == 0) {
-            for (int i=0; i<self.mArr_unitTop.count; i++) {
-                ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
-            }
-            for (int i=0; i<self.mArr_unit.count; i++) {
-                ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
-            }
-        }else if (self.mInt_index == 1){
-            for (int i=0; i<self.mArr_classTop.count; i++) {
-                ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
-            }
-            for (int i=0; i<self.mArr_class.count; i++) {
-                ClassModel *classModel = [self.mArr_class objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
-            }
-        }else if (self.mInt_index == 2){
-            for (int i=0; i<self.mArr_local.count; i++) {
-                ClassModel *classModel = [self.mArr_local objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
-            }
-        }else if (self.mInt_index == 3){
-            for (int i=0; i<self.mArr_attention.count; i++) {
-                ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
-            }
-        }else if (self.mInt_index == 4){
-            for (int i=0; i<self.mArr_sum.count; i++) {
-                ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
-                if ([classModel.TabIDStr isEqual:tableID]) {
-                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                    break;
-                }
+    if (self.mInt_index == 0) {
+        for (int i=0; i<self.mArr_unitTop.count; i++) {
+            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
             }
         }
+        for (int i=0; i<self.mArr_unit.count; i++) {
+            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 1){
+        for (int i=0; i<self.mArr_classTop.count; i++) {
+            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_class.count; i++) {
+            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 2){
+        for (int i=0; i<self.mArr_local.count; i++) {
+            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 3){
+        for (int i=0; i<self.mArr_attention.count; i++) {
+            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 4){
+        for (int i=0; i<self.mArr_sum.count; i++) {
+            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"subCellArr" object:@[self.mArr_unitTop,self.mArr_unit]];
     
     [self.mTableV_list reloadData];
 }
@@ -194,6 +201,105 @@
 -(void)PopupWindowClickBtn:(PopupWindow *)PopupWindow Button:(UIButton *)btn{
     D("btn.tag-=======%ld",(long)btn.tag);
     self.mView_popup.hidden = YES;
+    [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+    
+    if (btn.tag == 0) {
+        //先判断是否已经获取到是否已经点赞的附加信息
+        if (self.mView_popup.mModel_class.mModel_info.TabID >0) {//获取到
+            if (self.mView_popup.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
+                [[ShareHttp getInstance] shareHttpAirthLikeIt:self.mView_popup.mModel_class.TabIDStr Flag:[NSString stringWithFormat:@"%d",self.mView_popup.mModel_class.mModel_info.Likeflag]];
+                [self ProgressViewLoad:@"点赞中..."];
+            }else{//已赞
+//                [self loadNoMore:@"已赞"];
+            }
+        }else{//发送获取当前文章附加信息的请求
+            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID];
+            [self ProgressViewLoad:@"获取信息中..."];
+        }
+    }else{
+        
+    }
+}
+
+//获取文章的附加信息回调
+-(void)GetArthInfo:(NSNotification *)noti{
+    GetArthInfoModel *model = noti.object;
+    //判断是否需要点赞请求
+    [self sendLike:model];
+    if (self.mInt_index == 0) {
+        for (int i=0; i<self.mArr_unitTop.count; i++) {
+            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_unit.count; i++) {
+            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 1){
+        for (int i=0; i<self.mArr_classTop.count; i++) {
+            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_class.count; i++) {
+            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 2){
+        for (int i=0; i<self.mArr_local.count; i++) {
+            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 3){
+        for (int i=0; i<self.mArr_attention.count; i++) {
+            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 4){
+        for (int i=0; i<self.mArr_sum.count; i++) {
+            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }
+}
+
+//收到文章的附加信息后，判断是否需要发送点赞请求
+-(void)sendLike:(GetArthInfoModel *)model{
+    if (model.Likeflag >=0){//没有点赞，发送点赞请求
+        [[ShareHttp getInstance] shareHttpAirthLikeIt:model.TabIDStr Flag:[NSString stringWithFormat:@"%d",model.Likeflag]];
+        [self ProgressViewLoad:@"点赞中..."];
+    }else{//已赞
+        [self loadNoMore:@"已赞"];
+    }
+}
+
+//通知文章详情界面刷新点赞
+-(void)AirthLikeIt:(NSNotification *)noti{
+    NSString *str = noti.object;
+    self.mProgressV.labelText = str;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
 }
 
 //切换账号时，更新数据
@@ -339,20 +445,20 @@
     if (self.mInt_index == 0&&(self.mArr_unitTop.count==0||self.mArr_unit.count==0)) {
         if (self.mArr_unitTop.count==0) {
             [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         }
         if (self.mArr_unit.count==0) {
             [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         }
     }else if (self.mInt_index == 1&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
         if (self.mArr_classTop.count==0) {
             [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         }
         if (self.mArr_class.count==0) {
             [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         }
     }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
         [self tableViewDownReloadData];
@@ -381,20 +487,20 @@
         //flag=1个人，=2单位
         [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
         [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-        [self ProgressViewLoad];
+        [self ProgressViewLoad:@"加载中..."];
     }else if (self.mInt_index == 1){
         [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
         [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-        [self ProgressViewLoad];
+        [self ProgressViewLoad:@"加载中..."];
     }else if (self.mInt_index == 2){
         [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
-        [self ProgressViewLoad];
+        [self ProgressViewLoad:@"加载中..."];
     }else if (self.mInt_index == 3){
         [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
-        [self ProgressViewLoad];
+        [self ProgressViewLoad:@"加载中..."];
     }else if (self.mInt_index == 4){
         [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
-        [self ProgressViewLoad];
+        [self ProgressViewLoad:@"加载中..."];
     }
 }
 
@@ -812,14 +918,14 @@
     [utils pushViewController:topView animated:YES];
 }
 
--(void)ProgressViewLoad{
+-(void)ProgressViewLoad:(NSString *)title{
     self.mView_popup.hidden = YES;
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
     }
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
+    self.mProgressV.labelText = title;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
 }
@@ -868,9 +974,9 @@
             }
             int a = (int)self.mArr_unit.count/5+1;
             [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         } else {
-            [self loadNoMore];
+            [self loadNoMore:@"没有更多了"];
         }
     }else if (self.mInt_index == 1){
         if (self.mArr_class.count>=5&&self.mArr_class.count%5==0) {
@@ -880,9 +986,9 @@
             }
             int a = (int)self.mArr_class.count/5+1;
             [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         } else {
-            [self loadNoMore];
+            [self loadNoMore:@"没有更多了"];
         }
     }else if (self.mInt_index == 2){
         if (self.mArr_local.count>=5&&self.mArr_local.count%5==0) {
@@ -892,9 +998,9 @@
             }
             int a = (int)self.mArr_local.count/5+1;
             [[ClassHttp getInstance] classHttpShowingUnitArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         } else {
-            [self loadNoMore];
+            [self loadNoMore:@"没有更多了"];
         }
     }else if (self.mInt_index == 3){
         if (self.mArr_attention.count>=5&&self.mArr_attention.count%5==0) {
@@ -904,9 +1010,9 @@
             }
             int a = (int)self.mArr_attention.count/5+1;
             [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" accid:[dm getInstance].jiaoBaoHao];
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         } else {
-            [self loadNoMore];
+            [self loadNoMore:@"没有更多了"];
         }
     }else if (self.mInt_index == 4){
         if (self.mArr_sum.count>=5&&self.mArr_sum.count%5==0) {
@@ -916,28 +1022,39 @@
             }
             int a = (int)self.mArr_sum.count/5+1;
             [[ClassHttp getInstance] classHttpShowingUnitArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
-            [self ProgressViewLoad];
+            [self ProgressViewLoad:@"加载中..."];
         } else {
-            [self loadNoMore];
+            [self loadNoMore:@"没有更多了"];
         }
     }
 }
 
--(void)loadNoMore{
+-(void)loadNoMore:(NSString *)title{
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"没有更多了";
+    self.mProgressV.labelText = title;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
 }
 
+
 //点击点赞评论按钮
 -(void)ClassTableViewCellCommentBtn:(ClassTableViewCell *)topArthListCell Btn:(UIButton *)btn{
+    self.mView_popup.mModel_class = topArthListCell.mModel_class;
     //得到当前点击的button相对于整个view的坐标
     CGRect parentRect = [btn convertRect:btn.bounds toView:self];
     self.mView_popup.hidden = NO;
     self.mView_popup.frame = CGRectMake(parentRect.origin.x-120, parentRect.origin.y, self.mView_popup.frame.size.width, self.mView_popup.frame.size.height);
+    if (topArthListCell.mModel_class.mModel_info.TabID >0) {//获取到
+        if (topArthListCell.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
+            [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+        }else{//已赞
+            [self.mView_popup.mBtn_like setTitle:@"已赞" forState:UIControlStateNormal];
+        }
+    }else{
+        [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+    }
 }
 
 //向cell中添加图片点击手势

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClassModel.h"
 
 @protocol PopupWindowDelegate;
 
@@ -14,11 +15,13 @@
     UIButton *mBtn_like;//点赞按钮
     UIButton *mBtn_comment;//评论按钮
     id<PopupWindowDelegate> delegate;
+    ClassModel *mModel_class;//传值
 }
 
 @property (nonatomic,strong) UIButton *mBtn_like;//点赞按钮
 @property (nonatomic,strong) UIButton *mBtn_comment;//评论按钮
 @property (strong,nonatomic) id<PopupWindowDelegate> delegate;
+@property (nonatomic,strong) ClassModel *mModel_class;//传值
 
 @end
 

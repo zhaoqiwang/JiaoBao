@@ -17,6 +17,7 @@
     int ViewCount;
     int FeeBackCount;
     int Likeflag;
+    NSString *TabIDStr;//加密ID
 }
 
 @property (nonatomic,assign) int TabID;
@@ -27,6 +28,7 @@
 @property (nonatomic,assign) int ViewCount;
 @property (nonatomic,assign) int FeeBackCount;
 @property (nonatomic,assign) int Likeflag;
+@property (nonatomic,strong) NSString *TabIDStr;//加密ID
 
 @end
 //{"TabID":368263,"ClickCount":27,"LikeCount":7,"StarJson":null,"State":1,"ViewCount":16,"FeeBackCount":4,"Likeflag":0}

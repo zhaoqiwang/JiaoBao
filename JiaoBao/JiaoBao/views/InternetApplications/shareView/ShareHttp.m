@@ -406,6 +406,7 @@ static ShareHttp *shareHttp = nil;
     [request setRequestMethod:@"POST"];
     [request addPostValue:aid forKey:@"aid"];
     [request addPostValue:sid forKey:@"sid"];
+    request.userInfo = [NSDictionary dictionaryWithObject:aid forKey:@"tableID"];
     request.tag = 17;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -593,7 +594,6 @@ static ShareHttp *shareHttp = nil;
             str = @"点赞成功";
         }else{
             str = @"点赞失败";
-            D("hahah");
         }
         //通知文章详情界面刷新点赞
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthLikeIt" object:str];
@@ -647,6 +647,8 @@ static ShareHttp *shareHttp = nil;
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00===17=>>>>==%@",str000);
         GetArthInfoModel *model = [ParserJson_share parserJsonGetArthInfo:str000];
+        NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
+        model.TabIDStr = tableID;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:model];
     }
 }
