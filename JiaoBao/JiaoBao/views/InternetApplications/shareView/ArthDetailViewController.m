@@ -244,7 +244,7 @@
 
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
-    NSString *str = noti.object;
+    NSString *str = [noti.object objectForKey:@"str"];
     self.mProgressV.labelText = str;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     [self.mProgressV show:YES];
@@ -260,7 +260,7 @@
 
 //文章评论
 -(void)AirthAddComment:(NSNotification *)noti{
-    NSString *str = noti.object;
+    NSString *str = [noti.object objectForKey:@"str"];
     if ([str isEqualToString:@"评论成功"]) {
         self.mTextF_text.text = @"";
     }
