@@ -262,11 +262,12 @@
     self.imageCount--;
     if(self.imageCount == 0)
     {
-            [self.mProgressV hide:YES];
+            //[self.mProgressV hide:YES];
+           [self.mProgressV show:YES];
+
             self.mProgressV.mode = MBProgressHUDModeCustomView;
             self.mProgressV.labelText = @"上传图片成功";
             //    self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         
     }
@@ -283,11 +284,13 @@
     NSString *str = noti.object;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = str;
-//    self.mProgressV.userInteractionEnabled = NO;
+    self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     self.mTextF_title.text = @"";
     self.mTextV_content.text = @"";
+    self.mInt_index = 0;
+    self.mArr_pic = [[NSMutableArray alloc]initWithCapacity:0];
 }
 
 //点击发送按钮
@@ -327,6 +330,7 @@
         NSLog(@"originalName = %@",model.originalName);
         NSString *temp = model.originalName;
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        NSLog(@"model_url = %@",model.url);
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
     NSLog(@"unitID = %@",self.mStr_unitID);
@@ -610,7 +614,6 @@
                                 
                                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
                                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
-
                                 self.mInt_index ++;
                                 
                                 break;

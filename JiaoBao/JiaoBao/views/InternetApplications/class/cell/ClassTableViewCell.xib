@@ -145,6 +145,19 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="A2e-4u-auj">
+                        <rect key="frame" x="143" y="149" width="60" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <state key="normal" title="更多评论">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="moreBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Deb-gf-Dlf"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -168,6 +181,7 @@
                 <outlet property="mLab_time" destination="QxI-3X-DL4" id="GQz-Ue-Mex"/>
                 <outlet property="mView_background" destination="Pqy-uQ-a3W" id="VQR-Pp-rKH"/>
                 <outlet property="mView_img" destination="6oN-Cm-0kG" id="Rpp-La-pqI"/>
+                <outlet property="moreBtn" destination="A2e-4u-auj" id="zB9-16-M5Y"/>
                 <outlet property="tableview" destination="WRT-Dl-oiF" id="Kln-ja-2lk"/>
             </connections>
             <point key="canvasLocation" x="150" y="211"/>

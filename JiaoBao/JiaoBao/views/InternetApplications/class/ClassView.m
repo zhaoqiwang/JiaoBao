@@ -1033,6 +1033,7 @@
     {
         cell.tableview.frame = CGRectZero;
         cell.backImgV.frame = CGRectZero;
+        cell.moreBtn.frame = CGRectZero;
         
     }
     else
@@ -1043,13 +1044,15 @@
         // The background should be pinned to the left and not stretch.
         backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
         cell.backImgV.image = backImage;
+        cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
         
         
     }
 
     cell.tableview.backgroundColor = [UIColor clearColor];
 
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15);
+
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5);
     return cell;
 }
 
@@ -1105,7 +1108,8 @@
 }
 
 //发表文章按钮
--(void)clickPosting:(UIButton *)btn{
+-(void)clickPosting:(UIButton *)btn
+{
     UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
     model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
     model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];

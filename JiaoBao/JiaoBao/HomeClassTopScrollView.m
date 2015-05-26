@@ -332,7 +332,7 @@ static HomeClassTopScrollView *__singletion;
 -(void)CMRevicer:(NSNotification *)noti{
 
        NSArray *arr = [noti object];
-       //self.thirdArr = arr;
+       self.thirdArr = arr;
     NSLog(@"arr = %@",arr);
     if([dm getInstance].notificationSymbol == 102)
     {
