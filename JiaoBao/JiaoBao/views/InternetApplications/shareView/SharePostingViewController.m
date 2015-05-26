@@ -279,6 +279,8 @@
 }
 
 -(void)SavePublishArticle:(NSNotification *)noti{
+    self.mInt_index = 0;
+    [self.mArr_pic removeAllObjects];
     NSString *str = noti.object;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = str;

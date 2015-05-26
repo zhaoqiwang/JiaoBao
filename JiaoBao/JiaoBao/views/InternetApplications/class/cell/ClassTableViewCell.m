@@ -54,9 +54,9 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"tableview_superview = %@",[[tableView superview]superview]);
-    ClassTableViewCell *classCell = (ClassTableViewCell*)[[tableView superview]superview];
-    NSLog(@"cell = %@",classCell);
+//    NSLog(@"tableview_superview = %@",[[tableView superview]superview]);
+//    ClassTableViewCell *classCell = (ClassTableViewCell*)[[tableView superview]superview];
+//    NSLog(@"cell = %@",classCell);
     static NSString *indentifier = @"CommentCell";
     CommentCell *cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if(cell == nil)
