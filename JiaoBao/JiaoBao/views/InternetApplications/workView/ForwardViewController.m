@@ -91,6 +91,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
     self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y, self.mLab_4.frame.size.width, 29);
+    NSString *groupName = [dm getInstance].mStr_unit;
+    self.mLab_4.text = [NSString stringWithFormat:@"%@人员分组",groupName];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
     self.mBtn_all.tag = 1;
     [self.mBtn_all addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];

@@ -21,6 +21,7 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
+    self.moreBtn.enabled = NO;
    // Initialization code
     
 }
@@ -106,7 +107,8 @@
 
 
 //给头像添加点击事件
--(void)thumbImgClick{
+-(void)thumbImgClick
+{
     self.mModel_class = [mModel_class init];
     self.mImgV_0.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImgClick0:)];
@@ -176,4 +178,9 @@
     labell.attributedText = str;
 }
 
+- (IBAction)moreBtnAction:(id)sender
+{
+    //[utils pushViewController:<#(UIViewController *)#> animated:<#(BOOL)#>];
+    
+}
 @end

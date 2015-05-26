@@ -70,6 +70,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImgV;
+- (IBAction)moreBtnAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 
 //给图片添加点击事件
 -(void)thumbImgClick;

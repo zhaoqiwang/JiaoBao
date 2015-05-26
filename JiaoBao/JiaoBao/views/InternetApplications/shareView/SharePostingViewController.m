@@ -262,11 +262,12 @@
     self.imageCount--;
     if(self.imageCount == 0)
     {
-            [self.mProgressV hide:YES];
+            //[self.mProgressV hide:YES];
+           [self.mProgressV show:YES];
+
             self.mProgressV.mode = MBProgressHUDModeCustomView;
             self.mProgressV.labelText = @"上传图片成功";
             //    self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         
     }
@@ -286,6 +287,7 @@
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     self.mTextF_title.text = @"";
     self.mTextV_content.text = @"";
+    self.mInt_index = 0;
 }
 
 //点击发送按钮

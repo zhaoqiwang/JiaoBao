@@ -341,6 +341,7 @@ if([dm getInstance].notificationSymbol == 100)
             
         }
         int num = (int)genArr.count;
+        
         NSLog(@"num = %d",num);
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
