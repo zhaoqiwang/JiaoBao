@@ -68,10 +68,8 @@
 @property (strong,nonatomic) id<ClassTableViewCellClassDelegate> ClassDelegate;
 @property (strong,nonatomic) id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
-@property(nonatomic,strong)NSArray *nameArr,*commentArr;
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImgV;
-@property(nonatomic,strong)NSArray *topArr,*unitArr;
 
 //给图片添加点击事件
 -(void)thumbImgClick;
