@@ -334,6 +334,7 @@ static ShareHttp *shareHttp = nil;
     [request setRequestMethod:@"POST"];
     [request addPostValue:aid forKey:@"aid"];
     [request addPostValue:flag forKey:@"goflag"];
+    request.userInfo = [NSDictionary dictionaryWithObject:aid forKey:@"aid"];
     request.tag = 13;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -372,6 +373,7 @@ static ShareHttp *shareHttp = nil;
     if (refid.length>0) {
         [request addPostValue:refid forKey:@"refid"];
     }
+    request.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:aid,@"tableID",comment,@"comment", nil];
     request.tag = 15;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -595,8 +597,12 @@ static ShareHttp *shareHttp = nil;
         }else{
             str = @"点赞失败";
         }
+        NSString *aid = [_request.userInfo objectForKey:@"aid"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:aid forKey:@"aid"];
+        [dic setValue:str forKey:@"str"];
         //通知文章详情界面刷新点赞
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthLikeIt" object:str];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthLikeIt" object:dic];
     }else if (_request.tag == 14) {//获取文章评论列表
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -624,8 +630,14 @@ static ShareHttp *shareHttp = nil;
         }else{
             str = @"评论失败";
         }
+        NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
+        NSString *comment = [_request.userInfo objectForKey:@"comment"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:str forKey:@"str"];
+        [dic setValue:tableID forKey:@"tableID"];
+        [dic setValue:comment forKey:@"comment"];
         //文章评论
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthAddComment" object:str];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthAddComment" object:dic];
     }else if (_request.tag == 16) {//评论顶和踩
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
         NSString *str;

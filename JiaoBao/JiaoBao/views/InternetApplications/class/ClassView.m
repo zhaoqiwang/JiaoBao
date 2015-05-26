@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation ClassView
-@synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mProgressV,mInt_flag,mView_popup;
+@synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mProgressV,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text;
 -(void)refreshClassView:(id)sender
 {
     [self.mTableV_list reloadData];
@@ -56,6 +56,14 @@
         //通知文章详情界面刷新点赞
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthLikeIt" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthLikeIt:) name:@"AirthLikeIt" object:nil];
+        //键盘事件
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+        //文章评论
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthAddComment" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthAddComment:) name:@"AirthAddComment" object:nil];
         
         self.mArr_unit = [NSMutableArray array];
         self.mArr_class = [NSMutableArray array];
@@ -124,6 +132,34 @@
         self.mView_popup.delegate = self;
         [self addSubview:self.mView_popup];
         self.mView_popup.hidden = YES;
+        
+        //输入View坐标
+        self.mView_text = [[UIView alloc] init];
+        self.mView_text.frame = CGRectMake(0, 500, [dm getInstance].width, 51);
+        self.mView_text.backgroundColor = [UIColor whiteColor];
+        //添加边框
+        self.mView_text.layer.borderWidth = .5;
+        self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+        [self addSubview:self.mView_text];
+        //输入框
+        self.mTextF_text = [[UITextField alloc] init];
+        self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15-70, 51-20);
+        self.mTextF_text.placeholder = @"请输入评论内容";
+        self.mTextF_text.delegate = self;
+        self.mTextF_text.font = [UIFont systemFontOfSize:14];
+        self.mTextF_text.borderStyle = UITextBorderStyleRoundedRect;
+        self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+        [self.mView_text addSubview:self.mTextF_text];
+        //发送按钮
+        self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
+        [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mBtn_send setTitle:@"发送" forState:UIControlStateNormal];
+        self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:14];
+        [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [self.mView_text addSubview:self.mBtn_send];
+        [self.mView_text setHidden:YES];
+        
     }
     return self;
 }
@@ -192,6 +228,7 @@
             }
         }
     }
+    
     [[NSNotificationCenter defaultCenter]postNotificationName:@"subCellArr" object:@[self.mArr_unitTop,self.mArr_unit]];
     
     [self.mTableV_list reloadData];
@@ -199,7 +236,6 @@
 
 //点击弹出框中的赞或者评论按钮
 -(void)PopupWindowClickBtn:(PopupWindow *)PopupWindow Button:(UIButton *)btn{
-    D("btn.tag-=======%ld",(long)btn.tag);
     self.mView_popup.hidden = YES;
     [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
     
@@ -217,8 +253,102 @@
             [self ProgressViewLoad:@"获取信息中..."];
         }
     }else{
-        
+        [self.mTextF_text becomeFirstResponder];
     }
+}
+
+//点击发送评论按钮
+-(void)clickSendBtn:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    if (self.mTextF_text.text.length==0) {
+        self.mProgressV.labelText = @"请输入内容";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    [[ShareHttp getInstance] shareHttpAirthAddComment:self.mView_popup.mModel_class.TabIDStr content:self.mTextF_text.text refid:@""];
+    [self ProgressViewLoad:@"提交中"];
+    [self.mTextF_text resignFirstResponder];
+}
+
+//文章评论
+-(void)AirthAddComment:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    NSString *str = [noti.object objectForKey:@"str"];
+    NSString *tableID = [noti.object objectForKey:@"tableID"];
+    NSString *comment = [noti.object objectForKey:@"comment"];
+    
+    commentsListModel *tempModel = [[commentsListModel alloc] init];
+    tempModel.UserName = [dm getInstance].name;
+    if (self.mTextF_text.text.length==0) {
+        tempModel.Commnets = comment;
+    }else{
+        tempModel.Commnets = self.mTextF_text.text;
+    }
+    
+    if ([str isEqualToString:@"评论成功"]) {
+        self.mTextF_text.text = @"";
+    }
+    if (self.mInt_index == 0) {
+        for (int i=0; i<self.mArr_unitTop.count; i++) {
+            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_unit.count; i++) {
+            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 1){
+        for (int i=0; i<self.mArr_classTop.count; i++) {
+            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_class.count; i++) {
+            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 2){
+        for (int i=0; i<self.mArr_local.count; i++) {
+            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 3){
+        for (int i=0; i<self.mArr_attention.count; i++) {
+            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }else if (self.mInt_index == 4){
+        for (int i=0; i<self.mArr_sum.count; i++) {
+            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }
+    [self.mTableV_list reloadData];
 }
 
 //获取文章的附加信息回调
@@ -295,11 +425,77 @@
 
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
-    NSString *str = noti.object;
+    NSString *str = [noti.object objectForKey:@"str"];
     self.mProgressV.labelText = str;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    
+    //
+    NSString *aid = [noti.object objectForKey:@"aid"];
+    if (self.mInt_index == 0) {
+        for (int i=0; i<self.mArr_unitTop.count; i++) {
+            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_unit.count; i++) {
+            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 1){
+        for (int i=0; i<self.mArr_classTop.count; i++) {
+            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_class.count; i++) {
+            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 2){
+        for (int i=0; i<self.mArr_local.count; i++) {
+            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 3){
+        for (int i=0; i<self.mArr_attention.count; i++) {
+            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }else if (self.mInt_index == 4){
+        for (int i=0; i<self.mArr_sum.count; i++) {
+            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }
+    [self.mTableV_list reloadData];
 }
 
 //切换账号时，更新数据
@@ -794,13 +990,15 @@
     cell.mLab_likeCount.text = model.LikeCount;
     cell.mLab_like.frame = CGRectMake(cell.mLab_likeCount.frame.origin.x-cell.mLab_like.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_like.frame.size.width, cell.mLab_like.frame.size.height);
     //评论
-    CGSize feeBackSize = [[NSString stringWithFormat:@"%@",model.FeeBackCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    cell.mLab_assessCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, feeBackSize.width, cell.mLab_assessCount.frame.size.height);
-    cell.mLab_assessCount.text = model.FeeBackCount;
-    cell.mLab_assess.frame = CGRectMake(cell.mLab_assessCount.frame.origin.x-cell.mLab_assess.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_assess.frame.size.width, cell.mLab_assess.frame.size.height);
+//    CGSize feeBackSize = [[NSString stringWithFormat:@"%@",model.FeeBackCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+//    cell.mLab_assessCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, feeBackSize.width, cell.mLab_assessCount.frame.size.height);
+//    cell.mLab_assessCount.text = model.FeeBackCount;
+//    cell.mLab_assess.frame = CGRectMake(cell.mLab_assessCount.frame.origin.x-cell.mLab_assess.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_assess.frame.size.width, cell.mLab_assess.frame.size.height);
+    cell.mLab_assess.hidden = YES;
+    cell.mLab_assessCount.hidden = YES;
     //点击量
     CGSize clickSize = [[NSString stringWithFormat:@"%@",model.ClickCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    cell.mLab_clickCount.frame = CGRectMake(cell.mLab_assess.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_clickCount.frame.size.height);
+    cell.mLab_clickCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_assessCount.frame.size.height);
     cell.mLab_clickCount.text = model.ClickCount;
     cell.mLab_click.frame = CGRectMake(cell.mLab_clickCount.frame.origin.x-cell.mLab_click.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_click.frame.size.width, cell.mLab_click.frame.size.height);
     NSUInteger h = 0;
@@ -1264,6 +1462,51 @@
     NSLog(@"Did finish modal presentation");
 //    [self dismissViewControllerAnimated:YES completion:nil];
     [utils popViewControllerAnimated:YES];
+}
+
+- (void) keyboardWasShown:(NSNotification *) notif{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSValue *animationDurationValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mView_text.hidden = NO;
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height-keyboardSize.height-51*2-10, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+- (void) keyboardWasHidden:(NSNotification *) notif{
+    self.mView_text.hidden = YES;
+    NSDictionary *userInfo = [notif userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        //若其有输入内容，则发送
+        if (self.mTextF_text.text.length>0) {
+//            [self clickSendBtn];
+        }
+        return NO;
+    }
+    return YES;
 }
 
 //当切换账号时，将此界面的所有数组清空

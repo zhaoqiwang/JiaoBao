@@ -21,7 +21,7 @@
 #import "MWPhotoBrowser.h"
 #import "PopupWindow.h"
 
-@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate,PopupWindowDelegate>{
+@interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate,PopupWindowDelegate,UITextFieldDelegate>{
     UIView *mView_button;//放四个按钮
     UITableView *mTableV_list;//表格
     NSMutableArray *mArr_unit;//本单位
@@ -40,6 +40,9 @@
     MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新,1是在刷新
     PopupWindow *mView_popup;//点赞评论弹出框
+    UIView *mView_text;//放输入框
+    UITextField *mTextF_text;//输入框
+    UIButton *mBtn_send;//发送按钮
 }
 
 @property (nonatomic,strong) UIView *mView_button;//放四个按钮
@@ -60,9 +63,12 @@
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property (nonatomic, strong) NSMutableArray *photos;
-@property(nonatomic,strong)NSArray *commentArr;
-@property(nonatomic,strong)NSArray *nameArr;
+@property (nonatomic,strong)NSArray *commentArr;
+@property (nonatomic,strong)NSArray *nameArr;
 @property (nonatomic,strong) PopupWindow *mView_popup;//点赞评论弹出框
+@property (nonatomic,strong) UIView *mView_text;//放输入框
+@property (nonatomic,strong) UITextField *mTextF_text;//输入框
+@property (nonatomic,strong) UIButton *mBtn_send;//发送按钮
 
 - (id)initWithFrame1:(CGRect)frame;
 

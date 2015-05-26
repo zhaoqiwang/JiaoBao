@@ -60,7 +60,6 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
-    
     //将dm中的单位人员数组改为未展开、未选中
     for (TreeView_node *node1 in [dm getInstance].mArr_unit_member) {
         node1.isExpanded = FALSE;
