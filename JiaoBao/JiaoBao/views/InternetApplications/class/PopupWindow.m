@@ -24,7 +24,7 @@
         self.mBtn_like = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_like.frame = CGRectMake(0, 0, 60, 30);
         [self.mBtn_like setImage:[UIImage imageNamed:@"popupWindow_like"] forState:UIControlStateNormal];
-        self.mBtn_like.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.mBtn_like.titleLabel.font = [UIFont systemFontOfSize:13];
         [self.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
         self.mBtn_like.imageEdgeInsets = UIEdgeInsetsMake(4,0,5,0);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
         self.mBtn_like.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中

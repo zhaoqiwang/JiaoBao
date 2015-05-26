@@ -243,8 +243,12 @@
         //先判断是否已经获取到是否已经点赞的附加信息
         if (self.mView_popup.mModel_class.mModel_info.TabID >0) {//获取到
             if (self.mView_popup.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
-                [[ShareHttp getInstance] shareHttpAirthLikeIt:self.mView_popup.mModel_class.TabIDStr Flag:[NSString stringWithFormat:@"%d",self.mView_popup.mModel_class.mModel_info.Likeflag]];
-                [self ProgressViewLoad:@"点赞中..."];
+                if ([[[NSUserDefaults standardUserDefaults] valueForKey:BUGFROM] isEqual:@"ArthDetailViewController"]) {
+                    
+                }else{
+                    [[ShareHttp getInstance] shareHttpAirthLikeIt:self.mView_popup.mModel_class.TabIDStr Flag:[NSString stringWithFormat:@"%d",self.mView_popup.mModel_class.mModel_info.Likeflag]];
+                    [self ProgressViewLoad:@"点赞中..."];
+                }
             }else{//已赞
 //                [self loadNoMore:@"已赞"];
             }
@@ -416,8 +420,12 @@
 //收到文章的附加信息后，判断是否需要发送点赞请求
 -(void)sendLike:(GetArthInfoModel *)model{
     if (model.Likeflag >=0){//没有点赞，发送点赞请求
-        [[ShareHttp getInstance] shareHttpAirthLikeIt:model.TabIDStr Flag:[NSString stringWithFormat:@"%d",model.Likeflag]];
-        [self ProgressViewLoad:@"点赞中..."];
+        if ([[[NSUserDefaults standardUserDefaults] valueForKey:BUGFROM] isEqual:@"ArthDetailViewController"]) {
+            
+        }else{
+            [[ShareHttp getInstance] shareHttpAirthLikeIt:model.TabIDStr Flag:[NSString stringWithFormat:@"%d",model.Likeflag]];
+            [self ProgressViewLoad:@"点赞中..."];
+        }
     }else{//已赞
         [self loadNoMore:@"已赞"];
     }
@@ -981,7 +989,7 @@
     cell.mLab_time.text = model.RecDate;
     
     //点赞评论按钮
-    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-26, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 26, 30);
+    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-26, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 40, 35);
     [cell.mBtn_comment setImage:[UIImage imageNamed:@"popupWindow_like_comment"] forState:UIControlStateNormal];
     
     //点赞

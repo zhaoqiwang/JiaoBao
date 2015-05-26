@@ -99,7 +99,7 @@ static LoginSendHttp *loginSendHttp = nil;
     } else {
         loginStr = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"],@"UserName",[[NSUserDefaults standardUserDefaults]objectForKey:@"PassWD"], @"UserPW",time,@"TimeStamp", nil];
     }
-    
+    D("loginstr-======%@",loginStr);
     SBJsonWriter *writer = [[SBJsonWriter alloc] init];
     NSString *loginJSon = [writer stringWithObject:loginStr];
     //加密
