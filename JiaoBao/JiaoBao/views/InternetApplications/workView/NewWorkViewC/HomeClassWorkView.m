@@ -122,8 +122,9 @@
 }
 -(void)progress:(id)sender
 {
+    NSString *str = [sender object];
     //[SVProgressHUD show];
-    self.mProgressV.labelText = @"正在加载...";
+    self.mProgressV.labelText = str;
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     self.mProgressV.userInteractionEnabled = NO;
     [self.mProgressV show:YES];
