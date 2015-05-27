@@ -20,6 +20,8 @@
         if(model.smsTree.count == 0)
         {
             [self removeFromSuperview];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+
         }
 
         
