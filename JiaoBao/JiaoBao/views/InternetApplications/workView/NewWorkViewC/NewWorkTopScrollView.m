@@ -7,6 +7,7 @@
 //
 
 #import "NewWorkTopScrollView.h"
+#import "SVProgressHUD.h"
 
 @implementation NewWorkTopScrollView
 @synthesize mArr_name,mImgV_slide,mInt_scrollViewSelectedChannelID,mInt_userSelectedChannelID;
@@ -137,6 +138,10 @@
                 [dm getInstance].notificationSymbol = 100;
 
                 //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
+                if([dm getInstance].mModel_unitList.UnitClass.count == 0)
+                {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+                }
                 for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
                 {
                     myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
@@ -145,7 +150,7 @@
                 }
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:nil];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
                 [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
                 
