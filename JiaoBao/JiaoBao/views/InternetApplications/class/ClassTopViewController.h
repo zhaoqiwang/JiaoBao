@@ -18,8 +18,9 @@
 #import "ClassHttp.h"
 #import "UnitSpaceViewController.h"
 #import "MWPhotoBrowser.h"
+#import "PopupWindow.h"
 
-@interface ClassTopViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,ClassTableViewCellClassDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate>{
+@interface ClassTopViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,ClassTableViewCellClassDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate,PopupWindowDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_list;//列表显示
     NSMutableArray *mArr_list;//列表数组
@@ -29,6 +30,10 @@
     int mInt_unit_class;//判断的是要加载单位1还是班级2
     NSString *mStr_classID;//当显示班级时，班级ID
     NSString *mStr_navName;//当为班级时，加载班级名称
+    PopupWindow *mView_popup;//点赞评论弹出框
+    UIView *mView_text;//放输入框
+    UITextField *mTextF_text;//输入框
+    UIButton *mBtn_send;//发送按钮
 }
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//列表显示
@@ -40,5 +45,9 @@
 @property (nonatomic,strong) NSString *mStr_classID;//当显示班级时，班级ID
 @property (nonatomic,strong) NSString *mStr_navName;//当为班级时，加载班级名称
 @property (nonatomic, strong) NSMutableArray *photos;
+@property (nonatomic,strong) PopupWindow *mView_popup;//点赞评论弹出框
+@property (nonatomic,strong) UIView *mView_text;//放输入框
+@property (nonatomic,strong) UITextField *mTextF_text;//输入框
+@property (nonatomic,strong) UIButton *mBtn_send;//发送按钮
 
 @end
