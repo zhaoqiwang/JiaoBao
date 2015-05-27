@@ -37,10 +37,14 @@ NSString *kCell = @"Forward_cell2";
     //self.view.backgroundColor = [UIColor lightGrayColor];
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;//滚动方向
-    
+
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
     [self addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
+    if([dm getInstance].mModel_unitList.UnitClass.count == 0)
+    {
+        
+    }
 //
     self.mCollectionV_list = [[UICollectionView alloc]initWithFrame:CGRectMake(0,headerView.frame.size.height+headerView.frame.origin.y, [dm getInstance].width, 600) collectionViewLayout:flowLayout];
     [self addSubview:self.mCollectionV_list];
@@ -154,6 +158,7 @@ NSString *kCell = @"Forward_cell2";
 -(void)selSecBtn:(id)sender
 {
     self.datasource = [dm getInstance].mModel_unitList.UnitClass;
+
     self.dataArr = [NSMutableArray arrayWithArray:[sender object] ];
 
     for(int i=0;i<self.dataArr.count;i++)
@@ -172,6 +177,11 @@ NSString *kCell = @"Forward_cell2";
         
         
         
+    }
+    NSLog(@"self.datasource.count = %ld",self.datasource.count);
+    if(self.datasource.count == 0)
+    {
+        [SVProgressHUD showInfoWithStatus:@"无班级" ];
     }
            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
 

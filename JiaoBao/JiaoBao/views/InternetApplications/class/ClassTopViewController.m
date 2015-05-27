@@ -280,8 +280,69 @@
     cell.mLab_clickCount.frame = CGRectMake(cell.mLab_assess.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_clickCount.frame.size.height);
     cell.mLab_clickCount.text = model.ClickCount;
     cell.mLab_click.frame = CGRectMake(cell.mLab_clickCount.frame.origin.x-cell.mLab_click.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_click.frame.size.width, cell.mLab_click.frame.size.height);
+    NSUInteger h = 0;
+    for(int i=0;i<model.mArr_comment.count;i++)
+    {
+        commentsListModel *tempModel = [model.mArr_comment objectAtIndex:i];
+        
+        NSString *string1 = tempModel.UserName;
+        NSString *string2 = tempModel.Commnets;
+        //        NSString *string1 = [self.nameArr objectAtIndex:i ];
+        //        NSString *string2 = [self.commentArr objectAtIndex:i];
+        NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        //        NSAttributedString* atrString = [[NSAttributedString alloc] initWithString:string];
+        //        NSRange range = NSMakeRange(0, atrString.length);
+        //        NSDictionary* dic = [atrString attributesAtIndex:0 effectiveRange:&range];
+        CGRect rect=[string boundingRectWithSize:CGSizeMake(cell.frame.size.width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+        
+        h = h+rect.size.height;
+        
+    }
     
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height);
+    if(model.mArr_comment.count == 0)
+    {
+        cell.tableview.frame = CGRectZero;
+        cell.backImgV.frame = CGRectZero;
+        cell.moreBtn.frame = CGRectZero;
+        
+    }
+    else
+    {
+        if(model.mArr_comment.count<5)
+        {
+            cell.moreBtn.frame = CGRectZero;
+            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5, [dm getInstance].width-65, h+7);
+            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4, [dm getInstance].width-65, h+13);
+            UIImage *backImage = [UIImage imageNamed:@"bj.png"];
+            // The background should be pinned to the left and not stretch.
+            backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
+            cell.backImgV.image = backImage;
+            //            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
+            
+            
+        }
+        else{
+            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5, [dm getInstance].width-65, h+7);
+            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4, [dm getInstance].width-65, h+13);
+            UIImage *backImage = [UIImage imageNamed:@"bj.png"];
+            // The background should be pinned to the left and not stretch.
+            backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
+            cell.backImgV.image = backImage;
+            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
+            
+        }
+        
+        
+        
+    }
+    
+    cell.tableview.backgroundColor = [UIColor clearColor];
+    
+    
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5);
+    
+//    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height);
     return cell;
 }
 
