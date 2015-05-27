@@ -168,10 +168,6 @@
 -(void)AirthCommentsList2:(NSNotification *)noti{
     [self.mProgressV hide:YES];
     CommentsListObjModel *model = [noti.object objectForKey:@"model"];
-    for (int i=0; i<model.commentsList.count; i++) {
-        commentsListModel *tempModel = [model.commentsList objectAtIndex:i];
-        D("jdjfjdlsjfjfjjfjffjfjfjfjfj-===== %d %@,%@",i,tempModel.UserName,tempModel.Commnets);
-    }
     NSString *tableID = [noti.object objectForKey:@"tableID"];
     if (self.mInt_index == 0) {
         for (int i=0; i<self.mArr_unitTop.count; i++) {
@@ -229,8 +225,6 @@
         }
     }
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"subCellArr" object:@[self.mArr_unitTop,self.mArr_unit]];
-    
     [self.mTableV_list reloadData];
 }
 
@@ -274,6 +268,7 @@
         [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         return;
     }
+    self.mView_popup.hidden = YES;
     [[ShareHttp getInstance] shareHttpAirthAddComment:self.mView_popup.mModel_class.TabIDStr content:self.mTextF_text.text refid:@""];
     [self ProgressViewLoad:@"提交中"];
     [self.mTextF_text resignFirstResponder];

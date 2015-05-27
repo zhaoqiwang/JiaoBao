@@ -14,7 +14,7 @@
 @end
 
 @implementation ClassTopViewController
-@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class,mStr_classID,mStr_navName,mArr_list_class;
+@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class,mStr_classID,mStr_navName,mArr_list_class,mTextF_text,mView_popup,mView_text,mBtn_send;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -30,6 +30,23 @@
     //我的班级文章列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AllMyClassArthList3" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AllMyClassArthList3:) name:@"AllMyClassArthList3" object:nil];
+    //将获取到的评论列表传到界面
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthCommentsList2" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthCommentsList2:) name:@"AirthCommentsList2" object:nil];
+    //获取文章的附加信息
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetArthInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetArthInfo:) name:@"GetArthInfo" object:nil];
+    //通知文章详情界面刷新点赞
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthLikeIt" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthLikeIt:) name:@"AirthLikeIt" object:nil];
+    //键盘事件
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+    //文章评论
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthAddComment" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthAddComment:) name:@"AirthAddComment" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -62,14 +79,230 @@
     self.mProgressV.delegate = self;
     //判断应该加载单位1还是班级2
     if (self.mInt_unit_class == 1) {
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
     } else if(self.mInt_unit_class == 2) {
-        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"2" RequestFlag:@"3"];//单位
     }else if (self.mInt_unit_class == 3){
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
     }
     
     [self ProgressViewLoad];
+    
+    self.mView_popup = [[PopupWindow alloc] init];
+    self.mView_popup.delegate = self;
+    [self.view addSubview:self.mView_popup];
+    self.mView_popup.hidden = YES;
+    
+    //输入View坐标
+    self.mView_text = [[UIView alloc] init];
+    self.mView_text.frame = CGRectMake(0, 500, [dm getInstance].width, 51);
+    self.mView_text.backgroundColor = [UIColor whiteColor];
+    //添加边框
+    self.mView_text.layer.borderWidth = .5;
+    self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    [self.view addSubview:self.mView_text];
+    //输入框
+    self.mTextF_text = [[UITextField alloc] init];
+    self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15-70, 51-20);
+    self.mTextF_text.placeholder = @"请输入评论内容";
+    self.mTextF_text.delegate = self;
+    self.mTextF_text.font = [UIFont systemFontOfSize:14];
+    self.mTextF_text.borderStyle = UITextBorderStyleRoundedRect;
+    self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+    [self.mView_text addSubview:self.mTextF_text];
+    //发送按钮
+    self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
+    [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.mBtn_send setTitle:@"发送" forState:UIControlStateNormal];
+    self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.mView_text addSubview:self.mBtn_send];
+    [self.mView_text setHidden:YES];
+}
+
+//将获取到的评论列表传到界面
+-(void)AirthCommentsList2:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    CommentsListObjModel *model = [noti.object objectForKey:@"model"];
+    NSString *tableID = [noti.object objectForKey:@"tableID"];
+    
+    if (self.mInt_unit_class == 3){
+        for (int i=0; i<self.mArr_list_class.count; i++) {
+            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }else{
+        for (int i=0; i<self.mArr_list.count; i++) {
+            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                break;
+            }
+        }
+    }
+    
+    [self.mTableV_list reloadData];
+}
+
+//点击弹出框中的赞或者评论按钮
+-(void)PopupWindowClickBtn:(PopupWindow *)PopupWindow Button:(UIButton *)btn{
+    self.mView_popup.hidden = YES;
+    [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+    
+    if (btn.tag == 0) {
+        //先判断是否已经获取到是否已经点赞的附加信息
+        if (self.mView_popup.mModel_class.mModel_info.TabID >0) {//获取到
+            if (self.mView_popup.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
+                if ([[[NSUserDefaults standardUserDefaults] valueForKey:BUGFROM] isEqual:@"ArthDetailViewController"]) {
+                    
+                }else{
+                    [[ShareHttp getInstance] shareHttpAirthLikeIt:self.mView_popup.mModel_class.TabIDStr Flag:[NSString stringWithFormat:@"%d",self.mView_popup.mModel_class.mModel_info.Likeflag]];
+                    [self ProgressViewLoad:@"点赞中..."];
+                }
+            }else{//已赞
+                //                [self loadNoMore:@"已赞"];
+            }
+        }else{//发送获取当前文章附加信息的请求
+            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID];
+            [self ProgressViewLoad:@"获取信息中..."];
+        }
+    }else{
+        [self.mTextF_text becomeFirstResponder];
+    }
+}
+
+//点击发送评论按钮
+-(void)clickSendBtn:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    if (self.mTextF_text.text.length==0) {
+        self.mProgressV.labelText = @"请输入内容";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    self.mView_popup.hidden = YES;
+    [[ShareHttp getInstance] shareHttpAirthAddComment:self.mView_popup.mModel_class.TabIDStr content:self.mTextF_text.text refid:@""];
+    [self ProgressViewLoad:@"提交中"];
+    [self.mTextF_text resignFirstResponder];
+}
+
+//文章评论
+-(void)AirthAddComment:(NSNotification *)noti{
+    [self.mProgressV hide:YES];
+    NSString *str = [noti.object objectForKey:@"str"];
+    NSString *tableID = [noti.object objectForKey:@"tableID"];
+    NSString *comment = [noti.object objectForKey:@"comment"];
+    
+    commentsListModel *tempModel = [[commentsListModel alloc] init];
+    tempModel.UserName = [dm getInstance].name;
+    if (self.mTextF_text.text.length==0) {
+        tempModel.Commnets = comment;
+    }else{
+        tempModel.Commnets = self.mTextF_text.text;
+    }
+    
+    if ([str isEqualToString:@"评论成功"]) {
+        self.mTextF_text.text = @"";
+    }
+    if (self.mInt_unit_class == 3){
+        for (int i=0; i<self.mArr_list_class.count; i++) {
+            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }else{
+        for (int i=0; i<self.mArr_list.count; i++) {
+            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                break;
+            }
+        }
+    }
+    [self.mTableV_list reloadData];
+}
+
+//获取文章的附加信息回调
+-(void)GetArthInfo:(NSNotification *)noti{
+    GetArthInfoModel *model = noti.object;
+    //判断是否需要点赞请求
+    [self sendLike:model];
+    if (self.mInt_unit_class == 3){
+        for (int i=0; i<self.mArr_list_class.count; i++) {
+            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }else{
+        for (int i=0; i<self.mArr_list.count; i++) {
+            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                classModel.mModel_info = model;
+                break;
+            }
+        }
+    }
+}
+
+//收到文章的附加信息后，判断是否需要发送点赞请求
+-(void)sendLike:(GetArthInfoModel *)model{
+    if (model.Likeflag >=0){//没有点赞，发送点赞请求
+        if ([[[NSUserDefaults standardUserDefaults] valueForKey:BUGFROM] isEqual:@"ArthDetailViewController"]) {
+            
+        }else{
+            [[ShareHttp getInstance] shareHttpAirthLikeIt:model.TabIDStr Flag:[NSString stringWithFormat:@"%d",model.Likeflag]];
+            [self ProgressViewLoad:@"点赞中..."];
+        }
+    }else{//已赞
+        self.mProgressV.labelText = @"已赞";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
+}
+
+//通知文章详情界面刷新点赞
+-(void)AirthLikeIt:(NSNotification *)noti{
+    NSString *str = [noti.object objectForKey:@"str"];
+    self.mProgressV.labelText = str;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    
+    //
+    NSString *aid = [noti.object objectForKey:@"aid"];
+    if (self.mInt_unit_class == 3){
+        for (int i=0; i<self.mArr_list_class.count; i++) {
+            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }else{
+        for (int i=0; i<self.mArr_list.count; i++) {
+            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:aid]) {
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                classModel.mModel_info.Likeflag = -1;
+                break;
+            }
+        }
+    }
+    [self.mTableV_list reloadData];
 }
 
 //获取到头像后，更新界面
@@ -265,19 +498,25 @@
     //时间
     cell.mLab_time.frame = CGRectMake(62, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
     cell.mLab_time.text = model.RecDate;
+    //点赞评论按钮
+    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-26, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 40, 35);
+    [cell.mBtn_comment setImage:[UIImage imageNamed:@"popupWindow_like_comment"] forState:UIControlStateNormal];
+    
     //点赞
     CGSize likeSize = [[NSString stringWithFormat:@"%@",model.LikeCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    cell.mLab_likeCount.frame = CGRectMake([dm getInstance].width-10-likeSize.width, cell.mLab_time.frame.origin.y, likeSize.width, cell.mLab_likeCount.frame.size.height);
+    cell.mLab_likeCount.frame = CGRectMake(cell.mBtn_comment.frame.origin.x-10-likeSize.width, cell.mLab_time.frame.origin.y, likeSize.width, cell.mLab_likeCount.frame.size.height);
     cell.mLab_likeCount.text = model.LikeCount;
     cell.mLab_like.frame = CGRectMake(cell.mLab_likeCount.frame.origin.x-cell.mLab_like.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_like.frame.size.width, cell.mLab_like.frame.size.height);
     //评论
-    CGSize feeBackSize = [[NSString stringWithFormat:@"%@",model.FeeBackCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    cell.mLab_assessCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, feeBackSize.width, cell.mLab_assessCount.frame.size.height);
-    cell.mLab_assessCount.text = model.FeeBackCount;
-    cell.mLab_assess.frame = CGRectMake(cell.mLab_assessCount.frame.origin.x-cell.mLab_assess.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_assess.frame.size.width, cell.mLab_assess.frame.size.height);
+    //    CGSize feeBackSize = [[NSString stringWithFormat:@"%@",model.FeeBackCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+    //    cell.mLab_assessCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, feeBackSize.width, cell.mLab_assessCount.frame.size.height);
+    //    cell.mLab_assessCount.text = model.FeeBackCount;
+    //    cell.mLab_assess.frame = CGRectMake(cell.mLab_assessCount.frame.origin.x-cell.mLab_assess.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_assess.frame.size.width, cell.mLab_assess.frame.size.height);
+    cell.mLab_assess.hidden = YES;
+    cell.mLab_assessCount.hidden = YES;
     //点击量
     CGSize clickSize = [[NSString stringWithFormat:@"%@",model.ClickCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    cell.mLab_clickCount.frame = CGRectMake(cell.mLab_assess.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_clickCount.frame.size.height);
+    cell.mLab_clickCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, clickSize.width, cell.mLab_assessCount.frame.size.height);
     cell.mLab_clickCount.text = model.ClickCount;
     cell.mLab_click.frame = CGRectMake(cell.mLab_clickCount.frame.origin.x-cell.mLab_click.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_click.frame.size.width, cell.mLab_click.frame.size.height);
     
@@ -353,6 +592,36 @@
     sleep(2);
 }
 
+-(void)ProgressViewLoad:(NSString *)title{
+    self.mView_popup.hidden = YES;
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    self.mProgressV.labelText = title;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+}
+
+//点击点赞评论按钮
+-(void)ClassTableViewCellCommentBtn:(ClassTableViewCell *)topArthListCell Btn:(UIButton *)btn{
+    self.mView_popup.mModel_class = topArthListCell.mModel_class;
+    //得到当前点击的button相对于整个view的坐标
+    CGRect parentRect = [btn convertRect:btn.bounds toView:self.view];
+    self.mView_popup.hidden = NO;
+    self.mView_popup.frame = CGRectMake(parentRect.origin.x-120, parentRect.origin.y, self.mView_popup.frame.size.width, self.mView_popup.frame.size.height);
+    if (topArthListCell.mModel_class.mModel_info.TabID >0) {//获取到
+        if (topArthListCell.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
+            [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+        }else{//已赞
+            [self.mView_popup.mBtn_like setTitle:@"已赞" forState:UIControlStateNormal];
+        }
+    }else{
+        [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+    }
+}
+
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
     [self ProgressViewLoad];
@@ -361,36 +630,36 @@
     //判断应该加载单位1还是班级2
     if (self.mInt_unit_class == 1) {
         //刚进入学校圈，或者下拉刷新时执行
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
     } else if (self.mInt_unit_class == 2){
-        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
+        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"2" RequestFlag:@"3"];//单位
     }else if (self.mInt_unit_class == 3){
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"20" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
     }
 }
 - (void)footerRereshing{
     //不是刷新
     self.mInt_flag = 0;
-    if (self.mArr_list.count>=20) {
+    if (self.mArr_list.count>=5) {
         //检查当前网络是否可用
         if ([self checkNetWork]) {
             return;
         }
         //判断应该加载单位1还是班级2
         if (self.mInt_unit_class == 1) {
-            int a = (int)self.mArr_list.count/20+1;
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+            int a = (int)self.mArr_list.count/5+1;
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
         } else if (self.mInt_unit_class == 2){
-            int a = (int)self.mArr_list.count/20+1;
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"20" sectionFlag:@"2" RequestFlag:@"3"];//单位
+            int a = (int)self.mArr_list.count/5+1;
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" sectionFlag:@"2" RequestFlag:@"3"];//单位
         }else if (self.mInt_unit_class == 3){
             
         }
         
         [self ProgressViewLoad];
-    }else if (self.mArr_list_class.count>=20){
-        int a = (int)self.mArr_list_class.count/20+1;
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"20" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
+    }else if (self.mArr_list_class.count>=5){
+        int a = (int)self.mArr_list_class.count/5+1;
+        [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"2" UnitID:self.mStr_classID order:@"" title:@"" RequestFlag:@"4"];
         [self ProgressViewLoad];
     } else {
         [self loadNoMore];
@@ -622,6 +891,51 @@
     // If we subscribe to this method we must dismiss the view controller ourselves
     NSLog(@"Did finish modal presentation");
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void) keyboardWasShown:(NSNotification *) notif{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSValue *animationDurationValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mView_text.hidden = NO;
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height-keyboardSize.height-51, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+- (void) keyboardWasHidden:(NSNotification *) notif{
+    self.mView_text.hidden = YES;
+    NSDictionary *userInfo = [notif userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        //若其有输入内容，则发送
+        if (self.mTextF_text.text.length>0) {
+            //            [self clickSendBtn];
+        }
+        return NO;
+    }
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {
