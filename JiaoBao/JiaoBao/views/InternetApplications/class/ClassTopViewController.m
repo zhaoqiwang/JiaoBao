@@ -429,6 +429,8 @@
     //添加图片点击事件
     [cell thumbImgClick];
     cell.mModel_class = model;
+    NSLog(@"classModel.mArr_comment.count = %lu",model.mArr_comment.count);
+
     cell.delegate = self;
     cell.tag = indexPath.row;
     //添加头像点击事件

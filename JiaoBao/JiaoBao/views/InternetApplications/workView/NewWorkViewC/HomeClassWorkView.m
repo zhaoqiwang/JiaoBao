@@ -123,12 +123,21 @@
 -(void)progress:(id)sender
 {
     NSString *str = [sender object];
-    //[SVProgressHUD show];
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.mProgressV.labelText = str;
+        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+        self.mProgressV.userInteractionEnabled = NO;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        
+        
+    });
+//    //[SVProgressHUD show];
+//    self.mProgressV.labelText = str;
+//    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+//    self.mProgressV.userInteractionEnabled = NO;
+//    [self.mProgressV show:YES];
+//    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
     
 }
 -(void)progress2:(id)sender
