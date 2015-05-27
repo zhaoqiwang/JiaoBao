@@ -322,6 +322,12 @@
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     
+    for (int i=0; i<array.count; i++) {
+        ClassModel *model = [array objectAtIndex:i];
+        //获取文章评论
+        [[ShareHttp getInstance] shareHttpAirthCommentsList:model.TabIDStr Page:@"1" Num:@"5" Flag:@"2"];
+    }
+    
     //如果是刷新，将数据清除
     if (self.mInt_flag == 1) {
         [self.mArr_list removeAllObjects];
@@ -345,6 +351,12 @@
     NSDictionary *dic = noti.object;
     //    NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
+    
+    for (int i=0; i<array.count; i++) {
+        ClassModel *model = [array objectAtIndex:i];
+        //获取文章评论
+        [[ShareHttp getInstance] shareHttpAirthCommentsList:model.TabIDStr Page:@"1" Num:@"5" Flag:@"2"];
+    }
     //如果是刷新，将数据清除
     if (self.mInt_flag == 1) {
         [self.mArr_list removeAllObjects];
