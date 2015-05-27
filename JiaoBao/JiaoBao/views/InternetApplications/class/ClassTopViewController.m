@@ -354,6 +354,12 @@
 }
 
 #pragma mark - TableViewdelegate&&TableViewdataSource
+
+//表格开始滑动，
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    self.mView_popup.hidden = YES;
+}
+
 //每个cell返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
