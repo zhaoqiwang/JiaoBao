@@ -286,9 +286,14 @@ static HomeClassTopScrollView *__singletion;
 -(void)sendRequest{
     if([dm getInstance].notificationSymbol == 100)
     {
+        if([dm getInstance].mModel_unitList.UnitClass.count == 0)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+        }
         if(self.requestSymbol0 == YES)
         {
             self.requestSymbol0 =NO;
+
         }
         
     }
@@ -296,8 +301,13 @@ static HomeClassTopScrollView *__singletion;
 
     if([dm getInstance].notificationSymbol == 101)
     {
+        if([dm getInstance].mModel_unitList.UnitClass.count == 0)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+        }
         if(self.requestSymbol1 ==YES)
         {
+
         //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 
         
@@ -333,6 +343,17 @@ static HomeClassTopScrollView *__singletion;
 
        NSArray *arr = [noti object];
        self.thirdArr = arr;
+    for(int i=0;i<arr.count;i++)
+    {
+        SMSTreeArrayModel *model =[arr objectAtIndex:i];
+        if(model.smsTree.count == 0)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            
+        }
+        
+        
+    }
     NSLog(@"arr = %@",arr);
     if([dm getInstance].notificationSymbol == 102)
     {

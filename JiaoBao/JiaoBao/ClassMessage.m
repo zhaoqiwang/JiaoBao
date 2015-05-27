@@ -179,10 +179,10 @@ NSString *kCell = @"Forward_cell2";
         
     }
     NSLog(@"self.datasource.count = %ld",self.datasource.count);
-    if(self.datasource.count == 0)
-    {
-        [SVProgressHUD showInfoWithStatus:@"无班级" ];
-    }
+//    if(self.datasource.count == 0)
+//    {
+//        [SVProgressHUD showInfoWithStatus:@"无班级" ];
+//    }
            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
 
     
