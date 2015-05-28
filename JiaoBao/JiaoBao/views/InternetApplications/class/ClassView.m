@@ -966,7 +966,8 @@
                 [cell.mImgV_0 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }else if (i==1){
                 cell.mImgV_1.hidden = NO;
-                [cell.mImgV_1 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];                [cell.mImgV_1 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
+                [cell.mImgV_1 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
+                [cell.mImgV_1 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }else if (i==2){
                 cell.mImgV_2.hidden = NO;
                 [cell.mImgV_2 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
@@ -984,7 +985,7 @@
     cell.mLab_time.text = model.RecDate;
     
     //点赞评论按钮
-    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-26, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 40, 35);
+    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-35, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 40, 35);
     [cell.mBtn_comment setImage:[UIImage imageNamed:@"popupWindow_like_comment"] forState:UIControlStateNormal];
     
     //点赞
