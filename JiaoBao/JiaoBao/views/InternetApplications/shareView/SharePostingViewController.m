@@ -174,7 +174,7 @@
     if (self.mInt_section == 0) {//分享
         self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表分享"];
     }else if (self.mInt_section == 1){//展示
-        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发表动态"];
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"发布单位动态"];
     }
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];

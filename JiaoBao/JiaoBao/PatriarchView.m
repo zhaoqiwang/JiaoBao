@@ -10,6 +10,7 @@
 #import "CustomCell.h"
 
 @implementation PatriarchView
+
 -(void)seleForuth:(id)sender
 {
     self.datasource = [sender object];
@@ -18,7 +19,7 @@
         SMSTreeArrayModel *model =[self.datasource objectAtIndex:i];
         if(model.smsTree.count == 0)
         {
-            [self removeFromSuperview];
+            //[self removeFromSuperview];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
 
         }

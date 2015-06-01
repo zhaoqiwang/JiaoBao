@@ -531,6 +531,7 @@
     NSDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
+    
     for (int i=0; i<array.count; i++) {
         ClassModel *model = [array objectAtIndex:i];
         //获取文章评论

@@ -44,6 +44,7 @@ static HomeClassTopScrollView *__singletion;
     self = [super initWithFrame:frame];
     if (self) {
         self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+        
 
 //        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
@@ -317,6 +318,12 @@ static HomeClassTopScrollView *__singletion;
     if([dm getInstance].notificationSymbol == 102)
     {
         [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
+        if(self.symbol == YES)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+
+        }
+
         if(self.requestSymbol2 == YES)
         {
             
@@ -328,6 +335,11 @@ static HomeClassTopScrollView *__singletion;
 
     if([dm getInstance].notificationSymbol == 103)
     {
+        if(self.symbol == YES)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            
+        }
         if(self.requestSymbol3 == YES)
         {
             [[LoginSendHttp getInstance]ReceiveListWithFlag:0 all:1];
@@ -349,6 +361,7 @@ static HomeClassTopScrollView *__singletion;
         if(model.smsTree.count == 0)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            self.symbol = YES;
             
         }
         
