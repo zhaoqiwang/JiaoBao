@@ -524,14 +524,29 @@
 
 //我的班级文章列表
 -(void)AllMyClassArthList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    //[self.mProgressV hide:YES];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
     NSDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
+    if(array.count == 0)
+    {
+            [self.mProgressV show:YES];
+
+            self.mProgressV.mode = MBProgressHUDModeText;
+            
+            self.mProgressV.labelText = @"无关联的班级";
+            self.mProgressV.userInteractionEnabled = NO;
+            
+            //[self.mProgressV hide:YES afterDelay:2];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            
+            
     
+
+    }
     for (int i=0; i<array.count; i++) {
         ClassModel *model = [array objectAtIndex:i];
         //获取文章评论
