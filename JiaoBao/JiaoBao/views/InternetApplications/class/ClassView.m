@@ -1046,7 +1046,7 @@
         cell.tableview.frame = CGRectZero;
         cell.backImgV.frame = CGRectZero;
         cell.moreBtn.frame = CGRectZero;
-        cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height);
+        cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+10);
         
     }
     else

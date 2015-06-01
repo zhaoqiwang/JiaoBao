@@ -519,7 +519,7 @@
     cell.mLab_time.frame = CGRectMake(62, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
     cell.mLab_time.text = model.RecDate;
     //点赞评论按钮
-    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-35, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 40, 35);
+    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-35, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height-3, 40, 35);
     [cell.mBtn_comment setImage:[UIImage imageNamed:@"popupWindow_like_comment"] forState:UIControlStateNormal];
     
     //点赞
@@ -564,7 +564,7 @@
         cell.tableview.frame = CGRectZero;
         cell.backImgV.frame = CGRectZero;
         cell.moreBtn.frame = CGRectZero;
-        cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height);
+        cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+10);
         
     }
     else
