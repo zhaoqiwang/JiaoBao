@@ -73,6 +73,8 @@
     self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
     self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
     self.mTableV_list.footerRefreshingText = @"正在加载...";
+    UIView *view = [[UIView alloc]init];
+    self.mTableV_list.tableFooterView = view;
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
@@ -119,6 +121,11 @@
     [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.mView_text addSubview:self.mBtn_send];
     [self.mView_text setHidden:YES];
+    self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
+    
+    self.label.textColor = [UIColor grayColor];
+    //self.label.font = [UIFont systemFontOfSize:15];
+    self.label.textAlignment = NSTextAlignmentCenter;
 }
 
 //将获取到的评论列表传到界面
@@ -384,8 +391,35 @@
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.mInt_unit_class == 3){
+        if(self.mArr_list_class.count == 0)
+        {
+            
+            
+            self.label.text = @"没有信息";
+            
+            [self.view addSubview:self.label];
+            
+        }
+        else
+        {
+            [self.label  removeFromSuperview];
+        }
+
         return self.mArr_list_class.count;
     }else{
+        if(self.mArr_list.count == 0)
+        {
+            
+            
+            self.label.text = @"没有信息";
+            
+            [self.view addSubview:self.label];
+            
+        }
+        else
+        {
+            [self.label  removeFromSuperview];
+        }
         return self.mArr_list.count;
     }
     return 0;
