@@ -410,7 +410,8 @@
     //文件名
     NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
     UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
+    if (img.size.width>0)
+    {
         [cell.mImgV_head setImage:img];
     }else{
         [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
@@ -441,7 +442,7 @@
     //添加图片点击事件
     [cell thumbImgClick];
     cell.mModel_class = model;
-    NSLog(@"classModel.mArr_comment.count = %lu",model.mArr_comment.count);
+    //NSLog(@"classModel.mArr_comment.count = %lu",model.mArr_comment.count);
 
     cell.delegate = self;
     cell.tag = indexPath.row;
@@ -519,7 +520,7 @@
     cell.mLab_time.frame = CGRectMake(62, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
     cell.mLab_time.text = model.RecDate;
     //点赞评论按钮
-    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-35, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height, 40, 35);
+    cell.mBtn_comment.frame = CGRectMake([dm getInstance].width-10-35, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height-3, 40, 35);
     [cell.mBtn_comment setImage:[UIImage imageNamed:@"popupWindow_like_comment"] forState:UIControlStateNormal];
     
     //点赞
@@ -564,7 +565,7 @@
         cell.tableview.frame = CGRectZero;
         cell.backImgV.frame = CGRectZero;
         cell.moreBtn.frame = CGRectZero;
-        cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height);
+        cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+10);
         
     }
     else

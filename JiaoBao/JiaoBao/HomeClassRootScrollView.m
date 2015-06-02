@@ -29,6 +29,8 @@ static HomeClassRootScrollView *__singletion;
 - (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(seleForuth:) name:@"seleForuth" object:nil];
+
         self.delegate = self;
         self.contentSize = CGSizeMake([dm getInstance].width*4, 1000);
         
@@ -55,10 +57,10 @@ static HomeClassRootScrollView *__singletion;
 //            if(isAdmin != 0)
 //            {
                 self.schoolMessage = [[SchoolMessage alloc] initWithFrame:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-                [self addSubview:self.schoolMessage];
+                //[self addSubview:self.schoolMessage];
                 self.patriarchView = [[PatriarchView alloc] initWithFrame:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
-                [self addSubview:self.patriarchView];
-                
+//                [self addSubview:self.patriarchView];
+        
             //}
             
 
@@ -68,6 +70,26 @@ static HomeClassRootScrollView *__singletion;
 
     }
     return self;
+}
+-(void)seleForuth:(id)sender
+{
+    NSArray *arr = [sender object];
+    for(int i=0;i<arr.count;i++)
+    {
+        SMSTreeArrayModel *model =[arr objectAtIndex:i];
+        if(model.smsTree.count != 0)
+        {
+            [self addSubview:self.schoolMessage];
+            [self addSubview:self.patriarchView];
+
+
+            
+        }
+        
+        
+    }
+    
+    
 }
 
 //开始滑动

@@ -290,7 +290,7 @@
         if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
             menuItems =
             @[
-              [KxMenuItem menuItem:@"发表动态"
+              [KxMenuItem menuItem:@"发布单位动态"
                              image:[UIImage imageNamed:@"appNav_dongtai"]
                             target:self
                             action:@selector(pushMenuItem4:)],
@@ -299,7 +299,7 @@
                             target:self
                             action:@selector(pushMenuItem5:)],
               
-              [KxMenuItem menuItem:@"附件"
+              [KxMenuItem menuItem:@"下载的附件"
                              image:[UIImage imageNamed:@"appNav_access"]
                             target:self
                             action:@selector(pushMenuItem7:)],
@@ -323,7 +323,7 @@
                             target:self
                             action:@selector(pushMenuItem6:)],
               
-              [KxMenuItem menuItem:@"发表动态"
+              [KxMenuItem menuItem:@"发布单位动态"
                              image:[UIImage imageNamed:@"appNav_dongtai"]
                             target:self
                             action:@selector(pushMenuItem4:)],
@@ -332,7 +332,7 @@
                             target:self
                             action:@selector(pushMenuItem5:)],
               
-              [KxMenuItem menuItem:@"附件"
+              [KxMenuItem menuItem:@"下载的附件"
                              image:[UIImage imageNamed:@"appNav_access"]
                             target:self
                             action:@selector(pushMenuItem7:)],

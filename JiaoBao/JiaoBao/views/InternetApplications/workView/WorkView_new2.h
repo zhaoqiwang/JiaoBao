@@ -45,6 +45,8 @@
 @property (assign,nonatomic) int mInt_index;//当前点击的是第几个
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
+@property(nonatomic,strong) UILabel *label;
+
 
 - (id)initWithFrame1:(CGRect)frame;
 

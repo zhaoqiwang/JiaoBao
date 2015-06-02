@@ -19,7 +19,7 @@
         SMSTreeArrayModel *model =[arr objectAtIndex:i];
         if(model.smsTree.count == 0)
         {
-            [self removeFromSuperview];
+            //[self removeFromSuperview];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
 
         }

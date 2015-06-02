@@ -15,7 +15,8 @@
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
-    if (self) {
+    if (self)
+    {
         // Initialization code
         self.frame = frame;
         //通知界面更新，获取事务信息接收单位列表
