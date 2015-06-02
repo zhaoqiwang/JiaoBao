@@ -181,19 +181,21 @@
     //循环找需要发送的人
     NSMutableArray *array = [NSMutableArray array];
     for (TreeView_node *node in self.mArr_sumData) {
-        
-        for(TreeView_node *node2 in node.sonNodes){
+        NewWorkTree_model *temp2 = node.nodeData;
+        if ([temp2.mStr_name isEqual:@"所有班级"]) {
             
-            for(TreeView_node *node3 in node2.sonNodes){
-                
-                for(TreeView_node *node4 in node3.sonNodes){
-                    if (node4.mInt_select == 1) {
-                        NewWorkTree_model *model = node4.nodeData;
-                        groupselit_selitModel *model3 = model.mModel_people;
-                        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                        [dic setValue:model3.flag forKey:@"flag"];
-                        [dic setValue:model3.selit forKey:@"selit"];
-                        [array addObject:dic];
+        }else{
+            for(TreeView_node *node2 in node.sonNodes){
+                for(TreeView_node *node3 in node2.sonNodes){
+                    for(TreeView_node *node4 in node3.sonNodes){
+                        if (node4.mInt_select == 1) {
+                            NewWorkTree_model *model = node4.nodeData;
+                            groupselit_selitModel *model3 = model.mModel_people;
+                            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                            [dic setValue:model3.flag forKey:@"flag"];
+                            [dic setValue:model3.selit forKey:@"selit"];
+                            [array addObject:dic];
+                        }
                     }
                 }
             }
@@ -709,17 +711,23 @@
  --------------------------------------- */
 -(void) reloadDataForDisplayArray{
     NSMutableArray *tmp = [[NSMutableArray alloc]init];
+
     for (TreeView_node *node in self.mArr_sumData) {
-        [tmp addObject:node];
-        if(node.isExpanded){
-            for(TreeView_node *node2 in node.sonNodes){
-                [tmp addObject:node2];
-                if(node2.isExpanded){
-                    for(TreeView_node *node3 in node2.sonNodes){
-                        [tmp addObject:node3];
-                        if(node3.isExpanded){
-                            for(TreeView_node *node4 in node3.sonNodes){
-                                [tmp addObject:node4];
+        NewWorkTree_model *temp2 = node.nodeData;
+        if ([temp2.mStr_name isEqual:@"所有班级"]) {
+            
+        }else{
+            [tmp addObject:node];
+            if(node.isExpanded){
+                for(TreeView_node *node2 in node.sonNodes){
+                    [tmp addObject:node2];
+                    if(node2.isExpanded){
+                        for(TreeView_node *node3 in node2.sonNodes){
+                            [tmp addObject:node3];
+                            if(node3.isExpanded){
+                                for(TreeView_node *node4 in node3.sonNodes){
+                                    [tmp addObject:node4];
+                                }
                             }
                         }
                     }
