@@ -104,6 +104,10 @@
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
         self.mTableV_list.delegate=self;
         self.mTableV_list.dataSource=self;
+        //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
+        UIView *view = [[UIView alloc]init];
+        self.mTableV_list.tableFooterView = view;
+
 //        self.mTableV_list.scrollEnabled = NO;
         [self addSubview:self.mTableV_list];
         [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
@@ -161,6 +165,11 @@
         [self.mView_text setHidden:YES];
         
     }
+    self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
+    
+    self.label.textColor = [UIColor grayColor];
+    //self.label.font = [UIFont systemFontOfSize:15];
+    self.label.textAlignment = NSTextAlignmentCenter;
     return self;
 }
 
@@ -519,34 +528,20 @@
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    
     [self.mTableV_list reloadData];
 }
 
 //我的班级文章列表
 -(void)AllMyClassArthList:(NSNotification *)noti{
-    //[self.mProgressV hide:YES];
+    [self.mProgressV hide:YES];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
     NSDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
-    if(array.count == 0)
-    {
-            [self.mProgressV show:YES];
 
-            self.mProgressV.mode = MBProgressHUDModeText;
-            
-            self.mProgressV.labelText = @"无关联的班级";
-            self.mProgressV.userInteractionEnabled = NO;
-            
-            //[self.mProgressV hide:YES afterDelay:2];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            
-            
-    
-
-    }
     for (int i=0; i<array.count; i++) {
         ClassModel *model = [array objectAtIndex:i];
         //获取文章评论
@@ -595,6 +590,7 @@
         }
         [self.mArr_unit addObjectsFromArray:array];
     }
+
     [self.mTableV_list reloadData];
 }
 
@@ -653,6 +649,7 @@
 
 //按钮点击事件
 -(void)btnChange:(UIButton *)btn{
+
     D("utype-===%d",[dm getInstance].uType);
     self.mView_popup.hidden = YES;
     self.mInt_index = (int)btn.tag;
@@ -682,6 +679,11 @@
     }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
         [self tableViewDownReloadData];
     }
+
+        [self.mTableV_list reloadData];
+
+        
+    
     D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
     //切换图片
     for (UIButton *tempBtn in self.mView_button.subviews) {
@@ -693,7 +695,6 @@
             }
         }
     }
-    [self.mTableV_list reloadData];
 }
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData{
@@ -725,9 +726,58 @@
 }
 
 #pragma mark - TableViewdelegate&&TableViewdataSource
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    return nil;
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 50)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor  = [UIColor grayColor];
+    [view addSubview:label];
+    if(mInt_index == 0)
+    {
+        if(section == 0)
+        {
+            if(self.mArr_unitTop.count == 0)
+            {
+                label.text = @"没有单位动态";
+
+            }
+        }
+        if(section == 1)
+        {
+            if(self.mArr_unit.count == 0)
+            {
+                label.text = @"没有单位分享";
+
+            }
+        }
+    }
+    if(mInt_index == 1)
+    {
+        if(section == 0)
+        {
+            if(self.mArr_classTop.count == 0)
+            {
+                label.text = @"没有班级动态";
+                
+            }
+        }
+        if(section == 1)
+        {
+            if(self.mArr_class.count == 0)
+            {
+                label.text = @"没有班级分享";
+                
+            }
+        }
+        
+    }
+       return view;
+
+
 }
+    
+
 //每个cell返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
@@ -742,12 +792,47 @@
     if (self.mInt_index == 0||self.mInt_index == 1) {
         return 20;
     }else{
-        return 0;
+        return 20;
     }
     return 0;
 }
 //每个section底返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(self.mInt_index == 0)
+    {
+        if(section == 0)
+        {
+            if(self.mArr_unitTop.count == 0)
+            {
+                return 50;
+            }
+        }
+        if(section == 1)
+        {
+            if(self.mArr_unit.count == 0)
+            {
+                return 50;
+            }
+        }
+    }
+    
+    if(self.mInt_index == 1)
+    {
+        if(section == 0)
+        {
+            if(self.mArr_classTop.count == 0)
+            {
+                return 50;
+            }
+        }
+        if(section == 1)
+        {
+            if(self.mArr_class.count == 0)
+            {
+                return 50;
+            }
+        }
+    }
     return 0;
 }
 
@@ -782,33 +867,155 @@
     
     return nil;
 }
+
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+
     if (section == 0) {
         if (self.mInt_index == 0) {
+            if(self.mArr_unitTop.count == 0)
+            {
+                
+                
+                //self.label.text = @"没有班级信息";
+                
+                //[self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+            
+
             return self.mArr_unitTop.count;
         }else if (self.mInt_index == 1){
+            if(self.mArr_classTop.count == 0)
+            {
+                
+                
+                //self.label.text = @"没有班级信息";
+                
+                //[self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+            
+
             return self.mArr_classTop.count;
         }else if (self.mInt_index == 2){
+            if(self.mArr_local.count == 0)
+            {
+                
+                
+                self.label.text = @"没有本地信息";
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
+            
             return self.mArr_local.count;
         }else if (self.mInt_index == 3){
+            if(self.mArr_attention.count == 0)
+            {
+                
+                
+                self.label.text = @"没有关注信息";
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
             return self.mArr_attention.count;
-        }else if (self.mInt_index == 4){
+        }else if (self.mArr_sum.count == 4){
+            if(self.mArr_sum.count == 0)
+            {
+                
+                
+                self.label.text = @"没有全部信息";
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
             return self.mArr_sum.count;
         }
     }else{
         if (self.mInt_index == 0) {
+
             return self.mArr_unit.count;
         }else if (self.mInt_index == 1){
+   
             return self.mArr_class.count;
         }else if (self.mInt_index == 2){
+            if(self.mArr_local.count == 0)
+            {
+                
+                
+                self.label.text = @"没有本地信息";
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
             return self.mArr_local.count;
         }else if (self.mInt_index == 3){
+            if(self.mArr_attention.count == 0)
+            {
+                
+                
+                self.label.text = @"没有关注信息";
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
             return self.mArr_attention.count;
         }else if (self.mInt_index == 4){
+            NSLog(@"sum = %ld",self.mArr_sum.count);
+            if(self.mArr_sum.count == 0)
+            {
+                
+                
+                self.label.text = @"没有全部信息";
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
             return self.mArr_sum.count;
         }
     }
+    
+
     return 0;
 }
 //有多少section

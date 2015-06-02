@@ -410,7 +410,8 @@
     //文件名
     NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
     UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
+    if (img.size.width>0)
+    {
         [cell.mImgV_head setImage:img];
     }else{
         [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
@@ -441,7 +442,7 @@
     //添加图片点击事件
     [cell thumbImgClick];
     cell.mModel_class = model;
-    NSLog(@"classModel.mArr_comment.count = %lu",model.mArr_comment.count);
+    //NSLog(@"classModel.mArr_comment.count = %lu",model.mArr_comment.count);
 
     cell.delegate = self;
     cell.tag = indexPath.row;

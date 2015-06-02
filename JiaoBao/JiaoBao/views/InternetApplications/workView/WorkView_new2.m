@@ -82,6 +82,10 @@
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
         [self addSubview:self.mProgressV];
         self.mProgressV.delegate = self;
+        self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
+        
+        self.label.textColor = [UIColor grayColor];
+        self.label.textAlignment = NSTextAlignmentCenter;
     }
     return self;
 }
@@ -143,18 +147,96 @@
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (self.mInt_index == 0) {
-        return self.mArr_sum.count;
-    }else if (self.mInt_index == 1){
-        return self.mArr_unRead.count;
-    }else if (self.mInt_index == 2){
-        return self.mArr_unReply.count;
-    }else if (self.mInt_index == 3){
-        return self.mArr_reply.count;
-    }else if (self.mInt_index == 4){
-        return self.mArr_mySend.count;
-    }
-    return 0;
+    
+        if (self.mInt_index == 0) {
+
+            if(self.mArr_sum.count == 0)
+            {
+
+
+                self.label.text = @"没有信息";
+
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
+        
+    
+
+            return self.mArr_sum.count;
+        }else if (self.mInt_index == 1){
+            
+            if(self.mArr_unRead.count ==  0)
+            {
+                self.label.text = @"没有未读信息";
+
+                [self addSubview:self.label];
+
+                
+            }
+            else
+            {
+                [self.label removeFromSuperview];
+            }
+
+            return self.mArr_unRead.count;
+        }else if (self.mInt_index == 2){
+            if(self.mArr_unReply.count == 0)
+            {
+                
+                
+                self.label.text = @"没有未回复信息";
+
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
+            return self.mArr_unReply.count;
+        }else if (self.mInt_index == 3){
+            if(self.mArr_reply.count == 0)
+            {
+                
+                self.label.text = @"没有已回复信息";
+
+                
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
+            return self.mArr_reply.count;
+        }else if (self.mInt_index == 4){
+            if(self.mArr_mySend.count == 0)
+            {
+                
+                
+                self.label.text = @"没有我发的信息";
+
+                [self addSubview:self.label];
+                
+            }
+            else
+            {
+                [self.label  removeFromSuperview];
+            }
+
+            return self.mArr_mySend.count;
+        }
+
+        
+    
+      return 0;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -438,7 +520,7 @@
 }
 
 -(void)noMore{
-    sleep(1);
+    sleep(3);
 }
 
 - (void)Loading {
