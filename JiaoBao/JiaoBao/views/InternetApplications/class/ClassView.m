@@ -792,7 +792,7 @@
     if (self.mInt_index == 0||self.mInt_index == 1) {
         return 20;
     }else{
-        return 20;
+        return 0;
     }
     return 0;
 }
@@ -873,36 +873,16 @@
 
     if (section == 0) {
         if (self.mInt_index == 0) {
-            if(self.mArr_unitTop.count == 0)
-            {
-                
-                
-                //self.label.text = @"没有班级信息";
-                
-                //[self addSubview:self.label];
-                
-            }
-            else
-            {
+
                 [self.label  removeFromSuperview];
-            }
+            
             
 
             return self.mArr_unitTop.count;
         }else if (self.mInt_index == 1){
-            if(self.mArr_classTop.count == 0)
-            {
-                
-                
-                //self.label.text = @"没有班级信息";
-                
-                //[self addSubview:self.label];
-                
-            }
-            else
-            {
+
                 [self.label  removeFromSuperview];
-            }
+            
             
 
             return self.mArr_classTop.count;
@@ -939,7 +919,7 @@
             }
 
             return self.mArr_attention.count;
-        }else if (self.mArr_sum.count == 4){
+        }else if (self.mInt_index == 4){
             if(self.mArr_sum.count == 0)
             {
                 

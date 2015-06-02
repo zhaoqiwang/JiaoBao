@@ -49,5 +49,6 @@
 @property (nonatomic,strong) UIView *mView_text;//放输入框
 @property (nonatomic,strong) UITextField *mTextF_text;//输入框
 @property (nonatomic,strong) UIButton *mBtn_send;//发送按钮
+@property(nonatomic,strong)UILabel *label;
 
 @end
