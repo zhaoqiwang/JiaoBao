@@ -28,7 +28,7 @@ static RegisterHttp *registerHttp = nil;
 
 //检查手机是否重复                      手机号码
 -(void)registerHttpCheckmyMobileAcc:(NSString *)accid{
-    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/checkmyMobileAcc",MAINURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/checkmobileAcc",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -90,7 +90,7 @@ static RegisterHttp *registerHttp = nil;
     [request startAsynchronous];
 }
 
-//用户注册                      客户端版本号              客户端ID               加密后的登录JSON对象字符串             当前时间（如：2013-12-09 00:37:09 数字签名，base64(MD5(Ver + IAMSCID + regAccIdStr + ClientKey))        true,ios应用
+//用户注册                      客户端版本号              客户端ID               加密后的登录JSON对象字符串             当前时间（如：2013-12-09 00:37:09        数字签名，base64(MD5(Ver+regAccIdStr+ClientKey+TimeStamp))        true,ios应用
 -(void)registerHttpRegAccId:(NSString *)CliVer IAMSCID:(NSString *)IAMSCID regAccIdStr:(NSString *)regAccIdStr TimeStamp:(NSString *)TimeStamp Sign:(NSString *)Sign ios:(NSString *)ios{
     NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/SendCheckCode",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];

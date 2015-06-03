@@ -11,7 +11,7 @@
 #define MAINURL @"http://www.jsyoa.edu8800.com/JBClient/"//网址
 //#define MAINURL @"http://www.jiaobao.net/JBClient/"//网址
 #define APPID @"101003" //appid
-#define CLIVER @"1.0.1"
+#define CLIVER @"1.1.2"
 #define TIMEOUT 30
 
 #define BUGFROM @"bugfrom"//bug来自于在UserDefault中的常量
