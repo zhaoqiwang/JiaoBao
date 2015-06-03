@@ -67,15 +67,19 @@
 
     NSString *string1 = tempModel.UserName;
     NSString *string2 = tempModel.Commnets;
+    NSLog(@"string1 = %@ string2 = %@",string1,string2);
+    
     
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+    NSLog(@"name = %@",name);
+    
 
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
 
     CGRect rect=[string boundingRectWithSize:CGSizeMake([dm getInstance].width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
                                   attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
 
-    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, rect.size.height);
+    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, rect.size.height+5);
     NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
     [row4 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
@@ -94,7 +98,7 @@
 
 
 
-    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, rect.size.height);
+    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, rect.size.height+3);
     
     
     return cell;
