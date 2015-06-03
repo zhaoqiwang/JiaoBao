@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
 		A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179771AB914D900E7093F /* work_deleteAccessory.png */; };
 		A701797B1AB914D900E7093F /* work_deleteAccessory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */; };
 		A701797C1AB914D900E7093F /* work_deleteAccessory@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179791AB914D900E7093F /* work_deleteAccessory@3x.png */; };
@@ -803,6 +804,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		439313081B1DBE6E00169F30 /* RegisterHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterHttp.h; path = views/InternetApplications/register/RegisterHttp.h; sourceTree = "<group>"; };
+		439313091B1DBE6E00169F30 /* RegisterHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterHttp.m; path = views/InternetApplications/register/RegisterHttp.m; sourceTree = "<group>"; };
 		A70179771AB914D900E7093F /* work_deleteAccessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = work_deleteAccessory.png; path = Image/InternetApp/workView/work_deleteAccessory.png; sourceTree = "<group>"; };
 		A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "work_deleteAccessory@2x.png"; path = "Image/InternetApp/workView/work_deleteAccessory@2x.png"; sourceTree = "<group>"; };
 		A70179791AB914D900E7093F /* work_deleteAccessory@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "work_deleteAccessory@3x.png"; path = "Image/InternetApp/workView/work_deleteAccessory@3x.png"; sourceTree = "<group>"; };
@@ -3381,6 +3384,15 @@
 			path = JSONModelTransformations;
 			sourceTree = "<group>";
 		};
+		A796B32D1B1D98FB00FA1735 /* register */ = {
+			isa = PBXGroup;
+			children = (
+				439313081B1DBE6E00169F30 /* RegisterHttp.h */,
+				439313091B1DBE6E00169F30 /* RegisterHttp.m */,
+			);
+			name = register;
+			sourceTree = "<group>";
+		};
 		A79C207A1A2DC50E00D0AA27 /* model */ = {
 			isa = PBXGroup;
 			children = (
@@ -3476,6 +3488,7 @@
 		A7AD8C2F19F63C8F002E65FB /* InternetApplications */ = {
 			isa = PBXGroup;
 			children = (
+				A796B32D1B1D98FB00FA1735 /* register */,
 				A749B9DA19F89F050036F480 /* workView */,
 				A75E6EA21ABA6A0100B51B18 /* class */,
 				A7357A2C1A401FFB00A195C5 /* theme */,
@@ -4536,6 +4549,7 @@
 				A7B0F9581A47C37D00C1863A /* MBProgressHUD+Add.m in Sources */,
 				A773FC4E1A4C0563005F84C2 /* ELCOverlayImageView.m in Sources */,
 				A7357A1F1A4007CA00A195C5 /* FriendSpaceModel.m in Sources */,
+				4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */,
 				A70E3C9E1A1EE2D800E6D0EC /* UserSumClassModel.m in Sources */,
 				A75A37471A08C3F0009D2464 /* groupselit_selitModel.m in Sources */,
 				A755E70C19F278B900BBDF3D /* ASICloudFilesContainerRequest.m in Sources */,

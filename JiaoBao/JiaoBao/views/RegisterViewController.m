@@ -14,7 +14,7 @@
 @end
 
 @implementation RegisterViewController
-@synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mProgressV;
+@synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mProgressV,mBtn_register;
 
 - (void)viewDidLoad {
     D("dm... %d,%d",[dm getInstance].width, [dm getInstance].height);
@@ -93,6 +93,15 @@
     [self.mBtn_memberPassWD addTarget:self action:@selector(memberPasswd:) forControlEvents:UIControlEventTouchDown];
     [self.mView_view addSubview:self.mBtn_memberPassWD];
     
+    //注册按钮
+    self.mBtn_register = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_register.frame = CGRectMake([dm getInstance].width-60, self.mBtn_memberPassWD.frame.origin.y, 50, self.mBtn_memberPassWD.frame.size.height);
+//    [self.mBtn_register setImage:image3 forState:UIControlStateNormal];
+    [self.mBtn_register setTitle:@"注册" forState:UIControlStateNormal];
+    self.mBtn_register.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.mBtn_register addTarget:self action:@selector(registerPhoneNum:) forControlEvents:UIControlEventTouchDown];
+    [self.mView_view addSubview:self.mBtn_register];
+    
     //登陆按钮
     UIImage *image4 = [UIImage imageNamed:@"Regiser_login"];
     self.mBtn_login = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -167,6 +176,11 @@
     }
     NSString *str_pic = [NSString stringWithFormat:@"Regiser_passwd_%d",flag];
     [self.mBtn_memberPassWD setImage:[UIImage imageNamed:str_pic] forState:UIControlStateNormal];
+}
+
+//注册
+-(void)registerPhoneNum:(UIButton *)btn{
+    D("点击注册按钮");
 }
 //点击登录按钮
 -(void)clickLogin:(id)sender{
