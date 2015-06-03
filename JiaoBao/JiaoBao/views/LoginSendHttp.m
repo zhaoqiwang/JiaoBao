@@ -29,7 +29,7 @@ static LoginSendHttp *loginSendHttp = nil;
 }
 
 //向服务器获取当前时间
--(void)getTime{
+-(void)getTime:(NSString *)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@Account/getcurTime",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -38,6 +38,7 @@ static LoginSendHttp *loginSendHttp = nil;
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
     [request setDelegate:self];
+    request.userInfo = [NSDictionary dictionaryWithObject:flag forKey:@"flag"];
     flag_request = 4;
     [request startAsynchronous];
 }
@@ -832,12 +833,18 @@ static LoginSendHttp *loginSendHttp = nil;
         if ([str000 isEqual:self.mStr_hands]) {
             D("握手成功");
             //登录获取时间
-            [self getTime];
+            [self getTime:@"1"];
         }
     }else if (flag_request == 4){//登录获取时间回调
         NSString *time = [jsonDic objectForKey:@"Data"];
-        //发送登录请求
-        [self login:time];
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        if ([flag intValue]==1) {
+            //发送登录请求
+            [self login:time];
+        }else{
+            //发送注册请求
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"registerGetTime" object:time];
+        }
     }else if (flag_request == 5){//发送登录请求回调
         NSString *str = [jsonDic objectForKey:@"ResultDesc"];
         if ([str isEqual:@"成功!"]) {

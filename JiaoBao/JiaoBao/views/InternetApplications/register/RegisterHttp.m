@@ -101,11 +101,132 @@ static RegisterHttp *registerHttp = nil;
     [request setRequestMethod:@"POST"];
     [request addPostValue:CliVer forKey:@"CliVer"];
     [request addPostValue:IAMSCID forKey:@"IAMSCID"];
-    [request addPostValue:regAccIdStr forKey:@"regAccIdStr"];
+    //对json串加密
+    NSData *dataRSA = [RSATool encrypt:regAccIdStr error:nil];
+    NSString *registerRSA = [dataRSA base64EncodedString];
+    [request addPostValue:registerRSA forKey:@"regAccIdStr"];
     [request addPostValue:TimeStamp forKey:@"TimeStamp"];
-    [request addPostValue:Sign forKey:@"Sign"];
+    //生成签名字符串
+    NSString *ClientKey = [[NSUserDefaults standardUserDefaults]objectForKey:@"ClientKey"];
+    NSString *sign = [NSString stringWithFormat:@"%@%@%@%@",CLIVER,registerRSA,ClientKey,TimeStamp];
+    NSData * md5Data=[[sign dataUsingEncoding:NSUTF8StringEncoding] MD5Sum];
+    NSString *strSign =[NSString base64StringFromData:md5Data length:(int)md5Data.length];
+    [request addPostValue:strSign forKey:@"Sign"];
     [request addPostValue:ios forKey:@"ios"];
     request.tag = 5;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//检查昵称是否重复      昵称不能全是数字，不能包含@
+-(void)registerHttpCheckAccN:(NSString *)nickname{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/checkAccN",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:nickname forKey:@"nickname"];
+    request.tag = 6;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//修改帐户信息的昵称和姓名          用户教宝号           昵称不能全是数字，不能包含@          姓名，20字以内
+-(void)registerHttpUpateRecAcc:(NSString *)accid NickName:(NSString *)nickname TrueName:(NSString *)trueName{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/UpateRecAcc",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:accid forKey:@"accId"];
+    [request addPostValue:nickname forKey:@"nickname"];
+    [request addPostValue:trueName forKey:@"trueName"];
+    request.tag = 7;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//验证旧密码后修改帐户密码      加密后的json密码对象的base64字符串  true,ios应用
+-(void)registerHttpChangePW:(NSString *)pwobjstr iOS:(NSString *)ios{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/ChangePW",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:pwobjstr forKey:@"pwobjstr"];
+    [request addPostValue:ios forKey:@"ios"];
+    request.tag = 8;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//获取根据手机号码匹配的单位数据           教宝号
+-(void)registerHttpGetMyMobileUnitList:(NSString *)accid{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/GetMyMobileUnitList",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:accid forKey:@"accId"];
+    request.tag = 9;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//加入单位操作                  教宝号         0=加入单位，1=不加入单位，-2下次恢复提示    加密Id，GetMyMobileUnitList中获对象的TabIdStr
+-(void)registerHttpJoinUnitOP:(NSString *)accid option:(NSString *)option tableStr:(NSString *)tabIdStr{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/JoinUnitOP",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:accid forKey:@"accId"];
+    [request addPostValue:option forKey:@"op"];
+    [request addPostValue:tabIdStr forKey:@"tabIdStr"];
+    request.tag = 10;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//在重置密码时验证用户手机                  手机号码            收到的手机验证码        图片验证码
+-(void)registerHttpCheckMobileVcode:(NSString *)phoneNum cCode:(NSString *)cCode vCode:(NSString *)vCode{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/CheckMobileVcode",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:phoneNum forKey:@"mobilenum"];
+    [request addPostValue:cCode forKey:@"checkcode"];
+    [request addPostValue:vCode forKey:@"vCode"];
+    request.tag = 11;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//重置用户密码                  加密后的json密码对象的base64字符串   true,ios应用
+-(void)registerHttpResetAccPw:(NSString *)resetobjstr iOS:(NSString *)ios{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/ResetAccPw",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:resetobjstr forKey:@"resetobjstr"];
+    [request addPostValue:ios forKey:@"ios"];
+    request.tag = 12;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
 }
@@ -147,6 +268,41 @@ static RegisterHttp *registerHttp = nil;
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==5=>>>>==%@",str);
+        
+    }else if (_request.tag == 6){//检查昵称是否重复
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==6=>>>>==%@",str);
+        
+    }else if (_request.tag == 7){//修改帐户信息的昵称和姓名
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==7=>>>>==%@",str);
+        
+    }else if (_request.tag == 8){//验证旧密码后修改帐户密码
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==8=>>>>==%@",str);
+        
+    }else if (_request.tag == 9){//获取根据手机号码匹配的单位数据
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==9=>>>>==%@",str);
+        
+    }else if (_request.tag == 10){//加入单位操作
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==10=>>>>==%@",str);
+        
+    }else if (_request.tag == 11){//在重置密码时验证用户手机
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==11=>>>>==%@",str);
+        
+    }else if (_request.tag == 12){//重置用户密码 
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==12=>>>>==%@",str);
         
     }
 }

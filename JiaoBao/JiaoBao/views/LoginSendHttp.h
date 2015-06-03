@@ -57,8 +57,8 @@
 //单
 +(LoginSendHttp *)getInstance;
 
-//当注册时，向服务器获取当前时间
--(void)getTime;
+//当注册时，向服务器获取当前时间 1登录2注册
+-(void)getTime:(NSString *)flag;
 
 //登录，先握手，再发送登录
 -(void)hands_login;
