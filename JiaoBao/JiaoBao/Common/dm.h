@@ -38,6 +38,7 @@
     NSString *uuid;//启动时设置，注册成功后，添加到key中
     BOOL tableSymbol;
     
+    
 }
 
 @property (nonatomic,assign) int width;//界面宽度
@@ -69,6 +70,8 @@
 @property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;
 @property(nonatomic,strong)MBProgressHUD *progress;
 @property(nonatomic,assign)NSUInteger topButtonSymbol;
+@property(nonatomic,assign)BOOL RegisterSymbol;
+@property(nonatomic,strong)NSString *tel ,*urlNum;
 
 
 + (dm*) getInstance;

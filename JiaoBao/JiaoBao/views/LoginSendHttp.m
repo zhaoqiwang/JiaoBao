@@ -8,6 +8,7 @@
 
 #import "LoginSendHttp.h"
 #import "InternetAppTopScrollView.h"
+#import "RegisterHttp.h"
 
 static LoginSendHttp *loginSendHttp = nil;
 
@@ -832,7 +833,18 @@ static LoginSendHttp *loginSendHttp = nil;
         if ([str000 isEqual:self.mStr_hands]) {
             D("握手成功");
             //登录获取时间
-            [self getTime];
+            if([dm getInstance].RegisterSymbol == NO)
+               {
+                   [self getTime];
+
+                   
+               }
+            else
+            {
+//                [[RegisterHttp getInstance]registerHttpSendCheckCode:[dm getInstance].tel Code:[dm getInstance].urlNum];
+            }
+            
+
         }
     }else if (flag_request == 4){//登录获取时间回调
         NSString *time = [jsonDic objectForKey:@"Data"];

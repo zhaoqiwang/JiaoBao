@@ -8,6 +8,7 @@
 
 #import "RegisterViewController.h"
 #import "Reachability.h"
+#import "FirstRegViewController.h"
 
 @interface RegisterViewController ()
 
@@ -180,6 +181,9 @@
 
 //注册
 -(void)registerPhoneNum:(UIButton *)btn{
+    FirstRegViewController *firstReg = [[FirstRegViewController alloc]init];
+    UINavigationController *navC = [[UINavigationController alloc]initWithRootViewController:firstReg];
+    [self presentViewController:navC animated:YES completion:nil];
     D("点击注册按钮");
 }
 //点击登录按钮
