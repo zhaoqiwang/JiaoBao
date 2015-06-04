@@ -245,9 +245,21 @@
         if ([self checkNetWork]) {
             return;
         }
-        [[LoginSendHttp getInstance] hands_login];
+        if(self.forgetPWSymbol == YES)
+        {
+            [[LoginSendHttp getInstance] hands_login];
+            
 
-        [[RegisterHttp getInstance]registerHttpSendCheckCode:self.tel.text Code:self.urlNumTF.text];
+            
+        }
+        else
+        {
+            [[LoginSendHttp getInstance] hands_login];
+            
+            [[RegisterHttp getInstance]registerHttpSendCheckCode:self.tel.text Code:self.urlNumTF.text];
+            
+        }
+
     }
 
 

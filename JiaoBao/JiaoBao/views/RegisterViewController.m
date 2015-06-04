@@ -197,6 +197,9 @@
 //忘记密码按钮
 -(void)forgetPW:(UIButton *)btn{
     D("点击忘记密码按钮");
+    FirstRegViewController *firstReg = [[FirstRegViewController alloc]init];
+    UINavigationController *navC = [[UINavigationController alloc]initWithRootViewController:firstReg];
+    [self presentViewController:navC animated:YES completion:nil];
 }
 
 //点击登录按钮
