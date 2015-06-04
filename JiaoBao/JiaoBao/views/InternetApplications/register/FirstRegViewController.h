@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *urlImgV;
 @property(nonatomic,strong)NSString *telStr;
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
+@property(nonatomic,assign)BOOL forgetPWSymbol;
 
 @property(nonatomic,assign)BOOL telSymbol,urlSymbol ,identi_code_Symbol;
 - (IBAction)getIdentiCodeAction:(id)sender;
