@@ -793,9 +793,6 @@
 		F7DC76461AC698BC00D6B0CE /* libbaidumapapis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */; };
 		F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */; };
 		F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */; };
-		F7EC84B51B203E3400CBE0C1 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84B11B203E3400CBE0C1 /* PersonalSpaceModel.m */; };
-		F7EC84B61B203E3400CBE0C1 /* PersonalSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84B31B203E3400CBE0C1 /* PersonalSpaceViewController.m */; };
-		F7EC84B71B203E3400CBE0C1 /* PersonalSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EC84B41B203E3400CBE0C1 /* PersonalSpaceViewController.xib */; };
 		F7F460B61AE891C70069820F /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B31AE891C70069820F /* triangle.png */; };
 		F7F460B71AE891C70069820F /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B41AE891C70069820F /* triangle@2x.png */; };
 		F7F460B81AE891C70069820F /* triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B51AE891C70069820F /* triangle@3x.png */; };
@@ -1980,11 +1977,6 @@
 		F7EC84A71B1FE08A00CBE0C1 /* SecondRegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondRegViewController.h; path = views/InternetApplications/register/SecondRegViewController.h; sourceTree = "<group>"; };
 		F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondRegViewController.m; path = views/InternetApplications/register/SecondRegViewController.m; sourceTree = "<group>"; };
 		F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SecondRegViewController.xib; path = views/InternetApplications/register/SecondRegViewController.xib; sourceTree = "<group>"; };
-		F7EC84B01B203E3400CBE0C1 /* PersonalSpaceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalSpaceModel.h; path = views/InternetApplications/personalSpace/PersonalSpaceModel.h; sourceTree = "<group>"; };
-		F7EC84B11B203E3400CBE0C1 /* PersonalSpaceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalSpaceModel.m; path = views/InternetApplications/personalSpace/PersonalSpaceModel.m; sourceTree = "<group>"; };
-		F7EC84B21B203E3400CBE0C1 /* PersonalSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalSpaceViewController.h; path = views/InternetApplications/personalSpace/PersonalSpaceViewController.h; sourceTree = "<group>"; };
-		F7EC84B31B203E3400CBE0C1 /* PersonalSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalSpaceViewController.m; path = views/InternetApplications/personalSpace/PersonalSpaceViewController.m; sourceTree = "<group>"; };
-		F7EC84B41B203E3400CBE0C1 /* PersonalSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonalSpaceViewController.xib; path = views/InternetApplications/personalSpace/PersonalSpaceViewController.xib; sourceTree = "<group>"; };
 		F7F460B31AE891C70069820F /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = Image/InternetApp/share/triangle.png; sourceTree = "<group>"; };
 		F7F460B41AE891C70069820F /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@2x.png"; path = "Image/InternetApp/share/triangle@2x.png"; sourceTree = "<group>"; };
 		F7F460B51AE891C70069820F /* triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@3x.png"; path = "Image/InternetApp/share/triangle@3x.png"; sourceTree = "<group>"; };
@@ -3630,17 +3622,11 @@
 		A7E2E5E51B20312B003F85B5 /* personalSpace */ = {
 			isa = PBXGroup;
 			children = (
-				F7EC84B01B203E3400CBE0C1 /* PersonalSpaceModel.h */,
-				F7EC84B11B203E3400CBE0C1 /* PersonalSpaceModel.m */,
-				F7EC84B21B203E3400CBE0C1 /* PersonalSpaceViewController.h */,
-				F7EC84B31B203E3400CBE0C1 /* PersonalSpaceViewController.m */,
-				F7EC84B41B203E3400CBE0C1 /* PersonalSpaceViewController.xib */,
 				A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */,
 				A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */,
 				A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */,
 				A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */,
 				A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */,
->>>>>>> b018550ea6288f6bd4b1c08b0f38d75612a357a2
 			);
 			name = personalSpace;
 			sourceTree = "<group>";
@@ -4042,7 +4028,6 @@
 				A749B9CB19F89A530036F480 /* root_forwardNotice@2x.png in Resources */,
 				A75046941A0A14BC00C54ECC /* forward_sendMsg1@2x.png in Resources */,
 				A74821A919FF452200234020 /* nav_return@2x.png in Resources */,
-				F7EC84B71B203E3400CBE0C1 /* PersonalSpaceViewController.xib in Resources */,
 				A7AD8C5619F644A2002E65FB /* tabbar_student1.png in Resources */,
 				A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */,
 				A7781F3F1AE8A0F300F03AEB /* NewWorkView_0.png in Resources */,
@@ -4427,11 +4412,11 @@
 				A755E67319F2492700BBDF3D /* main.m in Sources */,
 				A748219719FF2AE500234020 /* MsgDetailViewController.m in Sources */,
 				F71803241AB3C46300E6167F /* JTCalendarMonthView.m in Sources */,
-				F7EC84B51B203E3400CBE0C1 /* PersonalSpaceModel.m in Sources */,
 				F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */,
 				A77FF02B1A650B3F00DB85E3 /* NSArray+JSONModel.m in Sources */,
 				A73191F81A135036008CFD53 /* SMSTreeArrayModel.m in Sources */,
 				A7595EA21A5FC2F30027848E /* PSTCollectionViewLayout.m in Sources */,
+				A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */,
 				A762FFFB1A282A6000A78B5C /* NoticeInfoModel.m in Sources */,
 				A72B581E1A3D70B8004D8920 /* UnitSpaceViewController.m in Sources */,
 				A77FF0361A6511AB00DB85E3 /* UnitClassModel.m in Sources */,
@@ -4650,7 +4635,6 @@
 				F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */,
 				A74821AC19FF741400234020 /* MsgDetail_ReaderList.m in Sources */,
 				A74339511A452B7700AFC0A5 /* SDWebImageDownloader.m in Sources */,
-				F7EC84B61B203E3400CBE0C1 /* PersonalSpaceViewController.m in Sources */,
 				A755E71619F278B900BBDF3D /* ASIS3ServiceRequest.m in Sources */,
 				A74D127F1A3BF15600A93CAC /* ParserJson_show.m in Sources */,
 				A74339521A452B7700AFC0A5 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -4777,7 +4761,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = JiaoBao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4803,7 +4787,7 @@
 					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = JiaoBao/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

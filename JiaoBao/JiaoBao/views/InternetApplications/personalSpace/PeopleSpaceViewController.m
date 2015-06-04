@@ -20,9 +20,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-//    //发送注册请求
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerGetTime" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerGetTime:) name:@"registerGetTime" object:nil];
+    
 }
 
 - (void)viewDidLoad {
