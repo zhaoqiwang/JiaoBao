@@ -14,7 +14,7 @@
 @end
 
 @implementation RegisterViewController
-@synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mProgressV,mBtn_register;
+@synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mProgressV,mBtn_register,mBtn_forgetPW;
 
 - (void)viewDidLoad {
     D("dm... %d,%d",[dm getInstance].width, [dm getInstance].height);
@@ -96,11 +96,18 @@
     //注册按钮
     self.mBtn_register = [UIButton buttonWithType:UIButtonTypeCustom];
     self.mBtn_register.frame = CGRectMake([dm getInstance].width-60, self.mBtn_memberPassWD.frame.origin.y, 50, self.mBtn_memberPassWD.frame.size.height);
-//    [self.mBtn_register setImage:image3 forState:UIControlStateNormal];
     [self.mBtn_register setTitle:@"注册" forState:UIControlStateNormal];
     self.mBtn_register.titleLabel.font = [UIFont systemFontOfSize:12];
     [self.mBtn_register addTarget:self action:@selector(registerPhoneNum:) forControlEvents:UIControlEventTouchDown];
     [self.mView_view addSubview:self.mBtn_register];
+    
+    //忘记密码按钮
+    self.mBtn_forgetPW = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.mBtn_forgetPW.frame = CGRectMake(self.mBtn_register.frame.origin.x-60, self.mBtn_memberPassWD.frame.origin.y, 50, self.mBtn_memberPassWD.frame.size.height);
+    [self.mBtn_forgetPW setTitle:@"忘记密码" forState:UIControlStateNormal];
+    self.mBtn_forgetPW.titleLabel.font = [UIFont systemFontOfSize:12];
+    [self.mBtn_forgetPW addTarget:self action:@selector(forgetPW:) forControlEvents:UIControlEventTouchDown];
+    [self.mView_view addSubview:self.mBtn_forgetPW];
     
     //登陆按钮
     UIImage *image4 = [UIImage imageNamed:@"Regiser_login"];
@@ -182,6 +189,12 @@
 -(void)registerPhoneNum:(UIButton *)btn{
     D("点击注册按钮");
 }
+
+//忘记密码按钮
+-(void)forgetPW:(UIButton *)btn{
+    D("点击忘记密码按钮");
+}
+
 //点击登录按钮
 -(void)clickLogin:(id)sender{
     //检查当前网络是否可用

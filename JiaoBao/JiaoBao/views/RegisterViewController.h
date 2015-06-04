@@ -23,6 +23,7 @@
     int flag;//记住密码标记,1是未记住，2是记住
     MBProgressHUD *mProgressV;//
     UIButton *mBtn_register;//注册
+    UIButton *mBtn_forgetPW;//注忘记密码
 }
 
 @property (strong,nonatomic) UIImageView *mImgV_bg;//填充背景
@@ -34,5 +35,6 @@
 @property (strong,nonatomic) UIButton *mBtn_memberPassWD;//记住密码按钮
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (strong,nonatomic) UIButton *mBtn_register;//注册
+@property (strong,nonatomic) UIButton *mBtn_forgetPW;//注忘记密码
 
 @end
