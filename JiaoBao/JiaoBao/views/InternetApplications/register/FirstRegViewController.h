@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyNavigationBar.h"
 
-@interface FirstRegViewController : UIViewController<UITextFieldDelegate>
+@interface FirstRegViewController : UIViewController<UITextFieldDelegate,MyNavigationDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *tel;
 @property (weak, nonatomic) IBOutlet UITextField *urlNumTF;
 @property (weak, nonatomic) IBOutlet UITextField *tel_identi_codeTF;
 @property (weak, nonatomic) IBOutlet UIImageView *urlImgV;
 @property(nonatomic,strong)NSString *telStr;
+@property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
+
 @property(nonatomic,assign)BOOL telSymbol,urlSymbol ,identi_code_Symbol;
 - (IBAction)getIdentiCodeAction:(id)sender;
 - (IBAction)nextStepAction:(id)sender;

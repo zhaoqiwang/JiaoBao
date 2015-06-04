@@ -10,12 +10,16 @@
 #import "SVProgressHUD.h"
 #import "RegisterHttp.h"
 #import "SecondRegViewController.h"
+#import "MBProgressHUD.h"
+#import "Reachability.h"
 
-@interface FirstRegViewController ()
+@interface FirstRegViewController ()<MBProgressHUDDelegate>
 {
     id  _observer1,_observer2,_observer3,_observer4;
     NSInteger timeNum;
 }
+@property(nonatomic,strong)NSTimer *myTimer;
+@property(nonatomic,strong)MBProgressHUD *mProgressV;
 
 @end
 
@@ -25,7 +29,8 @@
     [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)viewDidDisappear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated{
+    [dm getInstance].RegisterSymbol = NO;
     if(_observer1)
     {
         
@@ -60,17 +65,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
+    [self.view addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
+
     timeNum = 120;
-    self.navigationItem.title = @"注册";
+    self.navigationController.navigationBarHidden = YES;
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"注册"];
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar setGoBack];
+    [self.view addSubview:self.mNav_navgationBar];
     [dm getInstance].RegisterSymbol = YES;
-    [[RegisterHttp getInstance]registerHttpGetValidateCode];
-        UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        backBtn.frame = CGRectMake(0, 0,63,26);
-        [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    backBtn.frame = CGRectMake(0, 0,63,26);
+    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
 //        backBtn.backgroundColor = [UIColor colorWithRed:224/255.0 green:133/255.0 blue:30/255.0 alpha:1];
-        [backBtn addTarget:self action:@selector(doBack:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-        self.navigationItem.leftBarButtonItem = backItem;
+    [backBtn addTarget:self action:@selector(doBack:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = backItem;
+    if ([self checkNetWork]) {
+        return;
+    }
+    [[RegisterHttp getInstance]registerHttpGetValidateCode];
+
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -94,7 +111,8 @@
         }
         else
         {
-            [SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
+            [self progressViewTishi:@"手机号码已经被注册"];
+            //[SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
             self.telSymbol = NO;
         }
         
@@ -114,7 +132,9 @@
            }
         else
         {
-            [SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
+            [self progressViewTishi:@"请获取手机验证码"];
+
+            //[SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
         }
         
         
@@ -132,7 +152,9 @@
         }
         else
         {
-            [SVProgressHUD showInfoWithStatus:@"验证失败"];
+            [self progressViewTishi:@"验证失败"];
+
+            //[SVProgressHUD showInfoWithStatus:@"验证失败"];
         }
         
         
@@ -146,6 +168,9 @@
         
     
     
+}
+-(void)myNavigationGoback{
+    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -161,10 +186,12 @@
         BOOL isTel = [self checkTel:self.tel.text];
         if(isTel)
         {
-            if(self.tel.text != self.telStr)
+            if(![self.tel.text isEqualToString: self.telStr])
             {
                 [self.get_identi_code_btn setTitle:@"获取手机验证码" forState:UIControlStateNormal];
                 self.get_identi_code_btn.enabled = YES;
+                [self.myTimer invalidate];
+                timeNum = 120;
 
                 
             }
@@ -184,8 +211,8 @@
     BOOL isMatch = [pred evaluateWithObject:str];
     if (!isMatch)
     {
-        
-        [SVProgressHUD showErrorWithStatus:@"请输入正确的手机号码"];
+        [self progressViewTishi:@"请输入正确的手机号码"];
+        //[SVProgressHUD showErrorWithStatus:@"请输入正确的手机号码"];
         return NO;
         
     }
@@ -196,34 +223,40 @@
 
 
 - (IBAction)getIdentiCodeAction:(id)sender {
-    if(!self.tel.text)
+    if([self.tel.text isEqualToString:@""])
     {
-        [SVProgressHUD showInfoWithStatus:@"请输入手机号"];
+        [self progressViewTishi:@"请输入手机号"];
+        //[SVProgressHUD showInfoWithStatus:@"请输入手机号"];
         return;
     }
-    if(!self.tel_identi_codeTF.text)
+    if([self.tel_identi_codeTF.text isEqualToString:@""])
     {
-        [SVProgressHUD showInfoWithStatus:@"请输入验证码"];
+        [self progressViewTishi:@"请输入验证码"];
+
+        //[SVProgressHUD showInfoWithStatus:@"请输入验证码"];
         return;
  
     }
     if(self.telSymbol == YES)
     {
-        [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
+        self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
 //        [dm getInstance].tel = self.tel.text;
 //        [dm getInstance].urlNum = self.urlNumTF.text;
+        if ([self checkNetWork]) {
+            return;
+        }
         [[LoginSendHttp getInstance] hands_login];
 
         [[RegisterHttp getInstance]registerHttpSendCheckCode:self.tel.text Code:self.urlNumTF.text];
     }
-//        [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
+
 
 }
 -(void)timeAction:(id)sender
 {
     if(timeNum>0)
     {
-        [self.get_identi_code_btn setTitle:[NSString stringWithFormat:@"%ld重新获取验证码",timeNum] forState:UIControlStateNormal];
+        [self.get_identi_code_btn setTitle:[NSString stringWithFormat:@"%ld秒后重新获取验证码",timeNum] forState:UIControlStateNormal];
         timeNum--;
         self.get_identi_code_btn.enabled = NO;
         
@@ -232,16 +265,20 @@
     {
         [self.get_identi_code_btn setTitle:@"获取手机验证码" forState:UIControlStateNormal];
         self.get_identi_code_btn.enabled = YES;
+        [self.myTimer invalidate];
+        timeNum = 120;
     }
 
 
 }
 
 - (IBAction)nextStepAction:(id)sender {
-//    SecondRegViewController *sec = [[SecondRegViewController alloc]init];
-//    sec.tel = self.tel.text;
-//    sec.urlNumStr = self.urlNumTF.text;
-//    [self.navigationController pushViewController:sec animated:YES];
+    SecondRegViewController *sec = [[SecondRegViewController alloc]init];
+    sec.tel = self.tel.text;
+    //sec.urlNumStr = self.urlNumTF.text;
+    self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
+    [self.navigationController pushViewController:sec animated:YES];
+
     
 //    if(!self.tel.text)
 //    {
@@ -265,7 +302,66 @@
 }
 
 - (IBAction)getUrlImageAction:(id)sender {
+    if ([self checkNetWork]) {
+        return;
+    }
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
 
+}
+
+//检查当前网络是否可用
+-(BOOL)checkNetWork{
+    if([Reachability isEnableNetwork]==NO){
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = NETWORKENABLE;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+-(void)noMore{
+    sleep(1);
+}
+
+-(void)progressViewTishi:(NSString *)title{
+    self.mProgressV.labelText = title;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+}
+
+-(void)ProgressViewLoad:(NSString *)title{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    self.mProgressV.labelText = title;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)Loading {
+    sleep(TIMEOUT);
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    sleep(2);
+}
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        
+        return NO;
+    }
+    return YES;
+}
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
 }
 @end

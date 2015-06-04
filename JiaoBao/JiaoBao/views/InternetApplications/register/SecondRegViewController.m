@@ -10,15 +10,61 @@
 #import "LoginSendHttp.h"
 #import "RegisterHttp.h"
 #import "SVProgressHUD.h"
+#import "RegisterPassWViewController.h"
+#import "MBProgressHUD.h"
+#import "Reachability.h"
 
-@interface SecondRegViewController ()
+@interface SecondRegViewController ()<MBProgressHUDDelegate>
+{
+    id  _observer1,_observer2,_observer3,_observer4;
+
+}
+@property(nonatomic,strong)MBProgressHUD *mProgressV;
+
 
 @end
 
 @implementation SecondRegViewController
+-(void)viewDidDisappear:(BOOL)animated
+{
+    if(_observer1)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer1];
+        
+    }
+    if(_observer2)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer2];
+        
+    }
+    if(_observer3)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer3];
+        
+    }
+    if(_observer4)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer4];
+        
+    }
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
+    [self.view addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
+    self.navigationController.navigationBarHidden = YES;
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"注册"];
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar setGoBack];
+    [self.view addSubview:self.mNav_navgationBar];
+
     [self addNotification];
 
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
@@ -27,7 +73,7 @@
 }
 -(void)addNotification
 {
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
+    _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
         self.urlImgV.image = image;
@@ -35,7 +81,7 @@
         
         
     }];
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"tel" object:nil queue:nil usingBlock:^(NSNotification *note) {
+    _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"tel" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSString *str =note.object;
         if([str isEqualToString:@"true"])
         {
@@ -45,13 +91,13 @@
         }
         else
         {
-            [SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
+            [self progressViewTishi:@"手机号码已经被注册"];
             self.telSymbol = NO;
         }
         
         
     }];
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"get_identi_code" object:nil queue:nil usingBlock:^(NSNotification *note) {
+    _observer3 = [[NSNotificationCenter defaultCenter]addObserverForName:@"get_identi_code" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
         NSString *str =note.object;
         if([str integerValue ] == 0)
@@ -62,19 +108,22 @@
         }
         else
         {
-            [SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
+            [self progressViewTishi:@"请获取手机验证码"];
         }
         
         
         
     }];
     
-    [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
+    _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSString *str =note.object;
         if([str integerValue ] == 0)
         {
             NSLog(@"验证成功");
             [SVProgressHUD dismiss];
+            RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
+            pass.mStr_phoneNum = self.tel;
+            [self.navigationController pushViewController:pass animated:YES];
             
             
             
@@ -82,7 +131,7 @@
         }
         else
         {
-            [SVProgressHUD showInfoWithStatus:@"验证失败"];
+            [self progressViewTishi:@"验证失败"];
         }
         
         
@@ -103,16 +152,16 @@
 }
 
 - (IBAction)nextStepAction:(id)sender {
-    if(!self.tel_identi_codeTF.text)
+    if([self.tel_identi_codeTF.text isEqualToString:@""])
     {
-        [SVProgressHUD showInfoWithStatus:@"请输入手机号码"];
+        [self progressViewTishi:@"请输入手机号码"];
         return;
 
         
     }
-    if(!self.urlNumTF.text)
+    if([self.urlNumTF.text isEqualToString:@""])
     {
-        [SVProgressHUD showInfoWithStatus:@"请输入图片验证码"];
+        [self progressViewTishi:@"请输入图片验证码"];
         return;
         
     }
@@ -130,6 +179,67 @@
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
     
 }
+-(void)myNavigationGoback{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+//检查当前网络是否可用
+-(BOOL)checkNetWork{
+    if([Reachability isEnableNetwork]==NO){
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = NETWORKENABLE;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return YES;
+    }else{
+        return NO;
+    }
+}
+
+-(void)noMore{
+    sleep(1);
+}
+
+-(void)progressViewTishi:(NSString *)title{
+    self.mProgressV.labelText = title;
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+}
+
+-(void)ProgressViewLoad:(NSString *)title{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    self.mProgressV.labelText = title;
+    [self.mProgressV show:YES];
+    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)Loading {
+    sleep(TIMEOUT);
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    sleep(2);
+}
+
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        
+        return NO;
+    }
+    return YES;
+}
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
 
 
 - (void)didReceiveMemoryWarning {
