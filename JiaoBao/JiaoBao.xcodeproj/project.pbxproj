@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
+		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
 		A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179771AB914D900E7093F /* work_deleteAccessory.png */; };
 		A701797B1AB914D900E7093F /* work_deleteAccessory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */; };
@@ -811,6 +813,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviseNameViewController.h; path = views/InternetApplications/personalSpace/ReviseNameViewController.h; sourceTree = "<group>"; };
+		4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviseNameViewController.m; path = views/InternetApplications/personalSpace/ReviseNameViewController.m; sourceTree = "<group>"; };
+		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
 		439313081B1DBE6E00169F30 /* RegisterHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterHttp.h; path = views/InternetApplications/register/RegisterHttp.h; sourceTree = "<group>"; };
 		439313091B1DBE6E00169F30 /* RegisterHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterHttp.m; path = views/InternetApplications/register/RegisterHttp.m; sourceTree = "<group>"; };
 		A70179771AB914D900E7093F /* work_deleteAccessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = work_deleteAccessory.png; path = Image/InternetApp/workView/work_deleteAccessory.png; sourceTree = "<group>"; };
@@ -3635,6 +3640,9 @@
 				A7E2E5F91B204ED4003F85B5 /* PeopleSpaceTableViewCell.h */,
 				A7E2E5FA1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m */,
 				A7E2E5FB1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib */,
+				4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */,
+				4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */,
+				4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */,
 			);
 			name = personalSpace;
 			sourceTree = "<group>";
@@ -3992,6 +4000,7 @@
 				A7209E711A29CF9800418A9C /* NoticeListViewController.xib in Resources */,
 				A782AEC41AE9D71A00547B0F /* NewWork_Send@3x.png in Resources */,
 				A78D65E41A8A04E800BE6326 /* workMsg@3x.png in Resources */,
+				4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */,
 				A72B581A1A3D3E14004D8920 /* RelatedUnitViewController.xib in Resources */,
 				A753FAF21A1DDC0300AB5F22 /* share_tableV_school@2x.png in Resources */,
 				A74C11981A01D9FC00925230 /* icon_ios7.png in Resources */,
@@ -4541,6 +4550,7 @@
 				A77FF02C1A650B3F00DB85E3 /* JSONAPI.m in Sources */,
 				A725E4301A53A11800957EAE /* MyAttUnitModel.m in Sources */,
 				A74339531A452B7700AFC0A5 /* SDWebImageManager.m in Sources */,
+				4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */,
 				A743394D1A452B7700AFC0A5 /* NSData+ImageContentType.m in Sources */,
 				A7595EA51A5FC2F30027848E /* PSTGridLayoutItem.m in Sources */,
 				F79D84DC1ABD4DC000897477 /* SignInHttp.m in Sources */,

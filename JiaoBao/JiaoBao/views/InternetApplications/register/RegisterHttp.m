@@ -303,12 +303,21 @@ static RegisterHttp *registerHttp = nil;
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==6=>>>>==%@",str);
+        if ([code intValue]==0) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:code];
+        }else{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:str];
+        }
         
     }else if (_request.tag == 7){//修改帐户信息的昵称和姓名
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==7=>>>>==%@",str);
-        
+        if ([code intValue]==0) {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpUpateRecAcc" object:code];
+        }else{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpUpateRecAcc" object:str];
+        }
     }else if (_request.tag == 8){//验证旧密码后修改帐户密码
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];

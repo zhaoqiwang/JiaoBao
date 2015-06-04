@@ -95,7 +95,7 @@
         cell.mLab_line.frame = CGRectMake(0, 69, [dm getInstance].width, .5);
     }else{
         cell.mImgV_head.hidden = YES;
-        cell.mLab_nickName.frame = CGRectMake(10, 10, cell.mLab_nickName.frame.size.width, cell.mLab_nickName.frame.size.height);
+        cell.mLab_nickName.frame = CGRectMake(15, 10, cell.mLab_nickName.frame.size.width, cell.mLab_nickName.frame.size.height);
         cell.mLab_trueName.frame = CGRectMake(100, 10, 200, cell.mLab_nickName.frame.size.height);
         cell.mLab_line.frame = CGRectMake(0, 43, [dm getInstance].width, .5);
     }
@@ -106,7 +106,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    if (indexPath.row==0) {
+        ReviseNameViewController *reviseName = [[ReviseNameViewController alloc] init];
+        [utils pushViewController:reviseName animated:YES];
+    }
 }
 
 //导航条返回按钮回调
