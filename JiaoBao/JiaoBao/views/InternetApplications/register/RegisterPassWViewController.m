@@ -14,7 +14,7 @@
 @end
 
 @implementation RegisterPassWViewController
-@synthesize mBtn_register,mLab_confirmPassWord,mLab_passWord,mTextF_confirmPassword,mTextF_password,mNav_navgationBar,mLab_tishi,mProgressV,mStr_phoneNum;
+@synthesize mBtn_register,mLab_confirmPassWord,mLab_passWord,mTextF_confirmPassword,mTextF_password,mNav_navgationBar,mLab_tishi,mProgressV,mStr_phoneNum,mInt_flag;
 
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -32,7 +32,7 @@
     // Do any additional setup after loading the view from its nib.
     
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"注册"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"输入密码"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -72,8 +72,17 @@
     //判断两次密码输入是否一致，一致，则发送注册协议
     if ([self.mTextF_confirmPassword.text isEqual:self.mTextF_password.text]) {
         D("哦了");
-        //获取当前时间
-        [[LoginSendHttp getInstance] getTime:@"2"];
+        if (self.mInt_flag == 1) {//注册时设置密码
+            //获取当前时间
+            [[LoginSendHttp getInstance] getTime:@"2"];
+        }else if (self.mInt_flag == 2){//重置密码
+            //生成登录的json字符串
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setValue:self.mStr_phoneNum forKey:@"mobilenum"];
+            [dic setValue:self.mTextF_password.text forKey:@"npw"];
+            NSString *json = [dic JSONString];
+            [[RegisterHttp getInstance] registerHttpResetAccPw:json iOS:@"true"];
+        }
     }else{
         [self progressViewTishi:@"两次密码输入不一致"];
     }

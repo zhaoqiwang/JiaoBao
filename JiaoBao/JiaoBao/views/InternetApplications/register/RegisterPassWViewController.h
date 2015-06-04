@@ -26,6 +26,7 @@
     UILabel *mLab_tishi;//密码提示
     MBProgressHUD *mProgressV;//
     NSString *mStr_phoneNum;//从上个界面来的电话号码
+    int mInt_flag;//1是注册时设置密码，2为重置密码
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -37,6 +38,7 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_tishi;
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSString *mStr_phoneNum;//从上个界面来的电话号码
+@property (nonatomic,assign) int mInt_flag;//1是注册时设置密码，2为重置密码
 
 //点击注册按钮
 -(IBAction)mBtn_register:(UIButton *)btn;

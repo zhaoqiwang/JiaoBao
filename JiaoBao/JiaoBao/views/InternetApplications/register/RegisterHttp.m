@@ -224,9 +224,28 @@ static RegisterHttp *registerHttp = nil;
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
-    [request addPostValue:resetobjstr forKey:@"resetobjstr"];
+    //对json串加密
+    NSData *dataRSA = [RSATool encrypt:resetobjstr error:nil];
+    NSString *registerRSA = [dataRSA base64EncodedString];
+    [request addPostValue:registerRSA forKey:@"resetobjstr"];
     [request addPostValue:ios forKey:@"ios"];
     request.tag = 12;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
+//重置用户密码时发送手机验证码
+-(void)registerHttpReSendCheckCode:(NSString *)phone vCode:(NSString *)vCode{
+    NSString *urlString = [NSString stringWithFormat:@"%@AccountReg/ReSendCheckCode",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:phone forKey:@"mobilenum"];
+    [request addPostValue:vCode forKey:@"vCode"];
+    request.tag = 13;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
 }
@@ -311,6 +330,11 @@ static RegisterHttp *registerHttp = nil;
         D("str00=register==11=>>>>==%@",str);
         
     }else if (_request.tag == 12){//重置用户密码 
+        NSDictionary *dic = [dataString objectFromJSONString];
+        NSString *str = [dic objectForKey:@"Data"];
+        D("str00=register==12=>>>>==%@",str);
+        
+    }else if (_request.tag == 13){//重置用户密码时发送手机验证码
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);

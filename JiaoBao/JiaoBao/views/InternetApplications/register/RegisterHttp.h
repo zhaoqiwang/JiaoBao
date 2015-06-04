@@ -61,4 +61,7 @@
 //重置用户密码                  加密后的json密码对象的base64字符串   true,ios应用
 -(void)registerHttpResetAccPw:(NSString *)resetobjstr iOS:(NSString *)ios;
 
+//重置用户密码时发送手机验证码
+-(void)registerHttpReSendCheckCode:(NSString *)phone vCode:(NSString *)vCode;
+
 @end
