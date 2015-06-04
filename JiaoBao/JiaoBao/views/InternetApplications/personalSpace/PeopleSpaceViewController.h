@@ -21,6 +21,7 @@
     MBProgressHUD *mProgressV;//
     UITableView *mTableV_personalS;//表格
     NSMutableArray *mArr_personalS;//个人信息数组
+    
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
