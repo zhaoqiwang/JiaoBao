@@ -8,7 +8,6 @@
 
 #import "ForwardViewController.h"
 #import "Reachability.h"
-#import "CollectionFootView.h"
 
 #define Margin 0//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
@@ -109,7 +108,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.mCollectionV_list.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
     [self.mCollectionV_list registerClass:[Forward_cell class] forCellWithReuseIdentifier:kCellID];
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kDetailedViewControllerID];
-    [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"FootView"];
+//    [self.mCollectionV_list registerClass:[CollectionFootView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"FootView"];
     
      [self.mCollectionV_list registerNib:[UINib nibWithNibName:@"CollectionFootView" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FootView"];
     

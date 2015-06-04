@@ -37,7 +37,7 @@
 //验证手机验证码
 -(void)registerHttpRegCheckMobileVcode:(NSString *)phoneNum cCode:(NSString *)cCode vCode:(NSString *)vCode;
 
-//用户注册                      客户端版本号              客户端ID               加密后的登录JSON对象字符串             当前时间（如：2013-12-09 00:37:09 数字签名，base64(MD5(Ver + IAMSCID + regAccIdStr + ClientKey))        true,ios应用
+//用户注册                      客户端版本号              客户端ID               加密后的登录JSON对象字符串             当前时间（如：2013-12-09 00:37:09        数字签名，base64(MD5(Ver+regAccIdStr+ClientKey+TimeStamp))        true,ios应用
 -(void)registerHttpRegAccId:(NSString *)CliVer IAMSCID:(NSString *)IAMSCID regAccIdStr:(NSString *)regAccIdStr TimeStamp:(NSString *)TimeStamp Sign:(NSString *)Sign ios:(NSString *)ios;
 
 //检查昵称是否重复      昵称不能全是数字，不能包含@
