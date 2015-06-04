@@ -694,6 +694,9 @@
 		A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE672F1AA70A250038D0C5 /* themeTotal.png */; };
 		A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */; };
 		A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */; };
+		A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */; };
+		A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */; };
+		A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
 		F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030E1AB3C46300E6167F /* JTCalendarContentView.m */; };
@@ -1774,6 +1777,11 @@
 		A7CE672F1AA70A250038D0C5 /* themeTotal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = themeTotal.png; path = Image/InternetApp/themeTotal.png; sourceTree = "<group>"; };
 		A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@2x.png"; path = "Image/InternetApp/themeTotal@2x.png"; sourceTree = "<group>"; };
 		A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@3x.png"; path = "Image/InternetApp/themeTotal@3x.png"; sourceTree = "<group>"; };
+		A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceViewController.h; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.h; sourceTree = "<group>"; };
+		A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleSpaceViewController.m; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.m; sourceTree = "<group>"; };
+		A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleSpaceViewController.xib; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.xib; sourceTree = "<group>"; };
+		A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalSpaceModel.h; path = views/InternetApplications/personalSpace/PersonalSpaceModel.h; sourceTree = "<group>"; };
+		A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalSpaceModel.m; path = views/InternetApplications/personalSpace/PersonalSpaceModel.m; sourceTree = "<group>"; };
 		F71803091AB3C46300E6167F /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendar.h; path = Common/JTCalendar/JTCalendar.h; sourceTree = "<group>"; };
 		F718030A1AB3C46300E6167F /* JTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCalendar.m; path = Common/JTCalendar/JTCalendar.m; sourceTree = "<group>"; };
 		F718030B1AB3C46300E6167F /* JTCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendarAppearance.h; path = Common/JTCalendar/JTCalendarAppearance.h; sourceTree = "<group>"; };
@@ -3627,6 +3635,12 @@
 				F7EC84B21B203E3400CBE0C1 /* PersonalSpaceViewController.h */,
 				F7EC84B31B203E3400CBE0C1 /* PersonalSpaceViewController.m */,
 				F7EC84B41B203E3400CBE0C1 /* PersonalSpaceViewController.xib */,
+				A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */,
+				A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */,
+				A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */,
+				A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */,
+				A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */,
+>>>>>>> b018550ea6288f6bd4b1c08b0f38d75612a357a2
 			);
 			name = personalSpace;
 			sourceTree = "<group>";
@@ -4030,6 +4044,7 @@
 				A74821A919FF452200234020 /* nav_return@2x.png in Resources */,
 				F7EC84B71B203E3400CBE0C1 /* PersonalSpaceViewController.xib in Resources */,
 				A7AD8C5619F644A2002E65FB /* tabbar_student1.png in Resources */,
+				A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */,
 				A7781F3F1AE8A0F300F03AEB /* NewWorkView_0.png in Resources */,
 				F718032D1AB3C4EF00E6167F /* kal_left_arrow@2x.png in Resources */,
 				A74821A519FF452200234020 /* msgDetail_send@2x.png in Resources */,
@@ -4646,6 +4661,7 @@
 				A755E72A19F27C8E00BBDF3D /* NSData+CommonCrypto.m in Sources */,
 				A755E71219F278B900BBDF3D /* ASIS3BucketObject.m in Sources */,
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
+				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,

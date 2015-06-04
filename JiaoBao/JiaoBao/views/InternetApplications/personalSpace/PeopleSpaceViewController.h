@@ -1,5 +1,5 @@
 //
-//  PersonalSpaceViewController.h
+//  PeopleSpaceViewController.h
 //  JiaoBao
 //
 //  Created by Zqw on 15/6/4.
@@ -16,7 +16,7 @@
 #import "JSONKit.h"
 #import "RegisterHttp.h"
 
-@interface PersonalSpaceViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>{
+@interface PeopleSpaceViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     MBProgressHUD *mProgressV;//
     UITableView *mTableV_personalS;//表格
