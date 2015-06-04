@@ -604,6 +604,8 @@
 		A79C7AE61AF22ACB00E9D30A /* newWork_reverseSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE01AF22ACB00E9D30A /* newWork_reverseSelect.png */; };
 		A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE11AF22ACB00E9D30A /* newWork_reverseSelect@2x.png */; };
 		A79C7AE81AF22ACB00E9D30A /* newWork_reverseSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */; };
+		A7A00BCB1B1EA9990056FE30 /* RegisterPassWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A00BC91B1EA9990056FE30 /* RegisterPassWViewController.m */; };
+		A7A00BCC1B1EA9990056FE30 /* RegisterPassWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7A00BCA1B1EA9990056FE30 /* RegisterPassWViewController.xib */; };
 		A7A15CC31AF08DC700843CB3 /* NewWorkTree_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */; };
 		A7A379001B06E75F000C9DC5 /* OpenFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A378FE1B06E75F000C9DC5 /* OpenFileViewController.m */; };
 		A7A379011B06E75F000C9DC5 /* OpenFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7A378FF1B06E75F000C9DC5 /* OpenFileViewController.xib */; };
@@ -1645,6 +1647,9 @@
 		A79C7AE01AF22ACB00E9D30A /* newWork_reverseSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newWork_reverseSelect.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect.png; sourceTree = "<group>"; };
 		A79C7AE11AF22ACB00E9D30A /* newWork_reverseSelect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_reverseSelect@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect@2x.png"; sourceTree = "<group>"; };
 		A79C7AE21AF22ACB00E9D30A /* newWork_reverseSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_reverseSelect@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_reverseSelect@3x.png"; sourceTree = "<group>"; };
+		A7A00BC81B1EA9990056FE30 /* RegisterPassWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterPassWViewController.h; path = views/InternetApplications/register/RegisterPassWViewController.h; sourceTree = "<group>"; };
+		A7A00BC91B1EA9990056FE30 /* RegisterPassWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterPassWViewController.m; path = views/InternetApplications/register/RegisterPassWViewController.m; sourceTree = "<group>"; };
+		A7A00BCA1B1EA9990056FE30 /* RegisterPassWViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RegisterPassWViewController.xib; path = views/InternetApplications/register/RegisterPassWViewController.xib; sourceTree = "<group>"; };
 		A7A15CC11AF08DC700843CB3 /* NewWorkTree_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewWorkTree_model.h; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTree_model.h; sourceTree = "<group>"; };
 		A7A15CC21AF08DC700843CB3 /* NewWorkTree_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewWorkTree_model.m; path = views/InternetApplications/workView/NewWorkViewC/NewWorkTree_model.m; sourceTree = "<group>"; };
 		A7A378FD1B06E75F000C9DC5 /* OpenFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenFileViewController.h; path = views/InternetApplications/workView/OpenFileViewController.h; sourceTree = "<group>"; };
@@ -3392,6 +3397,9 @@
 				F7EC84A71B1FE08A00CBE0C1 /* SecondRegViewController.h */,
 				F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */,
 				F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */,
+				A7A00BC81B1EA9990056FE30 /* RegisterPassWViewController.h */,
+				A7A00BC91B1EA9990056FE30 /* RegisterPassWViewController.m */,
+				A7A00BCA1B1EA9990056FE30 /* RegisterPassWViewController.xib */,
 			);
 			name = register;
 			sourceTree = "<group>";
@@ -4283,6 +4291,7 @@
 				A76ED5BF1AD67855006F3E0B /* workView_4@2x.png in Resources */,
 				A7BEEA1A1A441E10003C9EAD /* UnintAlbumsListViewController.xib in Resources */,
 				A75E6EBB1ABACDBD00B51B18 /* classView_1.png in Resources */,
+				A7A00BCC1B1EA9990056FE30 /* RegisterPassWViewController.xib in Resources */,
 				F79D84DF1ABD4DC000897477 /* SignInViewController.xib in Resources */,
 				F7502A231AEE1E50004F822F /* plus@3x.png in Resources */,
 				A72B582B1A3D867A004D8920 /* UnitDetailViewController.xib in Resources */,
@@ -4429,6 +4438,7 @@
 				A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */,
 				A7209E701A29CF9800418A9C /* NoticeListViewController.m in Sources */,
 				A755E6A119F24D2C00BBDF3D /* RootViewController.m in Sources */,
+				A7A00BCB1B1EA9990056FE30 /* RegisterPassWViewController.m in Sources */,
 				A7AD8C3319F63CC7002E65FB /* InternetApplicationsViewController.m in Sources */,
 				A753FAF51A1DED7000AB5F22 /* UserClassModel.m in Sources */,
 				A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */,

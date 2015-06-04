@@ -105,7 +105,7 @@ CLLocationManager *locationManager;
         //截取八位作为key
         [dm getInstance].uuid = [tempKey substringWithRange:NSMakeRange(3,8)];
         //向服务器发送注册通知
-        [[LoginSendHttp getInstance] getTime];
+        [[LoginSendHttp getInstance] getTime:@"1"];
         [LoginSendHttp getInstance].flag_request = 1;
         [LoginSendHttp getInstance].flag_skip = 1;
     }
