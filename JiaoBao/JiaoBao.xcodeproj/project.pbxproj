@@ -694,12 +694,9 @@
 		A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE672F1AA70A250038D0C5 /* themeTotal.png */; };
 		A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */; };
 		A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */; };
-		A7E2E5EA1B2031A8003F85B5 /* PersonalSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5E81B2031A8003F85B5 /* PersonalSpaceViewController.m */; };
-		A7E2E5EB1B2031A8003F85B5 /* PersonalSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5E91B2031A8003F85B5 /* PersonalSpaceViewController.xib */; };
+		A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */; };
+		A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */; };
 		A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */; };
-		F70206AD1AEB13950047CA2A /* TopView.m in Sources */ = {isa = PBXBuildFile; fileRef = F70206AC1AEB13950047CA2A /* TopView.m */; };
-		F70206B21AEB307B0047CA2A /* CollectionFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = F70206B01AEB307B0047CA2A /* CollectionFootView.m */; };
-		F70206B31AEB307B0047CA2A /* CollectionFootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70206B11AEB307B0047CA2A /* CollectionFootView.xib */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
 		F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030E1AB3C46300E6167F /* JTCalendarContentView.m */; };
@@ -1777,16 +1774,11 @@
 		A7CE672F1AA70A250038D0C5 /* themeTotal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = themeTotal.png; path = Image/InternetApp/themeTotal.png; sourceTree = "<group>"; };
 		A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@2x.png"; path = "Image/InternetApp/themeTotal@2x.png"; sourceTree = "<group>"; };
 		A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@3x.png"; path = "Image/InternetApp/themeTotal@3x.png"; sourceTree = "<group>"; };
-		A7E2E5E71B2031A8003F85B5 /* PersonalSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalSpaceViewController.h; path = views/InternetApplications/personalSpace/PersonalSpaceViewController.h; sourceTree = "<group>"; };
-		A7E2E5E81B2031A8003F85B5 /* PersonalSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalSpaceViewController.m; path = views/InternetApplications/personalSpace/PersonalSpaceViewController.m; sourceTree = "<group>"; };
-		A7E2E5E91B2031A8003F85B5 /* PersonalSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PersonalSpaceViewController.xib; path = views/InternetApplications/personalSpace/PersonalSpaceViewController.xib; sourceTree = "<group>"; };
+		A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceViewController.h; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.h; sourceTree = "<group>"; };
+		A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleSpaceViewController.m; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.m; sourceTree = "<group>"; };
+		A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleSpaceViewController.xib; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.xib; sourceTree = "<group>"; };
 		A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalSpaceModel.h; path = views/InternetApplications/personalSpace/PersonalSpaceModel.h; sourceTree = "<group>"; };
 		A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalSpaceModel.m; path = views/InternetApplications/personalSpace/PersonalSpaceModel.m; sourceTree = "<group>"; };
-		F70206AB1AEB13950047CA2A /* TopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopView.h; sourceTree = "<group>"; };
-		F70206AC1AEB13950047CA2A /* TopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopView.m; sourceTree = "<group>"; };
-		F70206AF1AEB307B0047CA2A /* CollectionFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionFootView.h; sourceTree = "<group>"; };
-		F70206B01AEB307B0047CA2A /* CollectionFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionFootView.m; sourceTree = "<group>"; };
-		F70206B11AEB307B0047CA2A /* CollectionFootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionFootView.xib; sourceTree = "<group>"; };
 		F71803091AB3C46300E6167F /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendar.h; path = Common/JTCalendar/JTCalendar.h; sourceTree = "<group>"; };
 		F718030A1AB3C46300E6167F /* JTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCalendar.m; path = Common/JTCalendar/JTCalendar.m; sourceTree = "<group>"; };
 		F718030B1AB3C46300E6167F /* JTCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendarAppearance.h; path = Common/JTCalendar/JTCalendarAppearance.h; sourceTree = "<group>"; };
@@ -3630,9 +3622,9 @@
 		A7E2E5E51B20312B003F85B5 /* personalSpace */ = {
 			isa = PBXGroup;
 			children = (
-				A7E2E5E71B2031A8003F85B5 /* PersonalSpaceViewController.h */,
-				A7E2E5E81B2031A8003F85B5 /* PersonalSpaceViewController.m */,
-				A7E2E5E91B2031A8003F85B5 /* PersonalSpaceViewController.xib */,
+				A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */,
+				A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */,
+				A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */,
 				A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */,
 				A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */,
 			);
@@ -4037,7 +4029,7 @@
 				A75046941A0A14BC00C54ECC /* forward_sendMsg1@2x.png in Resources */,
 				A74821A919FF452200234020 /* nav_return@2x.png in Resources */,
 				A7AD8C5619F644A2002E65FB /* tabbar_student1.png in Resources */,
-				A7E2E5EB1B2031A8003F85B5 /* PersonalSpaceViewController.xib in Resources */,
+				A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */,
 				A7781F3F1AE8A0F300F03AEB /* NewWorkView_0.png in Resources */,
 				F718032D1AB3C4EF00E6167F /* kal_left_arrow@2x.png in Resources */,
 				A74821A519FF452200234020 /* msgDetail_send@2x.png in Resources */,
@@ -4653,7 +4645,7 @@
 				A755E72A19F27C8E00BBDF3D /* NSData+CommonCrypto.m in Sources */,
 				A755E71219F278B900BBDF3D /* ASIS3BucketObject.m in Sources */,
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
-				A7E2E5EA1B2031A8003F85B5 /* PersonalSpaceViewController.m in Sources */,
+				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,
