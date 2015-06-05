@@ -93,7 +93,7 @@
     NSString *trueName = [dm getInstance].TrueName;
     NSString *nickName = [dm getInstance].name;
     NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"手机",@"邮箱",@"密码",@"所在单位", nil];
-    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"", nil];
+    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"加入单位", nil];
     for (int i=0; i<6; i++) {
         PersonalSpaceModel *model = [[PersonalSpaceModel alloc] init];
         model.mStr_nickName = [NSString stringWithFormat:@"%@",[tempArr0 objectAtIndex:i]];
