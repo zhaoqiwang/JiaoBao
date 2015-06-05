@@ -338,17 +338,23 @@ static RegisterHttp *registerHttp = nil;
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==11=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:code];
+
+
         
     }else if (_request.tag == 12){//重置用户密码 
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
+
         
     }else if (_request.tag == 13){//重置用户密码时发送手机验证码
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:code];
+
         
     }
 }

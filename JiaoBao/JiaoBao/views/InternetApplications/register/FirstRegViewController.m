@@ -199,7 +199,16 @@
             if ([self checkNetWork]) {
                 return;
             }
-            [[RegisterHttp getInstance] registerHttpCheckmyMobileAcc:self.tel.text];
+            if(self.forgetPWSymbol ==NO)
+            {
+                [[RegisterHttp getInstance] registerHttpCheckmyMobileAcc:self.tel.text];
+
+                
+            }
+            else
+            {
+                self.telSymbol = YES;
+            }
             
         }
         
@@ -254,6 +263,7 @@
             if ([self checkNetWork]) {
                 return;
             }
+
             [[LoginSendHttp getInstance] hands_login];
             [[RegisterHttp getInstance]registerHttpReSendCheckCode:self.tel.text vCode:self.urlNumTF.text];
             
