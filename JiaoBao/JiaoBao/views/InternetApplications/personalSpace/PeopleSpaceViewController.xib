@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PeopleSpaceViewController">
             <connections>
-                <outlet property="mTableV_personalS" destination="DGt-8J-iIu" id="Daa-7e-cMo"/>
+                <outlet property="mTableV_personalS" destination="DGt-8J-iIu" id="0XB-g3-KgC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,13 +16,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DGt-8J-iIu">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DGt-8J-iIu">
                     <rect key="frame" x="0.0" y="69" width="320" height="499"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="Q7f-ZU-eoS"/>
-                        <outlet property="delegate" destination="-1" id="W4g-rL-YNy"/>
+                        <outlet property="dataSource" destination="-1" id="CJY-iK-K6r"/>
+                        <outlet property="delegate" destination="-1" id="ku2-q0-gjd"/>
                     </connections>
                 </tableView>
             </subviews>

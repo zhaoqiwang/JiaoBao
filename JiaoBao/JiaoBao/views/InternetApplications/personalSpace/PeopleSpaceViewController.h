@@ -15,6 +15,9 @@
 #import "LoginSendHttp.h"
 #import "JSONKit.h"
 #import "RegisterHttp.h"
+#import "PersonalSpaceModel.h"
+#import "PeopleSpaceTableViewCell.h"
+#import "ReviseNameViewController.h"
 
 @interface PeopleSpaceViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条

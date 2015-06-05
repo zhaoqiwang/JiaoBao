@@ -304,6 +304,11 @@
                             target:self
                             action:@selector(pushMenuItem7:)],
               
+              [KxMenuItem menuItem:@"个人中心"
+                             image:[UIImage imageNamed:@"appNav_access"]
+                            target:self
+                            action:@selector(pushMenuItem8:)],
+              
               [KxMenuItem menuItem:@"切换单位"
                              image:[UIImage imageNamed:@"appNav_changeUnit"]
                             target:self
@@ -336,6 +341,11 @@
                              image:[UIImage imageNamed:@"appNav_access"]
                             target:self
                             action:@selector(pushMenuItem7:)],
+              
+              [KxMenuItem menuItem:@"个人中心"
+                             image:[UIImage imageNamed:@"appNav_access"]
+                            target:self
+                            action:@selector(pushMenuItem8:)],
               
               [KxMenuItem menuItem:@"切换单位"
                              image:[UIImage imageNamed:@"appNav_changeUnit"]
@@ -624,6 +634,19 @@
 //    [utils pushViewController:forward animated:YES];
     NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
     [utils pushViewController:newWork animated:YES];
+}
+
+//个人中心
+-(void)pushMenuItem8:(id)sender{
+    self.mView_all.hidden = YES;
+    self.mTableV_left.hidden = YES;
+    self.mTableV_right.hidden = YES;
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    PeopleSpaceViewController *view = [[PeopleSpaceViewController alloc] init];
+    [utils pushViewController:view animated:YES];
 }
 
 //获取当前用户可以发布动态的单位列表(含班级）

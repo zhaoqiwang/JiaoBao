@@ -9,7 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface PersonalSpaceModel : NSObject{
-    //
+    NSString *mStr_trueName;//真实姓名或标题
+    NSString *mStr_nickName;//昵称或标题对应的值
 }
+
+@property (nonatomic,strong) NSString *mStr_trueName;//真实姓名或标题
+@property (nonatomic,strong) NSString *mStr_nickName;//昵称或标题对应的值
 
 @end

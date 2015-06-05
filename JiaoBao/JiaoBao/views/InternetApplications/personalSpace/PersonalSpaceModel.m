@@ -9,5 +9,6 @@
 #import "PersonalSpaceModel.h"
 
 @implementation PersonalSpaceModel
+@synthesize mStr_nickName,mStr_trueName;
 
 @end
