@@ -190,6 +190,8 @@
 -(void)registerPhoneNum:(UIButton *)btn{
     FirstRegViewController *firstReg = [[FirstRegViewController alloc]init];
     UINavigationController *navC = [[UINavigationController alloc]initWithRootViewController:firstReg];
+    firstReg.forgetPWSymbol = NO;
+
     [self presentViewController:navC animated:YES completion:nil];
     D("点击注册按钮");
 }
@@ -198,6 +200,7 @@
 -(void)forgetPW:(UIButton *)btn{
     D("点击忘记密码按钮");
     FirstRegViewController *firstReg = [[FirstRegViewController alloc]init];
+    firstReg.forgetPWSymbol = YES;
     UINavigationController *navC = [[UINavigationController alloc]initWithRootViewController:firstReg];
     [self presentViewController:navC animated:YES completion:nil];
 }

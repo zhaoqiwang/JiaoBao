@@ -25,6 +25,49 @@
     //发送注册请求
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerGetTime" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerGetTime:) name:@"registerGetTime" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerPW" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerPW:) name:@"registerPW" object:nil];
+}
+-(void)registerPW:(id)sender
+{
+    NSNotification *note = (NSNotification*)sender;
+    NSString *str =note.object;
+    if(self.mInt_flag == 1)
+    {
+        if([str integerValue ] == 0)
+        {
+            [self progressViewTishi:@"注册成功"];
+            [dm getInstance].RegisterSymbol = NO;
+            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+            
+            
+        }
+        else
+        {
+            [self progressViewTishi:@"注册失败"];
+        }
+        
+    }
+    
+    else
+    {
+        if([str integerValue ] == 0)
+        {
+            [self progressViewTishi:@"重置密码成功"];
+            [dm getInstance].RegisterSymbol = NO;
+            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+            
+            
+        }
+        else
+        {
+            [self progressViewTishi:@"重置密码失败"];
+        }
+        
+    }
+
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -91,7 +134,7 @@
 //发送注册请求
 -(void)registerGetTime:(NSNotification *)noti{
     NSString *time = noti.object;
-    D("time-====%@",time);
+        D("time-====%@",time);
     //生成登录的json字符串
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setValue:self.mStr_phoneNum forKey:@"MobileNum"];
@@ -147,7 +190,7 @@
 }
 
 -(void)myNavigationGoback{
-    [utils popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //键盘点击DO

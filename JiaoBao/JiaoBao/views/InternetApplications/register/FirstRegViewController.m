@@ -127,12 +127,13 @@
                NSLog(@"获取验证码成功");
                SecondRegViewController *sec = [[SecondRegViewController alloc]init];
                sec.tel = self.tel.text;
+               sec.forgetPWSymbol = self.forgetPWSymbol;
                [self.navigationController pushViewController:sec animated:YES];
                
            }
         else
         {
-            [self progressViewTishi:@"请获取手机验证码"];
+            [self progressViewTishi:@"获取验证码失败"];
 
             //[SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
         }
@@ -195,6 +196,9 @@
 
                 
             }
+            if ([self checkNetWork]) {
+                return;
+            }
             [[RegisterHttp getInstance] registerHttpCheckmyMobileAcc:self.tel.text];
             
         }
@@ -247,13 +251,20 @@
         }
         if(self.forgetPWSymbol == YES)
         {
+            if ([self checkNetWork]) {
+                return;
+            }
             [[LoginSendHttp getInstance] hands_login];
+            [[RegisterHttp getInstance]registerHttpReSendCheckCode:self.tel.text vCode:self.urlNumTF.text];
             
 
             
         }
         else
         {
+            if ([self checkNetWork]) {
+                return;
+            }
             [[LoginSendHttp getInstance] hands_login];
             
             [[RegisterHttp getInstance]registerHttpSendCheckCode:self.tel.text Code:self.urlNumTF.text];
@@ -287,6 +298,7 @@
 - (IBAction)nextStepAction:(id)sender {
     SecondRegViewController *sec = [[SecondRegViewController alloc]init];
     sec.tel = self.tel.text;
+    sec.forgetPWSymbol = YES;
     //sec.urlNumStr = self.urlNumTF.text;
     self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
     [self.navigationController pushViewController:sec animated:YES];

@@ -66,6 +66,9 @@
     [self.view addSubview:self.mNav_navgationBar];
 
     [self addNotification];
+    if ([self checkNetWork]) {
+        return;
+    }
 
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
 
@@ -123,6 +126,18 @@
             [SVProgressHUD dismiss];
             RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
             pass.mStr_phoneNum = self.tel;
+            if(self.forgetPWSymbol ==YES)
+            {
+                pass.mInt_flag = 2;
+
+                
+            }
+            else
+            {
+                pass.mInt_flag = 1;
+
+                
+            }
             [self.navigationController pushViewController:pass animated:YES];
             
             
@@ -142,6 +157,10 @@
 }
 
 - (IBAction)getIdentiCodeAction:(id)sender {
+    
+    if ([self checkNetWork]) {
+        return;
+    }
 
 
         [[LoginSendHttp getInstance] hands_login];
@@ -152,6 +171,21 @@
 }
 
 - (IBAction)nextStepAction:(id)sender {
+    RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
+    pass.mStr_phoneNum = self.tel;
+    if(self.forgetPWSymbol ==YES)
+    {
+        pass.mInt_flag = 2;
+        
+        
+    }
+    else
+    {
+        pass.mInt_flag = 1;
+        
+        
+    }
+    [self.navigationController pushViewController:pass animated:YES];
     if([self.tel_identi_codeTF.text isEqualToString:@""])
     {
         [self progressViewTishi:@"请输入手机号码"];
@@ -165,10 +199,26 @@
         return;
         
     }
+    if(self.forgetPWSymbol == YES)
+    {
+        if ([self checkNetWork]) {
+            return;
+        }
+        [[RegisterHttp getInstance]registerHttpCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
+        
+    }
 
+    else
+    {
+        if ([self checkNetWork]) {
+            return;
+        }
+        [[RegisterHttp getInstance]registerHttpRegCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
+        [SVProgressHUD show];
+        
+    }
     
-    [[RegisterHttp getInstance]registerHttpRegCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
-    [SVProgressHUD show];
+
         
     
     
@@ -176,9 +226,14 @@
 }
 
 - (IBAction)getUrlImageAction:(id)sender {
+    if ([self checkNetWork]) {
+        return;
+    }
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
     
 }
+
+
 -(void)myNavigationGoback{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
@@ -239,6 +294,23 @@
 {
     [self.view endEditing:YES];
 }
+
+- (BOOL)checkTel:(NSString *)str
+{
+    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    BOOL isMatch = [pred evaluateWithObject:str];
+    if (!isMatch)
+    {
+        [self progressViewTishi:@"请输入正确的手机号码"];
+        //[SVProgressHUD showErrorWithStatus:@"请输入正确的手机号码"];
+        return NO;
+        
+    }
+    return YES;
+    
+}
+
 
 
 

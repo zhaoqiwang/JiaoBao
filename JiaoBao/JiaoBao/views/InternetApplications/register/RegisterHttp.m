@@ -298,6 +298,7 @@ static RegisterHttp *registerHttp = nil;
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==5=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
         
     }else if (_request.tag == 6){//检查昵称是否重复
         NSDictionary *dic = [dataString objectFromJSONString];
@@ -333,6 +334,7 @@ static RegisterHttp *registerHttp = nil;
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
         
     }else if (_request.tag == 13){//重置用户密码时发送手机验证码
         NSDictionary *dic = [dataString objectFromJSONString];
