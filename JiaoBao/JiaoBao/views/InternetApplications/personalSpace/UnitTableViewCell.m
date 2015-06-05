@@ -22,6 +22,7 @@
 
 - (IBAction)addBtnAction:(id)sender {
     UIButton *btn = (UIButton*)sender;
+    NSLog(@"addBtn");
     [self.delegate ClickBtnWith:btn cell:self];
 }
 @end

@@ -774,6 +774,8 @@
 		F76B646B1B1EA8CB008F6961 /* bj.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64681B1EA8CB008F6961 /* bj.png */; };
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
+		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
+		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
 		F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */; };
 		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
@@ -1891,6 +1893,9 @@
 		F76B64681B1EA8CB008F6961 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bj.png; path = Image/InternetApp/class/bj.png; sourceTree = "<group>"; };
 		F76B64691B1EA8CB008F6961 /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@2x.png"; path = "Image/InternetApp/class/bj@2x.png"; sourceTree = "<group>"; };
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
+		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
+		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
+		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
 		F78EF17A1B2150CB003B6603 /* UnitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitTableViewCell.h; path = views/InternetApplications/personalSpace/UnitTableViewCell.h; sourceTree = "<group>"; };
 		F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitTableViewCell.m; path = views/InternetApplications/personalSpace/UnitTableViewCell.m; sourceTree = "<group>"; };
 		F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnitTableViewCell.xib; path = views/InternetApplications/personalSpace/UnitTableViewCell.xib; sourceTree = "<group>"; };
@@ -3643,6 +3648,9 @@
 				A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */,
 				A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */,
 				A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */,
+				F78D38631B218727005C17F0 /* MobileUnitViewController.h */,
+				F78D38641B218727005C17F0 /* MobileUnitViewController.m */,
+				F78D38651B218727005C17F0 /* MobileUnitViewController.xib */,
 				A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */,
 				A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */,
 				F78EF1801B215681003B6603 /* unitModel.h */,
@@ -3930,6 +3938,7 @@
 				A7AAC4D019F75DB200A0ED40 /* appNav_search@2x.png in Resources */,
 				A77116021A4D11930042CB91 /* noPhoto.png in Resources */,
 				A74C802B1A30466C0043D335 /* rootNav_rongYun.png in Resources */,
+				F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */,
 				A7AAC4CE19F75DB200A0ED40 /* appNav_add@2x.png in Resources */,
 				F7502A0D1AEE1E50004F822F /* blank@3x.png in Resources */,
 				A7375F411A0B233A00B31926 /* Forward_section.xib in Resources */,
@@ -4458,6 +4467,7 @@
 				A73AD8281A20271600F68C47 /* ArthLIstViewController.m in Sources */,
 				A74D128A1A3C510300A93CAC /* UpdateUnitListModel.m in Sources */,
 				A755E70419F278B900BBDF3D /* ASIDownloadCache.m in Sources */,
+				F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */,
 				A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */,
 				A7255F8E1A19878C005F9CCE /* ParserJson_share.m in Sources */,
 				A771CAAF1A2430CD000B41F2 /* Loger.mm in Sources */,
