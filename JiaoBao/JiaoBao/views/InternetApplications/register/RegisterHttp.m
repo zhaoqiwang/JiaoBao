@@ -7,6 +7,7 @@
 //
 
 #import "RegisterHttp.h"
+#import "unitModel.h"
 
 static RegisterHttp *registerHttp = nil;
 
@@ -331,28 +332,39 @@ static RegisterHttp *registerHttp = nil;
     }else if (_request.tag == 9){//获取根据手机号码匹配的单位数据
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
+        
+        NSArray *unitArr = [ParserJson parserUnitList:str];
+
         D("str00=register==9=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyMobileUnitList" object:unitArr];
         
     }else if (_request.tag == 10){//加入单位操作
-        NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
-        D("str00=register==10=>>>>==%@",str);
+//        NSDictionary *dic = [dataString objectFromJSONString];
+//        NSString *str = [dic objectForKey:@"Data"];
+//        D("str00=register==10=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"JoinUnitOP" object:code];
         
     }else if (_request.tag == 11){//在重置密码时验证用户手机
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==11=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:code];
+
+
         
     }else if (_request.tag == 12){//重置用户密码 
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
+
         
     }else if (_request.tag == 13){//重置用户密码时发送手机验证码
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:code];
+
         
     }
 }

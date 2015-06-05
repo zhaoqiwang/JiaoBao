@@ -774,6 +774,11 @@
 		F76B646B1B1EA8CB008F6961 /* bj.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64681B1EA8CB008F6961 /* bj.png */; };
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
+		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
+		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
+		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
+		F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */; };
+		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
 		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
@@ -1888,6 +1893,14 @@
 		F76B64681B1EA8CB008F6961 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bj.png; path = Image/InternetApp/class/bj.png; sourceTree = "<group>"; };
 		F76B64691B1EA8CB008F6961 /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@2x.png"; path = "Image/InternetApp/class/bj@2x.png"; sourceTree = "<group>"; };
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
+		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
+		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
+		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
+		F78EF17A1B2150CB003B6603 /* UnitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitTableViewCell.h; path = views/InternetApplications/personalSpace/UnitTableViewCell.h; sourceTree = "<group>"; };
+		F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitTableViewCell.m; path = views/InternetApplications/personalSpace/UnitTableViewCell.m; sourceTree = "<group>"; };
+		F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnitTableViewCell.xib; path = views/InternetApplications/personalSpace/UnitTableViewCell.xib; sourceTree = "<group>"; };
+		F78EF1801B215681003B6603 /* unitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unitModel.h; path = views/InternetApplications/personalSpace/unitModel.h; sourceTree = "<group>"; };
+		F78EF1811B215681003B6603 /* unitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unitModel.m; path = views/InternetApplications/personalSpace/unitModel.m; sourceTree = "<group>"; };
 		F79897B11B1571C500A4277F /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj@2x.png"; sourceTree = "<group>"; };
 		F79897B41B1571CD00A4277F /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj@3x.png"; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
@@ -3635,11 +3648,19 @@
 				A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */,
 				A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */,
 				A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */,
+				F78D38631B218727005C17F0 /* MobileUnitViewController.h */,
+				F78D38641B218727005C17F0 /* MobileUnitViewController.m */,
+				F78D38651B218727005C17F0 /* MobileUnitViewController.xib */,
 				A7E2E5EC1B2035FE003F85B5 /* PersonalSpaceModel.h */,
 				A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */,
+				F78EF1801B215681003B6603 /* unitModel.h */,
+				F78EF1811B215681003B6603 /* unitModel.m */,
 				A7E2E5F91B204ED4003F85B5 /* PeopleSpaceTableViewCell.h */,
 				A7E2E5FA1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m */,
 				A7E2E5FB1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib */,
+				F78EF17A1B2150CB003B6603 /* UnitTableViewCell.h */,
+				F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */,
+				F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */,
 				4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */,
 				4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */,
 				4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */,
@@ -3917,6 +3938,7 @@
 				A7AAC4D019F75DB200A0ED40 /* appNav_search@2x.png in Resources */,
 				A77116021A4D11930042CB91 /* noPhoto.png in Resources */,
 				A74C802B1A30466C0043D335 /* rootNav_rongYun.png in Resources */,
+				F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */,
 				A7AAC4CE19F75DB200A0ED40 /* appNav_add@2x.png in Resources */,
 				F7502A0D1AEE1E50004F822F /* blank@3x.png in Resources */,
 				A7375F411A0B233A00B31926 /* Forward_section.xib in Resources */,
@@ -3982,6 +4004,7 @@
 				A7BB180719F4F91E00A81286 /* Regiser_passwd_1@2x.png in Resources */,
 				A761D3F31A7F697900DCAEB9 /* rootTable_2@2x.png in Resources */,
 				A761D3F81A7F697900DCAEB9 /* rootTable_4.png in Resources */,
+				F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */,
 				A7BB180019F4F91E00A81286 /* Regiser_bg@2x.png in Resources */,
 				A754D3301A22CBE1000E356A /* SharePostingViewController.xib in Resources */,
 				A7CE67321AA70A250038D0C5 /* shareArticle.png in Resources */,
@@ -4407,6 +4430,7 @@
 				A7595E9D1A5FC2F30027848E /* PSTCollectionViewCell.m in Sources */,
 				A7AAC4D819F7896900A0ED40 /* InternetAppRootScrollView.m in Sources */,
 				A73CAD6F1A07755B00D6C5AA /* MJRefreshFooterView.m in Sources */,
+				F78EF1821B215681003B6603 /* unitModel.m in Sources */,
 				A76C69951A8895F80069BA63 /* WorkView_new.m in Sources */,
 				A749B9DD19F89F9C0036F480 /* WorkView.m in Sources */,
 				A773FC4B1A4C0563005F84C2 /* ELCAssetTablePicker.m in Sources */,
@@ -4443,6 +4467,7 @@
 				A73AD8281A20271600F68C47 /* ArthLIstViewController.m in Sources */,
 				A74D128A1A3C510300A93CAC /* UpdateUnitListModel.m in Sources */,
 				A755E70419F278B900BBDF3D /* ASIDownloadCache.m in Sources */,
+				F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */,
 				A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */,
 				A7255F8E1A19878C005F9CCE /* ParserJson_share.m in Sources */,
 				A771CAAF1A2430CD000B41F2 /* Loger.mm in Sources */,
@@ -4567,6 +4592,7 @@
 				A7AAC4D519F7893A00A0ED40 /* InternetAppTopScrollView.m in Sources */,
 				A753E5271A1B2C79005A8EED /* ShareCollectionViewCell.m in Sources */,
 				A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */,
+				F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */,
 				A755E71A19F278B900BBDF3D /* SBJsonBase.m in Sources */,
 				A7781F221AE889E100F03AEB /* NewWorkRootScrollView.m in Sources */,
 				A73789291A2F177900DF8882 /* RongYunTokenModel.m in Sources */,

@@ -27,6 +27,7 @@
 #import "CommMsgRevicerUnitListModel.h"
 #import "SendToMeUserListModel.h"
 #import "GetmyUserClassModel.h"
+#import "unitModel.h"
 
 @interface ParserJson : NSObject
 
@@ -73,5 +74,6 @@
 
 //获取到关联的班级
 +(NSMutableArray *)parserJsonGetmyUserClass:(NSString *)json;
++(NSMutableArray *)parserUnitList:(NSString *)json;
 
 @end

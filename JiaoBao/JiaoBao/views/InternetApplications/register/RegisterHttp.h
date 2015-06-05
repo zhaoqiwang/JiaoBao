@@ -17,6 +17,7 @@
 #import "JSONKit.h"
 #import "define_constant.h"
 #import "LoginSendHttp.h"
+#import "ParserJson.h"
 
 @interface RegisterHttp : NSObject<ASIHTTPRequestDelegate>{
     

@@ -171,21 +171,21 @@
 }
 
 - (IBAction)nextStepAction:(id)sender {
-    RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
-    pass.mStr_phoneNum = self.tel;
-    if(self.forgetPWSymbol ==YES)
-    {
-        pass.mInt_flag = 2;
-        
-        
-    }
-    else
-    {
-        pass.mInt_flag = 1;
-        
-        
-    }
-    [self.navigationController pushViewController:pass animated:YES];
+//    RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
+//    pass.mStr_phoneNum = self.tel;
+//    if(self.forgetPWSymbol ==YES)
+//    {
+//        pass.mInt_flag = 2;
+//        
+//        
+//    }
+//    else
+//    {
+//        pass.mInt_flag = 1;
+//        
+//        
+//    }
+//    [self.navigationController pushViewController:pass animated:YES];
     if([self.tel_identi_codeTF.text isEqualToString:@""])
     {
         [self progressViewTishi:@"请输入手机号码"];
