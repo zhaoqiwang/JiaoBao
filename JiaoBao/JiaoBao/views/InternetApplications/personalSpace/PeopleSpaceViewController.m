@@ -26,19 +26,15 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter]removeObserver:_observer1];
     [[NSNotificationCenter defaultCenter]removeObserver:_observer2];
-
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [self setValueModel];
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSArray *arr = note.object;
         self.unitArr = arr;
         [self.unitTabelView reloadData];
-        
-        
-        
     }];
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSString *str =note.object;
@@ -47,20 +43,11 @@
             [self progressViewTishi:@"加入成功"];
             [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             self.addBtn.enabled = NO;
-
-
-            
         }
-        else
-        {
+        else {
             [self progressViewTishi:@"加入失败"];
-            
         }
-        
-        
-        
     }];
-    
 }
 
 - (void)viewDidLoad {
@@ -75,7 +62,7 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-    [self setValueModel];
+    
     //表格
     self.mTableV_personalS.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, 500);
     self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y-20, [dm getInstance].width, 400);
@@ -90,8 +77,9 @@
 
 //设置显示值
 -(void)setValueModel{
+    [self.mArr_personalS removeAllObjects];
     NSString *trueName = [dm getInstance].TrueName;
-    NSString *nickName = [dm getInstance].name;
+    NSString *nickName = [dm getInstance].NickName;
     NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"手机",@"邮箱",@"密码",@"所在单位", nil];
     NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"加入单位", nil];
     for (int i=0; i<6; i++) {
@@ -100,6 +88,7 @@
         model.mStr_trueName = [NSString stringWithFormat:@"%@",[tempArr1 objectAtIndex:i]];
         [self.mArr_personalS addObject:model];
     }
+    [self.mTableV_personalS reloadData];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -243,6 +232,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row==0) {
         ReviseNameViewController *reviseName = [[ReviseNameViewController alloc] init];
+        reviseName.mInt_flag = 1;
+        [utils pushViewController:reviseName animated:YES];
+    }else if (indexPath.row == 4){
+        ReviseNameViewController *reviseName = [[ReviseNameViewController alloc] init];
+        reviseName.mInt_flag = 2;
         [utils pushViewController:reviseName animated:YES];
     }
     if(indexPath.row == 5)

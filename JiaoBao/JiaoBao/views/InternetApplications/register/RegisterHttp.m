@@ -160,7 +160,10 @@ static RegisterHttp *registerHttp = nil;
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
-    [request addPostValue:pwobjstr forKey:@"pwobjstr"];
+    //对json串加密
+    NSData *dataRSA = [RSATool encrypt:pwobjstr error:nil];
+    NSString *registerRSA = [dataRSA base64EncodedString];
+    [request addPostValue:registerRSA forKey:@"pwobjstr"];
     [request addPostValue:ios forKey:@"ios"];
     request.tag = 8;//设置请求tag
     [request setDelegate:self];
@@ -303,28 +306,29 @@ static RegisterHttp *registerHttp = nil;
         
     }else if (_request.tag == 6){//检查昵称是否重复
         NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
+        NSString *str = [dic objectForKey:@"ResultDesc"];
         D("str00=register==6=>>>>==%@",str);
-        if ([code intValue]==0) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:code];
-        }else{
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:str];
-        }
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:code forKey:@"code"];
+        [dic2 setValue:str forKey:@"str"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:dic2];
         
     }else if (_request.tag == 7){//修改帐户信息的昵称和姓名
         NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
+        NSString *str = [dic objectForKey:@"ResultDesc"];
         D("str00=register==7=>>>>==%@",str);
-        if ([code intValue]==0) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpUpateRecAcc" object:code];
-        }else{
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpUpateRecAcc" object:str];
-        }
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:code forKey:@"code"];
+        [dic2 setValue:str forKey:@"str"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpUpateRecAcc" object:dic2];
     }else if (_request.tag == 8){//验证旧密码后修改帐户密码
         NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
+        NSString *str = [dic objectForKey:@"ResultDesc"];
         D("str00=register==8=>>>>==%@",str);
-        
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:code forKey:@"code"];
+        [dic2 setValue:str forKey:@"str"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpChangePW" object:dic2];
     }else if (_request.tag == 9){//获取根据手机号码匹配的单位数据
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];

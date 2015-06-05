@@ -19,6 +19,7 @@
     int statusBar;//状态栏
     NSString *jiaoBaoHao;//教宝号,accid
     NSString *name;//自己的名字`
+    NSString *NickName;
     NSString *TrueName;
     NSMutableArray *identity;//个人的班级或者学校信息
     NSString *unReadMsg1;//未读交流信息数量
@@ -47,6 +48,7 @@
 @property (nonatomic,assign) int statusBar;//状态栏
 @property (nonatomic,strong) NSString *jiaoBaoHao;//教宝号
 @property (nonatomic,strong) NSString *name;//自己的名字
+@property (nonatomic,strong) NSString *NickName;
 @property (nonatomic,strong) NSString *TrueName;
 @property (nonatomic,strong) NSMutableArray *identity;//个人的班级或者学校信息
 @property (nonatomic,strong) NSString *unReadMsg1;//未读交流信息数量
