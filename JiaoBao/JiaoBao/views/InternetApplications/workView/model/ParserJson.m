@@ -742,4 +742,35 @@
     return array;
 }
 
++(NSMutableArray *)parserUnitList:(NSString *)json
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+
+    NSArray *arrlist=[json objectFromJSONString];
+    for (int i=0; i<arrlist.count; i++) {
+        unitModel *model = [[unitModel alloc]init];
+        NSDictionary *result = [arrlist objectAtIndex:i];
+        model.UnitName =[result objectForKey:@"UnitName"];
+        model.Identity =[result objectForKey:@"Identity"];
+        model.IdentType =[result objectForKey:@"IdentType"];
+        model.AccId =[result objectForKey:@"AccId"];
+        model.TabId =[result objectForKey:@"TabId"];
+        model.JoinFlag =[result objectForKey:@"JoinFlag"];
+        model.TabIdStr =[result objectForKey:@"TabIdStr"];
+        if([model.IdentType integerValue]!=2)
+        {
+            [array addObject:model];
+
+            
+        }
+
+    }
+    return array;
+
+    
+
+
+}
+
+
 @end

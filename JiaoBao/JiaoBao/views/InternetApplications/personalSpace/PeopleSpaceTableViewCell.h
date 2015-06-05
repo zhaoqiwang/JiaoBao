@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface PeopleSpaceTableViewCell : UITableViewCell{
     UIImageView *mImgV_head;
     UILabel *mLab_nickName;
