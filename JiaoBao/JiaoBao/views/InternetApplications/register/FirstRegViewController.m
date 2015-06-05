@@ -233,7 +233,7 @@
         //[SVProgressHUD showInfoWithStatus:@"请输入手机号"];
         return;
     }
-    if([self.tel_identi_codeTF.text isEqualToString:@""])
+    if([self.urlNumTF.text isEqualToString:@""])
     {
         [self progressViewTishi:@"请输入验证码"];
 
