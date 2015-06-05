@@ -151,6 +151,9 @@
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    if ([str isEqual:@"用户名或密码错误！"]) {
+        [self pushMenuItem3:nil];
+    }
 }
 
 -(void)myTask{

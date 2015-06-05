@@ -864,11 +864,11 @@ static LoginSendHttp *loginSendHttp = nil;
             D("str-=flag_request5== %@",str000);
             NSDictionary *dic = [str000 objectFromJSONString];
             [dm getInstance].jiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
-            NSString *name = [dic objectForKey:@"TrueName"];
+            NSString *name = [dic objectForKey:@"Nickname"];
             if ([name isKindOfClass:[NSNull class]]||[name isEqual:@"null"]) {
-                [dm getInstance].name = [dic objectForKey:@"Nickname"];
+                [dm getInstance].NickName = [dic objectForKey:@"TrueName"];
             }else{
-                [dm getInstance].name = [dic objectForKey:@"TrueName"];
+                [dm getInstance].NickName = [dic objectForKey:@"Nickname"];
             }
             [dm getInstance].TrueName = [dic objectForKey:@"TrueName"];
             //请求融云用户token
