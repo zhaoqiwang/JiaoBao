@@ -80,9 +80,11 @@
     [self.mArr_personalS removeAllObjects];
     NSString *trueName = [dm getInstance].TrueName;
     NSString *nickName = [dm getInstance].NickName;
-    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"手机",@"邮箱",@"密码",@"所在单位", nil];
-    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"加入单位", nil];
-    for (int i=0; i<6; i++) {
+//    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"手机",@"邮箱",@"密码",@"所在单位", nil];
+//    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"加入单位", nil];
+    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"密码",@"所在单位", nil];
+    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"修改密码",@"加入单位", nil];
+    for (int i=0; i<4; i++) {
         PersonalSpaceModel *model = [[PersonalSpaceModel alloc] init];
         model.mStr_nickName = [NSString stringWithFormat:@"%@",[tempArr0 objectAtIndex:i]];
         model.mStr_trueName = [NSString stringWithFormat:@"%@",[tempArr1 objectAtIndex:i]];
@@ -234,12 +236,12 @@
         ReviseNameViewController *reviseName = [[ReviseNameViewController alloc] init];
         reviseName.mInt_flag = 1;
         [utils pushViewController:reviseName animated:YES];
-    }else if (indexPath.row == 4){
+    }else if (indexPath.row == 2){
         ReviseNameViewController *reviseName = [[ReviseNameViewController alloc] init];
         reviseName.mInt_flag = 2;
         [utils pushViewController:reviseName animated:YES];
     }
-    if(indexPath.row == 5)
+    if(indexPath.row == 3)
     {
         MobileUnitViewController *detail = [[MobileUnitViewController alloc]init];
         [utils pushViewController:detail animated:YES];

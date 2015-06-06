@@ -105,7 +105,7 @@
     [self.view addSubview:self.mView_text];
     //输入框
     self.mTextF_text = [[UITextField alloc] init];
-    self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15-70, 51-20);
+    self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15*2, 51-20);
     self.mTextF_text.placeholder = @"请输入评论内容";
     self.mTextF_text.delegate = self;
     self.mTextF_text.font = [UIFont systemFontOfSize:14];
@@ -113,14 +113,14 @@
     self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
     [self.mView_text addSubview:self.mTextF_text];
     //发送按钮
-    self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
-    [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.mBtn_send setTitle:@"发送" forState:UIControlStateNormal];
-    self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.mView_text addSubview:self.mBtn_send];
-    [self.mView_text setHidden:YES];
+//    self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
+//    [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.mBtn_send setTitle:@"发送" forState:UIControlStateNormal];
+//    self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:14];
+//    [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//    [self.mView_text addSubview:self.mBtn_send];
+//    [self.mView_text setHidden:YES];
     self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
     
     self.label.textColor = [UIColor grayColor];
@@ -377,6 +377,8 @@
 //表格开始滑动，
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     self.mView_popup.hidden = YES;
+    self.mView_text.hidden = YES;
+    [self.mTextF_text resignFirstResponder];
 }
 
 //每个cell返回的高度
@@ -438,6 +440,7 @@
     }else{
         array = [NSMutableArray arrayWithArray:self.mArr_list];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
@@ -641,29 +644,57 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSMutableArray *array = [NSMutableArray array];
-    if (self.mInt_unit_class == 3){
-        array = [NSMutableArray arrayWithArray:self.mArr_list_class];
-    }else{
-        array = [NSMutableArray arrayWithArray:self.mArr_list];
-    }
-    ClassModel *ClassModel = [array objectAtIndex:indexPath.row];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    NSMutableArray *array = [NSMutableArray array];
+//    if (self.mInt_unit_class == 3){
+//        array = [NSMutableArray arrayWithArray:self.mArr_list_class];
+//    }else{
+//        array = [NSMutableArray arrayWithArray:self.mArr_list];
+//    }
+//    ClassModel *ClassModel = [array objectAtIndex:indexPath.row];
+//    //转model
+//    TopArthListModel *model = [[TopArthListModel alloc] init];
+//    model.TabIDStr = ClassModel.TabIDStr;
+//    model.ClickCount = ClassModel.ClickCount;
+//    model.Context = ClassModel.Context;
+//    model.JiaoBaoHao = ClassModel.JiaoBaoHao;
+//    model.LikeCount = ClassModel.LikeCount;
+//    model.RecDate = ClassModel.RecDate;
+//    model.Source = ClassModel.Source;
+//    model.StarJson = ClassModel.StarJson;
+//    model.State = ClassModel.State;
+//    model.Title = ClassModel.Title;
+//    model.ViewCount = ClassModel.ViewCount;
+//    model.SectionID = ClassModel.SectionID;
+//    model.UserName = ClassModel.UserName;
+//    
+//    ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
+//    arth.Arthmodel = model;
+//    [utils pushViewController:arth animated:YES];
+    
+    self.mView_popup.hidden = YES;
+    self.mView_text.hidden = YES;
+    [self.mTextF_text resignFirstResponder];
+
+}
+
+//点击内容或者标题时触发cell点击事件
+-(void)ClassTableViewCellContentPress:(ClassTableViewCell *)classCell{
     //转model
     TopArthListModel *model = [[TopArthListModel alloc] init];
-    model.TabIDStr = ClassModel.TabIDStr;
-    model.ClickCount = ClassModel.ClickCount;
-    model.Context = ClassModel.Context;
-    model.JiaoBaoHao = ClassModel.JiaoBaoHao;
-    model.LikeCount = ClassModel.LikeCount;
-    model.RecDate = ClassModel.RecDate;
-    model.Source = ClassModel.Source;
-    model.StarJson = ClassModel.StarJson;
-    model.State = ClassModel.State;
-    model.Title = ClassModel.Title;
-    model.ViewCount = ClassModel.ViewCount;
-    model.SectionID = ClassModel.SectionID;
-    model.UserName = ClassModel.UserName;
+    model.TabIDStr = classCell.mModel_class.TabIDStr;
+    model.ClickCount = classCell.mModel_class.ClickCount;
+    model.Context = classCell.mModel_class.Context;
+    model.JiaoBaoHao = classCell.mModel_class.JiaoBaoHao;
+    model.LikeCount = classCell.mModel_class.LikeCount;
+    model.RecDate = classCell.mModel_class.RecDate;
+    model.Source = classCell.mModel_class.Source;
+    model.StarJson = classCell.mModel_class.StarJson;
+    model.State = classCell.mModel_class.State;
+    model.Title = classCell.mModel_class.Title;
+    model.ViewCount = classCell.mModel_class.ViewCount;
+    model.SectionID = classCell.mModel_class.SectionID;
+    model.UserName = classCell.mModel_class.UserName;
     
     ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
     arth.Arthmodel = model;
@@ -1046,7 +1077,7 @@
         [textField resignFirstResponder];
         //若其有输入内容，则发送
         if (self.mTextF_text.text.length>0) {
-            //            [self clickSendBtn];
+            [self clickSendBtn:nil];
         }
         return NO;
     }
