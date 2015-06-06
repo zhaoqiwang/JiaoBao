@@ -327,13 +327,10 @@
     NSString *content = self.mTextV_content.text;
     for (int i=0; i<self.mArr_pic.count; i++) {
         UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-        NSLog(@"originalName = %@",model.originalName);
         NSString *temp = model.originalName;
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-        NSLog(@"model_url = %@",model.url);
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
-    NSLog(@"unitID = %@",self.mStr_unitID);
     
     if (self.mInt_section == 0) {//分享
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];

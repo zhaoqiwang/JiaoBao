@@ -308,7 +308,7 @@
                             action:@selector(pushMenuItem7:)],
               
               [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_access"]
+                             image:[UIImage imageNamed:@"appNav_changeUser"]
                             target:self
                             action:@selector(pushMenuItem8:)],
               
@@ -346,7 +346,7 @@
                             action:@selector(pushMenuItem7:)],
               
               [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_access"]
+                             image:[UIImage imageNamed:@"appNav_changeUser"]
                             target:self
                             action:@selector(pushMenuItem8:)],
               

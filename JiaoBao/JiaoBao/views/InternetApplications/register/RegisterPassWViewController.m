@@ -32,42 +32,30 @@
 {
     NSNotification *note = (NSNotification*)sender;
     NSString *str =note.object;
-    if(self.mInt_flag == 1)
-    {
-        if([str integerValue ] == 0)
-        {
-            [self progressViewTishi:@"注册成功"];
+    if(self.mInt_flag == 1){
+        if([str integerValue ] == 0) {
             [dm getInstance].RegisterSymbol = NO;
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-            
-            
+            [self loadGotoLogin:@"注册成功"];
         }
-        else
-        {
+        else{
             [self progressViewTishi:@"注册失败"];
         }
-        
     }
-    
-    else
-    {
-        if([str integerValue ] == 0)
-        {
-            [self progressViewTishi:@"重置密码成功"];
+    else{
+        if([str integerValue ] == 0){
             [dm getInstance].RegisterSymbol = NO;
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-            
-            
+            [self loadGotoLogin:@"重置密码成功"];
         }
-        else
-        {
+        else{
             [self progressViewTishi:@"重置密码失败"];
         }
-        
     }
+}
 
-    
-    
+-(void)loadGotoLogin:(NSString *)title{
+    [self progressViewTishi:title];
+    sleep(2);
+    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad {

@@ -21,7 +21,7 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
-    self.moreBtn.enabled = NO;
+//    self.moreBtn.enabled = NO;
    // Initialization code
     
 }
@@ -67,11 +67,9 @@
 
     NSString *string1 = tempModel.UserName;
     NSString *string2 = tempModel.Commnets;
-    NSLog(@"string1 = %@ string2 = %@",string1,string2);
     
     
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
-    NSLog(@"name = %@",name);
     
 
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
@@ -128,6 +126,18 @@
     
     //
     [self.mBtn_comment addTarget:self action:@selector(commentClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.mLab_assessContent.userInteractionEnabled = YES;
+    self.mLab_content.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(mLab_assessContentPress:)];
+    [self.mLab_assessContent addGestureRecognizer:tap4];
+    
+    UITapGestureRecognizer *tap5 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(mLab_assessContentPress:)];
+    [self.mLab_content addGestureRecognizer:tap5];
+}
+
+-(void)mLab_assessContentPress:(UIGestureRecognizer *)gest{
+    [self.headImgDelegate ClassTableViewCellContentPress:self];
 }
 
 -(void)commentClick:(UIButton *)btn{
@@ -185,6 +195,6 @@
 - (IBAction)moreBtnAction:(id)sender
 {
     //[utils pushViewController:<#(UIViewController *)#> animated:<#(BOOL)#>];
-    
+    [self.headImgDelegate ClassTableViewCellContentPress:self];
 }
 @end

@@ -26,8 +26,6 @@
         for(int i=0;i<model.smsTree.count;i++)
         {
             SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
-            NSLog(@"name = %@",subModel.name);
-            
         }
         
     }

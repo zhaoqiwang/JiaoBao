@@ -110,5 +110,11 @@
 
 - (void) ClassTableViewCellHeadImgTapPress:(ClassTableViewCell *) topArthListCell;
 
+//点击内容时触发点击cell事件
+-(void)ClassTableViewCellContentPress:(ClassTableViewCell *)classCell;
+
+//点击标题内容时触发点击cell事件
+//-(void)ClassTableViewCellAssessContentPress:(ClassTableViewCell *)classCell;
+
 @end
 

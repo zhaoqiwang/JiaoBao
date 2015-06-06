@@ -43,6 +43,8 @@ CLLocationManager *locationManager;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
     
+    [dm getInstance].mStr_unit = @"暂无";
+    [dm getInstance].name = @"新用户";
     //百度地图
 //    BMKMapManager *mapManager = [[BMKMapManager alloc]init];
 //    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
