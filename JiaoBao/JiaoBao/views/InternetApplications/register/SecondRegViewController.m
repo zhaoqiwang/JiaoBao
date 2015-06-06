@@ -60,8 +60,18 @@
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
     self.navigationController.navigationBarHidden = YES;
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"注册"];
-    self.mNav_navgationBar.delegate = self;
+    if(self.forgetPWSymbol == YES)
+    {
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"忘记密码"];
+        
+        
+    }
+    else
+    {
+        self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"注册"];
+        
+        
+    }    self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
 

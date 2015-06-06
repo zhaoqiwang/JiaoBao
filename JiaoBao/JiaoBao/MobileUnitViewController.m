@@ -140,7 +140,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[RegisterHttp getInstance]registerHttpJoinUnitOP:[dm getInstance].jiaoBaoHao option:@"1" tableStr:model.TabIdStr];
+    [[RegisterHttp getInstance]registerHttpJoinUnitOP:[dm getInstance].jiaoBaoHao option:@"0" tableStr:model.TabIdStr];
     
     
 }
