@@ -36,15 +36,35 @@
     {
         if([str integerValue ] == 0)
         {
-            [self progressViewTishi:@"注册成功"];
-            [dm getInstance].RegisterSymbol = NO;
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+            NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
+                [self progressViewTishi:@"注册失败"];
+                [dm getInstance].RegisterSymbol = NO;
+
+                sleep(2);
+                
+                
+            }];
+            
+            NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
+                [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                
+                
+                
+            }];
+            [op2 addDependency:op1];
+//            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+//            [queue addOperation:op1];
+//            [queue addOperation:op2];
+//            [self progressViewTishi:@"注册成功"];
+//            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
             
             
         }
         else
         {
             [self progressViewTishi:@"注册失败"];
+            //[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+
         }
         
     }
@@ -53,9 +73,25 @@
     {
         if([str integerValue ] == 0)
         {
-            [self progressViewTishi:@"重置密码成功"];
-            [dm getInstance].RegisterSymbol = NO;
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+            NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
+                [self progressViewTishi:@"重置密码成功"];
+                [dm getInstance].RegisterSymbol = NO;
+                
+                sleep(2);
+                
+                
+            }];
+            
+            NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
+                [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+                
+                
+                
+            }];
+            [op2 addDependency:op1];
+//            [self progressViewTishi:@"重置密码成功"];
+//            [dm getInstance].RegisterSymbol = NO;
+//            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
             
             
         }
@@ -95,8 +131,9 @@
     self.mProgressV.delegate = self;
 }
 
--(void)mBtn_register:(UIButton *)btn{
-    //检查当前网络是否可用
+-(void)mBtn_register:(UIButton *)btn
+{
+        //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
     }

@@ -757,7 +757,7 @@
         model.TabId =[result objectForKey:@"TabId"];
         model.JoinFlag =[result objectForKey:@"JoinFlag"];
         model.TabIdStr =[result objectForKey:@"TabIdStr"];
-        if([model.IdentType integerValue]!=2)
+        if([model.JoinFlag integerValue]!=2)
         {
             [array addObject:model];
 

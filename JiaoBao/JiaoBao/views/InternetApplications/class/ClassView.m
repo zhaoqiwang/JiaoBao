@@ -102,8 +102,8 @@
         //列表
 //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *view = [[UIView alloc]init];
         self.mTableV_list.tableFooterView = view;
@@ -590,8 +590,19 @@
         }
         [self.mArr_unit addObjectsFromArray:array];
     }
+    NSLog(@"ffffff = %@",self.mTableV_list.delegate);
+    if(self.mTableV_list.delegate == nil)
+    {
+    self.mTableV_list.delegate=self;
+    self.mTableV_list.dataSource=self;
+    }
+    else
+    {
+        [self.mTableV_list reloadData];
 
-    [self.mTableV_list reloadData];
+        
+    }
+
 }
 
 //取单位空间发表的最新或推荐文章,本地和全部
@@ -680,7 +691,7 @@
         [self tableViewDownReloadData];
     }
 
-        [self.mTableV_list reloadData];
+       [self.mTableV_list reloadData];
 
         
     

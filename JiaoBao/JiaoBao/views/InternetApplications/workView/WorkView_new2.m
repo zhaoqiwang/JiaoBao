@@ -19,6 +19,7 @@
         // Initialization code
         self.frame = frame;
         self.backgroundColor = [UIColor whiteColor];
+        self.firstSymbol = NO;
         
         //取发给我消息的用户列表，new
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnReadMsgCell" object:nil];
@@ -57,8 +58,8 @@
         }
         //列表
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:self.mTableV_list];
         [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
@@ -97,6 +98,8 @@
 }
 
 -(void)UnReadMsgCell:(NSNotification *)noti{
+
+    
     [self.mProgressV hide:YES];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
@@ -128,7 +131,21 @@
     }else if ([tag intValue] == 2){
         [self.mArr_mySend addObjectsFromArray:array];
     }
-    [self.mTableV_list reloadData];
+    if(self.mTableV_list.delegate == nil)
+    {
+        self.mTableV_list.delegate=self;
+        self.mTableV_list.dataSource=self;
+        
+    }
+    else{
+        [self.mTableV_list reloadData];
+
+        
+    }
+
+
+
+        
 }
 
 #pragma mark - TableViewdelegate&&TableViewdataSource
@@ -144,9 +161,20 @@
     }
     return 0;
 }
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+//    NSLog(@"section = %ld",section);
+//    if(self.firstSymbol == NO)
+//    {
+//        self.firstSymbol = YES;
+//        return 0;
+//    }
     
         if (self.mInt_index == 0) {
 
@@ -385,7 +413,7 @@
             }
         }
     }
-    [self.mTableV_list reloadData];
+   // [self.mTableV_list reloadData];
 }
 
 //发表文章按钮

@@ -112,7 +112,8 @@
         unitModel *unitModel = [self.unitArr objectAtIndex:indexPath.row];
         cell.unitNameLabel.text = unitModel.UnitName;
         cell.identTypeLabel.text =unitModel.Identity;
-        if(unitModel.AccId>0)
+    
+        if([unitModel.AccId integerValue]>0)
         {
             [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             cell.addBtn.enabled = NO;
@@ -139,7 +140,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[RegisterHttp getInstance]registerHttpJoinUnitOP:model.AccId option:@"1" tableStr:model.TabIdStr];
+    [[RegisterHttp getInstance]registerHttpJoinUnitOP:[dm getInstance].jiaoBaoHao option:@"1" tableStr:model.TabIdStr];
     
     
 }

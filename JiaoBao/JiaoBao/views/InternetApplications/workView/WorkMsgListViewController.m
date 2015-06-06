@@ -67,7 +67,8 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+40, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+40, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-40);
+    
     //添加表格的下拉刷新
     self.mTableV_detail.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mTableV_detail.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
@@ -79,7 +80,7 @@
     }
     else
     {
-        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-40);
 
         self.dropDownLabel.frame = CGRectZero;
     }

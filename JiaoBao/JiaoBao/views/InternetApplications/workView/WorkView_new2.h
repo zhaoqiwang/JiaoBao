@@ -46,6 +46,7 @@
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property(nonatomic,strong) UILabel *label;
+@property(nonatomic,assign)BOOL firstSymbol;
 
 
 - (id)initWithFrame1:(CGRect)frame;
