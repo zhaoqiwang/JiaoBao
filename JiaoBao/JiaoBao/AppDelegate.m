@@ -21,6 +21,8 @@ CLLocationManager *locationManager;
 @synthesize mInternet,mRegister_view,mInt_index;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+
     BMKMapManager *mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [mapManager start:@"iqYoKFAodVcfY8oRpi0KtuHs"  generalDelegate:self];

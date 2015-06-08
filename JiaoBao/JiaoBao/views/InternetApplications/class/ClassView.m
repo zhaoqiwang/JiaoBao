@@ -102,8 +102,8 @@
         //列表
 //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-//        self.mTableV_list.delegate=self;
-//        self.mTableV_list.dataSource=self;
+        self.mTableV_list.delegate=self;
+        self.mTableV_list.dataSource=self;
         //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *view = [[UIView alloc]init];
         self.mTableV_list.tableFooterView = view;
@@ -590,12 +590,14 @@
         }
         [self.mArr_unit addObjectsFromArray:array];
     }
-    if(self.mTableV_list.delegate == nil){
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
-    }else{
-        [self.mTableV_list reloadData];
+    NSLog(@"ffffff = %@",self.mTableV_list.delegate);
+    if(self.mTableV_list.delegate == nil)
+    {
+    self.mTableV_list.delegate=self;
+    self.mTableV_list.dataSource=self;
     }
+
+    [self.mTableV_list reloadData];
 }
 
 //取单位空间发表的最新或推荐文章,本地和全部
@@ -1230,6 +1232,8 @@
         
         NSString *string1 = tempModel.UserName;
         NSString *string2 = tempModel.Commnets;
+        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
 //        NSString *string1 = [self.nameArr objectAtIndex:i ];
 //        NSString *string2 = [self.commentArr objectAtIndex:i];
         NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];

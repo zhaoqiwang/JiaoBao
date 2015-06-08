@@ -137,11 +137,11 @@
         self.mTableV_list.dataSource=self;
         
     }
-    else{
+    
         [self.mTableV_list reloadData];
 
         
-    }
+    
 
 
 

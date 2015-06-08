@@ -67,8 +67,8 @@
 
     NSString *string1 = tempModel.UserName;
     NSString *string2 = tempModel.Commnets;
-    
-    
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
     
 
