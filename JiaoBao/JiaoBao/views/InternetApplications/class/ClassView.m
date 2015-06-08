@@ -597,11 +597,7 @@
     self.mTableV_list.dataSource=self;
     }
 
-        [self.mTableV_list reloadData];
-
-        
-    
-
+    [self.mTableV_list reloadData];
 }
 
 //取单位空间发表的最新或推荐文章,本地和全部
@@ -659,42 +655,46 @@
 
 //按钮点击事件
 -(void)btnChange:(UIButton *)btn{
-
-    D("utype-===%d",[dm getInstance].uType);
-    self.mView_popup.hidden = YES;
+    D("utype-===%d,%d",[dm getInstance].uType,[dm getInstance].UID);
     self.mInt_index = (int)btn.tag;
-    //点击按钮时，判断是否应该进行数据获取
-    if (self.mInt_index == 0&&(self.mArr_unitTop.count==0||self.mArr_unit.count==0)) {
-        if (self.mArr_unitTop.count==0) {
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            [self ProgressViewLoad:@"加载中..."];
-        }
-        if (self.mArr_unit.count==0) {
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        }
-    }else if (self.mInt_index == 1&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
-        if (self.mArr_classTop.count==0) {
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
-            [self ProgressViewLoad:@"加载中..."];
-        }
-        if (self.mArr_class.count==0) {
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-            [self ProgressViewLoad:@"加载中..."];
-        }
-    }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
-        [self tableViewDownReloadData];
-    }else if (self.mInt_index == 3&&self.mArr_attention.count==0){
-        [self tableViewDownReloadData];
-    }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
-        [self tableViewDownReloadData];
-    }
-
-       [self.mTableV_list reloadData];
-
+    if ([dm getInstance].UID == 0) {
         
-    
-    D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
+    }else{
+        self.mView_popup.hidden = YES;
+        
+        //点击按钮时，判断是否应该进行数据获取
+        if (self.mInt_index == 0&&(self.mArr_unitTop.count==0||self.mArr_unit.count==0)) {
+            if (self.mArr_unitTop.count==0) {
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
+                [self ProgressViewLoad:@"加载中..."];
+            }
+            if (self.mArr_unit.count==0) {
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            }
+        }else if (self.mInt_index == 1&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
+            if (self.mArr_classTop.count==0) {
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
+                [self ProgressViewLoad:@"加载中..."];
+            }
+            if (self.mArr_class.count==0) {
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
+                [self ProgressViewLoad:@"加载中..."];
+            }
+        }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
+            [self tableViewDownReloadData];
+        }else if (self.mInt_index == 3&&self.mArr_attention.count==0){
+            [self tableViewDownReloadData];
+        }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
+            [self tableViewDownReloadData];
+        }
+        
+        
+        
+        D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
+        
+    }
+    [self.mTableV_list reloadData];
     //切换图片
     for (UIButton *tempBtn in self.mView_button.subviews) {
         if ([tempBtn isKindOfClass:[UIButton class]]) {
@@ -709,24 +709,28 @@
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData{
     self.mView_popup.hidden = YES;
-    if (self.mInt_index == 0) {
-        //flag=1个人，=2单位
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-        [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-        [self ProgressViewLoad:@"加载中..."];
-    }else if (self.mInt_index == 1){
-        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
-        [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-        [self ProgressViewLoad:@"加载中..."];
-    }else if (self.mInt_index == 2){
-        [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
-        [self ProgressViewLoad:@"加载中..."];
-    }else if (self.mInt_index == 3){
-        [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
-        [self ProgressViewLoad:@"加载中..."];
-    }else if (self.mInt_index == 4){
-        [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
-        [self ProgressViewLoad:@"加载中..."];
+    if ([dm getInstance].UID ==0) {
+        [self.mTableV_list reloadData];
+    }else{
+        if (self.mInt_index == 0) {
+            //flag=1个人，=2单位
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
+            [self ProgressViewLoad:@"加载中..."];
+        }else if (self.mInt_index == 1){
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
+            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
+            [self ProgressViewLoad:@"加载中..."];
+        }else if (self.mInt_index == 2){
+            [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
+            [self ProgressViewLoad:@"加载中..."];
+        }else if (self.mInt_index == 3){
+            [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
+            [self ProgressViewLoad:@"加载中..."];
+        }else if (self.mInt_index == 4){
+            [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
+            [self ProgressViewLoad:@"加载中..."];
+        }
     }
 }
 
@@ -1437,71 +1441,85 @@
 - (void)headerRereshing{
     //标注为刷新
     self.mInt_flag = 1;
-    //刚进入学校圈，或者下拉刷新时执行
-    [self tableViewDownReloadData];
+    if ([dm getInstance].UID ==0) {
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
+        [self.mTableV_list reloadData];
+    }else{
+        
+        //刚进入学校圈，或者下拉刷新时执行
+        [self tableViewDownReloadData];
+    }
 }
 - (void)footerRereshing{
     //不是刷新
     self.mInt_flag = 0;
-    if (self.mInt_index == 0) {
-        if (self.mArr_unit.count>=5&&self.mArr_unit.count%5==0) {
-            //检查当前网络是否可用
-            if ([self checkNetWork]) {
-                return;
+    if ([dm getInstance].UID ==0) {
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
+        [self.mTableV_list reloadData];
+    }else{
+        
+        if (self.mInt_index == 0) {
+            if (self.mArr_unit.count>=5&&self.mArr_unit.count%5==0) {
+                //检查当前网络是否可用
+                if ([self checkNetWork]) {
+                    return;
+                }
+                int a = (int)self.mArr_unit.count/5+1;
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            } else {
+                [self loadNoMore:@"没有更多了"];
             }
-            int a = (int)self.mArr_unit.count/5+1;
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        } else {
-            [self loadNoMore:@"没有更多了"];
-        }
-    }else if (self.mInt_index == 1){
-        if (self.mArr_class.count>=5&&self.mArr_class.count%5==0) {
-            //检查当前网络是否可用
-            if ([self checkNetWork]) {
-                return;
+        }else if (self.mInt_index == 1){
+            if (self.mArr_class.count>=5&&self.mArr_class.count%5==0) {
+                //检查当前网络是否可用
+                if ([self checkNetWork]) {
+                    return;
+                }
+                int a = (int)self.mArr_class.count/5+1;
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
+                [self ProgressViewLoad:@"加载中..."];
+            } else {
+                [self loadNoMore:@"没有更多了"];
             }
-            int a = (int)self.mArr_class.count/5+1;
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-            [self ProgressViewLoad:@"加载中..."];
-        } else {
-            [self loadNoMore:@"没有更多了"];
-        }
-    }else if (self.mInt_index == 2){
-        if (self.mArr_local.count>=5&&self.mArr_local.count%5==0) {
-            //检查当前网络是否可用
-            if ([self checkNetWork]) {
-                return;
+        }else if (self.mInt_index == 2){
+            if (self.mArr_local.count>=5&&self.mArr_local.count%5==0) {
+                //检查当前网络是否可用
+                if ([self checkNetWork]) {
+                    return;
+                }
+                int a = (int)self.mArr_local.count/5+1;
+                [[ClassHttp getInstance] classHttpShowingUnitArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            } else {
+                [self loadNoMore:@"没有更多了"];
             }
-            int a = (int)self.mArr_local.count/5+1;
-            [[ClassHttp getInstance] classHttpShowingUnitArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        } else {
-            [self loadNoMore:@"没有更多了"];
-        }
-    }else if (self.mInt_index == 3){
-        if (self.mArr_attention.count>=5&&self.mArr_attention.count%5==0) {
-            //检查当前网络是否可用
-            if ([self checkNetWork]) {
-                return;
+        }else if (self.mInt_index == 3){
+            if (self.mArr_attention.count>=5&&self.mArr_attention.count%5==0) {
+                //检查当前网络是否可用
+                if ([self checkNetWork]) {
+                    return;
+                }
+                int a = (int)self.mArr_attention.count/5+1;
+                [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" accid:[dm getInstance].jiaoBaoHao];
+                [self ProgressViewLoad:@"加载中..."];
+            } else {
+                [self loadNoMore:@"没有更多了"];
             }
-            int a = (int)self.mArr_attention.count/5+1;
-            [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" accid:[dm getInstance].jiaoBaoHao];
-            [self ProgressViewLoad:@"加载中..."];
-        } else {
-            [self loadNoMore:@"没有更多了"];
-        }
-    }else if (self.mInt_index == 4){
-        if (self.mArr_sum.count>=5&&self.mArr_sum.count%5==0) {
-            //检查当前网络是否可用
-            if ([self checkNetWork]) {
-                return;
+        }else if (self.mInt_index == 4){
+            if (self.mArr_sum.count>=5&&self.mArr_sum.count%5==0) {
+                //检查当前网络是否可用
+                if ([self checkNetWork]) {
+                    return;
+                }
+                int a = (int)self.mArr_sum.count/5+1;
+                [[ClassHttp getInstance] classHttpShowingUnitArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
+                [self ProgressViewLoad:@"加载中..."];
+            } else {
+                [self loadNoMore:@"没有更多了"];
             }
-            int a = (int)self.mArr_sum.count/5+1;
-            [[ClassHttp getInstance] classHttpShowingUnitArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
-            [self ProgressViewLoad:@"加载中..."];
-        } else {
-            [self loadNoMore:@"没有更多了"];
         }
     }
 }

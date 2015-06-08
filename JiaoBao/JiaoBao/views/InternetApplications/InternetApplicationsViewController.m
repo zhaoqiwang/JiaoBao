@@ -198,7 +198,6 @@
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
-//                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                     break;
@@ -213,7 +212,6 @@
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
-//                    [dm getInstance].uType = [userUnitsModel.UnitType intValue]
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                     break;
@@ -241,7 +239,6 @@
                     name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
-                    [dm getInstance].uType = [userUnitsModel.UnitType intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
@@ -475,6 +472,7 @@
             [dm getInstance].mStr_unit = userUnitsModel.ClassName;
             [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
         }
+        [dm getInstance].uType = [idenModel.RoleIdentity intValue];
         //发送获取列表请求
         [[LoginSendHttp getInstance] changeCurUnit];
         [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
