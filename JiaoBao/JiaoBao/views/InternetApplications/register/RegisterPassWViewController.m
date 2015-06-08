@@ -37,9 +37,8 @@
         if([str integerValue ] == 0)
         {
             NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
-                [self progressViewTishi:@"注册失败"];
+                [self progressViewTishi:@"注册成功"];
                 [dm getInstance].RegisterSymbol = NO;
-
                 sleep(2);
                 
                 
@@ -52,9 +51,9 @@
                 
             }];
             [op2 addDependency:op1];
-//            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
-//            [queue addOperation:op1];
-//            [queue addOperation:op2];
+            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+            [queue addOperation:op1];
+            [queue addOperation:op2];
 //            [self progressViewTishi:@"注册成功"];
 //            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
             
@@ -89,6 +88,10 @@
                 
             }];
             [op2 addDependency:op1];
+            [op2 addDependency:op1];
+            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
+            [queue addOperation:op1];
+            [queue addOperation:op2];
 //            [self progressViewTishi:@"重置密码成功"];
 //            [dm getInstance].RegisterSymbol = NO;
 //            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];

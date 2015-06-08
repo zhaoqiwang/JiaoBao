@@ -69,7 +69,7 @@
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
 
-    timeNum = 120;
+    timeNum = 60;
     self.navigationController.navigationBarHidden = YES;
     if(self.forgetPWSymbol == YES)
     {
@@ -117,12 +117,19 @@
         if([str isEqualToString:@"true"])
         {
             self.telSymbol = YES;
+            if(self.forgetPWSymbol == YES)
+            {
+                [self progressViewTishi:@"手机号码没有注册"];
+                self.tel.text = @"";
+
+            }
 
 
         }
         else
         {
             [self progressViewTishi:@"手机号码已经被注册"];
+            self.tel.text = @"";
             //[SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
             self.telSymbol = NO;
         }
@@ -203,7 +210,7 @@
                 [self.get_identi_code_btn setTitle:@"获取手机验证码" forState:UIControlStateNormal];
                 self.get_identi_code_btn.enabled = YES;
                 [self.myTimer invalidate];
-                timeNum = 120;
+                timeNum = 60;
 
                 
             }
@@ -219,6 +226,7 @@
             else
             {
                 self.telSymbol = YES;
+                [[RegisterHttp getInstance] registerHttpCheckmyMobileAcc:self.tel.text];
             }
             
         }
@@ -310,7 +318,7 @@
         [self.get_identi_code_btn setTitle:@"获取手机验证码" forState:UIControlStateNormal];
         self.get_identi_code_btn.enabled = YES;
         [self.myTimer invalidate];
-        timeNum = 120;
+        timeNum = 60;
     }
 
 

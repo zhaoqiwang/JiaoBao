@@ -102,8 +102,8 @@
         //列表
 //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *view = [[UIView alloc]init];
         self.mTableV_list.tableFooterView = view;
@@ -1256,13 +1256,13 @@
         if(model.mArr_comment.count<5)
         {
             cell.moreBtn.frame = CGRectZero;
-            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, h+7);
-            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-10, h+13);
+            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, h+7+10);
+            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-10, h+13+10);
             UIImage *backImage = [UIImage imageNamed:@"bj.png"];
             // The background should be pinned to the left and not stretch.
             backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
             cell.backImgV.image = backImage;
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+3);
+            cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+3+10);
 //            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
 
             
