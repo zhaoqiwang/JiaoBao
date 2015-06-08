@@ -391,9 +391,9 @@
         return [dm getInstance].identity.count;
     }else if (tableView.tag == 101){
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
-        if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             return idenModel.UserUnits.count;
-        }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
+        }else if ([idenModel.RoleIdentity intValue]==3) {
             return idenModel.UserClasses.count;
         }
     }
@@ -431,10 +431,10 @@
     } else {
         cell.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1];
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
-        if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:row];
             cell.textLabel.text = userUnitsModel.UnitName;
-        }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
+        }else if ([idenModel.RoleIdentity intValue]==3) {
             Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:row];
             cell.textLabel.text = userUnitsModel.ClassName;
         }
@@ -464,12 +464,12 @@
         return;
     }
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
-        if (self.mInt_defaultTV_index==0||self.mInt_defaultTV_index==1) {
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:indexPath.row];
             [dm getInstance].UID = [userUnitsModel.UnitID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.UnitName;
             [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
-        }else if(self.mInt_defaultTV_index==2||self.mInt_defaultTV_index==3){
+        }else if ([idenModel.RoleIdentity intValue]==3) {
             Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:indexPath.row];
             [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.ClassName;
