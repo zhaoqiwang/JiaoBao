@@ -41,7 +41,8 @@
     
     ForwardViewController *forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
     //forward.mStr_navName = @"新建事务";
-    forward.mInt_forwardFlag = 1;
+    //forward.mInt_forwardFlag = 1;
+    [LoginSendHttp getInstance].mInt_forwardFlag = 1;
     forward.mInt_forwardAll = 2;
     forward.mInt_flag = 1;
     forward.mInt_all = 2;
@@ -51,7 +52,9 @@
 
     [root addSubview:forward.view];
     [dm getInstance].notificationSymbol = 1;
-    [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+    NSLog(@"utype = %d",[dm getInstance].uType);
+    [[LoginSendHttp getInstance]changeCurUnit];
+    //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
     
     [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:[dm getInstance].progress];
@@ -68,6 +71,10 @@
     if([dm getInstance].notificationSymbol ==1)
     {
         [dm getInstance].mModel_unitList = noti.object;
+        CommMsgRevicerUnitListModel *model = noti.object;
+        
+       // NSLog(@"TabId =%@ %@",[dm getInstance].mModel_unitList,model);
+        NSLog(@"tabid = %@ %@",[dm getInstance].mModel_unitList.myUnit.TabIDStr,model.myUnit);
         [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
         
     }

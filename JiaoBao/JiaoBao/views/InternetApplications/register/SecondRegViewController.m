@@ -133,7 +133,7 @@
         if([str integerValue ] == 0)
         {
             NSLog(@"验证成功");
-            [SVProgressHUD dismiss];
+            [self progressViewTishi:@"验证成功"];
             RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
             pass.mStr_phoneNum = self.tel;
             if(self.forgetPWSymbol ==YES)
@@ -224,7 +224,7 @@
             return;
         }
         [[RegisterHttp getInstance]registerHttpRegCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
-        [SVProgressHUD show];
+        [self progressViewTishi:@"正在加载"];
         
     }
     
