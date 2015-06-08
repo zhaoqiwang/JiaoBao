@@ -1228,6 +1228,8 @@
         
         NSString *string1 = tempModel.UserName;
         NSString *string2 = tempModel.Commnets;
+        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
 //        NSString *string1 = [self.nameArr objectAtIndex:i ];
 //        NSString *string2 = [self.commentArr objectAtIndex:i];
         NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
