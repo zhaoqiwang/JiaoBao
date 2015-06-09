@@ -220,8 +220,8 @@
     {
 
 
-        //BOOL isTel = [self checkTel:self.tel.text];
-        BOOL isTel = YES;
+        BOOL isTel = [self checkTel:self.tel.text];
+        //BOOL isTel = YES;
         if(isTel)
         {
             if(![self.tel.text isEqualToString: self.telStr])
@@ -258,7 +258,8 @@
 #pragma -mark 正则表达式验证方法
 - (BOOL)checkTel:(NSString *)str
 {
-    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+   // NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    NSString *regex = @"^[1][3-9]\\d{9}$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     BOOL isMatch = [pred evaluateWithObject:str];
     if (!isMatch)
