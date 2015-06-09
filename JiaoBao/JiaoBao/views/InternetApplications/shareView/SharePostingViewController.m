@@ -645,6 +645,7 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = NO;
     imagePickerController.sourceType = sourceType;
+        
     [self presentViewController:imagePickerController animated:YES completion:^{}];
 
     }

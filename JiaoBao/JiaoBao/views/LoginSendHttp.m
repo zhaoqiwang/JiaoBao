@@ -1147,6 +1147,8 @@ static LoginSendHttp *loginSendHttp = nil;
 
             if (self.mInt_forwardFlag == 1) {//普通请求
                 [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+            }else if (self.mInt_forwardFlag ==2){//获取个人信息
+                [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
             }else{//短信直通车
                 [self ReceiveListWithFlag:self.mInt_forwardFlag all:self.mInt_forwardAll];
             }
@@ -1206,6 +1208,7 @@ static LoginSendHttp *loginSendHttp = nil;
         }
         NSString *name;
         if ([str000 isKindOfClass:[NSNull class]]||[str000 isEqual:@"null"]) {
+            [dm getInstance].name = [dm getInstance].TrueName;
             name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
         }else{
             [dm getInstance].name = model.UserName;

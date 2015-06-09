@@ -292,6 +292,10 @@
         NSString *requiredmediatype=(NSString *)kUTTypeImage;
         NSArray *arrmediatypes=[NSArray arrayWithObject:requiredmediatype];
         [picker setMediaTypes:arrmediatypes];
+        
+//        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+//            picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+//        }
         //        [self presentViewController:picker animated:YES completion:nil];
         [utils pushViewController1:picker animated:YES];
     }else{

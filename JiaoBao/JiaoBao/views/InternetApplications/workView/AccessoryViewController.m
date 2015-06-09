@@ -126,6 +126,11 @@
         browser.enableSwipeToDismiss = NO;
         [browser setCurrentPhotoIndex:a];
         
+        _selections = [NSMutableArray new];
+        for (int i = 0; i < photos.count; i++) {
+            [_selections addObject:[NSNumber numberWithBool:NO]];
+        }
+        
         double delayInSeconds = 0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -153,7 +158,8 @@
 }
 
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
-    NSLog(@"Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+    D("Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+    [_selections replaceObjectAtIndex:index withObject:[NSNumber numberWithBool:selected]];
     NSString *name = [self.mArr_photo objectAtIndex:index];
     for (int i=0; i<self.mArr_sumFile.count; i++) {
         AccessoryModel *model = [self.mArr_sumFile objectAtIndex:i];
@@ -173,6 +179,10 @@
     // If we subscribe to this method we must dismiss the view controller ourselves
     NSLog(@"Did finish modal presentation");
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)photoBrowser:(MWPhotoBrowser *)photoBrowser isPhotoSelectedAtIndex:(NSUInteger)index {
+    return [[_selections objectAtIndex:index] boolValue];
 }
 
 //是否选择的回调
