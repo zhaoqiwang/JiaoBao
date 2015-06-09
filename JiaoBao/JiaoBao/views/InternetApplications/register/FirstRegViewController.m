@@ -220,7 +220,8 @@
     {
 
 
-        BOOL isTel = [self checkTel:self.tel.text];
+        //BOOL isTel = [self checkTel:self.tel.text];
+        BOOL isTel = YES;
         if(isTel)
         {
             if(![self.tel.text isEqualToString: self.telStr])
