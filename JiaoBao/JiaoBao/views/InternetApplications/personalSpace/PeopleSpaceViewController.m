@@ -64,8 +64,9 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     //表格
-    self.mTableV_personalS.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, 500);
+    self.mTableV_personalS.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, 160);
     self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y-20, [dm getInstance].width, 400);
+    self.tableVIewBtn.frame = self.unitTabelView.frame;
     
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
@@ -98,7 +99,7 @@
     {
         return self.unitArr.count;
     }
-    return self.mArr_personalS.count;
+    return self.mArr_personalS.count-1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -107,7 +108,7 @@
     {
         UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 35)];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, [dm getInstance].width, 35)];
-        label.text = @"所在单位";
+        label.text = @"关联单位";
         //label.textColor = [UIColor lightGrayColor];
         label.font = [UIFont systemFontOfSize:14];
         [headerView addSubview:label];
@@ -133,7 +134,8 @@
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     if([tableView isEqual:self.unitTabelView])
     {
-        return 30;
+        return 20;
+        
     }
     else
     {
@@ -167,6 +169,7 @@
         {
             [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             cell.addBtn.enabled = NO;
+            
         }
         else
         {
@@ -175,6 +178,7 @@
 
             
         }
+        cell.addBtn.hidden = YES;
 
         if(indexPath.row == self.unitArr.count -1)
         {
@@ -324,4 +328,8 @@
 }
 */
 
+- (IBAction)tbBtnAction:(id)sender {
+    MobileUnitViewController *detail = [[MobileUnitViewController alloc]init];
+    [utils pushViewController:detail animated:YES];
+}
 @end

@@ -232,7 +232,8 @@
 
                 
             }
-            if ([self checkNetWork]) {
+            if ([self checkNetWork])
+            {
                 return;
             }
             if(self.forgetPWSymbol ==NO)
