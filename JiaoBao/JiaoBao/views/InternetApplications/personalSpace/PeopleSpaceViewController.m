@@ -147,7 +147,8 @@
 
 }
 
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if([tableView isEqual:self.unitTabelView])
     {
         static NSString *cellIdentifier = @"unitTabelViewCell";

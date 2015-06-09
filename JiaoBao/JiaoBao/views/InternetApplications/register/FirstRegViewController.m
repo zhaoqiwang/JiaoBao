@@ -116,22 +116,39 @@
         NSString *str =note.object;
         if([str isEqualToString:@"true"])
         {
-            self.telSymbol = YES;
             if(self.forgetPWSymbol == YES)
             {
                 [self progressViewTishi:@"手机号码没有注册"];
                 self.tel.text = @"";
 
             }
+            else
+            {
+                self.telSymbol = YES;
+
+                
+            }
 
 
         }
         else
         {
-            [self progressViewTishi:@"手机号码已经被注册"];
-            self.tel.text = @"";
+            if(self.forgetPWSymbol == YES)
+            {
+                self.telSymbol = YES;
+                
+            }
+            else
+            {
+                [self progressViewTishi:@"手机号码已经被注册"];
+                self.tel.text = @"";
+                self.telSymbol = NO;
+
+
+
+                
+            }
             //[SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
-            self.telSymbol = NO;
         }
         
         
@@ -193,6 +210,7 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
