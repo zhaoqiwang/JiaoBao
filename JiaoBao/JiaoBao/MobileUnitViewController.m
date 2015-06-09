@@ -113,7 +113,7 @@
         cell.unitNameLabel.text = unitModel.UnitName;
         cell.identTypeLabel.text =unitModel.Identity;
     
-        if([unitModel.JoinFlag integerValue]>0)
+        if([unitModel.AccId integerValue]>0)
         {
             [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             cell.addBtn.enabled = NO;

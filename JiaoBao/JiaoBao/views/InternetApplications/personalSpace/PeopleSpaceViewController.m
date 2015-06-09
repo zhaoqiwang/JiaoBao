@@ -15,7 +15,7 @@
     id  _observer1,_observer2;
 
 }
-@property(nonatomic,strong)NSArray *unitArr;
+@property(nonatomic,strong)NSArray *unitArr,*unitArr2;
 @property(nonatomic,strong)UIButton *addBtn;
 
 @end
@@ -31,27 +31,66 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setValueModel];
-    _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSArray *arr = note.object;
-        self.unitArr = arr;
-        [self.unitTabelView reloadData];
-    }];
-    _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *str =note.object;
-        if([str integerValue ] == 0)
-        {
-            [self progressViewTishi:@"加入成功"];
-            [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
-            self.addBtn.enabled = NO;
-        }
-        else {
-            [self progressViewTishi:@"加入失败"];
-        }
-    }];
+//    _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        NSArray *arr = note.object;
+//        self.unitArr = arr;
+//        [self.unitTabelView reloadData];
+//    }];
+//    _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        NSString *str =note.object;
+//        if([str integerValue ] == 0)
+//        {
+//            [self progressViewTishi:@"加入成功"];
+//            [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
+//            self.addBtn.enabled = NO;
+//        }
+//        else {
+//            [self progressViewTishi:@"加入失败"];
+//        }
+//    }];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];
+
+    for(int i=0;i<[dm getInstance].identity.count;i++)
+    {
+        Identity_model *model= [[dm getInstance].identity objectAtIndex:i];
+        if([model.RoleIdName isEqualToString:@"家长"]|[model.RoleIdName isEqualToString:@"学生"])
+        {
+            for(int i=0;i<model.UserClasses.count;i++)
+            {
+                Identity_UserClasses_model *model2 = [model.UserClasses objectAtIndex:i];
+                [mArr addObject:model2.ClassName];
+                [mArr2 addObject:model.RoleIdName];
+
+            }
+            
+        }
+        else
+        {
+            for(int i=0;i<model.UserUnits.count;i++)
+            {
+                Identity_UserUnits_model *model2 = [model.UserUnits objectAtIndex:i];
+                NSLog(@"identity_name = %@",model2.UnitName);
+                [mArr addObject:model2.UnitName];
+                [mArr2 addObject:model.RoleIdName];
+
+            }
+            
+        }
+
+
+
+        
+    }
+
+    self.unitArr = mArr;
+    self.unitArr2 = mArr2;
+
+    
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
@@ -64,14 +103,15 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     //表格
-    self.mTableV_personalS.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, 500);
+    self.mTableV_personalS.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, 160);
     self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y-20, [dm getInstance].width, 400);
+    self.tableVIewBtn.frame = self.unitTabelView.frame;
     
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
-    [[RegisterHttp getInstance]registerHttpGetMyMobileUnitList:[dm getInstance].jiaoBaoHao];
+//    [[RegisterHttp getInstance]registerHttpGetMyMobileUnitList:[dm getInstance].jiaoBaoHao];
 //    [[RegisterHttp getInstance]registerHttpJoinUnitOP:[dm getInstance].jiaoBaoHao option:0 tableStr:<#(NSString *)#>]
 }
 
@@ -98,7 +138,7 @@
     {
         return self.unitArr.count;
     }
-    return self.mArr_personalS.count;
+    return self.mArr_personalS.count-1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -106,11 +146,17 @@
     if([tableView isEqual:self.unitTabelView])
     {
         UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 35)];
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, [dm getInstance].width, 35)];
-        label.text = @"所在单位";
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 200, 35)];
+        label.text = @"我的单位";
         //label.textColor = [UIColor lightGrayColor];
         label.font = [UIFont systemFontOfSize:14];
         [headerView addSubview:label];
+        
+        UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(100, 0, 200, 35)];
+        label2.text = @"加入单位";
+        label2.textColor = [UIColor lightGrayColor];
+        label2.font = [UIFont systemFontOfSize:14];
+        [headerView addSubview:label2];
         return headerView;
         
     }
@@ -133,7 +179,8 @@
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     if([tableView isEqual:self.unitTabelView])
     {
-        return 30;
+        return 20;
+        
     }
     else
     {
@@ -147,7 +194,8 @@
 
 }
 
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     if([tableView isEqual:self.unitTabelView])
     {
         static NSString *cellIdentifier = @"unitTabelViewCell";
@@ -158,22 +206,26 @@
         }
         cell.delegate = self;
         cell.tag = indexPath.row;
+        cell.unitNameLabel.text = [self.unitArr objectAtIndex:indexPath.row];
+        cell.identTypeLabel.text = [self.unitArr2 objectAtIndex:indexPath.row];
         
-        unitModel *unitModel = [self.unitArr objectAtIndex:indexPath.row];
-        cell.unitNameLabel.text = unitModel.UnitName;
-        cell.identTypeLabel.text =unitModel.Identity;
-        if(unitModel.AccId>0)
-        {
-            [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
-            cell.addBtn.enabled = NO;
-        }
-        else
-        {
-            [cell.addBtn setTitle:@"加入" forState:UIControlStateNormal];
-            cell.addBtn.enabled = YES;
-
-            
-        }
+//        unitModel *unitModel = [self.unitArr objectAtIndex:indexPath.row];
+//        cell.unitNameLabel.text = unitModel.UnitName;
+//        cell.identTypeLabel.text =unitModel.Identity;
+//        if(unitModel.AccId>0)
+//        {
+//            [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
+//            cell.addBtn.enabled = NO;
+//            
+//        }
+//        else
+//        {
+//            [cell.addBtn setTitle:@"加入" forState:UIControlStateNormal];
+//            cell.addBtn.enabled = YES;
+//
+//            
+//        }
+        cell.addBtn.hidden = YES;
 
         if(indexPath.row == self.unitArr.count -1)
         {
@@ -250,12 +302,12 @@
 }
 -(void)ClickBtnWith:(UIButton *)btn cell:(UnitTableViewCell *)cell
 {
-    self.addBtn = btn;
-    unitModel *model = [self.unitArr objectAtIndex:cell.tag];
-    if ([self checkNetWork]) {
-        return;
-    }
-    [[RegisterHttp getInstance]registerHttpJoinUnitOP:model.AccId option:@"1" tableStr:model.TabIdStr];
+//    self.addBtn = btn;
+//    unitModel *model = [self.unitArr objectAtIndex:cell.tag];
+//    if ([self checkNetWork]) {
+//        return;
+//    }
+//    [[RegisterHttp getInstance]registerHttpJoinUnitOP:model.AccId option:@"1" tableStr:model.TabIdStr];
     
     
 }
@@ -323,4 +375,8 @@
 }
 */
 
+- (IBAction)tbBtnAction:(id)sender {
+    MobileUnitViewController *detail = [[MobileUnitViewController alloc]init];
+    [utils pushViewController:detail animated:YES];
+}
 @end

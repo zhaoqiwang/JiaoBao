@@ -29,6 +29,8 @@
     NSMutableArray *mArr_personalS;//个人信息数组
     
 }
+@property (weak, nonatomic) IBOutlet UIButton *tableVIewBtn;
+- (IBAction)tbBtnAction:(id)sender;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//

@@ -69,7 +69,7 @@
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
 
-    timeNum = 120;
+    timeNum = 60;
     self.navigationController.navigationBarHidden = YES;
     if(self.forgetPWSymbol == YES)
     {
@@ -116,15 +116,39 @@
         NSString *str =note.object;
         if([str isEqualToString:@"true"])
         {
-            self.telSymbol = YES;
+            if(self.forgetPWSymbol == YES)
+            {
+                [self progressViewTishi:@"手机号码没有注册"];
+                self.tel.text = @"";
+
+            }
+            else
+            {
+                self.telSymbol = YES;
+
+                
+            }
 
 
         }
         else
         {
-            [self progressViewTishi:@"手机号码已经被注册"];
+            if(self.forgetPWSymbol == YES)
+            {
+                self.telSymbol = YES;
+                
+            }
+            else
+            {
+                [self progressViewTishi:@"手机号码已经被注册"];
+                self.tel.text = @"";
+                self.telSymbol = NO;
+
+
+
+                
+            }
             //[SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
-            self.telSymbol = NO;
         }
         
         
@@ -186,6 +210,7 @@
 }
 
 - (void)didReceiveMemoryWarning {
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -196,6 +221,7 @@
 
 
         BOOL isTel = [self checkTel:self.tel.text];
+        //BOOL isTel = YES;
         if(isTel)
         {
             if(![self.tel.text isEqualToString: self.telStr])
@@ -203,11 +229,12 @@
                 [self.get_identi_code_btn setTitle:@"获取手机验证码" forState:UIControlStateNormal];
                 self.get_identi_code_btn.enabled = YES;
                 [self.myTimer invalidate];
-                timeNum = 120;
+                timeNum = 60;
 
                 
             }
-            if ([self checkNetWork]) {
+            if ([self checkNetWork])
+            {
                 return;
             }
             if(self.forgetPWSymbol ==NO)
@@ -219,6 +246,7 @@
             else
             {
                 self.telSymbol = YES;
+                [[RegisterHttp getInstance] registerHttpCheckmyMobileAcc:self.tel.text];
             }
             
         }
@@ -230,7 +258,8 @@
 #pragma -mark 正则表达式验证方法
 - (BOOL)checkTel:(NSString *)str
 {
-    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+   // NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
+    NSString *regex = @"^[1][3-9]\\d{9}$";
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
     BOOL isMatch = [pred evaluateWithObject:str];
     if (!isMatch)
@@ -310,7 +339,7 @@
         [self.get_identi_code_btn setTitle:@"获取手机验证码" forState:UIControlStateNormal];
         self.get_identi_code_btn.enabled = YES;
         [self.myTimer invalidate];
-        timeNum = 120;
+        timeNum = 60;
     }
 
 
