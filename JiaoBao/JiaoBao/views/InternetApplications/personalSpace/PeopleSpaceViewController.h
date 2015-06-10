@@ -36,6 +36,6 @@
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_personalS;
 @property (nonatomic,strong) NSMutableArray *mArr_personalS;//个人信息数组
-@property (weak, nonatomic) IBOutlet UITableView *unitTabelView;
+@property (weak, nonatomic) IBOutlet UITableView *unitTabelView;//关联单位列表
 
 @end

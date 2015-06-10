@@ -4,7 +4,7 @@
 //
 //  Created by songyanming on 15/6/5.
 //  Copyright (c) 2015年 JSY. All rights reserved.
-//
+//加入单位的cell
 
 #import <UIKit/UIKit.h>
 @protocol unitCellDelegate;

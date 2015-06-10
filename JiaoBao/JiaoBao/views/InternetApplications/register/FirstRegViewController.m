@@ -16,21 +16,19 @@
 @interface FirstRegViewController ()<MBProgressHUDDelegate>
 {
     id  _observer1,_observer2,_observer3,_observer4;
-    NSInteger timeNum;
+    NSInteger timeNum;//倒计时计时器的时间参数
 }
-@property(nonatomic,strong)NSTimer *myTimer;
+@property(nonatomic,strong)NSTimer *myTimer;//倒计时计时器
 @property(nonatomic,strong)MBProgressHUD *mProgressV;
 
 @end
 
 @implementation FirstRegViewController
--(void)doBack:(id)sender
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-}
 
 -(void)viewWillDisappear:(BOOL)animated{
     [dm getInstance].RegisterSymbol = NO;
+    
+    //移除通知
     if(_observer1)
     {
         
@@ -58,6 +56,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    //加通知
     [self addNotification];
 
     
@@ -65,11 +64,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    timeNum = 60;
+    [dm getInstance].RegisterSymbol = YES;
+
+
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
 
-    timeNum = 60;
     self.navigationController.navigationBarHidden = YES;
     if(self.forgetPWSymbol == YES)
     {
@@ -86,14 +88,8 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-    [dm getInstance].RegisterSymbol = YES;
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    backBtn.frame = CGRectMake(0, 0,63,26);
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
-//        backBtn.backgroundColor = [UIColor colorWithRed:224/255.0 green:133/255.0 blue:30/255.0 alpha:1];
-    [backBtn addTarget:self action:@selector(doBack:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backItem;
+    
+
     if ([self checkNetWork]) {
         return;
     }
@@ -104,6 +100,7 @@
 }
 -(void)addNotification
 {
+    //获取图片验证码d的图片
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
@@ -112,17 +109,18 @@
         
         
     }];
+    //获取手机是否已经注册的参数
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"tel" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSString *str =note.object;
-        if([str isEqualToString:@"true"])
+        if([str isEqualToString:@"true"])//true表示手机号码没有注册
         {
-            if(self.forgetPWSymbol == YES)
+            if(self.forgetPWSymbol == YES)//如果是忘记密码的VC 则提示手机号码没有注册 并清空手机号码输入框
             {
                 [self progressViewTishi:@"手机号码没有注册"];
                 self.tel.text = @"";
 
             }
-            else
+            else//如果是注册界面vc 不用提示 手机号码是否正确的标志设置为yes
             {
                 self.telSymbol = YES;
 
@@ -131,14 +129,14 @@
 
 
         }
-        else
+        else//false表示手机号码已经注册
         {
-            if(self.forgetPWSymbol == YES)
+            if(self.forgetPWSymbol == YES)//如果是忘记密码vc 手机号码是否正确的标志设置为yes
             {
                 self.telSymbol = YES;
                 
             }
-            else
+            else//如果是注册界面vc 则提示手机号码已经被注册 并清空手机号码输入框
             {
                 [self progressViewTishi:@"手机号码已经被注册"];
                 self.tel.text = @"";
@@ -148,18 +146,19 @@
 
                 
             }
-            //[SVProgressHUD showInfoWithStatus:@"手机号码已经被注册"];
         }
         
         
     }];
+    //获取手机验证码
     _observer3 = [[NSNotificationCenter defaultCenter]addObserverForName:@"get_identi_code" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
         NSString *str =note.object;
-        if([str integerValue ] == 0)
+        if([str integerValue ] == 0)//成功
            {
                self.identi_code_Symbol = YES;
                NSLog(@"获取验证码成功");
+               //成功则跳转到第二个界面
                SecondRegViewController *sec = [[SecondRegViewController alloc]init];
                sec.tel = self.tel.text;
                sec.forgetPWSymbol = self.forgetPWSymbol;

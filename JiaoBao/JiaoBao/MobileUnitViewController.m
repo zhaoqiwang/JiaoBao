@@ -27,6 +27,7 @@
 @implementation MobileUnitViewController
 -(void)dealloc
 {
+    //viewController销毁时释放通知
     [[NSNotificationCenter defaultCenter]removeObserver:_observer1];
     [[NSNotificationCenter defaultCenter]removeObserver:_observer2];
 
@@ -34,14 +35,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"个人中心"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    
+    //设置tableview的frame
     self.tableView.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, 500);
+    
+    //去掉tableview没用的的cell的横线
     UIView *view = [[UIView alloc]init];
     self.tableView.tableFooterView = view;
+    
+    //获取手机自动匹配的单位数据
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSArray *arr = note.object;
         NSLog(@"arr_count = %ld",arr.count);
@@ -52,12 +60,15 @@
         
         
     }];
+    //向服务器请求手机自动匹配单位数据
     [[RegisterHttp getInstance]registerHttpGetMyMobileUnitList:[dm getInstance].jiaoBaoHao];
 
-
+//加提示类的实例
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
+    
+    //点击加入单位获取返回信息
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSString *str =note.object;
         if([str integerValue ] == 0)
@@ -81,6 +92,9 @@
     
     // Do any additional setup after loading the view from its nib.
 }
+
+#pragma - mark tableview代理方法
+
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSLog(@"self.unitArr = %ld",self.unitArr.count);
@@ -108,17 +122,17 @@
         cell.delegate = self;
         cell.tag = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+    
         unitModel *unitModel = [self.unitArr objectAtIndex:indexPath.row];
         cell.unitNameLabel.text = unitModel.UnitName;
         cell.identTypeLabel.text =unitModel.Identity;
     
-        if([unitModel.AccId integerValue]>0)
+        if([unitModel.AccId integerValue]>0)//accid>0 表示已加入
         {
             [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             cell.addBtn.enabled = NO;
         }
-        else
+        else//accid = 0 表示未加入
         {
             [cell.addBtn setTitle:@"加入" forState:UIControlStateNormal];
             cell.addBtn.enabled = YES;
@@ -133,6 +147,8 @@
         
     
 }
+
+#pragma -mark 点击addBtn的回调方法
 -(void)ClickBtnWith:(UIButton *)btn cell:(UnitTableViewCell *)cell
 {
     self.addBtn = btn;
@@ -140,6 +156,7 @@
     if ([self checkNetWork]) {
         return;
     }
+    //向服务器请求加入单位
     [[RegisterHttp getInstance]registerHttpJoinUnitOP:[dm getInstance].jiaoBaoHao option:@"0" tableStr:model.TabIdStr];
     
     

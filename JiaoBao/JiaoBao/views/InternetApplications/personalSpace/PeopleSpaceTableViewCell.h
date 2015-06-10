@@ -4,7 +4,7 @@
 //
 //  Created by Zqw on 15/6/4.
 //  Copyright (c) 2015年 JSY. All rights reserved.
-//
+//个人中心主列表的cell
 
 #import <UIKit/UIKit.h>
 

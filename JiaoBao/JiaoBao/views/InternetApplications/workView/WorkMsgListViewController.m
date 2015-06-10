@@ -455,10 +455,15 @@
         MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
         //姓名
         cell.mLab_name.hidden = NO;
-        cell.mLab_name.frame = CGRectMake(0, 62, [dm getInstance].width-10, 15);
+        cell.mLab_name.numberOfLines = 0;
+        cell.mLab_name.lineBreakMode = NSLineBreakByCharWrapping;
+
         cell.mLab_name.text = model.UserName;
-        cell.mLab_name.textAlignment = NSTextAlignmentRight;
-        cell.mLab_name.font = [UIFont systemFontOfSize:12];
+        cell.mLab_name.textAlignment = NSTextAlignmentLeft;
+        cell.mLab_name.font = [UIFont systemFontOfSize:11];
+        CGRect rect=[cell.mLab_name.text boundingRectWithSize:CGSizeMake(40, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:11],NSFontAttributeName, nil]  context:nil];
+        cell.mLab_name.frame = CGRectMake([dm getInstance].width-55, 62, 40, rect.size.height);
 
         //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
