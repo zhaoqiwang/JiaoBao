@@ -4,7 +4,7 @@
 //
 //  Created by 赵启旺 on 15/6/4.
 //  Copyright (c) 2015年 JSY. All rights reserved.
-//
+//修改昵称或修改密码的VC
 
 #import <UIKit/UIKit.h>
 #import "dm.h"

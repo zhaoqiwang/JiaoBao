@@ -25,22 +25,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/class/ClassTopViewController.m"
-            timestampString = "455247457.91885"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
-            landmarkName = "-tableView:numberOfRowsInSection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/class/cell/ClassTableViewCell.m"
             timestampString = "455447200.030718"
             startingColumnNumber = "9223372036854775807"
@@ -57,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/register/RegisterPassWViewController.m"
-            timestampString = "455452164.626552"
+            filePath = "JiaoBao/views/InternetApplications/shareView/SharePostingViewController.m"
+            timestampString = "455613890.625224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "-registerPW:"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "-UploadImg:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

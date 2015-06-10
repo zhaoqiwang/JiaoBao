@@ -15,8 +15,9 @@
     id  _observer1,_observer2;
 
 }
-@property(nonatomic,strong)NSArray *unitArr,*unitArr2;
-@property(nonatomic,strong)UIButton *addBtn;
+@property(nonatomic,strong)NSArray *unitArr,*unitArr2;//关联单位名称数组、关联单位身份数组
+@property(nonatomic,strong)UIButton *addBtn;//指向点击cell上的addBtn，等数据返回时改变addbtn的title
+@property(nonatomic,strong)UIScrollView *mainScrollView;
 
 @end
 
@@ -24,6 +25,7 @@
 @synthesize mTableV_personalS,mNav_navgationBar,mProgressV,mArr_personalS;
 
 -(void)viewDidDisappear:(BOOL)animated{
+//    移除通知
     [[NSNotificationCenter defaultCenter]removeObserver:_observer1];
     [[NSNotificationCenter defaultCenter]removeObserver:_observer2];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -31,30 +33,14 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self setValueModel];
-//    _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
-//        NSArray *arr = note.object;
-//        self.unitArr = arr;
-//        [self.unitTabelView reloadData];
-//    }];
-//    _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
-//        NSString *str =note.object;
-//        if([str integerValue ] == 0)
-//        {
-//            [self progressViewTishi:@"加入成功"];
-//            [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
-//            self.addBtn.enabled = NO;
-//        }
-//        else {
-//            [self progressViewTishi:@"加入失败"];
-//        }
-//    }];
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //获取关联身份数据 并加入到相应的数组中
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];
-
     for(int i=0;i<[dm getInstance].identity.count;i++)
     {
         Identity_model *model= [[dm getInstance].identity objectAtIndex:i];
@@ -90,27 +76,39 @@
     self.unitArr = mArr;
     self.unitArr2 = mArr2;
 
-    
+    //加提示类的实例
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
+    
     // Do any additional setup after loading the view from its nib.
+    
     self.mArr_personalS = [NSMutableArray array];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"个人中心"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+
+
     
     //表格
-    self.mTableV_personalS.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar+20, [dm getInstance].width, 160);
-    self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y-20, [dm getInstance].width, 400);
+    NSLog(@"height = %ld",70+(self.mArr_personalS.count-1)*44);
+    self.mTableV_personalS.frame = CGRectMake(0, 0, [dm getInstance].width, 70+2*44);
+    
+    self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y, [dm getInstance].width, 20*self.unitArr.count+40);
     self.tableVIewBtn.frame = self.unitTabelView.frame;
     
+    self.mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height)];
+    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_personalS.frame.size.height+self.unitTabelView.frame.size.height);
+    [self.view addSubview:self.mainScrollView];
+    //self.mainScrollView.backgroundColor = [UIColor redColor];
+    [self.mainScrollView addSubview:self.mTableV_personalS];
+    [self.mainScrollView addSubview:self.unitTabelView];
+    [self.mainScrollView addSubview:self.tableVIewBtn];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
+    
+
 //    [[RegisterHttp getInstance]registerHttpGetMyMobileUnitList:[dm getInstance].jiaoBaoHao];
 //    [[RegisterHttp getInstance]registerHttpJoinUnitOP:[dm getInstance].jiaoBaoHao option:0 tableStr:<#(NSString *)#>]
 }
@@ -132,7 +130,7 @@
     }
     [self.mTableV_personalS reloadData];
 }
-
+#pragma -mark 列表代理方法
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     if([tableView isEqual:self.unitTabelView])
     {
@@ -147,7 +145,7 @@
     {
         UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 35)];
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5, 0, 200, 35)];
-        label.text = @"我的单位";
+        label.text = @"  我的单位";
         //label.textColor = [UIColor lightGrayColor];
         label.font = [UIFont systemFontOfSize:14];
         [headerView addSubview:label];
@@ -196,6 +194,7 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //如果是关联单位的列表
     if([tableView isEqual:self.unitTabelView])
     {
         static NSString *cellIdentifier = @"unitTabelViewCell";
@@ -240,7 +239,7 @@
         
         
     }
-    else
+    else//如果是个人中心的主列表
     {
     static NSString *CellWithIdentifier = @"PeopleSpaceTableViewCell";
     PeopleSpaceTableViewCell *cell = (PeopleSpaceTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];

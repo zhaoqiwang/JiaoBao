@@ -27,6 +27,7 @@
 @implementation SecondRegViewController
 -(void)viewDidDisappear:(BOOL)animated
 {
+    //移除通知
     if(_observer1)
     {
         
@@ -79,13 +80,14 @@
     if ([self checkNetWork]) {
         return;
     }
-
+//获取图片验证码的请求
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
 
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addNotification
 {
+   // 获取图片验证码的数据
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
@@ -94,43 +96,44 @@
         
         
     }];
-    _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"tel" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *str =note.object;
-        if([str isEqualToString:@"true"])
-        {
-            self.telSymbol = YES;
-            
-            
-        }
-        else
-        {
-            [self progressViewTishi:@"手机号码已经被注册"];
-            self.telSymbol = NO;
-        }
-        
-        
-    }];
-    _observer3 = [[NSNotificationCenter defaultCenter]addObserverForName:@"get_identi_code" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        
-        NSString *str =note.object;
-        if([str integerValue ] == 0)
-        {
-            self.identi_code_Symbol = YES;
-            NSLog(@"获取验证码成功");
-            
-        }
-        else
-        {
-            [self progressViewTishi:@"请获取手机验证码"];
-        }
-        
-        
-        
-    }];
-    
+//    //获取手机号码是否正确的数据
+//    _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"tel" object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        NSString *str =note.object;
+//        if([str isEqualToString:@"true"])//true表示手机号码已经被注册
+//        {
+//            self.telSymbol = YES;
+//            
+//            
+//        }
+//        else
+//        {
+//            [self progressViewTishi:@"手机号码已经被注册"];
+//            self.telSymbol = NO;
+//        }
+//        
+//        
+//    }];
+//    _observer3 = [[NSNotificationCenter defaultCenter]addObserverForName:@"get_identi_code" object:nil queue:nil usingBlock:^(NSNotification *note) {
+//        
+//        NSString *str =note.object;
+//        if([str integerValue ] == 0)
+//        {
+//            self.identi_code_Symbol = YES;
+//            NSLog(@"获取验证码成功");
+//            
+//        }
+//        else
+//        {
+//            [self progressViewTishi:@"请获取手机验证码"];
+//        }
+//        
+//        
+//        
+//    }];
+    //获取验证验证码是否正确的数据
     _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSString *str =note.object;
-        if([str integerValue ] == 0)
+        if([str integerValue ] == 0)//成功则跳转到第三个界面
         {
             NSLog(@"验证成功");
             [self progressViewTishi:@"验证成功"];
@@ -138,13 +141,13 @@
             pass.mStr_phoneNum = self.tel;
             if(self.forgetPWSymbol ==YES)
             {
-                pass.mInt_flag = 2;
+                pass.mInt_flag = 2;//表示是忘记密码界面
 
                 
             }
             else
             {
-                pass.mInt_flag = 1;
+                pass.mInt_flag = 1;//表示是注册界面
 
                 
             }
@@ -165,7 +168,7 @@
 
     
 }
-
+//已经隐藏
 - (IBAction)getIdentiCodeAction:(id)sender {
     
     if ([self checkNetWork]) {
@@ -209,20 +212,25 @@
         return;
         
     }
+    NSLog(@"registerSymbol = %d",[dm getInstance].RegisterSymbol);
     if(self.forgetPWSymbol == YES)
     {
         if ([self checkNetWork]) {
             return;
         }
+        //验证忘记密码的手机验证码及图片验证码和手机的请求
+
         [[RegisterHttp getInstance]registerHttpCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
         
     }
 
     else
+
     {
         if ([self checkNetWork]) {
             return;
         }
+        //验证注册的手机验证码及图片验证码和手机的请求
         [[RegisterHttp getInstance]registerHttpRegCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
         [self progressViewTishi:@"正在加载"];
         
@@ -234,11 +242,12 @@
     
     
 }
-
+//点击button获取图片验证码
 - (IBAction)getUrlImageAction:(id)sender {
     if ([self checkNetWork]) {
         return;
     }
+    //获取图片验证码的请求
     [[RegisterHttp getInstance]registerHttpGetValidateCode];
     
 }
@@ -290,7 +299,7 @@
     sleep(2);
 }
 
-//键盘点击DO
+//键盘点击DO 回收键盘
 #pragma mark - UITextView Delegate Methods
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([string isEqualToString:@"\n"]) {
@@ -300,26 +309,12 @@
     }
     return YES;
 }
+//点击view回收键盘
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
 }
 
-- (BOOL)checkTel:(NSString *)str
-{
-    NSString *regex = @"^((13[0-9])|(147)|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    BOOL isMatch = [pred evaluateWithObject:str];
-    if (!isMatch)
-    {
-        [self progressViewTishi:@"请输入正确的手机号码"];
-        //[SVProgressHUD showErrorWithStatus:@"请输入正确的手机号码"];
-        return NO;
-        
-    }
-    return YES;
-    
-}
 
 
 
