@@ -458,8 +458,8 @@
     } else if (tableView.tag == 101){
         //检查当前网络是否可用
         if ([self checkNetWork]) {
-        return;
-    }
+            return;
+        }
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:indexPath.row];
@@ -475,7 +475,8 @@
         [dm getInstance].uType = [idenModel.RoleIdentity intValue];
         //发送获取列表请求
         [[LoginSendHttp getInstance] changeCurUnit];
-        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        [LoginSendHttp getInstance].mInt_forwardFlag =2;
+//        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         NSLog(@"unit = %@",[dm getInstance].mStr_unit);
         self.mProgressV.labelText = @"加载中...";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;

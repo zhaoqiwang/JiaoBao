@@ -32,6 +32,7 @@
     id <AccessoryViewControllerProtocol > delegate;
     int mInt_flag;//判断是选择附件0，还是查看1
     NSMutableArray *mArr_photo;//图片的名称
+    NSMutableArray *_selections;//是否选中图片
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
