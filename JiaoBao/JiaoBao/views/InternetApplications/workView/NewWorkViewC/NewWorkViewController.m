@@ -14,8 +14,14 @@
 @end
 
 @implementation NewWorkViewController
-@synthesize mNav_navgationBar;
+@synthesize mNav_navgationBar,rootView;
 
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.rootView.moreUnitView dealloc1];
+    [self.rootView.homeClassView dealloc1];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,8 +41,8 @@
     [self.view addSubview:self.top];
 //    [self.view addSubview:[NewWorkTopScrollView shareInstance]];
     //root
-    NewWorkRootScrollView *root = [[NewWorkRootScrollView alloc] initWithFrame];
-    [self.view addSubview:root];
+    self.rootView = [[NewWorkRootScrollView alloc] initWithFrame];
+    [self.view addSubview:self.rootView];
 //    [self.view addSubview:[NewWorkRootScrollView shareInstance]];
     
     ForwardViewController *forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
@@ -50,7 +56,7 @@
     [self addChildViewController:forward];
     [forward didMoveToParentViewController:self];
 
-    [root addSubview:forward.view];
+    [self.rootView addSubview:forward.view];
     [dm getInstance].notificationSymbol = 1;
     NSLog(@"utype = %d",[dm getInstance].uType);
     [[LoginSendHttp getInstance]changeCurUnit];

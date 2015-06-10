@@ -17,6 +17,11 @@
 @implementation RegisterViewController
 @synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mProgressV,mBtn_register,mBtn_forgetPW;
 
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
     D("dm... %d,%d",[dm getInstance].width, [dm getInstance].height);
     //做bug服务器显示当前的哪个界面
