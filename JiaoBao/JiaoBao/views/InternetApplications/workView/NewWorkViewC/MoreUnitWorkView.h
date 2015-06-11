@@ -17,6 +17,8 @@
 #import "TreeView_Level2_Cell.h"
 #import "NewWorkTree_model.h"
 #import "MBProgressHUD.h"
+#import "ChineseString.h"
+#import "pinyin.h"
 
 @interface MoreUnitWorkView : UIView<NewWorkTopViewProtocol,UITableViewDataSource,UITableViewDelegate,TreeView_Level0_CellDelegate,MBProgressHUDDelegate>{
     UIScrollView *mScrollV_all;//放所有控件

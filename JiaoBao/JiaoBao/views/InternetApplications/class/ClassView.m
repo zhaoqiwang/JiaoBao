@@ -992,7 +992,6 @@
 
             return self.mArr_attention.count;
         }else if (self.mInt_index == 4){
-            NSLog(@"sum = %ld",self.mArr_sum.count);
             if(self.mArr_sum.count == 0)
             {
                 
@@ -1297,53 +1296,6 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    self.mView_popup.hidden = YES;
-//    ClassModel *ClassModel;
-//    if (indexPath.section == 0) {
-//        if (self.mInt_index == 0) {
-//            ClassModel = [self.mArr_unitTop objectAtIndex:indexPath.row];
-//        }else if (self.mInt_index == 1){
-//            ClassModel = [self.mArr_classTop objectAtIndex:indexPath.row];
-//        }else if (self.mInt_index == 2){
-//            ClassModel = [self.mArr_local objectAtIndex:indexPath.row];
-//        }else if (self.mInt_index == 3){
-//            ClassModel = [self.mArr_attention objectAtIndex:indexPath.row];
-//        }else if (self.mInt_index == 4){
-//            ClassModel = [self.mArr_sum objectAtIndex:indexPath.row];
-//        }
-//    }else{
-//        if (self.mInt_index == 0) {
-//            ClassModel = [self.mArr_unit objectAtIndex:indexPath.row];
-//        }else if (self.mInt_index == 1){
-//            ClassModel = [self.mArr_class objectAtIndex:indexPath.row];
-//        }else if (self.mInt_index == 2){
-//            
-//        }else if (self.mInt_index == 3){
-//            
-//        }else if (self.mInt_index == 4){
-//            
-//        }
-//    }
-//    //转model
-//    TopArthListModel *model = [[TopArthListModel alloc] init];
-//    model.TabIDStr = ClassModel.TabIDStr;
-//    model.ClickCount = ClassModel.ClickCount;
-//    model.Context = ClassModel.Context;
-//    model.JiaoBaoHao = ClassModel.JiaoBaoHao;
-//    model.LikeCount = ClassModel.LikeCount;
-//    model.RecDate = ClassModel.RecDate;
-//    model.Source = ClassModel.Source;
-//    model.StarJson = ClassModel.StarJson;
-//    model.State = ClassModel.State;
-//    model.Title = ClassModel.Title;
-//    model.ViewCount = ClassModel.ViewCount;
-//    model.SectionID = ClassModel.SectionID;
-//    model.UserName = ClassModel.UserName;
-//
-//    ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
-//    arth.Arthmodel = model;
-//    [utils pushViewController:arth animated:YES];
     
     self.mView_popup.hidden = YES;
     self.mView_text.hidden = YES;

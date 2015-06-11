@@ -800,6 +800,21 @@ static LoginSendHttp *loginSendHttp = nil;
     [request startAsynchronous];
 }
 
+//注销登录接口
+-(void)loginHttpLogout{
+    NSString *urlString = [NSString stringWithFormat:@"%@Account/logout",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    request.tag = 31;//设置请求tag
+    self.flag_request = 0;
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
@@ -1399,6 +1414,13 @@ static LoginSendHttp *loginSendHttp = nil;
             NSMutableArray *array = [ParserJson parserJsonGetmyUserClass:str000];
             //传到事务界面显示
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:array];
+        }
+    }else if (_request.tag == 31){//注销登录
+        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+            NSString *str = [jsonDic objectForKey:@"Data"];
+            NSString *str000 = [DESTool decryptWithText:str Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+            D("str00=login==31=>>>>==%@",str000);
+            
         }
     }
 }

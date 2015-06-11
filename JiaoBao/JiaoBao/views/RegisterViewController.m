@@ -133,10 +133,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"loginSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess:) name:@"loginSuccess" object:nil];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

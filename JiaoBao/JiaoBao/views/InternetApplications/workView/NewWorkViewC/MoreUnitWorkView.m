@@ -255,6 +255,8 @@
         //上级单位
         NSMutableArray *tempArr = [[NSMutableArray alloc] init];
         TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
+        //对人员进行排序
+        self.mModel_unitList.UnitParents = [self userNameChineseSort:self.mModel_unitList.UnitParents Flag:2];
         for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
             myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
             //第1根节点
@@ -292,6 +294,8 @@
             NewWorkTree_model *temp2 = node2.nodeData;
             temp2.mStr_name = @"所有班级";
         }
+        //对人员进行排序
+        sub_unit = [self userNameChineseSort:sub_unit Flag:2];
         for (int i=0; i<sub_unit.count; i++) {
             myUnit *tempUnit = [sub_unit objectAtIndex:i];
             //第1根节点
@@ -377,6 +381,8 @@
             }
         }
     }
+    //对分组排序
+    array = [self userNameChineseSort:(NSMutableArray *)array Flag:3];
     //往数组中塞数据
     NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
     for (int i=0; i<array.count; i++) {
@@ -395,6 +401,8 @@
         temp.mModel_group = model;
         temp.mStr_img_open_close = @"root_close";
         node0.nodeData = temp;
+        //对人员进行排序
+        model.groupselit_selit = [self userNameChineseSort:model.groupselit_selit Flag:1];
         //检查当前分组的子类数组
         NSMutableArray *tempArr3 = [[NSMutableArray alloc] init];
         for (int a=0; a<model.groupselit_selit.count; a++) {
@@ -421,6 +429,65 @@
     tempNode.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
     //刷新
     [self reloadDataForDisplayArray];
+}
+
+//对人员1和分组2进行排序，
+-(NSMutableArray *)userNameChineseSort:(NSMutableArray *)array Flag:(int)flag{
+    //Step2:获取字符串中文字的拼音首字母并与字符串共同存放
+    NSMutableArray *chineseStringsArray=[NSMutableArray array];
+    for(int i=0;i<[array count];i++){
+        ChineseString *chineseString=[[ChineseString alloc]init];
+        if (flag == 1) {
+            groupselit_selitModel *model = [array objectAtIndex:i];
+            chineseString.string=[NSString stringWithString:model.Name];
+            chineseString.groupselit = model;
+        }else if (flag == 2){
+            myUnit *model = [array objectAtIndex:i];
+            chineseString.string=[NSString stringWithString:model.UintName];
+            chineseString.myUnitModel = model;
+        }else if (flag == 3){
+            UserListModel *model = [array objectAtIndex:i];
+            chineseString.string=[NSString stringWithString:model.GroupName];
+            chineseString.userListModel = model;
+        }
+        
+        if(chineseString.string==nil){
+            chineseString.string=@"";
+        }
+        
+        if(![chineseString.string isEqualToString:@""]){
+            NSString *pinYinResult=[NSString string];
+            for(int j=0;j<chineseString.string.length;j++){
+                NSString *singlePinyinLetter=[[NSString stringWithFormat:@"%c",pinyinFirstLetter([chineseString.string characterAtIndex:j])]uppercaseString];
+                pinYinResult=[pinYinResult stringByAppendingString:singlePinyinLetter];
+            }
+            chineseString.pinYin=pinYinResult;
+        }else{
+            chineseString.pinYin=@"";
+        }
+        [chineseStringsArray addObject:chineseString];
+    }
+    
+    //Step3:按照拼音首字母对这些Strings进行排序
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"pinYin" ascending:YES]];
+    [chineseStringsArray sortUsingDescriptors:sortDescriptors];
+    
+    // Step4:如果有需要，再把排序好的内容从ChineseString类中提取出来
+    NSMutableArray *result=[NSMutableArray array];
+    for(int i=0;i<[chineseStringsArray count];i++){
+        if (flag == 1) {
+            groupselit_selitModel *tempModel = ((ChineseString*)[chineseStringsArray objectAtIndex:i]).groupselit;
+            [result addObject:tempModel];
+        }else if (flag == 2){
+            myUnit *tempModel = ((ChineseString*)[chineseStringsArray objectAtIndex:i]).myUnitModel;
+            [result addObject:tempModel];
+        }else if (flag == 3){
+            UserListModel *tempModel = ((ChineseString*)[chineseStringsArray objectAtIndex:i]).userListModel;
+            [result addObject:tempModel];
+        }
+    }
+    
+    return result;
 }
 
 //添加数据

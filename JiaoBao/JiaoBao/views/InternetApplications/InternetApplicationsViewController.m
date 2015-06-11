@@ -27,7 +27,6 @@
     }else{
         [[LoginSendHttp getInstance] getUnreadMessages1];
         [[LoginSendHttp getInstance] getUnreadMessages2];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshExchangeView" object:nil];
     }
     //添加通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getIdentity" object:nil];
@@ -557,6 +556,8 @@
 }
 //切换账号
 - (void) pushMenuItem3:(id)sender{
+    //发送注销登录请求
+    [[LoginSendHttp getInstance] loginHttpLogout];
     RegisterViewController *mRegister_view = [[RegisterViewController alloc]init];
     [LoginSendHttp getInstance].flag_skip = 1;
     //将InternetAppTopScrollView中的请求数据时的标志归零
@@ -568,6 +569,7 @@
     [InternetAppTopScrollView shareInstance].mInt_work_mysend = 0;
     [dm getInstance].mStr_unit = @"";
     [dm getInstance].name = @"";
+    [dm getInstance].url = @"";
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];

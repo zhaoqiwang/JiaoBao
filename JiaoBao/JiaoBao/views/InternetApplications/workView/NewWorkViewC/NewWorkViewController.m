@@ -26,6 +26,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     [[NSNotificationCenter defaultCenter]addObserverForName:@"" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
     }];
