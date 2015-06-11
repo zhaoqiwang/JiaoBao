@@ -16,11 +16,13 @@
 
 @interface NewWorkViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
+    NewWorkRootScrollView *rootView;
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property(nonatomic,strong)NewWorkTopScrollView *top;
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
+@property (nonatomic,strong) NewWorkRootScrollView *rootView;
 
 
 @end

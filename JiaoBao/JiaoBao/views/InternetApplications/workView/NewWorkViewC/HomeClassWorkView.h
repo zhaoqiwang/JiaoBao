@@ -26,4 +26,6 @@
 
 - (id)initWithFrame1:(CGRect)frame;
 
+-(void)dealloc1;
+
 @end

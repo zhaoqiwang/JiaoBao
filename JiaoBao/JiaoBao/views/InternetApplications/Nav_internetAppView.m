@@ -9,7 +9,7 @@
 #import "Nav_internetAppView.h"
 #import "define_constant.h"
 
-static Nav_internetAppView *loginSendHttp = nil;
+static Nav_internetAppView *nav_internetAppView = nil;
 
 #define Nav_width 44
 #define Nav_height 43
@@ -19,18 +19,21 @@ static Nav_internetAppView *loginSendHttp = nil;
 @synthesize mLab_name,mBtn_add,mBtn_search,mBtn_setting,mScrollV_name,delegate;
 
 +(Nav_internetAppView *)getInstance{
-    if (loginSendHttp == nil) {
-        loginSendHttp = [[Nav_internetAppView alloc] init];
+    if (nav_internetAppView == nil) {
+        nav_internetAppView = [[Nav_internetAppView alloc] init];
+        for (UIView *view in nav_internetAppView.subviews) {
+            [view removeFromSuperview];
+        }
     }
-    return loginSendHttp;
+    return nav_internetAppView;
 }
--(id)init{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
+//-(id)init{
+//    self = [super init];
+//    if (self) {
+//        
+//    }
+//    return self;
+//}
 
 -(id)initWithName:(NSString *)name
 {
@@ -46,22 +49,22 @@ static Nav_internetAppView *loginSendHttp = nil;
         [self.mBtn_setting addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
         [self addSubview:self.mBtn_setting];
         //添加按钮
-       
-            self.mBtn_add = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.mBtn_add.frame = CGRectMake([dm getInstance].width-Nav_width*2, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
-            [self.mBtn_add setImage:[UIImage imageNamed:@"appNav_add"] forState:UIControlStateNormal];
-            self.mBtn_add.tag = 2;
-            [self.mBtn_add addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
-            [self addSubview:self.mBtn_add];
-               
         
-//        //搜索按钮
-//        self.mBtn_search = [UIButton buttonWithType:UIButtonTypeCustom];
-//        self.mBtn_search.frame = CGRectMake([dm getInstance].width-Nav_width*3, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
-//        [self.mBtn_search setImage:[UIImage imageNamed:@"appNav_search"] forState:UIControlStateNormal];
-//        self.mBtn_search.tag = 3;
-//        [self.mBtn_search addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
-//        [self addSubview:self.mBtn_search];
+        self.mBtn_add = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.mBtn_add.frame = CGRectMake([dm getInstance].width-Nav_width*2, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
+        [self.mBtn_add setImage:[UIImage imageNamed:@"appNav_add"] forState:UIControlStateNormal];
+        self.mBtn_add.tag = 2;
+        [self.mBtn_add addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
+        [self addSubview:self.mBtn_add];
+        
+        
+        //        //搜索按钮
+        //        self.mBtn_search = [UIButton buttonWithType:UIButtonTypeCustom];
+        //        self.mBtn_search.frame = CGRectMake([dm getInstance].width-Nav_width*3, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
+        //        [self.mBtn_search setImage:[UIImage imageNamed:@"appNav_search"] forState:UIControlStateNormal];
+        //        self.mBtn_search.tag = 3;
+        //        [self.mBtn_search addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
+        //        [self addSubview:self.mBtn_search];
         //名字
         self.mScrollV_name = [[UIScrollView alloc] initWithFrame:CGRectMake(15, 0+[dm getInstance].statusBar, [dm getInstance].width-11-Nav_width*2-10, Nav_height)];
         CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:15]];

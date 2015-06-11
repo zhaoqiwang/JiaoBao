@@ -17,6 +17,11 @@
 {
     [self setFrame];
 }
+
+-(void)dealloc1{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
     NSString *str = noti.object;
