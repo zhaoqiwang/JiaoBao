@@ -413,7 +413,7 @@
             }
         }
     }
-   // [self.mTableV_list reloadData];
+    [self.mTableV_list reloadData];
 }
 
 //发表文章按钮
