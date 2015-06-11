@@ -437,7 +437,8 @@
 }
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    self.imageCount = info.count;
+    self.imageCount = 1;
+    D("info_count = %ld",(unsigned long)info.count);
     [picker dismissViewControllerAnimated:YES completion:^{}];
     self.mProgressV.labelText = @"正在上传";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
@@ -450,7 +451,7 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    NSData *imageData = UIImageJPEGRepresentation(image,0.75);
+    NSData *imageData = UIImageJPEGRepresentation(image,0);
     NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
     D("图片路径是：%@",imgPath);
 
