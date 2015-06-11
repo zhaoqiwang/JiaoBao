@@ -18,6 +18,8 @@
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
+    self.finishSymbol = 0;
+    self.finishSybmol2 = 0;
     if (self) {
         // Initialization code
         self.frame = frame;
@@ -102,8 +104,8 @@
         //列表
 //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *view = [[UIView alloc]init];
         self.mTableV_list.tableFooterView = view;
@@ -534,6 +536,7 @@
 
 //我的班级文章列表
 -(void)AllMyClassArthList:(NSNotification *)noti{
+    self.finishSymbol++;
     [self.mProgressV hide:YES];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
@@ -553,18 +556,55 @@
             [self.mArr_classTop removeAllObjects];
         }
         self.mArr_classTop = array;
+        D("mArr_classTop_count = %ld",self.mArr_classTop.count);
+        if(self.finishSymbol == 2)
+        {
+            if(self.mTableV_list.delegate == nil)
+            {
+                self.mTableV_list.delegate=self;
+                self.mTableV_list.dataSource=self;
+            }
+            else
+            {
+                [self.mTableV_list reloadData];
+                
+                
+            }
+            //self.finishSymbol = 0;
+            
+        }
     }else{//个人
         //如果是刷新，将数据清除
         if (self.mInt_flag == 1) {
             [self.mArr_class removeAllObjects];
         }
         [self.mArr_class addObjectsFromArray:array];
+        D("mArr_class = %ld",self.mArr_class.count);
+
+        if(self.finishSymbol == 2)
+        {
+            if(self.mTableV_list.delegate == nil)
+            {
+                self.mTableV_list.delegate=self;
+                self.mTableV_list.dataSource=self;
+            }
+            else
+            {
+                [self.mTableV_list reloadData];
+                
+                
+            }
+            //self.finishSymbol = 0;
+            
+        }
+
     }
-    [self.mTableV_list reloadData];
+    //[self.mTableV_list reloadData];
 }
 
 //通知学校界面，获取到的单位和个人数据,本单位或本班
 -(void)UnitArthListIndex:(NSNotification *)noti{
+    self.finishSybmol2++;
     [self.mProgressV hide:YES];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
@@ -583,21 +623,48 @@
             [self.mArr_unitTop removeAllObjects];
         }
         self.mArr_unitTop = array;
+        if(self.finishSybmol2 == 2)
+        {
+            if(self.mTableV_list.delegate == nil)
+            {
+                self.mTableV_list.delegate=self;
+                self.mTableV_list.dataSource=self;
+            }
+            else
+            {
+                [self.mTableV_list reloadData];
+                
+                
+            }
+            self.finishSybmol2 = 0;
+            
+        }
+
     }else{
         //如果是刷新，将数据清除
         if (self.mInt_flag == 1) {
             [self.mArr_unit removeAllObjects];
         }
         [self.mArr_unit addObjectsFromArray:array];
-    }
-    NSLog(@"ffffff = %@",self.mTableV_list.delegate);
-    if(self.mTableV_list.delegate == nil)
-    {
-    self.mTableV_list.delegate=self;
-    self.mTableV_list.dataSource=self;
+        if(self.finishSybmol2 == 2)
+        {
+            if(self.mTableV_list.delegate == nil)
+            {
+                self.mTableV_list.delegate=self;
+                self.mTableV_list.dataSource=self;
+            }
+            else
+            {
+                [self.mTableV_list reloadData];
+                
+                
+            }
+            self.finishSybmol2 = 0;
+            
+        }
     }
 
-    [self.mTableV_list reloadData];
+
 }
 
 //取单位空间发表的最新或推荐文章,本地和全部
@@ -683,10 +750,16 @@
             }
         }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
             [self tableViewDownReloadData];
+            //[self.mTableV_list reloadData];
+
         }else if (self.mInt_index == 3&&self.mArr_attention.count==0){
             [self tableViewDownReloadData];
+            //[self.mTableV_list reloadData];
+
         }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
             [self tableViewDownReloadData];
+            //[self.mTableV_list reloadData];
+
         }
         
         
@@ -694,7 +767,7 @@
         D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
         
     }
-    [self.mTableV_list reloadData];
+    //[self.mTableV_list reloadData];
     //切换图片
     for (UIButton *tempBtn in self.mView_button.subviews) {
         if ([tempBtn isKindOfClass:[UIButton class]]) {
@@ -838,14 +911,26 @@
         {
             if(self.mArr_classTop.count == 0)
             {
-                return 50;
+                if(self.finishSymbol == 2)
+                {
+                    //self.finishSymbol = 0;
+                    return 50;
+
+                    
+                }
             }
         }
         if(section == 1)
         {
             if(self.mArr_class.count == 0)
             {
-                return 50;
+                if(self.finishSymbol == 2)
+                {
+                    self.finishSymbol = 0;
+
+                    return 50;
+                    
+                }
             }
         }
     }
@@ -1430,9 +1515,20 @@
 - (void)Loading {
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
+    self.mProgressV.tag++;
+    NSLog(@"tag = %ld",(long)self.mProgressV.tag);
     sleep(TIMEOUT);
+    NSLog(@"threadSymbol = %ld",(long)self.threadSymbol);
+
+    
+    if(self.threadSymbol == self.mProgressV.tag-1)
+    {
     self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = @"加载超时";
+    }
+    self.threadSymbol++;
+
+
     //    self.mProgressV.userInteractionEnabled = NO;
     sleep(2);
 }

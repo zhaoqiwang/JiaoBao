@@ -58,8 +58,8 @@
         }
         //列表
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:self.mTableV_list];
         [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
