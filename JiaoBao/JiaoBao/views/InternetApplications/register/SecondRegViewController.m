@@ -25,7 +25,7 @@
 @end
 
 @implementation SecondRegViewController
--(void)viewDidDisappear:(BOOL)animated
+-(void)viewWillDisappear:(BOOL)animated
 {
     //移除通知
     if(_observer1)
@@ -57,6 +57,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
     [self.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;

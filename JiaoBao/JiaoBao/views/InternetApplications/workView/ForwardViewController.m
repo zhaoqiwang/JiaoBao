@@ -62,6 +62,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [dm getInstance].notificationSymbol = 1;
 
     

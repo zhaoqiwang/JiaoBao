@@ -73,6 +73,7 @@
 @property(nonatomic,assign)NSUInteger finishSymbol,finishSybmol2;//两次连续请求全部完成的标志
 @property(nonatomic,strong)NSThread *thread;
 @property(nonatomic,assign)NSUInteger threadSymbol;
+@property(nonatomic,assign)BOOL symbol;
 
 - (id)initWithFrame1:(CGRect)frame;
 

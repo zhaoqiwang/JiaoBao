@@ -594,7 +594,7 @@
                 
                 
             }
-            //self.finishSymbol = 0;
+            self.finishSymbol = 0;
             
         }
 
@@ -767,7 +767,7 @@
         D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
         
     }
-    //[self.mTableV_list reloadData];
+    [self.mTableV_list reloadData];
     //切换图片
     for (UIButton *tempBtn in self.mView_button.subviews) {
         if ([tempBtn isKindOfClass:[UIButton class]]) {
@@ -911,7 +911,7 @@
         {
             if(self.mArr_classTop.count == 0)
             {
-                if(self.finishSymbol == 2)
+                //if(self.finishSymbol == 2)
                 {
                     //self.finishSymbol = 0;
                     return 50;
@@ -924,9 +924,9 @@
         {
             if(self.mArr_class.count == 0)
             {
-                if(self.finishSymbol == 2)
+                //if(self.finishSymbol == 2)
                 {
-                    self.finishSymbol = 0;
+                    //self.finishSymbol = 0;
 
                     return 50;
                     

@@ -24,6 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUpLoadResult:) name:@"getUpLoadResult" object:nil];
     self.datePicker.backgroundColor = [UIColor whiteColor];
