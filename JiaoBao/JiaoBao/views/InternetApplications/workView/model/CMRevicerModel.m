@@ -12,6 +12,7 @@
 @synthesize parentUnitRevicer,myUnitRevicer,subUnitRevicer,UnitClassRevicer,selitadmintomem,selitadmintogen,selitadmintostu,unitClassAdminRevicer;
 
 -(id)init{
+    self = [super init];
     self.parentUnitRevicer = [[NSMutableArray alloc] init];
     self.myUnitRevicer = [[myUnitRevicerModel alloc] init];
     self.subUnitRevicer = [[NSMutableArray alloc] init];

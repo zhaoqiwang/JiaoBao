@@ -20,10 +20,12 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 @synthesize mArr_list,mCollectionV_albums,mNav_navgationBar,mProgressV,mModel_albums,mArr_bigPhoto,mModel_person,mStr_flag;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //获取单位相册照片后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitPhotoByGroupID" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitPhotoByGroupID:) name:@"GetUnitPhotoByGroupID" object:nil];

@@ -132,7 +132,8 @@ NSString *kSection = @"Forward_section3";
         model = [unit.list objectAtIndex:1];
         
         
-    }        groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+    }
+        groupselit_selitModel *groupModel;
         groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
         if (groupModel.mInt_select == 0) {
             cell.mImgV_select.image = [UIImage imageNamed:@"blank.png"];
@@ -218,7 +219,7 @@ NSString *kSection = @"Forward_section3";
         model = [unit.list objectAtIndex:1];
         
         
-    }    groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+    }    groupselit_selitModel *groupModel ;
     groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
     if(groupModel.mInt_select == 1)
     {
@@ -251,7 +252,7 @@ NSString *kSection = @"Forward_section3";
     
     if(btn.tag == 2)
     {
-        groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+        groupselit_selitModel *groupModel ;
         myUnit *unit = [self.datasource objectAtIndex:section.tag];
 
         UserListModel *model;

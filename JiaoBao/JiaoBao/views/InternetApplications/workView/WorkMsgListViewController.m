@@ -18,6 +18,7 @@
 @synthesize mBtn_send,mTableV_detail,mTextF_text,mView_text,mArr_list,mNav_navgationBar,mProgressV,mArr_feeback,mArr_msg,mInt_down,mInt_up,mStr_lastID,mStr_name,mStr_tableID,mInt_page,mArr_attList,mInt_file,mInt_flag,mInt_our,mInt_msg,mArr_readList,mStr_flag;
 
 -(instancetype)init{
+    self = [super init];
     self.mArr_list = [[NSMutableArray alloc] init];
     self.mArr_msg = [[NSMutableArray alloc] init];
     self.mArr_feeback = [[NSMutableArray alloc] init];
@@ -27,6 +28,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //取单个用户发给我消息列表，new
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SendToMeMsgList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SendToMeMsgList:) name:@"SendToMeMsgList" object:nil];
@@ -50,6 +52,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

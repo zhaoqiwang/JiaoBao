@@ -16,6 +16,7 @@
 @synthesize mArr_list,mInt_index,mNav_navgationBar,mProgressV,mStr_classID,mStr_title,mTableV_list,mModel_notice;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad {

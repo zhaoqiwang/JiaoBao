@@ -12,6 +12,7 @@
 @synthesize myUnit,UnitParents,subUnits,UnitClass;
 
 -(id)init{
+    self = [super init];
     self.myUnit = [[myUnit alloc] init];
     self.UnitParents = [[NSMutableArray alloc] init];
     self.subUnits = [[NSMutableArray alloc] init];

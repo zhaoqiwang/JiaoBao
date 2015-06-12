@@ -23,10 +23,12 @@
 @synthesize mStr_flag,mBtn_name,mBtn_upload,mLab_name,mNav_navgationBar,mProgressV,mStr_groupID,mTableV_name,mTextF_name,mArr_albums,delegate;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //上传照片成功
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpLoadPhotoUnit" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpLoadPhotoUnit:) name:@"UpLoadPhotoUnit" object:nil];

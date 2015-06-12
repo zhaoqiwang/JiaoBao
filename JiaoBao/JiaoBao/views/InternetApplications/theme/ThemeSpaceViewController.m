@@ -17,10 +17,12 @@
 @synthesize mImgV_head,mBtn_add,mInt_index,mArr_list,mScrollV_img,mLab_albums,mLab_arth,mLab_detail,mNav_navgationBar,mScrollV_all,mTableV_arth,mProgressV,mStr_title,mStr_unitID,mArr_newPhoto,mPageC_page,mStr_tableID,mBtn_att;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //获取到得文章通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"themeSpace" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(themeSpace:) name:@"themeSpace" object:nil];

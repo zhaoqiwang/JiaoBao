@@ -12,6 +12,7 @@
 @synthesize mStr_classID,mStr_img_open_close,mStr_name,mModel_group,mModel_unit,mModel_people;
 
 -(id)init{
+    self = [super init];
     self.mModel_unit = [[myUnit alloc] init];
     self.mModel_group = [[UserListModel alloc] init];
     self.mModel_people = [[groupselit_selitModel alloc] init];

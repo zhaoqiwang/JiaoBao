@@ -91,7 +91,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillAppear:YES];
+    [super viewWillDisappear:YES];
     self.mapView.showsUserLocation = NO;
     [_locService stopUserLocationService];
 
@@ -428,6 +428,7 @@ errorCode:(BMKSearchErrorCode)error{
         NSString *time = [utils getLocalTime];
         dm *dmInstance = [dm getInstance];
         NSString *SignInTypeID = [[self.groupArr objectAtIndex:self.selectedRow]objectForKey:@"GroupID"];
+
 //        NSArray *SignInGroupIDArr =  [[self.groupArr objectAtIndex:self.selectedRow]objectForKey:@"GroupItems"];
 //    _SignInGroupID = [[SignInGroupIDArr objectAtIndex:0]objectForKey:@"SignInGroupID"];
     NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
@@ -443,14 +444,23 @@ errorCode:(BMKSearchErrorCode)error{
     NSString *Latitude = [NSString stringWithFormat:@"%f",BaidumapView.centerCoordinate.latitude];
     NSString *flagStr  = [NSString stringWithFormat:@"%d",flag];
     NSLog(@"SignInTypeID = %@",self.SignInGroupID);
-        NSArray *value= [NSArray arrayWithObjects:dateStr,longitude,Latitude,address,dmInstance.userInfo.UserID,dmInstance.userInfo.UserName,dmInstance.userInfo.UserType,dmInstance.userInfo.UnitID,dmInstance.mStr_unit, @"1.00.5",@"8295",SignInTypeID,self.SignInGroupID,year,month,day,@"0",SignInTypeName,SignInGroupName,@"0",@"", nil];
-    [utils logArr:value];
-        NSArray *key = [NSArray arrayWithObjects:@"SignInDateTime",@"Longitude",@"Latitude",@"Place",@"UserID",@"UserName",@"UserTypeID",@"UnitID",@"UnitName",@"MobileEdition",@"MobileModel",@"SignInTypeID",@"SignInGroupID",@"Year",@"Month",@"day",@"HandleFlag",@"SignInTypeName",@"SignInGroupName",@"SignInFlag",@"Remark", nil];
-    
-    
-    
-        NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
-        [[SignInHttp getInstance]CreateSignIn:dic];
+        @try {
+            NSArray *value= [NSArray arrayWithObjects:dateStr,longitude,Latitude,address,dmInstance.userInfo.UserID,dmInstance.userInfo.UserName,dmInstance.userInfo.UserType,dmInstance.userInfo.UnitID,dmInstance.mStr_unit, @"1.00.5",@"8295",SignInTypeID,self.SignInGroupID,year,month,day,@"0",SignInTypeName,SignInGroupName,@"0",@"", nil];
+            [utils logArr:value];
+            NSArray *key = [NSArray arrayWithObjects:@"SignInDateTime",@"Longitude",@"Latitude",@"Place",@"UserID",@"UserName",@"UserTypeID",@"UnitID",@"UnitName",@"MobileEdition",@"MobileModel",@"SignInTypeID",@"SignInGroupID",@"Year",@"Month",@"day",@"HandleFlag",@"SignInTypeName",@"SignInGroupName",@"SignInFlag",@"Remark", nil];
+            
+            
+            
+            NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
+            [[SignInHttp getInstance]CreateSignIn:dic];
+        }
+        @catch (NSException *exception) {
+            [SVProgressHUD showErrorWithStatus:@"数据异常"];
+        }
+        @finally {
+            
+        }
+
     }
     
         

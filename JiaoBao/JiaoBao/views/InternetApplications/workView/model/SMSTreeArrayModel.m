@@ -12,6 +12,7 @@
 @synthesize name,smsTree;
 
 -(id)init{
+    self = [super init];
     self.smsTree = [[NSMutableArray alloc] init];
     return self;
 }

@@ -12,6 +12,7 @@
 @synthesize ClassName,teachers_selit,studentgens_genselit;
 
 -(id)init{
+    self = [super init];
     self.studentgens_genselit = [[NSMutableArray alloc] init];
     return self;
 }

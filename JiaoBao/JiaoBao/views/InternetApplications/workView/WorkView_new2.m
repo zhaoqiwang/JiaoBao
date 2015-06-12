@@ -5,7 +5,6 @@
 //  Created by Zqw on 15-4-9.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
-
 #import "WorkView_new2.h"
 #import "Reachability.h"
 
@@ -20,6 +19,7 @@
         self.frame = frame;
         self.backgroundColor = [UIColor whiteColor];
         self.firstSymbol = NO;
+
         
         //取发给我消息的用户列表，new
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnReadMsgCell" object:nil];

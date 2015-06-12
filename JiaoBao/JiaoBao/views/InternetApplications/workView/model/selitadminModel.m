@@ -12,6 +12,7 @@
 @synthesize groupName,UnitType,UserList,SendFlag;
 
 -(id)init{
+    self = [super init];
     self.UserList = [[NSMutableArray alloc] init];
     return self;
 }

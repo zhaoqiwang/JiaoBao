@@ -349,7 +349,6 @@ static  SignInHttp*__instance;
         if([result isEqualToString:@"成功"])
         {
             [SVProgressHUD showSuccessWithStatus:@"签报成功"];
-
             
         }
         else

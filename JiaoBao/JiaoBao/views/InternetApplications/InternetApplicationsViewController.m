@@ -20,6 +20,7 @@
 @synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mProgressV,mInt_flag;
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     [dm getInstance].sectionSet = nil;
     [dm getInstance].tableSymbol =NO;
     if (self.mInt_flag == 0) {
@@ -29,6 +30,8 @@
         [[LoginSendHttp getInstance] getUnreadMessages2];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshExchangeView" object:nil];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
     //添加通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getIdentity" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getIdentity:) name:@"getIdentity" object:nil];
@@ -50,7 +53,12 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+-(void)changeCurUnit
+{
+    [[LoginSendHttp getInstance]GetCommPerm];
 }
 
 - (void)viewDidLoad {
@@ -189,7 +197,7 @@
         NSString *str_default = idenModel.DefaultUnitId;
         
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
-            NSMutableArray *array = [NSMutableArray array];
+            NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
                 Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
@@ -204,7 +212,7 @@
                 }
             }
         }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){
-            NSMutableArray *array = [NSMutableArray array];
+            NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
@@ -228,11 +236,11 @@
     }
     if (name.length==0) {
         for (int i=0; i<tempArr.count; i++) {
-            Identity_model *idenModel = [[Identity_model alloc] init];
+            Identity_model *idenModel ;
             idenModel = [tempArr objectAtIndex:i];
             NSString *name = @"";
            if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
-                NSMutableArray *array = [NSMutableArray array];
+               NSMutableArray *array ;
                 array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                 if (array.count>0) {
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
@@ -243,7 +251,7 @@
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
             }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){
-                NSMutableArray *array = [NSMutableArray array];
+                NSMutableArray *array ;
                 array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                 if (array.count>0) {
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];
@@ -286,7 +294,7 @@
 -(void)Nav_internetAppViewClickBtnWith:(UIButton *)btn{
     D("点击的button是  %ld",(long)btn.tag);
     if (btn.tag == 1) {//点击设置按钮
-        NSArray *menuItems = [NSArray array];
+        NSArray *menuItems ;
         if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
             menuItems =
             @[
@@ -621,6 +629,8 @@
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
+    [[LoginSendHttp getInstance]changeCurUnit];
+    
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;

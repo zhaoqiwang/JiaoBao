@@ -12,6 +12,7 @@
 @synthesize GroupName,MCount,groupselit_selit;
 
 -(id)init{
+    self = [super init];
     self.groupselit_selit = [[NSMutableArray alloc] init];
     return self;
 }

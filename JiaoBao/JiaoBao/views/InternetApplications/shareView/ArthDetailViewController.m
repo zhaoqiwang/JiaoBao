@@ -17,10 +17,12 @@
 @synthesize mNav_navgationBar,mWebV_js,Arthmodel,mImgV_click,mImgV_like,mImgV_View,mLab_click,mLab_like,mLab_name,mLab_time,mLab_title,mLab_View,mScrollV_view,mModel,mProgressV,mInt_from,mStr_tableID,mStr_title,mModel_notice,mBtn_send,mTextF_text,mView_text,mArr_feeback,mBtn_more,mInt_page,mTableV_detail,mModel_commentList,mModel_arthInfo;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //通知文章详情界面刷新
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ArthDetai" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArthDetai:) name:@"ArthDetai" object:nil];

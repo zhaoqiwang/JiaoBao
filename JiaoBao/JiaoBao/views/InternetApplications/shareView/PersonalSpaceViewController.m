@@ -21,10 +21,12 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 @synthesize mImgV_head,mBtn_add,mInt_index,mArr_list,mCollectionV_albums,mLab_albums,mLab_arth,mLab_detail,mNav_navgationBar,mScrollV_all,mTableV_arth,mModel_personal,mProgressV,mArr_NewPhoto,mLab_jiaobaohao;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //获取到得文章通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TopArthListIndex" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndex:) name:@"TopArthListIndex" object:nil];

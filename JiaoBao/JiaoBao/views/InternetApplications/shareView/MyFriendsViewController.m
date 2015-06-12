@@ -17,11 +17,13 @@
 @synthesize mArr_friends,mProgressV,mTableV_friends,mNav_navgationBar,mStr_title,mInt_flag;
 
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
     //获取到该用户的所有好友通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //获取到该用户的所有好友通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMyFriends" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetMyFriends:) name:@"GetMyFriends" object:nil];

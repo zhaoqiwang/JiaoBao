@@ -14,6 +14,7 @@
 @synthesize pinYin,userModel,groupModel;
 
 -(id)init{
+    self = [super init];
     self.userModel = [[UserInfoByUnitIDModel alloc] init];
     self.groupModel = [[ExchangeUnitGroupsModel alloc] init];
     return self;

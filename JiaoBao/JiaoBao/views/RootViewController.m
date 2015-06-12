@@ -19,7 +19,7 @@
 @synthesize mTabbar_view,mViewC_appcation,mViewC_center,mViewC_studentFile,mArr_views,mProgressV;
 
 -(void)viewWillAppear:(BOOL)animated{
-    
+    [super viewWillAppear:YES];
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     }
@@ -38,6 +38,7 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    [[RCIM sharedRCIM] setConnectionStatusDelegate:nil];
 }

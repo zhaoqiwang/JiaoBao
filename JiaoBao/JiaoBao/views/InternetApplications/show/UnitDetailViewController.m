@@ -17,6 +17,7 @@
 @synthesize mModel_unit,mNav_navgationBar,mWebV_js,mProgressV;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     mWebV_js.delegate = nil;
     [mWebV_js loadHTMLString:@"" baseURL:nil];
@@ -26,6 +27,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //将获取到的简介，推送到界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"Getintroduce" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Getintroduce:) name:@"Getintroduce" object:nil];

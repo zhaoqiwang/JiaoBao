@@ -24,8 +24,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     //界面消失时，移除通知
-    //[[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.mProgressV hide:YES];
 
     [self removeFromParentViewController];
@@ -44,6 +45,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)viewWillAppear:(BOOL)animated{
 
     [self setFrame];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
 
@@ -62,6 +65,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[LoginSendHttp getInstance]GetCommPerm];
     
     [dm getInstance].notificationSymbol = 1;
 
