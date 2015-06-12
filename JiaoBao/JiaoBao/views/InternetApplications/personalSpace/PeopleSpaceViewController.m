@@ -40,6 +40,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     //获取关联身份数据 并加入到相应的数组中
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];

@@ -11,12 +11,17 @@
 @implementation ChineseString
 
 @synthesize string;
-@synthesize pinYin,userModel,groupModel;
+@synthesize pinYin,userModel,groupModel,userSumClassModel,unitInfoModel,groupselit,myUnitModel,userListModel;
 
 -(id)init{
     self = [super init];
     self.userModel = [[UserInfoByUnitIDModel alloc] init];
     self.groupModel = [[ExchangeUnitGroupsModel alloc] init];
+    self.userSumClassModel = [[UserSumClassModel alloc] init];
+    self.unitInfoModel = [[UnitInfoModel alloc] init];
+    self.groupselit = [[groupselit_selitModel alloc] init];
+    self.myUnitModel = [[myUnit alloc] init];
+    self.userListModel = [[UserListModel alloc] init];
     return self;
 }
 

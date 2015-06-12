@@ -814,6 +814,21 @@ static LoginSendHttp *loginSendHttp = nil;
     [request startAsynchronous];
 }
 
+//注销登录接口
+-(void)loginHttpLogout{
+    NSString *urlString = [NSString stringWithFormat:@"%@Account/logout",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    request.tag = 31;//设置请求tag
+    self.flag_request = 0;
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
@@ -1423,6 +1438,7 @@ static LoginSendHttp *loginSendHttp = nil;
             [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:dic];
         }
         
+
 
     }
 }

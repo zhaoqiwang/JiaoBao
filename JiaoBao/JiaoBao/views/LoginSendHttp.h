@@ -57,6 +57,9 @@
 //单
 +(LoginSendHttp *)getInstance;
 
+//注销登录接口
+-(void)loginHttpLogout;
+
 //当注册时，向服务器获取当前时间 1登录2注册
 -(void)getTime:(NSString *)flag;
 
