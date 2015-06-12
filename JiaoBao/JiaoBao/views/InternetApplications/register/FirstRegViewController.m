@@ -26,6 +26,7 @@
 @implementation FirstRegViewController
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
     [dm getInstance].RegisterSymbol = NO;
     
     //移除通知
@@ -57,6 +58,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     //加通知
+    [super viewWillAppear:YES];
     [self addNotification];
 
     

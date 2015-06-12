@@ -18,10 +18,12 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //获取到的子单位通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MySubUnitInfo" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MySubUnitInfo:) name:@"MySubUnitInfo" object:nil];

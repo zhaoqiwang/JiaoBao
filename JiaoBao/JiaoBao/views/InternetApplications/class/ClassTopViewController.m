@@ -17,10 +17,13 @@
 @synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class,mStr_classID,mStr_navName,mArr_list_class,mTextF_text,mView_popup,mView_text,mBtn_send;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //通知学校界面，获取到的单位和个人数据,本单位或本班
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnitArthListIndex3" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnitArthListIndex3:) name:@"UnitArthListIndex3" object:nil];
@@ -434,7 +437,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] lastObject];
     }
     cell.tag = indexPath.row;
-    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *array ;
     if (self.mInt_unit_class == 3){
         array = [NSMutableArray arrayWithArray:self.mArr_list_class];
     }else{

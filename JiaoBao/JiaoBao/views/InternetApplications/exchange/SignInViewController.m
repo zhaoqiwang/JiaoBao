@@ -141,6 +141,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:YES];
 //    self.calendar = nil;
 //    self.calendarView = nil;
 //    self.menuView = nil;

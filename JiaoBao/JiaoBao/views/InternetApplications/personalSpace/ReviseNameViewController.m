@@ -18,10 +18,12 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //昵称是否重复
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerHttpCheckAccN" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerHttpCheckAccN:) name:@"registerHttpCheckAccN" object:nil];

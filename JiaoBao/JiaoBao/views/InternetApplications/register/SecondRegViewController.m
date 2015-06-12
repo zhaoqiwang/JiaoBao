@@ -27,6 +27,7 @@
 @implementation SecondRegViewController
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:YES];
     //移除通知
     if(_observer1)
     {

@@ -143,7 +143,7 @@
     //下级单位
     TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
     //判断是子类还是班级
-    NSMutableArray *sub_unit = [NSMutableArray array];
+    NSMutableArray *sub_unit ;
     if (self.mModel_unitList.subUnits.count>0) {
         sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
     }else{
@@ -286,7 +286,7 @@
         NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
         TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
         //判断是子类还是班级
-        NSMutableArray *sub_unit = [NSMutableArray array];
+        NSMutableArray *sub_unit ;
         if (self.mModel_unitList.subUnits.count>0) {
             sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
         }else{

@@ -17,10 +17,12 @@
 @synthesize mArr_list,mProgressV,mTableV_list,mNav_navgationBar,mInt_index,mStr_flag,mModel_unit;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //通知单位展示空间界面，将得到的值，传到界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnitSpaceArthList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnitSpaceArthList:) name:@"UnitSpaceArthList" object:nil];

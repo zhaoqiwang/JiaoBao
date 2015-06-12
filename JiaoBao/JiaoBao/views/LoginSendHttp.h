@@ -138,6 +138,7 @@
 
 //获取老师的关联班级
 -(void)login_GetmyUserClass:(NSString *)uid Accid:(NSString *)accid;
+-(void)GetCommPerm;
 
 @end
 

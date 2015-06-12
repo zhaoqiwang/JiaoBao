@@ -12,6 +12,7 @@
 @synthesize TabIDStr,UserName,MsgContent,RecDate,JiaoBaoHao,arrayAttList,arrayReaderList,arrayTrunToList,MsgTabIDStr,FeeBackMsg;
 
 -(id)init{
+    self = [super init];
     self.arrayAttList = [[NSMutableArray alloc] init];
     self.arrayReaderList = [[NSMutableArray alloc] init];
     self.arrayTrunToList = [[NSMutableArray alloc] init];

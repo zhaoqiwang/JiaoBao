@@ -18,10 +18,13 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //通知shareview界面，将得到的值，传到界面,最新更新，推荐
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TopArthListIndex" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndex:) name:@"TopArthListIndex" object:nil];

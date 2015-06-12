@@ -17,10 +17,12 @@
 @synthesize mNav_navgationBar,mTableV_list,mProgressV,mStr_title,mArr_list,mInt_index,mStr_flag,mStr_local;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //将获得到的单位信息，通知到界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpdateUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateUnitList:) name:@"UpdateUnitList" object:nil];

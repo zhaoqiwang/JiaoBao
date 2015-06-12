@@ -799,6 +799,20 @@ static LoginSendHttp *loginSendHttp = nil;
     [request setDelegate:self];
     [request startAsynchronous];
 }
+-(void)GetCommPerm
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@CommMsg/GetCommPerm",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    request.tag = 31;//设置请求tag
+    self.flag_request = 0;
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
 
 //注销登录接口
 -(void)loginHttpLogout{
@@ -1415,13 +1429,17 @@ static LoginSendHttp *loginSendHttp = nil;
             //传到事务界面显示
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:array];
         }
-    }else if (_request.tag == 31){//注销登录
+    }else if (_request.tag == 31)
+    {
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
-            NSString *str000 = [DESTool decryptWithText:str Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-            D("str00=login==31=>>>>==%@",str000);
-            
+            D("str00=login==31=>>>>==%@",str);
+            NSArray *dic = [str objectFromJSONString];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:dic];
         }
+        
+
+
     }
 }
 

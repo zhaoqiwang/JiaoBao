@@ -20,10 +20,12 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 @synthesize mArr_list,mStr_title,mNav_navgationBar,mCollectionV_unit,mScrollV_img,mProgressV,mModel_unit,mArr_newPhoto,mPageC_page;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidAppear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //单位最新前N张照片后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitNewPhoto" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitNewPhoto:) name:@"GetUnitNewPhoto" object:nil];

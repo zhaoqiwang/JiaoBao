@@ -25,6 +25,7 @@
 @synthesize mTableV_personalS,mNav_navgationBar,mProgressV,mArr_personalS;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
 //    移除通知
     [[NSNotificationCenter defaultCenter]removeObserver:_observer1];
     [[NSNotificationCenter defaultCenter]removeObserver:_observer2];
@@ -32,6 +33,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     [self setValueModel];
 
 }

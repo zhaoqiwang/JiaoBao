@@ -31,10 +31,12 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //通知界面刷新信息详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MsgDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MsgDetail:) name:@"MsgDetail" object:nil];
@@ -177,7 +179,7 @@
             for (int i=0; i<[dm getInstance].identity.count; i++) {
                 Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
                 if (i==0||i==1) {
-                    NSMutableArray *array = [NSMutableArray array];
+                    NSMutableArray *array ;
                     array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                     if (array.count>0) {
                         Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
@@ -187,7 +189,7 @@
                         }
                     }
                 }else if(i==2||i==3){
-                    NSMutableArray *array = [NSMutableArray array];
+                    NSMutableArray *array;
                     array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                     if (array.count>0) {
                         Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];

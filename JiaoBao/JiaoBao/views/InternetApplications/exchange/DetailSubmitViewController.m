@@ -213,7 +213,7 @@
 }
 
 - (IBAction)doneAction:(id)sender {
-    NSDate *date = [NSDate date];
+    //NSDate *date = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"HH:mm"];
     NSString *destDateString;

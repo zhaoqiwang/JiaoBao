@@ -20,10 +20,12 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 @synthesize mArr_list,mCollectionV_albums,mNav_navgationBar,mProgressV,mModel_unit,mStr_flag,mModel_personal,mArr_myselfAlbums,creatAlbums,uploadPhoto;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //获取单位相册后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitPGroup" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitPGroup:) name:@"GetUnitPGroup" object:nil];
@@ -169,7 +171,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     for (int i=0; i<[dm getInstance].identity.count; i++) {
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
         if (i==0||i==1) {
-            NSMutableArray *array = [NSMutableArray array];
+            NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
                 Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
@@ -178,7 +180,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
                 }
             }
         }else if(i==2||i==3){
-            NSMutableArray *array = [NSMutableArray array];
+            NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
@@ -323,7 +325,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         for (int i=0; i<[dm getInstance].identity.count; i++) {
             Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
             if (i==0||i==1) {
-                NSMutableArray *array = [NSMutableArray array];
+                NSMutableArray *array ;
                 array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                 for (int m=0; m<array.count; m++) {
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
@@ -332,7 +334,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
                     }
                 }
             }else if(i==2||i==3){
-                NSMutableArray *array = [NSMutableArray array];
+                NSMutableArray *array ;
                 array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                 for (int m=0; m<array.count; m++) {
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];

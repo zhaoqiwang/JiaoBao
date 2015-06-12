@@ -26,11 +26,13 @@ NSString *kCellID0 = @"Forward_cell";
 @synthesize mBtn_send,mCollentV_member,mNav_navgationBar,mTextF_text,mView_text,mArr_member,mProgressV;
 
 -(instancetype)init{
+    self = [super init];
     self.mArr_member = [[NSMutableArray alloc] init];
     return self;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //键盘事件
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
@@ -39,6 +41,7 @@ NSString *kCellID0 = @"Forward_cell";
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

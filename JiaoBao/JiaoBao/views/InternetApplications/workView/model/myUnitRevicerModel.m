@@ -12,6 +12,7 @@
 @synthesize UnitName,TabIDStr,UserList;
 
 -(id)init{
+    self = [super init];
     self.UserList = [[NSMutableArray alloc] init];
     return self;
 }

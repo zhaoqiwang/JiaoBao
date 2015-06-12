@@ -14,6 +14,7 @@
 @synthesize pinYin,userModel,groupModel,userSumClassModel,unitInfoModel,groupselit,myUnitModel,userListModel;
 
 -(id)init{
+    self = [super init];
     self.userModel = [[UserInfoByUnitIDModel alloc] init];
     self.groupModel = [[ExchangeUnitGroupsModel alloc] init];
     self.userSumClassModel = [[UserSumClassModel alloc] init];

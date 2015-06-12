@@ -21,10 +21,12 @@
 @synthesize mNav_navgationBar,mProgressV,mLab_name,mTextF_name,mLab_desInfo,mTextF_desInfo,mLab_type,mStr_flag,mStr_unitID,mStr_type,mBtn_type,mTableV_type,mTextF_type,delegate;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //创建单位相册回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CreateUnitPhotoGroup" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CreateUnitPhotoGroup:) name:@"CreateUnitPhotoGroup" object:nil];
@@ -55,7 +57,7 @@
     self.mTableV_type.frame = CGRectMake(self.mTextF_type.frame.origin.x, self.mTextF_type.frame.origin.y+self.mTextF_type.frame.size.height, self.mTextF_type.frame.size.width, 0);
     
 //    个人，0:私有；1：好友可访问；2：关注可访问；3：游客可访问，单位：0无限制，1单位内可见
-    NSMutableArray *array = [NSMutableArray array];
+    NSMutableArray *array ;
     if ([self.mStr_flag intValue] == 1) {
         array = [NSMutableArray arrayWithObjects:@"别人不可访问",@"好友可访问",@"关注可访问",@"游客可访问", nil];
     }else{

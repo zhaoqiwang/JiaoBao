@@ -12,6 +12,7 @@
 @synthesize selitunitclassidtogen,selitunitclassidtostu,selitunitclassadmintogen,selitunitclassadmintostu;
 
 -(id)init{
+    self = [super init];
     self.selitunitclassidtogen = [[NSMutableArray alloc] init];
     self.selitunitclassidtostu = [[NSMutableArray alloc] init];
     self.selitunitclassadmintogen = [[NSMutableArray alloc] init];

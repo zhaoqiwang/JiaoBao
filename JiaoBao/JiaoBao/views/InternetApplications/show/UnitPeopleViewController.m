@@ -18,10 +18,12 @@
 @synthesize mNav_navgationBar,mTableV_list,mArr_list,mModel_unit,mInt_index,mArr_sum,mProgressV;
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //单位分组的请求
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnitPeopleGroupList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnitPeopleGroupList:) name:@"UnitPeopleGroupList" object:nil];

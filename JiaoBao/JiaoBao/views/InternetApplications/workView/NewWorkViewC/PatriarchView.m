@@ -23,10 +23,10 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
 
         }
-        for(int i=0;i<model.smsTree.count;i++)
-        {
-            SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
-        }
+//        for(int i=0;i<model.smsTree.count;i++)
+//        {
+//            SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
+//        }
         
     }
 

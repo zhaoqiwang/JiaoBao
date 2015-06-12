@@ -18,10 +18,12 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //发送注册请求
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerGetTime" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerGetTime:) name:@"registerGetTime" object:nil];

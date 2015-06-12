@@ -244,6 +244,7 @@
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"meinv.png"]];
         imgView.frame = CGRectMake(100, 5+[dm getInstance].statusBar, 30, 30);
         [self addSubview:imgView];
+        [imgView release];
         
         UILabel *label = [[UILabel alloc] init];
         label.backgroundColor = [UIColor clearColor];
@@ -253,6 +254,7 @@
         label.frame = CGRectMake(100+30+10, 5+[dm getInstance].statusBar, 100, 18);
         label.textAlignment = NSTextAlignmentLeft;
         [self addSubview:label];
+        [label release];
         
         UILabel *label1 = [[UILabel alloc] init];
         label1.textColor = [UIColor whiteColor];
@@ -262,6 +264,7 @@
         label1.frame = CGRectMake(100+30+10, 5+18+[dm getInstance].statusBar, 100, 13);
         label1.textAlignment = NSTextAlignmentLeft;
         [self addSubview:label1];
+        [label1 release];
     }
     
     return self;

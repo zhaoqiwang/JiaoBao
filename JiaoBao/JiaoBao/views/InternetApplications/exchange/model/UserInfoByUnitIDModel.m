@@ -12,6 +12,7 @@
 @synthesize isAdmin,UserID,UserName,AccID,GroupFlag;
 
 -(id)init{
+    self = [super init];
     self.GroupFlag = [[NSMutableArray alloc] init];
     self.isAdmin = @"";
     self.UserID = @"";

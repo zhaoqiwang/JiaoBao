@@ -12,6 +12,7 @@
 @synthesize RoleIdentity,RoleIdName,UserUnits,UserClasses,DefaultUnitId;
 
 -(id)init{
+    self = [super init];
     self.UserUnits = [[NSMutableArray alloc] init];
     self.UserClasses = [[NSMutableArray alloc] init];
     return self;
