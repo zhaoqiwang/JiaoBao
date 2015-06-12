@@ -29,10 +29,7 @@
         [[LoginSendHttp getInstance] getUnreadMessages1];
         [[LoginSendHttp getInstance] getUnreadMessages2];
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+
     //添加通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getIdentity" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getIdentity:) name:@"getIdentity" object:nil];
@@ -57,10 +54,7 @@
     [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
--(void)changeCurUnit
-{
-    [[LoginSendHttp getInstance]GetCommPerm];
-}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -633,7 +627,7 @@
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
-    [[LoginSendHttp getInstance]changeCurUnit];
+    
     
     //检查当前网络是否可用
     if ([self checkNetWork]) {
@@ -641,8 +635,8 @@
     }
     D("点击新建事务、发布通知按钮");
 
-//    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
-//    [utils pushViewController:newWork animated:YES];
+    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
+    [utils pushViewController:newWork animated:YES];
 }
 
 //个人中心
