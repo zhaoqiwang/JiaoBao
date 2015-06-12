@@ -807,16 +807,6 @@
 		F7F460B81AE891C70069820F /* triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B51AE891C70069820F /* triangle@3x.png */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		A7595EBC1A5FC2F40027848E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A7595E8D1A5FC2F30027848E /* MWPhotoBrowser.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4C6F96C414AF704100F8389A;
-			remoteInfo = MWPhotoBrowser;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviseNameViewController.h; path = views/InternetApplications/personalSpace/ReviseNameViewController.h; sourceTree = "<group>"; };
 		4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviseNameViewController.m; path = views/InternetApplications/personalSpace/ReviseNameViewController.m; sourceTree = "<group>"; };
@@ -1331,7 +1321,6 @@
 		A7595E681A5FC2F30027848E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A7595E8B1A5FC2F30027848E /* MWPhotoBrowser-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MWPhotoBrowser-Prefix.pch"; sourceTree = "<group>"; };
 		A7595E8C1A5FC2F30027848E /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MWPhotoBrowser.bundle; sourceTree = "<group>"; };
-		A7595E8D1A5FC2F30027848E /* MWPhotoBrowser.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = MWPhotoBrowser.xcodeproj; sourceTree = "<group>"; };
 		A7595EBE1A5FC55E0027848E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		A7595EC01A5FC56A0027848E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A75A37341A087C76009D2464 /* ForwardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ForwardViewController.h; path = views/InternetApplications/workView/ForwardViewController.h; sourceTree = "<group>"; };
@@ -2860,7 +2849,6 @@
 				A7595E411A5FC2F30027848E /* Libraries */,
 				A7595E8B1A5FC2F30027848E /* MWPhotoBrowser-Prefix.pch */,
 				A7595E8C1A5FC2F30027848E /* MWPhotoBrowser.bundle */,
-				A7595E8D1A5FC2F30027848E /* MWPhotoBrowser.xcodeproj */,
 			);
 			name = MWPhotoBrowser;
 			path = Common/MWPhotoBrowser;
@@ -2962,14 +2950,6 @@
 				A7595E681A5FC2F30027848E /* README.md */,
 			);
 			path = SDWebImage;
-			sourceTree = "<group>";
-		};
-		A7595E8E1A5FC2F30027848E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A7595EBD1A5FC2F40027848E /* libMWPhotoBrowser.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		A75E6EA21ABA6A0100B51B18 /* class */ = {
@@ -3902,28 +3882,12 @@
 			mainGroup = A755E66419F2492700BBDF3D;
 			productRefGroup = A755E66E19F2492700BBDF3D /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A7595E8E1A5FC2F30027848E /* Products */;
-					ProjectRef = A7595E8D1A5FC2F30027848E /* MWPhotoBrowser.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				A755E66C19F2492700BBDF3D /* JiaoBao */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		A7595EBD1A5FC2F40027848E /* libMWPhotoBrowser.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMWPhotoBrowser.a;
-			remoteRef = A7595EBC1A5FC2F40027848E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A755E66B19F2492700BBDF3D /* Resources */ = {
