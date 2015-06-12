@@ -24,6 +24,10 @@
     [self.rootView.moreUnitView dealloc1];
     [self.rootView.homeClassView dealloc1];
 }
+-(void)changeCurUnit
+{
+    [[LoginSendHttp getInstance]GetCommPerm];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +35,10 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
     [[NSNotificationCenter defaultCenter]addObserverForName:@"" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
     }];
@@ -53,30 +60,7 @@
     self.rootView = [[NewWorkRootScrollView alloc] initWithFrame];
     [self.view addSubview:self.rootView];
 //    [self.view addSubview:[NewWorkRootScrollView shareInstance]];
-    NSString *unitCommright= [self.rightDic objectForKey:@"UnitCommRight"];
-    if(unitCommright )
-    {
-        self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
-        //forward.mStr_navName = @"新建事务";
-        //forward.mInt_forwardFlag = 1;
-        [LoginSendHttp getInstance].mInt_forwardFlag = 1;
-        self.forward.mInt_forwardAll = 2;
-        self.forward.mInt_flag = 1;
-        self.forward.mInt_all = 2;
-        //forward.mInt_where = 0;
-        [self addChildViewController:self.forward];
-        [self.forward didMoveToParentViewController:self];
-        [self.rootView addSubview:self.forward.view];
-        
-    }
-    else
-    {
-                self.mProgressV.mode = MBProgressHUDModeCustomView;
-                self.mProgressV.labelText = @"没有权限";
-                [self.mProgressV show:YES];
-                [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-        
-    }
+
 
     //[self.forward didMoveToParentViewController:self];
 
@@ -107,11 +91,15 @@
         NSLog(@"tabid = %@ %@",[dm getInstance].mModel_unitList.myUnit.TabIDStr,model.myUnit);
         [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
         
+
+        
     }
 
 
     
 }
+
+
 - (void)Loading {
     sleep(TIMEOUT);
     [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
@@ -136,23 +124,37 @@
 
 
 }
-//-(void)GetCommPerm:(id)sender
-//{
-//    NSDictionary *dic = [sender object];
-//    NSString *unitCommright= [dic objectForKey:@"UnitCommRight"];
-//    if([unitCommright isEqualToString:@"true"])
-//    {
-//        
-//    }
-//    else
-//    {
-//        self.mProgressV.mode = MBProgressHUDModeCustomView;
-//        self.mProgressV.labelText = @"没有权限";
-//        [self.mProgressV show:YES];
-//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-//    }
-//    
-//}
+-(void)GetCommPerm:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
+    if(unitCommright ==NO)
+    {
+        self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
+        //forward.mStr_navName = @"新建事务";
+        //forward.mInt_forwardFlag = 1;
+        [LoginSendHttp getInstance].mInt_forwardFlag = 1;
+        self.forward.mInt_forwardAll = 2;
+        self.forward.mInt_flag = 1;
+        self.forward.mInt_all = 2;
+        //forward.mInt_where = 0;
+        [self addChildViewController:self.forward];
+        [self.forward didMoveToParentViewController:self];
+        [self.rootView addSubview:self.forward.view];
+        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+
+        
+    }
+    else
+    {
+        [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+        [dm getInstance].progress.labelText = @"没有权限";
+        [[dm getInstance].progress show:YES];
+        [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        
+    }
+    
+}
 -(void)noMore{
     sleep(1);
 }
