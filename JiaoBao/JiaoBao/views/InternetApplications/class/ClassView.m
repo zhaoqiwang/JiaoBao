@@ -520,12 +520,14 @@
 
 //通知学校界面，切换成功身份成功，清空数组
 -(void)changeCurUnit{
-    [self clearArray];
-    [self.mTableV_list reloadData];
-    //重新获取数据
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.tag = self.mInt_index;
-    [self btnChange:btn];
+    if (self.mInt_changeUnit ==1) {
+        [self clearArray];
+        [self.mTableV_list reloadData];
+        //重新获取数据
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.tag = self.mInt_index;
+        [self btnChange:btn];
+    }
 }
 
 //获取到头像后，更新界面

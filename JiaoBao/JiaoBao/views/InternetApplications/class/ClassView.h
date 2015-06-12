@@ -43,6 +43,7 @@
     UIView *mView_text;//放输入框
     UITextField *mTextF_text;//输入框
     UIButton *mBtn_send;//发送按钮
+    int mInt_changeUnit;//判断是主动切换单位请求1，还是进入新建事务0，做是否发生获取文章请求用
 }
 
 @property (nonatomic,strong) UIView *mView_button;//放四个按钮
@@ -74,6 +75,7 @@
 @property(nonatomic,strong)NSThread *thread;
 @property(nonatomic,assign)NSUInteger threadSymbol;
 @property(nonatomic,assign)BOOL symbol;
+@property (nonatomic,assign) int mInt_changeUnit;
 
 - (id)initWithFrame1:(CGRect)frame;
 
