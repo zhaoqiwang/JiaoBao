@@ -143,6 +143,8 @@
 @end
 
 @protocol LoginSendHttpDelegate <NSObject>
+
+@optional
 //告知登录界面
 -(void)LoginSendHttpMember:(NSString *)str;
 
