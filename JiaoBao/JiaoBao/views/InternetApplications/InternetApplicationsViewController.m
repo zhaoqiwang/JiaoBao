@@ -469,6 +469,8 @@
         if ([self checkNetWork]) {
             return;
         }
+        //记录当前为主动切换单位请求
+        [InternetAppRootScrollView shareInstance].classView.mInt_changeUnit =1;
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:indexPath.row];
@@ -630,6 +632,8 @@
 
 //新建事务
 - (void) pushMenuItem6:(id)sender{
+    //记录当前为被动切换单位请求
+    [InternetAppRootScrollView shareInstance].classView.mInt_changeUnit =0;
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
