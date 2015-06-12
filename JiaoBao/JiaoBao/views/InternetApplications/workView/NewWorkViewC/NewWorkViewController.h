@@ -23,6 +23,7 @@
 @property(nonatomic,strong)NewWorkTopScrollView *top;
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NewWorkRootScrollView *rootView;
+@property(nonatomic,strong)NSDictionary *rightDic;
 
 
 @end

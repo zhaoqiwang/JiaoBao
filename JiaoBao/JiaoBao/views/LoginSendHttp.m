@@ -808,7 +808,7 @@ static LoginSendHttp *loginSendHttp = nil;
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
-    request.tag = 31;//设置请求tag
+    request.tag = 32;//设置请求tag
     self.flag_request = 0;
     [request setDelegate:self];
     [request startAsynchronous];
@@ -1429,11 +1429,11 @@ static LoginSendHttp *loginSendHttp = nil;
             //传到事务界面显示
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:array];
         }
-    }else if (_request.tag == 31)
+    }else if (_request.tag == 32)
     {
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
-            D("str00=login==31=>>>>==%@",str);
+            D("str00=login==32=>>>>==%@",str);
             NSArray *dic = [str objectFromJSONString];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:dic];
         }

@@ -11,6 +11,8 @@
 
 @interface NewWorkViewController ()
 
+@property(nonatomic,strong)ForwardViewController *forward;
+
 @end
 
 @implementation NewWorkViewController
@@ -40,6 +42,9 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
     //top
     self.top = [[NewWorkTopScrollView alloc] initWithFrame];
     [self.view addSubview:self.top];
@@ -48,19 +53,34 @@
     self.rootView = [[NewWorkRootScrollView alloc] initWithFrame];
     [self.view addSubview:self.rootView];
 //    [self.view addSubview:[NewWorkRootScrollView shareInstance]];
-    
-    ForwardViewController *forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
-    //forward.mStr_navName = @"新建事务";
-    //forward.mInt_forwardFlag = 1;
-    [LoginSendHttp getInstance].mInt_forwardFlag = 1;
-    forward.mInt_forwardAll = 2;
-    forward.mInt_flag = 1;
-    forward.mInt_all = 2;
-    //forward.mInt_where = 0;
-    [self addChildViewController:forward];
-    [forward didMoveToParentViewController:self];
+    NSString *unitCommright= [self.rightDic objectForKey:@"UnitCommRight"];
+    if(unitCommright )
+    {
+        self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
+        //forward.mStr_navName = @"新建事务";
+        //forward.mInt_forwardFlag = 1;
+        [LoginSendHttp getInstance].mInt_forwardFlag = 1;
+        self.forward.mInt_forwardAll = 2;
+        self.forward.mInt_flag = 1;
+        self.forward.mInt_all = 2;
+        //forward.mInt_where = 0;
+        [self addChildViewController:self.forward];
+        [self.forward didMoveToParentViewController:self];
+        [self.rootView addSubview:self.forward.view];
+        
+    }
+    else
+    {
+                self.mProgressV.mode = MBProgressHUDModeCustomView;
+                self.mProgressV.labelText = @"没有权限";
+                [self.mProgressV show:YES];
+                [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        
+    }
 
-    [self.rootView addSubview:forward.view];
+    //[self.forward didMoveToParentViewController:self];
+
+    
     [dm getInstance].notificationSymbol = 1;
     NSLog(@"utype = %d",[dm getInstance].uType);
     [[LoginSendHttp getInstance]changeCurUnit];
@@ -115,6 +135,26 @@
     [utils popViewControllerAnimated:YES];
 
 
+}
+//-(void)GetCommPerm:(id)sender
+//{
+//    NSDictionary *dic = [sender object];
+//    NSString *unitCommright= [dic objectForKey:@"UnitCommRight"];
+//    if([unitCommright isEqualToString:@"true"])
+//    {
+//        
+//    }
+//    else
+//    {
+//        self.mProgressV.mode = MBProgressHUDModeCustomView;
+//        self.mProgressV.labelText = @"没有权限";
+//        [self.mProgressV show:YES];
+//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//    }
+//    
+//}
+-(void)noMore{
+    sleep(1);
 }
 
 - (void)didReceiveMemoryWarning {

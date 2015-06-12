@@ -41,12 +41,29 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     }
 
 }
+//-(void)GetCommPerm:(id)sender
+//{
+//    NSDictionary *dic = [sender object];
+//    NSString *unitCommright= [dic objectForKey:@"UnitCommRight"];
+//    if([unitCommright isEqualToString:@"true"])
+//    {
+//        
+//    }
+//    else
+//    {
+//        self.mProgressV.mode = MBProgressHUDModeCustomView;
+//        self.mProgressV.labelText = @"没有权限";
+//        [self.mProgressV show:YES];
+//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//    }
+//    
+//}
 
 -(void)viewWillAppear:(BOOL)animated{
 
     [self setFrame];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
 
@@ -65,7 +82,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[LoginSendHttp getInstance]GetCommPerm];
+    //[[LoginSendHttp getInstance]GetCommPerm];
     
     [dm getInstance].notificationSymbol = 1;
 

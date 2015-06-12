@@ -29,6 +29,8 @@
         [[LoginSendHttp getInstance] getUnreadMessages1];
         [[LoginSendHttp getInstance] getUnreadMessages2];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
     //添加通知
@@ -638,16 +640,9 @@
         return;
     }
     D("点击新建事务、发布通知按钮");
-//    ForwardViewController *forward = [[ForwardViewController alloc] init];
-//    forward.mStr_navName = @"新建事务";
-//    forward.mInt_forwardFlag = 1;
-//    forward.mInt_forwardAll = 2;
-//    forward.mInt_flag = 1;
-//    forward.mInt_all = 2;
-//    forward.mInt_where = 0;
-//    [utils pushViewController:forward animated:YES];
-    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
-    [utils pushViewController:newWork animated:YES];
+
+//    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
+//    [utils pushViewController:newWork animated:YES];
 }
 
 //个人中心
@@ -706,6 +701,26 @@
     friends.mStr_title = @"关注空间";
     friends.mInt_flag = 2;
     [utils pushViewController:friends animated:YES];
+}
+-(void)GetCommPerm:(id)sender
+{
+    NSDictionary *dic = [sender object];
+//    NSString *unitCommright= [dic objectForKey:@"UnitCommRight"];
+//    if([unitCommright isEqualToString:@"true"])
+//    {
+//        //[self.forward didMoveToParentViewController:self];
+//    }
+//    else
+//    {
+//        self.mProgressV.mode = MBProgressHUDModeCustomView;
+//        self.mProgressV.labelText = @"没有权限";
+//        [self.mProgressV show:YES];
+//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//    }
+    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
+    newWork.rightDic = dic;
+    [utils pushViewController:newWork animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {
