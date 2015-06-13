@@ -19,6 +19,7 @@
 #import "MBProgressHUD.h"
 #import "ChineseString.h"
 #import "pinyin.h"
+#import "RightModel.h"
 
 @interface MoreUnitWorkView : UIView<NewWorkTopViewProtocol,UITableViewDataSource,UITableViewDelegate,TreeView_Level0_CellDelegate,MBProgressHUDDelegate>{
     UIScrollView *mScrollV_all;//放所有控件
@@ -32,6 +33,7 @@
     int mInt_requestCount2;//请求数量
     MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否第一次进入此界面，发送数据请求
+    RightModel *mModel_right;//发送权限
 }
 
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//放所有控件
@@ -45,6 +47,7 @@
 @property (nonatomic,assign) int mInt_requestCount2;//请求数量
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_flag;//判断是否第一次进入此界面，发送数据请求
+@property (nonatomic,strong) RightModel *mModel_right;//发送权限
 
 
 - (id)initWithFrame1:(CGRect)frame;
