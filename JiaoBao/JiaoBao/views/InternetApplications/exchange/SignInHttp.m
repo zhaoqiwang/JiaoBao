@@ -111,16 +111,14 @@ static  SignInHttp*__instance;
         [request addRequestHeader:@"Content-Type" value:@"text/xml"];
         [request addRequestHeader:@"charset" value:@"UTF8"];
         [request setRequestMethod:@"POST"];
-        NSLog(@"jsonStr = %@",jsonStr);
         [request addPostValue:jsonStr forKey:@"Data"];
         [request setDelegate:self];
         [request startAsynchronous];
         request.tag = 1;
         NSError *error1 = [request error];
         if (!error1) {
-            NSString *response = [request responseString];
+            //NSString *response = [request responseString];
             
-            NSLog(@"Test：%@",response);
         }
     }
     
@@ -151,7 +149,6 @@ static  SignInHttp*__instance;
 
 -(void)getUnitGroups:(NSUInteger)UID
 {
-    NSLog(@"UID = %ld",UID);
     NSString *urlString = [NSString stringWithFormat:@"%@/Basic/getUnitGroups",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -183,16 +180,14 @@ static  SignInHttp*__instance;
         [request addRequestHeader:@"Content-Type" value:@"text/xml"];
         [request addRequestHeader:@"charset" value:@"UTF8"];
         [request setRequestMethod:@"POST"];
-        NSLog(@"jsonStr = %@",jsonStr);
         [request addPostValue:jsonStr forKey:@"SignInJsonData"];
         [request setDelegate:self];
         [request startAsynchronous];
         request.tag = 10;
         NSError *error1 = [request error];
         if (!error1) {
-            NSString *response = [request responseString];
+            //NSString *response = [request responseString];
             
-            NSLog(@"Test：%@",response);
         }
 
     }
@@ -232,7 +227,6 @@ static  SignInHttp*__instance;
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
         NSDictionary *dicList = [dataString objectFromJSONString];
-        NSLog(@"dataString = %@",dataString);
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetDelayedTime" object:dicList];
         
     }
@@ -241,7 +235,6 @@ static  SignInHttp*__instance;
         NSData *responseData = [_request responseData];
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSLog(@"UpLoadResult = %@",dataString);
         NSDictionary *dicList = [dataString objectFromJSONString];
 
         [[NSNotificationCenter defaultCenter]postNotificationName:@"getUpLoadResult" object:dicList];
@@ -252,11 +245,9 @@ static  SignInHttp*__instance;
         NSData *responseData = [_request responseData];
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSLog(@"dataString = %@",dataString);
 
         NSDictionary *dicList = [dataString objectFromJSONString];
         NSArray *dataList = [dicList  objectForKey:@"Data"];
-        NSLog(@"dataList = %@",dataList);
         if(![dataList isEqual:[NSNull null]])
         {
 
@@ -271,11 +262,9 @@ static  SignInHttp*__instance;
         NSData *responseData = [_request responseData];
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSLog(@"tag3 = %@",dataString);
         NSDictionary *UnitGroupInfoDic = [dataString objectFromJSONString];
         NSString *dataStr = [UnitGroupInfoDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:dataStr Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        NSLog(@"str000= %@",str000);
         NSArray *groupArr = [str000 objectFromJSONString];
 
         
@@ -287,11 +276,9 @@ static  SignInHttp*__instance;
         NSData *responseData = [_request responseData];
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSLog(@"dataString = %@",dataString);
         
         NSDictionary *dicList = [dataString objectFromJSONString];
         NSDictionary *dicData = [dicList  objectForKey:@"Data"];
-        NSLog(@"dicData = %@",dicData);
         if(![dicData isEqual:[NSNull null]])
         {
             
@@ -304,11 +291,9 @@ static  SignInHttp*__instance;
         NSData *responseData = [_request responseData];
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSLog(@"dataString = %@",dataString);
         
         NSDictionary *dicList = [dataString objectFromJSONString];
         NSDictionary *dicData = [dicList  objectForKey:@"Data"];
-        NSLog(@"dicData = %@",dicData);
         if(![dicData isEqual:[NSNull null]])
         {
             
@@ -323,7 +308,6 @@ static  SignInHttp*__instance;
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
         NSDictionary *dicList = [dataString objectFromJSONString];
-        NSLog(@"dataString = %@",dataString);
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetTime" object:dicList];
         
     }
@@ -333,7 +317,6 @@ static  SignInHttp*__instance;
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
         NSDictionary *dicList = [dataString objectFromJSONString];
-        NSLog(@"dataString = %@",dataString);
         NSArray *arr = [dicList objectForKey:@"Data"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
         
@@ -344,7 +327,6 @@ static  SignInHttp*__instance;
         NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
         NSDictionary *dicList = [dataString objectFromJSONString];
-        NSLog(@"dataString = %@",dataString);
         NSString *result = [dicList objectForKey:@"ResultDesc"];
         if([result isEqualToString:@"成功"])
         {

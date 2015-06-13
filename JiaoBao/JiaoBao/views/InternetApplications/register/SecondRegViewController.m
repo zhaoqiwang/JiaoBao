@@ -216,7 +216,6 @@
         return;
         
     }
-    NSLog(@"registerSymbol = %d",[dm getInstance].RegisterSymbol);
     if(self.forgetPWSymbol == YES)
     {
         if ([self checkNetWork]) {

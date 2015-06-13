@@ -19,10 +19,12 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //通知界面刷新消息cell
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnReadMsgCell" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnReadMsgCell:) name:@"UnReadMsgCell" object:nil];

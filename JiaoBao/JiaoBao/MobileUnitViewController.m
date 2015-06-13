@@ -52,7 +52,6 @@
     //获取手机自动匹配的单位数据
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSArray *arr = note.object;
-        NSLog(@"arr_count = %ld",arr.count);
 
         self.unitArr = arr;
         [self.tableView reloadData];
@@ -97,7 +96,6 @@
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"self.unitArr = %ld",self.unitArr.count);
     
 
         return self.unitArr.count;

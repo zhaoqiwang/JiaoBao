@@ -157,7 +157,6 @@
 
 //点击发送按钮
 -(void)clickSendBtn{
-    NSLog(@"text = %@",self.mTextF_text.text);
 
     //检查当前网络是否可用
     if ([self checkNetWork]) {

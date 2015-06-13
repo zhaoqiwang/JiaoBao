@@ -67,7 +67,6 @@
             for(int i=0;i<model.UserUnits.count;i++)
             {
                 Identity_UserUnits_model *model2 = [model.UserUnits objectAtIndex:i];
-                NSLog(@"identity_name = %@",model2.UnitName);
                 [mArr addObject:model2.UnitName];
                 [mArr2 addObject:model.RoleIdName];
 
@@ -100,7 +99,6 @@
 
     
     //表格
-    NSLog(@"height = %ld",70+(self.mArr_personalS.count-1)*44);
     self.mTableV_personalS.frame = CGRectMake(0, 0, [dm getInstance].width, 70+2*44);
     
     self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y, [dm getInstance].width, 20*self.unitArr.count+40);

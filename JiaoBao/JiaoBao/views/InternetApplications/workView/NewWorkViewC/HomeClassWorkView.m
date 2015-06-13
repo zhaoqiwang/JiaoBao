@@ -71,7 +71,8 @@
                 model = [unit.list objectAtIndex:0];
                 
                 
-            }            groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+            }
+            groupselit_selitModel *groupModel ;
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
                 groupModel = [model.groupselit_selit objectAtIndex:i];
@@ -279,7 +280,6 @@
 
 //点击发送按钮
 -(void)mBtn_send:(UIButton *)btn{
-    NSLog(@"notificationSymbol = %lu",(unsigned long)[dm getInstance].notificationSymbol);
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -320,7 +320,7 @@ if([dm getInstance].notificationSymbol == 100)
 
                 
             }
-            groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+            groupselit_selitModel *groupModel ;
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
                 groupModel = [model.groupselit_selit objectAtIndex:i];
@@ -338,8 +338,6 @@ if([dm getInstance].notificationSymbol == 100)
 
         
     }
-        int num = (int)genArr.count;
-        NSLog(@"num = %d",num);
         [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
 
 
@@ -363,7 +361,7 @@ if([dm getInstance].notificationSymbol == 100)
                 model = [unit.list objectAtIndex:0];
                 
                 
-            }            groupselit_selitModel *groupModel = [[groupselit_selitModel alloc] init];
+            }            groupselit_selitModel *groupModel;
             for(int i=0;i<model.groupselit_selit.count;i++)
             {
                 groupModel = [model.groupselit_selit objectAtIndex:i];
@@ -380,9 +378,8 @@ if([dm getInstance].notificationSymbol == 100)
             }
             
         }
-        int num = (int)genArr.count;
+        //int num = (int)genArr.count;
         
-        NSLog(@"num = %d",num);
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
     }
@@ -399,7 +396,6 @@ if([dm getInstance].notificationSymbol == 100)
                     if (i == 1)
                     {
                         [genArr addObject:tempModel.id0];
-                        NSLog(@"id0 = %@",tempModel.id0);
                         
                     }
 
@@ -431,7 +427,6 @@ if([dm getInstance].notificationSymbol == 100)
                         if(tempModel.mInt_select == 1)
                         {
                         [genArr addObject:tempModel.id0];
-                        NSLog(@"id0 = %@",tempModel.id0);
 
                         }
                         

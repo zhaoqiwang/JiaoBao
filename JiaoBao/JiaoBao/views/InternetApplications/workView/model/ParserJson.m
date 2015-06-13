@@ -651,7 +651,6 @@
     model.TabID = [result objectForKey:@"TabID"];
     model.TabIDStr = [result objectForKey:@"TabIDStr"];
     model.flag = [result objectForKey:@"flag"];
-    NSLog(@"TabIDStr = %@ flag = %@",model.TabIDStr,model.flag);
     return model;
 }
 

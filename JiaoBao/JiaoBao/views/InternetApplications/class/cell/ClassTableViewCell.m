@@ -36,7 +36,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 //    NSLog(@"model = %@",self.mModel_class.mArr_comment);
-//    [utils logArr:self.mModel_class.mArr_comment];
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
     if (cell)
     {
@@ -89,7 +88,6 @@
 //    else
 //    {
 //    NSArray *arr = [ self.mModel_class.mArr_comment objectAtIndex:indexPath.row];
-//    [utils logArr:arr];
 //    }
 
     //cell.contentLabel.text = string;

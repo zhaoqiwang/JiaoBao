@@ -231,7 +231,6 @@ static HomeClassTopScrollView *__singletion;
 {
     if([dm getInstance].notificationSymbol == 100)
     {
-        NSLog(@"getData");
         NSDictionary *dic = noti.object;
         NSString *unitID = [dic objectForKey:@"unitID"];
         NSArray *array = [dic objectForKey:@"array"];
@@ -367,7 +366,6 @@ static HomeClassTopScrollView *__singletion;
         
         
     }
-    NSLog(@"arr = %@",arr);
     if([dm getInstance].notificationSymbol == 102)
     {
         [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];

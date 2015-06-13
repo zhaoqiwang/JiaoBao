@@ -21,6 +21,7 @@
 
 
 -(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.rootView.moreUnitView dealloc1];
     [self.rootView.homeClassView dealloc1];
@@ -67,7 +68,6 @@
 
     
     [dm getInstance].notificationSymbol = 1;
-    NSLog(@"utype = %d",[dm getInstance].uType);
     [[LoginSendHttp getInstance]changeCurUnit];
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
     
@@ -86,14 +86,11 @@
     if([dm getInstance].notificationSymbol ==1)
     {
         [dm getInstance].mModel_unitList = noti.object;
-        CommMsgRevicerUnitListModel *model = noti.object;
+        //CommMsgRevicerUnitListModel *model = noti.object;
         
        // NSLog(@"TabId =%@ %@",[dm getInstance].mModel_unitList,model);
-        NSLog(@"tabid = %@ %@",[dm getInstance].mModel_unitList.myUnit.TabIDStr,model.myUnit);
         [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
-        
 
-        
     }
 
 
@@ -128,7 +125,6 @@
 -(void)GetCommPerm:(id)sender
 {
     RightModel *rightModel = [sender object];
-    NSLog(@"rightModel = %@",rightModel.UnitCommRight);
     
     //BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
     if([rightModel.UnitCommRight integerValue]==1)
@@ -146,7 +142,6 @@
         [self.rootView addSubview:self.forward.view];
         [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 
-        
     }
     else
     {

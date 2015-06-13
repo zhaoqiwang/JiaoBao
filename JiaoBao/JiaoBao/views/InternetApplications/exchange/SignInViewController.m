@@ -84,7 +84,6 @@
         menuItem.tag = i;
         [menuItems addObject:menuItem];
     }
-    [utils logArr:menuItems];
 
 
     
@@ -165,7 +164,6 @@
 //
 //    NSLog(@"date = %@",date);
     NSString *destDateString = [dateFormatter stringFromDate:date];
-    NSLog(@"destDateString = %@",destDateString);
     self.selcetedDateStr = destDateString;
 //    NSDate *curDate = [NSDate date];
 //    NSString *destDateString2 = [dateFormatter stringFromDate:curDate];
@@ -202,20 +200,17 @@
     NSDate *curDate = [NSDate date];
     NSString *curDateStr = [dateFormatter stringFromDate:curDate];
     NSDate *currDate = [dateFormatter dateFromString:curDateStr];
-    NSLog(@"selected = %@,curDate = %@",slectedDate,currDate);
         NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
     
          int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
         NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
     NSInteger days = [comps day] ;
-        NSLog(@"days = %ld",days);
     
     
 
 
 
     
-    NSLog(@"delaytime = %lu",(unsigned long)self.delayTime);
     
     if(days <(-self.delayTime))
     {

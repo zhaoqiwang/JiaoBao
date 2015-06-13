@@ -60,7 +60,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //}
 
 -(void)viewWillAppear:(BOOL)animated{
-
+    [super viewWillAppear:YES];
     [self setFrame];
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
@@ -107,7 +107,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.topView.delegate = self;
     
     [self.mScrollV_all addSubview:self.topView];
-    NSLog(@"topView = %@",self.topView);
     self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28)];
     self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
@@ -546,8 +545,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         self.imgV.image = [UIImage imageNamed:@"blank.png"];
         
     }
-    NSLog(@"section.seleted = %lu",(unsigned long)self.allSelected);
-    NSLog(@"self.allSelected = %lu",(unsigned long)self.allSelected);
 
     [self.mCollectionV_list reloadData];
 }
@@ -655,7 +652,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             isAll = 10000;
             break;
         }
-        NSLog(@"isAll = %d",isAll);
 
         isAll = isAll+model.sectionSelSymbol;
 
@@ -686,7 +682,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
         
     }
-    NSLog(@"self.allSelected = %lu",(unsigned long)self.allSelected);
 
 [self.mCollectionV_list reloadData];
     

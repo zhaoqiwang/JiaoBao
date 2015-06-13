@@ -70,8 +70,8 @@
     self = [super init];
     if (self) {
         [self setMyFrame];
-        UILabel *label = [[UILabel alloc] init];
-        self.label_Title = label;
+        self.label_Title = [[UILabel alloc] init];
+        
         self.label_Title.backgroundColor = [UIColor clearColor];
         self.label_Title.textAlignment = NSTextAlignmentCenter;
         self.label_Title.font = [UIFont systemFontOfSize:LABEL_TEXT_FONTSIZE];
@@ -96,9 +96,7 @@
         UIImage *image = [UIImage imageWithContentsOfFile:path];
         self.layer.contents = (id) image.CGImage;
         
-        UILabel * mainTitleLabel = [[UILabel alloc]init];
-        self.mainTitleLabel = mainTitleLabel;
-        [self.mainTitleLabel release];
+        self.mainTitleLabel = [[UILabel alloc]init];
         [self.mainTitleLabel setText:mainTitle];
 //        if (subTitle.length>0) {
 //            [self.mainTitleLabel setFrame:CGRectMake(85, 7+[dm getInstance].statusBar, 150, 18)];

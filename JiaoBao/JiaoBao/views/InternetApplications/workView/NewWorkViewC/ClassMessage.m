@@ -173,12 +173,10 @@ NSString *kCell = @"Forward_cell2";
             }
             
         }
-        NSLog(@"dataArrCount = %lu",(unsigned long)self.dataArr.count);
         
         
         
     }
-    NSLog(@"self.datasource.count = %ld",self.datasource.count);
 //    if(self.datasource.count == 0)
 //    {
 //        [SVProgressHUD showInfoWithStatus:@"无班级" ];

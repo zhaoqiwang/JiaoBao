@@ -26,6 +26,7 @@
 @synthesize UintName,TabID,TabIDStr,flag,list;
 
 -(id)init{
+    self = [super init];
     self.list = [NSMutableArray array];
     return self;
 }

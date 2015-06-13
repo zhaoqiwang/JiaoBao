@@ -482,7 +482,6 @@
         [[LoginSendHttp getInstance] changeCurUnit];
         [LoginSendHttp getInstance].mInt_forwardFlag =2;
 //        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
-        NSLog(@"unit = %@",[dm getInstance].mStr_unit);
         self.mProgressV.labelText = @"加载中...";
         self.mProgressV.mode = MBProgressHUDModeIndeterminate;
 //        self.mProgressV.userInteractionEnabled = NO;
@@ -590,8 +589,6 @@
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
-    NSLog(@"%@",self.mView_all);
-    NSLog(@"%d",self.mView_all.hidden);
     //self.mView_all.backgroundColor = [UIColor redColor];
     //检查当前网络是否可用
     if ([self checkNetWork]) {
@@ -609,8 +606,6 @@
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
-    NSLog(@"%@",self.mView_all);
-    NSLog(@"%d",self.mView_all.hidden);
     //self.mView_all.backgroundColor = [UIColor redColor];
     
     UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
@@ -700,26 +695,7 @@
     friends.mInt_flag = 2;
     [utils pushViewController:friends animated:YES];
 }
--(void)GetCommPerm:(id)sender
-{
-    NSDictionary *dic = [sender object];
-//    NSString *unitCommright= [dic objectForKey:@"UnitCommRight"];
-//    if([unitCommright isEqualToString:@"true"])
-//    {
-//        //[self.forward didMoveToParentViewController:self];
-//    }
-//    else
-//    {
-//        self.mProgressV.mode = MBProgressHUDModeCustomView;
-//        self.mProgressV.labelText = @"没有权限";
-//        [self.mProgressV show:YES];
-//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-//    }
-    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
-    newWork.rightDic = dic;
-    [utils pushViewController:newWork animated:YES];
-    
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
