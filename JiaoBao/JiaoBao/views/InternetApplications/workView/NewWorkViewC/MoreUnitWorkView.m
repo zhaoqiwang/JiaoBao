@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation MoreUnitWorkView
-@synthesize mViewTop,mScrollV_all,mModel_unitList,mArr_display,mArr_sumData,mTableV_work,mInt_readflag,mInt_requestCount,mInt_requestCount2,mProgressV,mInt_flag;
+@synthesize mViewTop,mScrollV_all,mModel_unitList,mArr_display,mArr_sumData,mTableV_work,mInt_readflag,mInt_requestCount,mInt_requestCount2,mProgressV,mInt_flag,mModel_right;
 
 -(void)dealloc1{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -37,6 +37,9 @@
         //第一次进入此界面，发送数据请求
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"fristGotoMoreUnit" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fristGotoMoreUnit) name:@"fristGotoMoreUnit" object:nil];
+        //获取发送权限
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
         
         self.mArr_sumData = [NSMutableArray array];
         self.mArr_display = [NSArray array];
@@ -56,9 +59,7 @@
         self.mTableV_work.dataSource = self;
         self.mTableV_work.scrollEnabled = NO;
         [self.mScrollV_all addSubview:self.mTableV_work];
-        //添加基本数据
-        [self addData];
-        [self reloadDataForDisplayArray];//初始化将要显示的数据
+        
         //加载提示框
         self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
         [self addSubview:self.mProgressV];
@@ -69,17 +70,26 @@
     return self;
 }
 
+-(void)GetCommPerm:(id)sender{
+    self.mModel_right = [sender object];
+    //添加基本数据
+    [self addData];
+    [self reloadDataForDisplayArray];//初始化将要显示的数据
+}
+
 //第一次进入此界面，发送数据请求
 -(void)fristGotoMoreUnit{
     if (self.mInt_flag ==0) {
         self.mInt_flag = 1;
-        if (self.mArr_sumData.count>0) {
-            [self sendRequest];
-        }else{
+//        if (self.mArr_sumData.count>0) {
+        if ([self.mModel_right.ParentCommRight intValue] ==0&&[self.mModel_right.SubUnitCommRight intValue] ==0) {
+            [self.mScrollV_all removeFromSuperview];
             self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"无其他单位";
+            self.mProgressV.labelText = @"无发送权限";
             [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        }else{
+            [self sendRequest];
         }
     }
 }
@@ -269,7 +279,6 @@
             }
         }
         
-        
         //上级单位
         NSMutableArray *tempArr = [[NSMutableArray alloc] init];
 //        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
@@ -296,17 +305,11 @@
                     temp.mStr_img_open_close = @"root_close";
                     node.nodeData = temp;
                     [tempArr addObject:node];
-                    //        if ([dm getInstance].uType == 1||[dm getInstance].uType == 2) {
-                    //            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
-                    //        }else{
-                    //            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
-                    //        }
                 }
                 
                 node1.sonNodes = [NSMutableArray arrayWithArray:tempArr];
             }
         }
-        
         
         //下级单位
         NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
@@ -343,20 +346,12 @@
                     temp.mStr_img_open_close = @"root_close";
                     node.nodeData = temp;
                     [tempArr2 addObject:node];
-                    //        if (self.mModel_unitList.subUnits.count>0) {
-                    //            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
-                    //        }else{
-                    //            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
-                    //        }
                 }
                 
                 node2.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
             }
         }
-        
     }
-    
-    
     
     [self reloadDataForDisplayArray];
 }
@@ -528,40 +523,46 @@
 -(void)addData{
     //第0根节点
     TreeView_node *node0 = [[TreeView_node alloc]init];
-    node0.nodeLevel = 0;
-    node0.type = 0;
-    node0.sonNodes = nil;
-    node0.isExpanded = FALSE;
-    node0.flag = @"+1";
-    node0.nodeFlag  = @"+1";
-    NewWorkTree_model *temp0 =[[NewWorkTree_model alloc]init];
-    temp0.mStr_name = @"当前单位";
-    temp0.mStr_img_open_close = @"root_close";
-    node0.nodeData = temp0;
+    if ([self.mModel_right.UnitCommRight intValue] ==1) {
+        node0.nodeLevel = 0;
+        node0.type = 0;
+        node0.sonNodes = nil;
+        node0.isExpanded = FALSE;
+        node0.flag = @"+1";
+        node0.nodeFlag  = @"+1";
+        NewWorkTree_model *temp0 =[[NewWorkTree_model alloc]init];
+        temp0.mStr_name = @"当前单位";
+        temp0.mStr_img_open_close = @"root_close";
+        node0.nodeData = temp0;
+    }
     
     TreeView_node *node1 = [[TreeView_node alloc]init];
-    node1.nodeLevel = 0;
-    node1.type = 0;
-    node1.sonNodes = nil;
-    node1.isExpanded = FALSE;
-    node1.flag = @"+2";
-    node1.nodeFlag  = @"+2";
-    NewWorkTree_model *temp1 =[[NewWorkTree_model alloc]init];
-    temp1.mStr_name = @"上级单位";
-    temp1.mStr_img_open_close = @"root_close";
-    node1.nodeData = temp1;
+    if ([self.mModel_right.ParentCommRight intValue] ==1) {
+        node1.nodeLevel = 0;
+        node1.type = 0;
+        node1.sonNodes = nil;
+        node1.isExpanded = FALSE;
+        node1.flag = @"+2";
+        node1.nodeFlag  = @"+2";
+        NewWorkTree_model *temp1 =[[NewWorkTree_model alloc]init];
+        temp1.mStr_name = @"上级单位";
+        temp1.mStr_img_open_close = @"root_close";
+        node1.nodeData = temp1;
+    }
     
     TreeView_node *node2 = [[TreeView_node alloc]init];
-    node2.nodeLevel = 0;
-    node2.type = 0;
-    node2.sonNodes = nil;
-    node2.isExpanded = FALSE;
-    node2.flag = @"+3";
-    node2.nodeFlag  = @"+3";
-    NewWorkTree_model *temp2 =[[NewWorkTree_model alloc]init];
-    temp2.mStr_name = @"下级单位";
-    temp2.mStr_img_open_close = @"root_close";
-    node2.nodeData = temp2;
+    if ([self.mModel_right.SubUnitCommRight intValue] ==1) {
+        node2.nodeLevel = 0;
+        node2.type = 0;
+        node2.sonNodes = nil;
+        node2.isExpanded = FALSE;
+        node2.flag = @"+3";
+        node2.nodeFlag  = @"+3";
+        NewWorkTree_model *temp2 =[[NewWorkTree_model alloc]init];
+        temp2.mStr_name = @"下级单位";
+        temp2.mStr_img_open_close = @"root_close";
+        node2.nodeData = temp2;
+    }
     
     self.mArr_sumData = [NSMutableArray arrayWithObjects:node0,node1,node2, nil];
 }

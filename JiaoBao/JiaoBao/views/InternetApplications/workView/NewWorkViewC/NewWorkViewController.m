@@ -78,8 +78,8 @@
     [dm getInstance].progress.userInteractionEnabled = YES;
     [[dm getInstance].progress show:YES];
     [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-
 }
+
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti
 {
@@ -91,13 +91,7 @@
        // NSLog(@"TabId =%@ %@",[dm getInstance].mModel_unitList,model);
         NSLog(@"tabid = %@ %@",[dm getInstance].mModel_unitList.myUnit.TabIDStr,model.myUnit);
         [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
-        
-
-        
     }
-
-
-    
 }
 
 
