@@ -718,6 +718,7 @@
 		F71803431AB3C71A00E6167F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718033F1AB3C71A00E6167F /* SVIndefiniteAnimatedView.m */; };
 		F71803441AB3C71A00E6167F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F71803401AB3C71A00E6167F /* SVProgressHUD.bundle */; };
 		F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F71803421AB3C71A00E6167F /* SVProgressHUD.m */; };
+		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639921B0EC53D00365EB7 /* libicucore.dylib */; };
 		F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */; };
@@ -1813,6 +1814,8 @@
 		F71803401AB3C71A00E6167F /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = Common/SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
 		F71803411AB3C71A00E6167F /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = Common/SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		F71803421AB3C71A00E6167F /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = Common/SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
+		F72A726A1B2BBCFC00378C95 /* RightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RightModel.h; path = views/InternetApplications/workView/NewWorkViewC/RightModel.h; sourceTree = "<group>"; };
+		F72A726B1B2BBCFC00378C95 /* RightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightModel.m; path = views/InternetApplications/workView/NewWorkViewC/RightModel.m; sourceTree = "<group>"; };
 		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
 		F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHImagePickerMutilSelector.m; path = Common/MHImagePick/MHImagePickerMutilSelector.m; sourceTree = "<group>"; };
 		F74639921B0EC53D00365EB7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
@@ -3291,6 +3294,8 @@
 				F76B644E1B1EA4CE008F6961 /* CustomCell.h */,
 				F76B644F1B1EA4CE008F6961 /* CustomCell.m */,
 				F76B64501B1EA4CE008F6961 /* CustomCell.xib */,
+				F72A726A1B2BBCFC00378C95 /* RightModel.h */,
+				F72A726B1B2BBCFC00378C95 /* RightModel.m */,
 			);
 			name = NewWorkViewC;
 			sourceTree = "<group>";
@@ -4407,6 +4412,7 @@
 				A74821B219FF747F00234020 /* MsgDetail_FeebackList.m in Sources */,
 				A7595E9E1A5FC2F30027848E /* PSTCollectionViewController.m in Sources */,
 				A76B6A721AB2D09900B6ED12 /* AccessoryTableViewCell.m in Sources */,
+				F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */,
 				A755E70719F278B900BBDF3D /* ASIInputStream.m in Sources */,
 				A77FF0271A650B3F00DB85E3 /* JSONModel.m in Sources */,
 				A755E71419F278B900BBDF3D /* ASIS3ObjectRequest.m in Sources */,

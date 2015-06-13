@@ -9,6 +9,7 @@
 #import "LoginSendHttp.h"
 #import "InternetAppTopScrollView.h"
 #import "RegisterHttp.h"
+#import "RightModel.h"
 
 static LoginSendHttp *loginSendHttp = nil;
 
@@ -1434,8 +1435,15 @@ static LoginSendHttp *loginSendHttp = nil;
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
             D("str00=login==32=>>>>==%@",str);
-            NSArray *dic = [str objectFromJSONString];
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:dic];
+            NSDictionary *dic = [str objectFromJSONString];
+            NSLog(@"ParentCommRight = %@",[dic objectForKey:@"ParentCommRight"]);
+            RightModel *model = [[RightModel alloc]init];
+            model.ParentCommRight = [dic objectForKey:@"ParentCommRight"];
+            model.UnitCommRight = [dic objectForKey:@"UnitCommRight"];
+            model.SubUnitCommRight = [dic objectForKey:@"SubUnitCommRight"];
+
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:model];
         }
         
 

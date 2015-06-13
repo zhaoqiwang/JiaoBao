@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface RightModel : NSObject
+@property(nonatomic,assign)NSString *ParentCommRight;//对上级发送事务的权限
+@property(nonatomic,assign)NSString *UnitCommRight;//对同单位事务的权限
+@property(nonatomic,assign)NSString *SubUnitCommRight;//对下级发送事务的权限
+
+
 
 @end

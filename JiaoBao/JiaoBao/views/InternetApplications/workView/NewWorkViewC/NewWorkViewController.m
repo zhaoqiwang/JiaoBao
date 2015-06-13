@@ -8,6 +8,7 @@
 
 #import "NewWorkViewController.h"
 #import "ForwardViewController.h"
+#import "RightModel.h"
 
 @interface NewWorkViewController ()
 
@@ -126,9 +127,11 @@
 }
 -(void)GetCommPerm:(id)sender
 {
-    NSDictionary *dic = [sender object];
-    BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
-    if(unitCommright ==YES)
+    RightModel *rightModel = [sender object];
+    NSLog(@"rightModel = %@",rightModel.UnitCommRight);
+    
+    //BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
+    if([rightModel.UnitCommRight integerValue]==1)
     {
         self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
         //forward.mStr_navName = @"新建事务";
