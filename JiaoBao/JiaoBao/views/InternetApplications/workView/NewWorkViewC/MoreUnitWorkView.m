@@ -127,8 +127,13 @@
     self.mInt_requestCount = 0;
     self.mInt_requestCount2 = 0;
     //上级单位
-    TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
-    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+    TreeView_node *node1;
+    for (TreeView_node *node in self.mArr_sumData) {
+        if ([node.flag isEqual:@"+2"]) {
+            node1 = node;
+        }
+    }
+//    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
         for(TreeView_node *node2 in node1.sonNodes){
             NewWorkTree_model *tempModel = node2.nodeData;
             myUnit *temp = tempModel.mModel_unit;
@@ -139,17 +144,22 @@
                 [[LoginSendHttp getInstance] login_GetUnitClassRevicer:temp.TabID Flag:temp.flag];
             }
         }
-    }
+//    }
     //下级单位
-    TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
-    //判断是子类还是班级
-    NSMutableArray *sub_unit ;
-    if (self.mModel_unitList.subUnits.count>0) {
-        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
-    }else{
-        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
+    TreeView_node *node2;
+    for (TreeView_node *node in self.mArr_sumData) {
+        if ([node.flag isEqual:@"+3"]) {
+            node2 = node;
+        }
     }
-    for (int i=0; i<sub_unit.count; i++) {
+    //判断是子类还是班级
+//    NSMutableArray *sub_unit ;
+//    if (self.mModel_unitList.subUnits.count>0) {
+//        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
+//    }else{
+//        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
+//    }
+//    for (int i=0; i<sub_unit.count; i++) {
         for(TreeView_node *node3 in node2.sonNodes){
             self.mInt_requestCount ++;
             NewWorkTree_model *tempModel = node3.nodeData;
@@ -160,7 +170,7 @@
                 [[LoginSendHttp getInstance] login_GetUnitClassRevicer:temp.TabID Flag:temp.flag];
             }
         }
-    }
+//    }
     
     self.mProgressV.labelText = @"加载中...";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
@@ -233,93 +243,117 @@
     if (self.mModel_unitList.UnitParents.count==0&&self.mModel_unitList.subUnits.count==0) {
         [self.mArr_sumData removeAllObjects];
     }else{
-        TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
-        //当前单位
-        myUnit *tempMyUnit= self.mModel_unitList.myUnit;
-        //第1根节点
-        TreeView_node *node6 = [[TreeView_node alloc]init];
-        node6.nodeLevel = 1;
-        node6.type = 1;
-        node6.sonNodes = nil;
-        node6.isExpanded = FALSE;
-        node6.flag = tempMyUnit.TabID;
-        node6.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node0.nodeFlag,node6.flag];
-        NewWorkTree_model *temp6 =[[NewWorkTree_model alloc]init];
-        temp6.mStr_name = tempMyUnit.UintName;
-        temp6.mModel_unit = tempMyUnit;
-        temp6.mStr_img_open_close = @"root_close";
-        node6.nodeData = temp6;
+//        TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
+        TreeView_node *node0;
+        for (TreeView_node *node in self.mArr_sumData) {
+            if ([node.flag isEqual:@"+1"]) {
+                node0 = node;
+                
+                //当前单位
+                myUnit *tempMyUnit= self.mModel_unitList.myUnit;
+                //第1根节点
+                TreeView_node *node6 = [[TreeView_node alloc]init];
+                node6.nodeLevel = 1;
+                node6.type = 1;
+                node6.sonNodes = nil;
+                node6.isExpanded = FALSE;
+                node6.flag = tempMyUnit.TabID;
+                node6.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node0.nodeFlag,node6.flag];
+                NewWorkTree_model *temp6 =[[NewWorkTree_model alloc]init];
+                temp6.mStr_name = tempMyUnit.UintName;
+                temp6.mModel_unit = tempMyUnit;
+                temp6.mStr_img_open_close = @"root_close";
+                node6.nodeData = temp6;
+                
+                node0.sonNodes = [NSMutableArray arrayWithObjects:node6,nil];
+            }
+        }
         
-        node0.sonNodes = [NSMutableArray arrayWithObjects:node6,nil];
         
         //上级单位
         NSMutableArray *tempArr = [[NSMutableArray alloc] init];
-        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
-        //对人员进行排序
-        self.mModel_unitList.UnitParents = [self userNameChineseSort:self.mModel_unitList.UnitParents Flag:2];
-        for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
-            myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
-            //第1根节点
-            TreeView_node *node = [[TreeView_node alloc]init];
-            node.nodeLevel = 1;
-            node.type = 1;
-            node.sonNodes = nil;
-            node.isExpanded = FALSE;
-            node.flag = tempUnit.TabID;
-            node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node1.nodeFlag,node.flag];
-            NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
-            temp.mStr_name = tempUnit.UintName;
-            temp.mModel_unit = tempUnit;
-            temp.mStr_img_open_close = @"root_close";
-            node.nodeData = temp;
-            [tempArr addObject:node];
-            //        if ([dm getInstance].uType == 1||[dm getInstance].uType == 2) {
-            //            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
-            //        }else{
-            //            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
-            //        }
+//        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
+        TreeView_node *node1;
+        for (TreeView_node *node in self.mArr_sumData) {
+            if ([node.flag isEqual:@"+2"]) {
+                node1 = node;
+                
+                //对人员进行排序
+                self.mModel_unitList.UnitParents = [self userNameChineseSort:self.mModel_unitList.UnitParents Flag:2];
+                for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+                    myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+                    //第1根节点
+                    TreeView_node *node = [[TreeView_node alloc]init];
+                    node.nodeLevel = 1;
+                    node.type = 1;
+                    node.sonNodes = nil;
+                    node.isExpanded = FALSE;
+                    node.flag = tempUnit.TabID;
+                    node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node1.nodeFlag,node.flag];
+                    NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
+                    temp.mStr_name = tempUnit.UintName;
+                    temp.mModel_unit = tempUnit;
+                    temp.mStr_img_open_close = @"root_close";
+                    node.nodeData = temp;
+                    [tempArr addObject:node];
+                    //        if ([dm getInstance].uType == 1||[dm getInstance].uType == 2) {
+                    //            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
+                    //        }else{
+                    //            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
+                    //        }
+                }
+                
+                node1.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+            }
         }
         
-        node1.sonNodes = [NSMutableArray arrayWithArray:tempArr];
         
         //下级单位
         NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
-        TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
-        //判断是子类还是班级
-        NSMutableArray *sub_unit ;
-        if (self.mModel_unitList.subUnits.count>0) {
-            sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
-        }else{
-            sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
-            NewWorkTree_model *temp2 = node2.nodeData;
-            temp2.mStr_name = @"所有班级";
-        }
-        //对人员进行排序
-        sub_unit = [self userNameChineseSort:sub_unit Flag:2];
-        for (int i=0; i<sub_unit.count; i++) {
-            myUnit *tempUnit = [sub_unit objectAtIndex:i];
-            //第1根节点
-            TreeView_node *node = [[TreeView_node alloc]init];
-            node.nodeLevel = 1;
-            node.type = 1;
-            node.sonNodes = nil;
-            node.isExpanded = FALSE;
-            node.flag = tempUnit.TabID;
-            node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node2.nodeFlag,node.flag];
-            NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
-            temp.mStr_name = tempUnit.UintName;
-            temp.mModel_unit = tempUnit;
-            temp.mStr_img_open_close = @"root_close";
-            node.nodeData = temp;
-            [tempArr2 addObject:node];
-            //        if (self.mModel_unitList.subUnits.count>0) {
-            //            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
-            //        }else{
-            //            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
-            //        }
+//        TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
+        TreeView_node *node2;
+        for (TreeView_node *node in self.mArr_sumData) {
+            if ([node.flag isEqual:@"+3"]) {
+                node2 = node;
+                
+                //判断是子类还是班级
+                NSMutableArray *sub_unit ;
+                if (self.mModel_unitList.subUnits.count>0) {
+                    sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
+                }else{
+                    sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
+                    NewWorkTree_model *temp2 = node2.nodeData;
+                    temp2.mStr_name = @"所有班级";
+                }
+                //对人员进行排序
+                sub_unit = [self userNameChineseSort:sub_unit Flag:2];
+                for (int i=0; i<sub_unit.count; i++) {
+                    myUnit *tempUnit = [sub_unit objectAtIndex:i];
+                    //第1根节点
+                    TreeView_node *node = [[TreeView_node alloc]init];
+                    node.nodeLevel = 1;
+                    node.type = 1;
+                    node.sonNodes = nil;
+                    node.isExpanded = FALSE;
+                    node.flag = tempUnit.TabID;
+                    node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node2.nodeFlag,node.flag];
+                    NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
+                    temp.mStr_name = tempUnit.UintName;
+                    temp.mModel_unit = tempUnit;
+                    temp.mStr_img_open_close = @"root_close";
+                    node.nodeData = temp;
+                    [tempArr2 addObject:node];
+                    //        if (self.mModel_unitList.subUnits.count>0) {
+                    //            [[LoginSendHttp getInstance] login_GetUnitRevicer:tempUnit.TabID Flag:tempUnit.flag];
+                    //        }else{
+                    //            [[LoginSendHttp getInstance] login_GetUnitClassRevicer:tempUnit.TabID Flag:tempUnit.flag];
+                    //        }
+                }
+                
+                node2.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
+            }
         }
         
-        node2.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
     }
     
     
