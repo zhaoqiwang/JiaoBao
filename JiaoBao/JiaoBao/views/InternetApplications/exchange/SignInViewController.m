@@ -230,7 +230,6 @@
         DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
             detail.selectedStr = self.selcetedDateStr;
             detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
-            [utils logDic:detail.groupDic];
             
             [self.navigationController pushViewController:detail animated:YES];
 

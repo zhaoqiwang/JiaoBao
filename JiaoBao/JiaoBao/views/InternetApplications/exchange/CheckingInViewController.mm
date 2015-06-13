@@ -264,7 +264,6 @@
 -(void)getCurrentTime:(id)sender
 {
     NSDictionary *dic = [sender object];
-    [utils logDic:dic];
     NSString *timeStr = [dic objectForKey:@"Data"];
     dateStr = timeStr;
 }
@@ -675,7 +674,6 @@ if(component == 0)
 //            
 //            _placemark = [placemarks objectAtIndex:0];
 //            NSLog(@"_placemark = %@",[_placemark.addressDictionary objectForKey:@"FormattedAddressLines"]);
-//            [utils logDic:_placemark.addressDictionary];
 //            
 //            
 //            

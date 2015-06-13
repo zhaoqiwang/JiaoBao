@@ -79,7 +79,6 @@
     if(![self.textView.text isEqualToString:@""]&&![self.textView2.text isEqualToString:@""]&&![self.startTime.text isEqualToString:@""]&&![self.endTime.text isEqualToString:@""])
     {
         NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,dmInsance.mStr_unit,uType,dmInsance.mStr_unit,DetptID,DetptName,@"0",@"未审核",dmInsance.userInfo.UserID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
-        [utils logDic:dic];
         [[SignInHttp getInstance]uploadschedule:dic];
         
     }

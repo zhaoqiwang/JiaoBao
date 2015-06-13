@@ -48,7 +48,6 @@
 {
     self.dataSource = [sender object];
     [self.tableView reloadData];
-//    [self logDic:valueDic];
 //    
 //    for(int i=1;i<self.labelCollection.count;i++)
 //    {
