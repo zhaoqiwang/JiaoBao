@@ -35,7 +35,6 @@
 }
 -(void)GetSignInList:(id)sender
 {
-    NSLog(@"sender = %@",sender);
     if(sender)
     {
 
@@ -73,11 +72,9 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *date = [NSDate date];
     NSString *destDateString = [dateFormatter stringFromDate:date];
-    NSLog(@"destDateString = %@",destDateString);
     if([self.selectedArrSymbol containsObject:destDateString])
     {
         NSUInteger index = [self.selectedArrSymbol indexOfObject:destDateString];
-        NSLog(@"index - %d",index);
         self.dicArr = [self.datasource objectAtIndex:index];
     
     }
@@ -102,7 +99,6 @@
     
     NSString *destDateString = [dateFormatter stringFromDate:self.calendar.currentDate];
     NSArray *dateArr = [destDateString componentsSeparatedByString:@"-"];
-    NSLog(@"year = %@ month = %@",[dateArr objectAtIndex:0],[dateArr objectAtIndex:1]);
     [[SignInHttp getInstance]GetSignInListForMobile:[dateArr objectAtIndex:0] Month:[dateArr objectAtIndex:1]];
 
     {
@@ -138,11 +134,9 @@
     
     
     NSString *destDateString = [dateFormatter stringFromDate:date];
-    NSLog(@"destDateString = %@",destDateString);
     if([self.selectedArrSymbol containsObject:destDateString])
     {
         NSUInteger arrIndex = [self.selectedArrSymbol indexOfObject:destDateString];
-        NSLog(@"selectedArrSymbol = %@",self.selectedArrSymbol);
         self.dicArr = [self.datasource objectAtIndex:arrIndex];
         [self.tableView reloadData];
         

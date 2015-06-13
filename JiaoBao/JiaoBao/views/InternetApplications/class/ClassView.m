@@ -1470,9 +1470,7 @@
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     self.mProgressV.tag++;
-    NSLog(@"tag = %ld",(long)self.mProgressV.tag);
     sleep(TIMEOUT);
-    NSLog(@"threadSymbol = %ld",(long)self.threadSymbol);
 
     
     if(self.threadSymbol == self.mProgressV.tag-1)

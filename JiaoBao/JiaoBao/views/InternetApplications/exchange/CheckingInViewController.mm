@@ -106,7 +106,6 @@
 }
 -(void)getUnitName:(id)sender
 {
-    NSLog(@"title = %@",[dm getInstance].mStr_unit);
     [self.mNav_navgationBar leftBtnAction:[dm getInstance].mStr_unit];
     [[SignInHttp getInstance]getTime];
 
@@ -189,7 +188,6 @@
     
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
     [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
-//    NSLog(@"unit = %@",[dm getInstance].mStr_unit);
 //    [self.mNav_navgationBar setBackBtnTitle:[dm getInstance].mStr_unit];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar leftBtnAction:[dm getInstance].mStr_unit];
@@ -266,7 +264,6 @@
 -(void)getCurrentTime:(id)sender
 {
     NSDictionary *dic = [sender object];
-    [utils logDic:dic];
     NSString *timeStr = [dic objectForKey:@"Data"];
     dateStr = timeStr;
 }
@@ -379,7 +376,6 @@ errorCode:(BMKSearchErrorCode)error{
         annotation.title = [dic objectForKey:@"AddressName"];
         [BaidumapView addAnnotation:annotation];
         //self.nameLabel.center = CGPointMake(self.Longitude, self.Latitude);
-        NSLog(@"Longitude = %f %f",self.Longitude,self.Latitude);
         
         
         
@@ -443,10 +439,8 @@ errorCode:(BMKSearchErrorCode)error{
     NSString *longitude = [NSString stringWithFormat:@"%f",BaidumapView.centerCoordinate.longitude];
     NSString *Latitude = [NSString stringWithFormat:@"%f",BaidumapView.centerCoordinate.latitude];
     NSString *flagStr  = [NSString stringWithFormat:@"%d",flag];
-    NSLog(@"SignInTypeID = %@",self.SignInGroupID);
         @try {
             NSArray *value= [NSArray arrayWithObjects:dateStr,longitude,Latitude,address,dmInstance.userInfo.UserID,dmInstance.userInfo.UserName,dmInstance.userInfo.UserType,dmInstance.userInfo.UnitID,dmInstance.mStr_unit, @"1.00.5",@"8295",SignInTypeID,self.SignInGroupID,year,month,day,@"0",SignInTypeName,SignInGroupName,@"0",@"", nil];
-            [utils logArr:value];
             NSArray *key = [NSArray arrayWithObjects:@"SignInDateTime",@"Longitude",@"Latitude",@"Place",@"UserID",@"UserName",@"UserTypeID",@"UnitID",@"UnitName",@"MobileEdition",@"MobileModel",@"SignInTypeID",@"SignInGroupID",@"Year",@"Month",@"day",@"HandleFlag",@"SignInTypeName",@"SignInGroupName",@"SignInFlag",@"Remark", nil];
             
             
@@ -536,7 +530,6 @@ if(component == 0)
         NSArray *arr = [[self.groupArr objectAtIndex:row]objectForKey:@"GroupItems"];
         NSDictionary *dic = [arr objectAtIndex:0];
         self.SignInGroupID = [dic objectForKey:@"TabID"];
-        NSLog(@"SignInTypeID = %@",self.SignInGroupID);
 
 
         
@@ -555,7 +548,6 @@ if(component == 0)
         NSString *itemStr = [[GroupItems objectAtIndex:row]objectForKey:@"TabID"];
         [self.secondBtn setTitle:title forState:UIControlStateNormal];
         self.SignInGroupID = itemStr;
-        NSLog(@"SignInTypeID = %@",self.SignInGroupID);
 
     }
 
@@ -663,7 +655,6 @@ if(component == 0)
 //    [self.mapView setCenterCoordinate:userLocation.coordinate animated:NO];
 //    NSLog(@"====%f %f",userLocation.coordinate.longitude,userLocation.coordinate.latitude);
 //    //    [self.geocoder geocodeAddressString:@"中国山东省济南天桥区铜元局前街金冠商务中心" completionHandler:^(NSArray *placemarks, NSError *error) {
-//    //        [utils logArr:placemarks];
 //    //    }];
 //    
 //    //    CLLocation *location = [[CLLocation alloc]initWithLatitude:36.681449 longitude:117.021468];
@@ -683,7 +674,6 @@ if(component == 0)
 //            
 //            _placemark = [placemarks objectAtIndex:0];
 //            NSLog(@"_placemark = %@",[_placemark.addressDictionary objectForKey:@"FormattedAddressLines"]);
-//            [utils logDic:_placemark.addressDictionary];
 //            
 //            
 //            

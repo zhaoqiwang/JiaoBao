@@ -565,7 +565,6 @@ static LoginSendHttp *loginSendHttp = nil;
     }
     for (int i=0; i<genArr.count; i++) {
         NSString *str = [genArr objectAtIndex:i];
-        NSLog(@"str999999 = %@",str);
         [request addPostValue:str forKey:@"GenUnit"];
     }
     for (int i=0; i<stuArr.count; i++) {
@@ -1281,7 +1280,6 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         [dic2 setValue:unitID forKey:@"unitID"];
         NSMutableArray *array = [ParserJson parserUserListClass_json:str];
-        NSLog(@"rselut = %@",array);
         [dic2 setValue:array forKey:@"array"];
 //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        //通知界面更新，获取事务信息接收单位列表
@@ -1343,7 +1341,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=login==25=>>>>==%@",str);
         NSDictionary *tempDic = [str objectFromJSONString];
-        NSMutableArray *arrlist = [NSMutableArray array];
+        NSMutableArray *arrlist ;
         NSMutableArray *array = [NSMutableArray array];
         
         NSString *selitadmintostu = [tempDic objectForKey:@"selitunitclassadmintogen"];
@@ -1436,7 +1434,6 @@ static LoginSendHttp *loginSendHttp = nil;
             NSString *str = [jsonDic objectForKey:@"Data"];
             D("str00=login==32=>>>>==%@",str);
             NSDictionary *dic = [str objectFromJSONString];
-            NSLog(@"ParentCommRight = %@",[dic objectForKey:@"ParentCommRight"]);
             RightModel *model = [[RightModel alloc]init];
             model.ParentCommRight = [dic objectForKey:@"ParentCommRight"];
             model.UnitCommRight = [dic objectForKey:@"UnitCommRight"];

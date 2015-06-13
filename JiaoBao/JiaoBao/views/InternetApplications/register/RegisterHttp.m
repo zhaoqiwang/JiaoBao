@@ -264,12 +264,10 @@ static RegisterHttp *registerHttp = nil;
 //    NSLog(@"jsonObject = %@",jsonObject);
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
     NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-    NSLog(@"dataString = %@",dataString);
     D("dataString--tag=----register--------====%ld---  ",(long)_request.tag);
     NSMutableDictionary *jsonDic = [dataString objectFromJSONString];
     //先对返回值做判断，是否连接超时
     NSString *code = [jsonDic objectForKey:@"ResultCode"];
-    NSLog(@"code = %@",code);
     if ([code intValue] == 8) {
         [[LoginSendHttp getInstance] hands_login];
         return;

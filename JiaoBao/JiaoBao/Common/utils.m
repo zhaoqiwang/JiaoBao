@@ -105,26 +105,6 @@
     date = date/60/60/24 + 25569.33333;
     return date;
 }
-+ (void)logDic:(NSDictionary *)dic
-{
-    NSError *error;
-    NSString *tempStr1 = [[dic description] stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
-    NSLog(@"dic[%ld]:%@",(unsigned long)dic.count,str);
-}
-+ (void)logArr:(NSArray *)arr
-{
-    NSError *error;
-    NSString *tempStr1 = [[arr description] stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
-    NSLog(@"arr[%ld]:%@",(unsigned long)arr.count,str);
-}
 
 
 @end

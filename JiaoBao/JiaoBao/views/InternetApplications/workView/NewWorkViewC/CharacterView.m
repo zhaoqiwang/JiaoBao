@@ -15,29 +15,28 @@ NSString *kSection = @"Forward_section3";
 -(void)selSecBtn:(id)sender
 {
         self.datasource = [NSMutableArray arrayWithArray:[sender object] ];
-        for(int i=0;i<self.datasource.count;i++)
-        {
-            myUnit *unit = [self.datasource objectAtIndex:i];
-            for(int j=0;j<unit.list.count;j++)
-            {
-                UserListModel *model = [unit.list objectAtIndex:j];
-                for(int z=0;z<model.groupselit_selit.count;z++)
-                {
-                    groupselit_selitModel *model2 = [model.groupselit_selit objectAtIndex:z];
-                    NSLog(@"555555[%d][%d][%d] = %@",i,j,z,model2.Name);
-                }
-//                if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+//        for(int i=0;i<self.datasource.count;i++)
+//        {
+//            myUnit *unit = [self.datasource objectAtIndex:i];
+//            for(int j=0;j<unit.list.count;j++)
+//            {
+//                UserListModel *model = [unit.list objectAtIndex:j];
+//                for(int z=0;z<model.groupselit_selit.count;z++)
 //                {
-//                    [unit.list removeObject:model];
+//                    groupselit_selitModel *model2 = [model.groupselit_selit objectAtIndex:z];
 //                }
-
-
-                
-            }
-
-
-    
-        }
+////                if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+////                {
+////                    [unit.list removeObject:model];
+////                }
+//
+//
+//                
+//            }
+//
+//
+//    
+//        }
     
     
             [self.mCollectionV_list reloadData];

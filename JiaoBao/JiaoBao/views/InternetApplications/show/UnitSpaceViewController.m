@@ -20,7 +20,7 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 @synthesize mArr_list,mStr_title,mNav_navgationBar,mCollectionV_unit,mScrollV_img,mProgressV,mModel_unit,mArr_newPhoto,mPageC_page;
 
 -(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidAppear:YES];
+    [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

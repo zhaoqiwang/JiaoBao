@@ -330,7 +330,6 @@
 //
 //        
 //    }
-    NSLog(@"allSelSymbol = %lu",(unsigned long)self.allSelSymbol);
     if(self.allSelSymbol == 1)
     {
         [self.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];

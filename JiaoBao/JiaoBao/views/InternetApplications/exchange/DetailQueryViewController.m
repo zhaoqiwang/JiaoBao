@@ -47,9 +47,7 @@
 -(void)getQueryResult:(id)sender
 {
     self.dataSource = [sender object];
-    [utils logArr:self.dataSource];
     [self.tableView reloadData];
-//    [self logDic:valueDic];
 //    
 //    for(int i=1;i<self.labelCollection.count;i++)
 //    {
@@ -69,7 +67,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"dataSource_count = %ld",self.dataSource.count);
     return self.dataSource.count;
 }
 
@@ -132,28 +129,7 @@
 {
     [utils popViewControllerAnimated:YES];
 }
-- (void)logDic:(NSDictionary *)dic
-{
-    NSError *error;
-    NSString *tempStr1 = [[dic description] stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
-    NSLog(@"dic[%ld]:%@",dic.count,str);
-}
-- (void)logArr:(NSArray *)arr
-{
-    
-    NSError *error;
-    NSString *tempStr1 = [[arr description] stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
-    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
-    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
-    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *str = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListImmutable format:NULL error:&error];
-    NSLog(@"arr[%ld]:%@",arr.count,str);
-    
-}
+
 
 /*
 #pragma mark - Navigation

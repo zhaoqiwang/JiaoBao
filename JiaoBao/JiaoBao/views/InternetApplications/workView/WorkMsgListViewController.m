@@ -112,7 +112,6 @@
     [self.mTableV_detail footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSMutableArray *tempArr = [dic valueForKey:@"array"];
-    [utils logArr:tempArr];
     if (self.mInt_page > 1) {
         if (tempArr.count>0) {
             [self.mArr_feeback addObjectsFromArray:tempArr];

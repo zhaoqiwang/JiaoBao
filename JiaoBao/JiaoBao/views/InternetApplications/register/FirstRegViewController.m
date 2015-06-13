@@ -162,7 +162,6 @@
         if([str integerValue ] == 0)//成功
            {
                self.identi_code_Symbol = YES;
-               NSLog(@"获取验证码成功");
                //成功则跳转到第二个界面
                SecondRegViewController *sec = [[SecondRegViewController alloc]init];
                sec.tel = self.tel.text;
@@ -185,7 +184,6 @@
         NSString *str =note.object;
         if([str integerValue ] == 0)
         {
-            NSLog(@"验证成功");
             
             
             

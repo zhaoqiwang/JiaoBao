@@ -33,8 +33,6 @@
 
 //当前时间用时间转化过之后显示的double值
 +(double)todayTimeConvertToDouble;
-+ (void)logDic:(NSDictionary *)dic;
-+ (void)logArr:(NSArray *)arr;
 
 
 

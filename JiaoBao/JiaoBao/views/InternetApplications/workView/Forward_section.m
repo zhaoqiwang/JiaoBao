@@ -120,7 +120,6 @@
         if(![[dm getInstance].sectionSet containsObject:num] )
         {
             [[dm getInstance].sectionSet addObject:num];
-            NSLog(@"mSet = %@",[dm getInstance].sectionSet);
             
             
         }
