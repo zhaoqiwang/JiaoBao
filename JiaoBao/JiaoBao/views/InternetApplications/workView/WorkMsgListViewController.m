@@ -161,7 +161,6 @@
     SendToMeUserListModel *model = noti.object;
     D("lastID = %@",model.LastID);
     
-    //[utils logDic:noti.object];
     if (model.LastID.length==0) {
         [self.mTableV_detail removeHeader];
         [self.dropDownLabel setFrame:CGRectZero];
