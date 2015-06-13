@@ -392,6 +392,9 @@
                     imagePickerController.delegate = self;
                     imagePickerController.allowsEditing = NO;
                     imagePickerController.sourceType = sourceType;
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+                        self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+                    }
 
                     [self presentViewController:imagePickerController animated:YES completion:^{}];
                 }
@@ -648,7 +651,9 @@
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = NO;
     imagePickerController.sourceType = sourceType;
-        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+            self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+        }
     [self presentViewController:imagePickerController animated:YES completion:^{}];
 
     }
