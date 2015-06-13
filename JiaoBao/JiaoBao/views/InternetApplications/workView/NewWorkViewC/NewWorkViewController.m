@@ -128,7 +128,7 @@
 {
     NSDictionary *dic = [sender object];
     BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
-    if(unitCommright ==NO)
+    if(unitCommright ==YES)
     {
         self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
         //forward.mStr_navName = @"新建事务";
@@ -147,6 +147,7 @@
     }
     else
     {
+        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
         [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
         [dm getInstance].progress.labelText = @"没有权限";
         [[dm getInstance].progress show:YES];
