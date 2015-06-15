@@ -71,10 +71,19 @@
 }
 
 -(void)GetCommPerm:(id)sender{
-    self.mModel_right = [sender object];
-    //添加基本数据
-    [self addData];
-    [self reloadDataForDisplayArray];//初始化将要显示的数据
+    NSMutableDictionary *dic = [sender object];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        self.mModel_right = [dic objectForKey:@"model"];
+        //添加基本数据
+        [self addData];
+        [self reloadDataForDisplayArray];//初始化将要显示的数据
+    }else{
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"获取权限失败";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
 }
 
 //第一次进入此界面，发送数据请求
@@ -82,10 +91,10 @@
     if (self.mInt_flag ==0) {
         self.mInt_flag = 1;
 //        if (self.mArr_sumData.count>0) {
-        if ([self.mModel_right.ParentCommRight intValue] ==0&&[self.mModel_right.SubUnitCommRight intValue] ==0) {
+        if (([self.mModel_right.ParentCommRight intValue] ==0&&[self.mModel_right.SubUnitCommRight intValue] ==0)||self.mArr_sumData.count==0) {
             [self.mScrollV_all removeFromSuperview];
             self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"无发送权限";
+            self.mProgressV.labelText = @"无发送权限或没有其他单位";
             [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         }else{

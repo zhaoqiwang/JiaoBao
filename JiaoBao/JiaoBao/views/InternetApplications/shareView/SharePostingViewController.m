@@ -244,19 +244,28 @@
 
 //获取到的关联班级
 -(void)GetmyUserClass:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
-    for (int i=0; i<array.count; i++) {
-        GetmyUserClassModel *model = [array objectAtIndex:i];
-        NSString *str = [NSString stringWithFormat:@"%@-%@",model.GradeName,model.ClassName];
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"3" forKey:@"type"];
-        [dic setValue:model.ClassID forKey:@"unitID"];
-        [dic setValue:str forKey:@"name"];
-        D("dlkfgnd;lkgmne-===%@",str);
-        [self.pullArr addObject:dic];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        [self.mProgressV hide:YES];
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        for (int i=0; i<array.count; i++) {
+            GetmyUserClassModel *model = [array objectAtIndex:i];
+            NSString *str = [NSString stringWithFormat:@"%@-%@",model.GradeName,model.ClassName];
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setValue:@"3" forKey:@"type"];
+            [dic setValue:model.ClassID forKey:@"unitID"];
+            [dic setValue:str forKey:@"name"];
+            D("dlkfgnd;lkgmne-===%@",str);
+            [self.pullArr addObject:dic];
+        }
+        [self.mTableV_type reloadData];
+    }else{
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"获取失败";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     }
-    [self.mTableV_type reloadData];
 }
 
 //上传图片回调

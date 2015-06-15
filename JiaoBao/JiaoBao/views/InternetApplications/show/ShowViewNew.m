@@ -85,12 +85,22 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
 
 //获取到我关注的单位后，通知界面
 -(void)GetMyAttUnit:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
-    [self.mArr_follow removeAllObjects];
-    self.mArr_follow = [NSMutableArray arrayWithArray:array];
-    //重置界面
-    [self reSetFrame];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue]==0) {//成功
+        [self.mProgressV hide:YES];
+        NSMutableArray *array = noti.object;
+        [self.mArr_follow removeAllObjects];
+        self.mArr_follow = [NSMutableArray arrayWithArray:array];
+        //重置界面
+        [self reSetFrame];
+    }else{
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"获取单位出错";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
+    
 }
 
 -(void)ProgressViewLoad{

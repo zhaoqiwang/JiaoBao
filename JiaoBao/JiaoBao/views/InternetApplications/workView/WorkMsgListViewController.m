@@ -158,62 +158,77 @@
     [self.mProgressV hide:YES];
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
-    SendToMeUserListModel *model = noti.object;
-    D("lastID = %@",model.LastID);
-    
-    //[utils logDic:noti.object];
-    if (model.LastID.length==0) {
-        [self.mTableV_detail removeHeader];
-        [self.dropDownLabel setFrame:CGRectZero];
-        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
-    }
-    self.mStr_lastID = model.LastID;
-    
-    //将值倒序插入
-    if (model.CommMsgList.count>1) {
-        if (self.mArr_msg.count==1) {
-            for (int i=1; i<model.CommMsgList.count; i++) {
-                CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
-                [self.mArr_msg insertObject:modelTemp atIndex:0];
-            }
-        }else{
-            for (int i=0; i<model.CommMsgList.count; i++) {
-                CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
-                [self.mArr_msg insertObject:modelTemp atIndex:0];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        SendToMeUserListModel *model = [dic objectForKey:@"model"];
+        D("lastID = %@",model.LastID);
+        
+        //[utils logDic:noti.object];
+        if (model.LastID.length==0) {
+            [self.mTableV_detail removeHeader];
+            [self.dropDownLabel setFrame:CGRectZero];
+            self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+        }
+        self.mStr_lastID = model.LastID;
+        
+        //将值倒序插入
+        if (model.CommMsgList.count>1) {
+            if (self.mArr_msg.count==1) {
+                for (int i=1; i<model.CommMsgList.count; i++) {
+                    CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
+                    [self.mArr_msg insertObject:modelTemp atIndex:0];
+                }
+            }else{
+                for (int i=0; i<model.CommMsgList.count; i++) {
+                    CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
+                    [self.mArr_msg insertObject:modelTemp atIndex:0];
+                }
             }
         }
+        
+        [self addArray];
+    }else{
+        self.mProgressV.labelText = @"获取失败";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     }
-    
-    [self addArray];
 }
 
 -(void)GetMySendMsgList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
-    NSMutableArray *array = noti.object;
-    
-    if (array.count>1) {
-        //将值倒序插入
-        if (self.mArr_msg.count==1) {
-            for (int i=1; i<array.count; i++) {
-                CommMsgListModel *modelTemp = [array objectAtIndex:i];
-                [self.mArr_msg insertObject:modelTemp atIndex:0];
-            }
-        }else{
-            for (int i=0; i<array.count; i++) {
-                CommMsgListModel *modelTemp = [array objectAtIndex:i];
-                [self.mArr_msg insertObject:modelTemp atIndex:0];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        [self.mProgressV hide:YES];
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (array.count>1) {
+            //将值倒序插入
+            if (self.mArr_msg.count==1) {
+                for (int i=1; i<array.count; i++) {
+                    CommMsgListModel *modelTemp = [array objectAtIndex:i];
+                    [self.mArr_msg insertObject:modelTemp atIndex:0];
+                }
+            }else{
+                for (int i=0; i<array.count; i++) {
+                    CommMsgListModel *modelTemp = [array objectAtIndex:i];
+                    [self.mArr_msg insertObject:modelTemp atIndex:0];
+                }
             }
         }
-    }
-    
-    if (array.count!=20) {
-        [self.mTableV_detail removeHeader];
-
         
+        if (array.count!=20) {
+            [self.mTableV_detail removeHeader];
+        }
+        [self addArray];
+    }else{
+        self.mProgressV.labelText = @"获取失败";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     }
-    [self addArray];
 }
 
 -(void)addArray{

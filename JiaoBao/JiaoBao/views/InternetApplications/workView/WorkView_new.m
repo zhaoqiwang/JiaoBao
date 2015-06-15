@@ -93,28 +93,30 @@
 
 //
 -(void)GetMySendMsgList:(NSNotification *)noti{
-//    [self.mProgressV hide:YES];
-//    [self.mTableV_list headerEndRefreshing];
-//    [self.mTableV_list footerEndRefreshing];
-    //如果是刷新，判断
-//    if (self.mArr_list.count>0) {
-//        [self.mArr_list removeAllObjects];
-//    }
-    NSMutableArray *array = noti.object;
-    if (array.count>0) {
-        if (self.mArr_list.count>0) {
-            CommMsgListModel *model = [self.mArr_list objectAtIndex:0];
-            if ([model.flag integerValue] != 0) {
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (array.count>0) {
+            if (self.mArr_list.count>0) {
+                CommMsgListModel *model = [self.mArr_list objectAtIndex:0];
+                if ([model.flag integerValue] != 0) {
+                    CommMsgListModel *model = [array objectAtIndex:0];
+                    [self.mArr_list insertObject:model atIndex:0];
+                    [self.mTableV_list reloadData];
+                }
+            }
+            if (self.mArr_list.count == 0) {
                 CommMsgListModel *model = [array objectAtIndex:0];
                 [self.mArr_list insertObject:model atIndex:0];
                 [self.mTableV_list reloadData];
             }
         }
-        if (self.mArr_list.count == 0) {
-            CommMsgListModel *model = [array objectAtIndex:0];
-            [self.mArr_list insertObject:model atIndex:0];
-            [self.mTableV_list reloadData];
-        }
+    }else{
+        self.mProgressV.labelText = @"获取失败";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     }
 }
 
@@ -124,21 +126,31 @@
 //    if (self.mArr_list.count==1) {
 //        [self.mArr_list removeAllObjects];
 //    }
-    [self.mProgressV hide:YES];
+    
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
-    SendToMeUserListModel *model = noti.object;
-    [self.mArr_list addObjectsFromArray:model.CommMsgList];
-    [self.mTableV_list reloadData];
-    //根据数值多少，做是否添加上拉判断
-    if (model.LastID.length>0) {
-        self.mStr_lastID = model.LastID;
-        [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
-        self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
-        self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
-        self.mTableV_list.footerRefreshingText = @"正在加载...";
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        [self.mProgressV hide:YES];
+        SendToMeUserListModel *model = [dic objectForKey:@"model"];
+        [self.mArr_list addObjectsFromArray:model.CommMsgList];
+        [self.mTableV_list reloadData];
+        //根据数值多少，做是否添加上拉判断
+        if (model.LastID.length>0) {
+            self.mStr_lastID = model.LastID;
+            [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+            self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+            self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+            self.mTableV_list.footerRefreshingText = @"正在加载...";
+        }else{
+            [self.mTableV_list removeFooter];
+        }
     }else{
-        [self.mTableV_list removeFooter];
+        self.mProgressV.labelText = @"获取失败";
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     }
 }
 
