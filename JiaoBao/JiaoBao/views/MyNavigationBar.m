@@ -288,7 +288,7 @@
     //self.leftBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.leftBtn setTitle:title forState:UIControlStateNormal];
-    
+    self.leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.leftBtn setImage:[UIImage imageNamed:@"nav_return"] forState:UIControlStateNormal];
     self.leftBtn.tag = BTN_GOBACK_TAG;
     [self.leftBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];

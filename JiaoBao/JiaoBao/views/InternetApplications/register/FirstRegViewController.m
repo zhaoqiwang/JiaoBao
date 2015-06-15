@@ -15,7 +15,7 @@
 
 @interface FirstRegViewController ()<MBProgressHUDDelegate>
 {
-    id  _observer1,_observer2,_observer3,_observer4;
+    id  _observer1,_observer2,_observer3;
     NSInteger timeNum;//倒计时计时器的时间参数
 }
 @property(nonatomic,strong)NSTimer *myTimer;//倒计时计时器
@@ -48,12 +48,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:_observer3];
         
     }
-    if(_observer4)
-    {
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:_observer4];
-        
-    }
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -157,8 +152,10 @@
     }];
     //获取手机验证码
     _observer3 = [[NSNotificationCenter defaultCenter]addObserverForName:@"get_identi_code" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        
-        NSString *str =note.object;
+        NSDictionary *dic = note.object;
+        NSArray *keyArr =[dic allKeys];
+        NSString *str = [keyArr objectAtIndex:0];
+        NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)//成功
            {
                self.identi_code_Symbol = YES;
@@ -171,7 +168,7 @@
            }
         else
         {
-            [self progressViewTishi:@"获取验证码失败"];
+            [self progressViewTishi:ResultDesc];
 
             //[SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
         }
@@ -180,32 +177,9 @@
         
     }];
     
-    _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *str =note.object;
-        if([str integerValue ] == 0)
-        {
-            
-            
-            
-        }
-        else
-        {
-            [self progressViewTishi:@"验证失败"];
-
-            //[SVProgressHUD showInfoWithStatus:@"验证失败"];
-        }
-        
-        
-        
-    }];
-    
-
 
     
-    
-        
-    
-    
+
 }
 -(void)myNavigationGoback{
     [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
@@ -355,24 +329,7 @@
     self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
     [self.navigationController pushViewController:sec animated:YES];
 
-    
-//    if(!self.tel.text)
-//    {
-//        [SVProgressHUD showInfoWithStatus:@"请输入手机号"];
-//        return;
-//    }
-//    if(!self.tel_identi_codeTF.text)
-//    {
-//        [SVProgressHUD showInfoWithStatus:@"请输入验证码"];
-//        return;
-//        
-//    }
-//    if(self.telSymbol== YES&&self.identi_code_Symbol == YES)
-//    {
-//        NSLog(@"first = %@ second = %@ third = %@",self.tel.text,self.tel_identi_codeTF.text,self.urlNumTF.text);
-//        [[RegisterHttp getInstance]registerHttpRegCheckMobileVcode:self.tel.text cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
-//        
-//    }
+
 
 
 }

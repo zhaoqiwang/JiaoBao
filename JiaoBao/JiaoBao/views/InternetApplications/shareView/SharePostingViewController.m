@@ -60,14 +60,14 @@
     self.pullArr = [NSMutableArray array];
     if (self.mInt_section == 0) {//分享
         self.mStr_unitID = @"";
-        //如果是老师身份，请求关联班级
-        if ([dm getInstance].uType == 2) {
-            [[LoginSendHttp getInstance] login_GetmyUserClass:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Accid:[dm getInstance].jiaoBaoHao];
-            self.mProgressV.labelText = @"加载关联班级中...";
-            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-        }
+//        //如果是老师身份，请求关联班级
+//        if ([dm getInstance].uType == 2) {
+//            [[LoginSendHttp getInstance] login_GetmyUserClass:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Accid:[dm getInstance].jiaoBaoHao];
+//            self.mProgressV.labelText = @"加载关联班级中...";
+//            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+//            [self.mProgressV show:YES];
+//            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+//        }
         
         for (int i=0; i<[dm getInstance].identity.count; i++) {
             Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];

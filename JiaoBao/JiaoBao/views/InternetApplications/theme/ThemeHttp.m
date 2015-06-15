@@ -353,178 +353,273 @@ static ThemeHttp *themeHttp = nil;
     NSMutableDictionary *jsonDic = [dataString objectFromJSONString];
     //先对返回值做判断，是否连接超时
     NSString *code = [jsonDic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
     if ([code intValue] == 8) {
         [[LoginSendHttp getInstance] hands_login];
         return;
     }
     if (_request.tag == 1) {//取最新更新的主题
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+        if([code integerValue]==0)
+        {
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00=theme==1=>>>>==%@",str000);
         NSMutableArray *array = [ParserJson_show parserJsonUpdateUnitList:str000];
+            [dic setValue:code forKey:@"ResultCode"];
+            [dic setValue:ResultDesc forKey:@"ResultDesc"];
+            [dic setValue:array forKey:@"array"];
+
         //获取单位头像
 //        [self getUnitImg1:array];
         //将获得到的单位信息，通知到界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:array];
-    }else if (_request.tag == 2) {//取我关注的和我所参与的主题
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
-            [InternetAppTopScrollView shareInstance].mInt_theme = 1;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:dic];
         }
-        NSString *time = [jsonDic objectForKey:@"Data"];
-        NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        D("str00=theme==2=>>>>==%@",str000);
-        NSMutableArray *array = [ParserJson_theme parserJsonEnjoyInterestList:str000];
-        //获取单位头像
-//        [self getUnitImg:array];
-        //将我的主题通知界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"EnjoyInterestList" object:array];
+        else
+        {
+            [dic setValue:code forKey:@"ResultCode"];
+            [dic setValue:ResultDesc forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:dic];
+
+        }
+    }else if (_request.tag == 2) {//取我关注的和我所参与的主题
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+        if ([code intValue]==0) {
+            [InternetAppTopScrollView shareInstance].mInt_theme = 1;
+            NSString *time = [jsonDic objectForKey:@"Data"];
+            NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+            D("str00=theme==2=>>>>==%@",str000);
+            NSMutableArray *array = [ParserJson_theme parserJsonEnjoyInterestList:str000];
+            [dic setValue:code forKey:@"ResultCode"];
+            [dic setValue:ResultDesc forKey:@"ResultDesc"];
+            [dic setValue:array forKey:@"array"];
+            //获取单位头像
+            //        [self getUnitImg:array];
+            //将我的主题通知界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"EnjoyInterestList" object:dic];
+        }
+        else
+        {
+            [dic setValue:code forKey:@"ResultCode"];
+            [dic setValue:ResultDesc forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"EnjoyInterestList" object:dic];
+
+        }
+
     }else if (_request.tag == 3) {//获取单位相册,功能：获取某单位中的相册
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:nil];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+
+        if ([code intValue]>0) {
+            [dic setValue:code forKey:@"ResultCode"];
+            [dic setValue:ResultDesc forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:dic];
             D("数据错误或没有相册");
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==3=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetUnitPGroup:str];
+            [dic setValue:code forKey:@"ResultCode"];
+            [dic setValue:ResultDesc forKey:@"ResultDesc"];
+            [dic setValue:array forKey:@"array"];
+
             //获取单位相册后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:dic];
         }
         
     }else if (_request.tag == 5) {//获取单位相册的照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPhotoByGroupID" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPhotoByGroupID" object:dic];
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==5=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetUnitPhotoByGroupID:str];
+            [dic setValue:array forKey:@"array"];
+
             //获取单位相册照片后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPhotoByGroupID" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPhotoByGroupID" object:dic];
         }
     }else if (_request.tag == 6) {//创建单位相册
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
             D("单位相册创建成功");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateUnitPhotoGroup" object:@"0"];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateUnitPhotoGroup" object:@"1"];
         }
     }else if (_request.tag == 7) {//单位相册上传照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
             D("单位上传照片成功");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpLoadPhotoUnit" object:@"0"];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpLoadPhotoUnit" object:@"1"];
         }
     }else if (_request.tag == 8) {//获取单位相册的第一张照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitFristPhotoByGroup" object:dic];
+
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             str = [str stringByReplacingOccurrencesOfString:@"[{{" withString:@"[{"];
             D("str00=theme==8=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetUnitPhotoByGroupID:str];
             D("str00=theme==8=>>>>%lu",(unsigned long)array.count);
             NSString *group = [_request.userInfo objectForKey:@"groupID"];
-            NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
-            [dic1 setValue:group forKey:@"groupID"];
-            [dic1 setValue:array forKey:@"array"];
+            //NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+            [dic setValue:group forKey:@"groupID"];
+            [dic setValue:array forKey:@"array"];
             //获取单位相册的第一张照片后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitFristPhotoByGroup" object:dic1];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitFristPhotoByGroup" object:dic];
         }
     }else if (_request.tag == 9) {//个人空间相册上传照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
             D("个人空间上传照片成功");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpLoadPhotoUnit" object:@"0"];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpLoadPhotoUnit" object:@"1"];
         }
     }else if (_request.tag == 10) {//个人空间添加相册
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
             D("个人空间相册创建成功");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateUnitPhotoGroup" object:@"0"];
         }else{
             [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateUnitPhotoGroup" object:@"1"];
         }
     }else if (_request.tag == 11) {//要获取属于jiaobaohao下的相册
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPhotoList" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPhotoList" object:dic];
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==11=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetPhotoList:str];
             //获取单位相册照片后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPhotoList" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPhotoList" object:dic];
         }
     }else if (_request.tag == 12) {//个人某个相册中的照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==12=>>>>==%@",str);
 //            NSMutableArray *array = [ParserJson_show parserJsonGetPhotoList:str];
 //            //获取单位相册照片后，通知界面
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:array];
         }
     }else if (_request.tag == 13) {//个人最新前N张照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetNewPhoto" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetNewPhoto" object:dic];
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==13=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetUnitPhotoByGroupID:str];
+            [dic setValue:array forKey:@"array"];
             //个人最新前N张照片后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetNewPhoto" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetNewPhoto" object:dic];
         }
     }else if (_request.tag == 14) {//个人相册中第一张照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetFristPhotoByGroup" object:dic];
+
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
 //            str = [str stringByReplacingOccurrencesOfString:@"[{{" withString:@"[{"];
             D("str00=theme==14=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetUnitPhotoByGroupID:str];
             D("str00=theme==14=>>>>%lu",(unsigned long)array.count);
             NSString *group = [_request.userInfo objectForKey:@"groupID"];
-            NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
-            [dic1 setValue:group forKey:@"groupID"];
-            [dic1 setValue:array forKey:@"array"];
+            //NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+            [dic setValue:group forKey:@"groupID"];
+            [dic setValue:array forKey:@"array"];
             //获取个人相册的第一张照片后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetFristPhotoByGroup" object:dic1];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetFristPhotoByGroup" object:dic];
         }
     }else if (_request.tag == 15) {//获取单位中最新的N张照片
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]>0) {
             D("数据错误或没有相册");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNewPhoto" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNewPhoto" object:dic];
         }else{
-            NSDictionary *dic = [dataString objectFromJSONString];
-            NSString *str = [dic objectForKey:@"Data"];
+            NSDictionary *dic1 = [dataString objectFromJSONString];
+            NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==15=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetUnitPhotoByGroupID:str];
+            [dic setValue:array forKey:@"array"];
+
             //个人最新前N张照片后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNewPhoto" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNewPhoto" object:dic];
         }
     }else if (_request.tag == 16) {//是否关注主题
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"ExistAtt" object:str];
+            [dic setValue:str forKey:@"str"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ExistAtt" object:dic];
+        }
+        else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ExistAtt" object:dic];
+            
         }
     }else if (_request.tag == 17) {//加主题关注
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
-            if ([[jsonDic objectForKey:@"Data"] intValue]>0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
+            if ([code intValue]>0) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAtt" object:nil];
             }
         }
     }else if (_request.tag == 18) {//取消主题关注
-        if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        if ([code intValue]==0) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAtt" object:nil];
         }
     }

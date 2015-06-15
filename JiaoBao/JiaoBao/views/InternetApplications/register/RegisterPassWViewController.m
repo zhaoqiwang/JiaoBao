@@ -33,7 +33,10 @@
 -(void)registerPW:(id)sender
 {
     NSNotification *note = (NSNotification*)sender;
-    NSString *str =note.object;
+    NSDictionary *dic = note.object;
+    NSArray *keyArr =[dic allKeys];
+    NSString *str = [keyArr objectAtIndex:0];
+    NSString *ResultDesc = [dic objectForKey:str];
     if(self.mInt_flag == 1)
     {
         if([str integerValue ] == 0)
@@ -63,7 +66,7 @@
         }
         else
         {
-            [self progressViewTishi:@"注册失败"];
+            [self progressViewTishi:ResultDesc];
             //[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 
         }

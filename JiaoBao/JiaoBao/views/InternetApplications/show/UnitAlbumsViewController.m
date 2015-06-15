@@ -97,7 +97,18 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //获取个人相册的第一张照片后，通知界面
 -(void)GetFristPhotoByGroup:(NSNotification *)noti{
-    NSMutableDictionary *dic = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
     NSString *str = [dic objectForKey:@"groupID"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<self.mArr_list.count; i++) {
@@ -116,7 +127,18 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //获取单位相册的第一张照片后，通知界面
 -(void)GetUnitFristPhotoByGroup:(NSNotification *)noti{
-    NSMutableDictionary *dic = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
     NSString *str = [dic objectForKey:@"groupID"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<self.mArr_list.count; i++) {
@@ -135,7 +157,19 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 //获取到个人相册后
 -(void)GetPhotoList:(NSNotification *)noti{
     [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    NSMutableArray *array = [dic objectForKey:@"array"];
     [self.mArr_list removeAllObjects];
     self.mArr_list = [NSMutableArray arrayWithArray:array];
     D("self.mInt_flag-===%@",self.mStr_flag);
@@ -154,7 +188,19 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 //获取单位相册后，通知界面
 -(void)GetUnitPGroup:(NSNotification *)noti{
     [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    NSMutableArray *array = [dic objectForKey:@"array"];
     [self.mArr_list removeAllObjects];
     self.mArr_list = [NSMutableArray arrayWithArray:array];
     D("self.mInt_flag-===%@",self.mStr_flag);

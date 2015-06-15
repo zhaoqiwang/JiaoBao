@@ -611,7 +611,19 @@
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
+    
     NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!= 0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {
@@ -676,6 +688,17 @@
     [self.mTableV_list footerEndRefreshing];
     
     NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!= 0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {
@@ -709,6 +732,17 @@
         [self.mArr_attention removeAllObjects];
     }
     NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!= 0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
 //    NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {

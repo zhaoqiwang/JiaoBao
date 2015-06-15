@@ -69,7 +69,10 @@
     
     //点击加入单位获取返回信息
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *str =note.object;
+        NSDictionary *dic = note.object;
+        NSArray *keyArr =[dic allKeys];
+        NSString *str = [keyArr objectAtIndex:0];
+        NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)
         {
             [self progressViewTishi:@"加入成功"];
@@ -81,7 +84,7 @@
         }
         else
         {
-            [self progressViewTishi:@"加入失败"];
+            [self progressViewTishi:ResultDesc];
             
         }
         

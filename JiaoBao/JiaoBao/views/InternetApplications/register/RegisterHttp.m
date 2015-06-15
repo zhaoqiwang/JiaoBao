@@ -287,20 +287,22 @@ static RegisterHttp *registerHttp = nil;
 //        NSDictionary *dic = [dataString objectFromJSONString];
 //        NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==3=>>>>==%@",code);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:code];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:@{code:ResultDesc}];
         
     }else if (_request.tag == 4){//验证手机验证码
-//        NSDictionary *dic = [dataString objectFromJSONString];
-//        NSString *str = [dic objectForKey:@"Data"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
         D("str00=register==4=>>>>==%@",code);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:code];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:@{code:ResultDesc}];
 
         
     }else if (_request.tag == 5){//用户注册
-        NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
-        D("str00=register==5=>>>>==%@",str);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
+
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:@{code:ResultDesc}];
         
     }else if (_request.tag == 6){//检查昵称是否重复
         NSDictionary *dic = [dataString objectFromJSONString];
@@ -337,31 +339,31 @@ static RegisterHttp *registerHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyMobileUnitList" object:unitArr];
         
     }else if (_request.tag == 10){//加入单位操作
-//        NSDictionary *dic = [dataString objectFromJSONString];
-//        NSString *str = [dic objectForKey:@"Data"];
-//        D("str00=register==10=>>>>==%@",str);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"JoinUnitOP" object:code];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"JoinUnitOP" object:@{code:ResultDesc}];
         
     }else if (_request.tag == 11){//在重置密码时验证用户手机
-        NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
-        D("str00=register==11=>>>>==%@",str);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:code];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:@{code:ResultDesc}];
 
 
         
     }else if (_request.tag == 12){//重置用户密码 
-        NSDictionary *dic = [dataString objectFromJSONString];
-        NSString *str = [dic objectForKey:@"Data"];
-        D("str00=register==12=>>>>==%@",str);
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:code];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:@{code:ResultDesc}];
 
         
     }else if (_request.tag == 13){//重置用户密码时发送手机验证码
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=register==12=>>>>==%@",str);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:code];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:@{code:ResultDesc}];
 
         
     }

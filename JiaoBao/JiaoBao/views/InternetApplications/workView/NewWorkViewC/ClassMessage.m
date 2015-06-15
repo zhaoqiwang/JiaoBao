@@ -31,7 +31,7 @@ NSString *kCell = @"Forward_cell2";
     headerView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
     label.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-    label.text = @"所在班级家长";
+    label.text = @"  所在班级家长";
     label.font = [UIFont systemFontOfSize:13];
     [headerView addSubview:label];
     //self.view.backgroundColor = [UIColor lightGrayColor];

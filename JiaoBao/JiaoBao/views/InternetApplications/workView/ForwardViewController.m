@@ -110,7 +110,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28)];
     self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
-    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(10, self.topView.frame.size.height+self.topView.frame.origin.y, self.mLab_4.frame.size.width, 29);
     NSString *groupName = [dm getInstance].mStr_unit;
     self.mLab_4.text = [NSString stringWithFormat:@"%@人员分组",groupName];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
@@ -250,7 +250,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
     //接收人，全选，反选，发表
     self.headView.frame = CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28);
-    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.origin.y+self.topView.frame.size.height, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(10, self.topView.frame.origin.y+self.topView.frame.size.height, self.mLab_4.frame.size.width, 29);
     self.imgV.frame = CGRectMake([dm getInstance].width-15-100+15, self.mLab_4.frame.origin.y+7, 14, 14);
     self.imgV.image = [UIImage imageNamed:@"blank.png"];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);

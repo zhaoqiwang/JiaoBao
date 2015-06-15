@@ -158,7 +158,20 @@
 
 //是否关注主题
 -(void)ExistAtt:(NSNotification *)noti{
-    NSString *str = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+
+    NSString *str = [dic objectForKey:@"str"];
     self.mBtn_att.hidden = NO;
     if ([str integerValue]==0) {//未关注
         [self.mBtn_att setTitle:@"添加关注" forState:UIControlStateNormal];
@@ -219,7 +232,19 @@
 
 //个人最新前N张照片后，通知界面
 -(void)GetUnitNewPhoto:(NSNotification *)noti{
-    NSMutableArray *array = noti.object;
+    NSDictionary *dic = noti.object;
+//    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    
+//    if([ResultCode integerValue]!=0)
+//    {
+//        self.mProgressV.mode = MBProgressHUDModeCustomView;
+//        self.mProgressV.labelText = ResultDesc;
+//        [self.mProgressV show:YES];
+//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//        return;
+//    }
+    NSMutableArray *array = [dic objectForKey:@"array"];
     self.mArr_newPhoto = [NSMutableArray arrayWithArray:array];
     //设置照片展示
     [self setScrollViewImageShow];

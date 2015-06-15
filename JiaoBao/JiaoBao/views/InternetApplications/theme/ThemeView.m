@@ -144,7 +144,19 @@
     [self.mProgressV hide:YES];
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
-    NSMutableArray *array = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    NSMutableArray *array = [dic objectForKey:@"array"];
     if (self.mInt_index > 1) {
         if (array.count>0) {
             [self.mArr_tabel addObjectsFromArray:array];
