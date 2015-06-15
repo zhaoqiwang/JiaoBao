@@ -375,16 +375,20 @@ static ShowHttp *showHttp = nil;
         }
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         D("str00=show==7=>>>>==%@",str);
         if ([[dic objectForKey:@"ResultCode"] intValue] >0) {
             D("获取我关注的单位出错");
+            [dic2 setValue:@"1" forKey:@"flag"];
         }else{
             NSMutableArray *array = [ParserJson_show parserJsonGetMyAttUnit:str];
             //获取单位logo
 //            [self getMyAttUnitImg:array];
-            //获取到我关注的单位后，通知界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyAttUnit" object:array];
+            [dic2 setValue:@"0" forKey:@"flag"];
+            [dic2 setValue:array forKey:@"array"];
         }
+        //获取到我关注的单位后，通知界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyAttUnit" object:dic2];
     }else if (_request.tag == 8) {//获取本单位栏目文章
         NSString *flag = [_request.userInfo objectForKey:@"sectionFlag"];
         NSString *time = [jsonDic objectForKey:@"Data"];

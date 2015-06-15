@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation ClassView
-@synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mProgressV,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text;
+@synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mProgressV,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text,mInt_changeUnit;
 -(void)refreshClassView:(id)sender
 {
     [self.mTableV_list reloadData];
@@ -45,7 +45,7 @@
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
         //通知学校界面，切换成功身份成功，清空数组
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit:) name:@"changeCurUnit" object:nil];
         //切换账号时，更新数据
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RegisterView" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RegisterView:) name:@"RegisterView" object:nil];
@@ -519,14 +519,20 @@
 }
 
 //通知学校界面，切换成功身份成功，清空数组
--(void)changeCurUnit{
-    if (self.mInt_changeUnit ==1) {
-        [self clearArray];
-        [self.mTableV_list reloadData];
-        //重新获取数据
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.tag = self.mInt_index;
-        [self btnChange:btn];
+-(void)changeCurUnit:(NSNotification *)noti{
+    NSString *str = noti.object;
+    if ([str intValue] ==0) {//成功
+        [self loadNoMore:@"切换身份成功"];
+        if (self.mInt_changeUnit ==1) {
+            [self clearArray];
+            [self.mTableV_list reloadData];
+            //重新获取数据
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.tag = self.mInt_index;
+            [self btnChange:btn];
+        }
+    }else{
+        [self loadNoMore:@"切换身份失败"];
     }
 }
 

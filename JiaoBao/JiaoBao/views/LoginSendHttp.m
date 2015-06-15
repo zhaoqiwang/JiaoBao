@@ -1181,10 +1181,9 @@ static LoginSendHttp *loginSendHttp = nil;
             }else{//短信直通车
                 [self ReceiveListWithFlag:self.mInt_forwardFlag all:self.mInt_forwardAll];
             }
-            
-            //通知内务界面，切换成功
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCurUnit" object:nil];
         }
+        //通知内务界面，切换成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCurUnit" object:time];
     }else if (_request.tag == 17){//发表交流信息,内容
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
         if ([time intValue] == 0) {
@@ -1390,46 +1389,65 @@ static LoginSendHttp *loginSendHttp = nil;
             }
         }
     }else if (_request.tag == 27){//获取我发送的消息列表
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             [InternetAppTopScrollView shareInstance].mInt_work_mysend = 1;
             NSString *str = [jsonDic objectForKey:@"Data"];
             D("str00=login==27=>>>>==%@",str);
             NSMutableArray *array = [ParserJson parserJsonGetMySendMsgList:str];
-            //传到事务界面显示
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMySendMsgList" object:array];
+            [tempDic setValue:array forKey:@"array"];
+            [tempDic setValue:@"0" forKey:@"flag"];
+        }else{
+            [tempDic setValue:@"1" forKey:@"flag"];
         }
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMySendMsgList" object:tempDic];
     }else if (_request.tag == 28){//取发给我消息的用户列表，new
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             [InternetAppTopScrollView shareInstance].mInt_work_sendToMe = 1;
             NSString *str = [jsonDic objectForKey:@"Data"];
             NSString *readFlag = [_request.userInfo objectForKey:@"readFlag"];
             D("str00=login==28=>>>>=%@=%@",readFlag,str);
             SendToMeUserListModel *model = [ParserJson parserJsonSendToMeUserList:str];
-            NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+            [dic2 setValue:@"0" forKey:@"flag"];
             [dic2 setValue:readFlag forKey:@"readFlag"];
             [dic2 setValue:model forKey:@"model"];
-            //传到事务界面显示
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeUserList" object:dic2];
+        }else{
+            [dic2 setValue:@"1" forKey:@"flag"];
         }
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeUserList" object:dic2];
     }else if (_request.tag == 29){//取单个用户发给我消息列表 new
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
             D("str00=login==29=>>>>==%@",str);
             SendToMeUserListModel *model = [ParserJson parserJsonSendToMeUserList:str];
-            //传到事务界面显示
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeMsgList" object:model];
+            [dic2 setValue:@"0" forKey:@"flag"];
+            [dic2 setValue:model forKey:@"model"];
+        }else{
+            [dic2 setValue:@"1" forKey:@"flag"];
         }
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeMsgList" object:dic2];
     }else if (_request.tag == 30){//获取老师的关联班级
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
             NSString *str000 = [DESTool decryptWithText:str Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
             D("str00=login==30=>>>>==%@",str000);
             NSMutableArray *array = [ParserJson parserJsonGetmyUserClass:str000];
-            //传到事务界面显示
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:array];
+            [dic2 setValue:@"0" forKey:@"flag"];
+            [dic2 setValue:array forKey:@"array"];
+            
+        }else{
+            [dic2 setValue:@"1" forKey:@"flag"];
         }
-    }else if (_request.tag == 32)
-    {
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:dic2];
+    }else if (_request.tag == 32){
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
             D("str00=login==32=>>>>==%@",str);
@@ -1438,13 +1456,12 @@ static LoginSendHttp *loginSendHttp = nil;
             model.ParentCommRight = [dic objectForKey:@"ParentCommRight"];
             model.UnitCommRight = [dic objectForKey:@"UnitCommRight"];
             model.SubUnitCommRight = [dic objectForKey:@"SubUnitCommRight"];
-
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:model];
+            [dic2 setValue:@"0" forKey:@"flag"];
+            [dic2 setValue:model forKey:@"model"];
+        }else{
+            [dic2 setValue:@"1" forKey:@"flag"];
         }
-        
-
-
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:dic2];
     }
 }
 

@@ -26,9 +26,16 @@
     [self.rootView.moreUnitView dealloc1];
     [self.rootView.homeClassView dealloc1];
 }
--(void)changeCurUnit
-{
-    [[LoginSendHttp getInstance]GetCommPerm];
+-(void)changeCurUnit:(NSNotification *)noti{
+    NSString *str = noti.object;
+    if ([str intValue] ==0) {//成功
+        [[LoginSendHttp getInstance]GetCommPerm];
+    }else{
+        [dm getInstance].progress.labelText = @"切换身份失败";
+        [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+        [[dm getInstance].progress show:YES];
+        [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
 }
 
 - (void)viewDidLoad {
@@ -40,7 +47,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit:) name:@"changeCurUnit" object:nil];
     [[NSNotificationCenter defaultCenter]addObserverForName:@"" object:nil queue:nil usingBlock:^(NSNotification *note) {
         
     }];
@@ -120,35 +127,43 @@
 }
 -(void)GetCommPerm:(id)sender
 {
-    RightModel *rightModel = [sender object];
-    
-    //BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
-    if([rightModel.UnitCommRight integerValue]==1)
-    {
-        self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
-        //forward.mStr_navName = @"新建事务";
-        //forward.mInt_forwardFlag = 1;
-        [LoginSendHttp getInstance].mInt_forwardFlag = 1;
-        self.forward.mInt_forwardAll = 2;
-        self.forward.mInt_flag = 1;
-        self.forward.mInt_all = 2;
-        //forward.mInt_where = 0;
-        [self addChildViewController:self.forward];
-        [self.forward didMoveToParentViewController:self];
-        [self.rootView addSubview:self.forward.view];
-        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-
-    }
-    else
-    {
-        [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-        [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-        [dm getInstance].progress.labelText = @"没有权限";
-        [[dm getInstance].progress show:YES];
-        [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    NSMutableDictionary *dic = [sender object];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {//成功
+        RightModel *rightModel = [dic objectForKey:@"model"];
         
+        //BOOL unitCommright= [dic objectForKey:@"UnitCommRight"];
+        if([rightModel.UnitCommRight integerValue]==1)
+        {
+            self.forward = [[ForwardViewController alloc]initWithNibName:@"ForwardViewController" bundle:nil];
+            //forward.mStr_navName = @"新建事务";
+            //forward.mInt_forwardFlag = 1;
+            [LoginSendHttp getInstance].mInt_forwardFlag = 1;
+            self.forward.mInt_forwardAll = 2;
+            self.forward.mInt_flag = 1;
+            self.forward.mInt_all = 2;
+            //forward.mInt_where = 0;
+            [self addChildViewController:self.forward];
+            [self.forward didMoveToParentViewController:self];
+            [self.rootView addSubview:self.forward.view];
+            [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+            
+        }
+        else
+        {
+            [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+            [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+            [dm getInstance].progress.labelText = @"没有权限";
+            [[dm getInstance].progress show:YES];
+            [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            
+        }
+    }else{
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"获取权限失败";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
     }
-    
 }
 -(void)noMore{
     sleep(1);

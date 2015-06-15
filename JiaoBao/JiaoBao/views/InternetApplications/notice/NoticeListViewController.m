@@ -151,8 +151,16 @@
     [[LoginSendHttp getInstance] changeCurUnit];
 }
 //切换成功
--(void)changeCurUnit{
-    [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+-(void)changeCurUnit:(NSNotification *)noti{
+    NSString *str = noti.object;
+    if ([str intValue] ==0) {//成功
+        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    }else{
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"切换身份失败";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    }
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
