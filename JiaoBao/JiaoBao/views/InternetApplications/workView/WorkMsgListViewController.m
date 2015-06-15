@@ -140,7 +140,7 @@
         model.RecDate = modelMsg.RecDate;
         model.UserName = modelMsg.UserName;
         model.JiaoBaoHao = modelMsg.JiaoBaoHao;
-        model.noReadCount = @"";
+        model.NoReadCount = @"";
         model.NoReplyCount = @"";
         model.ReadFlag = @"";
         model.flag = @"0";
@@ -186,7 +186,6 @@
                 }
             }
         }
-        
         [self addArray];
     }else{
         self.mProgressV.labelText = @"获取失败";
