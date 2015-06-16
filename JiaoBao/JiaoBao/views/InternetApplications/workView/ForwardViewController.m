@@ -21,16 +21,28 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 @implementation ForwardViewController
 
-
+-(void)dealloc
+{
+    
+}
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
+
     //界面消失时，移除通知
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [self.mProgressV hide:YES];
 
     [self removeFromParentViewController];
 }
+
+-(void)removeNotification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    
+}
+
 -(void)refreshWorkView:(id)sender
 {
     if([dm getInstance].notificationSymbol ==1)
@@ -45,24 +57,38 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setFrame];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
+//
+//    //发表消息成功推送
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
+////    //通知界面更新，获取事务信息接收单位列表
+////    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+////    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+//    //获取到每个单位中的人员
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+//    //获取到下发通知的权限
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMsgAllReviceUnitList" object:nil];
+  }
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
-
+    
     //发表消息成功推送
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
-//    //通知界面更新，获取事务信息接收单位列表
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+    //    //通知界面更新，获取事务信息接收单位列表
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     //获取到每个单位中的人员
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
     //获取到下发通知的权限
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMsgAllReviceUnitList" object:nil];
-  }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     
     [dm getInstance].notificationSymbol = 1;
 
@@ -90,7 +116,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     self.headView = [[UIView alloc]initWithFrame:CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28)];
     self.headView.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.mScrollV_all insertSubview:self.headView belowSubview:self.mLab_4];
-    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.size.height+self.topView.frame.origin.y, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(10, self.topView.frame.size.height+self.topView.frame.origin.y, self.mLab_4.frame.size.width, 29);
     NSString *groupName = [dm getInstance].mStr_unit;
     self.mLab_4.text = [NSString stringWithFormat:@"%@人员分组",groupName];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);
@@ -230,7 +256,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
     //接收人，全选，反选，发表
     self.headView.frame = CGRectMake(0, self.topView.frame.size.height+self.topView.frame.origin.y, [dm getInstance].width, 28);
-    self.mLab_4.frame =CGRectMake(Margin, self.topView.frame.origin.y+self.topView.frame.size.height, self.mLab_4.frame.size.width, 29);
+    self.mLab_4.frame =CGRectMake(10, self.topView.frame.origin.y+self.topView.frame.size.height, self.mLab_4.frame.size.width, 29);
     self.imgV.frame = CGRectMake([dm getInstance].width-15-100+15, self.mLab_4.frame.origin.y+7, 14, 14);
     self.imgV.image = [UIImage imageNamed:@"blank.png"];
     self.mBtn_all.frame = CGRectMake([dm getInstance].width-100+15, self.mLab_4.frame.origin.y, 40, 29);

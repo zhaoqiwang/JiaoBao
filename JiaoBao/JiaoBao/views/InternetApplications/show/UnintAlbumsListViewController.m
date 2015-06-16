@@ -85,8 +85,19 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 //获取单位相册后，通知界面
 -(void)GetUnitPhotoByGroupID:(NSNotification *)noti{
     [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
-    self.mArr_list = [NSMutableArray arrayWithArray:array];
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    NSMutableArray *array = [dic objectForKey:@"array"];    self.mArr_list = [NSMutableArray arrayWithArray:array];
     //将相册图片中的大图片路径，循环加入数组
     for (int i=0; i<self.mArr_list.count; i++) {
         UnitAlbumsListModel *model = [self.mArr_list objectAtIndex:i];

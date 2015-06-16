@@ -20,6 +20,7 @@
 
 -(void)dealloc1{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
 }
 
 //发表消息成功
@@ -223,6 +224,7 @@
 {
     if([dm getInstance].notificationSymbol == 100)
     {
+        NSLog(@"-self.mViewTop.frame.origin.y = %f",self.mViewTop.frame.origin.y);
 
         [HomeClassRootScrollView shareInstance].contentSize = CGSizeMake(320, [dm getInstance].height - self.mViewTop.frame.size.height-self.mViewTop.frame.origin.y-[HomeClassTopScrollView shareInstance].frame.size.height);
         self.mScrollV_all.contentSize = CGSizeMake(320, self.frame.size.height);

@@ -21,7 +21,7 @@
 #import "pinyin.h"
 #import "RightModel.h"
 
-@interface MoreUnitWorkView : UIView<NewWorkTopViewProtocol,UITableViewDataSource,UITableViewDelegate,TreeView_Level0_CellDelegate,MBProgressHUDDelegate>{
+@interface MoreUnitWorkView : UIView<NewWorkTopViewProtocol,NewWorkTopViewProtocol,UITableViewDataSource,UITableViewDelegate,TreeView_Level0_CellDelegate,MBProgressHUDDelegate>{
     UIScrollView *mScrollV_all;//放所有控件
     NewWorkTopView *mViewTop;//上半部分
     CommMsgRevicerUnitListModel *mModel_unitList;//

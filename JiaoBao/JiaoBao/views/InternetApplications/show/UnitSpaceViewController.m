@@ -106,7 +106,19 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 //单位最新前N张照片后，通知界面
 -(void)GetUnitNewPhoto:(NSNotification *)noti{
     [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
+    NSDictionary *dic = noti.object;
+//    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    
+//    if([ResultCode integerValue]!=0)
+//    {
+//        self.mProgressV.mode = MBProgressHUDModeCustomView;
+//        self.mProgressV.labelText = ResultDesc;
+//        [self.mProgressV show:YES];
+//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+//        return;
+//    }
+    NSMutableArray *array = [dic objectForKey:@"array"];
     self.mArr_newPhoto = [NSMutableArray arrayWithArray:array];
     //设置照片展示
     [self setScrollViewImageShow];

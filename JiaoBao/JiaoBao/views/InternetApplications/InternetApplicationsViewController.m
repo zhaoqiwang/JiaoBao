@@ -493,12 +493,11 @@
     }
 }
 - (void)Loading{
-    //sleep(TIMEOUT);
-//    self.mProgressV.mode = MBProgressHUDModeCustomView;
-//    self.mProgressV.labelText = @"加载超时";
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"unitNameNotication" object:nil];
-//    self.mProgressV.userInteractionEnabled = NO;
-    //sleep(2);
+    sleep(TIMEOUT);
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    self.mProgressV.userInteractionEnabled = NO;
+    sleep(2);
 }
 
 -(void)noMore{
@@ -655,7 +654,19 @@
 //获取当前用户可以发布动态的单位列表(含班级）
 -(void)GetReleaseNewsUnits:(NSNotification *)noti{
     [self.mProgressV hide:YES];
-    NSMutableArray *array = noti.object;
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
+    if([ResultCode integerValue]!=0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+    }
+    NSMutableArray *array = [dic objectForKey:@"array"];
     if (array.count==0) {
         self.mProgressV.labelText = @"没有权限";
         self.mProgressV.mode = MBProgressHUDModeCustomView;

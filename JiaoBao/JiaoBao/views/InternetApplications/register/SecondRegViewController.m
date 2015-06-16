@@ -136,7 +136,10 @@
 //    }];
     //获取验证验证码是否正确的数据
     _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *str =note.object;
+        NSDictionary *dic = note.object;
+        NSArray *keyArr =[dic allKeys];
+        NSString *str = [keyArr objectAtIndex:0];
+        NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)//成功则跳转到第三个界面
         {
             NSLog(@"验证成功");
@@ -163,7 +166,7 @@
         }
         else
         {
-            [self progressViewTishi:@"验证失败"];
+            [self progressViewTishi:ResultDesc];
         }
         
         

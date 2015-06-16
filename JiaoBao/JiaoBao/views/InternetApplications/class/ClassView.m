@@ -617,7 +617,19 @@
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
+    
     NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!= 0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {
@@ -682,6 +694,17 @@
     [self.mTableV_list footerEndRefreshing];
     
     NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!= 0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {
@@ -715,6 +738,17 @@
         [self.mArr_attention removeAllObjects];
     }
     NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!= 0)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = ResultDesc;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
 //    NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {
@@ -791,8 +825,24 @@
 -(void)tableViewDownReloadData{
     self.mView_popup.hidden = YES;
     if ([dm getInstance].UID ==0) {
-        [self.mTableV_list reloadData];
-    }else{
+        if(self.mTableV_list.delegate == nil)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.mTableV_list.delegate=self;
+                self.mTableV_list.dataSource=self;
+                [self.mTableV_list reloadData];
+
+                
+                
+            });
+
+        }
+        else
+        {
+            [self.mTableV_list reloadData];
+            
+            
+        }    }else{
         if (self.mInt_index == 0) {
             //flag=1个人，=2单位
             [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];

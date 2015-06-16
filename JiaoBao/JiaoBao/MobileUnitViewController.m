@@ -37,7 +37,7 @@
     [super viewDidLoad];
     
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"个人中心"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"加入单位"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -69,19 +69,22 @@
     
     //点击加入单位获取返回信息
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {
-        NSString *str =note.object;
+        NSDictionary *dic = note.object;
+        NSArray *keyArr =[dic allKeys];
+        NSString *str = [keyArr objectAtIndex:0];
+        NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)
         {
             [self progressViewTishi:@"加入成功"];
             [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             self.addBtn.enabled = NO;
-            
-            
+            [[LoginSendHttp getInstance]getIdentityInformation];
+
             
         }
         else
         {
-            [self progressViewTishi:@"加入失败"];
+            [self progressViewTishi:ResultDesc];
             
         }
         
