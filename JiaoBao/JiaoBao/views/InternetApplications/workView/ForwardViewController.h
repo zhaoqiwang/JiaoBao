@@ -43,6 +43,7 @@
 @property(nonatomic,strong)NewWorkTopView *topView;
 @property(nonatomic,assign)BOOL showTopView;
 @property(nonatomic,assign)NSUInteger allSelected;
+-(void)removeNotification;
 
 
 @end

@@ -19,13 +19,6 @@
 @implementation NewWorkViewController
 @synthesize mNav_navgationBar,rootView;
 
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.rootView.moreUnitView dealloc1];
-    [self.rootView.homeClassView dealloc1];
-}
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
     if ([str intValue] ==0) {//成功
@@ -120,7 +113,10 @@
     [HomeClassTopScrollView destroyDealloc];
     [HomeClassRootScrollView destroyDealloc];
     self.top.firstSel = 0;
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.rootView.moreUnitView dealloc1];
+    [self.rootView.homeClassView dealloc1];
+    [self.forward removeNotification];
     [utils popViewControllerAnimated:YES];
 
 

@@ -21,16 +21,28 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 @implementation ForwardViewController
 
-
+-(void)dealloc
+{
+    
+}
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
+
     //界面消失时，移除通知
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [self.mProgressV hide:YES];
 
     [self removeFromParentViewController];
 }
+
+-(void)removeNotification
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    
+}
+
 -(void)refreshWorkView:(id)sender
 {
     if([dm getInstance].notificationSymbol ==1)
@@ -45,24 +57,38 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setFrame];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
+//
+//    //发表消息成功推送
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
+////    //通知界面更新，获取事务信息接收单位列表
+////    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+////    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+//    //获取到每个单位中的人员
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+//    //获取到下发通知的权限
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMsgAllReviceUnitList" object:nil];
+  }
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
-
+    
     //发表消息成功推送
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
-//    //通知界面更新，获取事务信息接收单位列表
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
+    //    //通知界面更新，获取事务信息接收单位列表
+    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     //获取到每个单位中的人员
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
     //获取到下发通知的权限
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMsgAllReviceUnitList" object:nil];
-  }
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     
     [dm getInstance].notificationSymbol = 1;
 

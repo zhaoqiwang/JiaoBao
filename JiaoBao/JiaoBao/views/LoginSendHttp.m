@@ -969,6 +969,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //将得到的个人信息，通知界面
         [dm getInstance].identity = array;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"getIdentity" object:array];
+        
     }else if (_request.tag == 3){//未读消息数量
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -1175,7 +1176,7 @@ static LoginSendHttp *loginSendHttp = nil;
             //发送获取接收人列表请求
 
             if (self.mInt_forwardFlag == 1) {//普通请求
-                [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+                //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
             }else if (self.mInt_forwardFlag ==2){//获取个人信息
                 [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
             }else{//短信直通车

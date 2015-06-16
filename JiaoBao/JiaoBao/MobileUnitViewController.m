@@ -37,7 +37,7 @@
     [super viewDidLoad];
     
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"个人中心"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"加入单位"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -78,8 +78,8 @@
             [self progressViewTishi:@"加入成功"];
             [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             self.addBtn.enabled = NO;
-            
-            
+            [[LoginSendHttp getInstance]getIdentityInformation];
+
             
         }
         else

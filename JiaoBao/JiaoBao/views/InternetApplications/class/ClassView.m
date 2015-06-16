@@ -825,8 +825,24 @@
 -(void)tableViewDownReloadData{
     self.mView_popup.hidden = YES;
     if ([dm getInstance].UID ==0) {
-        [self.mTableV_list reloadData];
-    }else{
+        if(self.mTableV_list.delegate == nil)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.mTableV_list.delegate=self;
+                self.mTableV_list.dataSource=self;
+                [self.mTableV_list reloadData];
+
+                
+                
+            });
+
+        }
+        else
+        {
+            [self.mTableV_list reloadData];
+            
+            
+        }    }else{
         if (self.mInt_index == 0) {
             //flag=1个人，=2单位
             [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];

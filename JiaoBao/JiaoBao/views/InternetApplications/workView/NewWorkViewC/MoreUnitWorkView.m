@@ -14,6 +14,9 @@
 
 -(void)dealloc1{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
+
+
 }
 
 - (id)initWithFrame1:(CGRect)frame{
@@ -22,6 +25,8 @@
     {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
         //通知界面更新，获取事务信息接收单位列表
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
@@ -101,6 +106,10 @@
             [self sendRequest];
         }
     }
+}
+-(void)refreshWorkView:(id)sender
+{
+    [self refreshMoreUnitView];
 }
 
 //添加附件后重置界面

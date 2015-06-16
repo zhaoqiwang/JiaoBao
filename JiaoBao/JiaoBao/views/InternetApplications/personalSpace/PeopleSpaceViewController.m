@@ -40,7 +40,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"getIdentity" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];
+        for(int i=0;i<[dm getInstance].identity.count;i++)
+        {
+            Identity_model *model= [[dm getInstance].identity objectAtIndex:i];
+            if([model.RoleIdName isEqualToString:@"家长"]|[model.RoleIdName isEqualToString:@"学生"])
+            {
+                for(int i=0;i<model.UserClasses.count;i++)
+                {
+                    Identity_UserClasses_model *model2 = [model.UserClasses objectAtIndex:i];
+                    [mArr addObject:model2.ClassName];
+                    [mArr2 addObject:model.RoleIdName];
+                    
+                    
+                }
+                
+            }
+            else
+            {
+                for(int i=0;i<model.UserUnits.count;i++)
+                {
+                    Identity_UserUnits_model *model2 = [model.UserUnits objectAtIndex:i];
+                    [mArr addObject:model2.UnitName];
+                    [mArr2 addObject:model.RoleIdName];
+                    
+                }
+                
+            }
+            
+            
+            
+            
+        }
+        
+        self.unitArr = mArr;
+        self.unitArr2 = mArr2;
+        [self.unitTabelView reloadData];
+
+    }];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -58,6 +98,7 @@
                 Identity_UserClasses_model *model2 = [model.UserClasses objectAtIndex:i];
                 [mArr addObject:model2.ClassName];
                 [mArr2 addObject:model.RoleIdName];
+                
 
             }
             
