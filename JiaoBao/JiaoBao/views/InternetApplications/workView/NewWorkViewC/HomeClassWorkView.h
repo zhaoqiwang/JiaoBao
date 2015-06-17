@@ -25,6 +25,7 @@
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 - (id)initWithFrame1:(CGRect)frame;
+-(void)resetFrame;
 
 -(void)dealloc1;
 

@@ -289,8 +289,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 - (void)Loading {
     sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
+//    self.mProgressV.mode = MBProgressHUDModeCustomView;
+//    self.mProgressV.labelText = @"加载超时";
+    [self.mProgressV show:NO];
+    
 //    self.mProgressV.userInteractionEnabled = NO;
     sleep(2);
 }
