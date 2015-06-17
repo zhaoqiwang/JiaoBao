@@ -574,6 +574,7 @@
     [dm getInstance].mStr_unit = @"";
     [dm getInstance].name = @"";
     [dm getInstance].url = @"";
+    [dm getInstance].UID = 0;
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
