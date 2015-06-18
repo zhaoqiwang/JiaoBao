@@ -114,6 +114,9 @@
     //    self.mProgressV.userInteractionEnabled = NO;
     sleep(2);
 }
+-(void)noMore{
+    sleep(1);
+}
 
 - (void)selectNameButton:(UIButton *)sender{
 
@@ -126,6 +129,14 @@
         mInt_userSelectedChannelID = sender.tag;
         if(sender.tag == 100)
         {
+            if([[dm getInstance].firstFlag isEqualToString: @"1"])
+            {
+                [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+                [dm getInstance].progress.labelText = @"没有权限";
+                [[dm getInstance].progress show:YES];
+                [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            }
+            
             [dm getInstance].notificationSymbol = 1;
 
             
@@ -172,6 +183,13 @@
         
         if(sender.tag ==102)
         {
+            if([[dm getInstance].thirdFlag isEqualToString: @"1"])
+            {
+                [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+                [dm getInstance].progress.labelText = @"无发送权限或没有其他单位";
+                [[dm getInstance].progress show:YES];
+                [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            }
             [dm getInstance].topButtonSymbol = [dm getInstance].notificationSymbol;
             [dm getInstance].notificationSymbol = 3;
  

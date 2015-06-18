@@ -100,6 +100,7 @@
             [self.mScrollV_all removeFromSuperview];
             self.mProgressV.mode = MBProgressHUDModeCustomView;
             self.mProgressV.labelText = @"无发送权限或没有其他单位";
+            [dm getInstance].thirdFlag = @"1";
             [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         }else{

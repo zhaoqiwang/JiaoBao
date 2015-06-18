@@ -10,7 +10,7 @@
 static dm* dmone = nil;
 
 @implementation dm
-@synthesize width,height,url,statusBar,jiaoBaoHao,identity,name,UID,uType,unReadMsg1,unReadMsg2,mStr_unit,mStr_tableID,userInfo,mImt_shareUnRead,mImt_showUnRead,TrueName,rongYunModel,mArr_rongYunGroup,mArr_rongYunUser,mArr_unit_member,mArr_myFriends,uuid;
+@synthesize width,height,url,statusBar,jiaoBaoHao,identity,name,UID,uType,unReadMsg1,unReadMsg2,mStr_unit,mStr_tableID,userInfo,mImt_shareUnRead,mImt_showUnRead,TrueName,rongYunModel,mArr_rongYunGroup,mArr_rongYunUser,mArr_unit_member,mArr_myFriends,uuid,MainUrl;
 
 +(dm*) getInstance {
     if(dmone == nil) {

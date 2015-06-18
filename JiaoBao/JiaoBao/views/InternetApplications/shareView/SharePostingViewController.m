@@ -360,11 +360,11 @@
 }
 
 - (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
+//    sleep(TIMEOUT);
+//    self.mProgressV.mode = MBProgressHUDModeCustomView;
+//    self.mProgressV.labelText = @"加载超时";
+////    self.mProgressV.userInteractionEnabled = NO;
+//    sleep(2);
 }
 
 //点击选择图片按钮

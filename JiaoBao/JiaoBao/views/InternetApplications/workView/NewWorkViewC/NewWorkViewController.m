@@ -117,6 +117,8 @@
     [self.rootView.moreUnitView dealloc1];
     [self.rootView.homeClassView dealloc1];
     [self.forward removeNotification];
+    [dm getInstance].firstFlag = @"0";
+    [dm getInstance].thirdFlag = @"0";
     [utils popViewControllerAnimated:YES];
 
 
@@ -150,6 +152,7 @@
             [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
             [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
             [dm getInstance].progress.labelText = @"没有权限";
+            [dm getInstance].firstFlag = @"1";
             [[dm getInstance].progress show:YES];
             [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
             

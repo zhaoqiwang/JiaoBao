@@ -931,6 +931,10 @@ static LoginSendHttp *loginSendHttp = nil;
             NSString *url=[item objectForKey:@"Value"];
             D("url-==  %@",url);
             [dm getInstance].url = url;
+            if (i==0) {
+                url = [NSString stringWithFormat:@"%@/",url];
+                [dm getInstance].MainUrl = url;
+            }
             //请求Token
             [self getToken];
         }
