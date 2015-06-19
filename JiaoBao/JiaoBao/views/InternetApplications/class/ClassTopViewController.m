@@ -620,10 +620,11 @@
         //        NSAttributedString* atrString = [[NSAttributedString alloc] initWithString:string];
         //        NSRange range = NSMakeRange(0, atrString.length);
         //        NSDictionary* dic = [atrString attributesAtIndex:0 effectiveRange:&range];
-        CGRect rect=[string boundingRectWithSize:CGSizeMake(cell.frame.size.width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
-                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+//        CGRect rect=[string boundingRectWithSize:CGSizeMake(cell.frame.size.width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
+//                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+            CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
         
-        h = h+rect.size.height;
+        h = h+size.height;
         
     }
     

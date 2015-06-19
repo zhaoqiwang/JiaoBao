@@ -64,6 +64,13 @@
 @end
 
 @implementation CheckingInViewController
+-(void)dealloc
+{
+    if(BaidumapView)
+    {
+        BaidumapView = nil;
+    }
+}
 
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
 {
@@ -75,10 +82,15 @@
     }
     return nil;
 }
-
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [BaidumapView viewWillAppear];
     self.mapView.showsUserLocation = YES;
     [_locService startUserLocationService];
 
@@ -92,6 +104,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    [BaidumapView viewWillDisappear];
     self.mapView.showsUserLocation = NO;
     [_locService stopUserLocationService];
 
@@ -146,7 +159,6 @@
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUnitName:) name:@"unitNameNotication" object:nil];
     [[SignInHttp getInstance]getTime];
-
 
     BaidumapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64+30, 320, 568-94)];
     [self.view addSubview:BaidumapView];
@@ -604,6 +616,10 @@ if(component == 0)
     
 }
 -(void)myNavigationGoback{
+    BaidumapView = nil;
+    _locService = nil;
+    _searcher = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
