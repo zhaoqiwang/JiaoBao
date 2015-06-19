@@ -323,7 +323,7 @@
                             action:@selector(pushMenuItem3:)],
               
               ];
-        }else{
+        }else if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
             menuItems =
             @[
               [KxMenuItem menuItem:@"新建事务"
@@ -354,6 +354,21 @@
                              image:[UIImage imageNamed:@"appNav_changeUnit"]
                             target:self
                             action:@selector(pushMenuItem2:)],
+              
+              [KxMenuItem menuItem:@"切换账号"
+                             image:[UIImage imageNamed:@"appNav_changeUser"]
+                            target:self
+                            action:@selector(pushMenuItem3:)],
+              
+              ];
+        }else{
+            menuItems =
+            @[
+              
+              [KxMenuItem menuItem:@"个人中心"
+                             image:[UIImage imageNamed:@"appNav_changeUser"]
+                            target:self
+                            action:@selector(pushMenuItem8:)],
               
               [KxMenuItem menuItem:@"切换账号"
                              image:[UIImage imageNamed:@"appNav_changeUser"]
@@ -571,8 +586,8 @@
     [InternetAppTopScrollView shareInstance].mInt_theme = 0;
     [InternetAppTopScrollView shareInstance].mInt_work_sendToMe = 0;
     [InternetAppTopScrollView shareInstance].mInt_work_mysend = 0;
-    [dm getInstance].mStr_unit = @"";
-    [dm getInstance].name = @"";
+    [dm getInstance].mStr_unit = @"暂无";
+    [dm getInstance].name = @"新用户";
     [dm getInstance].url = @"";
     [dm getInstance].UID = 0;
     

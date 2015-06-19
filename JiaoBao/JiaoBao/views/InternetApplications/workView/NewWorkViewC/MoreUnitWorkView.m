@@ -94,7 +94,7 @@
 //第一次进入此界面，发送数据请求
 -(void)fristGotoMoreUnit{
     if (self.mInt_flag ==0) {
-        self.mInt_flag = 1;
+        
 //        if (self.mArr_sumData.count>0) {
         if (([self.mModel_right.ParentCommRight intValue] ==0&&[self.mModel_right.SubUnitCommRight intValue] ==0)||self.mArr_sumData.count==0) {
             [self.mScrollV_all removeFromSuperview];
@@ -104,6 +104,7 @@
             [self.mProgressV show:YES];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         }else{
+            self.mInt_flag = 1;
             [self sendRequest];
         }
     }
@@ -201,10 +202,12 @@
         }
 //    }
     
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    if (self.mInt_requestCount >0) {
+        self.mProgressV.labelText = @"加载中...";
+        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    }
 }
 
 - (void)Loading {
@@ -553,6 +556,7 @@
         temp0.mStr_name = @"当前单位";
         temp0.mStr_img_open_close = @"root_close";
         node0.nodeData = temp0;
+        [self.mArr_sumData addObject:node0];
     }
     
     TreeView_node *node1 = [[TreeView_node alloc]init];
@@ -567,6 +571,7 @@
         temp1.mStr_name = @"上级单位";
         temp1.mStr_img_open_close = @"root_close";
         node1.nodeData = temp1;
+        [self.mArr_sumData addObject:node1];
     }
     
     TreeView_node *node2 = [[TreeView_node alloc]init];
@@ -581,9 +586,10 @@
         temp2.mStr_name = @"下级单位";
         temp2.mStr_img_open_close = @"root_close";
         node2.nodeData = temp2;
+        [self.mArr_sumData addObject:node2];
     }
     
-    self.mArr_sumData = [NSMutableArray arrayWithObjects:node0,node1,node2, nil];
+//    self.mArr_sumData = [NSMutableArray arrayWithObjects:node0,node1,node2, nil];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -822,7 +828,14 @@
         [self.mTableV_work reloadData];
     }
     else {
-        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+        if (node.sonNodes.count ==0) {
+            self.mProgressV.mode = MBProgressHUDModeCustomView;
+            self.mProgressV.labelText = @"没有子单位";
+            [self.mProgressV show:YES];
+            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        }else{
+            [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+        }
     }
 }
 

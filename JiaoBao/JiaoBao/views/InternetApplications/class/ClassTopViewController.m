@@ -704,11 +704,20 @@
     self.mView_popup.hidden = YES;
     self.mView_text.hidden = YES;
     [self.mTextF_text resignFirstResponder];
+}
 
+//评论的点击
+-(void)didSelectedCell{
+    self.mView_popup.hidden = YES;
+    self.mView_text.hidden = YES;
+    [self.mTextF_text resignFirstResponder];
 }
 
 //点击内容或者标题时触发cell点击事件
 -(void)ClassTableViewCellContentPress:(ClassTableViewCell *)classCell{
+    self.mView_popup.hidden = YES;
+    self.mView_text.hidden = YES;
+    [self.mTextF_text resignFirstResponder];
     //转model
     TopArthListModel *model = [[TopArthListModel alloc] init];
     model.TabIDStr = classCell.mModel_class.TabIDStr;
@@ -781,19 +790,23 @@
 
 //点击点赞评论按钮
 -(void)ClassTableViewCellCommentBtn:(ClassTableViewCell *)topArthListCell Btn:(UIButton *)btn{
-    self.mView_popup.mModel_class = topArthListCell.mModel_class;
-    //得到当前点击的button相对于整个view的坐标
-    CGRect parentRect = [btn convertRect:btn.bounds toView:self.view];
-    self.mView_popup.hidden = NO;
-    self.mView_popup.frame = CGRectMake(parentRect.origin.x-120, parentRect.origin.y, self.mView_popup.frame.size.width, self.mView_popup.frame.size.height);
-    if (topArthListCell.mModel_class.mModel_info.TabID >0) {//获取到
-        if (topArthListCell.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
+    if (self.mView_popup.hidden == YES) {
+        self.mView_popup.mModel_class = topArthListCell.mModel_class;
+        //得到当前点击的button相对于整个view的坐标
+        CGRect parentRect = [btn convertRect:btn.bounds toView:self.view];
+        self.mView_popup.hidden = NO;
+        self.mView_popup.frame = CGRectMake(parentRect.origin.x-120, parentRect.origin.y, self.mView_popup.frame.size.width, self.mView_popup.frame.size.height);
+        if (topArthListCell.mModel_class.mModel_info.TabID >0) {//获取到
+            if (topArthListCell.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
+                [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+            }else{//已赞
+                [self.mView_popup.mBtn_like setTitle:@"已赞" forState:UIControlStateNormal];
+            }
+        }else{
             [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
-        }else{//已赞
-            [self.mView_popup.mBtn_like setTitle:@"已赞" forState:UIControlStateNormal];
         }
     }else{
-        [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
+        self.mView_popup.hidden = YES;
     }
 }
 

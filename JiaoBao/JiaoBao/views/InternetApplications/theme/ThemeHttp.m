@@ -521,6 +521,7 @@ static ThemeHttp *themeHttp = nil;
             NSString *str = [dic1 objectForKey:@"Data"];
             D("str00=theme==11=>>>>==%@",str);
             NSMutableArray *array = [ParserJson_show parserJsonGetPhotoList:str];
+            [dic setValue:array forKey:@"array"];
             //获取单位相册照片后，通知界面
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPhotoList" object:dic];
         }

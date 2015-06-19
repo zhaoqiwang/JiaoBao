@@ -87,6 +87,8 @@
 //向cell中添加图片点击手势
 @protocol ClassTableViewCellDelegate <NSObject>
 
+@optional
+
 - (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
 
 - (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img;
@@ -100,6 +102,7 @@
 
 //向cell班级显示中添加点击手势
 @protocol ClassTableViewCellClassDelegate <NSObject>
+@optional
 
 - (void) ClassTableViewCellClassTapPress:(ClassTableViewCell *) topArthListCell;
 
@@ -107,6 +110,7 @@
 
 //向cell头像显示中添加点击手势
 @protocol ClassTableViewCellHeadImgDelegate <NSObject>
+@optional
 
 - (void) ClassTableViewCellHeadImgTapPress:(ClassTableViewCell *) topArthListCell;
 
@@ -115,6 +119,9 @@
 
 //点击标题内容时触发点击cell事件
 //-(void)ClassTableViewCellAssessContentPress:(ClassTableViewCell *)classCell;
+
+//表格点击事件，返回到主界面
+-(void)didSelectedCell;
 
 @end
 
