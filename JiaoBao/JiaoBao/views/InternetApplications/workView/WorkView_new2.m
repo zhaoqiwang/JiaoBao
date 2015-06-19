@@ -19,7 +19,9 @@
         self.frame = frame;
         self.backgroundColor = [UIColor whiteColor];
         self.firstSymbol = NO;
-
+        //做bug服务器显示当前的哪个界面
+        NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+        [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
         
         //取发给我消息的用户列表，new
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnReadMsgCell" object:nil];

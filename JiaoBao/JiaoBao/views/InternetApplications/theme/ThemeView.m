@@ -17,7 +17,9 @@
     if (self) {
         // Initialization code
         self.frame = frame;
-        
+        //做bug服务器显示当前的哪个界面
+        NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+        [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
         //将我的主题通知界面
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnjoyInterestList" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EnjoyInterestList:) name:@"EnjoyInterestList" object:nil];

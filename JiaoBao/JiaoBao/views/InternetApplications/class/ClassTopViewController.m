@@ -54,9 +54,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-    // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mArr_list_class = [NSMutableArray array];
     //添加导航条
