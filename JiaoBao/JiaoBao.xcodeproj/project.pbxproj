@@ -4721,7 +4721,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 				SDKROOT = iphoneos8.2;
 			};
 			name = Debug;
@@ -4757,7 +4757,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 				SDKROOT = iphoneos8.2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4785,7 +4785,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 			};
 			name = Debug;
 		};
@@ -4811,7 +4811,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fabe91eb-b986-4261-b2a8-cce642bad77e";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 			};
 			name = Release;
 		};

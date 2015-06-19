@@ -68,6 +68,8 @@
     self.mTextF_userName.textAlignment = NSTextAlignmentLeft;
     self.mTextF_userName.borderStyle=UITextBorderStyleNone;
     self.mTextF_userName.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"];
+    self.mTextF_userName.delegate = self;
+    self.mTextF_userName.returnKeyType = UIReturnKeyDone;//return键的类型
     [tempView1 addSubview:self.mTextF_userName];
     
     UIImage *image2 = [UIImage imageNamed:@"Regiser_passwd"];
@@ -81,6 +83,8 @@
     self.mTextF_passwd.textAlignment = NSTextAlignmentLeft;
     [self.mTextF_passwd setSecureTextEntry:YES];
 //    self.mTextF_passwd.keyboardType = UIKeyboardTypeNumberPad;
+    self.mTextF_passwd.delegate = self;
+    self.mTextF_passwd.returnKeyType = UIReturnKeyDone;//return键的类型
     self.mTextF_passwd.text = [[NSUserDefaults standardUserDefaults] valueForKey:@"PassWD"];
     self.mTextF_passwd.borderStyle=UITextBorderStyleNone;
     [tempView2 addSubview:self.mTextF_passwd];
@@ -98,23 +102,23 @@
     self.mBtn_memberPassWD.frame = CGRectMake(tempView2.frame.origin.x, tempView2.frame.origin.y+tempView2.frame.size.height, image3.size.width, image3.size.height);
     [self.mBtn_memberPassWD setImage:image3 forState:UIControlStateNormal];
     [self.mBtn_memberPassWD addTarget:self action:@selector(memberPasswd:) forControlEvents:UIControlEventTouchDown];
-    [self.mView_view addSubview:self.mBtn_memberPassWD];
+//    [self.mView_view addSubview:self.mBtn_memberPassWD];
     
     //注册按钮
     self.mBtn_register = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_register.frame = CGRectMake([dm getInstance].width-60, self.mBtn_memberPassWD.frame.origin.y, 50, self.mBtn_memberPassWD.frame.size.height);
+    self.mBtn_register.frame = CGRectMake([dm getInstance].width-60, [dm getInstance].height-40, 50, 30);
     [self.mBtn_register setTitle:@"注册" forState:UIControlStateNormal];
     self.mBtn_register.titleLabel.font = [UIFont systemFontOfSize:12];
     [self.mBtn_register addTarget:self action:@selector(registerPhoneNum:) forControlEvents:UIControlEventTouchDown];
-    [self.mView_view addSubview:self.mBtn_register];
+    [self.view addSubview:self.mBtn_register];
     
     //忘记密码按钮
     self.mBtn_forgetPW = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.mBtn_forgetPW.frame = CGRectMake(self.mBtn_register.frame.origin.x-60, self.mBtn_memberPassWD.frame.origin.y, 50, self.mBtn_memberPassWD.frame.size.height);
+    self.mBtn_forgetPW.frame = CGRectMake(20, [dm getInstance].height-40, 50, 30);
     [self.mBtn_forgetPW setTitle:@"忘记密码" forState:UIControlStateNormal];
     self.mBtn_forgetPW.titleLabel.font = [UIFont systemFontOfSize:12];
     [self.mBtn_forgetPW addTarget:self action:@selector(forgetPW:) forControlEvents:UIControlEventTouchDown];
-    [self.mView_view addSubview:self.mBtn_forgetPW];
+    [self.view addSubview:self.mBtn_forgetPW];
     
     //登陆按钮
     UIImage *image4 = [UIImage imageNamed:@"Regiser_login"];
@@ -267,6 +271,16 @@
         [[NSUserDefaults standardUserDefaults] setValue:@"1" forKey:@"rememberPassWD"];
         [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     }
+}
+
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning {

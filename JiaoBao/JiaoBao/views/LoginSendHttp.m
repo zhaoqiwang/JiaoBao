@@ -930,10 +930,16 @@ static LoginSendHttp *loginSendHttp = nil;
             NSDictionary *item=[arrlist objectAtIndex:i];
             NSString *url=[item objectForKey:@"Value"];
             D("url-==  %@",url);
-            [dm getInstance].url = url;
-            //请求Token
-            [self getToken];
+            if (i==0) {
+                [dm getInstance].url = url;
+            }else if (i==1){
+                [dm getInstance].RiCUrl = url;
+            }else if (i==2){
+                [dm getInstance].KaoQUrl = url;
+            }
         }
+        //请求Token
+        [self getToken];
     }else if (flag_request == 7){//获取Token回调
         NSString *time = [jsonDic objectForKey:@"Data"];
         D("flag_request==7 == %@",time);

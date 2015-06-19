@@ -15,7 +15,7 @@
 @interface dm : NSObject{
     int width;//界面宽度
     int height;//界面高度
-    NSString *url;//系统应用的URL
+    NSString *url;//系统应用的URL,主url
     int statusBar;//状态栏
     NSString *jiaoBaoHao;//教宝号,accid
     NSString *name;//自己的名字`
@@ -39,7 +39,9 @@
     NSString *uuid;//启动时设置，注册成功后，添加到key中
     BOOL tableSymbol;//
     
-    
+//    NSString *MainUrl;//主url----url
+    NSString *RiCUrl;//日程url
+    NSString *KaoQUrl;//考勤url
 }
 
 @property (nonatomic,assign) int width;//界面宽度
@@ -73,6 +75,9 @@
 @property(nonatomic,strong)MBProgressHUD *progress;
 @property(nonatomic,assign)NSUInteger topButtonSymbol;//发布事务界面点击顶部button的标志
 @property(nonatomic,assign)BOOL RegisterSymbol;//是否是注册 是注册 获取手机验证码握手时不获取时间
+@property (nonatomic,strong) NSString *MainUrl;//主url
+@property (nonatomic,strong) NSString *RiCUrl;//日程url
+@property (nonatomic,strong) NSString *KaoQUrl;//考勤url
 
 
 + (dm*) getInstance;

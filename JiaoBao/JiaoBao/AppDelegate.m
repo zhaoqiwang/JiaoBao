@@ -85,6 +85,8 @@ CLLocationManager *locationManager;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registeredSuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registeredSuccessfully) name:@"registeredSuccessfully" object:nil];//注册成功跳转主界面通知
+    //默认登录成功则记住密码
+    [[NSUserDefaults standardUserDefaults] setValue:@"2" forKey:@"rememberPassWD"];
     //通知到界面得到的单位人员
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ExchangeUserInfoByUnitID" object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ExchangeUserInfoByUnitID:) name:@"ExchangeUserInfoByUnitID" object:nil];

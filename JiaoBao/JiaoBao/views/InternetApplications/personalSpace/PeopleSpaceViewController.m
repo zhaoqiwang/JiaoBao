@@ -166,8 +166,8 @@
     NSString *nickName = [dm getInstance].NickName;
 //    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"手机",@"邮箱",@"密码",@"所在单位", nil];
 //    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"加入单位", nil];
-    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"密码",@"所在单位", nil];
-    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"修改密码",@"加入单位", nil];
+    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"教宝号",@"修改密码",@"所在单位", nil];
+    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"", nil];
     for (int i=0; i<4; i++) {
         PersonalSpaceModel *model = [[PersonalSpaceModel alloc] init];
         model.mStr_nickName = [NSString stringWithFormat:@"%@",[tempArr0 objectAtIndex:i]];
@@ -312,7 +312,11 @@
         cell.mLab_nickName.frame = CGRectMake(cell.mImgV_head.frame.size.width+20, 15, [dm getInstance].width-75, cell.mLab_nickName.frame.size.height);
         cell.mLab_trueName.frame = CGRectMake(cell.mImgV_head.frame.size.width+20, 15+cell.mLab_nickName.frame.size.height+5, [dm getInstance].width-75, cell.mLab_nickName.frame.size.height);
         cell.mLab_line.frame = CGRectMake(0, 69, [dm getInstance].width, .5);
+        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }else{
+        if (indexPath.row ==2) {
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+        }
         cell.mImgV_head.hidden = YES;
         cell.mLab_nickName.frame = CGRectMake(15, 10, cell.mLab_nickName.frame.size.width, cell.mLab_nickName.frame.size.height);
         cell.mLab_trueName.frame = CGRectMake(100, 10, 200, cell.mLab_nickName.frame.size.height);
@@ -320,7 +324,6 @@
     }
     cell.mLab_nickName.text = model.mStr_nickName;
     cell.mLab_trueName.text = model.mStr_trueName;
-        
     
     return cell;
     }
