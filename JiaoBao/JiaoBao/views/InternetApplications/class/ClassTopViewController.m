@@ -54,6 +54,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mArr_list_class = [NSMutableArray array];
