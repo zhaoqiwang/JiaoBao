@@ -17,6 +17,10 @@
 @end
 
 @implementation DetailQueryViewController
+-(void)dealloc
+{
+    
+}
 
 - (void)viewDidLoad
 {
@@ -127,7 +131,7 @@
 }
 -(void)myNavigationGoback
 {
-    [utils popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

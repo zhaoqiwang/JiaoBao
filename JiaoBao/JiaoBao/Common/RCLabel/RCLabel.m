@@ -1708,112 +1708,112 @@ CGFloat MyGetWidthCallback( void* refCon ){
 #pragma mark Touch Handling
 
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    
-	UITouch *touch = [touches anyObject];
-	CGPoint location = [touch locationInView:self];
-	
-	CFArrayRef lines = CTFrameGetLines(_ctFrame);
-	CGPoint origins[CFArrayGetCount(lines)];
-	CTFrameGetLineOrigins(_ctFrame, CFRangeMake(0, 0), origins);
-	
-	CTLineRef line = NULL;
-	CGPoint lineOrigin = CGPointZero;
-    CGPathRef path = CTFrameGetPath(_ctFrame);
-    CGRect rect = CGPathGetBoundingBox(path);
-    CGFloat nextLineY = 0;
-	for (int i= 0; i < CFArrayGetCount(lines); i++)
-	{
-		CGPoint origin = origins[i];
-		
-		CGFloat y = rect.origin.y + rect.size.height - origin.y;
-        CTLineRef tempLine = CFArrayGetValueAtIndex(lines, i);
-        CGFloat ascend = 0;
-        CGFloat decend = 0;
-        CGFloat leading = 0;
-        CTLineGetTypographicBounds(tempLine, &ascend, &decend, &leading);
-        y -= ascend;
-        
-		if ((location.y >= y) && (location.x >= origin.x))
-		{
-            
-			line = CFArrayGetValueAtIndex(lines, i);
-			lineOrigin = origin;
-		}
-        nextLineY = y + ascend + fabsf(decend) + leading;
-	}
-	if (!line || location.y >= nextLineY) {
-        return;
-    }
-	location.x -= lineOrigin.x;
-    
-    
-    CFArrayRef runs = CTLineGetGlyphRuns(line);
-    CGFloat lineAscent;
-    CGFloat lineDescent;
-    CGFloat lineLeading;
-    CTLineGetTypographicBounds(line, &lineAscent, &lineDescent, &lineLeading);
-    BOOL isClicked = NO;
-    for (int j = 0; j < CFArrayGetCount(runs); j++) {
-        CTRunRef run = CFArrayGetValueAtIndex(runs, j);
-        
-        CGFloat ascent, descent, leading;
-    
-        CGFloat width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, &leading);
-        
-        const CGPoint *positions = CTRunGetPositionsPtr(run);
-        
-        
-        if (location.x <= width + positions[0].x) {
-            isClicked = YES;
-            break;
-        } 
-       
-    }
-    if (!isClicked) {
-        [super touchesBegan:touches withEvent:event];
-        return;
-    }
-    
-    
-    
-    
-    
-    
-	CFIndex index = CTLineGetStringIndexForPosition(line, location);
-	RTLabelComponent *tempComponent = nil;
-	for (RTLabelComponent *component in self.componentsAndPlainText.linkComponents)
-	{
-		if ((index >= component.position) && (index <= ([component.text length] + component.position)))
-		{
-			tempComponent = component;
-			
-		}
-	}
-    if (tempComponent) {
-        self.currentLinkComponent = tempComponent;
-        [self setNeedsDisplay];
-    }
-    else {
-        for (RTLabelComponent *component in self.componentsAndPlainText.imgComponents)
-        {
-            if ((index >= component.position) && (index <= ([component.text length] + component.position)))
-            {
-                tempComponent = component;
-                
-            }
-        }
-        if (tempComponent) {
-            self.currentImgComponent = tempComponent;
-            [self setNeedsDisplay];
-        }
-        else {
-            [super touchesBegan:touches withEvent:event];
-        }
-        
-    }
-}
+//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    
+//	UITouch *touch = [touches anyObject];
+//	CGPoint location = [touch locationInView:self];
+//	
+//	CFArrayRef lines = CTFrameGetLines(_ctFrame);
+//	CGPoint origins[CFArrayGetCount(lines)];
+//	CTFrameGetLineOrigins(_ctFrame, CFRangeMake(0, 0), origins);
+//	
+//	CTLineRef line = NULL;
+//	CGPoint lineOrigin = CGPointZero;
+//    CGPathRef path = CTFrameGetPath(_ctFrame);
+//    CGRect rect = CGPathGetBoundingBox(path);
+//    CGFloat nextLineY = 0;
+//	for (int i= 0; i < CFArrayGetCount(lines); i++)
+//	{
+//		CGPoint origin = origins[i];
+//		
+//		CGFloat y = rect.origin.y + rect.size.height - origin.y;
+//        CTLineRef tempLine = CFArrayGetValueAtIndex(lines, i);
+//        CGFloat ascend = 0;
+//        CGFloat decend = 0;
+//        CGFloat leading = 0;
+//        CTLineGetTypographicBounds(tempLine, &ascend, &decend, &leading);
+//        y -= ascend;
+//        
+//		if ((location.y >= y) && (location.x >= origin.x))
+//		{
+//            
+//			line = CFArrayGetValueAtIndex(lines, i);
+//			lineOrigin = origin;
+//		}
+//        nextLineY = y + ascend + fabsf(decend) + leading;
+//	}
+//	if (!line || location.y >= nextLineY) {
+//        return;
+//    }
+//	location.x -= lineOrigin.x;
+//    
+//    
+//    CFArrayRef runs = CTLineGetGlyphRuns(line);
+//    CGFloat lineAscent;
+//    CGFloat lineDescent;
+//    CGFloat lineLeading;
+//    CTLineGetTypographicBounds(line, &lineAscent, &lineDescent, &lineLeading);
+//    BOOL isClicked = NO;
+//    for (int j = 0; j < CFArrayGetCount(runs); j++) {
+//        CTRunRef run = CFArrayGetValueAtIndex(runs, j);
+//        
+//        CGFloat ascent, descent, leading;
+//    
+//        CGFloat width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, &leading);
+//        
+//        const CGPoint *positions = CTRunGetPositionsPtr(run);
+//        
+//        
+//        if (location.x <= width + positions[0].x) {
+//            isClicked = YES;
+//            break;
+//        } 
+//       
+//    }
+//    if (!isClicked) {
+//        [super touchesBegan:touches withEvent:event];
+//        return;
+//    }
+//    
+//    
+//    
+//    
+//    
+//    
+//	CFIndex index = CTLineGetStringIndexForPosition(line, location);
+//	RTLabelComponent *tempComponent = nil;
+//	for (RTLabelComponent *component in self.componentsAndPlainText.linkComponents)
+//	{
+//		if ((index >= component.position) && (index <= ([component.text length] + component.position)))
+//		{
+//			tempComponent = component;
+//			
+//		}
+//	}
+//    if (tempComponent) {
+//        self.currentLinkComponent = tempComponent;
+//        [self setNeedsDisplay];
+//    }
+//    else {
+//        for (RTLabelComponent *component in self.componentsAndPlainText.imgComponents)
+//        {
+//            if ((index >= component.position) && (index <= ([component.text length] + component.position)))
+//            {
+//                tempComponent = component;
+//                
+//            }
+//        }
+//        if (tempComponent) {
+//            self.currentImgComponent = tempComponent;
+//            [self setNeedsDisplay];
+//        }
+//        else {
+//            [super touchesBegan:touches withEvent:event];
+//        }
+//        
+//    }
+//}
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {	
     [super touchesMoved:touches withEvent:event];
