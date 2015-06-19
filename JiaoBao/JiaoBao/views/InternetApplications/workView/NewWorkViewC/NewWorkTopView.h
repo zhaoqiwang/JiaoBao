@@ -51,6 +51,7 @@
 @property (nonatomic,strong) UIView *mView_accessory;//显示附件用
 @property (nonatomic,assign) int mInt_sendMsg;//是否发送短信，0发送，1不发送
 @property (retain,nonatomic) id <NewWorkTopViewProtocol > delegate;
+@property(nonatomic,strong)UIImagePickerController *picker;
 -(void)addAccessoryPhoto;
 
 //刷新显示附件

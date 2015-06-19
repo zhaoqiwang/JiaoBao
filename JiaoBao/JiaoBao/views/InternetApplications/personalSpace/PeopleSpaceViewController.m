@@ -223,7 +223,7 @@
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     if([tableView isEqual:self.unitTabelView])
     {
-        return 20;
+        return 30;
         
     }
     else
@@ -256,6 +256,7 @@
 
         NSString *identTypeLabelStr = [NSString stringWithFormat:@"(%@)",[self.unitArr2 objectAtIndex:indexPath.row] ];
         cell.identTypeLabel.text = identTypeLabelStr;
+
 
         cell.addBtn.hidden = YES;
 

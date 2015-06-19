@@ -360,11 +360,25 @@
 }
 
 - (void)Loading {
-//    sleep(TIMEOUT);
-//    self.mProgressV.mode = MBProgressHUDModeCustomView;
-//    self.mProgressV.labelText = @"加载超时";
-////    self.mProgressV.userInteractionEnabled = NO;
-//    sleep(2);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.timer invalidate];
+        self.timer = nil;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
+        
+        
+    });
+    
+    
+
+
+
+}
+-(void)timerAction:(id)sender
+{
+    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    self.mProgressV.labelText = @"加载超时";
+    sleep(2);
+    
 }
 
 //点击选择图片按钮

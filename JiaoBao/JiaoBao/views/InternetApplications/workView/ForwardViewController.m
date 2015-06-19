@@ -13,6 +13,7 @@
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 
 @interface ForwardViewController ()
+@property(nonatomic,strong)NSTimer *timer;
 
 @end
 
@@ -288,13 +289,25 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 
 - (void)Loading {
-    sleep(TIMEOUT);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.timer invalidate];
+        self.timer = nil;
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
+        
+        
+    });
+    
+    
+    
+    
+    
+}
+-(void)timerAction:(id)sender
+{
 //    self.mProgressV.mode = MBProgressHUDModeCustomView;
 //    self.mProgressV.labelText = @"加载超时";
-    [self.mProgressV show:NO];
+//    sleep(2);
     
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 

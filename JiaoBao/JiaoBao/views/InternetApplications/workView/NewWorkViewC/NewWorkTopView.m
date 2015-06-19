@@ -9,6 +9,7 @@
 #import "NewWorkTopView.h"
 
 @implementation NewWorkTopView
+
 @synthesize mArr_accessory,mInt_sendMsg,mView_accessory,mBtn_accessory,mBtn_send,mBtn_sendMsg,mBtn_photos,mTextV_input,delegate;
 
 - (id)init{
@@ -284,20 +285,28 @@
     NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
     if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {
         NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
-        UIImagePickerController *picker=[[UIImagePickerController alloc] init];
-        picker.mediaTypes=mediatypes;
-        picker.delegate=self;
+        self.picker=[[UIImagePickerController alloc] init];
+        self.picker.mediaTypes=mediatypes;
+        self.picker.delegate=self;
         //        picker.allowsEditing=YES;
-        picker.sourceType=sourceType;
+        self.picker.sourceType=sourceType;
+        
+        
+        if([[[UIDevice
+              currentDevice] systemVersion] floatValue]>=8.0) {
+            
+            self.picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+            
+        }
         NSString *requiredmediatype=(NSString *)kUTTypeImage;
         NSArray *arrmediatypes=[NSArray arrayWithObject:requiredmediatype];
-        [picker setMediaTypes:arrmediatypes];
+        [self.picker setMediaTypes:arrmediatypes];
         
 //        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
 //            picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
 //        }
         //        [self presentViewController:picker animated:YES completion:nil];
-        [utils pushViewController1:picker animated:YES];
+        [utils pushViewController1:self.picker animated:YES];
     }else{
         UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"错误信息!" message:@"当前设备不支持拍摄功能" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
         [alert show];
