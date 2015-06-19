@@ -126,7 +126,9 @@
     
         unitModel *unitModel = [self.unitArr objectAtIndex:indexPath.row];
         cell.unitNameLabel.text = unitModel.UnitName;
-        cell.identTypeLabel.text =unitModel.Identity;
+    NSString *identTypeLabelStr = [NSString stringWithFormat:@"(%@)",unitModel.Identity];
+
+        cell.identTypeLabel.text =identTypeLabelStr;
     
         if([unitModel.AccId integerValue]>0)//accid>0 表示已加入
         {

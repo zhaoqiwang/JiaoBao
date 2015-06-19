@@ -7,11 +7,12 @@
 //
 
 #import "UnitTableViewCell.h"
+#import "dm.h"
 
 @implementation UnitTableViewCell
 
 - (void)awakeFromNib {
-    // Initialization code
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -62,6 +62,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cameraBtn;
 @property (weak, nonatomic) IBOutlet UIButton *albumBtn;
 @property (nonatomic,strong) NSMutableArray *pullArr;
+@property(nonatomic,strong)NSTimer *timer;
 
 
 - (IBAction)cameraBtnAction:(id)sender;

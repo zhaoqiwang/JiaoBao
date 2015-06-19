@@ -8,6 +8,7 @@
 
 #import "CharacterView.h"
 #import "Forward_cell.h"
+#import "HomeClassWorkView.h"
 NSString *kCell3 = @"Forward_cell3";
 NSString *kSection = @"Forward_section3";
 
@@ -283,6 +284,7 @@ NSString *kSection = @"Forward_section3";
 
         [self.mCollectionV_list reloadData];
         
+        
     }
     if(btn.tag ==6)
     {
@@ -319,6 +321,9 @@ NSString *kSection = @"Forward_section3";
         [self.mCollectionV_list reloadData];
         
     }
+    HomeClassWorkView *home = (HomeClassWorkView*)[[[self superview]superview]superview];
+    [home resetFrame];
+    
 
 }
 

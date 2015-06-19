@@ -668,7 +668,7 @@
 
 //获取当前用户可以发布动态的单位列表(含班级）
 -(void)GetReleaseNewsUnits:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -688,6 +688,7 @@
         [self.mProgressV show:YES];
         [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
     }else{
+        [self.mProgressV hide:YES];
 //        UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
 //        model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
 //        model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];

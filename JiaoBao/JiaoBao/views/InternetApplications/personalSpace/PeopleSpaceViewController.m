@@ -197,7 +197,7 @@
         [headerView addSubview:label];
         
         UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(100, 0, 200, 35)];
-        label2.text = @"加入单位";
+        //label2.text = @"加入单位";
         label2.textColor = [UIColor lightGrayColor];
         label2.font = [UIFont systemFontOfSize:14];
         [headerView addSubview:label2];
@@ -251,25 +251,12 @@
         }
         cell.delegate = self;
         cell.tag = indexPath.row;
+
         cell.unitNameLabel.text = [self.unitArr objectAtIndex:indexPath.row];
-        cell.identTypeLabel.text = [self.unitArr2 objectAtIndex:indexPath.row];
-        
-//        unitModel *unitModel = [self.unitArr objectAtIndex:indexPath.row];
-//        cell.unitNameLabel.text = unitModel.UnitName;
-//        cell.identTypeLabel.text =unitModel.Identity;
-//        if(unitModel.AccId>0)
-//        {
-//            [cell.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
-//            cell.addBtn.enabled = NO;
-//            
-//        }
-//        else
-//        {
-//            [cell.addBtn setTitle:@"加入" forState:UIControlStateNormal];
-//            cell.addBtn.enabled = YES;
-//
-//            
-//        }
+
+        NSString *identTypeLabelStr = [NSString stringWithFormat:@"(%@)",[self.unitArr2 objectAtIndex:indexPath.row] ];
+        cell.identTypeLabel.text = identTypeLabelStr;
+
         cell.addBtn.hidden = YES;
 
         if(indexPath.row == self.unitArr.count -1)

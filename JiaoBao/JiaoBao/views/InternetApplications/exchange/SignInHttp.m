@@ -43,7 +43,7 @@ static  SignInHttp*__instance;
 }
 -(void)getSignInAddress
 {
-    NSString *urlString = @"http://58.56.66.218:8084/InterAppSignInAddress/GetSignInAddJsonData";
+    NSString *urlString = @"http://58.56.66.215:8084/InterAppSignInAddress/GetSignInAddJsonData";
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -60,7 +60,7 @@ static  SignInHttp*__instance;
 }
 -(void)GetSignInGroupByUnitID
 {
-    NSString *urlString = @"http://58.56.66.218:8084/InterAppMobileInterface/GetSignInGroupByUnitID";
+    NSString *urlString = @"http://58.56.66.215:8084/InterAppMobileInterface/GetSignInGroupByUnitID";
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -80,7 +80,7 @@ static  SignInHttp*__instance;
 
 -(void)getDelayedTime:(NSString *)UnitID;
 {
-    NSString *urlString = @"http://58.56.66.218:8082/WorkPlanMobileInterface/WorkPlanGetReportedDelayDateByUnitID";
+    NSString *urlString = @"http://58.56.66.215:8082/WorkPlanMobileInterface/WorkPlanGetReportedDelayDateByUnitID";
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -106,7 +106,7 @@ static  SignInHttp*__instance;
         
         //NSLog(@"Register JSON:%@",[[NSString alloc] initWithData:tempJsonData encoding:NSUTF8StringEncoding]);
         
-        NSURL *url = [NSURL URLWithString:@"http://58.56.66.218:8082/WorkPlanMobileInterface/WorkPlanAddContent"];
+        NSURL *url = [NSURL URLWithString:@"http://58.56.66.215:8082/WorkPlanMobileInterface/WorkPlanAddContent"];
         ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
         [request addRequestHeader:@"Content-Type" value:@"text/xml"];
         [request addRequestHeader:@"charset" value:@"UTF8"];
@@ -126,7 +126,7 @@ static  SignInHttp*__instance;
 }
 -(void)querySchedule:(NSDictionary*)dic
 {
-    NSString *urlString = @"http://58.56.66.218:8082/WorkPlanMobileInterface/GetWorkPlanInfoByUnitIDUserIDDate";
+    NSString *urlString = @"http://58.56.66.215:8082/WorkPlanMobileInterface/GetWorkPlanInfoByUnitIDUserIDDate";
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -175,7 +175,7 @@ static  SignInHttp*__instance;
         
         //NSLog(@"Register JSON:%@",[[NSString alloc] initWithData:tempJsonData encoding:NSUTF8StringEncoding]);
         
-        NSURL *url = [NSURL URLWithString:@"http://58.56.66.218:8082/InterAppMobileInterface/MobileCreateSignIn"];
+        NSURL *url = [NSURL URLWithString:@"http://58.56.66.215:8082/InterAppMobileInterface/MobileCreateSignIn"];
         ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
         [request addRequestHeader:@"Content-Type" value:@"text/xml"];
         [request addRequestHeader:@"charset" value:@"UTF8"];
@@ -196,7 +196,7 @@ static  SignInHttp*__instance;
 }
 -(void)GetSignInListForMobile:(NSString*)year Month:(NSString*)month
 {
-    NSString *urlString = @"http://58.56.66.218:8084/InterAppMobileInterface/GetSignInListForMobile";
+    NSString *urlString = @"http://58.56.66.215:8084/InterAppMobileInterface/GetSignInListForMobile";
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -345,6 +345,12 @@ static  SignInHttp*__instance;
 
 
     }
+-(void)requestFailed:(ASIHTTPRequest *)request{
+    NSData *responseData = [request responseData];
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+    NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+
+}
 
 
 

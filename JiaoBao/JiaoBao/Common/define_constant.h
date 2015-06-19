@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define MAINURL @"http://www.jsyoa.edu8800.com/JBClient/"//网址
+//#define AAAAAAA ([[dm getInstance].MainUrl length]>0?@"11111":@"http://www.jsyoa.edu8800.com/JBClient/")
 //#define MAINURL @"http://www.jiaobao.net/JBClient/"//网址
 #define APPID @"101003" //appid
 #define CLIVER @"1.0"
