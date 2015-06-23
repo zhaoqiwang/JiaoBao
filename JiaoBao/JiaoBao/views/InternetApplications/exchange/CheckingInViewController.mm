@@ -13,17 +13,12 @@
 #import "MBProgressHUD.h"
 #import "RecordViewController.h"
 
-
-
-
 @interface CheckingInViewController ()
 {
 
     CLLocationManager  *locationManager;
     BOOL flag;
-    //BMKMapManager* _mapManager;
     BMKMapView* BaidumapView;
-    //__weak IBOutlet BMKMapView *BaidumapView;
     BMKLocationService *_locService;
     BMKGeoCodeSearch *_searcher;
     NSString *address;
@@ -33,9 +28,6 @@
 }
 
 @property (strong, nonatomic) IBOutlet UIPickerView *pickView;//点击考勤模式弹出的pickView
-@property (nonatomic, weak) IBOutlet MKMapView *mapView;//
-@property (nonatomic, strong) CLGeocoder *geocoder;
-@property (nonatomic, strong) MKPlacemark *placemark;
 @property(nonatomic,strong)CLLocationManager *locationManage;
 @property(nonatomic,assign)CLLocationDegrees Longitude;
 @property(nonatomic,assign)CLLocationDegrees Latitude;
@@ -91,7 +83,6 @@
 {
     [super viewWillAppear:YES];
     [BaidumapView viewWillAppear];
-    self.mapView.showsUserLocation = YES;
     [_locService startUserLocationService];
 
     BaidumapView.showsUserLocation = NO;
@@ -99,16 +90,17 @@
 
     BaidumapView.delegate = self;
     _locService.delegate = self;
+    _searcher.delegate = self;
     // 此处记得不用的时候需要置nil，否则影响内存的释放
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
     [BaidumapView viewWillDisappear];
-    self.mapView.showsUserLocation = NO;
     [_locService stopUserLocationService];
 
     _locService.delegate = nil;
+    _searcher.delegate = nil;
 
 
     BaidumapView.showsUserLocation = NO;
@@ -141,11 +133,7 @@
     BaidumapView.delegate = self;
     _locService.delegate = self;
     self.nameLabel2.text = @"定位中...";
-//    BaidumapView.showsUserLocation = NO;
-//    [_locService startUserLocationService];
-//
-//    BaidumapView.userTrackingMode = BMKUserTrackingModeFollow;
-//    BaidumapView.showsUserLocation = YES;
+
     
 }
 - (void)viewDidLoad {
@@ -205,7 +193,7 @@
     [self.mNav_navgationBar leftBtnAction:[dm getInstance].mStr_unit];
     [self.view addSubview:self.mNav_navgationBar];
     BMKCoordinateRegion theRegion = { {0.0,0.0 }, {0.0,0.0 } };
-    theRegion.center= self.mapView.userLocation.location.coordinate;
+    //theRegion.center= BaidumapView.userLocation.location.coordinate;
     //缩放的精度。数值越小约精准
     theRegion.span.longitudeDelta =0.005;
     theRegion.span.latitudeDelta =0.005;
@@ -223,22 +211,9 @@
     locationManager.distanceFilter = 10;
     
 
-//    MKCoordinateRegion region;
-//    //region.span = MKCoordinateSpanMake(2, 1);
-//    region.span.longitudeDelta =0.005;
-//    region.span.latitudeDelta =0.0025;
-//    region.center = CLLocationCoordinate2DMake(36.681449, 117.021468);
-//    [self.mapView setRegion:region animated:YES];
 
-    self.geocoder = [[CLGeocoder alloc] init];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAction) name:@"location" object:nil];
-    // 添加圆形覆盖物
-//    CLLocationCoordinate2D coor;
-//    coor.latitude = 39.915;
-//    coor.longitude = 116.404;
-//    BMKCircle* circle = [BMKCircle circleWithCenterCoordinate:coor radius:5000];
-//    
-//    [_mapView addOverlay:circle];
+
     //设置定位精确度，默认：kCLLocationAccuracyBest
     [BMKLocationService setLocationDesiredAccuracy:kCLLocationAccuracyBest];
     //指定最小距离更新(米)，默认：kCLDistanceFilterNone
@@ -255,22 +230,7 @@
     BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
     geoCodeSearchOption.city= @"北京市";
     geoCodeSearchOption.address = @"海淀区上地10街10号";
-//    BOOL flag2 = [_searcher geoCode:geoCodeSearchOption];
-//    if(flag2)
-//    {
-//        NSLog(@"geo检索发送成功");
-//    }
-//    else
-//    {
-//        NSLog(@"geo检索发送失败");
-//    }
 
-
-
-
-
-
-    // Do any additional setup after loading the view from its nib.
 }
 
 -(void)getCurrentTime:(id)sender
@@ -316,19 +276,11 @@ errorCode:(BMKSearchErrorCode)error{
 //处理位置坐标更新
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-//    BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
-//    CLLocationCoordinate2D coor;
-//    coor.latitude = userLocation.location.coordinate.latitude;
-//    coor.longitude = userLocation.location.coordinate.longitude;
-//    annotation.coordinate = coor;
-//    annotation.title = @"这里是北京";
-//    [BaidumapView addAnnotation:annotation];
+
     BaidumapView.showsUserLocation = YES;//显示定位图层
     [BaidumapView updateLocationData:userLocation];
     BaidumapView.centerCoordinate = userLocation.location.coordinate;
-   // NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
 
-//    CLLocationCoordinate2D pt = (CLLocationCoordinate2D){ 36.681449,117.021468};
     BMKReverseGeoCodeOption *reverseGeoCodeSearchOption = [[
                                                             BMKReverseGeoCodeOption alloc]init];
     reverseGeoCodeSearchOption.reverseGeoPoint = BaidumapView.centerCoordinate;
@@ -372,12 +324,6 @@ errorCode:(BMKSearchErrorCode)error{
         self.circle = nil;
         NSDictionary *dic = [[sender object]objectAtIndex:0];
         
-//        self.nameLabel.text = [dic objectForKey:@"AddressName"];
-//        self.nameLabel.backgroundColor = [UIColor clearColor];
-//        self.nameLabel.font = [UIFont systemFontOfSize:12];
-//        self.nameLabel.textAlignment = NSTextAlignmentCenter;
-//        self.nameLabel.textColor = [UIColor blueColor];
-//        [BaidumapView addSubview:self.nameLabel];
         self.Longitude = (CLLocationDegrees)[[dic objectForKey:@"Longitude"] doubleValue];
         self.Latitude = (CLLocationDegrees)[[dic objectForKey:@"Latitude"] doubleValue];
         BMKPointAnnotation* annotation = [[BMKPointAnnotation alloc]init];
@@ -387,10 +333,7 @@ errorCode:(BMKSearchErrorCode)error{
         annotation.coordinate = coor;
         annotation.title = [dic objectForKey:@"AddressName"];
         [BaidumapView addAnnotation:annotation];
-        //self.nameLabel.center = CGPointMake(self.Longitude, self.Latitude);
-        
-        
-        
+
         self.location = [[CLLocation alloc]initWithLatitude:self.Latitude longitude:self.Longitude];
         self.range = [[dic objectForKey:@"Range"]integerValue];
         
@@ -400,15 +343,6 @@ errorCode:(BMKSearchErrorCode)error{
         
     }
 
-//    MKCoordinateRegion region;
-//    //region.span = MKCoordinateSpanMake(2, 1);
-//    region.span.longitudeDelta =0.006;
-//    region.span.latitudeDelta =0.003;
-//    region.center = CLLocationCoordinate2DMake(36.681449, 117.021468);
-//    [self.mapView setRegion:region animated:YES];
-//    MKCircle *circleTargePlace=[MKCircle circleWithCenterCoordinate:self.location.coordinate radius:100];
-//    [self.mapView addOverlay:circleTargePlace];
-    //[self.mapView setCenterCoordinate:location.coordinate animated:NO];
     
     
 }
@@ -433,12 +367,9 @@ errorCode:(BMKSearchErrorCode)error{
     else
     {
     
-        NSString *time = [utils getLocalTime];
         dm *dmInstance = [dm getInstance];
         NSString *SignInTypeID = [[self.groupArr objectAtIndex:self.selectedRow]objectForKey:@"GroupID"];
 
-//        NSArray *SignInGroupIDArr =  [[self.groupArr objectAtIndex:self.selectedRow]objectForKey:@"GroupItems"];
-//    _SignInGroupID = [[SignInGroupIDArr objectAtIndex:0]objectForKey:@"SignInGroupID"];
     NSArray *dateArr = [dateStr componentsSeparatedByString:@"-"];
     NSString *year = [dateArr objectAtIndex:0];
     NSString *month = [dateArr objectAtIndex:1];
@@ -450,7 +381,6 @@ errorCode:(BMKSearchErrorCode)error{
         NSString *SignInGroupName = [self.secondBtn titleForState:UIControlStateNormal];
     NSString *longitude = [NSString stringWithFormat:@"%f",BaidumapView.centerCoordinate.longitude];
     NSString *Latitude = [NSString stringWithFormat:@"%f",BaidumapView.centerCoordinate.latitude];
-    NSString *flagStr  = [NSString stringWithFormat:@"%d",flag];
         @try {
             NSArray *value= [NSArray arrayWithObjects:dateStr,longitude,Latitude,address,dmInstance.userInfo.UserID,dmInstance.userInfo.UserName,dmInstance.userInfo.UserType,dmInstance.userInfo.UnitID,dmInstance.mStr_unit, @"1.00.5",@"8295",SignInTypeID,self.SignInGroupID,year,month,day,@"0",SignInTypeName,SignInGroupName,@"0",@"", nil];
             NSArray *key = [NSArray arrayWithObjects:@"SignInDateTime",@"Longitude",@"Latitude",@"Place",@"UserID",@"UserName",@"UserTypeID",@"UnitID",@"UnitName",@"MobileEdition",@"MobileModel",@"SignInTypeID",@"SignInGroupID",@"Year",@"Month",@"day",@"HandleFlag",@"SignInTypeName",@"SignInGroupName",@"SignInFlag",@"Remark", nil];
@@ -468,10 +398,7 @@ errorCode:(BMKSearchErrorCode)error{
         }
 
     }
-    
-        
-    
-    
+
     
 }
 - (IBAction)recordAction:(id)sender {
@@ -563,12 +490,7 @@ if(component == 0)
 
     }
 
-    
-    
-
 }
-
-
 
 #pragma mark - 点击考勤类型方法
 - (IBAction)groupTypeAction:(id)sender {
@@ -619,6 +541,9 @@ if(component == 0)
     BaidumapView = nil;
     _locService = nil;
     _searcher = nil;
+    BaidumapView.delegate =nil;
+    _locService.delegate = nil;
+    _searcher.delegate = nil;
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
@@ -626,89 +551,6 @@ if(component == 0)
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-//-(CLLocationCoordinate2D)zzTransGPS:(CLLocationCoordinate2D)yGps
-//{
-//    int TenLat=0;
-//    int TenLog=0;
-//    TenLat = (int)(yGps.latitude*10);
-//    TenLog = (int)(yGps.longitude*10);
-//    NSString *sql = [[NSString alloc]initWithFormat:@"select offLat,offLog from gpsT where lat=%d and log = %d",TenLat,TenLog];
-//    NSLog(sql);
-//    sqlite3_stmt* stmtL = [m_sqlite NSRunSql:sql];
-//    int offLat=0;
-//    int offLog=0;
-//    while (sqlite3_step(stmtL)==SQLITE_ROW)
-//    {
-//        offLat = sqlite3_column_int(stmtL, 0);
-//        offLog = sqlite3_column_int(stmtL, 1);
-//        
-//    }
-//    
-//    yGps.latitude = yGps.latitude+offLat*0.0001;
-//    yGps.longitude = yGps.longitude + offLog*0.0001;
-//    return yGps;
-//    
-//    
-//}
-
-
-//#pragma - mark 画圆
-//- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id <MKOverlay>)overlay
-//{
-//    if ([overlay isKindOfClass:[MKCircle class]]) {
-//        MKCircleView *_circleView=[[MKCircleView alloc] initWithCircle:overlay];
-//        //_circleView.fillColor =  [UIColor redColor];
-//        _circleView.strokeColor = [UIColor redColor];
-//        _circleView.lineWidth=2.0;
-//        return _circleView;
-//    }
-//    return nil;
-//}
-#pragma - mark MapView代理方法
-//- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
-//{
-//    
-//    [self.mapView setCenterCoordinate:userLocation.coordinate animated:NO];
-//    NSLog(@"====%f %f",userLocation.coordinate.longitude,userLocation.coordinate.latitude);
-//    //    [self.geocoder geocodeAddressString:@"中国山东省济南天桥区铜元局前街金冠商务中心" completionHandler:^(NSArray *placemarks, NSError *error) {
-//    //    }];
-//    
-//    //    CLLocation *location = [[CLLocation alloc]initWithLatitude:36.681449 longitude:117.021468];
-//    //    CLLocationCoordinate2D coord;
-//    //    if (![WGS84TOGCJ02 isLocationOutOfChina:[location coordinate]]) {
-//    //        //转换后的coord
-//    //        coord= [WGS84TOGCJ02 transformFromWGSToGCJ:[location coordinate]];
-//    //    }
-//    //    CLLocation *location2 = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
-//    
-//    //    CLLocationCoordinate2D Coordinate = [self zzTransGPS:userLocation.location.coordinate];///火星GPS
-//    //    CLLocation *location = [[CLLocation alloc]initWithLatitude:Coordinate.latitude longitude:Coordinate.longitude];
-//    //    NSLog(@"location = %@",location);
-//    // Lookup the information for the current location of the user.
-//    [self.geocoder reverseGeocodeLocation:userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
-//        if ((placemarks != nil) && (placemarks.count > 0)) {
-//            
-//            _placemark = [placemarks objectAtIndex:0];
-//            NSLog(@"_placemark = %@",[_placemark.addressDictionary objectForKey:@"FormattedAddressLines"]);
-//            
-//            
-//            
-//        }
-//        else {
-//            // Handle the nil case if necessary.
-//        }
-//    }];
-//}
-
-
-
-
-
-
-
-
-
-
 
 
 @end

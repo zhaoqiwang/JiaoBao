@@ -18,7 +18,13 @@
         ThemeListModel *model = [[ThemeListModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
         model.TabIDStr = [dic objectForKey:@"TabIDStr"];
-        model.InterestName = [dic objectForKey:@"InterestName"];
+        NSString *name = [dic objectForKey:@"InterestName"];
+        if ([name isKindOfClass:[NSNull class]]||[name isEqual:@"null"]) {
+            
+        }else{
+            model.InterestName = name;
+        }
+        
         model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         model.FunsCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FunsCount"]];
         model.ArtCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ArtCount"]];
