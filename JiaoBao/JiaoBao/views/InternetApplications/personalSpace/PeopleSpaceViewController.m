@@ -40,7 +40,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"getIdentity" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
         NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];
@@ -54,7 +53,6 @@
                     Identity_UserClasses_model *model2 = [model.UserClasses objectAtIndex:i];
                     [mArr addObject:model2.ClassName];
                     [mArr2 addObject:model.RoleIdName];
-                    
                     
                 }
                 
