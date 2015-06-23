@@ -289,6 +289,7 @@ static HomeClassTopScrollView *__singletion;
         if([dm getInstance].mModel_unitList.UnitClass.count == 0)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+            [dm getInstance].secondFlag = @"无班级";
         }
         if(self.requestSymbol0 == YES)
         {
@@ -304,6 +305,7 @@ static HomeClassTopScrollView *__singletion;
         if([dm getInstance].mModel_unitList.UnitClass.count == 0)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+            [dm getInstance].secondFlag = @"无班级";
         }
         if(self.requestSymbol1 ==YES)
         {
@@ -320,6 +322,7 @@ static HomeClassTopScrollView *__singletion;
         if(self.symbol == YES)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            [dm getInstance].secondFlag =@"无权限";
 
         }
 
@@ -337,6 +340,7 @@ static HomeClassTopScrollView *__singletion;
         if(self.symbol == YES)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            [dm getInstance].secondFlag =@"无权限";
             
         }
         if(self.requestSymbol3 == YES)
@@ -360,6 +364,7 @@ static HomeClassTopScrollView *__singletion;
         if(model.smsTree.count == 0)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            [dm getInstance].secondFlag = @"无权限";
             self.symbol = YES;
             
         }

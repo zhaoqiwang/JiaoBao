@@ -119,6 +119,7 @@
     [self.forward removeNotification];
     [dm getInstance].firstFlag = @"0";
     [dm getInstance].thirdFlag = @"0";
+    [dm getInstance].secondFlag = @"0";
     [utils popViewControllerAnimated:YES];
 
 
