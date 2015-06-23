@@ -307,6 +307,10 @@
         TreeView_node *node1;
         for (TreeView_node *node in self.mArr_sumData) {
             if ([node.flag isEqual:@"+2"]) {
+                if (self.mModel_unitList.UnitParents.count==0) {
+                    [self.mArr_sumData removeObject:node];
+                    break;
+                }
                 node1 = node;
                 
                 //对人员进行排序
@@ -349,6 +353,10 @@
                     sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
                     NewWorkTree_model *temp2 = node2.nodeData;
                     temp2.mStr_name = @"所有班级";
+                }
+                if (sub_unit.count==0) {
+                    [self.mArr_sumData removeObject:node];
+                    break;
                 }
                 //对人员进行排序
                 sub_unit = [self userNameChineseSort:sub_unit Flag:2];

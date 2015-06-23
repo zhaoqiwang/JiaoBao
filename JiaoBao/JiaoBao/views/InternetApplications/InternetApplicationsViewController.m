@@ -220,6 +220,8 @@
                     break;
                 }
             }
+        }else{
+            [dm getInstance].uType = [idenModel.RoleIdentity intValue];
         }
         if (name.length>0)
         {
@@ -256,6 +258,8 @@
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
                 }
+            }else{
+                [dm getInstance].uType = [idenModel.RoleIdentity intValue];
             }
             if (name.length>0) {
                 CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
@@ -509,7 +513,7 @@
 }
 - (void)Loading{
     sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
+//    self.mProgressV.mode = MBProgressHUDModeCustomView;
     self.mProgressV.labelText = @"加载超时";
     self.mProgressV.userInteractionEnabled = NO;
     sleep(2);
