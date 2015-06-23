@@ -13,7 +13,7 @@
 @protocol TreeView_Level1_CellDelegate;
 
 @interface TreeView_Level1_Cell : UITableViewCell{
-    id<TreeView_Level1_CellDelegate> delegate;//代理
+//    id<TreeView_Level1_CellDelegate> delegate;//代理
     TreeView_node *mNode;//子类数据
     UIImageView *mImgV_open_close;//关闭还是打开按钮
     UIButton *mBtn_detail;//详情按钮
@@ -27,7 +27,7 @@
 @property (strong,nonatomic) IBOutlet UILabel *mLab_name;
 @property (strong,nonatomic) IBOutlet UIImageView *mImgV_number;
 @property (strong,nonatomic) IBOutlet UILabel *mLab_number;
-@property (strong,nonatomic) id<TreeView_Level1_CellDelegate> delegate;
+@property (weak,nonatomic) id<TreeView_Level1_CellDelegate> delegate;
 
 -(IBAction)clickBtn;
 

@@ -20,7 +20,6 @@
     UIImageView *mImgV_likeCount;//赞人数
     UILabel *mLab_likeCount;
     UILabel *mLab_line;//分割线
-    id<TopArthListCellDelegate> delegate;
 }
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_headImg;//头像
@@ -32,7 +31,7 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_likeCount;//赞人数
 @property (nonatomic,strong) IBOutlet UILabel *mLab_likeCount;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
-@property (strong,nonatomic) id<TopArthListCellDelegate> delegate;
+@property (weak,nonatomic) id<TopArthListCellDelegate> delegate;
 
 -(void)init:(TopArthListCell *)cell;
 

@@ -22,8 +22,8 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_LikeCount;
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_CaiCount;
 @property (nonatomic,strong) IBOutlet UIView *mView_RefID;
-@property (strong,nonatomic) id<AirthCommentsListCellDelegate> delegate;
-@property (strong,nonatomic) id<AirthCommentsListCellHeadDelegate> headDelegate;
+@property (weak,nonatomic) id<AirthCommentsListCellDelegate> delegate;
+@property (weak,nonatomic) id<AirthCommentsListCellHeadDelegate> headDelegate;
 
 -(IBAction)mBtn_reply:(UIButton *)sender;
 -(IBAction)mBtn_LikeCount:(UIButton *)sender;

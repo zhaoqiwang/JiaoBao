@@ -18,7 +18,7 @@
     UIImageView *mImgV_unRead;
     UILabel *mLab_unRead;
     UILabel *mLab_unit;//
-    id<WorkViewListCellDelegate> delegate;
+//    id<WorkViewListCellDelegate> delegate;
 }
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;
@@ -29,7 +29,7 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_unRead;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_unRead;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_unit;//
-@property (strong,nonatomic) id<WorkViewListCellDelegate> delegate;
+@property (weak,nonatomic) id<WorkViewListCellDelegate> delegate;
 
 //给图片添加点击事件
 -(void)headImgClick;

@@ -25,10 +25,10 @@
     NSMutableArray *mArr_image;
     int selectIndex;
     UIImageView *mImgV_movie;
-    id<TabbarViewDelegate> tabbarView_Delegate;
+//    id<TabbarViewDelegate> tabbarView_Delegate;
     int selectAtIndex;
 }
-@property (nonatomic , retain) id<TabbarViewDelegate> tabbarView_Delegate;
+@property (nonatomic , weak) id<TabbarViewDelegate> tabbarView_Delegate;
 @property (nonatomic , retain) NSMutableArray *mArr_image;
 @property (nonatomic , retain) UIImageView *mImgV_movie;
 

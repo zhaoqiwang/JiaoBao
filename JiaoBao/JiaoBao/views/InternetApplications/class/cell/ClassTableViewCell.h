@@ -36,10 +36,10 @@
     UIImageView *mImgV_1;
     UIImageView *mImgV_2;
     UIButton *mBtn_comment;//弹出点赞和评论
-    id<ClassTableViewCellDelegate> delegate;
+//    id<ClassTableViewCellDelegate> delegate;
     ClassModel *mModel_class;//
-    id<ClassTableViewCellClassDelegate> ClassDelegate;
-    id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
+//    id<ClassTableViewCellClassDelegate> ClassDelegate;
+//    id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
 }
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;//单位logo
@@ -63,10 +63,10 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_2;
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_comment;//弹出点赞和评论
 
-@property (strong,nonatomic) id<ClassTableViewCellDelegate> delegate;
+@property (weak,nonatomic) id<ClassTableViewCellDelegate> delegate;
 @property (nonatomic,strong) ClassModel *mModel_class;//
-@property (strong,nonatomic) id<ClassTableViewCellClassDelegate> ClassDelegate;
-@property (strong,nonatomic) id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
+@property (weak,nonatomic) id<ClassTableViewCellClassDelegate> ClassDelegate;
+@property (weak,nonatomic) id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImgV;

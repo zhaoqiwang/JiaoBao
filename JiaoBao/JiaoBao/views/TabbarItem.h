@@ -20,12 +20,12 @@
     UIImage *_normalImg;
     UIImage *_highlightedImg;
     UIImage *_twoImg;
-    id<TabbarItemDelegate> _tabbar_delegate;
+//    id<TabbarItemDelegate> _tabbar_delegate;
     int _imgType;
     UILabel *mLab_0;
 }
 @property (nonatomic , assign) int imgType;
-@property (nonatomic , retain) id<TabbarItemDelegate> tabbar_delegate;
+@property (nonatomic , weak) id<TabbarItemDelegate> tabbar_delegate;
 @property (nonatomic , retain) UIImageView *imageView;
 @property (nonatomic , retain) UIImage *normalImg;
 @property (nonatomic , retain) UIImage *highlightedImg;

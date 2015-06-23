@@ -29,7 +29,7 @@
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_file;//文件列表
     NSMutableArray *mArr_sumFile;
-    id <AccessoryViewControllerProtocol > delegate;
+//    id <AccessoryViewControllerProtocol > delegate;
     int mInt_flag;//判断是选择附件0，还是查看1
     NSMutableArray *mArr_photo;//图片的名称
     NSMutableArray *_selections;//是否选中图片
@@ -38,7 +38,7 @@
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_file;//文件列表
 @property (nonatomic,strong) NSMutableArray *mArr_sumFile;
-@property (retain,nonatomic) id <AccessoryViewControllerProtocol > delegate;
+@property (weak,nonatomic) id <AccessoryViewControllerProtocol > delegate;
 @property (nonatomic,assign) int mInt_flag;//判断是选择附件0，还是查看1
 @property (nonatomic,strong) NSMutableArray *photos;//图片的路径
 @property (nonatomic,strong) NSMutableArray *mArr_photo;//图片的名称

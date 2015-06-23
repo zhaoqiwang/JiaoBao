@@ -19,7 +19,7 @@
     UILabel *mLab_detail;//详情
     UILabel *mLab_time;//时间
     UIImageView *mImgV_select;//选择框
-    id<TreeView_Level2_CellDelegate> delegate;
+//    id<TreeView_Level2_CellDelegate> delegate;
 }
 @property (strong,nonatomic) TreeView_node *mNode;
 @property (strong,nonatomic) IBOutlet UIImageView *mImgV_head;
@@ -27,7 +27,7 @@
 @property (strong,nonatomic) IBOutlet UILabel *mLab_detail;//详情
 @property (strong,nonatomic) IBOutlet UILabel *mLab_time;//时间
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_select;//选择框
-@property(retain,nonatomic)id<TreeView_Level2_CellDelegate> delegate;
+@property(weak,nonatomic)id<TreeView_Level2_CellDelegate> delegate;
 
 //显示选择框
 - (void)initWithSelectImg;

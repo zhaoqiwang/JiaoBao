@@ -33,7 +33,7 @@
     NSString *mStr_unitID;//单位id
     NSString *mStr_type;//当前选择的权限
     BOOL isOpened;
-    id<CreatAlbumsDelegate> delegate;
+//    id<CreatAlbumsDelegate> delegate;
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -49,7 +49,7 @@
 @property (nonatomic,strong) NSString *mStr_flag;//来自个人1，单位2
 @property (nonatomic,strong) NSString *mStr_unitID;//单位id
 @property (nonatomic,strong) NSString *mStr_type;//当前选择的权限
-@property (strong,nonatomic) id<CreatAlbumsDelegate> delegate;
+@property (weak,nonatomic) id<CreatAlbumsDelegate> delegate;
 
 - (IBAction)changeOpenStatus:(id)sender;
 

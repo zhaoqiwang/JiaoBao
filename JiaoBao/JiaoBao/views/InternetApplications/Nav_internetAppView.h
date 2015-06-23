@@ -17,14 +17,14 @@
     UIButton *mBtn_add;//添加按钮
     UIButton *mBtn_setting;//设置
     UIScrollView *mScrollV_name;//放部门、姓名
-    id<Nav_internetAppViewDelegate> delegate;
+//    id<Nav_internetAppViewDelegate> delegate;
 }
 @property (strong,nonatomic) UILabel *mLab_name;//部门和姓名
 @property (strong,nonatomic) UIButton *mBtn_search;//搜索按钮
 @property (strong,nonatomic) UIButton *mBtn_add;//添加按钮
 @property (strong,nonatomic) UIButton *mBtn_setting;//设置
 @property (strong,nonatomic) UIScrollView *mScrollV_name;//放部门、姓名
-@property (strong,nonatomic) id<Nav_internetAppViewDelegate> delegate;
+@property (weak,nonatomic) id<Nav_internetAppViewDelegate> delegate;
 
 
 //单

@@ -32,7 +32,7 @@
     NSMutableArray *mArr_albums;//相册数组
     int mInt_uploadCount;//上传照片个数
     int mInt_count;//返回照片通知的个数
-    id<UpLoadPhotoDelegate> delegate;
+//    id<UpLoadPhotoDelegate> delegate;
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -45,7 +45,7 @@
 @property (nonatomic,strong) NSString *mStr_flag;//来自个人1，单位2
 @property (nonatomic,strong) NSString *mStr_groupID;//相册id
 @property (nonatomic,strong) NSMutableArray *mArr_albums;//相册数组
-@property (strong,nonatomic) id<UpLoadPhotoDelegate> delegate;
+@property (weak,nonatomic) id<UpLoadPhotoDelegate> delegate;
 
 - (IBAction)changeOpenStatus:(id)sender;
 

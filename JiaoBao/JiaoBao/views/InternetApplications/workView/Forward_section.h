@@ -14,13 +14,13 @@
     UILabel *mLab_name;//section名称
     UIButton *mBtn_all;//全选按钮
     UIButton *mBtn_invertSelect;//反选
-    id<Forward_sectionDelegate> delegate;
+//    id<Forward_sectionDelegate> delegate;
 }
 
 @property (nonatomic,strong) UILabel *mLab_name;//section名称
 @property (nonatomic,strong) UIButton *mBtn_all;//全选按钮
 @property (nonatomic,strong) UIButton *mBtn_invertSelect;//反选
-@property (strong,nonatomic) id<Forward_sectionDelegate> delegate;
+@property (weak,nonatomic) id<Forward_sectionDelegate> delegate;
 @property(nonatomic,strong)UIButton *addBtn;
 @property(nonatomic,strong)UIButton *triangleBtn;
 @property(nonatomic,strong)UIButton *rightBtn;
