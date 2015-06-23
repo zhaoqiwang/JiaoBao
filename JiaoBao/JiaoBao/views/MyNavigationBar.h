@@ -51,7 +51,7 @@
 
 
 
-@property (nonatomic , retain) id<MyNavigationDelegate> delegate;
+@property (nonatomic ,assign) id<MyNavigationDelegate> delegate;
 @property (nonatomic , retain) id<MyNavigationBtnTitleDelegate>btnDelegate;
 @property (nonatomic , retain) UILabel *label_Title;
 @property (nonatomic , retain) NSString *roomName;

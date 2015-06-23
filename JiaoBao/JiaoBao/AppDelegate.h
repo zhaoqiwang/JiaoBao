@@ -12,7 +12,8 @@
 #import "RegisterViewController.h"
 #import "dm.h"
 #import "Loger.h"
-#import "BMapKit.h"
+//#import "BMapKit.h"
+#import <BaiduMapAPI/BMapKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{
 //    RootViewController *mRoot_view;

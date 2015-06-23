@@ -701,6 +701,7 @@
 		A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */; };
 		A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5FA1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m */; };
 		A7E2E5FD1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5FB1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib */; };
+		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
 		F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030E1AB3C46300E6167F /* JTCalendarContentView.m */; };
@@ -780,7 +781,6 @@
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
 		F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */; };
 		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
-		F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F79D84841ABD4A1D00897477 /* libbaidumapapi.a */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
 		F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BC1ABD4DC000897477 /* DetailQueryViewController.m */; };
@@ -800,7 +800,6 @@
 		F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F79D84E11ABD4E1100897477 /* CheckingInViewController.mm */; };
 		F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
-		F7DC76461AC698BC00D6B0CE /* libbaidumapapis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */; };
 		F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */; };
 		F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */; };
 		F7F460B61AE891C70069820F /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B31AE891C70069820F /* triangle.png */; };
@@ -1784,6 +1783,7 @@
 		A7E2E5F91B204ED4003F85B5 /* PeopleSpaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceTableViewCell.h; path = views/InternetApplications/personalSpace/PeopleSpaceTableViewCell.h; sourceTree = "<group>"; };
 		A7E2E5FA1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleSpaceTableViewCell.m; path = views/InternetApplications/personalSpace/PeopleSpaceTableViewCell.m; sourceTree = "<group>"; };
 		A7E2E5FB1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleSpaceTableViewCell.xib; path = views/InternetApplications/personalSpace/PeopleSpaceTableViewCell.xib; sourceTree = "<group>"; };
+		F70861791B38EDC90032945D /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
 		F71803091AB3C46300E6167F /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendar.h; path = Common/JTCalendar/JTCalendar.h; sourceTree = "<group>"; };
 		F718030A1AB3C46300E6167F /* JTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCalendar.m; path = Common/JTCalendar/JTCalendar.m; sourceTree = "<group>"; };
 		F718030B1AB3C46300E6167F /* JTCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendarAppearance.h; path = Common/JTCalendar/JTCalendarAppearance.h; sourceTree = "<group>"; };
@@ -1956,7 +1956,6 @@
 		F79D84811ABD4A1D00897477 /* BMKUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKUserLocation.h; sourceTree = "<group>"; };
 		F79D84821ABD4A1D00897477 /* BMKUtilsComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKUtilsComponent.h; sourceTree = "<group>"; };
 		F79D84831ABD4A1D00897477 /* BMKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
-		F79D84841ABD4A1D00897477 /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbaidumapapi.a; path = Common/BaiduSDk/libbaidumapapi.a; sourceTree = "<group>"; };
 		F79D84851ABD4A1D00897477 /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = mapapi.bundle; path = Common/BaiduSDk/mapapi.bundle; sourceTree = "<group>"; };
 		F79D84B91ABD4DC000897477 /* DetailQueryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailQueryCell.h; path = views/InternetApplications/exchange/DetailQueryCell.h; sourceTree = "<group>"; };
 		F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailQueryCell.m; path = views/InternetApplications/exchange/DetailQueryCell.m; sourceTree = "<group>"; };
@@ -1988,7 +1987,6 @@
 		F7DBA8AC1B1016A100C865D5 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bj.png; sourceTree = "<group>"; };
 		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
 		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
-		F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbaidumapapis.a; path = Common/BaiduSDk/libbaidumapapis.a; sourceTree = "<group>"; };
 		F7EC84A71B1FE08A00CBE0C1 /* SecondRegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondRegViewController.h; path = views/InternetApplications/register/SecondRegViewController.h; sourceTree = "<group>"; };
 		F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondRegViewController.m; path = views/InternetApplications/register/SecondRegViewController.m; sourceTree = "<group>"; };
 		F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SecondRegViewController.xib; path = views/InternetApplications/register/SecondRegViewController.xib; sourceTree = "<group>"; };
@@ -2015,7 +2013,7 @@
 				A73789221A2F111800DF8882 /* OpenGLES.framework in Frameworks */,
 				A73789201A2F110900DF8882 /* MapKit.framework in Frameworks */,
 				A737891E1A2F10FE00DF8882 /* libstdc++.dylib in Frameworks */,
-				F79D84861ABD4A1D00897477 /* libbaidumapapi.a in Frameworks */,
+				F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */,
 				A737891C1A2F10EE00DF8882 /* libsqlite3.dylib in Frameworks */,
 				A737891A1A2F10D900DF8882 /* libc++.dylib in Frameworks */,
 				A73789181A2F10B200DF8882 /* CoreVideo.framework in Frameworks */,
@@ -2032,7 +2030,6 @@
 				A755E6AD19F254A600BBDF3D /* Security.framework in Frameworks */,
 				A755E6AB19F2549B00BBDF3D /* UIKit.framework in Frameworks */,
 				A755E6A919F2548E00BBDF3D /* Foundation.framework in Frameworks */,
-				F7DC76461AC698BC00D6B0CE /* libbaidumapapis.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3764,9 +3761,8 @@
 		F79D84451ABD4A0900897477 /* BaiduSDK */ = {
 			isa = PBXGroup;
 			children = (
+				F70861791B38EDC90032945D /* BaiduMapAPI.framework */,
 				F79D84461ABD4A1D00897477 /* inc */,
-				F79D84841ABD4A1D00897477 /* libbaidumapapi.a */,
-				F7DC76451AC698BC00D6B0CE /* libbaidumapapis.a */,
 				F79D84851ABD4A1D00897477 /* mapapi.bundle */,
 			);
 			name = BaiduSDK;
@@ -4771,6 +4767,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JiaoBao",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -4797,6 +4797,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/JiaoBao",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

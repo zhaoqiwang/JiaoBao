@@ -11,11 +11,12 @@
 #import "utils.h"
 #import "dm.h"
 #import "MBProgressHUD.h"
-#import <MapKit/MapKit.h>
-#import "BMapKit.h"
+#import <BaiduMapAPI/BMapKit.h>
+//#import <MapKit/MapKit.h>
+//#import "BMapKit.h"
 
 
-@interface CheckingInViewController : UIViewController<MyNavigationDelegate,MyNavigationBtnTitleDelegate,MKMapViewDelegate,CLLocationManagerDelegate,BMKAnnotation,BMKMapViewDelegate,BMKOverlay,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
+@interface CheckingInViewController : UIViewController<MyNavigationDelegate,CLLocationManagerDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate,BMKGeoCodeSearchDelegate>
 {
     IBOutlet UIView *bottomView;
     

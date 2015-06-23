@@ -11,7 +11,7 @@
 #import "Reachability.h"
 #import<AVFoundation/AVFoundation.h>
 
-CLLocationManager *locationManager;
+//CLLocationManager *locationManager;
 
 @interface AppDelegate ()
 
@@ -375,24 +375,24 @@ CLLocationManager *locationManager;
     return UIInterfaceOrientationMaskPortrait;
 }
 //iOS8开始定位
-- (BOOL)beginLocationUpdate
-{
-    // 判断定位操作是否被允许
-    if([CLLocationManager locationServicesEnabled])
-    {
-        locationManager = [[CLLocationManager alloc] init];//注意，这里的locationManager不是局部变量
-        //兼容iOS8定位
-        SEL requestSelector = NSSelectorFromString(@"requestWhenInUseAuthorization");
-        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined &&
-            [locationManager respondsToSelector:requestSelector]) {
-            [locationManager requestWhenInUseAuthorization];
-        }
-        return YES;
-    }else {
-        //提示用户无法进行定位操作
-    }
-    return NO;
-}
+//- (BOOL)beginLocationUpdate
+//{
+//    // 判断定位操作是否被允许
+//    if([CLLocationManager locationServicesEnabled])
+//    {
+//        locationManager = [[CLLocationManager alloc] init];//注意，这里的locationManager不是局部变量
+//        //兼容iOS8定位
+//        SEL requestSelector = NSSelectorFromString(@"requestWhenInUseAuthorization");
+//        if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined &&
+//            [locationManager respondsToSelector:requestSelector]) {
+//            [locationManager requestWhenInUseAuthorization];
+//        }
+//        return YES;
+//    }else {
+//        //提示用户无法进行定位操作
+//    }
+//    return NO;
+//}
 - (void)onGetNetworkState:(int)iError
 {
     if (0 == iError) {
