@@ -116,6 +116,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.rootView.moreUnitView dealloc1];
     [self.rootView.homeClassView dealloc1];
+    [self.top dealloc1];
+    [self.rootView dealloc1];
     [self.forward removeNotification];
     [dm getInstance].firstFlag = @"0";
     [dm getInstance].thirdFlag = @"0";

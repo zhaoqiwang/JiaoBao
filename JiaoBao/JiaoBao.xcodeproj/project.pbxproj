@@ -597,6 +597,8 @@
 		A78D65E31A8A04E800BE6326 /* workMsg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A78D65DD1A8A04E800BE6326 /* workMsg@2x.png */; };
 		A78D65E41A8A04E800BE6326 /* workMsg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A78D65DE1A8A04E800BE6326 /* workMsg@3x.png */; };
 		A78E4A2D1B0C7FD800969D8F /* PopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A78E4A2C1B0C7FD800969D8F /* PopupWindow.m */; };
+		A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */; };
+		A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */; };
 		A79C20791A2DB60A00D0AA27 /* ExchangeHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */; };
 		A79C207D1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207C1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m */; };
 		A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207F1A2DC67500D0AA27 /* ParserJson_exchange.m */; };
@@ -1639,6 +1641,10 @@
 		A78D65DE1A8A04E800BE6326 /* workMsg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "workMsg@3x.png"; path = "Image/InternetApp/workView/workMsg@3x.png"; sourceTree = "<group>"; };
 		A78E4A2B1B0C7FD800969D8F /* PopupWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopupWindow.h; path = views/InternetApplications/class/PopupWindow.h; sourceTree = "<group>"; };
 		A78E4A2C1B0C7FD800969D8F /* PopupWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopupWindow.m; path = views/InternetApplications/class/PopupWindow.m; sourceTree = "<group>"; };
+		A78FE2341B3AA43D00C8D1FD /* MBProgressHUD+AD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MBProgressHUD+AD.h"; path = "Common/MBProgressHUD+AD.h"; sourceTree = "<group>"; };
+		A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+AD.m"; path = "Common/MBProgressHUD+AD.m"; sourceTree = "<group>"; };
+		A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+HUD.h"; path = "Common/UIViewController+HUD.h"; sourceTree = "<group>"; };
+		A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HUD.m"; path = "Common/UIViewController+HUD.m"; sourceTree = "<group>"; };
 		A79C20771A2DB60A00D0AA27 /* ExchangeHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExchangeHttp.h; path = views/InternetApplications/exchange/ExchangeHttp.h; sourceTree = "<group>"; };
 		A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExchangeHttp.m; path = views/InternetApplications/exchange/ExchangeHttp.m; sourceTree = "<group>"; };
 		A79C207B1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExchangeUnitGroupsModel.h; path = views/InternetApplications/exchange/model/ExchangeUnitGroupsModel.h; sourceTree = "<group>"; };
@@ -2648,6 +2654,10 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */,
+				A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */,
+				A78FE2341B3AA43D00C8D1FD /* MBProgressHUD+AD.h */,
+				A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */,
 				F76B642F1B1E9FEE008F6961 /* RCLabel */,
 				F72D74B41AE0E92100189057 /* MHImagePick */,
 				F79D84451ABD4A0900897477 /* BaiduSDK */,
@@ -4612,6 +4622,7 @@
 				A75A37471A08C3F0009D2464 /* groupselit_selitModel.m in Sources */,
 				A755E70C19F278B900BBDF3D /* ASICloudFilesContainerRequest.m in Sources */,
 				A7595EA71A5FC2F30027848E /* PSTGridLayoutSection.m in Sources */,
+				A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */,
 				A743394E1A452B7700AFC0A5 /* SDImageCache.m in Sources */,
 				A7595E951A5FC2F30027848E /* MWTapDetectingImageView.m in Sources */,
 				A755E70B19F278B900BBDF3D /* ASICloudFilesContainer.m in Sources */,
@@ -4629,6 +4640,7 @@
 				A74736F41A78C2F90042F110 /* UncaughtExceptionHandler.m in Sources */,
 				A755E71119F278B900BBDF3D /* ASIS3Bucket.m in Sources */,
 				A7595E921A5FC2F30027848E /* MWGridViewController.m in Sources */,
+				A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */,
 				A74D12861A3C45DE00A93CAC /* UpdateUnitListViewController.m in Sources */,
 				A74339581A452B7700AFC0A5 /* UIImage+WebP.m in Sources */,
 				A7595EA11A5FC2F30027848E /* PSTCollectionViewItemKey.m in Sources */,

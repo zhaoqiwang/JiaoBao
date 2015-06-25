@@ -14,9 +14,6 @@
 
 -(void)dealloc1{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
-
-
 }
 
 - (id)initWithFrame1:(CGRect)frame{

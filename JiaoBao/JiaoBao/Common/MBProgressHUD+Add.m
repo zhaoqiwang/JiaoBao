@@ -48,7 +48,31 @@
     // 隐藏时候从父控件中移除
     hud.removeFromSuperViewOnHide = YES;
     // YES代表需要蒙版效果
-    hud.dimBackground = YES;
+    hud.dimBackground = NO;
+//    [hud showWhileExecuting:@selector(Loading:) onTarget:self withObject:nil animated:YES];
+    [hud showAnimated:YES whileExecutingBlock:^{
+        sleep(10);
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.labelText = @"加载超时";
+//        [hud hide:YES afterDelay:5];
+        sleep(2);
+        [hud hide:YES afterDelay:5];
+    }];
     return hud;
 }
+
++ (void)Loading:(MBProgressHUD *)hud{
+//    if (view == nil) view = [UIApplication sharedApplication].keyWindow;
+//    // 快速显示一个提示信息
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    sleep(10);
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.labelText = @"加载超时";
+    // 隐藏时候从父控件中移除
+    hud.removeFromSuperViewOnHide = NO;
+//    sleep(2);
+//    [hud hide:YES];
+    [hud hide:YES afterDelay:2];
+}
+
 @end

@@ -10,14 +10,14 @@
 #import "Reachability.h"
 #import "SignInViewController.h"
 #import "CheckingInViewController.h"
-
+#import "MBProgressHUD+AD.h"
 
 @interface InternetApplicationsViewController ()
 
 @end
 
 @implementation InternetApplicationsViewController
-@synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mProgressV,mInt_flag;
+@synthesize nav_internetAppView,mTableV_left,mTableV_right,mView_all,mInt_defaultTV_index,mInt_flag;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -50,10 +50,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetReleaseNewsUnits:) name:@"GetReleaseNewsUnits" object:nil];
 }
 
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
+//-(void)viewDidDisappear:(BOOL)animated{
+//    [super viewDidDisappear:YES];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//}
 
 
 - (void)viewDidLoad {
@@ -112,10 +112,6 @@
     self.mTableV_right.layer.borderColor = [[UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1] CGColor];
     [self.mView_all addSubview:self.mTableV_right];
     self.mTableV_right.hidden = YES;
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
 }
 
 //是否有更新
@@ -136,10 +132,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -150,10 +143,7 @@
 -(void)loginSuccess:(NSNotification *)noti{
     NSString *str = noti.object;
     D("loginSuccess-== %@",str);
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self.view];
     if ([str isEqual:@"用户名或密码错误！"]) {
         [self pushMenuItem3:nil];
     }
@@ -168,7 +158,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [[InternetAppTopScrollView shareInstance] sendRequest];
     //是否隐藏加号
     if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
@@ -180,7 +170,7 @@
 
 //获取到个人信息的通知
 -(void)getIdentity:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -501,27 +491,13 @@
         [[LoginSendHttp getInstance] changeCurUnit];
         [LoginSendHttp getInstance].mInt_forwardFlag =2;
 //        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
-        self.mProgressV.labelText = @"加载中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         self.mView_all.hidden = YES;
         self.mTableV_right.hidden = YES;
         self.mTableV_left.hidden = YES;
     }
 }
-- (void)Loading{
-//    sleep(TIMEOUT);
-//    self.mProgressV.mode = MBProgressHUDModeCustomView;
-//    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-//    sleep(2);
-}
 
--(void)noMore{
-    sleep(1);
-}
 //右上角“+”方法
 - (void)showMenu:(UIButton *)sender{
     NSArray *menuItems =
@@ -579,6 +555,7 @@
 }
 //切换账号
 - (void) pushMenuItem3:(id)sender{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     //发送注销登录请求
     [[LoginSendHttp getInstance] loginHttpLogout];
     RegisterViewController *mRegister_view = [[RegisterViewController alloc]init];
@@ -614,10 +591,7 @@
         return;
     }
     [[ClassHttp getInstance] classHttpGetReleaseNewsUnits];
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 
 //发表文章分享
@@ -676,23 +650,16 @@
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    
+    [MBProgressHUD hideHUDForView:self.view];
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
     if (array.count==0) {
-        self.mProgressV.labelText = @"没有权限";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showSuccess:@"没有权限" toView:self.view];
     }else{
-        [self.mProgressV hide:YES];
 //        UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
 //        model.UnitID = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
 //        model.UnitType = [NSString stringWithFormat:@"%d",[dm getInstance].uType];

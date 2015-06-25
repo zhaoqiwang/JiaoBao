@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AvailabilityMacros.h>
+#import "MBProgressHUD+AD.h"
 
 extern NSString * const SVProgressHUDDidReceiveTouchEventNotification;
 extern NSString * const SVProgressHUDDidTouchDownInsideNotification;

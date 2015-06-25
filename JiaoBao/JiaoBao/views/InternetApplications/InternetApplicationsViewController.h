@@ -29,7 +29,7 @@
     UITableView *mTableV_left;//单位
     UITableView *mTableV_right;//部门
     int mInt_defaultTV_index;//记录点击默认表格的索引
-    MBProgressHUD *mProgressV;//
+//    MBProgressHUD *mProgressV;//
     int mInt_flag;//返回执行
 }
 @property (strong,nonatomic) Nav_internetAppView *nav_internetAppView;
@@ -37,7 +37,7 @@
 @property (strong,nonatomic) UITableView *mTableV_left;//单位
 @property (strong,nonatomic) UITableView *mTableV_right;//部门
 @property (nonatomic,assign) int mInt_defaultTV_index;//记录点击默认表格的索引
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
+//@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_flag;//返回执行
 
 
