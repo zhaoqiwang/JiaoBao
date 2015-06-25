@@ -150,24 +150,32 @@
 
             if(self.firstSel == 0)
             {
+
                 [dm getInstance].notificationSymbol = 100;
 
                 //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
 
                 for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
                 {
+
                     myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
                     [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
                     
                 }
+
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
                 if([dm getInstance].mModel_unitList.UnitClass.count == 0)
                 {
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+                    [dm getInstance].secondFlag = @"无班级";
                 }
                 else{
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
+                        [dm getInstance].progress.mode = MBProgressHUDModeIndeterminate;
+                        [dm getInstance].progress.labelText = @"正在加载";
+                        [[dm getInstance].progress show:YES];
+                        [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+                        //[[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
 
                     
                 }
@@ -178,6 +186,14 @@
             else
             {
                 [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
+                if(![[dm getInstance].secondFlag isEqualToString: @"0"])
+                {
+                    [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
+                    [dm getInstance].progress.labelText = [dm getInstance].secondFlag;
+                    [[dm getInstance].progress show:YES];
+                    [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+                    
+                }
 
                 
             }
@@ -207,7 +223,6 @@
         [UIView animateWithDuration:0.25 animations:^{
             
             [self.mImgV_slide setFrame:CGRectMake(sender.frame.origin.x, 38, [dm getInstance].width/self.mArr_name.count, 2)];
-            
             
         } completion:^(BOOL finished) {
             if (finished) {

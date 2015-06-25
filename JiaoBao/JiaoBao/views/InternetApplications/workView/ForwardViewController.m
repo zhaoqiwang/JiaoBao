@@ -39,6 +39,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 -(void)removeNotification
 {
+    [self.timer invalidate];
+    self.timer = nil;
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     

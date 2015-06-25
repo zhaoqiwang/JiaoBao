@@ -253,6 +253,7 @@
         
         [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame.size.height+150);
         self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+[HomeClassTopScrollView shareInstance].frame.origin.y+48);
+        [HomeClassRootScrollView shareInstance].characterView.frame  = CGRectMake([dm getInstance].width, 0, 320, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
 
 
         
@@ -294,7 +295,10 @@
     CGRect mCollectionV_listFrame = [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame;
     [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame = CGRectMake(mCollectionV_listFrame.origin.x, mCollectionV_listFrame.origin.y, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
     [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame.size.height+150);
-    self.mScrollV_all.contentSize = CGSizeMake(320, [HomeClassRootScrollView shareInstance].frame.size.height+48);
+    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48);
+
+    [HomeClassRootScrollView shareInstance].characterView.frame  = CGRectMake([dm getInstance].width, 0, 320, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
+
 }
 
 

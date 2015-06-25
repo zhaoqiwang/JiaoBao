@@ -21,6 +21,7 @@
         {
             //[self removeFromSuperview];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            [dm getInstance].secondFlag =@"无权限";
 
         }
 //        for(int i=0;i<model.smsTree.count;i++)
