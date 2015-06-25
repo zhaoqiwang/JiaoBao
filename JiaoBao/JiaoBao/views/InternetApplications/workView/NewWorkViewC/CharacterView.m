@@ -322,7 +322,7 @@ NSString *kSection = @"Forward_section3";
         
     }
     HomeClassWorkView *home = (HomeClassWorkView*)[[[self superview]superview]superview];
-    [home resetFrame];
+    [home setFrame];
     
 
 }

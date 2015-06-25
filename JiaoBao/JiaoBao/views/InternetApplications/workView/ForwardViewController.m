@@ -307,6 +307,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 -(void)timerAction:(id)sender
 {
+    sleep(TIMEOUT);
 //    self.mProgressV.mode = MBProgressHUDModeCustomView;
 //    self.mProgressV.labelText = @"加载超时";
 //    sleep(2);

@@ -277,6 +277,11 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
             [dm getInstance].secondFlag = @"无班级";
         }
+        else
+        {
+            [dm getInstance].secondFlag = @"0";
+            
+        }
         if(self.requestSymbol0 == YES)
         {
             self.requestSymbol0 =NO;
@@ -292,6 +297,11 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
             [dm getInstance].secondFlag = @"无班级";
+        }
+        else
+        {
+            [dm getInstance].secondFlag = @"0";
+            
         }
         if(self.requestSymbol1 ==YES)
         {
@@ -311,6 +321,11 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             [dm getInstance].secondFlag =@"无权限";
 
         }
+        else
+        {
+            [dm getInstance].secondFlag = @"0";
+            
+        }
 
         if(self.requestSymbol2 == YES)
         {
@@ -327,6 +342,11 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
             [dm getInstance].secondFlag =@"无权限";
+            
+        }
+        else
+        {
+            [dm getInstance].secondFlag = @"0";
             
         }
         if(self.requestSymbol3 == YES)
