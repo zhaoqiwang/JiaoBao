@@ -31,4 +31,6 @@
 //+ (NewWorkRootScrollView *)shareInstance;
 - (id)initWithFrame;
 
+-(void)dealloc1;
+
 @end

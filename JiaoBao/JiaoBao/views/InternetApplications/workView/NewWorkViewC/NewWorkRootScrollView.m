@@ -21,6 +21,10 @@
 //    return __singletion;
 //}
 
+-(void)dealloc1{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (id)initWithFrame{
     CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44);
     

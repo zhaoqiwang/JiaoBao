@@ -8,6 +8,7 @@
 
 #import "UnitSpaceArthListViewController.h"
 #import "Reachability.h"
+#import "MBProgressHUD+AD.h"
 
 @interface UnitSpaceArthListViewController ()
 
@@ -84,7 +85,9 @@
 
 //将获得到的单位信息，通知到界面
 -(void)UnitSpaceArthList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+//    [self.mProgressV hide:YES];
+//    [MBProgressHUD hideHUDForView:self.view];
+//    [MBProgressHUD showSuccess:@"哦了" toView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     NSMutableArray *array = noti.object;
@@ -158,10 +161,12 @@
     }else {
         [[ShowHttp getInstance] showHttpGetUnitArthLIstIndexWith:self.mStr_flag UnitID:self.mModel_unit.UnitID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
     }
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+//    self.mProgressV.labelText = @"加载中...";
+//    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+//    [self.mProgressV show:YES];
+//    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    
+    [MBProgressHUD showMessage:@"哈哈哈哈" toView:self.view];
 }
 
 - (void)Loading {

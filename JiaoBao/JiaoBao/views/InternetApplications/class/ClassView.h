@@ -10,7 +10,7 @@
 #import "dm.h"
 #import "ClassTableViewCell.h"
 #import "ClassHttp.h"
-#import "MBProgressHUD.h"
+#import "MBProgressHUD+AD.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "ArthDetailViewController.h"
 #import "ClassTopViewController.h"
@@ -37,7 +37,7 @@
     NSMutableArray *mArr_localTop;//本地
     NSMutableArray *mArr_attentionTop;//关注
     NSMutableArray *mArr_sumTop;//全部
-    MBProgressHUD *mProgressV;//
+//    MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新,1是在刷新
     PopupWindow *mView_popup;//点赞评论弹出框
     UIView *mView_text;//放输入框
@@ -61,7 +61,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_localTop;//本地
 @property (nonatomic,strong) NSMutableArray *mArr_attentionTop;//关注
 @property (nonatomic,strong) NSMutableArray *mArr_sumTop;//全部
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
+//@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property (nonatomic, strong) NSMutableArray *photos;
 @property (nonatomic,strong)NSArray *commentArr;
