@@ -229,6 +229,7 @@ static HomeClassTopScrollView *__singletion;
 
 -(void)GetUnitRevicer:(NSNotification *)noti
 {
+    self.getClassNotiFlag++;
     if([dm getInstance].notificationSymbol == 100)
     {
         NSDictionary *dic = noti.object;
@@ -246,34 +247,19 @@ static HomeClassTopScrollView *__singletion;
                 [self.dataArr addObject:unit];
             }
         }
-//        for(int i=0;i<self.dataArr.count;i++)
-//        {
-//            myUnit *unit = [self.dataArr objectAtIndex:i];
-//            for(int j=0;j<unit.list.count;j++)
-//            {
-//                UserListModel *model = [unit.list objectAtIndex:j];
-//                for(int z=0;z<model.groupselit_selit.count;z++)
-//                {
-//                    
-//                    groupselit_selitModel *model2 = [model.groupselit_selit objectAtIndex:z];
-//                    NSLog(@"555555[%d][%d][%d] = %@",i,j,z,model2.Name);
-//                }
-//
-//                
-//            }
-//
-//
-//
-//            
-//        }
+
 
 
         self.requestSymbol0 = NO;
         self.requestSymbol1 = NO;
         [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
         
-
-        
+if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
+{
+    [[dm getInstance].progress hide:YES];
+    
+}
+    
     }
 
 

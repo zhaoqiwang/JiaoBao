@@ -148,10 +148,10 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUnitName:) name:@"unitNameNotication" object:nil];
     [[SignInHttp getInstance]getTime];
 
-    BaidumapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64+30, 320, 568-94)];
+    BaidumapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64+30, [dm getInstance].width, 568-94)];
     [self.view addSubview:BaidumapView];
     [self.view addSubview:bottomView];
-    [bottomView setFrame:CGRectMake(0, self.view.frame.size.height-90, 320, 90)];
+    [bottomView setFrame:CGRectMake(0, self.view.frame.size.height-90, [dm getInstance].width, 90)];
     UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [locationBtn setTitle:@"定位" forState:UIControlStateNormal];
     [locationBtn addTarget:self action:@selector(locationAction:) forControlEvents:UIControlEventTouchUpInside];

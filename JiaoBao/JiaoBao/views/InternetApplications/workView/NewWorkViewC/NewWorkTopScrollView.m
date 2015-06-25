@@ -153,10 +153,12 @@
 
                 for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
                 {
+
                     myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
                     [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
                     
                 }
+
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;
                 if([dm getInstance].mModel_unitList.UnitClass.count == 0)
@@ -165,7 +167,11 @@
                     [dm getInstance].secondFlag = @"无班级";
                 }
                 else{
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
+                        [dm getInstance].progress.mode = MBProgressHUDModeIndeterminate;
+                        [dm getInstance].progress.labelText = @"正在加载";
+                        [[dm getInstance].progress show:YES];
+                        [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+                        //[[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
 
                     
                 }

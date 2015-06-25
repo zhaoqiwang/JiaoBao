@@ -280,6 +280,7 @@
     {
             //[self.mProgressV hide:YES];
 
+
             self.mProgressV.mode = MBProgressHUDModeCustomView;
             self.mProgressV.labelText = @"上传图片成功";
             [self.mProgressV show:YES];
@@ -367,13 +368,14 @@
 }
 
 - (void)Loading {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.timer invalidate];
-        self.timer = nil;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
-        
-        
-    });
+    sleep(20);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.timer invalidate];
+//        self.timer = nil;
+//    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
+//        
+//        
+//    });
     
 
 }
@@ -476,8 +478,8 @@
         
 
     }];
-    self.mProgressV.labelText = @"正在上传";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+    self.mProgressV.labelText = @"正在上传";
     [self.mProgressV show:YES];
     [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
 
@@ -588,66 +590,58 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
+    
     [self dismissViewControllerAnimated:YES completion:^{
-
-}];
-    //发送选中图片上传请求
-    if (info.count>0) {
-        self.mProgressV.labelText = @"正在上传图片";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-        D("info.count-===%lu",(unsigned long)info.count);
-    }
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
-    //判断文件夹是否存在
-    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
-        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    
-    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
-    for (NSDictionary *dict in info) {
-        if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
-            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                
-
-                
-                NSData *imageData = UIImageJPEGRepresentation(image,0);
-
-               // NSLog(@"%lu",(unsigned long)imageData.length);
-
-                NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
-                
-                //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
-                //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
-                D("图片路径是：%@",imgPath);
-
-                BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
-                if (!yesNo) {//不存在，则直接写入后通知界面刷新
-                    BOOL result = [imageData writeToFile:imgPath atomically:YES];
-                    for (;;) {
-                        if (result) {
-                            NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
-                            
-                            [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-                            self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
-                            self.mInt_index ++;
-                            
-                            
-                            
-                            
-                            break;
-                        }
-                    }
-                }else {
-                    //存在
-                    BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
-                    if (blDele) {//删除成功后，写入，通知界面
+        //发送选中图片上传请求
+        if (info.count>0) {
+//            if([dm getInstance].progress== nil)
+//            {
+//                [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+//                [self.navigationController.view addSubview:[dm getInstance].progress];
+//                
+//            }
+//            [dm getInstance].progress.delegate = self;
+//            [dm getInstance].progress.labelText = @"正在上传图片";
+//            [dm getInstance].progress.userInteractionEnabled = NO;
+//            [[dm getInstance].progress show:YES];
+//            [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+            self.mProgressV.labelText = @"正在上传图片";
+            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
+            [self.mProgressV show:YES];
+            self.mProgressV.userInteractionEnabled = NO;
+            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+            D("info.count-===%lu",(unsigned long)info.count);
+        }
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        //文件名
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+        //判断文件夹是否存在
+        if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+            [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        
+        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+        for (NSDictionary *dict in info) {
+            if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
+                if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+                    UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                    
+                    
+                    
+                    NSData *imageData = UIImageJPEGRepresentation(image,0);
+                    
+                    // NSLog(@"%lu",(unsigned long)imageData.length);
+                    
+                    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+                    
+                    //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
+                    //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
+                    D("图片路径是：%@",imgPath);
+                    
+                    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+                    if (!yesNo) {//不存在，则直接写入后通知界面刷新
                         BOOL result = [imageData writeToFile:imgPath atomically:YES];
                         for (;;) {
                             if (result) {
@@ -657,21 +651,43 @@
                                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                                 self.mInt_index ++;
                                 
+                                
+                                
+                                
                                 break;
                             }
                         }
+                    }else {
+                        //存在
+                        BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
+                        if (blDele) {//删除成功后，写入，通知界面
+                            BOOL result = [imageData writeToFile:imgPath atomically:YES];
+                            for (;;) {
+                                if (result) {
+                                    NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
+                                    
+                                    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
+                                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+                                    self.mInt_index ++;
+                                    
+                                    break;
+                                }
+                            }
+                        }
                     }
+                } else {
+                    NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
                 }
-            } else {
-                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
+            else {
+                NSLog(@"Uknown asset type");
+            }
+            timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
         }
-        else {
-            NSLog(@"Uknown asset type");
-        }
-        timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
-    }
-   // [self.mProgressV hide:YES];
+
+
+}];
+       // [self.mProgressV hide:YES];
 }
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker

@@ -182,6 +182,8 @@
 
 }
 -(void)myNavigationGoback{
+    [self.myTimer invalidate];
+    self.myTimer = nil;
     [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
