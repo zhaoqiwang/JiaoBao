@@ -119,10 +119,7 @@ static NSString *DetailedViewControllerID = @"Forward_section";
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
@@ -172,17 +169,9 @@ static NSString *DetailedViewControllerID = @"Forward_section";
         }else if ([model.IsMyUnit intValue] ==1){//教育局
             [[ShareHttp getInstance] shareHttpGetUnitArthLIstIndexWith:@"1" UnitID:model.UnitID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
         }
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     } else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self];
     }
 }
 -(void)noMore{
@@ -225,11 +214,7 @@ static NSString *DetailedViewControllerID = @"Forward_section";
     [[ShareHttp getInstance] shareHttpGetSectionMessageWith:@"_2" TopFlags:@"2" AccID:[NSString stringWithFormat:@"%d",[dm getInstance].uType]];
     //请求最新更新数据
     [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"1" TopFlag:@"1" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //获取到关联单位和所有单位
@@ -696,10 +681,7 @@ static NSString *DetailedViewControllerID = @"Forward_section";
                     }else if (node.readflag == 2){//所有班级
                         [[ShareHttp getInstance] shareHttpGetUnitClassWith:userInfoModel.UnitID Section:@"1"];
                     }
-                    self.mProgressV.labelText = @"加载中...";
-                    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-                    [self.mProgressV show:YES];
-                    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+                    [MBProgressHUD showMessage:@"" toView:self];
                 }
             }
         } else {//第1层级，点击跳转界面，进入文章列表
@@ -816,23 +798,14 @@ static NSString *DetailedViewControllerID = @"Forward_section";
     if (indexPath.row == 0) {//最新更新
         //请求最新更新数据
         [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"1" TopFlag:@"1" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if (indexPath.row == 1){//推荐
         //请求最新更新数据
         [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"1" TopFlag:@"2" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if ([model.UnitType intValue] ==1){//教育局
         [[ShareHttp getInstance] shareHttpGetUnitArthLIstIndexWith:@"1" UnitID:model.UnitID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if ([model.UnitType intValue] ==2){//学校
         [self unitTypeClass];
         [self reloadDataForDisplayArray];//初始化将要显示的数据

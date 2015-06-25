@@ -18,13 +18,13 @@
     InternetApplicationsViewController *mViewC_appcation;
     StudentFileViewController *mViewC_studentFile;
     ApplicationCenterViewController *mViewC_center;
-    MBProgressHUD *mProgressV;//
+//    MBProgressHUD *mProgressV;//
 }
 @property (strong,nonatomic) TabbarView *mTabbar_view;//自定义tabbar
 @property (strong,nonatomic) NSMutableArray *mArr_views;//放root中所有的viewC
 @property (strong,nonatomic) InternetApplicationsViewController *mViewC_appcation;
 @property (strong,nonatomic) StudentFileViewController *mViewC_studentFile;
 @property (strong,nonatomic) ApplicationCenterViewController *mViewC_center;
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
+//@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 @end

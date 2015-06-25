@@ -20,7 +20,7 @@
 @end
 
 @implementation SharePostingViewController
-@synthesize mNav_navgationBar,mProgressV,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu,mArr_dynamic,mLab_hidden,pullArr,pullDownBtn;
+@synthesize mNav_navgationBar,mTextV_content,mBtn_send,mBtn_selectPic,mTextF_title,mInt_index,mArr_pic,mModel_unit,mInt_section,mBtn_send2,mTableV_type,mStr_unitID,mStr_uType,mLab_dongtai,mLab_fabu,mArr_dynamic,mLab_hidden,pullArr,pullDownBtn;
 
 -(id)init{
     self.mArr_dynamic = [NSMutableArray array];
@@ -57,21 +57,13 @@
     self.view.tag = 5;
     self.mLab_hidden.frame = self.view.frame;
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-    
-    
     self.pullArr = [NSMutableArray array];
     if (self.mInt_section == 0) {//分享
         self.mStr_unitID = @"";
         //如果是老师身份，请求关联班级
         if ([dm getInstance].uType == 2) {
             [[LoginSendHttp getInstance] login_GetmyUserClass:[NSString stringWithFormat:@"%d",[dm getInstance].UID] Accid:[dm getInstance].jiaoBaoHao];
-            self.mProgressV.labelText = @"加载关联班级中...";
-            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showMessage:@"加载关联班级中..." toView:self.view];
         }
         
         for (int i=0; i<[dm getInstance].identity.count; i++) {
@@ -237,10 +229,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -249,10 +238,10 @@
 
 //获取到的关联班级
 -(void)GetmyUserClass:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag intValue] ==0) {//成功
-        [self.mProgressV hide:YES];
         NSMutableArray *array = [dic objectForKey:@"array"];
         for (int i=0; i<array.count; i++) {
             GetmyUserClassModel *model = [array objectAtIndex:i];
@@ -266,27 +255,17 @@
         }
         [self.mTableV_type reloadData];
     }else{
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"获取失败";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"获取失败" toView:self.view];
     }
 }
 
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     self.imageCount--;
     if(self.imageCount == 0)
     {
-            //[self.mProgressV hide:YES];
-
-
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"上传图片成功";
-            [self.mProgressV show:YES];
-
-            //    self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showSuccess:@"上传图片成功" toView:self.view];
         
     }
 
@@ -297,14 +276,11 @@
 }
 
 -(void)SavePublishArticle:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     self.mInt_index = 0;
     [self.mArr_pic removeAllObjects];
     NSString *str = noti.object;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = str;
-    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self.view];
     self.mTextF_title.text = @"";
     self.mTextV_content.text = @"";
     self.mInt_index = 0;
@@ -328,18 +304,10 @@
     }
     D("self.textv.content-===%@",self.mTextV_content.text);
     if (self.mTextF_title.text.length==0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请输入标题";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入标题" toView:self.view];
         return;
     }else if (self.mTextV_content.text.length == 0){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请输入内容";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
     NSString *content = self.mTextV_content.text;
@@ -358,10 +326,7 @@
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }
     
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 -(void)noMore{
     sleep(1);
@@ -381,8 +346,7 @@
 }
 -(void)timerAction:(id)sender
 {
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
+    [MBProgressHUD showError:@"加载超时" toView:self.view];
     sleep(2);
     
 }
@@ -478,10 +442,7 @@
         
 
     }];
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"正在上传";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
 
     UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
     if (!image) {
@@ -504,11 +465,6 @@
                 
                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
-
-                
-                
-                
-                
                 break;
             }
         }
@@ -523,8 +479,6 @@
                     
                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
                     self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
-
-                    
                     break;
                 }
             }
@@ -533,8 +487,6 @@
 
     self.mInt_index ++;
     //[self.mProgressV hide:YES];
-
-
 }
 
 
@@ -594,23 +546,8 @@
     [self dismissViewControllerAnimated:YES completion:^{
         //发送选中图片上传请求
         if (info.count>0) {
-//            if([dm getInstance].progress== nil)
-//            {
-//                [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-//                [self.navigationController.view addSubview:[dm getInstance].progress];
-//                
-//            }
-//            [dm getInstance].progress.delegate = self;
-//            [dm getInstance].progress.labelText = @"正在上传图片";
-//            [dm getInstance].progress.userInteractionEnabled = NO;
-//            [[dm getInstance].progress show:YES];
-//            [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-            self.mProgressV.labelText = @"正在上传图片";
-            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-            [self.mProgressV show:YES];
-            self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
             D("info.count-===%lu",(unsigned long)info.count);
+            [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
         }
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);

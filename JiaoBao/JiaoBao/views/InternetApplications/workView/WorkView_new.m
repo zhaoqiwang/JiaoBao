@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation WorkView_new
-@synthesize mArr_list,mBtn_new,mProgressV,mTableV_list,mInt_index,mStr_lastID;
+@synthesize mArr_list,mBtn_new,mTableV_list,mInt_index,mStr_lastID;
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
@@ -53,12 +53,6 @@
         [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.mBtn_new addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_new];
-        //加载提示框
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
-        //请求数据
-        
     }
     return self;
 }
@@ -68,18 +62,12 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
@@ -88,11 +76,13 @@
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list reloadData];
 }
 
 //
 -(void)GetMySendMsgList:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag intValue] ==0) {//成功
@@ -113,26 +103,18 @@
             }
         }
     }else{
-        self.mProgressV.labelText = @"获取失败";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"获取失败" toView:self];
     }
 }
 
 //
 -(void)SendToMeUserList:(NSNotification *)noti{
-    //如果是刷新，判断
-//    if (self.mArr_list.count==1) {
-//        [self.mArr_list removeAllObjects];
-//    }
-    
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag intValue] ==0) {//成功
-        [self.mProgressV hide:YES];
         SendToMeUserListModel *model = [dic objectForKey:@"model"];
         [self.mArr_list addObjectsFromArray:model.CommMsgList];
         [self.mTableV_list reloadData];
@@ -147,10 +129,7 @@
             [self.mTableV_list removeFooter];
         }
     }else{
-        self.mProgressV.labelText = @"获取失败";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"获取失败" toView:self];
     }
 }
 
@@ -193,10 +172,7 @@
     } else {
         [self.mTableV_list headerEndRefreshing];
         [self.mTableV_list footerEndRefreshing];
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self];
     }
 }
 
@@ -295,19 +271,6 @@
     work.mInt_flag = 1;
     work.mStr_tableID = model.TabIDStr;
     [utils pushViewController:work animated:YES];
-}
-
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
 }
 
 //切换账号时，更新数据

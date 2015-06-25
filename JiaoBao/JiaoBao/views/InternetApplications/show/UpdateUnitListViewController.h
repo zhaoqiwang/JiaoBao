@@ -22,7 +22,6 @@
 @interface UpdateUnitListViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_list;//
-    MBProgressHUD *mProgressV;//
     NSString *mStr_title;//标题
     NSString *mStr_flag;//1最新，2推荐,3主题
     NSString *mStr_local;//true本地，默认false
@@ -33,7 +32,6 @@
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSString *mStr_title;//内务标题
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,strong) NSString *mStr_flag;//1最新，2推荐

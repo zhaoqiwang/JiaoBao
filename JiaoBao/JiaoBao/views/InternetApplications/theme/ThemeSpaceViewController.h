@@ -33,7 +33,6 @@
     UIButton *mBtn_add;//加载更多文章按钮
     NSMutableArray *mArr_list;//文章数组
     int mInt_index;//加载的第几页文章
-    MBProgressHUD *mProgressV;//
     NSString *mStr_title;//标题
     NSString *mStr_unitID;//id号
     NSMutableArray *mArr_newPhoto;//最新的N张照片
@@ -53,7 +52,6 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_add;//加载更多文章按钮
 @property (nonatomic,strong) NSMutableArray *mArr_list;////文章数组
 @property (nonatomic,assign) int mInt_index;//加载的第几页文章
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSString *mStr_title;//标题
 @property (nonatomic,strong) NSString *mStr_unitID;//id号
 @property (nonatomic,strong) NSMutableArray *mArr_newPhoto;//最新的N张照片

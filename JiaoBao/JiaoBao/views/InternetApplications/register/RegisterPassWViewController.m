@@ -14,7 +14,7 @@
 @end
 
 @implementation RegisterPassWViewController
-@synthesize mBtn_register,mLab_confirmPassWord,mLab_passWord,mTextF_confirmPassword,mTextF_password,mNav_navgationBar,mLab_tishi,mProgressV,mStr_phoneNum,mInt_flag;
+@synthesize mBtn_register,mLab_confirmPassWord,mLab_passWord,mTextF_confirmPassword,mTextF_password,mNav_navgationBar,mLab_tishi,mStr_phoneNum,mInt_flag;
 
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -136,10 +136,6 @@
     self.mTextF_confirmPassword.frame = CGRectMake(self.mTextF_password.frame.origin.x, self.mLab_confirmPassWord.frame.origin.y, self.mTextF_password.frame.size.width, self.mTextF_password.frame.size.height);
     //注册按钮
     self.mBtn_register.frame = CGRectMake(20, self.mTextF_confirmPassword.frame.origin.y+self.mTextF_confirmPassword.frame.size.height+20, [dm getInstance].width-40, self.mBtn_register.frame.size.height);
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
 }
 
 -(void)mBtn_register:(UIButton *)btn
@@ -198,25 +194,15 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
     }
 }
 
--(void)noMore{
-    sleep(1);
-}
-
 -(void)progressViewTishi:(NSString *)title{
-    self.mProgressV.labelText = title;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showError:title toView:self.view];
 }
 
 -(void)ProgressViewLoad:(NSString *)title{
@@ -224,17 +210,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = title;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
+    [MBProgressHUD showMessage:title toView:self.view];
 }
 
 -(void)myNavigationGoback{

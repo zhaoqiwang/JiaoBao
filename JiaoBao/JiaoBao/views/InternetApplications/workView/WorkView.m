@@ -52,10 +52,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
@@ -538,16 +535,10 @@
             D("111111111");
             //获取发给我的待处理信息
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:node.readflag page:@"1"];
-            self.mProgressV.labelText = @"加载中...";
-            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showMessage:@"" toView:self];
         }else if (node.readflag == 2&&node.isExpanded){//获取自己发出的信息
             [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:@"1"];
-            self.mProgressV.labelText = @"加载中...";
-            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showMessage:@"" toView:self];
         }else if (node.readflag == 3){
             ForwardViewController *forward = [[ForwardViewController alloc] init];
             //forward.mStr_navName = @"下发通知";

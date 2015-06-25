@@ -29,7 +29,6 @@
     NSMutableArray *mArr_follow;//关注单位数组
     UITableView *mTalbeV_follow;//关注的单位
     NSMutableArray *mArr_related;//相关单位数组
-    MBProgressHUD *mProgressV;//
 }
 
 @property (nonatomic,strong) UIScrollView *mScrollV_view;//放总界面
@@ -43,7 +42,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_follow;//关注单位数组
 @property (nonatomic,strong) UITableView *mTalbeV_follow;//关注的单位
 @property (nonatomic,strong) NSMutableArray *mArr_related;//相关单位数组
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 - (id)initWithFrame1:(CGRect)frame;
 -(void)ProgressViewLoad;

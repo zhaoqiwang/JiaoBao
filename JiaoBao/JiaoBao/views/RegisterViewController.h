@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "dm.h"
 #import "LoginSendHttp.h"
-#import "MBProgressHUD.h"
+#import "MBProgressHUD+AD.h"
 
 
 @interface RegisterViewController : UIViewController<UITextFieldDelegate,UIGestureRecognizerDelegate,ASIHTTPRequestDelegate,LoginSendHttpDelegate,MBProgressHUDDelegate>{
@@ -21,7 +21,7 @@
     UIView *mView_view;//放需要变坐标的控件
     UIButton *mBtn_memberPassWD;//记住密码按钮
     int flag;//记住密码标记,1是未记住，2是记住
-    MBProgressHUD *mProgressV;//
+//    MBProgressHUD *mProgressV;//
     UIButton *mBtn_register;//注册
     UIButton *mBtn_forgetPW;//注忘记密码
 }
@@ -33,7 +33,7 @@
 @property (strong,nonatomic) UIButton *mBtn_login;//登陆按钮
 @property (strong,nonatomic) UIView *mView_view;//放需要变坐标的控件
 @property (strong,nonatomic) UIButton *mBtn_memberPassWD;//记住密码按钮
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
+//@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (strong,nonatomic) UIButton *mBtn_register;//注册
 @property (strong,nonatomic) UIButton *mBtn_forgetPW;//注忘记密码
 

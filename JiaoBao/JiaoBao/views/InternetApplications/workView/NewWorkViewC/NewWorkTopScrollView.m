@@ -111,16 +111,6 @@
         [self addSubview:button];
     }
 }
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    //    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
--(void)noMore{
-    sleep(1);
-}
 
 - (void)selectNameButton:(UIButton *)sender{
 

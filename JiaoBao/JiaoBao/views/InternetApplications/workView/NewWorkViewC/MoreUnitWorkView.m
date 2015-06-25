@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation MoreUnitWorkView
-@synthesize mViewTop,mScrollV_all,mModel_unitList,mArr_display,mArr_sumData,mTableV_work,mInt_readflag,mInt_requestCount,mInt_requestCount2,mProgressV,mInt_flag,mModel_right;
+@synthesize mViewTop,mScrollV_all,mModel_unitList,mArr_display,mArr_sumData,mTableV_work,mInt_readflag,mInt_requestCount,mInt_requestCount2,mInt_flag,mModel_right;
 
 -(void)dealloc1{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -61,13 +61,6 @@
         self.mTableV_work.dataSource = self;
         self.mTableV_work.scrollEnabled = NO;
         [self.mScrollV_all addSubview:self.mTableV_work];
-        
-        //加载提示框
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
-        //刚进入界面时，加载全部数据
-//        [self sendRequest];
     }
     return self;
 }
@@ -81,10 +74,7 @@
         [self addData];
         [self reloadDataForDisplayArray];//初始化将要显示的数据
     }else{
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"获取权限失败";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"获取权限失败" toView:self];
     }
 }
 
@@ -95,11 +85,8 @@
 //        if (self.mArr_sumData.count>0) {
         if (([self.mModel_right.ParentCommRight intValue] ==0&&[self.mModel_right.SubUnitCommRight intValue] ==0)||self.mArr_sumData.count==0) {
             [self.mScrollV_all removeFromSuperview];
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"无发送权限或没有其他单位";
             [dm getInstance].thirdFlag = @"1";
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showError:@"无发送权限或没有其他单位" toView:self];
         }else{
             self.mInt_flag = 1;
             [self sendRequest];
@@ -120,11 +107,9 @@
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     NSString *str = noti.object;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = str;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self];
     self.mViewTop.mTextV_input.text = @"";
     [self.mViewTop.mArr_accessory removeAllObjects];
     //[self.mArr_photo removeAllObjects];
@@ -200,18 +185,8 @@
 //    }
     
     if (self.mInt_requestCount >0) {
-        self.mProgressV.labelText = @"加载中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
 }
 
 //点击发送按钮
@@ -221,10 +196,7 @@
         return;
     }
     if (self.mViewTop.mTextV_input.text.length == 0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请输入内容";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self];
         return;
     }
     //循环找需要发送的人
@@ -251,22 +223,17 @@
         }
     }
     if (array.count==0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请选择人员";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请选择人员" toView:self];
         return;
     }
     //发表
     [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:self.mViewTop.mArr_accessory];
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     self.mModel_unitList = noti.object;
     //判断是否只有当前一个单位
     if (self.mModel_unitList.UnitParents.count==0&&self.mModel_unitList.subUnits.count==0) {
@@ -387,7 +354,7 @@
 -(void)GetUnitRevicer:(NSNotification *)noti{
     self.mInt_requestCount2 ++;
     if (self.mInt_requestCount == self.mInt_requestCount2) {
-        [self.mProgressV hide:YES];
+        [MBProgressHUD hideHUDForView:self];
     }
     NSDictionary *dic = noti.object;
     NSString *unitID = [dic objectForKey:@"unitID"];
@@ -834,10 +801,7 @@
     }
     else {
         if (node.sonNodes.count ==0) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"没有子单位";
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showError:@"没有子单位" toView:self];
         }else{
             [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
         }
@@ -1119,10 +1083,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;

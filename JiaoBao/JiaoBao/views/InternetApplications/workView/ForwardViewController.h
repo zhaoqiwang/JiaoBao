@@ -31,7 +31,6 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_invertSelect;//接收人反选
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_list;//人员具体显示
 @property (nonatomic,strong) NSString *mStr_unit;//当前单位的名称
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_sendMsg;//是否发送短信
 @property (nonatomic,strong) myUnit *mModel_myUnit;//当前界面显示的人员model
 @property (nonatomic,strong) UnitClassRevicerModel *mModel_class;//当身份切换为老师时，用此model显示人员

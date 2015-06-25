@@ -32,7 +32,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
     //界面消失时，移除通知
     
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
 
     [self removeFromParentViewController];
 }
@@ -103,10 +103,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
     
     self.mModel_myUnit = [[myUnit alloc] init];
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
 
     //大scrollview的坐标
     self.mScrollV_all.frame = CGRectMake(0, 0, [dm getInstance].width, [dm getInstance].height-44-10);
@@ -276,10 +272,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -342,34 +335,31 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     if([dm getInstance].notificationSymbol ==1 )
     {
-    NSString *str = noti.object;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
+        NSString *str = noti.object;
         if(str.length == 0)
         {
             str = @"成功";
         }
-    self.mProgressV.labelText = str;
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    self.topView.mTextV_input.text = @"";
-    [self.topView.mArr_accessory removeAllObjects];
-    [self.topView addAccessoryPhoto];
-    for (int i=0; i<self.mModel_myUnit.list.count; i++)
-    {
-        
-        UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
-        model.sectionSelSymbol = 0;
-        for (int i=0; i<model.groupselit_selit.count; i++) {
-            groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
-            subModel.mInt_select = 0;
+        [MBProgressHUD showSuccess:str toView:self.view];
+        self.topView.mTextV_input.text = @"";
+        [self.topView.mArr_accessory removeAllObjects];
+        [self.topView addAccessoryPhoto];
+        for (int i=0; i<self.mModel_myUnit.list.count; i++)
+        {
+            
+            UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+            model.sectionSelSymbol = 0;
+            for (int i=0; i<model.groupselit_selit.count; i++) {
+                groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+                subModel.mInt_select = 0;
+            }
         }
-    }
-    self.imgV.image = [UIImage imageNamed:@"blank.png"];
-    
-    [self.mCollectionV_list reloadData];
+        self.imgV.image = [UIImage imageNamed:@"blank.png"];
+        
+        [self.mCollectionV_list reloadData];
     }
     
 }
@@ -729,41 +719,29 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     if ([self checkNetWork]) {
         return;
     }
-
-        if (self.topView.mTextV_input.text.length == 0)
-        {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"请输入内容";
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            return;
-        }
+    
+    if (self.topView.mTextV_input.text.length == 0)
+    {
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
+        return;
+    }
     NSMutableArray *array = [NSMutableArray array];
-
+    
     myUnit *tempUnit = [dm getInstance].mModel_unitList.myUnit;
     
     [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
     
-        if (array.count==0) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"请选择人员";
-            //            self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            return;
-        }
+    if (array.count==0) {
+        [MBProgressHUD showError:@"请选择人员" toView:self.view];
+        return;
+    }
     
-        //发表
-            NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
-            [array1 addObjectsFromArray:self.topView.mArr_accessory];
-            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
-        
-        self.mProgressV.labelText = @"正在发送";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        //        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-        
+    //发表
+    NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
+    [array1 addObjectsFromArray:self.topView.mArr_accessory];
+    [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
+    
+    [MBProgressHUD showMessage:@"v" toView:self.view];
     
     [self.mCollectionV_list reloadData];
     

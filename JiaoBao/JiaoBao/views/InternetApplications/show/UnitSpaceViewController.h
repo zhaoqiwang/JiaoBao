@@ -22,7 +22,6 @@
     MyNavigationBar *mNav_navgationBar;//导航条
     UIScrollView *mScrollV_img;
     UICollectionView *mCollectionV_unit;//放单位等
-    MBProgressHUD *mProgressV;//
     NSString *mStr_title;//内务标题
     NSMutableArray *mArr_list;//需要显示数据
     UnitSectionMessageModel *mModel_unit;
@@ -34,7 +33,6 @@
 @property (nonatomic,strong) IBOutlet UIScrollView *mScrollV_img;
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_unit;//放单位等
 @property (nonatomic,strong) IBOutlet UIPageControl *mPageC_page;
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSString *mStr_title;//内务标题
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,strong) UnitSectionMessageModel *mModel_unit;

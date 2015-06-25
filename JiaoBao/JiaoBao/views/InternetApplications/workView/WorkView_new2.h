@@ -30,7 +30,6 @@
     NSMutableArray *mArr_sum;//全部
     UIButton *mBtn_new;//新建事务
     int mInt_index;//当前点击的是第几个
-    MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新,1是在刷新
 }
 
@@ -43,7 +42,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_sum;//全部
 @property (strong,nonatomic) UIButton *mBtn_new;//新建事务
 @property (assign,nonatomic) int mInt_index;//当前点击的是第几个
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property(nonatomic,strong) UILabel *label;
 @property(nonatomic,assign)BOOL firstSymbol;

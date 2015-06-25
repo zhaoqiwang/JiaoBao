@@ -13,7 +13,7 @@
 @end
 
 @implementation NoticeListViewController
-@synthesize mArr_list,mInt_index,mNav_navgationBar,mProgressV,mStr_classID,mStr_title,mTableV_list,mModel_notice;
+@synthesize mArr_list,mInt_index,mNav_navgationBar,mStr_classID,mStr_title,mTableV_list,mModel_notice;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -56,16 +56,12 @@
     self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
     self.mTableV_list.headerRefreshingText = @"正在刷新...";
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
-    
     //发送请求
     [self sendhttpRequest];
 }
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mArr_list removeAllObjects];
     self.mInt_index = 1;
     
@@ -86,7 +82,7 @@
 }
 //通知到内务获取到的单位通知
 -(void)GetUnitNotices:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     UnitNoticeModel *model = noti.object;
@@ -96,12 +92,7 @@
         }
     }else{
         if (model.noticeInfoArray.count == 0) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"没有更多了";
-//            self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            
+            [MBProgressHUD showError:@"没有更多了" toView:self.view];
             return;
         }
         self.mModel_notice = noti.object;
@@ -126,23 +117,8 @@
         D("self.mint.page-====%lu %d",(unsigned long)self.mArr_list.count,self.mInt_index);
         [[ShareHttp getInstance] NoticeHttpGetUnitNoticesWith:@"3" UnitID:mStr_classID pageNum:[NSString stringWithFormat:@"%d",self.mInt_index]];
         
-        self.mProgressV.labelText = @"加载中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }
-}
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    sleep(2);
-}
--(void)noMore{
-    sleep(1);
 }
 
 //发送获取切换单位和个人信息请求
@@ -156,10 +132,7 @@
     if ([str intValue] ==0) {//成功
         [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     }else{
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"切换身份失败";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"切换身份失败" toView:self.view];
     }
 }
 

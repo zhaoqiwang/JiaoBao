@@ -20,7 +20,6 @@
 
 @interface UpLoadPhotoViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
-    MBProgressHUD *mProgressV;//
     UILabel *mLab_name;//相册名
     UITextField *mTextF_name;//相册名
     UIButton *mBtn_name;//弹出类型选择框
@@ -36,7 +35,6 @@
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_name;//相册名
 @property (nonatomic,strong) IBOutlet UITextField *mTextF_name;//相册名
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_name;//弹出类型选择框

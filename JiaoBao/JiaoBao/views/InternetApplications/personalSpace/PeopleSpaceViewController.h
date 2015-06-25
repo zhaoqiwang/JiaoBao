@@ -24,7 +24,6 @@
 
 @interface PeopleSpaceViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,unitCellDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
-    MBProgressHUD *mProgressV;//
     UITableView *mTableV_personalS;//表格
     NSMutableArray *mArr_personalS;//个人信息数组
     
@@ -33,7 +32,6 @@
 - (IBAction)tbBtnAction:(id)sender;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_personalS;
 @property (nonatomic,strong) NSMutableArray *mArr_personalS;//个人信息数组
 @property (weak, nonatomic) IBOutlet UITableView *unitTabelView;//关联单位列表

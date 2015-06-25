@@ -11,7 +11,7 @@
 static NSString *ShowCell = @"ShareCollectionViewCell";
 
 @implementation ShowView
-@synthesize mLab_name,mBtn_posting,mCollectionV_unit,mScrollV_share,mTableV_detail,mArr_unit,mInt_flag,mArr_tabel,mArr_class,mBtn_add,mInt_index,mProgressV,mArr_display;
+@synthesize mLab_name,mBtn_posting,mCollectionV_unit,mScrollV_share,mTableV_detail,mArr_unit,mInt_flag,mArr_tabel,mArr_class,mBtn_add,mInt_index,mArr_display;
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
@@ -98,11 +98,6 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
         [self.mBtn_posting setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.mBtn_posting addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_posting];
-        
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
-//        self.mProgressV.userInteractionEnabled = NO;
     }
     return self;
 }
@@ -117,6 +112,7 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 
 //最新、推荐文章数量
 -(void)GetSectionMessageShow:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     NSDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     NSString *count = [dic objectForKey:@"count"];
@@ -146,33 +142,15 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
         }else if ([model.IsMyUnit intValue] ==1){//教育局
             [[ShareHttp getInstance] shareHttpGetUnitArthLIstIndexWith:@"2" UnitID:model.UnitID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
         }
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     } else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self];
     }
-}
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 //加载获取到得单位
 -(void)getUnitInfoShow:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     NSMutableArray *array = noti.object;
     //未读数量标记
     for (int i=0; i<array.count; i++) {
@@ -195,16 +173,12 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
     [[ShareHttp getInstance] shareHttpGetSectionMessageWith:@"_1" TopFlags:@"2" AccID:[NSString stringWithFormat:@"%d",[dm getInstance].uType]];
     //请求最新更新数据
     [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"2" TopFlag:@"1" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //获取到关联单位和所有单位
 -(void)getUnitClassShow:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     int index = [[dic objectForKey:@"index"] intValue];
     NSArray *array = [dic objectForKey:@"array"];
@@ -372,6 +346,7 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mArr_unit removeAllObjects];
     [self unitAddDefault];
     self.mInt_flag = 0;
@@ -379,7 +354,7 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 
 //最新更新、推荐的通知
 -(void)TopArthListIndexShow:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     NSMutableArray *array = noti.object;
     if (self.mInt_index > 1) {
         if (array.count>0) {
@@ -394,7 +369,7 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
     //刷新，布局
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_detail reloadData];
 }
 
@@ -656,10 +631,7 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
                     }else if (node.readflag == 2){//所有班级
                         [[ShareHttp getInstance] shareHttpGetUnitClassWith:userInfoModel.UnitID Section:@"2"];
                     }
-                    self.mProgressV.labelText = @"加载中...";
-                    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-                    [self.mProgressV show:YES];
-                    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+                    [MBProgressHUD showMessage:@"" toView:self];
                 }
             }
         } else {//第1层级，点击跳转界面，进入文章列表
@@ -769,23 +741,14 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
     if (indexPath.row == 0) {//最新更新
         //请求最新更新数据
         [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"2" TopFlag:@"1" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if (indexPath.row == 1){//推荐
         //请求最新更新数据
         [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"2" TopFlag:@"2" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if ([model.UnitType intValue] ==1){//教育局
         [[ShareHttp getInstance] shareHttpGetUnitArthLIstIndexWith:@"2" UnitID:model.UnitID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if ([model.UnitType intValue] ==2){//学校
         [self unitTypeClass];
         [self reloadDataForDisplayArray];//初始化将要显示的数据

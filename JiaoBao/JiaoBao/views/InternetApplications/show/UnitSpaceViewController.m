@@ -17,7 +17,7 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 @end
 
 @implementation UnitSpaceViewController
-@synthesize mArr_list,mStr_title,mNav_navgationBar,mCollectionV_unit,mScrollV_img,mProgressV,mModel_unit,mArr_newPhoto,mPageC_page;
+@synthesize mArr_list,mStr_title,mNav_navgationBar,mCollectionV_unit,mScrollV_img,mModel_unit,mArr_newPhoto,mPageC_page;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -64,31 +64,12 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
     [self setScrollViewImageShow];
     //获取当前单位的前N张照片
     [self sendRequst];
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-    //    self.mProgressV.userInteractionEnabled = NO;
-    
-}
-
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -105,7 +86,7 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 
 //单位最新前N张照片后，通知界面
 -(void)GetUnitNewPhoto:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
 //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
 //    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -135,10 +116,7 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
     }else {
         [[ThemeHttp getInstance] themeHttpGetUnitNewPhoto:self.mModel_unit.UnitID count:@"4"];
     }
-    self.mProgressV.labelText = @"加载图片中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"加载图片中..." toView:self.view];
 }
 
 //设置照片展示
@@ -237,10 +215,7 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
         [utils pushViewController:people animated:YES];
     }else if (indexPath.row == 4){//下级单位
         if ([self.mModel_unit.UnitType intValue] == 3) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"班级没有下级";
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showError:@"班级没有下级" toView:self.view];
         }else{
             SubUnitInfoViewController *subUnit = [[SubUnitInfoViewController alloc] init];
             subUnit.mModel_unit = self.mModel_unit;

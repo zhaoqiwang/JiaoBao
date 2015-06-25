@@ -1475,6 +1475,7 @@ static LoginSendHttp *loginSendHttp = nil;
 //请求失败
 -(void)requestFailed:(ASIHTTPRequest *)request{
     NSData *responseData = [request responseData];
+    [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication].windows lastObject]];
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
     NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
     D("dataString--login==-tag=%ld,flag=%d----  请求失败--%@",(long)request.tag,flag_request,dataString);

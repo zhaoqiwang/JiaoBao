@@ -20,7 +20,6 @@
 @interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITextView *mTextV_content;//内容
-    MBProgressHUD *mProgressV;//
     UIButton *mBtn_send;//发表文章按钮
     UIButton *mBtn_send2;//发表文章按钮
     UITextField *mTextF_title;//标题
@@ -44,7 +43,6 @@
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITextView *mTextV_content;//内容
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_send;//发表文章按钮
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_send2;//发表文章按钮
 @property (nonatomic,strong) IBOutlet UITextField *mTextF_title;//标题

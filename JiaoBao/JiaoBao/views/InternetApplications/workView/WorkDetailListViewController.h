@@ -25,7 +25,6 @@
     int mInt_tag;//加载的哪项
     NSString *mStr_navName;//传递nav名字
     NSString *mStr_url;//需要申请的url
-    MBProgressHUD *mProgressV;//
     int mInt_refresh;//判断是刷新还是加载更多，1是加载，2是刷新
 }
 
@@ -36,7 +35,6 @@
 @property (nonatomic,assign) int mInt_tag;//加载的哪项
 @property (nonatomic,strong) NSString *mStr_navName;//传递nav名字
 @property (nonatomic,strong) NSString *mStr_url;//需要申请的url
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_refresh;//判断是刷新还是加载更多
 
 @end

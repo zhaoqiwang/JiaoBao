@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
-            timestampString = "456891453.620541"
+            filePath = "JiaoBao/views/InternetApplications/theme/ThemeHttp.m"
+            timestampString = "456917838.247232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "544"
-            endingLineNumber = "544"
-            landmarkName = "-AllMyClassArthList:"
+            startingLineNumber = "625"
+            endingLineNumber = "625"
+            landmarkName = "-requestFailed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,13 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
-            timestampString = "456891486.870112"
+            filePath = "JiaoBao/views/InternetApplications/class/ClassHttp.m"
+            timestampString = "456916243.635575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "552"
-            endingLineNumber = "552"
-            landmarkName = "-AllMyClassArthList:"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "-requestFailed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

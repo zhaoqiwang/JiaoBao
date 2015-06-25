@@ -24,7 +24,6 @@
     UITextField *mTextF_confirmPassword;//确认密码
     UIButton *mBtn_register;//
     UILabel *mLab_tishi;//密码提示
-    MBProgressHUD *mProgressV;//
     NSString *mStr_phoneNum;//从上个界面来的电话号码
     int mInt_flag;//1是注册时设置密码，2为重置密码
 }
@@ -36,7 +35,6 @@
 @property (nonatomic,strong) IBOutlet UITextField *mTextF_confirmPassword;
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_register;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_tishi;
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSString *mStr_phoneNum;//从上个界面来的电话号码
 @property (nonatomic,assign) int mInt_flag;//1是注册时设置密码，2为重置密码
 @property(nonatomic,assign)BOOL forgetPWSymbol;

@@ -17,7 +17,6 @@
 @interface CharacterView : UIView<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,Forward_sectionDelegate>
 @property(nonatomic,strong)UICollectionView *mCollectionV_list;
 @property(nonatomic,strong)NSMutableArray *datasource;
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;//
 @property(nonatomic,strong)myUnit *mModel_myUnit;
 @property(nonatomic,strong)NSMutableArray *dataArr;

@@ -31,7 +31,6 @@
     NSMutableArray *mArr_list;//
     int mInt_index;//当往数组中添加数据时，记录当前的readflag
     NSMutableArray *mArr_sum;//当重新获取人员时，存储
-    MBProgressHUD *mProgressV;//
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -40,6 +39,5 @@
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,assign) int mInt_index;//当往数组中添加数据时，记录当前的readflag
 @property (nonatomic,strong) NSMutableArray *mArr_sum;//当重新获取人员时，存储
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 @end

@@ -24,10 +24,7 @@
     if ([str intValue] ==0) {//成功
         [[LoginSendHttp getInstance]GetCommPerm];
     }else{
-        [dm getInstance].progress.labelText = @"切换身份失败";
-        [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-        [[dm getInstance].progress show:YES];
-        [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"切换身份失败" toView:self.view];
     }
 }
 
@@ -51,9 +48,7 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
+
     //top
     self.top = [[NewWorkTopScrollView alloc] initWithFrame];
     [self.view addSubview:self.top];
@@ -83,6 +78,7 @@
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti
 {
+    [MBProgressHUD hideHUDForView:self.view];
     if([dm getInstance].notificationSymbol ==1)
     {
         [dm getInstance].mModel_unitList = noti.object;
@@ -161,14 +157,8 @@
             
         }
     }else{
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"获取权限失败";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"获取权限失败" toView:self.view];
     }
-}
--(void)noMore{
-    sleep(1);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -31,7 +31,6 @@
     int mInt_readflag;//标注cell中的readflag
     int mInt_requestCount;//请求数量
     int mInt_requestCount2;//请求数量
-    MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否第一次进入此界面，发送数据请求
     RightModel *mModel_right;//发送权限
 }
@@ -45,7 +44,6 @@
 @property (nonatomic,assign) int mInt_readflag;//标注cell中的readflag
 @property (nonatomic,assign) int mInt_requestCount;//请求数量
 @property (nonatomic,assign) int mInt_requestCount2;//请求数量
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_flag;//判断是否第一次进入此界面，发送数据请求
 @property (nonatomic,strong) RightModel *mModel_right;//发送权限
 

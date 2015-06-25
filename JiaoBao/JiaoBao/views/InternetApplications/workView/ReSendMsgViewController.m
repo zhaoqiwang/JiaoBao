@@ -23,7 +23,7 @@ NSString *kCellID0 = @"Forward_cell";
 @end
 
 @implementation ReSendMsgViewController
-@synthesize mBtn_send,mCollentV_member,mNav_navgationBar,mTextF_text,mView_text,mArr_member,mProgressV;
+@synthesize mBtn_send,mCollentV_member,mNav_navgationBar,mTextF_text,mView_text,mArr_member;
 
 -(instancetype)init{
     self = [super init];
@@ -57,10 +57,6 @@ NSString *kCellID0 = @"Forward_cell";
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-    
     self.mCollentV_member.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     self.mCollentV_member.backgroundColor = [UIColor whiteColor];
     self.mCollentV_member.layer.borderWidth = 1;
@@ -86,17 +82,12 @@ NSString *kCellID0 = @"Forward_cell";
     D("点击发送按钮");
     [self.mTextF_text resignFirstResponder];
     if (self.mTextF_text.text.length==0) {
-        self.mProgressV.labelText = @"请输入内容";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
 //    CommMsgListModel *model = [self.mArr_msg objectAtIndex:self.mArr_msg.count-1];
 //    [[LoginSendHttp getInstance] addFeeBackWithUID:model.TabIDStr content:self.mTextF_text.text];
-    self.mProgressV.labelText = @"发送中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"发送中..." toView:self.view];
 }
 
 #pragma mark - Collection View Data Source
@@ -178,10 +169,7 @@ NSString *kCellID0 = @"Forward_cell";
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -234,20 +222,7 @@ NSString *kCellID0 = @"Forward_cell";
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
-}
-
-- (void)loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
-}
--(void)noMore{
-    sleep(1);
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //导航条返回按钮

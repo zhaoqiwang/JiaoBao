@@ -20,7 +20,7 @@
 @end
 
 @implementation UpLoadPhotoViewController
-@synthesize mStr_flag,mBtn_name,mBtn_upload,mLab_name,mNav_navgationBar,mProgressV,mStr_groupID,mTableV_name,mTextF_name,mArr_albums,delegate;
+@synthesize mStr_flag,mBtn_name,mBtn_upload,mLab_name,mNav_navgationBar,mStr_groupID,mTableV_name,mTextF_name,mArr_albums,delegate;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -89,20 +89,12 @@
     
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:2];
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -115,29 +107,12 @@
     if (mInt_count == mInt_uploadCount) {
         [self.delegate UpLoadPhotoSuccess];
         NSString *flag = noti.object;
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
         if ([flag intValue] == 0) {//成功
-            self.mProgressV.labelText = @"上传成功";
+            [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
         }else{
-            self.mProgressV.labelText = @"上传失败";
+            [MBProgressHUD showError:@"上传失败" toView:self.view];
         }
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-        
     }
-}
-
-- (void)Loading {
-    sleep(20);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"上传超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
--(void)noMore{
-    sleep(1);
 }
 
 - (IBAction)changeOpenStatus:(id)sender{
@@ -166,11 +141,7 @@
         return;
     }
     if (self.mStr_groupID.length == 0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请先选择相册";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请先选择相册" toView:self.view];
         return;
     }
     UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"上传照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册选择",nil];
@@ -200,10 +171,7 @@
     if (info.count>0) {
         mInt_count = 0;
         mInt_uploadCount = (int)info.count;
-        self.mProgressV.labelText = @"上传中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"上传中..." toView:self.view];
     }
     
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];

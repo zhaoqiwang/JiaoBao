@@ -18,7 +18,6 @@
 
 @interface ReviseNameViewController : UIViewController<MyNavigationDelegate,UITextFieldDelegate,MBProgressHUDDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
-    MBProgressHUD *mProgressV;//
     UILabel *mLab_nickName;//昵称
     UITextField *mTextF_nickName;
     UILabel *mLab_trueName;//真实名字
@@ -28,7 +27,6 @@
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_nickName;//
 @property (nonatomic,strong) IBOutlet UITextField *mTextF_nickName;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_trueName;//

@@ -25,7 +25,6 @@
     UITableView *mTableV_list;//列表显示
     NSMutableArray *mArr_list;//列表数组
     NSMutableArray *mArr_list_class;//列表数组,班级时用
-    MBProgressHUD *mProgressV;//
     int mInt_flag;//判断是否在下拉刷新
     int mInt_unit_class;//判断的是要加载单位1还是班级2
     NSString *mStr_classID;//当显示班级时，班级ID
@@ -39,7 +38,6 @@
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//列表显示
 @property (nonatomic,strong) NSMutableArray *mArr_list;//列表数组
 @property (nonatomic,strong) NSMutableArray *mArr_list_class;//列表数组,班级时用
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (assign,nonatomic) int mInt_flag;//判断是否在下拉刷新
 @property (assign,nonatomic) int mInt_unit_class;//判断的是要加载单位1还是班级2
 @property (nonatomic,strong) NSString *mStr_classID;//当显示班级时，班级ID

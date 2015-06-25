@@ -22,7 +22,6 @@
     NSString *mStr_title;//班级名称
     NSString *mStr_classID;//班级ID
     NSMutableArray *mArr_list;//获取到的文章数组
-    MBProgressHUD *mProgressV;//
     int mInt_index;//当前应该加载的第几页
     UnitNoticeModel *mModel_notice;//获取到的单位信息列表
 }
@@ -32,7 +31,6 @@
 @property (nonatomic,strong) NSString *mStr_title;//班级名称
 @property (nonatomic,strong) NSString *mStr_classID;//班级ID
 @property (nonatomic,strong) NSMutableArray *mArr_list;//获取到的文章数组
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_index;//当前应该加载的第几页
 @property (nonatomic,strong) UnitNoticeModel *mModel_notice;//获取到的单位信息列表
 

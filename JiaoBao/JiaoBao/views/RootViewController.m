@@ -16,7 +16,7 @@
 @end
 
 @implementation RootViewController
-@synthesize mTabbar_view,mViewC_appcation,mViewC_center,mViewC_studentFile,mArr_views,mProgressV;
+@synthesize mTabbar_view,mViewC_appcation,mViewC_center,mViewC_studentFile,mArr_views;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -80,9 +80,6 @@
     //通知界面，是否登录成功
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess:) name:@"loginSuccess" object:nil];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
 //    self.mProgressV.userInteractionEnabled = NO;
     
     
@@ -92,12 +89,10 @@
 
 //通知界面，是否登录成功
 -(void)loginSuccess:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
     D("loginSuccess-== %@",str);
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self.view];
 }
 
 -(void)myTask{

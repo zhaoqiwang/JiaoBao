@@ -17,7 +17,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 @end
 
 @implementation UnitAlbumsViewController
-@synthesize mArr_list,mCollectionV_albums,mNav_navgationBar,mProgressV,mModel_unit,mStr_flag,mModel_personal,mArr_myselfAlbums,creatAlbums,uploadPhoto;
+@synthesize mArr_list,mCollectionV_albums,mNav_navgationBar,mModel_unit,mStr_flag,mModel_personal,mArr_myselfAlbums,creatAlbums,uploadPhoto;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -72,12 +72,6 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     self.mCollectionV_albums.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mCollectionV_albums.backgroundColor = [UIColor whiteColor];
     [self.mCollectionV_albums registerClass:[ShareCollectionViewCell class] forCellWithReuseIdentifier:UnitAlbums];
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
-    
     //发送请求
     [self sendRequest];
 }
@@ -85,10 +79,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -97,16 +88,14 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //获取个人相册的第一张照片后，通知界面
 -(void)GetFristPhotoByGroup:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSString *str = [dic objectForKey:@"groupID"];
@@ -127,16 +116,14 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //获取单位相册的第一张照片后，通知界面
 -(void)GetUnitFristPhotoByGroup:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSString *str = [dic objectForKey:@"groupID"];
@@ -156,17 +143,14 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //获取到个人相册后
 -(void)GetPhotoList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
@@ -187,17 +171,14 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //获取单位相册后，通知界面
 -(void)GetUnitPGroup:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
@@ -261,22 +242,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
             [[ThemeHttp getInstance] themeHttpGetUnitPGroup:self.mModel_unit.UnitID];
         }
     }
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
--(void)noMore{
-    sleep(1);
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 -(void)CreatePhotoGroupSuccess{
