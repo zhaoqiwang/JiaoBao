@@ -44,14 +44,10 @@ static HomeClassTopScrollView *__singletion;
     self = [super initWithFrame:frame];
     if (self) {
         self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
-        
-
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer1" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer1" object:nil];
         self.delegate = self;
         self.backgroundColor = [UIColor colorWithRed:252/255.0 green:252/255.0 blue:252/255.0 alpha:1];
         self.backgroundColor = [UIColor whiteColor];
@@ -230,42 +226,39 @@ static HomeClassTopScrollView *__singletion;
 -(void)GetUnitRevicer:(NSNotification *)noti
 {
     self.getClassNotiFlag++;
-    if([dm getInstance].notificationSymbol == 100)
-    {
-        NSDictionary *dic = noti.object;
-        NSString *unitID = [dic objectForKey:@"unitID"];
-        NSArray *array = [dic objectForKey:@"array"];
-        self.genseliArr = [NSMutableArray array];
-        //找到当前这个单位，塞入数组
-
-        //班级
-        for (int i=0; i<[dm getInstance].mModel_unitList.UnitClass.count; i++)
+    [MBProgressHUD hideHUDForView:self];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        if([dm getInstance].notificationSymbol == 100)
         {
-            myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
-            if ([unit.TabID intValue] == [unitID intValue]) {
-                unit.list = [NSMutableArray arrayWithArray:array];
-                [self.dataArr addObject:unit];
+            NSString *unitID = [dic objectForKey:@"unitID"];
+            NSArray *array = [dic objectForKey:@"array"];
+            self.genseliArr = [NSMutableArray array];
+            //找到当前这个单位，塞入数组
+            
+            //班级
+            for (int i=0; i<[dm getInstance].mModel_unitList.UnitClass.count; i++)
+            {
+                myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+                if ([unit.TabID intValue] == [unitID intValue]) {
+                    unit.list = [NSMutableArray arrayWithArray:array];
+                    [self.dataArr addObject:unit];
+                }
+            }
+            self.requestSymbol0 = NO;
+            self.requestSymbol1 = NO;
+            [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
+            
+            if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
+            {
+                [[dm getInstance].progress hide:YES];
+                
             }
         }
-
-
-
-        self.requestSymbol0 = NO;
-        self.requestSymbol1 = NO;
-        [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
-        
-if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
-{
-    [[dm getInstance].progress hide:YES];
-    
-}
-    
+    }else{
+        [MBProgressHUD showError:@"" toView:self];
     }
-
-
-
-    
-    
 }
 
 //当第一次到达页面时，发送请求
@@ -362,35 +355,33 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
 }
 -(void)CMRevicer:(NSNotification *)noti{
 
-       NSArray *arr = [noti object];
-       self.thirdArr = arr;
-    for(int i=0;i<arr.count;i++)
-    {
-        SMSTreeArrayModel *model =[arr objectAtIndex:i];
-        if(model.smsTree.count == 0)
+    [MBProgressHUD hideHUDForView:self];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSArray *arr = [dic objectForKey:@"array"];
+        self.thirdArr = arr;
+        for(int i=0;i<arr.count;i++)
         {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
-            [dm getInstance].secondFlag = @"无权限";
-            self.symbol = YES;
-            
+            SMSTreeArrayModel *model =[arr objectAtIndex:i];
+            if(model.smsTree.count == 0)
+            {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+                [dm getInstance].secondFlag = @"无权限";
+                self.symbol = YES;
+            }
         }
-        
-        
+        if([dm getInstance].notificationSymbol == 102)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+        }
+        if([dm getInstance].notificationSymbol == 103)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
+        }
+    }else{
+        [MBProgressHUD showError:@"" toView:self];
     }
-    if([dm getInstance].notificationSymbol == 102)
-    {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
-
-        
-    }
-    if([dm getInstance].notificationSymbol == 103)
-    {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
-        
-        
-    }
-
-
 }
 + (void)destroyDealloc
 {

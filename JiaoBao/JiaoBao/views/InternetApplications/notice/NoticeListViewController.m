@@ -85,26 +85,32 @@
     [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
-    UnitNoticeModel *model = noti.object;
-    if (self.mInt_index > 1) {
-        if (model.noticeInfoArray.count>0) {
-            [self.mModel_notice.noticeInfoArray addObjectsFromArray:model.noticeInfoArray];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        UnitNoticeModel *model = [dic objectForKey:@"model"];
+        if (self.mInt_index > 1) {
+            if (model.noticeInfoArray.count>0) {
+                [self.mModel_notice.noticeInfoArray addObjectsFromArray:model.noticeInfoArray];
+            }
+        }else{
+            if (model.noticeInfoArray.count == 0) {
+                [MBProgressHUD showError:@"没有更多了" toView:self.view];
+                return;
+            }
+            self.mModel_notice = noti.object;
+            if (model.noticeInfoArray.count>=20) {
+                [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+                self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+                self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+                self.mTableV_list.footerRefreshingText = @"正在加载...";
+            }
         }
+        //刷新，布局
+        [self.mTableV_list reloadData];
     }else{
-        if (model.noticeInfoArray.count == 0) {
-            [MBProgressHUD showError:@"没有更多了" toView:self.view];
-            return;
-        }
-        self.mModel_notice = noti.object;
-        if (model.noticeInfoArray.count>=20) {
-            [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
-            self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
-            self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
-            self.mTableV_list.footerRefreshingText = @"正在加载...";
-        }
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-    //刷新，布局
-    [self.mTableV_list reloadData];
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
@@ -132,7 +138,6 @@
     if ([str intValue] ==0) {//成功
         [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     }else{
-        [MBProgressHUD showError:@"切换身份失败" toView:self.view];
     }
 }
 

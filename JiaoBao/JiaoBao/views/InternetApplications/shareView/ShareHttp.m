@@ -436,12 +436,15 @@ static ShareHttp *shareHttp = nil;
         [self getFaceImg:array flag:1];
         //通知shareview界面，将得到的值，传到界面
         NSString *flag = [_request.userInfo objectForKey:@"sectionFlag"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:@"array" forKey:@"array"];
         if ([flag isEqual:@"1"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
         }else if ([flag isEqual:@"2"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndexShow" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndexShow" object:dic];
         }else if ([flag isEqual:@"99"]) {//单位主题
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"themeSpace" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"themeSpace" object:dic];
         }
     }else if (_request.tag == 4){//获取头像
         //获取的用户自定义内容
@@ -478,10 +481,13 @@ static ShareHttp *shareHttp = nil;
         [self getUnitImg:array];
         //通知shareview界面，将得到的值，传到界面
         NSString *flag = [_request.userInfo objectForKey:@"sectionID"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:@"array" forKey:@"array"];
         if ([flag isEqual:@"1"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfo" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfo" object:dic];
         }else if ([flag isEqual:@"2"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfoShow" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfoShow" object:dic];
         }
     }else if (_request.tag == 1) {//获取关联的班级
         NSString *time = [jsonDic objectForKey:@"Data"];
@@ -491,6 +497,7 @@ static ShareHttp *shareHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"1" forKey:@"index"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         //将值传到界面
         NSString *flag = [_request.userInfo objectForKey:@"flag"];
         if ([flag isEqual:@"1"]) {//分享
@@ -508,6 +515,7 @@ static ShareHttp *shareHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"2" forKey:@"index"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         //将值传到界面
         NSString *flag = [_request.userInfo objectForKey:@"flag"];
         if ([flag isEqual:@"1"]) {//分享
@@ -520,8 +528,11 @@ static ShareHttp *shareHttp = nil;
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00===6=>>>>==%@",str000);
         ArthDetailModel *model = [ParserJson_share parserJsonArthDetailWith:str000];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:model forKey:@"model"];
+        [dic setValue:@"0" forKey:@"flag"];
         //通知文章详情界面刷新
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:model];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:dic];
     }else if (_request.tag == 7) {//获取本单位的所有下级单位基础信息
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -529,15 +540,21 @@ static ShareHttp *shareHttp = nil;
         NSMutableArray *array = [ParserJson_share parserJsonMySubUnitInfoWith:str000];
         //获取下级单位logo
         [self getDownUnitImg:array];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:@"array" forKey:@"array"];
         //将值传到界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"MySubUnitInfo" object:array];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MySubUnitInfo" object:dic];
     }else if (_request.tag == 8) {//上传图片
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00===8=>>>>==%@",str000);
         UploadImgModel *model = [ParserJson_share parserJsonUploadImgWith:str000];
         //通知界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UploadImg" object:model];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UploadImg" object:dic];
     }else if (_request.tag == 9) {//发表文章
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -580,27 +597,36 @@ static ShareHttp *shareHttp = nil;
         UnitNoticeModel *model = [ParserJson_share parserJsonUnitNoticesWith:str000];
         //获取头像
         [self getFaceImg:model.noticeInfoArray flag:2];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:model forKey:@"model"];
         //通知到内务获取到的单位通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNotices" object:model];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNotices" object:dic];
     }else if (_request.tag == 12) {//获取通知详细内容
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00===12=>>>>==%@",str000);
         NoticeInfoModel *model = [ParserJson_share parserJsonNoticeDetailWith:str000];
         //通知文章详情界面刷新
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:model];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:dic];
     }else if (_request.tag == 13) {//文章点赞
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
         NSString *str;
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         if ([time intValue] ==0) {
             str = @"点赞成功";
+            [dic setValue:@"0" forKey:@"flag"];
         }else{
             str = @"点赞失败";
+            [dic setValue:@"1" forKey:@"flag"];
         }
         NSString *aid = [_request.userInfo objectForKey:@"aid"];
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:aid forKey:@"aid"];
         [dic setValue:str forKey:@"str"];
+        
         //通知文章详情界面刷新点赞
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthLikeIt" object:dic];
     }else if (_request.tag == 14) {//获取文章评论列表
@@ -610,8 +636,9 @@ static ShareHttp *shareHttp = nil;
         CommentsListObjModel *model = [ParserJson_share parserJsonCommentsListWith:str000];
         NSString *flag = [_request.userInfo objectForKey:@"flag"];
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
         if ([flag intValue]==2) {//学校圈总界面
-            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setValue:model forKey:@"model"];
             [dic setValue:tableID forKey:@"tableID"];
             //将获取到的评论列表传到界面
@@ -620,19 +647,23 @@ static ShareHttp *shareHttp = nil;
             //获取头像
             [self getFaceImg:model.commentsList flag:3];
             //将获取到的评论列表传到界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList" object:model];
+            [dic setValue:model forKey:@"model"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList" object:dic];
         }
     }else if (_request.tag == 15) {//文章评论
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
         NSString *str;
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         if ([time intValue] ==0) {
             str = @"评论成功";
+            [dic setValue:@"0" forKey:@"flag"];
         }else{
             str = @"评论失败";
+            [dic setValue:@"1" forKey:@"flag"];
         }
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
         NSString *comment = [_request.userInfo objectForKey:@"comment"];
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        
         [dic setValue:str forKey:@"str"];
         [dic setValue:tableID forKey:@"tableID"];
         [dic setValue:comment forKey:@"comment"];
@@ -641,14 +672,17 @@ static ShareHttp *shareHttp = nil;
     }else if (_request.tag == 16) {//评论顶和踩
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
         NSString *str;
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         if ([time intValue] ==0) {
             str = @"成功";
+            [dic setValue:@"0" forKey:@"flag"];
         }else{
             str = @"失败";
+            [dic setValue:@"1" forKey:@"flag"];
         }
         NSString *temp1 = [_request.userInfo objectForKey:@"uid"];
         NSString *temp2 = [_request.userInfo objectForKey:@"tp"];
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        
         [dic setValue:temp1 forKey:@"uid"];
         [dic setValue:temp2 forKey:@"tp"];
         [dic setValue:str forKey:@"name"];
@@ -661,12 +695,133 @@ static ShareHttp *shareHttp = nil;
         GetArthInfoModel *model = [ParserJson_share parserJsonGetArthInfo:str000];
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
         model.TabIDStr = tableID;
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:model];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:dic];
     }
 }
 //请求失败
--(void)requestFailed:(ASIHTTPRequest *)request{
-    D("dataString---share-tag=%ld,flag----  请求失败",(long)request.tag);
+-(void)requestFailed:(ASIHTTPRequest *)_request{
+    D("dataString---share-tag=%ld,flag----  请求失败",(long)_request.tag);
+    if (_request.tag == 3) {//获取本单位栏目文章
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知shareview界面，将得到的值，传到界面
+        NSString *flag = [_request.userInfo objectForKey:@"sectionFlag"];
+        if ([flag isEqual:@"1"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
+        }else if ([flag isEqual:@"2"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndexShow" object:dic];
+        }else if ([flag isEqual:@"99"]) {//单位主题
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"themeSpace" object:dic];
+        }
+    }else if (_request.tag == 4){//获取头像
+        
+    }else if (_request.tag == 5) {//获取我所在的单位
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知shareview界面，将得到的值，传到界面
+        NSString *flag = [_request.userInfo objectForKey:@"sectionID"];
+        if ([flag isEqual:@"1"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfo" object:dic];
+        }else if ([flag isEqual:@"2"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfoShow" object:dic];
+        }
+    }else if (_request.tag == 1) {//获取关联的班级
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //将值传到界面
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        if ([flag isEqual:@"1"]) {//分享
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClass" object:dic];
+        }else if ([flag isEqual:@"2"]) {//展示
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClassShow" object:dic];
+        }else if ([flag isEqual:@"3"]) {//内务
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClassNotice" object:dic];
+        }
+    }else if (_request.tag == 2) {//获取所有班级
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //将值传到界面
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        if ([flag isEqual:@"1"]) {//分享
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClass" object:dic];
+        }else if ([flag isEqual:@"2"]) {//展示
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClassShow" object:dic];
+        }
+    }else if (_request.tag == 6) {//显示文章详细内容
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知文章详情界面刷新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:dic];
+    }else if (_request.tag == 7) {//获取本单位的所有下级单位基础信息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //将值传到界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MySubUnitInfo" object:dic];
+    }else if (_request.tag == 8) {//上传图片
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UploadImg" object:dic];
+    }else if (_request.tag == 9) {//发表文章
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SavePublishArticle" object:@"超时"];
+    }else if (_request.tag == 10) {//获取栏目最新和推荐文章的未读数量
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"3" forKey:@"flag"];
+        //将获取到的值，传到界面
+        NSString *section = [_request.userInfo objectForKey:@"sectionID"];
+        if ([section isEqual:@"_1"]) {//展示
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetSectionMessageShow" object:dic];
+        }else if ([section isEqual:@"_2"]) {//分享
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetSectionMessage" object:dic];
+        }
+    }else if (_request.tag == 11) {//获得单位通知，内务
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知到内务获取到的单位通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNotices" object:dic];
+    }else if (_request.tag == 12) {//获取通知详细内容
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知文章详情界面刷新
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:dic];
+    }else if (_request.tag == 13) {//文章点赞
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [dic setValue:@"超时" forKey:@"str"];
+        //通知文章详情界面刷新点赞
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthLikeIt" object:dic];
+    }else if (_request.tag == 14) {//获取文章评论列表
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        if ([flag intValue]==2) {//学校圈总界面
+            //将获取到的评论列表传到界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList2" object:dic];
+        }else{//详情界面
+            //获取头像
+            //将获取到的评论列表传到界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthCommentsList" object:dic];
+        }
+    }else if (_request.tag == 15) {//文章评论
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"超时" forKey:@"str"];
+        [dic setValue:@"1" forKey:@"flag"];
+        //文章评论
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthAddComment" object:dic];
+    }else if (_request.tag == 16) {//评论顶和踩
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [dic setValue:@"超时" forKey:@"name"];
+        //将踩、顶回复返回界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AirthAddScore" object:dic];
+    }else if (_request.tag == 17) {//文章附加评论
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:dic];
+    }
 }
 
 @end

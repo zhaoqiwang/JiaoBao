@@ -75,8 +75,14 @@
 //获取到该用户的所有好友通知
 -(void)GetMyFriends:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    self.mArr_friends = noti.object;
-    [self.mTableV_friends reloadData];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        self.mArr_friends = [dic objectForKey:@"array"];
+        [self.mTableV_friends reloadData];
+    }else{
+        [MBProgressHUD showError:@"" toView:self.view];
+    }
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -122,20 +128,6 @@
     //阅读图标
     cell.mImgV_viewCount.hidden = YES;
     return cell;
-}
-// 用于延时显示图片，以减少内存的使用
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    TopArthListCell *cell0 = (TopArthListCell *)cell;
-    FriendSpaceModel *model = [self.mArr_friends objectAtIndex:indexPath.row];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Friendjiaobaohao]];
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        [cell0.mImgV_headImg setImage:img];
-    }else{
-        [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-    }
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{

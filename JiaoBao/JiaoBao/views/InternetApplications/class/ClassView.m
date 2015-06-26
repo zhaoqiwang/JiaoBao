@@ -13,6 +13,7 @@
 @synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text,mInt_changeUnit;
 -(void)refreshClassView:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list reloadData];
 }
 
@@ -178,65 +179,70 @@
 //将获取到的评论列表传到界面
 -(void)AirthCommentsList2:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    CommentsListObjModel *model = [noti.object objectForKey:@"model"];
-    NSString *tableID = [noti.object objectForKey:@"tableID"];
-    if (self.mInt_index == 0) {
-        for (int i=0; i<self.mArr_unitTop.count; i++) {
-            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
+    NSString *flag = [noti.object objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        CommentsListObjModel *model = [noti.object objectForKey:@"model"];
+        NSString *tableID = [noti.object objectForKey:@"tableID"];
+        if (self.mInt_index == 0) {
+            for (int i=0; i<self.mArr_unitTop.count; i++) {
+                ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_unit.count; i++) {
+                ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 1){
+            for (int i=0; i<self.mArr_classTop.count; i++) {
+                ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_class.count; i++) {
+                ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 2){
+            for (int i=0; i<self.mArr_local.count; i++) {
+                ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 3){
+            for (int i=0; i<self.mArr_attention.count; i++) {
+                ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 4){
+            for (int i=0; i<self.mArr_sum.count; i++) {
+                ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
             }
         }
-        for (int i=0; i<self.mArr_unit.count; i++) {
-            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 1){
-        for (int i=0; i<self.mArr_classTop.count; i++) {
-            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_class.count; i++) {
-            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 2){
-        for (int i=0; i<self.mArr_local.count; i++) {
-            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 3){
-        for (int i=0; i<self.mArr_attention.count; i++) {
-            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 4){
-        for (int i=0; i<self.mArr_sum.count; i++) {
-            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
+        
+        [self.mTableV_list reloadData];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    
-    [self.mTableV_list reloadData];
 }
 
 //点击弹出框中的赞或者评论按钮
@@ -286,137 +292,149 @@
 -(void)AirthAddComment:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     NSString *str = [noti.object objectForKey:@"str"];
-    NSString *tableID = [noti.object objectForKey:@"tableID"];
-    NSString *comment = [noti.object objectForKey:@"comment"];
-    
-    commentsListModel *tempModel = [[commentsListModel alloc] init];
-    tempModel.UserName = [dm getInstance].name;
-    if (self.mTextF_text.text.length==0) {
-        tempModel.Commnets = comment;
+    NSString *flag = [noti.object objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSString *tableID = [noti.object objectForKey:@"tableID"];
+        NSString *comment = [noti.object objectForKey:@"comment"];
+        
+        commentsListModel *tempModel = [[commentsListModel alloc] init];
+        tempModel.UserName = [dm getInstance].name;
+        if (self.mTextF_text.text.length==0) {
+            tempModel.Commnets = comment;
+        }else{
+            tempModel.Commnets = self.mTextF_text.text;
+        }
+        
+        if ([str isEqualToString:@"评论成功"]) {
+            self.mTextF_text.text = @"";
+        }
+        if (self.mInt_index == 0) {
+            for (int i=0; i<self.mArr_unitTop.count; i++) {
+                ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_unit.count; i++) {
+                ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 1){
+            for (int i=0; i<self.mArr_classTop.count; i++) {
+                ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_class.count; i++) {
+                ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 2){
+            for (int i=0; i<self.mArr_local.count; i++) {
+                ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 3){
+            for (int i=0; i<self.mArr_attention.count; i++) {
+                ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 4){
+            for (int i=0; i<self.mArr_sum.count; i++) {
+                ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+        }
+        [self.mTableV_list reloadData];
     }else{
-        tempModel.Commnets = self.mTextF_text.text;
+        [MBProgressHUD showError:str toView:self];
     }
-    
-    if ([str isEqualToString:@"评论成功"]) {
-        self.mTextF_text.text = @"";
-    }
-    if (self.mInt_index == 0) {
-        for (int i=0; i<self.mArr_unitTop.count; i++) {
-            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_unit.count; i++) {
-            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 1){
-        for (int i=0; i<self.mArr_classTop.count; i++) {
-            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_class.count; i++) {
-            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 2){
-        for (int i=0; i<self.mArr_local.count; i++) {
-            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 3){
-        for (int i=0; i<self.mArr_attention.count; i++) {
-            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 4){
-        for (int i=0; i<self.mArr_sum.count; i++) {
-            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
-    }
-    [self.mTableV_list reloadData];
 }
 
 //获取文章的附加信息回调
 -(void)GetArthInfo:(NSNotification *)noti{
-    GetArthInfoModel *model = noti.object;
-    //判断是否需要点赞请求
-    [self sendLike:model];
-    if (self.mInt_index == 0) {
-        for (int i=0; i<self.mArr_unitTop.count; i++) {
-            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
+    [MBProgressHUD hideHUDForView:self];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        GetArthInfoModel *model = [dic objectForKey:@"model"];
+        //判断是否需要点赞请求
+        [self sendLike:model];
+        if (self.mInt_index == 0) {
+            for (int i=0; i<self.mArr_unitTop.count; i++) {
+                ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_unit.count; i++) {
+                ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 1){
+            for (int i=0; i<self.mArr_classTop.count; i++) {
+                ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_class.count; i++) {
+                ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 2){
+            for (int i=0; i<self.mArr_local.count; i++) {
+                ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 3){
+            for (int i=0; i<self.mArr_attention.count; i++) {
+                ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 4){
+            for (int i=0; i<self.mArr_sum.count; i++) {
+                ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
             }
         }
-        for (int i=0; i<self.mArr_unit.count; i++) {
-            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 1){
-        for (int i=0; i<self.mArr_classTop.count; i++) {
-            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_class.count; i++) {
-            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 2){
-        for (int i=0; i<self.mArr_local.count; i++) {
-            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 3){
-        for (int i=0; i<self.mArr_attention.count; i++) {
-            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 4){
-        for (int i=0; i<self.mArr_sum.count; i++) {
-            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
 }
 
@@ -436,78 +454,85 @@
 
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
+    NSString *flag = [noti.object objectForKey:@"flag"];
     NSString *str = [noti.object objectForKey:@"str"];
-    [MBProgressHUD showSuccess:str toView:self];
-    
-    //
-    NSString *aid = [noti.object objectForKey:@"aid"];
-    if (self.mInt_index == 0) {
-        for (int i=0; i<self.mArr_unitTop.count; i++) {
-            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
+    if ([flag integerValue]==0) {
+        [MBProgressHUD showSuccess:str toView:self];
+        
+        //
+        NSString *aid = [noti.object objectForKey:@"aid"];
+        if (self.mInt_index == 0) {
+            for (int i=0; i<self.mArr_unitTop.count; i++) {
+                ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_unit.count; i++) {
+                ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 1){
+            for (int i=0; i<self.mArr_classTop.count; i++) {
+                ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+            for (int i=0; i<self.mArr_class.count; i++) {
+                ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 2){
+            for (int i=0; i<self.mArr_local.count; i++) {
+                ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 3){
+            for (int i=0; i<self.mArr_attention.count; i++) {
+                ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+        }else if (self.mInt_index == 4){
+            for (int i=0; i<self.mArr_sum.count; i++) {
+                ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
             }
         }
-        for (int i=0; i<self.mArr_unit.count; i++) {
-            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 1){
-        for (int i=0; i<self.mArr_classTop.count; i++) {
-            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_class.count; i++) {
-            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 2){
-        for (int i=0; i<self.mArr_local.count; i++) {
-            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 3){
-        for (int i=0; i<self.mArr_attention.count; i++) {
-            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
-    }else if (self.mInt_index == 4){
-        for (int i=0; i<self.mArr_sum.count; i++) {
-            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
+        [self.mTableV_list reloadData];
+    }else{
+        [MBProgressHUD showError:str toView:self];
     }
-    [self.mTableV_list reloadData];
 }
 
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self clearArray];
     self.mInt_index = 0;
 }
@@ -516,7 +541,6 @@
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
     if ([str intValue] ==0) {//成功
-        [self loadNoMore:@"切换身份成功"];
         if (self.mInt_changeUnit ==1) {
             [self clearArray];
             [self.mTableV_list reloadData];
@@ -526,13 +550,12 @@
             [self btnChange:btn];
         }
     }else{
-        [self loadNoMore:@"切换身份失败"];
     }
 }
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
-    
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list reloadData];
 }
 

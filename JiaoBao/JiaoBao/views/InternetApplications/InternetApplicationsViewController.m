@@ -35,7 +35,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getIdentity:) name:@"getIdentity" object:nil];
     //通知internetApp界面，获取成功
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"internetAppGetUserInfo" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetAppGetUserInfo) name:@"internetAppGetUserInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetAppGetUserInfo:) name:@"internetAppGetUserInfo" object:nil];
     //向exchangeView页面发送通知，
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getTotalUnreadCount" object:nil];
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTotalUnreadCount) name:@"getTotalUnreadCount" object:nil];
@@ -48,6 +48,9 @@
     //获取当前用户可以发布动态的单位列表(含班级）
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetReleaseNewsUnits" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetReleaseNewsUnits:) name:@"GetReleaseNewsUnits" object:nil];
+    //通知学校界面，切换成功身份成功，清空数组
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit:) name:@"changeCurUnit" object:nil];
 }
 
 //-(void)viewDidDisappear:(BOOL)animated{
@@ -116,6 +119,7 @@
 
 //是否有更新
 -(void)itunesUpdataCheck:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"新版本被发现" message: @"发现新版本，如果不更新，可能会出现未知问题，是否下载最新？" delegate:self cancelButtonTitle:@"哦，不" otherButtonTitles: @"下载", nil];
     createUserResponseAlert.delegate = self;
     [createUserResponseAlert show];
@@ -141,6 +145,7 @@
 
 //通知界面，是否登录成功
 -(void)loginSuccess:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
     D("loginSuccess-== %@",str);
     [MBProgressHUD showSuccess:str toView:self.view];
@@ -149,22 +154,34 @@
     }
 }
 
--(void)myTask{
-    sleep(2);
+//通知学校界面，切换成功身份成功，清空数组
+-(void)changeCurUnit:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSString *str = noti.object;
+    if ([str intValue] ==0) {//成功
+        [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+    }else{
+        [MBProgressHUD showError:@"切换失败" toView:self.view];
+    }
 }
 
--(void)internetAppGetUserInfo{
-    //检查当前网络是否可用
-    if ([self checkNetWork]) {
-        return;
-    }
+-(void)internetAppGetUserInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    [[InternetAppTopScrollView shareInstance] sendRequest];
-    //是否隐藏加号
-    if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
-        [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
+    NSString *flag = noti.object;
+    if ([flag integerValue]==0) {
+        //检查当前网络是否可用
+        if ([self checkNetWork]) {
+            return;
+        }
+        [[InternetAppTopScrollView shareInstance] sendRequest];
+        //是否隐藏加号
+        if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
+            [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
+        }else{
+            [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
+        }
     }else{
-        [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
+        [MBProgressHUD showError:@"获取个人信息超时" toView:self.view];
     }
 }
 

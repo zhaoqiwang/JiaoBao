@@ -24,7 +24,6 @@
     if ([str intValue] ==0) {//成功
         [[LoginSendHttp getInstance]GetCommPerm];
     }else{
-        [MBProgressHUD showError:@"切换身份失败" toView:self.view];
     }
 }
 
@@ -79,13 +78,19 @@
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti
 {
     [MBProgressHUD hideHUDForView:self.view];
-    if([dm getInstance].notificationSymbol ==1)
-    {
-        [dm getInstance].mModel_unitList = noti.object;
-        //CommMsgRevicerUnitListModel *model = noti.object;
-        
-       // NSLog(@"TabId =%@ %@",[dm getInstance].mModel_unitList,model);
-        [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        if([dm getInstance].notificationSymbol ==1)
+        {
+            [dm getInstance].mModel_unitList = [dic objectForKey:@"model"];
+            //CommMsgRevicerUnitListModel *model = noti.object;
+            
+            // NSLog(@"TabId =%@ %@",[dm getInstance].mModel_unitList,model);
+            [[LoginSendHttp getInstance] login_GetUnitRevicer:[dm getInstance].mModel_unitList.myUnit.TabID Flag:[dm getInstance].mModel_unitList.myUnit.flag];
+        }
+    }else{
+        [MBProgressHUD showError:@"" toView:self.view];
     }
 }
 
@@ -149,11 +154,8 @@
         else
         {
             [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-            [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-            [dm getInstance].progress.labelText = @"没有权限";
             [dm getInstance].firstFlag = @"1";
-            [[dm getInstance].progress show:YES];
-            [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showError:@"没有权限" toView:self.view];
             
         }
     }else{

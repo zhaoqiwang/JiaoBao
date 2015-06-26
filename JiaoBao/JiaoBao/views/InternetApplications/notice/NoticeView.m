@@ -125,28 +125,34 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 //加载获取到得单位
 -(void)getUnitInfoShow:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    NSMutableArray *array = noti.object;
-    for (int i=0; i<array.count; i++) {
-        UnitSectionMessageModel *model = [array objectAtIndex:i];
-        //        if ([model.IsMyUnit isEqual:@"1"]&&[model.UnitType isEqual:@"1"]) {
-        if ([model.IsMyUnit isEqual:@"1"]) {
-            [self.mArr_unit addObject:model];
-            if ([dm getInstance].UID == [model.UnitID intValue]) {
-                self.mInt_flag = (int)self.mArr_unit.count-1;
-                //发送获取当前单位通知请求
-                UnitSectionMessageModel *model = [self.mArr_unit objectAtIndex:self.mInt_flag];
-                D("NoticeHttpGetUnitNoticesWith-===%@,%@,%d",model.UnitType,model.UnitID,self.mInt_index);
-                //发送获取切换单位和个人信息请求
-                [[LoginSendHttp getInstance] changeCurUnit];
-                [[LoginSendHttp getInstance] getUserInfoWith:[NSString stringWithFormat:@"%d",[dm getInstance].uType] UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
-                //设置标签名
-                self.mLab_name.text = [NSString stringWithFormat:@"  %@",model.UnitName];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        for (int i=0; i<array.count; i++) {
+            UnitSectionMessageModel *model = [array objectAtIndex:i];
+            //        if ([model.IsMyUnit isEqual:@"1"]&&[model.UnitType isEqual:@"1"]) {
+            if ([model.IsMyUnit isEqual:@"1"]) {
+                [self.mArr_unit addObject:model];
+                if ([dm getInstance].UID == [model.UnitID intValue]) {
+                    self.mInt_flag = (int)self.mArr_unit.count-1;
+                    //发送获取当前单位通知请求
+                    UnitSectionMessageModel *model = [self.mArr_unit objectAtIndex:self.mInt_flag];
+                    D("NoticeHttpGetUnitNoticesWith-===%@,%@,%d",model.UnitType,model.UnitID,self.mInt_index);
+                    //发送获取切换单位和个人信息请求
+                    [[LoginSendHttp getInstance] changeCurUnit];
+                    [[LoginSendHttp getInstance] getUserInfoWith:[NSString stringWithFormat:@"%d",[dm getInstance].uType] UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+                    //设置标签名
+                    self.mLab_name.text = [NSString stringWithFormat:@"  %@",model.UnitName];
+                }
             }
         }
+        //重置界面
+        [self.mCollectionV_unit reloadData];
+        [self reSetFrame];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    //重置界面
-    [self.mCollectionV_unit reloadData];
-    [self reSetFrame];
 }
 
 //获取到个人信息的通知，然后请求单位信息
@@ -165,30 +171,35 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 -(void)getUnitClassNotice:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
-    int index = [[dic objectForKey:@"index"] intValue];
-    NSArray *array = [dic objectForKey:@"array"];
-    NSMutableArray *tempArr = [NSMutableArray array];
-    
-    if (index == 1) {//关联的班级
-        for (int i=0; i<array.count; i++) {
-            UserClassModel *model = [array objectAtIndex:i];
-            //第1根节点
-            TreeView_node *node = [[TreeView_node alloc]init];
-            node.nodeLevel = 1;
-            node.type = 1;
-            node.sonNodes = nil;
-            node.isExpanded = FALSE;
-            TreeView_Level0_Model *temp =[[TreeView_Level0_Model alloc]init];
-            temp.mStr_name = model.ClassName;
-            temp.mStr_classID = model.ClassID;
-            temp.mStr_headImg = @"share_tableV_class";
-            node.nodeData = temp;
-            [tempArr addObject:node];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        int index = [[dic objectForKey:@"index"] intValue];
+        NSArray *array = [dic objectForKey:@"array"];
+        NSMutableArray *tempArr = [NSMutableArray array];
+        
+        if (index == 1) {//关联的班级
+            for (int i=0; i<array.count; i++) {
+                UserClassModel *model = [array objectAtIndex:i];
+                //第1根节点
+                TreeView_node *node = [[TreeView_node alloc]init];
+                node.nodeLevel = 1;
+                node.type = 1;
+                node.sonNodes = nil;
+                node.isExpanded = FALSE;
+                TreeView_Level0_Model *temp =[[TreeView_Level0_Model alloc]init];
+                temp.mStr_name = model.ClassName;
+                temp.mStr_classID = model.ClassID;
+                temp.mStr_headImg = @"share_tableV_class";
+                node.nodeData = temp;
+                [tempArr addObject:node];
+            }
+            TreeView_node *node0 = [self.mArr_class objectAtIndex:1];
+            node0.sonNodes = [NSMutableArray arrayWithArray:tempArr];
         }
-        TreeView_node *node0 = [self.mArr_class objectAtIndex:1];
-        node0.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        [self reloadDataForDisplayArray];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    [self reloadDataForDisplayArray];
 }
 /*---------------------------------------
  初始化将要显示的cell的数据
@@ -641,18 +652,24 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 //通知到内务获取到的单位通知
 -(void)GetUnitNotices:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    //判断是否是加载更多
-    if (self.mModel_notice.noticeInfoArray.count == 0) {
-        self.mModel_notice = noti.object;
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        //判断是否是加载更多
+        if (self.mModel_notice.noticeInfoArray.count == 0) {
+            self.mModel_notice = [dic objectForKey:@"model"];
+        }else{
+            UnitNoticeModel *model = [dic objectForKey:@"model"];
+            [self.mModel_notice.noticeInfoArray addObjectsFromArray:model.noticeInfoArray];
+        }
+        
+        D("self.mModel_notice...%lu",(unsigned long)self.mModel_notice.noticeInfoArray.count);
+        [self.mTableV_detail reloadData];
+        //表格,按钮，总大小
+        [self clickUnitResetFrame];
     }else{
-        UnitNoticeModel *model = noti.object;
-        [self.mModel_notice.noticeInfoArray addObjectsFromArray:model.noticeInfoArray];
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    
-    D("self.mModel_notice...%lu",(unsigned long)self.mModel_notice.noticeInfoArray.count);
-    [self.mTableV_detail reloadData];
-    //表格,按钮，总大小
-    [self clickUnitResetFrame];
 }
 
 

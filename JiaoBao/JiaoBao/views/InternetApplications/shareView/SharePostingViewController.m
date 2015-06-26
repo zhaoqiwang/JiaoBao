@@ -262,17 +262,22 @@
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    self.imageCount--;
-    if(self.imageCount == 0)
-    {
-        [MBProgressHUD showSuccess:@"上传图片成功" toView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        self.imageCount--;
+        if(self.imageCount == 0)
+        {
+            [MBProgressHUD showSuccess:@"上传图片成功" toView:self.view];
+        }
         
+        UploadImgModel *model = noti.object;
+        [self.mArr_pic addObject:model];
+        //self.mTextV_content.text = [NSString stringWithFormat:@"%@[图片%d]",self.mTextV_content.text,self.];
+        self._placeholdLabel.hidden = YES;
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-
-    UploadImgModel *model = noti.object;
-    [self.mArr_pic addObject:model];
-    //self.mTextV_content.text = [NSString stringWithFormat:@"%@[图片%d]",self.mTextV_content.text,self.];
-    self._placeholdLabel.hidden = YES;
 }
 
 -(void)SavePublishArticle:(NSNotification *)noti{

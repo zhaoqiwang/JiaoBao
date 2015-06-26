@@ -111,26 +111,33 @@
     [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
-    NSMutableArray *array = noti.object;
-    if (self.mInt_index > 1) {
-        if (array.count>0) {
-            [self.mArr_list addObjectsFromArray:array];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (self.mInt_index > 1) {
+            if (array.count>0) {
+                [self.mArr_list addObjectsFromArray:array];
+            }
+        }else{
+            if (array.count == 0) {
+                [MBProgressHUD showError:@"没有更多了" toView:self.view];
+                return;
+            }
+            self.mArr_list = [NSMutableArray arrayWithArray:array];
+            if (array.count>=20) {
+                [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+                self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+                self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+                self.mTableV_list.footerRefreshingText = @"正在加载...";
+            }
         }
+        //刷新，布局
+        [self.mTableV_list reloadData];
     }else{
-        if (array.count == 0) {
-            [MBProgressHUD showError:@"没有更多了" toView:self.view];
-            return;
-        }
-        self.mArr_list = [NSMutableArray arrayWithArray:array];
-        if (array.count>=20) {
-            [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
-            self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
-            self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
-            self.mTableV_list.footerRefreshingText = @"正在加载...";
-        }
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-    //刷新，布局
-    [self.mTableV_list reloadData];
+    
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{

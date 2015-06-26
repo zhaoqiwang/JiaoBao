@@ -107,29 +107,35 @@
     [MBProgressHUD hideHUDForView:self];
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
-    NSMutableArray *array = noti.object;
-    if (self.mInt_index > 1) {
-        if (array.count>0) {
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (self.mInt_index > 1) {
+            if (array.count>0) {
+                [self.mArr_tabel addObjectsFromArray:array];
+            }
+            if (array.count<20) {
+                [self.mTableV_detail removeFooter];
+            }
+        }else{
+            [self.mArr_tabel removeAllObjects];
+            [self.mArr_tabel addObjectsFromArray:self.mArr_difine];
             [self.mArr_tabel addObjectsFromArray:array];
+            if (array.count ==20&&self.mInt_index == 1) {
+                [self.mTableV_detail addFooterWithTarget:self action:@selector(footerRereshing)];
+                self.mTableV_detail.footerPullToRefreshText = @"上拉加载更多";
+                self.mTableV_detail.footerReleaseToRefreshText = @"松开加载更多数据";
+                self.mTableV_detail.footerRefreshingText = @"正在加载...";
+            }
+            //        self.mArr_tabel = [NSMutableArray arrayWithArray:array];
         }
-        if (array.count<20) {
-            [self.mTableV_detail removeFooter];
-        }
+        //刷新，布局
+        [self.mTableV_detail reloadData];
+        //    [self reSetFrame];
     }else{
-        [self.mArr_tabel removeAllObjects];
-        [self.mArr_tabel addObjectsFromArray:self.mArr_difine];
-        [self.mArr_tabel addObjectsFromArray:array];
-        if (array.count ==20&&self.mInt_index == 1) {
-            [self.mTableV_detail addFooterWithTarget:self action:@selector(footerRereshing)];
-            self.mTableV_detail.footerPullToRefreshText = @"上拉加载更多";
-            self.mTableV_detail.footerReleaseToRefreshText = @"松开加载更多数据";
-            self.mTableV_detail.footerRefreshingText = @"正在加载...";
-        }
-//        self.mArr_tabel = [NSMutableArray arrayWithArray:array];
+        [MBProgressHUD showError:@"" toView:self];
     }
-    //刷新，布局
-    [self.mTableV_detail reloadData];
-//    [self reSetFrame];
 }
 
 //切换账号时，更新数据

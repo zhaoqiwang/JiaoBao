@@ -36,7 +36,6 @@
     NSMutableArray *mArr_class;//学校数据，下级单位
     UIButton *mBtn_add;//加载更多按钮
     int mInt_index;//当前应该加载的第几页
-    MBProgressHUD *mProgressV;//
     NSMutableArray *mArr_display;//当为多级列表时，显示用的数组
 }
 
@@ -51,7 +50,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_class;//学校数据，下级单位
 @property (nonatomic,strong) UIButton *mBtn_add;//加载更多按钮
 @property (nonatomic,assign) int mInt_index;//当前应该加载的第几页
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSMutableArray *mArr_display;//当为多级列表时，显示用的数组
 
 - (id)initWithFrame1:(CGRect)frame;

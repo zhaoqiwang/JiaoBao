@@ -109,46 +109,48 @@
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
-    NSMutableArray *tempArr = [dic valueForKey:@"array"];
-    if (self.mInt_page > 1) {
-        if (tempArr.count>0) {
-            [self.mArr_feeback addObjectsFromArray:tempArr];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *tempArr = [dic valueForKey:@"array"];
+        if (self.mInt_page > 1) {
+            if (tempArr.count>0) {
+                [self.mArr_feeback addObjectsFromArray:tempArr];
+            }
+        }else{
+            self.mArr_feeback = [NSMutableArray arrayWithArray:tempArr];
         }
+        //判断是否隐藏加载更多按钮
+        if (tempArr.count==20) {
+            [self.mTableV_detail addFooterWithTarget:self action:@selector(footerRereshing)];
+            self.mTableV_detail.footerPullToRefreshText = @"上拉加载更多";
+            self.mTableV_detail.footerReleaseToRefreshText = @"松开加载更多数据";
+            self.mTableV_detail.footerRefreshingText = @"正在加载...";
+        }else{
+            [self.mTableV_detail removeFooter];
+        }
+        //加入内容列表为空，加入
+        if (self.mArr_msg.count==0) {
+            UnReadMsg_model *modelMsg = [dic valueForKey:@"model"];
+            CommMsgListModel *model = [[CommMsgListModel alloc] init];
+            model.TabIDStr = modelMsg.TabIDStr;
+            model.MsgContent = modelMsg.MsgContent;
+            model.RecDate = modelMsg.RecDate;
+            model.UserName = modelMsg.UserName;
+            model.JiaoBaoHao = modelMsg.JiaoBaoHao;
+            model.NoReadCount = @"";
+            model.NoReplyCount = @"";
+            model.ReadFlag = @"";
+            model.flag = @"0";
+            [self.mArr_msg addObject:model];
+            [self.mArr_attList addObjectsFromArray:modelMsg.arrayAttList];
+            //阅读人员列表
+            self.mArr_readList = [NSMutableArray arrayWithArray:modelMsg.arrayReaderList];
+        }
+        //定位
+        [self addArray];
     }else{
-        self.mArr_feeback = [NSMutableArray arrayWithArray:tempArr];
+        [MBProgressHUD showError:@"" toView:self.view];
     }
-    //判断是否隐藏加载更多按钮
-    if (tempArr.count==20) {
-        [self.mTableV_detail addFooterWithTarget:self action:@selector(footerRereshing)];
-        self.mTableV_detail.footerPullToRefreshText = @"上拉加载更多";
-        self.mTableV_detail.footerReleaseToRefreshText = @"松开加载更多数据";
-        self.mTableV_detail.footerRefreshingText = @"正在加载...";
-    }else{
-        [self.mTableV_detail removeFooter];
-//        self.dropDownBtn.frame = CGRectZero;
-//        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
-        
-    }
-    //加入内容列表为空，加入
-    if (self.mArr_msg.count==0) {
-        UnReadMsg_model *modelMsg = [dic valueForKey:@"model"];
-        CommMsgListModel *model = [[CommMsgListModel alloc] init];
-        model.TabIDStr = modelMsg.TabIDStr;
-        model.MsgContent = modelMsg.MsgContent;
-        model.RecDate = modelMsg.RecDate;
-        model.UserName = modelMsg.UserName;
-        model.JiaoBaoHao = modelMsg.JiaoBaoHao;
-        model.NoReadCount = @"";
-        model.NoReplyCount = @"";
-        model.ReadFlag = @"";
-        model.flag = @"0";
-        [self.mArr_msg addObject:model];
-        [self.mArr_attList addObjectsFromArray:modelMsg.arrayAttList];
-        //阅读人员列表
-        self.mArr_readList = [NSMutableArray arrayWithArray:modelMsg.arrayReaderList];
-    }
-    //定位
-    [self addArray];
 }
 
 //取单个用户发给我消息列表
@@ -586,8 +588,8 @@
     NSDictionary *dic = noti.object;
     NSString *str = [dic objectForKey:@"msg"];
     NSString *flag = [dic objectForKey:@"flag"];
-    [MBProgressHUD showSuccess:str toView:self.view];
     if ([flag isEqual:@"1"]) {//成功
+        [MBProgressHUD showSuccess:str toView:self.view];
         MsgDetail_FeebackList *model = [[MsgDetail_FeebackList alloc] init];
         model.FeeBackMsg = self.mTextF_text.text;
         model.Jiaobaohao = [dm getInstance].jiaoBaoHao;
@@ -597,7 +599,7 @@
         [self.mTextF_text resignFirstResponder];
         [self addArray];
     } else {//失败
-        
+        [MBProgressHUD showError:str toView:self.view];
     }
 }
 //点击附件按钮下载文件按钮

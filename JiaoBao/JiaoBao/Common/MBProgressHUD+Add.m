@@ -26,11 +26,14 @@
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:0.7];
+    [hud hide:YES afterDelay:2];
 }
 
 #pragma mark 显示错误信息
 + (void)showError:(NSString *)error toView:(UIView *)view{
+    if (error.length==0) {
+        error = @"获取失败";
+    }
     [self show:error icon:@"error.png" view:view];
 }
 

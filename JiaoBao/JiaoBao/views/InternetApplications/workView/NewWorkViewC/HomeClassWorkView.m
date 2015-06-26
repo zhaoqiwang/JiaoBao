@@ -26,107 +26,108 @@
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
-    NSString *str = noti.object;
     self.mProgressV.mode = MBProgressHUDModeCustomView;
-    if(str.length == 0)
-    {
-        str = @"成功";
-    }
-    //NSLog(@"str = %@",str);
-    self.mProgressV.labelText = str;
-    //    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    self.mViewTop.mTextV_input.text = @"";
-    [self.mViewTop.mArr_accessory removeAllObjects];
-    [self.mViewTop addAccessoryPhoto]; 
-    if([dm getInstance].notificationSymbol == 100)
-    {
-        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.dataArr;
-        for(int i=0;i<dataArr.count;i++)
+    NSString *str = noti.object;
+    if ([str integerValue]==1) {
+        [MBProgressHUD showError:@"超时" toView:self];
+    }else{
+        if(str.length == 0)
         {
-            myUnit *unit = [dataArr objectAtIndex:i];
-            unit.isSelected = NO;
-  
+            str = @"成功";
+        }
+        //NSLog(@"str = %@",str);
+        self.mProgressV.labelText = str;
+        //    self.mProgressV.userInteractionEnabled = NO;
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        self.mViewTop.mTextV_input.text = @"";
+        [self.mViewTop.mArr_accessory removeAllObjects];
+        [self.mViewTop addAccessoryPhoto];
+        if([dm getInstance].notificationSymbol == 100)
+        {
+            NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.dataArr;
+            for(int i=0;i<dataArr.count;i++)
+            {
+                myUnit *unit = [dataArr objectAtIndex:i];
+                unit.isSelected = NO;
+                
+                
+                
+            }
+            [[HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list reloadData];
             
             
         }
-        [[HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list reloadData];
-        
-        
-    }
-    if([dm getInstance].notificationSymbol == 101)
-    {
-        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].characterView.datasource;
-        for(int i=0;i<dataArr.count;i++)
+        if([dm getInstance].notificationSymbol == 101)
         {
-            myUnit *unit = [dataArr objectAtIndex:i];
-            UserListModel *model;
-            if(unit.list.count>1)
+            NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].characterView.datasource;
+            for(int i=0;i<dataArr.count;i++)
             {
-                model = [unit.list objectAtIndex:1];
-                
-                
-            }
-            else
-            {
-                model = [unit.list objectAtIndex:0];
-                
-                
-            }
-            groupselit_selitModel *groupModel ;
-            for(int i=0;i<model.groupselit_selit.count;i++)
-            {
-                groupModel = [model.groupselit_selit objectAtIndex:i];
-                if(groupModel.mInt_select == 1)
+                myUnit *unit = [dataArr objectAtIndex:i];
+                UserListModel *model;
+                if(unit.list.count>1)
                 {
-                    groupModel.mInt_select =0;
-
+                    model = [unit.list objectAtIndex:1];
+                    
+                    
                 }
-                
-                
-            }
-            
-        }
-        [[HomeClassRootScrollView shareInstance].characterView.mCollectionV_list reloadData];
-        
-    }
-    if([dm getInstance].notificationSymbol == 102)
-    {
-        
-        [[HomeClassRootScrollView shareInstance].schoolMessage.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
-        
-        
-    }
-    if([dm getInstance].notificationSymbol == 103)
-    {
-        NSArray *arr = [HomeClassRootScrollView shareInstance].patriarchView.datasource;
-        
-        for (int i=0; i<arr.count; i++) {
-            SMSTreeArrayModel *model = [arr objectAtIndex:i];
-            for (int m=0; m<model.smsTree.count; m++) {
-                SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
-                if (i == 1)
+                else
                 {
-                    if(tempModel.mInt_select == 1)
+                    model = [unit.list objectAtIndex:0];
+                    
+                    
+                }
+                groupselit_selitModel *groupModel ;
+                for(int i=0;i<model.groupselit_selit.count;i++)
+                {
+                    groupModel = [model.groupselit_selit objectAtIndex:i];
+                    if(groupModel.mInt_select == 1)
                     {
-                        tempModel.mInt_select =0;
+                        groupModel.mInt_select =0;
+                        
                     }
+                    
                     
                 }
                 
             }
-            [[HomeClassRootScrollView shareInstance].patriarchView.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
-            [[HomeClassRootScrollView shareInstance].patriarchView.tableView reloadData];
+            [[HomeClassRootScrollView shareInstance].characterView.mCollectionV_list reloadData];
             
+        }
+        if([dm getInstance].notificationSymbol == 102)
+        {
+            
+            [[HomeClassRootScrollView shareInstance].schoolMessage.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+            
+            
+        }
+        if([dm getInstance].notificationSymbol == 103)
+        {
+            NSArray *arr = [HomeClassRootScrollView shareInstance].patriarchView.datasource;
+            
+            for (int i=0; i<arr.count; i++) {
+                SMSTreeArrayModel *model = [arr objectAtIndex:i];
+                for (int m=0; m<model.smsTree.count; m++) {
+                    SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                    if (i == 1)
+                    {
+                        if(tempModel.mInt_select == 1)
+                        {
+                            tempModel.mInt_select =0;
+                        }
+                        
+                    }
+                    
+                }
+                [[HomeClassRootScrollView shareInstance].patriarchView.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+                [[HomeClassRootScrollView shareInstance].patriarchView.tableView reloadData];
+                
+                
+            }
+        }
+        [self setFrame];
         
     }
-    }
-    [self setFrame];
-
-
-    
-    
 }
 -(void)progress:(id)sender
 {

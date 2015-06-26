@@ -126,22 +126,30 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
 //加载获取到得单位
 -(void)getUnitInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    NSMutableArray *array = noti.object;
-    [self.mArr_myUnit removeAllObjects];
-    [self.mArr_related removeAllObjects];
-    //未读数量标记
-    for (int i=0; i<array.count; i++) {
-        UnitSectionMessageModel *model = [array objectAtIndex:i];
-        D("UnitSectionMessageModel *model-===%@",model.IsMyUnit);
-        if ([model.IsMyUnit intValue] == 1) {
-            [self.mArr_myUnit addObject:model];
-        }else{
-            [self.mArr_related addObject:model];
-        }
+    
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        //未读数量标记
+        [self.mArr_myUnit removeAllObjects];
+        [self.mArr_related removeAllObjects];
+        //未读数量标记
+        for (int i=0; i<array.count; i++) {
+            UnitSectionMessageModel *model = [array objectAtIndex:i];
+            D("UnitSectionMessageModel *model-===%@",model.IsMyUnit);
+            if ([model.IsMyUnit intValue] == 1) {
+                [self.mArr_myUnit addObject:model];
+            }else{
+                [self.mArr_related addObject:model];
+            }
 //        [dm getInstance].mImt_showUnRead = [dm getInstance].mImt_showUnRead + [model.MessageCount intValue];
+        }
+        //重置界面
+        [self reSetFrame];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    //重置界面
-    [self reSetFrame];
 }
 
 //重置界面

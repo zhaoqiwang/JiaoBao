@@ -85,6 +85,7 @@
 
 //文章详情通知
 -(void)Getintroduce:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
     NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
     NSString *string1 = [str substringToIndex:1];//从字符串的开头一直截取到指定的位置,但不包括该位置的字符

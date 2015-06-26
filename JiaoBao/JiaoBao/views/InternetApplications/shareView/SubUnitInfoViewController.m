@@ -78,24 +78,32 @@
 -(void)getUnitClassShow:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-    int index = [[dic objectForKey:@"index"] intValue];
-    
-    if (index == 1) {//关联的班级
-        
-    } else {//所有班级
-        NSMutableArray *temp = [dic objectForKey:@"array"];
-        self.mArr_unit = [self userNameChineseSort:temp Flag:2];
-        [self.mTableV_unit reloadData];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        int index = [[dic objectForKey:@"index"] intValue];
+        if (index == 1) {//关联的班级
+        } else {//所有班级
+            NSMutableArray *temp = [dic objectForKey:@"array"];
+            self.mArr_unit = [self userNameChineseSort:temp Flag:2];
+            [self.mTableV_unit reloadData];
+        }
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
 }
 
 //获取到的子单位通知
 -(void)MySubUnitInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    
-    NSMutableArray *temp = [NSMutableArray arrayWithArray:noti.object];
-    self.mArr_unit = [self userNameChineseSort:temp Flag:1];
-    [self.mTableV_unit reloadData];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *temp = [dic objectForKey:@"array"];
+        self.mArr_unit = [self userNameChineseSort:temp Flag:1];
+        [self.mTableV_unit reloadData];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self.view];
+    }
 }
 
 //对人员1和分组2进行排序，

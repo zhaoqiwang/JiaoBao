@@ -104,7 +104,7 @@
         [self.mTextF_text resignFirstResponder];
         [self setFrame];
     } else {//失败
-        
+        [MBProgressHUD showError:str toView:self.view];
     }
 }
 
@@ -126,25 +126,30 @@
     [[LoginSendHttp getInstance] getUnreadMessages2];
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-    NSMutableArray *tempArr = [dic valueForKey:@"array"];
-    if (self.mInt_page > 1) {
-        if (tempArr.count>0) {
-            [self.mArr_feeback addObjectsFromArray:tempArr];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *tempArr = [dic valueForKey:@"array"];
+        if (self.mInt_page > 1) {
+            if (tempArr.count>0) {
+                [self.mArr_feeback addObjectsFromArray:tempArr];
+            }
+        }else{
+            self.mArr_feeback = [NSMutableArray arrayWithArray:tempArr];
         }
+        //判断是否隐藏加载更多按钮
+        if (tempArr.count==20) {
+            self.mInt_more = 0;
+        }else{
+            self.mInt_more = 1;
+        }
+        
+        self.mModel_unReadMsg = [dic valueForKey:@"model"];
+        if(tempArr.count)
+            //定位
+            [self setFrame];
     }else{
-        self.mArr_feeback = [NSMutableArray arrayWithArray:tempArr];
+        [MBProgressHUD showError:@"" toView:self.view];
     }
-    //判断是否隐藏加载更多按钮
-    if (tempArr.count==20) {
-        self.mInt_more = 0;
-    }else{
-        self.mInt_more = 1;
-    }
-    
-    self.mModel_unReadMsg = [dic valueForKey:@"model"];
-    if(tempArr.count)
-    //定位
-    [self setFrame];
 }
 -(void)setFrame{
     self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);

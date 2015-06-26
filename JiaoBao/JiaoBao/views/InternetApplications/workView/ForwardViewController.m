@@ -61,20 +61,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setFrame];
-//    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshWorkView" object:nil];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshWorkView:) name:@"refreshWorkView" object:nil];
-//
-//    //发表消息成功推送
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
-////    //通知界面更新，获取事务信息接收单位列表
-////    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-////    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
-//    //获取到每个单位中的人员
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
-//    //获取到下发通知的权限
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMsgAllReviceUnitList" object:nil];
   }
 
 - (void)viewDidLoad {
@@ -85,9 +71,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     //发表消息成功推送
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"creatCommMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(creatCommMsg:) name:@"creatCommMsg" object:nil];
-    //    //通知界面更新，获取事务信息接收单位列表
-    //    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     //获取到每个单位中的人员
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
@@ -311,58 +294,59 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //获取到每个单位中的人员
 -(void)GetUnitRevicer:(NSNotification *)noti{
-    if([dm getInstance].notificationSymbol == 1)
-    {
-        [[dm getInstance].progress hide:YES];
-        
-        NSDictionary *dic = noti.object;
-        NSString *unitID = [dic objectForKey:@"unitID"];
-        NSArray *array = [dic objectForKey:@"array"];
-        
-        //当前单位
-        if ([[dm getInstance].mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
-            [dm getInstance].mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-            self.mModel_myUnit = [dm getInstance].mModel_unitList.myUnit;
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        if([dm getInstance].notificationSymbol == 1)
+        {
+            NSString *unitID = [dic objectForKey:@"unitID"];
+            NSArray *array = [dic objectForKey:@"array"];
+            
+            //当前单位
+            if ([[dm getInstance].mModel_unitList.myUnit.TabID intValue] == [unitID intValue]&&[unitID intValue] == [dm getInstance].UID) {
+                [dm getInstance].mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
+                self.mModel_myUnit = [dm getInstance].mModel_unitList.myUnit;
+            }
+            //刷新
+            [self CollectionReloadData];
         }
-        
-        //刷新
-        [self CollectionReloadData];
-        
+    }else{
+        [MBProgressHUD showError:@"" toView:self.view];
     }
     
-
-
 }
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    if([dm getInstance].notificationSymbol ==1 )
-    {
-        NSString *str = noti.object;
-        if(str.length == 0)
+    NSString *str = noti.object;
+    if ([str integerValue]==1) {
+        [MBProgressHUD showError:@"超时" toView:self.view];
+    }else{
+        if([dm getInstance].notificationSymbol ==1 )
         {
-            str = @"成功";
-        }
-        [MBProgressHUD showSuccess:str toView:self.view];
-        self.topView.mTextV_input.text = @"";
-        [self.topView.mArr_accessory removeAllObjects];
-        [self.topView addAccessoryPhoto];
-        for (int i=0; i<self.mModel_myUnit.list.count; i++)
-        {
-            
-            UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
-            model.sectionSelSymbol = 0;
-            for (int i=0; i<model.groupselit_selit.count; i++) {
-                groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
-                subModel.mInt_select = 0;
+            if(str.length == 0)
+            {
+                str = @"成功";
             }
+            [MBProgressHUD showSuccess:str toView:self.view];
+            self.topView.mTextV_input.text = @"";
+            [self.topView.mArr_accessory removeAllObjects];
+            [self.topView addAccessoryPhoto];
+            for (int i=0; i<self.mModel_myUnit.list.count; i++)
+            {
+                UserListModel *model = [self.mModel_myUnit.list objectAtIndex:i];
+                model.sectionSelSymbol = 0;
+                for (int i=0; i<model.groupselit_selit.count; i++) {
+                    groupselit_selitModel *subModel = [model.groupselit_selit objectAtIndex:i];
+                    subModel.mInt_select = 0;
+                }
+            }
+            self.imgV.image = [UIImage imageNamed:@"blank.png"];
+            [self.mCollectionV_list reloadData];
         }
-        self.imgV.image = [UIImage imageNamed:@"blank.png"];
-        
-        [self.mCollectionV_list reloadData];
     }
-    
 }
 -(void)noMore{
     sleep(1);
