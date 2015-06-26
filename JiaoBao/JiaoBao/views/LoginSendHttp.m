@@ -1014,6 +1014,7 @@ static LoginSendHttp *loginSendHttp = nil;
             [dic setValue:@"6" forKey:@"tag"];
         }
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
         //通知界面更新未读消息数量
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsg" object:nil];
@@ -1029,6 +1030,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"8" forKey:@"tag"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
     }else if (_request.tag == 7){//已处理已回复的
         NSString *time = [jsonDic objectForKey:@"Data"];
@@ -1042,6 +1044,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"9" forKey:@"tag"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
     }else if (_request.tag == 8){//获取自己发出的信息
         NSString *time = [jsonDic objectForKey:@"Data"];
@@ -1056,6 +1059,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"2" forKey:@"tag"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
     }else if (_request.tag == 9){//转发上级通知
         NSString *time = [jsonDic objectForKey:@"Data"];
@@ -1072,6 +1076,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"4" forKey:@"tag"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
     }else if (_request.tag == 10){//获取头像
         //获取的用户自定义内容
@@ -1109,6 +1114,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"7" forKey:@"tag"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
         //通知界面更新未读消息数量
         [dm getInstance].unReadMsg2 = [NSString stringWithFormat:@"%lu",(unsigned long)array.count];
@@ -1126,6 +1132,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:model forKey:@"model"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:@"0" forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MsgDetail" object:dic];
     }else if (_request.tag == 13){//回复交流信息
         NSString *time = [jsonDic objectForKey:@"ResultDesc"];
@@ -1174,6 +1181,9 @@ static LoginSendHttp *loginSendHttp = nil;
         CMRevicerModel *model = [ParserJson parserJsonCMRevicerWith:str000];
         D("model-==== %@",model);
         //向转发界面传递得到的人员单位列表
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CMRevicer" object:model];
     }else if (_request.tag == 16){//切换身份
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
@@ -1202,7 +1212,7 @@ static LoginSendHttp *loginSendHttp = nil;
             //发表消息失败推送
             [[NSNotificationCenter defaultCenter] postNotificationName:@"creatCommMsg" object:time];
         }
-    }else if (_request.tag == 18){//获取接收人列表或单位列表，普通请求
+    }else if (_request.tag == 18){//获取接收人列表或单位列表，短信直通车
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("tag-=== 18=== %@",str000);
@@ -1219,8 +1229,11 @@ static LoginSendHttp *loginSendHttp = nil;
             model.smsTree = [NSMutableArray arrayWithArray:[ParserJson parserJsonSMSUnitWith:str000]];
             [array addObject:model];
         }
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:array forKey:@"array"];
         //向转发界面传递得到的人员单位列表
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CMRevicer" object:array];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CMRevicer1" object:dic];
     }else if (_request.tag == 19){//获取个人信息
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -1254,7 +1267,7 @@ static LoginSendHttp *loginSendHttp = nil;
         [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
         
         //通知internetApp界面，获取成功
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"0"];
     }else if (_request.tag == 20){//获取事务信息接收单位列表
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
@@ -1262,8 +1275,11 @@ static LoginSendHttp *loginSendHttp = nil;
         CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        id data2 = [str objectFromJSONStringWithParseOptions:JKParseOptionLooseUnicode];
 //        UnitListJsonModel* model = [[UnitListJsonModel alloc] initWithString:str error:nil];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"0" forKey:@"flag"];
+        [dic2 setValue:model forKey:@"model"];
         //通知界面更新，获取事务信息接收单位列表
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CommMsgRevicerUnitList" object:model];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CommMsgRevicerUnitList" object:dic2];
     }else if (_request.tag == 21){//获取单位接收人
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
@@ -1273,9 +1289,7 @@ static LoginSendHttp *loginSendHttp = nil;
         [dic2 setValue:unitID forKey:@"unitID"];
         NSMutableArray *array = [ParserJson parserUserList_json:str];
         [dic2 setValue:array forKey:@"array"];
-//        id data2 = [str objectFromJSONStringWithParseOptions:JKParseOptionLooseUnicode];
-//        D("data2-====%@",data2);
-//        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
+        [dic2 setValue:@"0" forKey:@"flag"];
         //通知界面更新，获取事务信息接收单位列表
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
     }else if (_request.tag == 22){//获取班级接收人
@@ -1287,35 +1301,11 @@ static LoginSendHttp *loginSendHttp = nil;
         [dic2 setValue:unitID forKey:@"unitID"];
         NSMutableArray *array = [ParserJson parserUserListClass_json:str];
         [dic2 setValue:array forKey:@"array"];
+        [dic2 setValue:@"0" forKey:@"flag"];
 //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
 //        //通知界面更新，获取事务信息接收单位列表
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
-    }
-    //else if (_request.tag == 1000){//获取班级接收人
-//        NSData *responseData = [_request responseData];
-//        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-//        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-//        NSLog(@"UpLoadResult1111111 = %@",dataString);
-//        NSDictionary *dic = [dataString objectFromJSONString];
-//        NSDictionary *dic2 = [dic objectForKey:@"Data"];
-//        NSString *genselit = [dic2 objectForKey:@"genselit"];
-//        NSArray *selitArr = [genselit objectFromJSONString];
-//        NSLog(@"selitArr = %@",selitArr);
-//
-//
-//        
-//        //NSArray *dataList = [dicList  objectForKey:@"Data"];
-////        D("str00=login==22=>>>>==%@",str);
-////        NSString *unitID = [_request.userInfo objectForKey:@"unitID"];
-////        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
-////        [dic2 setValue:unitID forKey:@"unitID"];
-////        NSMutableArray *array = [ParserJson parserUserListClass_json:str];
-////        [dic2 setValue:array forKey:@"array"];
-////        //        CommMsgRevicerUnitListModel *model = [ParserJson parserJsonCommMsgRevicerUnitList:str];
-////        //        //通知界面更新，获取事务信息接收单位列表
-//        //[[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
-//    }
-    else if (_request.tag == 23){//获取群发权限
+    }else if (_request.tag == 23){//获取群发权限
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"Data"];
         D("str00=login==23=>>>>==%@",str);
@@ -1473,17 +1463,158 @@ static LoginSendHttp *loginSendHttp = nil;
 }
 
 //请求失败
--(void)requestFailed:(ASIHTTPRequest *)request{
-    NSData *responseData = [request responseData];
+-(void)requestFailed:(ASIHTTPRequest *)_request{
+    NSData *responseData = [_request responseData];
     [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication].windows lastObject]];
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
     NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-    D("dataString--login==-tag=%ld,flag=%d----  请求失败--%@",(long)request.tag,flag_request,dataString);
+    D("dataString--login==-tag=%ld,flag=%d----  请求失败--%@",(long)_request.tag,flag_request,dataString);
     if (self.flag_request == 8) {
-        NSString *token = [request.userInfo objectForKey:@"token"];
+        NSString *token = [_request.userInfo objectForKey:@"token"];
         //验证Token
         [self validateToken:token];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccess" object:@"验证失败，重新验证中"];
+    }
+    
+    if (flag_request == 1) {//注册获取到时间回调
+        
+    }else if (flag_request == 2){//注册回调
+        
+    }else if (flag_request == 3){//握手回调
+        
+    }else if (flag_request == 4){//登录获取时间回调
+        
+    }else if (flag_request == 5){//发送登录请求回调
+        //通知登录界面，是否记住密码
+        [self.delegate LoginSendHttpMember:@"2"];
+        //通知界面，是否登录成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"loginSuccess" object:@"登录超时"];
+    }else if (flag_request == 6){//获取系统应用URL的回调
+        
+    }else if (flag_request == 7){//获取Token回调
+        
+    }else if (flag_request == 8){//验证Token回调
+        
+    }
+    if (_request.tag == 2) {//获取自己的身份信息
+        
+    }else if (_request.tag == 3){//未读消息数量
+        
+    }else if (_request.tag == 4){//未读回复数量
+        
+    }else if (_request.tag == 5){//发给我的待处理信息
+        //通知界面刷新待处理未读消息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
+        //通知界面更新未读消息数量
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsg" object:nil];
+    }else if (_request.tag == 6){//已处理未回复的
+        //通知界面刷新已处理未回复消息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
+    }else if (_request.tag == 7){//已处理已回复的
+        //通知界面刷新已处理已回复消息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
+    }else if (_request.tag == 8){//获取自己发出的信息
+        //通知界面刷新已处理已回复消息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
+    }else if (_request.tag == 9){//转发上级通知
+        //通知界面刷新已处理已回复消息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
+    }else if (_request.tag == 10){//获取头像
+        
+    }else if (_request.tag == 11){//回复我的
+        //通知界面刷新回复我的信息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UnReadMsgCell" object:dic];
+    }else if (_request.tag == 12){//显示交流信息明细
+        //通知界面刷新信息详情
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MsgDetail" object:dic];
+    }else if (_request.tag == 13){//回复交流信息
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setValue:@"发送超时" forKey:@"msg"];
+            [dic setValue:@"3" forKey:@"flag"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"addFeeBack" object:dic];
+    }else if (_request.tag == 14){//在信息详情页，点击下载文件
+        
+    }
+    else if (_request.tag == 15){//获取接收人列表或单位列表，普通请求
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //向转发界面传递得到的人员单位列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CMRevicer" object:dic];
+    }else if (_request.tag == 16){//切换身份
+        //通知内务界面，切换成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCurUnit" object:@"1"];
+    }else if (_request.tag == 17){//发表交流信息,内容
+        //发表消息失败推送
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"creatCommMsg" object:@"1"];
+    }else if (_request.tag == 18){//获取接收人列表或单位列表，短信直通车
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //向转发界面传递得到的人员单位列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CMRevicer1" object:dic];
+    }else if (_request.tag == 19){//获取个人信息
+        //通知internetApp界面，获取成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"1"];
+    }else if (_request.tag == 20){//获取事务信息接收单位列表
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        //通知界面更新，获取事务信息接收单位列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CommMsgRevicerUnitList" object:dic2];
+    }else if (_request.tag == 21){//获取单位接收人
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        //通知界面更新，获取事务信息接收单位列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
+    }else if (_request.tag == 22){//获取班级接收人
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        //通知界面更新，获取事务信息接收单位列表
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitRevicer" object:dic2];
+    }else if (_request.tag == 23){//获取群发权限
+        
+    }else if (_request.tag == 24){//获取群发下属单位接收对象
+        
+    }else if (_request.tag == 25){//获取事务信息接收单位列表
+        
+    }else if (_request.tag == 26){//检查版本更新
+        
+    }else if (_request.tag == 27){//获取我发送的消息列表
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+        [tempDic setValue:@"1" forKey:@"flag"];
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMySendMsgList" object:tempDic];
+    }else if (_request.tag == 28){//取发给我消息的用户列表，new
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeUserList" object:dic2];
+    }else if (_request.tag == 29){//取单个用户发给我消息列表 new
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"SendToMeMsgList" object:dic2];
+    }else if (_request.tag == 30){//获取老师的关联班级
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        //传到事务界面显示
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:dic2];
+    }else if (_request.tag == 32){
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCommPerm" object:dic2];
     }
 }
 

@@ -336,10 +336,13 @@ static ShowHttp *showHttp = nil;
         NSMutableArray *array = [ParserJson_share parserJsonTopArthListWith:str000];
         //获取头像
         [[ShareHttp getInstance] getFaceImg:array flag:1];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:array forKey:@"array"];
         if ([flag isEqual:@"shareNew"]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndexNewShare" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndexNewShare" object:dic];
         }else{
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
         }
     }else if (_request.tag == 2) {//取最新或推荐个人分享文章
         NSString *time = [jsonDic objectForKey:@"Data"];
@@ -349,7 +352,10 @@ static ShowHttp *showHttp = nil;
         //获取头像
 //        [[ShareHttp getInstance] getFaceImg:array flag:1];
         //通知shareview界面，将得到的值，传到界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:array];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
     }else if (_request.tag == 3) {//取最新或推荐单位栏目文章
 //        NSString *time = [jsonDic objectForKey:@"Data"];
 //        NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -359,7 +365,10 @@ static ShowHttp *showHttp = nil;
         NSMutableArray *array = [ParserJson_share parserJsonTopArthListWith:str000];
         //获取头像
 //        [[ShareHttp getInstance] getFaceImg:array flag:1];
-       [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:array];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"0" forKey:@"flag"];
+        [dic2 setValue:array forKey:@"array"];
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic2];
     }else if (_request.tag == 4) {//取最新更新文章单位信息
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -368,7 +377,13 @@ static ShowHttp *showHttp = nil;
         //获取单位头像
         [self getUnitImg:array];
         //将获得到的单位信息，通知到界面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:array];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        [dic2 setValue:code forKey:@"ResultCode"];
+        [dic2 setValue:ResultDesc forKey:@"ResultDesc"];
+        [dic2 setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:dic2];
     }else if (_request.tag == 7){//获取我的关注单位
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             [InternetAppTopScrollView shareInstance].mInt_show2 = 1;
@@ -394,17 +409,20 @@ static ShowHttp *showHttp = nil;
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00=show==8=>>>>==%@",str000);
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         if ([flag intValue] == 99) {
             NSMutableArray *array = [ParserJson_share parserJsonTopArthListWith:str000];
+            [dic2 setValue:array forKey:@"array"];
             //获取头像
 //            [[ShareHttp getInstance] getFaceImg:array flag:1];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic2];
         }else{
             NSMutableArray *array = [ParserJson_share parserJsonTopArthListWith:str000];
+            [dic2 setValue:array forKey:@"array"];
             //获取头像
 //            [[ShareHttp getInstance] getFaceImg:array flag:1];
             //通知单位展示空间界面，将得到的值，传到界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitSpaceArthList" object:array];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitSpaceArthList" object:dic2];
         }
     }else if (_request.tag == 9) {//获取单位简介
         NSDictionary *dic = [dataString objectFromJSONString];
@@ -417,7 +435,10 @@ static ShowHttp *showHttp = nil;
         D("str00=show==10=>>>>==%@",str);
         NSMutableArray *array = [ParserJson_share parserJsonMyFriendsWith:str];
         //通知好友显示界面刷新数据
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyFriends" object:array];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"0" forKey:@"flag"];
+        [dic2 setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyFriends" object:dic2];
     }else if (_request.tag == 11) {//获取好友分组，提供jiaobaohao，获取该用户的所有好友分组
 //        D("str00=show==11=>>>>==%@",str000);
     }else if (_request.tag == 12) {//获取好友分组，提供jiaobaohao和组ID，获取该用户的这个组中所有好友
@@ -428,12 +449,74 @@ static ShowHttp *showHttp = nil;
         D("str00=show==13=>>>>==%@",str);
         NSMutableArray *array = [ParserJson_share parserJsonMyFriendsWith:str];
         //通知好友显示界面刷新数据
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyFriends" object:array];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:@"0" forKey:@"flag"];
+        [dic2 setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyFriends" object:dic2];
     }
 }
 //请求失败
--(void)requestFailed:(ASIHTTPRequest *)request{
-    D("dataString---show-tag=%ld,flag----  请求失败",(long)request.tag);
+-(void)requestFailed:(ASIHTTPRequest *)_request{
+    D("dataString---show-tag=%ld,flag----  请求失败",(long)_request.tag);
+    if (_request.tag == 0) {//获取单位logo
+        
+    }else if (_request.tag == 1) {//取最新或推荐单位栏目文章
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        if ([flag isEqual:@"shareNew"]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndexNewShare" object:dic];
+        }else{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
+        }
+    }else if (_request.tag == 2) {//取最新或推荐个人分享文章
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知shareview界面，将得到的值，传到界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
+    }else if (_request.tag == 3) {//取最新或推荐单位栏目文章
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
+    }else if (_request.tag == 4) {//取最新更新文章单位信息
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"ResultCode"];
+        [dic setValue:@"超时" forKey:@"ResultDesc"];
+        //将获得到的单位信息，通知到界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:dic];
+    }else if (_request.tag == 7){//获取我的关注单位
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+            [dic2 setValue:@"1" forKey:@"flag"];
+        //获取到我关注的单位后，通知界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyAttUnit" object:dic2];
+    }else if (_request.tag == 8) {//获取本单位栏目文章
+        NSString *flag = [_request.userInfo objectForKey:@"sectionFlag"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        if ([flag intValue] == 99) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
+        }else{
+            //通知单位展示空间界面，将得到的值，传到界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitSpaceArthList" object:dic];
+        }
+    }else if (_request.tag == 9) {//获取单位简介
+        //将获取到的简介，推送到界面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Getintroduce" object:@""];
+    }else if (_request.tag == 10) {//获取我的好友
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知好友显示界面刷新数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyFriends" object:dic];
+    }else if (_request.tag == 11) {//获取好友分组，提供jiaobaohao，获取该用户的所有好友分组
+        //        D("str00=show==11=>>>>==%@",str000);
+    }else if (_request.tag == 12) {//获取好友分组，提供jiaobaohao和组ID，获取该用户的这个组中所有好友
+        //        D("str00=show==12=>>>>==%@",str000);
+    }else if (_request.tag == 13) {//获取我的关注,提供jiaobaohao，获取该用户关注人员
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:@"1" forKey:@"flag"];
+        //通知好友显示界面刷新数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyFriends" object:dic];
+    }
 }
 
 @end

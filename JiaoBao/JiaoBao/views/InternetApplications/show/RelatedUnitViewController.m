@@ -96,12 +96,18 @@
 //获取到的子单位通知
 -(void)MySubUnitInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    self.mArr_down = noti.object;
-    //下级列表
-    self.mTableV_down.frame = CGRectMake(0, self.mLab_down.frame.origin.y+self.mLab_down.frame.size.height, [dm getInstance].width, 50*self.mArr_down.count);
-    //内容大小
-    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_down.frame.origin.y+self.mTableV_down.frame.size.height);
-    [self.mTableV_down reloadData];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        self.mArr_down = [dic objectForKey:@"array"];
+        //下级列表
+        self.mTableV_down.frame = CGRectMake(0, self.mLab_down.frame.origin.y+self.mLab_down.frame.size.height, [dm getInstance].width, 50*self.mArr_down.count);
+        //内容大小
+        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_down.frame.origin.y+self.mTableV_down.frame.size.height);
+        [self.mTableV_down reloadData];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self.view];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

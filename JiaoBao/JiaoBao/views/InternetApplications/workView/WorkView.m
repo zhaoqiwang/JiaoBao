@@ -116,58 +116,64 @@
 -(void)UnReadMsgCell:(NSNotification *)noti{
     [self.mProgressV hide:YES];
     NSMutableDictionary *dic = noti.object;
-    NSMutableArray *array = [dic valueForKey:@"array"];
-    int tag = [[dic valueForKey:@"tag"] intValue];
-    NSMutableArray *tempArr = [[NSMutableArray alloc] init];
-    for (int i=0; i<array.count; i++) {
-        UnReadMsg_model *unReadMsgModel = [array objectAtIndex:i];
-        //第2根节点
-        TreeView_node *node = [[TreeView_node alloc]init];
-        node.nodeLevel = 2;
-        node.type = 2;
-        node.sonNodes = nil;
-        node.isExpanded = FALSE;
-        TreeView_Level2_Model *temp =[[TreeView_Level2_Model alloc]init];
-        temp.mStr_name = unReadMsgModel.UserName;
-        //若是回复我的，显示回复内容
-        if (unReadMsgModel.MsgTabIDStr.length>0) {
-            temp.mStr_img_detail = unReadMsgModel.FeeBackMsg;
-        }else{
-            temp.mStr_img_detail = unReadMsgModel.MsgContent;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic valueForKey:@"array"];
+        int tag = [[dic valueForKey:@"tag"] intValue];
+        NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+        for (int i=0; i<array.count; i++) {
+            UnReadMsg_model *unReadMsgModel = [array objectAtIndex:i];
+            //第2根节点
+            TreeView_node *node = [[TreeView_node alloc]init];
+            node.nodeLevel = 2;
+            node.type = 2;
+            node.sonNodes = nil;
+            node.isExpanded = FALSE;
+            TreeView_Level2_Model *temp =[[TreeView_Level2_Model alloc]init];
+            temp.mStr_name = unReadMsgModel.UserName;
+            //若是回复我的，显示回复内容
+            if (unReadMsgModel.MsgTabIDStr.length>0) {
+                temp.mStr_img_detail = unReadMsgModel.FeeBackMsg;
+            }else{
+                temp.mStr_img_detail = unReadMsgModel.MsgContent;
+            }
+            
+            temp.mStr_headImg = @"root_img";
+            temp.mStr_time = unReadMsgModel.RecDate;
+            temp.mStr_TabIDStr = unReadMsgModel.TabIDStr;
+            temp.mStr_JiaoBaoHao = unReadMsgModel.JiaoBaoHao;
+            temp.mStr_MsgTabIDStr = unReadMsgModel.MsgTabIDStr;
+            node.nodeData = temp;
+            [tempArr addObject:node];
         }
-        
-        temp.mStr_headImg = @"root_img";
-        temp.mStr_time = unReadMsgModel.RecDate;
-        temp.mStr_TabIDStr = unReadMsgModel.TabIDStr;
-        temp.mStr_JiaoBaoHao = unReadMsgModel.JiaoBaoHao;
-        temp.mStr_MsgTabIDStr = unReadMsgModel.MsgTabIDStr;
-        node.nodeData = temp;
-        [tempArr addObject:node];
+        if (tag == 6) {
+            TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
+            TreeView_node *node6 = [node0.sonNodes objectAtIndex:0];
+            node6.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        }else if (tag == 8){
+            TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
+            TreeView_node *node8 = [node1.sonNodes objectAtIndex:0];
+            node8.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        }else if (tag == 9){
+            TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
+            TreeView_node *node9 = [node1.sonNodes objectAtIndex:1];
+            node9.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        }else if (tag == 2){
+            TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
+            node2.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        }else if (tag == 4){
+            TreeView_node *node4 = [self.mArr_sumData objectAtIndex:4];
+            node4.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        }else if (tag == 7){
+            TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
+            TreeView_node *node7 = [node0.sonNodes objectAtIndex:1];
+            node7.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        }
+        [self reloadDataForDisplayArray];
+    }else{
+        [MBProgressHUD showError:@"" toView:self];
     }
-    if (tag == 6) {
-        TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
-        TreeView_node *node6 = [node0.sonNodes objectAtIndex:0];
-        node6.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    }else if (tag == 8){
-        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
-        TreeView_node *node8 = [node1.sonNodes objectAtIndex:0];
-        node8.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    }else if (tag == 9){
-        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
-        TreeView_node *node9 = [node1.sonNodes objectAtIndex:1];
-        node9.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    }else if (tag == 2){
-        TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
-        node2.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    }else if (tag == 4){
-        TreeView_node *node4 = [self.mArr_sumData objectAtIndex:4];
-        node4.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    }else if (tag == 7){
-        TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
-        TreeView_node *node7 = [node0.sonNodes objectAtIndex:1];
-        node7.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    }
-    [self reloadDataForDisplayArray];
+    
 }
 //添加数据
 -(void)addData{

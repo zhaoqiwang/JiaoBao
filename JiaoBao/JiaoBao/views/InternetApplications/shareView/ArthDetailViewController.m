@@ -135,14 +135,20 @@
 
 //获取文章的附加信息回调
 -(void)GetArthInfo:(NSNotification *)noti{
-    GetArthInfoModel *model = noti.object;
-    self.mModel_arthInfo = model;
-    //判断文章是否有评论
-    if (self.mModel_arthInfo.FeeBackCount>0) {
-        //获取文章评论
-        [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
+    [MBProgressHUD hideHUDForView:self.view];
+    NSString *flag = [noti.object objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        GetArthInfoModel *model = [noti.object objectForKey:@"model"];
+        self.mModel_arthInfo = model;
+        //判断文章是否有评论
+        if (self.mModel_arthInfo.FeeBackCount>0) {
+            //获取文章评论
+            [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
+        }
+        [self setArthInfo];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-    [self setArthInfo];
 }
 
 //点击发送按钮
@@ -205,54 +211,69 @@
     NSString *uid = [dic objectForKey:@"uid"];
     NSString *tp = [dic objectForKey:@"tp"];
     NSString *name = [dic objectForKey:@"name"];
-    [MBProgressHUD showSuccess:name toView:self.view];
-    //循环当前显示数组
-    for (int i=0; i<self.mModel_commentList.commentsList.count; i++) {
-        commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:i];
-        if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==0) {
-            model.CaiCount = [NSString stringWithFormat:@"%d",[model.CaiCount intValue]+1];
-        }else if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==1){
-            model.LikeCount = [NSString stringWithFormat:@"%d",[model.LikeCount intValue]+1];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        [MBProgressHUD showSuccess:name toView:self.view];
+        //循环当前显示数组
+        for (int i=0; i<self.mModel_commentList.commentsList.count; i++) {
+            commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:i];
+            if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==0) {
+                model.CaiCount = [NSString stringWithFormat:@"%d",[model.CaiCount intValue]+1];
+            }else if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==1){
+                model.LikeCount = [NSString stringWithFormat:@"%d",[model.LikeCount intValue]+1];
+            }
         }
-    }
-    //循环引用数组
-    for (int i=0; i<self.mModel_commentList.refcomments.count; i++) {
-        refcommentsModel *model = [self.mModel_commentList.refcomments objectAtIndex:i];
-        if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==0) {
-            model.CaiCount = [NSString stringWithFormat:@"%d",[model.CaiCount intValue]+1];
-        }else if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==1){
-            model.LikeCount = [NSString stringWithFormat:@"%d",[model.LikeCount intValue]+1];
+        //循环引用数组
+        for (int i=0; i<self.mModel_commentList.refcomments.count; i++) {
+            refcommentsModel *model = [self.mModel_commentList.refcomments objectAtIndex:i];
+            if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==0) {
+                model.CaiCount = [NSString stringWithFormat:@"%d",[model.CaiCount intValue]+1];
+            }else if ([model.TabIDStr isEqual:uid]&&[tp intValue] ==1){
+                model.LikeCount = [NSString stringWithFormat:@"%d",[model.LikeCount intValue]+1];
+            }
         }
+        [self.mTableV_detail reloadData];
+    }else{
+        [MBProgressHUD showError:name toView:self.view];
     }
-    [self.mTableV_detail reloadData];
 }
 
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    NSString *flag = [noti.object objectForKey:@"flag"];
     NSString *str = [noti.object objectForKey:@"str"];
-    [MBProgressHUD showSuccess:str toView:self.view];
-    self.mModel_arthInfo.LikeCount = self.mModel_arthInfo.LikeCount+1;
-    self.mModel_arthInfo.Likeflag = -1;
-    self.mModel.Likeflag = @"1";
-    //点赞个数
-    self.mLab_like.text = [NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount];
-    //赞图标
-    self.mImgV_like.image = [UIImage imageNamed:[NSString stringWithFormat:@"share_likeBig_1"]];
+    if ([flag integerValue]==0) {
+        [MBProgressHUD showSuccess:str toView:self.view];
+        self.mModel_arthInfo.LikeCount = self.mModel_arthInfo.LikeCount+1;
+        self.mModel_arthInfo.Likeflag = -1;
+        self.mModel.Likeflag = @"1";
+        //点赞个数
+        self.mLab_like.text = [NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount];
+        //赞图标
+        self.mImgV_like.image = [UIImage imageNamed:[NSString stringWithFormat:@"share_likeBig_1"]];
+    }else{
+        [MBProgressHUD showError:str toView:self.view];
+    }
 }
 
 //文章评论
 -(void)AirthAddComment:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    NSString *flag = [noti.object objectForKey:@"flag"];
     NSString *str = [noti.object objectForKey:@"str"];
-    if ([str isEqualToString:@"评论成功"]) {
-        self.mTextF_text.text = @"";
+    if ([flag integerValue]==0) {
+        if ([str isEqualToString:@"评论成功"]) {
+            self.mTextF_text.text = @"";
+        }
+        //获取文章评论
+        [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
+        [self progressViewShow:@"评论成功，刷新列表中"];
+        [self.mModel_commentList.commentsList removeAllObjects];
+        [self.mModel_commentList.refcomments removeAllObjects];
+    }else{
+        [MBProgressHUD showError:str toView:self.view];
     }
-    //获取文章评论
-    [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
-    [self progressViewShow:@"评论成功，刷新列表中"];
-    [self.mModel_commentList.commentsList removeAllObjects];
-    [self.mModel_commentList.refcomments removeAllObjects];
 }
 
 //获取到头像后，更新界面
@@ -265,31 +286,37 @@
 //将获取到的评论列表传到界面
 -(void)AirthCommentsList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    CommentsListObjModel *model = noti.object;
-    if (self.mModel_commentList.commentsList.count==0) {
-        self.mModel_commentList = model;
-    }else{
-        //添加数组
-        [self.mModel_commentList.commentsList addObjectsFromArray:model.commentsList];
-        //将引用去重
-        for (int i=0; i<model.refcomments.count; i++) {
-            int a=0;
-            refcommentsModel *tempRef = [model.refcomments objectAtIndex:i];
-            for (int m=0; m<self.mModel_commentList.refcomments.count; m++) {
-                refcommentsModel *tempRef2 = [self.mModel_commentList.refcomments objectAtIndex:m];
-                if ([tempRef.TabIDStr isEqual:tempRef2.TabIDStr]) {
-                    a++;
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        CommentsListObjModel *model = [dic objectForKey:@"model"];
+        if (self.mModel_commentList.commentsList.count==0) {
+            self.mModel_commentList = model;
+        }else{
+            //添加数组
+            [self.mModel_commentList.commentsList addObjectsFromArray:model.commentsList];
+            //将引用去重
+            for (int i=0; i<model.refcomments.count; i++) {
+                int a=0;
+                refcommentsModel *tempRef = [model.refcomments objectAtIndex:i];
+                for (int m=0; m<self.mModel_commentList.refcomments.count; m++) {
+                    refcommentsModel *tempRef2 = [self.mModel_commentList.refcomments objectAtIndex:m];
+                    if ([tempRef.TabIDStr isEqual:tempRef2.TabIDStr]) {
+                        a++;
+                    }
+                }
+                if (a==0) {
+                    [self.mModel_commentList.refcomments addObject:tempRef];
                 }
             }
-            if (a==0) {
-                [self.mModel_commentList.refcomments addObject:tempRef];
-            }
         }
+        
+        [self.mTableV_detail reloadData];
+        //设置布局
+        [self setFrame];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-    
-    [self.mTableV_detail reloadData];
-    //设置布局
-    [self setFrame];
 }
 
 //设置界面布局
@@ -334,80 +361,81 @@
 //文章详情通知
 -(void)ArthDetai:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    if (self.mInt_from == 2) {
-        self.mModel_notice = noti.object;
-        NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-        for (int i=320; i<1000; i++) {
-            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
-            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        if (self.mInt_from == 2) {
+            self.mModel_notice = [dic objectForKey:@"model"];
+            NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
+            for (int i=320; i<1000; i++) {
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
+            }
+            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
+            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
+            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
+            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
+            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+            //标题
+            CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel_notice.Subject] sizeWithFont:[UIFont systemFontOfSize:14]];
+            self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
+            self.mLab_title.text = self.mModel_notice.Subject;
+            //作者
+            CGSize nameSize = [[NSString stringWithFormat:@"作者:%@",self.mModel_notice.UserName] sizeWithFont:[UIFont systemFontOfSize:13]];
+            self.mLab_name.frame = CGRectMake(5, self.mLab_title.frame.origin.y+self.mLab_title.frame.size.height+5, nameSize.width, nameSize.height);
+            self.mLab_name.text = [NSString stringWithFormat:@"作者:%@",self.mModel_notice.UserName];
+            //时间
+            CGSize timeSize = [self.mModel_notice.Recdate sizeWithFont:[UIFont systemFontOfSize:13]];
+            self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
+            self.mLab_time.text = self.mModel_notice.Recdate;
+            //内容
+            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+            D("detail.url-====%@",str);
+            [self.mWebV_js loadHTMLString:str baseURL:baseURL];
+        }else{
+            self.mModel = [dic objectForKey:@"model"];
+            //        NSString *str = self.mModel.Context;
+            NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
+            for (int i=320; i<1000; i++) {
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
+            }
+            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
+            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
+            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
+            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
+            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+            
+            //标题
+            CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
+            self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
+            self.mLab_title.text = self.mModel.Title;
+            //作者
+            CGSize nameSize = [[NSString stringWithFormat:@"作者:%@",self.mModel.UserName] sizeWithFont:[UIFont systemFontOfSize:13]];
+            self.mLab_name.frame = CGRectMake(5, self.mLab_title.frame.origin.y+self.mLab_title.frame.size.height+5, nameSize.width, nameSize.height);
+            self.mLab_name.text = [NSString stringWithFormat:@"作者:%@",self.mModel.UserName];
+            //时间
+            CGSize timeSize = [self.mModel.RecDate sizeWithFont:[UIFont systemFontOfSize:13]];
+            self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
+            self.mLab_time.text = self.mModel.RecDate;
+            //内容
+            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+            D("url-====%@",str);
+            [self.mWebV_js loadHTMLString:str baseURL:baseURL];
         }
-        str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
-        str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
-        str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
-        str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
-        str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
-        //标题
-        CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel_notice.Subject] sizeWithFont:[UIFont systemFontOfSize:14]];
-        self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
-        self.mLab_title.text = self.mModel_notice.Subject;
-        //作者
-        CGSize nameSize = [[NSString stringWithFormat:@"作者:%@",self.mModel_notice.UserName] sizeWithFont:[UIFont systemFontOfSize:13]];
-        self.mLab_name.frame = CGRectMake(5, self.mLab_title.frame.origin.y+self.mLab_title.frame.size.height+5, nameSize.width, nameSize.height);
-        self.mLab_name.text = [NSString stringWithFormat:@"作者:%@",self.mModel_notice.UserName];
-        //时间
-        CGSize timeSize = [self.mModel_notice.Recdate sizeWithFont:[UIFont systemFontOfSize:13]];
-        self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
-        self.mLab_time.text = self.mModel_notice.Recdate;
-        //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
-        NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-        D("detail.url-====%@",str);
-        [self.mWebV_js loadHTMLString:str baseURL:baseURL];
     }else{
-        self.mModel = noti.object;
-//        NSString *str = self.mModel.Context;
-        NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-        for (int i=320; i<1000; i++) {
-            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
-            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
-        }
-        str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
-        str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
-        str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
-        str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
-        str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-        str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
-        
-        //标题
-        CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
-        self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
-        self.mLab_title.text = self.mModel.Title;
-        //作者
-        CGSize nameSize = [[NSString stringWithFormat:@"作者:%@",self.mModel.UserName] sizeWithFont:[UIFont systemFontOfSize:13]];
-        self.mLab_name.frame = CGRectMake(5, self.mLab_title.frame.origin.y+self.mLab_title.frame.size.height+5, nameSize.width, nameSize.height);
-        self.mLab_name.text = [NSString stringWithFormat:@"作者:%@",self.mModel.UserName];
-        //时间
-        CGSize timeSize = [self.mModel.RecDate sizeWithFont:[UIFont systemFontOfSize:13]];
-        self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
-        self.mLab_time.text = self.mModel.RecDate;
-        //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
-        NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-        D("url-====%@",str);
-        [self.mWebV_js loadHTMLString:str baseURL:baseURL];
+        [MBProgressHUD showError:@"获取文章详情超时" toView:self.view];
     }
-    
-    
-//    NSString *url = @"http://www.enoya.com/stock-4031539-1-1.html";
-//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-//    [self.mWebV_js loadRequest:request];
 }
 
 //获取宽度已经适配于webView的html。这里的原始html也可以通过js从webView里获取

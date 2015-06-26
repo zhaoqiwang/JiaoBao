@@ -125,30 +125,35 @@
     [self.mTableV_detailist footerEndRefreshing];
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-    NSMutableArray *array = [dic valueForKey:@"array"];
-    if (self.mInt_page == 1) {
-        if (array.count>0) {
-            [self.mArr_detail removeAllObjects];
-            self.mArr_detail = [NSMutableArray arrayWithArray:array];
-        }
-        if (array.count==20) {
-            [self.mTableV_detailist addFooterWithTarget:self action:@selector(footerRereshing)];
-            self.mTableV_detailist.footerPullToRefreshText = @"上拉加载更多";
-            self.mTableV_detailist.footerReleaseToRefreshText = @"松开加载更多数据";
-            self.mTableV_detailist.footerRefreshingText = @"正在加载...";
-        }
-    }else{
-        if (array.count>0) {
-            for (int i=0; i<array.count; i++) {
-                UnReadMsg_model *unReadMsgModel = [array objectAtIndex:i];
-                [self.mArr_detail addObject:unReadMsgModel];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic valueForKey:@"array"];
+        if (self.mInt_page == 1) {
+            if (array.count>0) {
+                [self.mArr_detail removeAllObjects];
+                self.mArr_detail = [NSMutableArray arrayWithArray:array];
+            }
+            if (array.count==20) {
+                [self.mTableV_detailist addFooterWithTarget:self action:@selector(footerRereshing)];
+                self.mTableV_detailist.footerPullToRefreshText = @"上拉加载更多";
+                self.mTableV_detailist.footerReleaseToRefreshText = @"松开加载更多数据";
+                self.mTableV_detailist.footerRefreshingText = @"正在加载...";
+            }
+        }else{
+            if (array.count>0) {
+                for (int i=0; i<array.count; i++) {
+                    UnReadMsg_model *unReadMsgModel = [array objectAtIndex:i];
+                    [self.mArr_detail addObject:unReadMsgModel];
+                }
+            }
+            if (array.count<20) {
+                [self.mTableV_detailist removeFooter];
             }
         }
-        if (array.count<20) {
-            [self.mTableV_detailist removeFooter];
-        }
+        [self.mTableV_detailist reloadData];
+    }else{
+        [MBProgressHUD showError:@"获取失败" toView:self.view];
     }
-    [self.mTableV_detailist reloadData];
 }
 //导航条返回按钮
 -(void)myNavigationGoback{

@@ -137,19 +137,26 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 //获取到文章的通知
 -(void)TopArthListIndex:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    NSMutableArray *array = noti.object;
-    if (self.mInt_index > 1) {
-        if (array.count>0) {
-            [self.mArr_list addObjectsFromArray:array];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue] ==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (self.mInt_index > 1) {
+            if (array.count>0) {
+                [self.mArr_list addObjectsFromArray:array];
+            }
+        }else{
+            self.mArr_list = [NSMutableArray arrayWithArray:array];
         }
+        //刷新，布局
+        [self.mTableV_arth reloadData];
+        self.mTableV_arth.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y, self.mTableV_arth.frame.size.width, self.mArr_list.count*70);
+        self.mBtn_add.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y+self.mTableV_arth.frame.size.height, [dm getInstance].width, self.mBtn_add.frame.size.height);
+        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mBtn_add.frame.origin.y+self.mBtn_add.frame.size.height);
     }else{
-        self.mArr_list = [NSMutableArray arrayWithArray:array];
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-    //刷新，布局
-    [self.mTableV_arth reloadData];
-    self.mTableV_arth.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y, self.mTableV_arth.frame.size.width, self.mArr_list.count*70);
-    self.mBtn_add.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y+self.mTableV_arth.frame.size.height, [dm getInstance].width, self.mBtn_add.frame.size.height);
-    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mBtn_add.frame.origin.y+self.mBtn_add.frame.size.height);
+    
 }
 
 //加载更多按钮

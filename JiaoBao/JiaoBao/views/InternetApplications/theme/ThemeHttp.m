@@ -611,12 +611,12 @@ static ThemeHttp *themeHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:code forKey:@"ResultCode"];
         [dic setValue:ResultDesc forKey:@"ResultDesc"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAtt" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAtt" object:dic];
     }else if (_request.tag == 18) {//取消主题关注
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:code forKey:@"ResultCode"];
         [dic setValue:ResultDesc forKey:@"ResultDesc"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAtt" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAtt" object:dic];
     }
 }
 //请求失败

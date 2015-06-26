@@ -134,28 +134,33 @@
 //将获取到的评论列表传到界面
 -(void)AirthCommentsList2:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    CommentsListObjModel *model = [noti.object objectForKey:@"model"];
-    NSString *tableID = [noti.object objectForKey:@"tableID"];
-    
-    if (self.mInt_unit_class == 3){
-        for (int i=0; i<self.mArr_list_class.count; i++) {
-            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
+    NSString *flag = [noti.object objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        CommentsListObjModel *model = [noti.object objectForKey:@"model"];
+        NSString *tableID = [noti.object objectForKey:@"tableID"];
+        
+        if (self.mInt_unit_class == 3){
+            for (int i=0; i<self.mArr_list_class.count; i++) {
+                ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
+            }
+        }else{
+            for (int i=0; i<self.mArr_list.count; i++) {
+                ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    break;
+                }
             }
         }
+        
+        [self.mTableV_list reloadData];
     }else{
-        for (int i=0; i<self.mArr_list.count; i++) {
-            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
-                break;
-            }
-        }
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
-    
-    [self.mTableV_list reloadData];
 }
 
 //点击弹出框中的赞或者评论按钮
@@ -204,63 +209,74 @@
 //文章评论
 -(void)AirthAddComment:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    NSString *flag = [noti.object objectForKey:@"flag"];
     NSString *str = [noti.object objectForKey:@"str"];
-    NSString *tableID = [noti.object objectForKey:@"tableID"];
-    NSString *comment = [noti.object objectForKey:@"comment"];
-    
-    commentsListModel *tempModel = [[commentsListModel alloc] init];
-    tempModel.UserName = [dm getInstance].name;
-    if (self.mTextF_text.text.length==0) {
-        tempModel.Commnets = comment;
-    }else{
-        tempModel.Commnets = self.mTextF_text.text;
-    }
-    
-    if ([str isEqualToString:@"评论成功"]) {
-        self.mTextF_text.text = @"";
-    }
-    if (self.mInt_unit_class == 3){
-        for (int i=0; i<self.mArr_list_class.count; i++) {
-            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
+    if ([flag integerValue]==0) {
+        NSString *tableID = [noti.object objectForKey:@"tableID"];
+        NSString *comment = [noti.object objectForKey:@"comment"];
+        
+        commentsListModel *tempModel = [[commentsListModel alloc] init];
+        tempModel.UserName = [dm getInstance].name;
+        if (self.mTextF_text.text.length==0) {
+            tempModel.Commnets = comment;
+        }else{
+            tempModel.Commnets = self.mTextF_text.text;
+        }
+        
+        if ([str isEqualToString:@"评论成功"]) {
+            self.mTextF_text.text = @"";
+        }
+        if (self.mInt_unit_class == 3){
+            for (int i=0; i<self.mArr_list_class.count; i++) {
+                ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
+            }
+        }else{
+            for (int i=0; i<self.mArr_list.count; i++) {
+                ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:tableID]) {
+                    [classModel.mArr_comment insertObject:tempModel atIndex:0];
+                    break;
+                }
             }
         }
+        [self.mTableV_list reloadData];
     }else{
-        for (int i=0; i<self.mArr_list.count; i++) {
-            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:tableID]) {
-                [classModel.mArr_comment insertObject:tempModel atIndex:0];
-                break;
-            }
-        }
+        [MBProgressHUD showError:str toView:self.view];
     }
-    [self.mTableV_list reloadData];
 }
 
 //获取文章的附加信息回调
 -(void)GetArthInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    GetArthInfoModel *model = noti.object;
-    //判断是否需要点赞请求
-    [self sendLike:model];
-    if (self.mInt_unit_class == 3){
-        for (int i=0; i<self.mArr_list_class.count; i++) {
-            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        GetArthInfoModel *model = [dic objectForKey:@"model"];
+        //判断是否需要点赞请求
+        [self sendLike:model];
+        if (self.mInt_unit_class == 3){
+            for (int i=0; i<self.mArr_list_class.count; i++) {
+                ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
+            }
+        }else{
+            for (int i=0; i<self.mArr_list.count; i++) {
+                ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
+                    classModel.mModel_info = model;
+                    break;
+                }
             }
         }
     }else{
-        for (int i=0; i<self.mArr_list.count; i++) {
-            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
-                classModel.mModel_info = model;
-                break;
-            }
-        }
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
 }
 
@@ -281,30 +297,35 @@
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    NSString *flag = [noti.object objectForKey:@"flag"];
     NSString *str = [noti.object objectForKey:@"str"];
-    [MBProgressHUD showSuccess:str toView:self.view];
-    //
-    NSString *aid = [noti.object objectForKey:@"aid"];
-    if (self.mInt_unit_class == 3){
-        for (int i=0; i<self.mArr_list_class.count; i++) {
-            ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
+    if ([flag integerValue]==0) {
+        [MBProgressHUD showSuccess:str toView:self.view];
+        //
+        NSString *aid = [noti.object objectForKey:@"aid"];
+        if (self.mInt_unit_class == 3){
+            for (int i=0; i<self.mArr_list_class.count; i++) {
+                ClassModel *classModel = [self.mArr_list_class objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
+            }
+        }else{
+            for (int i=0; i<self.mArr_list.count; i++) {
+                ClassModel *classModel = [self.mArr_list objectAtIndex:i];
+                if ([classModel.TabIDStr isEqual:aid]) {
+                    classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
+                    classModel.mModel_info.Likeflag = -1;
+                    break;
+                }
             }
         }
+        [self.mTableV_list reloadData];
     }else{
-        for (int i=0; i<self.mArr_list.count; i++) {
-            ClassModel *classModel = [self.mArr_list objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.LikeCount = [NSString stringWithFormat:@"%d",[classModel.LikeCount intValue]+1];
-                classModel.mModel_info.Likeflag = -1;
-                break;
-            }
-        }
+        [MBProgressHUD showError:str toView:self.view];
     }
-    [self.mTableV_list reloadData];
 }
 
 //获取到头像后，更新界面

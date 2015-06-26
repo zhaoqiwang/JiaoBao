@@ -277,15 +277,21 @@
 //获取到文章的通知
 -(void)themeSpace:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    NSMutableArray *array = noti.object;
-    if (self.mInt_index > 1) {
-        if (array.count>0) {
-            [self.mArr_list addObjectsFromArray:array];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (self.mInt_index > 1) {
+            if (array.count>0) {
+                [self.mArr_list addObjectsFromArray:array];
+            }
+            [self tableviewReload:(int)array.count];
+        }else{
+            self.mArr_list = [NSMutableArray arrayWithArray:array];
+            [self tableviewReload:(int)array.count];
         }
-        [self tableviewReload:(int)array.count];
     }else{
-        self.mArr_list = [NSMutableArray arrayWithArray:array];
-        [self tableviewReload:(int)array.count];
+        [MBProgressHUD showError:@"超时" toView:self.view];
     }
 }
 

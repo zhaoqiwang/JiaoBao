@@ -122,6 +122,8 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
     }else if ([flag isEqual:@"2"]){
         UnitSectionMessageModel *model = [self.mArr_unit objectAtIndex:1];
         model.MessageCount = count;
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
     [self.mCollectionV_unit reloadData];
 }
@@ -151,17 +153,24 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 //加载获取到得单位
 -(void)getUnitInfoShow:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    NSMutableArray *array = noti.object;
-    //未读数量标记
-    for (int i=0; i<array.count; i++) {
-        UnitSectionMessageModel *model = [array objectAtIndex:i];
-        [dm getInstance].mImt_showUnRead = [dm getInstance].mImt_showUnRead + [model.MessageCount intValue];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"showUnReadMSG" object:nil];
+    
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        //未读数量标记
+        for (int i=0; i<array.count; i++) {
+            UnitSectionMessageModel *model = [array objectAtIndex:i];
+            [dm getInstance].mImt_showUnRead = [dm getInstance].mImt_showUnRead + [model.MessageCount intValue];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"showUnReadMSG" object:nil];
+        }
+        [self.mArr_unit addObjectsFromArray:array];
+        //重置界面
+        [self.mCollectionV_unit reloadData];
+        [self reSetFrame];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    [self.mArr_unit addObjectsFromArray:array];
-    //重置界面
-    [self.mCollectionV_unit reloadData];
-    [self reSetFrame];
 }
 
 //获取到个人信息的通知，然后请求单位信息
@@ -180,50 +189,55 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 -(void)getUnitClassShow:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
-    int index = [[dic objectForKey:@"index"] intValue];
-    NSArray *array = [dic objectForKey:@"array"];
-    NSMutableArray *tempArr = [NSMutableArray array];
-    
-    if (index == 1) {//关联的班级
-        for (int i=0; i<array.count; i++) {
-            UserClassModel *model = [array objectAtIndex:i];
-            //第1根节点
-            TreeView_node *node = [[TreeView_node alloc]init];
-            node.nodeLevel = 1;
-            node.type = 1;
-            node.sonNodes = nil;
-            node.isExpanded = FALSE;
-            TreeView_Level0_Model *temp =[[TreeView_Level0_Model alloc]init];
-            temp.mStr_name = model.ClassName;
-            temp.mStr_classID = model.ClassID;
-            temp.mStr_headImg = @"share_tableV_class";
-            node.nodeData = temp;
-            [tempArr addObject:node];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        int index = [[dic objectForKey:@"index"] intValue];
+        NSArray *array = [dic objectForKey:@"array"];
+        NSMutableArray *tempArr = [NSMutableArray array];
+        
+        if (index == 1) {//关联的班级
+            for (int i=0; i<array.count; i++) {
+                UserClassModel *model = [array objectAtIndex:i];
+                //第1根节点
+                TreeView_node *node = [[TreeView_node alloc]init];
+                node.nodeLevel = 1;
+                node.type = 1;
+                node.sonNodes = nil;
+                node.isExpanded = FALSE;
+                TreeView_Level0_Model *temp =[[TreeView_Level0_Model alloc]init];
+                temp.mStr_name = model.ClassName;
+                temp.mStr_classID = model.ClassID;
+                temp.mStr_headImg = @"share_tableV_class";
+                node.nodeData = temp;
+                [tempArr addObject:node];
+            }
+            TreeView_node *node0 = [self.mArr_class objectAtIndex:1];
+            node0.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        } else {//所有班级
+            for (int i=0; i<array.count; i++) {
+                UserSumClassModel *model = [array objectAtIndex:i];
+                //第1根节点
+                TreeView_node *node = [[TreeView_node alloc]init];
+                node.nodeLevel = 1;
+                node.type = 1;
+                node.sonNodes = nil;
+                node.isExpanded = FALSE;
+                TreeView_Level0_Model *temp =[[TreeView_Level0_Model alloc]init];
+                temp.mStr_name = model.ClsName;
+                temp.mStr_headImg = @"share_tableV_class";
+                temp.mStr_classID = model.TabID;
+                temp.mInt_number = [model.ArtUpdate intValue];
+                //            temp.mStr_TabIDStr = model.TabID;
+                node.nodeData = temp;
+                [tempArr addObject:node];
+            }
+            TreeView_node *node0 = [self.mArr_class objectAtIndex:2];
+            node0.sonNodes = [NSMutableArray arrayWithArray:tempArr];
         }
-        TreeView_node *node0 = [self.mArr_class objectAtIndex:1];
-        node0.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-    } else {//所有班级
-        for (int i=0; i<array.count; i++) {
-            UserSumClassModel *model = [array objectAtIndex:i];
-            //第1根节点
-            TreeView_node *node = [[TreeView_node alloc]init];
-            node.nodeLevel = 1;
-            node.type = 1;
-            node.sonNodes = nil;
-            node.isExpanded = FALSE;
-            TreeView_Level0_Model *temp =[[TreeView_Level0_Model alloc]init];
-            temp.mStr_name = model.ClsName;
-            temp.mStr_headImg = @"share_tableV_class";
-            temp.mStr_classID = model.TabID;
-            temp.mInt_number = [model.ArtUpdate intValue];
-            //            temp.mStr_TabIDStr = model.TabID;
-            node.nodeData = temp;
-            [tempArr addObject:node];
-        }
-        TreeView_node *node0 = [self.mArr_class objectAtIndex:2];
-        node0.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+        [self reloadDataForDisplayArray];
+    }else{
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    [self reloadDataForDisplayArray];
 }
 /*---------------------------------------
  初始化将要显示的cell的数据
@@ -355,16 +369,22 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
 //最新更新、推荐的通知
 -(void)TopArthListIndexShow:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    NSMutableArray *array = noti.object;
-    if (self.mInt_index > 1) {
-        if (array.count>0) {
-            [self.mArr_tabel addObjectsFromArray:array];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (self.mInt_index > 1) {
+            if (array.count>0) {
+                [self.mArr_tabel addObjectsFromArray:array];
+            }
+        }else{
+            self.mArr_tabel = [NSMutableArray arrayWithArray:array];
         }
+        //刷新，布局
+        [self clickUnitResetFrame];
     }else{
-        self.mArr_tabel = [NSMutableArray arrayWithArray:array];
+        [MBProgressHUD showError:@"超时" toView:self];
     }
-    //刷新，布局
-    [self clickUnitResetFrame];
 }
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{

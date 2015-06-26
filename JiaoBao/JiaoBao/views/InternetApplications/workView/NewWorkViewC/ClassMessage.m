@@ -16,11 +16,6 @@ NSString *kCell = @"Forward_cell2";
 - (instancetype)initWithFrame:(CGRect)frame
 {
    self = [super initWithFrame:frame];
-
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selSecBtn:) name:@"selSecBtn" object:nil];
 
 

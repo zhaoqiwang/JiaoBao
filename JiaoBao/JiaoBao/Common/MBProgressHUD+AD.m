@@ -24,7 +24,7 @@
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:1.0];
+    [hud hide:YES afterDelay:2.0];
 }
 
 #pragma mark 显示提醒文字（不带成功与否标志）
@@ -38,6 +38,9 @@
 
 #pragma mark 显示错误信息
 + (void)showError:(NSString *)error toView:(UIView *)view{
+    if (error.length==0) {
+        error = @"超时";
+    }
     [self show:error icon:@"error.png" view:view];
 }
 

@@ -66,6 +66,7 @@
 }
 
 -(void)GetCommPerm:(id)sender{
+    [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = [sender object];
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag intValue] ==0) {//成功
@@ -109,30 +110,33 @@
 -(void)creatCommMsg:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     NSString *str = noti.object;
-    [MBProgressHUD showSuccess:str toView:self];
-    self.mViewTop.mTextV_input.text = @"";
-    [self.mViewTop.mArr_accessory removeAllObjects];
-    //[self.mArr_photo removeAllObjects];
-    //刷新界面
-    [self.mViewTop addAccessoryPhoto];
-    //刷新界面
-    [self refreshMoreUnitView];
-    //重置数据
-    for (TreeView_node *node in self.mArr_sumData) {
-        node.mInt_select = 0;
-        for(TreeView_node *node2 in node.sonNodes){
-            node2.mInt_select = 0;
-            for(TreeView_node *node3 in node2.sonNodes){
-                node3.mInt_select = 0;
-                for(TreeView_node *node4 in node3.sonNodes){
-                    node4.mInt_select = 0;
+    if ([str integerValue]==1) {
+        [MBProgressHUD showError:@"超时" toView:self];
+    }else{
+        [MBProgressHUD showSuccess:str toView:self];
+        self.mViewTop.mTextV_input.text = @"";
+        [self.mViewTop.mArr_accessory removeAllObjects];
+        //[self.mArr_photo removeAllObjects];
+        //刷新界面
+        [self.mViewTop addAccessoryPhoto];
+        //刷新界面
+        [self refreshMoreUnitView];
+        //重置数据
+        for (TreeView_node *node in self.mArr_sumData) {
+            node.mInt_select = 0;
+            for(TreeView_node *node2 in node.sonNodes){
+                node2.mInt_select = 0;
+                for(TreeView_node *node3 in node2.sonNodes){
+                    node3.mInt_select = 0;
+                    for(TreeView_node *node4 in node3.sonNodes){
+                        node4.mInt_select = 0;
+                    }
                 }
             }
         }
+        //刷新
+        [self reloadDataForDisplayArray];
     }
-    //刷新
-    [self reloadDataForDisplayArray];
-    
 }
 
 -(void)sendRequest{
@@ -262,119 +266,126 @@
 //通知界面更新，获取事务信息接收单位列表
 -(void)CommMsgRevicerUnitList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    self.mModel_unitList = noti.object;
-    //判断是否只有当前一个单位
-    if (self.mModel_unitList.UnitParents.count==0&&self.mModel_unitList.subUnits.count==0) {
-        [self.mArr_sumData removeAllObjects];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        self.mModel_unitList = [dic objectForKey:@"model"];
+        //判断是否只有当前一个单位
+        if (self.mModel_unitList.UnitParents.count==0&&self.mModel_unitList.subUnits.count==0) {
+            [self.mArr_sumData removeAllObjects];
+        }else{
+            //        TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
+            TreeView_node *node0;
+            for (TreeView_node *node in self.mArr_sumData) {
+                if ([node.flag isEqual:@"+1"]) {
+                    node0 = node;
+                    
+                    //当前单位
+                    myUnit *tempMyUnit= self.mModel_unitList.myUnit;
+                    //第1根节点
+                    TreeView_node *node6 = [[TreeView_node alloc]init];
+                    node6.nodeLevel = 1;
+                    node6.type = 1;
+                    node6.sonNodes = nil;
+                    node6.isExpanded = FALSE;
+                    node6.flag = tempMyUnit.TabID;
+                    node6.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node0.nodeFlag,node6.flag];
+                    NewWorkTree_model *temp6 =[[NewWorkTree_model alloc]init];
+                    temp6.mStr_name = tempMyUnit.UintName;
+                    temp6.mModel_unit = tempMyUnit;
+                    temp6.mStr_img_open_close = @"root_close";
+                    node6.nodeData = temp6;
+                    
+                    node0.sonNodes = [NSMutableArray arrayWithObjects:node6,nil];
+                }
+            }
+            
+            //上级单位
+            NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+            //        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
+            TreeView_node *node1;
+            for (TreeView_node *node in self.mArr_sumData) {
+                if ([node.flag isEqual:@"+2"]) {
+                    if (self.mModel_unitList.UnitParents.count==0) {
+                        [self.mArr_sumData removeObject:node];
+                        break;
+                    }
+                    node1 = node;
+                    
+                    //对人员进行排序
+                    self.mModel_unitList.UnitParents = [self userNameChineseSort:self.mModel_unitList.UnitParents Flag:2];
+                    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+                        myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+                        //第1根节点
+                        TreeView_node *node = [[TreeView_node alloc]init];
+                        node.nodeLevel = 1;
+                        node.type = 1;
+                        node.sonNodes = nil;
+                        node.isExpanded = FALSE;
+                        node.flag = tempUnit.TabID;
+                        node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node1.nodeFlag,node.flag];
+                        NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
+                        temp.mStr_name = tempUnit.UintName;
+                        temp.mModel_unit = tempUnit;
+                        temp.mStr_img_open_close = @"root_close";
+                        node.nodeData = temp;
+                        [tempArr addObject:node];
+                    }
+                    
+                    node1.sonNodes = [NSMutableArray arrayWithArray:tempArr];
+                }
+            }
+            
+            //下级单位
+            NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
+            //        TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
+            TreeView_node *node2;
+            for (TreeView_node *node in self.mArr_sumData) {
+                if ([node.flag isEqual:@"+3"]) {
+                    node2 = node;
+                    
+                    //判断是子类还是班级
+                    NSMutableArray *sub_unit ;
+                    if (self.mModel_unitList.subUnits.count>0) {
+                        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
+                    }else{
+                        sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
+                        NewWorkTree_model *temp2 = node2.nodeData;
+                        temp2.mStr_name = @"所有班级";
+                    }
+                    if (sub_unit.count==0) {
+                        [self.mArr_sumData removeObject:node];
+                        break;
+                    }
+                    //对人员进行排序
+                    sub_unit = [self userNameChineseSort:sub_unit Flag:2];
+                    for (int i=0; i<sub_unit.count; i++) {
+                        myUnit *tempUnit = [sub_unit objectAtIndex:i];
+                        //第1根节点
+                        TreeView_node *node = [[TreeView_node alloc]init];
+                        node.nodeLevel = 1;
+                        node.type = 1;
+                        node.sonNodes = nil;
+                        node.isExpanded = FALSE;
+                        node.flag = tempUnit.TabID;
+                        node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node2.nodeFlag,node.flag];
+                        NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
+                        temp.mStr_name = tempUnit.UintName;
+                        temp.mModel_unit = tempUnit;
+                        temp.mStr_img_open_close = @"root_close";
+                        node.nodeData = temp;
+                        [tempArr2 addObject:node];
+                    }
+                    
+                    node2.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
+                }
+            }
+        }
+        
+        [self reloadDataForDisplayArray];
     }else{
-//        TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
-        TreeView_node *node0;
-        for (TreeView_node *node in self.mArr_sumData) {
-            if ([node.flag isEqual:@"+1"]) {
-                node0 = node;
-                
-                //当前单位
-                myUnit *tempMyUnit= self.mModel_unitList.myUnit;
-                //第1根节点
-                TreeView_node *node6 = [[TreeView_node alloc]init];
-                node6.nodeLevel = 1;
-                node6.type = 1;
-                node6.sonNodes = nil;
-                node6.isExpanded = FALSE;
-                node6.flag = tempMyUnit.TabID;
-                node6.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node0.nodeFlag,node6.flag];
-                NewWorkTree_model *temp6 =[[NewWorkTree_model alloc]init];
-                temp6.mStr_name = tempMyUnit.UintName;
-                temp6.mModel_unit = tempMyUnit;
-                temp6.mStr_img_open_close = @"root_close";
-                node6.nodeData = temp6;
-                
-                node0.sonNodes = [NSMutableArray arrayWithObjects:node6,nil];
-            }
-        }
-        
-        //上级单位
-        NSMutableArray *tempArr = [[NSMutableArray alloc] init];
-//        TreeView_node *node1 = [self.mArr_sumData objectAtIndex:1];
-        TreeView_node *node1;
-        for (TreeView_node *node in self.mArr_sumData) {
-            if ([node.flag isEqual:@"+2"]) {
-                if (self.mModel_unitList.UnitParents.count==0) {
-                    [self.mArr_sumData removeObject:node];
-                    break;
-                }
-                node1 = node;
-                //对人员进行排序
-                self.mModel_unitList.UnitParents = [self userNameChineseSort:self.mModel_unitList.UnitParents Flag:2];
-                for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
-                    myUnit *tempUnit = [self.mModel_unitList.UnitParents objectAtIndex:i];
-                    //第1根节点
-                    TreeView_node *node = [[TreeView_node alloc]init];
-                    node.nodeLevel = 1;
-                    node.type = 1;
-                    node.sonNodes = nil;
-                    node.isExpanded = FALSE;
-                    node.flag = tempUnit.TabID;
-                    node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node1.nodeFlag,node.flag];
-                    NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
-                    temp.mStr_name = tempUnit.UintName;
-                    temp.mModel_unit = tempUnit;
-                    temp.mStr_img_open_close = @"root_close";
-                    node.nodeData = temp;
-                    [tempArr addObject:node];
-                }
-                
-                node1.sonNodes = [NSMutableArray arrayWithArray:tempArr];
-            }
-        }
-        
-        //下级单位
-        NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
-//        TreeView_node *node2 = [self.mArr_sumData objectAtIndex:2];
-        TreeView_node *node2;
-        for (TreeView_node *node in self.mArr_sumData) {
-            if ([node.flag isEqual:@"+3"]) {
-                node2 = node;
-                
-                //判断是子类还是班级
-                NSMutableArray *sub_unit ;
-                if (self.mModel_unitList.subUnits.count>0) {
-                    sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
-                }else{
-                    sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
-                    NewWorkTree_model *temp2 = node2.nodeData;
-                    temp2.mStr_name = @"所有班级";
-                }
-                if (sub_unit.count==0) {
-                    [self.mArr_sumData removeObject:node];
-                    break;
-                }
-                //对人员进行排序
-                sub_unit = [self userNameChineseSort:sub_unit Flag:2];
-                for (int i=0; i<sub_unit.count; i++) {
-                    myUnit *tempUnit = [sub_unit objectAtIndex:i];
-                    //第1根节点
-                    TreeView_node *node = [[TreeView_node alloc]init];
-                    node.nodeLevel = 1;
-                    node.type = 1;
-                    node.sonNodes = nil;
-                    node.isExpanded = FALSE;
-                    node.flag = tempUnit.TabID;
-                    node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node2.nodeFlag,node.flag];
-                    NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
-                    temp.mStr_name = tempUnit.UintName;
-                    temp.mModel_unit = tempUnit;
-                    temp.mStr_img_open_close = @"root_close";
-                    node.nodeData = temp;
-                    [tempArr2 addObject:node];
-                }
-                
-                node2.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
-            }
-        }
+        [MBProgressHUD showError:@"" toView:self];
     }
-    
-    [self reloadDataForDisplayArray];
 }
 
 //获取到每个单位中的人员
@@ -384,101 +395,107 @@
         [MBProgressHUD hideHUDForView:self];
     }
     NSDictionary *dic = noti.object;
-    NSString *unitID = [dic objectForKey:@"unitID"];
-    NSArray *array = [dic objectForKey:@"array"];
-    //找到当前这个单位，塞入数组
-    
-    //当前单位
-    if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
-        self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
-    }
-    //上级单位
-    for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
-        myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSString *unitID = [dic objectForKey:@"unitID"];
+        NSArray *array = [dic objectForKey:@"array"];
+        //找到当前这个单位，塞入数组
+        
+        //当前单位
+        if ([self.mModel_unitList.myUnit.TabID intValue] == [unitID intValue]) {
+            self.mModel_unitList.myUnit.list = [NSMutableArray arrayWithArray:array];
         }
-    }
-    //下级单位
-    for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
-        myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-        }
-    }
-    //班级
-    for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
-        myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
-        if ([unit.TabID intValue] == [unitID intValue]) {
-            unit.list = [NSMutableArray arrayWithArray:array];
-        }
-    }
-    //找到当前的节点
-    TreeView_node *tempNode = [[TreeView_node alloc] init];
-    for (TreeView_node *node in self.mArr_sumData) {
-        for(TreeView_node *node2 in node.sonNodes){
-            NewWorkTree_model *temp = node2.nodeData;
-            if ([temp.mModel_unit.TabID isEqual:unitID]) {
-                tempNode = node2;
-                break;
+        //上级单位
+        for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {
+            myUnit *unit = [self.mModel_unitList.UnitParents objectAtIndex:i];
+            if ([unit.TabID intValue] == [unitID intValue]) {
+                unit.list = [NSMutableArray arrayWithArray:array];
             }
-            for(TreeView_node *node3 in node2.sonNodes){
-                NewWorkTree_model *temp = node3.nodeData;
+        }
+        //下级单位
+        for (int i=0; i<self.mModel_unitList.subUnits.count; i++) {
+            myUnit *unit = [self.mModel_unitList.subUnits objectAtIndex:i];
+            if ([unit.TabID intValue] == [unitID intValue]) {
+                unit.list = [NSMutableArray arrayWithArray:array];
+            }
+        }
+        //班级
+        for (int i=0; i<self.mModel_unitList.UnitClass.count; i++) {
+            myUnit *unit = [self.mModel_unitList.UnitClass objectAtIndex:i];
+            if ([unit.TabID intValue] == [unitID intValue]) {
+                unit.list = [NSMutableArray arrayWithArray:array];
+            }
+        }
+        //找到当前的节点
+        TreeView_node *tempNode = [[TreeView_node alloc] init];
+        for (TreeView_node *node in self.mArr_sumData) {
+            for(TreeView_node *node2 in node.sonNodes){
+                NewWorkTree_model *temp = node2.nodeData;
                 if ([temp.mModel_unit.TabID isEqual:unitID]) {
-                    tempNode = node3;
+                    tempNode = node2;
                     break;
+                }
+                for(TreeView_node *node3 in node2.sonNodes){
+                    NewWorkTree_model *temp = node3.nodeData;
+                    if ([temp.mModel_unit.TabID isEqual:unitID]) {
+                        tempNode = node3;
+                        break;
+                    }
                 }
             }
         }
-    }
-    //对分组排序
-    array = [self userNameChineseSort:(NSMutableArray *)array Flag:3];
-    //往数组中塞数据
-    NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
-    for (int i=0; i<array.count; i++) {
-        UserListModel *model = [array objectAtIndex:i];
-        NewWorkTree_model *tempUnit = tempNode.nodeData;
-        //第2根节点
-        TreeView_node *node0 = [[TreeView_node alloc]init];
-        node0.nodeLevel = 2;
-        node0.type = 2;
-        node0.sonNodes = nil;
-        node0.isExpanded = FALSE;
-        node0.flag = [NSString stringWithFormat:@"%@_%d",tempUnit.mModel_unit.TabID,self.mInt_readflag];
-        node0.nodeFlag  = [NSString stringWithFormat:@"%@-%@",tempNode.nodeFlag,node0.flag];
-        NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
-        temp.mStr_name = model.GroupName;
-        temp.mModel_group = model;
-        temp.mStr_img_open_close = @"root_close";
-        node0.nodeData = temp;
-        //对人员进行排序
-        model.groupselit_selit = [self userNameChineseSort:model.groupselit_selit Flag:1];
-        //检查当前分组的子类数组
-        NSMutableArray *tempArr3 = [[NSMutableArray alloc] init];
-        for (int a=0; a<model.groupselit_selit.count; a++) {
-            groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:a];
-            //第3根节点
-            TreeView_node *node = [[TreeView_node alloc]init];
-            node.nodeLevel = 3;
-            node.type = 3;
-            node.sonNodes = nil;
-            node.isExpanded = FALSE;
-//            node.flag = [NSString stringWithFormat:@"%@_%d",tempUnit.TabID,self.mInt_readflag];
-            node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node0.nodeFlag,groupModel.AccID];
+        //对分组排序
+        array = [self userNameChineseSort:(NSMutableArray *)array Flag:3];
+        //往数组中塞数据
+        NSMutableArray *tempArr2 = [[NSMutableArray alloc] init];
+        for (int i=0; i<array.count; i++) {
+            UserListModel *model = [array objectAtIndex:i];
+            NewWorkTree_model *tempUnit = tempNode.nodeData;
+            //第2根节点
+            TreeView_node *node0 = [[TreeView_node alloc]init];
+            node0.nodeLevel = 2;
+            node0.type = 2;
+            node0.sonNodes = nil;
+            node0.isExpanded = FALSE;
+            node0.flag = [NSString stringWithFormat:@"%@_%d",tempUnit.mModel_unit.TabID,self.mInt_readflag];
+            node0.nodeFlag  = [NSString stringWithFormat:@"%@-%@",tempNode.nodeFlag,node0.flag];
             NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
-            temp.mStr_name = groupModel.Name;
-            temp.mModel_people = groupModel;
+            temp.mStr_name = model.GroupName;
+            temp.mModel_group = model;
             temp.mStr_img_open_close = @"root_close";
-            node.nodeData = temp;
-            [tempArr3 addObject:node];
+            node0.nodeData = temp;
+            //对人员进行排序
+            model.groupselit_selit = [self userNameChineseSort:model.groupselit_selit Flag:1];
+            //检查当前分组的子类数组
+            NSMutableArray *tempArr3 = [[NSMutableArray alloc] init];
+            for (int a=0; a<model.groupselit_selit.count; a++) {
+                groupselit_selitModel *groupModel = [model.groupselit_selit objectAtIndex:a];
+                //第3根节点
+                TreeView_node *node = [[TreeView_node alloc]init];
+                node.nodeLevel = 3;
+                node.type = 3;
+                node.sonNodes = nil;
+                node.isExpanded = FALSE;
+                //            node.flag = [NSString stringWithFormat:@"%@_%d",tempUnit.TabID,self.mInt_readflag];
+                node.nodeFlag  = [NSString stringWithFormat:@"%@-%@",node0.nodeFlag,groupModel.AccID];
+                NewWorkTree_model *temp =[[NewWorkTree_model alloc]init];
+                temp.mStr_name = groupModel.Name;
+                temp.mModel_people = groupModel;
+                temp.mStr_img_open_close = @"root_close";
+                node.nodeData = temp;
+                [tempArr3 addObject:node];
+            }
+            node0.sonNodes = [NSMutableArray arrayWithArray:tempArr3];
+            [tempArr2 addObject:node0];
+            self.mInt_readflag++;
         }
-        node0.sonNodes = [NSMutableArray arrayWithArray:tempArr3];
-        [tempArr2 addObject:node0];
-        self.mInt_readflag++;
+        tempNode.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
+        //刷新
+        [self reloadDataForDisplayArray];
+    }else{
+        [MBProgressHUD showError:@"" toView:self];
     }
-    tempNode.sonNodes = [NSMutableArray arrayWithArray:tempArr2];
-    //刷新
-    [self reloadDataForDisplayArray];
+    
 }
 
 //对人员1和分组2进行排序，

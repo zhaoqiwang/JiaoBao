@@ -102,41 +102,46 @@
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
-    NSString *tag = [dic objectForKey:@"tag"];
-    NSMutableArray *array = [dic objectForKey:@"array"];
-    //如果是刷新，将数据清除
-    if (self.mInt_flag == 1) {
-        if (self.mInt_index == 0) {
-            [self.mArr_sum removeAllObjects];
-        }else if (self.mInt_index == 1){
-            [self.mArr_unRead removeAllObjects];
-        }else if (self.mInt_index == 2){
-            [self.mArr_unReply removeAllObjects];
-        }else if (self.mInt_index == 3){
-            [self.mArr_reply removeAllObjects];
-        }else if (self.mInt_index == 4){
-            [self.mArr_mySend removeAllObjects];
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag integerValue]==0) {
+        NSString *tag = [dic objectForKey:@"tag"];
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        //如果是刷新，将数据清除
+        if (self.mInt_flag == 1) {
+            if (self.mInt_index == 0) {
+                [self.mArr_sum removeAllObjects];
+            }else if (self.mInt_index == 1){
+                [self.mArr_unRead removeAllObjects];
+            }else if (self.mInt_index == 2){
+                [self.mArr_unReply removeAllObjects];
+            }else if (self.mInt_index == 3){
+                [self.mArr_reply removeAllObjects];
+            }else if (self.mInt_index == 4){
+                [self.mArr_mySend removeAllObjects];
+            }
         }
-    }
-    if ([tag intValue] == 0) {
-        [self.mArr_sum addObjectsFromArray:array];
-    }else if ([tag intValue] == 6){
-        [self.mArr_unRead addObjectsFromArray:array];
-    }else if ([tag intValue] == 8){
-        [self.mArr_unReply addObjectsFromArray:array];
-    }else if ([tag intValue] == 9){
-        [self.mArr_reply addObjectsFromArray:array];
-    }else if ([tag intValue] == 2){
-        [self.mArr_mySend addObjectsFromArray:array];
-    }
-    if(self.mTableV_list.delegate == nil)
-    {
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
-        
+        if ([tag intValue] == 0) {
+            [self.mArr_sum addObjectsFromArray:array];
+        }else if ([tag intValue] == 6){
+            [self.mArr_unRead addObjectsFromArray:array];
+        }else if ([tag intValue] == 8){
+            [self.mArr_unReply addObjectsFromArray:array];
+        }else if ([tag intValue] == 9){
+            [self.mArr_reply addObjectsFromArray:array];
+        }else if ([tag intValue] == 2){
+            [self.mArr_mySend addObjectsFromArray:array];
+        }
+        if(self.mTableV_list.delegate == nil)
+        {
+            self.mTableV_list.delegate=self;
+            self.mTableV_list.dataSource=self;
+            
+        }
+        [self.mTableV_list reloadData];
+    }else{
+        [MBProgressHUD showError:@"" toView:self];
     }
     
-        [self.mTableV_list reloadData];
 }
 
 #pragma mark - TableViewdelegate&&TableViewdataSource
