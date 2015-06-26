@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *unitNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *identTypeLabel;
 @property (weak, nonatomic) IBOutlet UIView *bottomLine;
-@property (strong,nonatomic) id<unitCellDelegate> delegate;
+@property (weak,nonatomic) id<unitCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIButton *addBtn;
 
 - (IBAction)addBtnAction:(id)sender;

@@ -16,7 +16,10 @@
 @implementation ReviseNameViewController
 @synthesize mBtn_sure,mLab_nickName,mLab_trueName,mNav_navgationBar,mProgressV,mTextF_nickName,mTextF_trueName,mInt_flag;
 
-
+-(void)dealloc
+{
+    
+}
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

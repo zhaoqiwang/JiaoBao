@@ -24,6 +24,29 @@
 @end
 
 @implementation FirstRegViewController
+-(void)dealloc
+{
+    //移除通知
+    if(_observer1)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer1];
+        
+    }
+    if(_observer2)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer2];
+        
+    }
+    if(_observer3)
+    {
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer3];
+        
+    }
+    
+}
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
@@ -100,11 +123,13 @@
 }
 -(void)addNotification
 {
+    __weak FirstRegViewController *weakSelf = self;
+
     //获取图片验证码d的图片
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
-        self.urlImgV.image = image;
+        weakSelf.urlImgV.image = image;
         
         
         
@@ -114,15 +139,15 @@
         NSString *str =note.object;
         if([str isEqualToString:@"true"])//true表示手机号码没有注册
         {
-            if(self.forgetPWSymbol == YES)//如果是忘记密码的VC 则提示手机号码没有注册 并清空手机号码输入框
+            if(weakSelf.forgetPWSymbol == YES)//如果是忘记密码的VC 则提示手机号码没有注册 并清空手机号码输入框
             {
-                [self progressViewTishi:@"手机号码没有注册"];
-                self.tel.text = @"";
+                [weakSelf progressViewTishi:@"手机号码没有注册"];
+                weakSelf.tel.text = @"";
 
             }
             else//如果是注册界面vc 不用提示 手机号码是否正确的标志设置为yes
             {
-                self.telSymbol = YES;
+                weakSelf.telSymbol = YES;
 
                 
             }
@@ -131,16 +156,16 @@
         }
         else//false表示手机号码已经注册
         {
-            if(self.forgetPWSymbol == YES)//如果是忘记密码vc 手机号码是否正确的标志设置为yes
+            if(weakSelf.forgetPWSymbol == YES)//如果是忘记密码vc 手机号码是否正确的标志设置为yes
             {
-                self.telSymbol = YES;
+                weakSelf.telSymbol = YES;
                 
             }
             else//如果是注册界面vc 则提示手机号码已经被注册 并清空手机号码输入框
             {
-                [self progressViewTishi:@"手机号码已经被注册"];
-                self.tel.text = @"";
-                self.telSymbol = NO;
+                [weakSelf progressViewTishi:@"手机号码已经被注册"];
+                weakSelf.tel.text = @"";
+                weakSelf.telSymbol = NO;
 
 
 
@@ -158,17 +183,17 @@
         NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)//成功
            {
-               self.identi_code_Symbol = YES;
+               weakSelf.identi_code_Symbol = YES;
                //成功则跳转到第二个界面
                SecondRegViewController *sec = [[SecondRegViewController alloc]init];
-               sec.tel = self.tel.text;
-               sec.forgetPWSymbol = self.forgetPWSymbol;
-               [self.navigationController pushViewController:sec animated:YES];
+               sec.tel = weakSelf.tel.text;
+               sec.forgetPWSymbol = weakSelf.forgetPWSymbol;
+               [weakSelf.navigationController pushViewController:sec animated:YES];
                
            }
         else
         {
-            [self progressViewTishi:ResultDesc];
+            [weakSelf progressViewTishi:ResultDesc];
 
             //[SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
         }

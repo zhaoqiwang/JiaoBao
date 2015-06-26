@@ -21,14 +21,12 @@
 
 @implementation MyNavigationBar
 @synthesize label_Title = _label_Title;
-@synthesize delegate = _delegate;
 @synthesize roomId = _roomId;
 @synthesize roomName = _roomName;
 @synthesize img_L_H = _img_L_H;
 @synthesize img_L_N = _img_L_N;
 @synthesize img_R_H = _img_R_H;
 @synthesize img_R_N = _img_R_N;
-@synthesize btnDelegate=_btnDelegate;
 @synthesize mainTitleLabel = _mainTitleLabel;
 @synthesize subTitleLabel = _subTitleLabel;
 

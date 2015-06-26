@@ -220,6 +220,28 @@
     if ([self checkNetWork]) {
         return;
     }
+    long long fileSizeSum = 0;
+
+    for(int i=0;i<self.mViewTop.mArr_accessory.count;i++)
+    {
+        AccessoryModel *model = [self.mViewTop.mArr_accessory objectAtIndex:i];
+        long long fileSize = 0;
+        fileSize = [model.fileAttributeDic fileSize];
+        fileSizeSum = fileSizeSum +fileSize;
+        
+    }
+    D("fileSizeSum = %lld",fileSizeSum);
+    
+    if(fileSizeSum>10000000)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"上传文件不能大于10M";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
+
     if (self.mViewTop.mTextV_input.text.length == 0) {
         self.mProgressV.mode = MBProgressHUDModeCustomView;
         self.mProgressV.labelText = @"请输入内容";
@@ -258,7 +280,13 @@
         return;
     }
     //发表
-    [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:self.mViewTop.mArr_accessory];
+    NSMutableArray *array0 = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<self.mViewTop.mArr_accessory.count;i++)
+    {
+        AccessoryModel *model = [self.mViewTop.mArr_accessory objectAtIndex:i];
+        [array0 addObject:model.mStr_name];
+    }
+    [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:self.mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array0];
     self.mProgressV.labelText = @"加载中...";
     self.mProgressV.mode = MBProgressHUDModeIndeterminate;
     [self.mProgressV show:YES];

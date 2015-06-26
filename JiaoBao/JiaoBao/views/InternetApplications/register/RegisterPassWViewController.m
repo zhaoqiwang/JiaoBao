@@ -16,7 +16,10 @@
 @implementation RegisterPassWViewController
 @synthesize mBtn_register,mLab_confirmPassWord,mLab_passWord,mTextF_confirmPassword,mTextF_password,mNav_navgationBar,mLab_tishi,mProgressV,mStr_phoneNum,mInt_flag;
 
-
+-(void)dealloc
+{
+    
+}
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

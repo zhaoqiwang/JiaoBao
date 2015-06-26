@@ -45,10 +45,13 @@
 //    NSString *tempPath =[paths objectAtIndex:0] ;
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
     NSArray *tempArr = [fileManager contentsOfDirectoryAtPath:tempPath error:nil];
+    NSArray *pathArr = [fileManager subpathsAtPath:tempPath];
     for (int i=0; i<tempArr.count; i++) {
         AccessoryModel *model = [[AccessoryModel  alloc] init];
         model.mInt_select = 0;
         model.mStr_name = [tempArr objectAtIndex:i];
+        model.pathStr = [tempPath stringByAppendingPathComponent:[pathArr objectAtIndex:i]];
+        model.fileAttributeDic = [fileManager attributesOfItemAtPath:model.pathStr error:nil];
         [self.mArr_sumFile addObject:model];
     }
     
@@ -212,7 +215,7 @@
         for (int i=0; i<self.mArr_sumFile.count; i++) {
             AccessoryModel *model = [self.mArr_sumFile objectAtIndex:i];
             if (model.mInt_select == 1) {
-                [tempArr addObject:model.mStr_name];
+                [tempArr addObject:model];
             }
         }
         

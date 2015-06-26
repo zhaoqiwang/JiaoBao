@@ -139,8 +139,6 @@
             self.mProgressV.labelText = str;
             self.mProgressV.userInteractionEnabled = NO;
 
-            //[self.mProgressV show:YES];
-            //[self.mProgressV hide:YES afterDelay:2];
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
             
             
@@ -233,7 +231,7 @@
         
         [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list.frame.size.height+150);
         self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+[HomeClassTopScrollView shareInstance].frame.origin.y+48);
-        [HomeClassRootScrollView shareInstance].classMessageView.frame  = CGRectMake([dm getInstance].width, 0, [dm getInstance].width, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
+        [HomeClassRootScrollView shareInstance].classMessageView.frame  = CGRectMake(0, 0, [dm getInstance].width, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
 
         
     }
@@ -258,11 +256,12 @@
     if([dm getInstance].notificationSymbol == 102)
     {
 
-        
-        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mScrollV_all.frame.size.height);
         [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 100);
+        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48+self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y);
+        [HomeClassRootScrollView shareInstance].schoolMessage.frame  = CGRectMake([dm getInstance].width*2, 0, 320, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
         
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [dm getInstance].height);
+
 
         
     }
@@ -270,19 +269,14 @@
     if([dm getInstance].notificationSymbol == 103)
     {
 
-        
-//        [HomeClassRootScrollView shareInstance].contentSize = CGSizeMake([dm getInstance].width, 1000);
-//        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, 1000);
         [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
-//        
-//        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, 1000);
-        CGRect mCollectionV_listFrame = [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame;
-        [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame = CGRectMake(mCollectionV_listFrame.origin.x, mCollectionV_listFrame.origin.y, [dm getInstance].width, [HomeClassRootScrollView shareInstance].patriarchView.tableView.contentSize.height);
+        CGRect tableViewFrame = [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame;
+        [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame =CGRectMake(tableViewFrame.origin.x, tableViewFrame.origin.y, [dm getInstance].width, [HomeClassRootScrollView shareInstance].patriarchView.tableView.contentSize.height);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame.size.height+50);
+        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48+self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y);
         
-        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame.size.height+150);
-        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+[HomeClassTopScrollView shareInstance].frame.origin.y+48);
+        [HomeClassRootScrollView shareInstance].patriarchView.frame  = CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
 
-        
     }
 
 }
@@ -304,6 +298,26 @@
     if ([self checkNetWork]) {
         return;
     }
+    long long fileSizeSum = 0;
+    for(int i=0;i<self.mViewTop.mArr_accessory.count;i++)
+    {
+        AccessoryModel *model = [self.mViewTop.mArr_accessory objectAtIndex:i];
+        long long fileSize = 0;
+        fileSize = [model.fileAttributeDic fileSize];
+        fileSizeSum = fileSizeSum +fileSize;
+        
+    }
+    D("fileSizeSum = %lld",fileSizeSum);
+    
+    if(fileSizeSum>10000000)
+    {
+        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        self.mProgressV.labelText = @"上传文件不能大于10M";
+        [self.mProgressV show:YES];
+        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        return;
+        
+    }
     if (self.mViewTop.mTextV_input.text.length == 0) {
         self.mProgressV.mode = MBProgressHUDModeCustomView;
         self.mProgressV.labelText = @"请输入内容";
@@ -312,8 +326,13 @@
         return;
     }
     NSMutableArray *genArr = [[NSMutableArray alloc]initWithCapacity:0];
-    NSMutableArray *array0 = [NSMutableArray array];
-    [array0 addObjectsFromArray:self.mViewTop.mArr_accessory];
+    NSMutableArray *array0 = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<self.mViewTop.mArr_accessory.count;i++)
+    {
+        AccessoryModel *model = [self.mViewTop.mArr_accessory objectAtIndex:i];
+        [array0 addObject:model.mStr_name];
+    }
+    //[array0 addObjectsFromArray:self.mViewTop.mArr_accessory];
     if([dm getInstance].notificationSymbol == 1)
     {
         [dm getInstance].notificationSymbol = [HomeClassTopScrollView shareInstance].mInt_userSelectedChannelID;

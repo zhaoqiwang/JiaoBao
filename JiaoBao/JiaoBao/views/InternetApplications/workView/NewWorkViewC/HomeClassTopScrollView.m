@@ -25,6 +25,7 @@
 
 static HomeClassTopScrollView *__singletion;
 
+
 + (HomeClassTopScrollView *)shareInstance {
     @synchronized ([HomeClassTopScrollView class])
     {
@@ -369,8 +370,8 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
         SMSTreeArrayModel *model =[arr objectAtIndex:i];
         if(model.smsTree.count == 0)
         {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
-            [dm getInstance].secondFlag = @"无权限";
+//            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+//            [dm getInstance].secondFlag = @"无权限";
             self.symbol = YES;
             
         }
@@ -394,6 +395,7 @@ if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
 }
 + (void)destroyDealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     __singletion = nil;
 }
 

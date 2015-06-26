@@ -138,7 +138,8 @@
         [self.mView_accessory addSubview:but];
         UIButton *tempBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         tempBtn.frame = CGRectMake(30, but.frame.origin.y, self.self.mView_accessory.frame.size.width-35, 25);
-        [tempBtn setTitle:[self.mArr_accessory objectAtIndex:i] forState:UIControlStateNormal];
+        AccessoryModel *model = [self.mArr_accessory objectAtIndex:i];
+        [tempBtn setTitle:model.mStr_name forState:UIControlStateNormal];
         tempBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         tempBtn.tag = i;
         tempBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
@@ -239,13 +240,18 @@
                 NSData *imageData = UIImageJPEGRepresentation(image,0);
                 
                 NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
-                [self.mArr_accessory addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
+
                 D("图片路径是：%@",imgPath);
                 BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
                 if (!yesNo) {//不存在，则直接写入后通知界面刷新
                     BOOL result = [imageData writeToFile:imgPath atomically:YES];
                     for (;;) {
                         if (result) {
+                            AccessoryModel *model = [[AccessoryModel  alloc] init];
+                            model.mStr_name= [NSString stringWithFormat:@"%@.png",timeSp];
+                            model.pathStr = imgPath;
+                            model.fileAttributeDic = [fileManager attributesOfItemAtPath:imgPath error:nil];
+                            [self.mArr_accessory addObject:model];
                             
                             break;
                         }
@@ -256,6 +262,11 @@
                         BOOL result = [imageData writeToFile:imgPath atomically:YES];
                         for (;;) {
                             if (result) {
+                                AccessoryModel *model = [[AccessoryModel  alloc] init];
+                                model.mStr_name= [NSString stringWithFormat:@"%@.png",timeSp];
+                                model.pathStr = imgPath;
+                                model.fileAttributeDic = [fileManager attributesOfItemAtPath:imgPath error:nil];
+                                [self.mArr_accessory addObject:model];
                                 
                                 break;
                             }
@@ -333,11 +344,18 @@
         
         NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
         D("图片路径是：%@",imgPath);
+
         BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+        AccessoryModel *model = [[AccessoryModel  alloc] init];
+
         if (!yesNo) {//不存在，则直接写入后通知界面刷新
             BOOL result = [imageData writeToFile:imgPath atomically:YES];
             for (;;) {
                 if (result) {
+                    model.mStr_name= [NSString stringWithFormat:@"%@.png",timeSp];
+                    model.pathStr = imgPath;
+                    model.fileAttributeDic = [fileManager attributesOfItemAtPath:imgPath error:nil];
+                    [self.mArr_accessory addObject:model];
                     
                     break;
                 }
@@ -348,13 +366,17 @@
                 BOOL result = [imageData writeToFile:imgPath atomically:YES];
                 for (;;) {
                     if (result) {
+                        model.mStr_name= [NSString stringWithFormat:@"%@.png",timeSp];
+                        model.pathStr = imgPath;
+                        model.fileAttributeDic = [fileManager attributesOfItemAtPath:imgPath error:nil];
+                        [self.mArr_accessory addObject:model];
                         
                         break;
                     }
                 }
             }
         }
-        [self.mArr_accessory addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
+        [self.mArr_accessory addObject:model];
     }
     
     if([lastChosenMediaType isEqual:(NSString *) kUTTypeMovie])
