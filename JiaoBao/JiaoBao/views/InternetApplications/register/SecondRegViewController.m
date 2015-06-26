@@ -24,6 +24,10 @@
 @end
 
 @implementation SecondRegViewController
+-(void)dealloc
+{
+    
+}
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
@@ -87,11 +91,13 @@
 }
 -(void)addNotification
 {
+    __weak SecondRegViewController *weakSelf = self;
+
    // 获取图片验证码的数据
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
-        self.urlImgV.image = image;
+        weakSelf.urlImgV.image = image;
         
         
         
@@ -139,10 +145,10 @@
         if([str integerValue ] == 0)//成功则跳转到第三个界面
         {
             NSLog(@"验证成功");
-            [self progressViewTishi:@"验证成功"];
+            [weakSelf progressViewTishi:@"验证成功"];
             RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
-            pass.mStr_phoneNum = self.tel;
-            if(self.forgetPWSymbol ==YES)
+            pass.mStr_phoneNum = weakSelf.tel;
+            if(weakSelf.forgetPWSymbol ==YES)
             {
                 pass.mInt_flag = 2;//表示是忘记密码界面
 
@@ -154,7 +160,7 @@
 
                 
             }
-            [self.navigationController pushViewController:pass animated:YES];
+            [weakSelf.navigationController pushViewController:pass animated:YES];
             
             
             
@@ -162,7 +168,7 @@
         }
         else
         {
-            [self progressViewTishi:ResultDesc];
+            [weakSelf progressViewTishi:ResultDesc];
         }
         
         

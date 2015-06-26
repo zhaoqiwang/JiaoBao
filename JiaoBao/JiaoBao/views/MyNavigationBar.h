@@ -29,7 +29,7 @@
 
 @interface MyNavigationBar : UIView{
     UILabel *_label_Title;
-    id<MyNavigationDelegate> _delegate;
+    //id<MyNavigationDelegate> _delegate;
     NSString *_roomName;
     int _roomId;
     
@@ -52,7 +52,7 @@
 
 
 @property (nonatomic ,assign) id<MyNavigationDelegate> delegate;
-@property (nonatomic , retain) id<MyNavigationBtnTitleDelegate>btnDelegate;
+@property (nonatomic , assign) id<MyNavigationBtnTitleDelegate>btnDelegate;
 @property (nonatomic , retain) UILabel *label_Title;
 @property (nonatomic , retain) NSString *roomName;
 @property (nonatomic , assign) int roomId;

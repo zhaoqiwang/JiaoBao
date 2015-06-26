@@ -25,6 +25,7 @@
 
 static HomeClassTopScrollView *__singletion;
 
+
 + (HomeClassTopScrollView *)shareInstance {
     @synchronized ([HomeClassTopScrollView class])
     {
@@ -348,10 +349,6 @@ static HomeClassTopScrollView *__singletion;
         }
         self.requestSymbol3 = NO;
     }
-    
-
-
-    
 }
 -(void)CMRevicer:(NSNotification *)noti{
 
@@ -366,8 +363,6 @@ static HomeClassTopScrollView *__singletion;
             SMSTreeArrayModel *model =[arr objectAtIndex:i];
             if(model.smsTree.count == 0)
             {
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
-                [dm getInstance].secondFlag = @"无权限";
                 self.symbol = YES;
             }
         }
@@ -385,6 +380,7 @@ static HomeClassTopScrollView *__singletion;
 }
 + (void)destroyDealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     __singletion = nil;
 }
 

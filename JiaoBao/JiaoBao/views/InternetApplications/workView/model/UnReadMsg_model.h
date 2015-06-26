@@ -19,7 +19,7 @@
     NSMutableArray *arrayTrunToList;
     NSString *MsgTabIDStr;//点击回复我的信息时用
     NSString *FeeBackMsg;//回复我的
-    NSString *UnitShortName;//单位名简称
+    //NSString *UnitShortName;//单位名简称
 }
 @property (strong,nonatomic) NSString *TabIDStr;//当前行数据的ID
 @property (strong,nonatomic) NSString *UserName;//名称

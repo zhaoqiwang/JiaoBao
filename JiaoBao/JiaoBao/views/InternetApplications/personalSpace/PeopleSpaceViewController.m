@@ -24,14 +24,14 @@
 @implementation PeopleSpaceViewController
 @synthesize mTableV_personalS,mNav_navgationBar,mArr_personalS;
 
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:YES];
-//    移除通知
+
+-(void)dealloc
+{
     [[NSNotificationCenter defaultCenter]removeObserver:_observer1];
     [[NSNotificationCenter defaultCenter]removeObserver:_observer2];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
-
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setValueModel];
@@ -40,6 +40,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    __weak PeopleSpaceViewController *weakSelf = self;
+
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"getIdentity" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
         NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];
@@ -74,9 +76,14 @@
             
         }
         
-        self.unitArr = mArr;
-        self.unitArr2 = mArr2;
-        [self.unitTabelView reloadData];
+        weakSelf.unitArr = mArr;
+        weakSelf.unitArr2 = mArr2;
+        [weakSelf.unitTabelView reloadData];
+        weakSelf.unitTabelView.frame = CGRectMake(0, weakSelf.mTableV_personalS.frame.size.height+weakSelf.mTableV_personalS.frame.origin.y, [dm getInstance].width, 30*weakSelf.unitArr.count+40);
+        weakSelf.tableVIewBtn.frame = weakSelf.unitTabelView.frame;
+        
+        weakSelf.mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, weakSelf.mNav_navgationBar.frame.size.height+weakSelf.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-weakSelf.mNav_navgationBar.frame.size.height)];
+        weakSelf.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, weakSelf.mTableV_personalS.frame.size.height+weakSelf.unitTabelView.frame.size.height);
 
     }];
     //做bug服务器显示当前的哪个界面
@@ -135,7 +142,7 @@
     //表格
     self.mTableV_personalS.frame = CGRectMake(0, 0, [dm getInstance].width, 70+2*44);
     
-    self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y, [dm getInstance].width, 20*self.unitArr.count+40);
+    self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y, [dm getInstance].width, 30*self.unitArr.count+40);
     self.tableVIewBtn.frame = self.unitTabelView.frame;
     
     self.mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height)];
@@ -242,7 +249,7 @@
         if(cell == nil){
             cell = [[[NSBundle mainBundle] loadNibNamed:@"UnitTableViewCell" owner:self options:nil] lastObject];
         }
-        cell.delegate = self;
+        //cell.delegate = self;
         cell.tag = indexPath.row;
 
         cell.unitNameLabel.text = [self.unitArr objectAtIndex:indexPath.row];
@@ -344,6 +351,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    
     [utils popViewControllerAnimated:YES];
 }
 

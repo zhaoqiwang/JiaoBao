@@ -37,7 +37,7 @@
     NSString *mStr_Register;//握手时，用于对比的字符串
     NSString *mStr_userName;//用户名
     NSString *mStr_passwd;//密码
-    id<LoginSendHttpDelegate> delegate;
+    //id<LoginSendHttpDelegate> delegate;
     int flag_skip;//是否发送window通知
     int flag_unReadMsg;//通知界面更新未读消息数量，当未读和未读回复都收到时，发送
     int mInt_forwardFlag;//切换身份时，判断是普通，还是短信
@@ -49,7 +49,7 @@
 @property (assign,nonatomic) int flag_request;//判断是哪个请求的回掉
 @property (strong,nonatomic) NSString *mStr_userName;//用户名
 @property (strong,nonatomic) NSString *mStr_passwd;//密码
-@property (strong,nonatomic) id<LoginSendHttpDelegate> delegate;
+@property (weak,nonatomic) id<LoginSendHttpDelegate> delegate;
 @property (assign,nonatomic) int flag_skip;//是否发送window通知
 @property (assign,nonatomic) int flag_unReadMsg;//通知界面更新未读消息数量，当未读和未读回复都收到时，发送
 @property (assign,nonatomic) int mInt_forwardFlag;//切换身份时，判断是普通，还是短信

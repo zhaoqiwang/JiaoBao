@@ -18,6 +18,10 @@
 
 @implementation NewWorkViewController
 @synthesize mNav_navgationBar,rootView;
+-(void)dealloc
+{
+    
+}
 
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
@@ -60,12 +64,12 @@
 
     //[self.forward didMoveToParentViewController:self];
 
-    
+    [dm getInstance].secondFlag = @"0";
     [dm getInstance].notificationSymbol = 1;
     [[LoginSendHttp getInstance]changeCurUnit];
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
     
-    [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
+    [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.view];
     [self.navigationController.view addSubview:[dm getInstance].progress];
     [dm getInstance].progress.delegate = self;
     [dm getInstance].progress.labelText = @"加载中...";

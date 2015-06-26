@@ -34,6 +34,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    __weak MobileUnitViewController *weakSelf = self;
+
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"加入单位"];
@@ -51,9 +53,9 @@
     //获取手机自动匹配的单位数据
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
         NSArray *arr = note.object;
-
-        self.unitArr = arr;
-        [self.tableView reloadData];
+        
+        weakSelf.unitArr = arr;
+        [weakSelf.tableView reloadData];
         
         
         
@@ -69,16 +71,16 @@
         NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)
         {
-            [self progressViewTishi:@"加入成功"];
-            [self.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
-            self.addBtn.enabled = NO;
+            [weakSelf progressViewTishi:@"加入成功"];
+            [weakSelf.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
+            weakSelf.addBtn.enabled = NO;
             [[LoginSendHttp getInstance]getIdentityInformation];
 
             
         }
         else
         {
-            [self progressViewTishi:ResultDesc];
+            [weakSelf progressViewTishi:ResultDesc];
             
         }
         
@@ -181,6 +183,8 @@
 }
 
 -(void)myNavigationGoback{
+
+    
     [utils popViewControllerAnimated:YES];
 }
 

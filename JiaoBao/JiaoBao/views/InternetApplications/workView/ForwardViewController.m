@@ -268,13 +268,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 
 - (void)Loading {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.timer invalidate];
-        self.timer = nil;
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
-        
-        
-    });
+    sleep(TIMEOUT);
+
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.timer invalidate];
+//        self.timer = nil;
+//        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
+//        
+//        
+//    });
     
     
     
@@ -283,7 +285,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 }
 -(void)timerAction:(id)sender
 {
-    sleep(TIMEOUT);
 //    self.mProgressV.mode = MBProgressHUDModeCustomView;
 //    self.mProgressV.labelText = @"加载超时";
 //    sleep(2);
@@ -704,6 +705,26 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     if ([self checkNetWork]) {
         return;
     }
+    long long fileSizeSum = 0;
+    for(int i=0;i<self.topView.mArr_accessory.count;i++)
+    {
+        AccessoryModel *model = [self.topView.mArr_accessory objectAtIndex:i];
+        long long fileSize = 0;
+        fileSize = [model.fileAttributeDic fileSize];
+        fileSizeSum = fileSizeSum +fileSize;
+        
+    }
+    D("fileSizeSum = %lld",fileSizeSum);
+
+    if(fileSizeSum>10000000)
+    {
+        [MBProgressHUD showError:@"上传文件不能大于10M" toView:self.view];
+
+        return;
+        
+    }
+
+
     
     if (self.topView.mTextV_input.text.length == 0)
     {
@@ -720,13 +741,23 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         [MBProgressHUD showError:@"请选择人员" toView:self.view];
         return;
     }
+
     
-    //发表
-    NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
-    [array1 addObjectsFromArray:self.topView.mArr_accessory];
-    [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
+
     
-    [MBProgressHUD showMessage:@"v" toView:self.view];
+        //发表
+            NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
+            //[array1 addObjectsFromArray:self.topView.mArr_accessory];
+    for(int i=0;i<self.topView.mArr_accessory.count;i++)
+    {
+        AccessoryModel *model = [self.topView.mArr_accessory objectAtIndex:i];
+        [array1 addObject:model.mStr_name];
+    }
+            [[LoginSendHttp getInstance] creatCommMsgWith:self.topView.mTextV_input.text SMSFlag:self.topView.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
+        
+
+    
+    [MBProgressHUD showMessage:@"正在发送" toView:self.view];
     
     [self.mCollectionV_list reloadData];
     

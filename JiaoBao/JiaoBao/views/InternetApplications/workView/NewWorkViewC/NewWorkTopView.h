@@ -39,7 +39,7 @@
     NSMutableArray *mArr_accessory;//附件数组
     UIView *mView_accessory;//显示附件用
     int mInt_sendMsg;//是否发送短信，0发送，1不发送
-    id <NewWorkTopViewProtocol > delegate;
+    //__weak id <NewWorkTopViewProtocol > delegate;
 }
 
 @property (nonatomic,strong) UITextView *mTextV_input;//输入内容
@@ -50,7 +50,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_accessory;//附件数组
 @property (nonatomic,strong) UIView *mView_accessory;//显示附件用
 @property (nonatomic,assign) int mInt_sendMsg;//是否发送短信，0发送，1不发送
-@property (retain,nonatomic) id <NewWorkTopViewProtocol > delegate;
+@property (weak,nonatomic) id <NewWorkTopViewProtocol > delegate;
 @property(nonatomic,strong)UIImagePickerController *picker;
 
 //刷新显示附件

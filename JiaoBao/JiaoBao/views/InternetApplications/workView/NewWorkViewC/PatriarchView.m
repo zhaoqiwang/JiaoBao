@@ -80,12 +80,13 @@
     [mBtn_invertSelect addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:mBtn_invertSelect];
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, headerView.frame.origin.y+headerView.frame.size.height, [dm getInstance].width, 300) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, headerView.frame.origin.y+headerView.frame.size.height, [dm getInstance].width, 1000) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self addSubview:self.tableView];
     self.tableView.tableFooterView=[[UIView alloc]init];
-    self.tableView.allowsSelection = YES;
+    self.tableView.allowsMultipleSelection = YES;
+    self.tableView.scrollEnabled = NO;
     
 
     return self;
@@ -268,6 +269,7 @@
 
                 if(symbol == NO)
                 {
+                    [self.tableView reloadData];
                     return;
                 }
                 
@@ -294,7 +296,7 @@
                 symbol = subModel2.mInt_select;
                 
                 if(symbol == YES)
-                {
+                {[self.tableView reloadData];
                     return;
                 }
                 

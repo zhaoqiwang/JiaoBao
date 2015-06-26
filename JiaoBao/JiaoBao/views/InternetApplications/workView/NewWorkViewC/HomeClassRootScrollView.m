@@ -145,6 +145,7 @@ static HomeClassRootScrollView *__singletion;
 */
 + (void)destroyDealloc
 {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     __singletion = nil;
 }
 @end
