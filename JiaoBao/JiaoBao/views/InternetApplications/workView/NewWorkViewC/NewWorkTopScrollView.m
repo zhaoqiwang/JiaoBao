@@ -125,10 +125,8 @@
         {
             if([[dm getInstance].firstFlag isEqualToString: @"1"])
             {
-                [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-                [dm getInstance].progress.labelText = @"没有权限";
-                [[dm getInstance].progress show:YES];
-                [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+                [MBProgressHUD showText:@"没有权限" toView:nil];
+
             }
             
             [dm getInstance].notificationSymbol = 1;
@@ -161,11 +159,9 @@
                     [dm getInstance].secondFlag = @"无班级";
                 }
                 else{
-                        [dm getInstance].progress.mode = MBProgressHUDModeIndeterminate;
-                        [dm getInstance].progress.labelText = @"正在加载";
-                        [[dm getInstance].progress show:YES];
-                        [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-                        //[[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
+                    
+                    [MBProgressHUD showMessage:@"正在加载" toView:nil];
+
 
                     
                 }
@@ -178,10 +174,8 @@
                 [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
                 if(![[dm getInstance].secondFlag isEqualToString: @"0"])
                 {
-                    [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-                    [dm getInstance].progress.labelText = [dm getInstance].secondFlag;
-                    [[dm getInstance].progress show:YES];
-                    [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+                    [MBProgressHUD showText:[dm getInstance].secondFlag toView:nil];
+
                     
                 }
 
@@ -193,13 +187,7 @@
         
         if(sender.tag ==102)
         {
-            if([[dm getInstance].thirdFlag isEqualToString: @"1"])
-            {
-//                [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-//                [dm getInstance].progress.labelText = @"无发送权限或没有其他单位";
-//                [[dm getInstance].progress show:YES];
-//                [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            }
+
             [dm getInstance].topButtonSymbol = [dm getInstance].notificationSymbol;
             [dm getInstance].notificationSymbol = 3;
  
@@ -264,5 +252,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"fristGotoMoreUnit" object:nil];
     }
 }
+
 
 @end

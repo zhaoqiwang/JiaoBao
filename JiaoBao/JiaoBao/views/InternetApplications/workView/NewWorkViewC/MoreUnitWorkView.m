@@ -185,6 +185,7 @@
 //    }
     
     if (self.mInt_requestCount >0) {
+        
         [MBProgressHUD showMessage:@"" toView:self];
     }
 }
@@ -303,7 +304,6 @@
                     break;
                 }
                 node1 = node;
-                
                 //对人员进行排序
                 self.mModel_unitList.UnitParents = [self userNameChineseSort:self.mModel_unitList.UnitParents Flag:2];
                 for (int i=0; i<self.mModel_unitList.UnitParents.count; i++) {

@@ -201,11 +201,64 @@ static ClassHttp *classHttp = nil;
         [mDic setValue:code forKey:@"ResultCode"];
         [mDic setValue:array forKey:@"array"];
         //通知主界面，获取到的单位班级数据
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetReleaseNewsUnits" object:dic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetReleaseNewsUnits" object:mDic];
     }
 }
 //请求失败
 -(void)requestFailed:(ASIHTTPRequest *)request{
+    if (request.tag == 1) {//客户端通过本接口获取本单位栏目文章
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSString *flag = [request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+
+        [dic1 setValue:ResultDesc forKey:@"ResultDesc"];
+        [dic1 setValue:code forKey:@"ResultCode"];
+        if ([flag intValue]==3||[flag intValue]==4) {//获取单位专门列表界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex3" object:dic1];
+        }else{
+            //通知学校界面，获取到的单位和个人数据
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitArthListIndex" object:dic1];
+        }
+    }else if (request.tag == 2){//取单位空间发表的最新或推荐文章
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:ResultDesc forKey:@"ResultDesc"];
+        [dic1 setValue:code forKey:@"ResultCode"];
+        //通知学校界面，获取到的本地和全部数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowingUnitArthList" object:dic1];
+    }else if (request.tag == 3){//取我关注的单位栏目文章
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:ResultDesc forKey:@"ResultDesc"];
+        [dic1 setValue:code forKey:@"ResultCode"];
+        //通知学校界面，获取到的关注数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttUnitArthListIndex" object:dic1];
+    }else if (request.tag == 4){//我的班级文章列表
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSString *flag = [request.userInfo objectForKey:@"flag"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionary];
+        [dic1 setValue:flag forKey:@"flag"];
+        [dic1 setValue:ResultDesc forKey:@"ResultDesc"];
+        [dic1 setValue:code forKey:@"ResultCode"];
+        if ([flag intValue]==3) {//获取单位专门列表界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AllMyClassArthList3" object:dic1];
+        }else{
+            //通知学校界面，获取到的关注数据
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"AllMyClassArthList" object:dic1];
+        }
+    }else if (request.tag == 5){//获取当前用户可以发布动态的单位列表(含班级）
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSMutableDictionary *mDic = [[NSMutableDictionary alloc]initWithCapacity:0];
+        [mDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [mDic setValue:code forKey:@"ResultCode"];
+        //通知主界面，获取到的单位班级数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetReleaseNewsUnits" object:mDic];
+    }
     D("dataString---theme-tag=%ld,flag----  请求失败",(long)request.tag);
 }
 

@@ -121,6 +121,16 @@
 
     //获取图片验证码d的图片
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        if([note.object isKindOfClass:[NSString class]])
+        {
+            if([note.object isEqualToString:@"请求超时"])
+            {
+                [MBProgressHUD showText:@"请求超时" toView:self.view];
+                return ;
+            }
+            
+        }
+
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
         weakSelf.urlImgV.image = image;
@@ -130,12 +140,18 @@
     }];
     //获取手机是否已经注册的参数
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"tel" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
         NSString *str =note.object;
+        if([str isEqualToString:@"请求超时"])
+        {
+            [MBProgressHUD showText:str toView:self.view];
+            return ;
+        }
         if([str isEqualToString:@"true"])//true表示手机号码没有注册
         {
             if(weakSelf.forgetPWSymbol == YES)//如果是忘记密码的VC 则提示手机号码没有注册 并清空手机号码输入框
             {
-                [weakSelf progressViewTishi:@"手机号码没有注册"];
+                [MBProgressHUD showText:@"手机号码没有注册" toView:self.view];
                 weakSelf.tel.text = @"";
 
             }
@@ -157,7 +173,7 @@
             }
             else//如果是注册界面vc 则提示手机号码已经被注册 并清空手机号码输入框
             {
-                [weakSelf progressViewTishi:@"手机号码已经被注册"];
+                [MBProgressHUD showError:@"手机号码已经被注册" toView:self.view];
                 weakSelf.tel.text = @"";
                 weakSelf.telSymbol = NO;
 
@@ -187,7 +203,8 @@
            }
         else
         {
-            [weakSelf progressViewTishi:ResultDesc];
+            [MBProgressHUD showText:ResultDesc toView:self.view];
+            //[weakSelf progressViewTishi:ResultDesc];
 
             //[SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
         }

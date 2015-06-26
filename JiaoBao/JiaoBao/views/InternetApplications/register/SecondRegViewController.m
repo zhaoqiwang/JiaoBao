@@ -95,6 +95,15 @@
 
    // 获取图片验证码的数据
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"urlImage" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        if([note.object isKindOfClass:[NSString class]])
+        {
+            if([note.object isEqualToString:@"请求超时"])
+            {
+                [MBProgressHUD showText:@"请求超时" toView:self.view];
+                return ;
+            }
+            
+        }
         NSData *imgData = note.object;
         UIImage *image = [UIImage imageWithData:imgData];
         weakSelf.urlImgV.image = image;
@@ -138,14 +147,15 @@
 //    }];
     //获取验证验证码是否正确的数据
     _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [MBProgressHUD hideHUDForView:self.view];
+
         NSDictionary *dic = note.object;
         NSArray *keyArr =[dic allKeys];
         NSString *str = [keyArr objectAtIndex:0];
         NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)//成功则跳转到第三个界面
         {
-            NSLog(@"验证成功");
-            [weakSelf progressViewTishi:@"验证成功"];
+            [MBProgressHUD showSuccess:@"验证成功" toView:self.view];
             RegisterPassWViewController *pass = [[RegisterPassWViewController alloc]init];
             pass.mStr_phoneNum = weakSelf.tel;
             if(weakSelf.forgetPWSymbol ==YES)
@@ -168,7 +178,8 @@
         }
         else
         {
-            [weakSelf progressViewTishi:ResultDesc];
+            [MBProgressHUD showError:ResultDesc toView:self.view];
+
         }
         
         
@@ -240,7 +251,7 @@
         }
         //验证注册的手机验证码及图片验证码和手机的请求
         [[RegisterHttp getInstance]registerHttpRegCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
-        [self progressViewTishi:@"正在加载"];
+        [MBProgressHUD showMessage:@"正在加载" toView:self.view];
         
     }
     

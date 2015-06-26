@@ -370,6 +370,90 @@ static RegisterHttp *registerHttp = nil;
 }
 //请求失败
 -(void)requestFailed:(ASIHTTPRequest *)request{
+    if (request.tag == 1) {//检查手机是否重复
+        NSString *dataString = @"请求超时";
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"tel" object:dataString];
+        
+        
+    }else if (request.tag == 2){//获取图片验证码url
+        NSString *dataString = @"请求超时";
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"urlImage" object:dataString];
+        
+    }else if (request.tag == 3){//发送手机验证码
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:@{code:ResultDesc}];
+        
+    }else if (request.tag == 4){//验证手机验证码
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:@{code:ResultDesc}];
+        
+        
+    }else if (request.tag == 5){//用户注册
+        
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:@{code:ResultDesc}];
+        
+    }else if (request.tag == 6){//检查昵称是否重复
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:code forKey:@"code"];
+        [dic2 setValue:ResultDesc forKey:@"str"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:dic2];
+        
+    }else if (request.tag == 7){//修改帐户信息的昵称和姓名
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:code forKey:@"code"];
+        [dic2 setValue:ResultDesc forKey:@"str"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpUpateRecAcc" object:dic2];
+    }else if (request.tag == 8){//验证旧密码后修改帐户密码
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:code forKey:@"code"];
+        [dic2 setValue:ResultDesc forKey:@"str"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpChangePW" object:dic2];
+    }else if (request.tag == 9){//获取根据手机号码匹配的单位数据
+        
+        NSString *ResultDesc = @"请求超时";
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyMobileUnitList" object:ResultDesc];
+        
+    }else if (request.tag == 10){//加入单位操作
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"JoinUnitOP" object:@{code:ResultDesc}];
+        
+    }else if (request.tag == 11){//在重置密码时验证用户手机
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"RegCheckMobileVcode" object:@{code:ResultDesc}];
+        
+        
+        
+    }else if (request.tag == 12){//重置用户密码
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"registerPW" object:@{code:ResultDesc}];
+        
+        
+    }else if (request.tag == 13){//重置用户密码时发送手机验证码
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:@{code:ResultDesc}];
+        
+        
+    }
+
     D("dataString---register-tag=%ld,flag----  请求失败",(long)request.tag);
 }
 

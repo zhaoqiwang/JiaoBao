@@ -284,29 +284,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
 }
 
-- (void)Loading {
-    sleep(TIMEOUT);
 
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.timer invalidate];
-//        self.timer = nil;
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
-//        
-//        
-//    });
-    
-    
-    
-    
-    
-}
--(void)timerAction:(id)sender
-{
-//    self.mProgressV.mode = MBProgressHUDModeCustomView;
-//    self.mProgressV.labelText = @"加载超时";
-//    sleep(2);
-    
-}
 
 
 
@@ -314,8 +292,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)GetUnitRevicer:(NSNotification *)noti{
     if([dm getInstance].notificationSymbol == 1)
     {
-        [[dm getInstance].progress hide:YES];
-        
+        [MBProgressHUD hideHUDForView:self.parentViewController.view animated:YES];
         NSDictionary *dic = noti.object;
         NSString *unitID = [dic objectForKey:@"unitID"];
         NSArray *array = [dic objectForKey:@"array"];

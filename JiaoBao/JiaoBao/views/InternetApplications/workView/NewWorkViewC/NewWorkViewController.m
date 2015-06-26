@@ -69,14 +69,14 @@
     [dm getInstance].notificationSymbol = 1;
     [[LoginSendHttp getInstance]changeCurUnit];
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-    
-    [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.navigationController.view addSubview:[dm getInstance].progress];
-    [dm getInstance].progress.delegate = self;
-    [dm getInstance].progress.labelText = @"加载中...";
-    [dm getInstance].progress.userInteractionEnabled = YES;
-    [[dm getInstance].progress show:YES];
-    [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+//    [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.view];
+//    [self.navigationController.view addSubview:[dm getInstance].progress];
+//    [dm getInstance].progress.delegate = self;
+//    [dm getInstance].progress.labelText = @"加载中...";
+//    [dm getInstance].progress.userInteractionEnabled = YES;
+//    [[dm getInstance].progress show:YES];
+//    [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
 }
 
 //通知界面更新，获取事务信息接收单位列表
@@ -153,11 +153,10 @@
         else
         {
             [[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-            [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-            [dm getInstance].progress.labelText = @"没有权限";
+            [MBProgressHUD showSuccess:@"没有权限" toView:self.view];
+
             [dm getInstance].firstFlag = @"1";
-            [[dm getInstance].progress show:YES];
-            [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+
             
         }
     }else{

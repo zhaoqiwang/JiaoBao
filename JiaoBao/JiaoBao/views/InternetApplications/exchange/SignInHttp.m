@@ -347,18 +347,15 @@ static  SignInHttp*__instance;
         {
             [SVProgressHUD showErrorWithStatus:@"签报失败"];
         }
-        
-//        NSArray *arr = [dicList objectForKey:@"Data"];
-//        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
+
         
     }
 
 
     }
 -(void)requestFailed:(ASIHTTPRequest *)request{
-    NSData *responseData = [request responseData];
-    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-    NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+    [SVProgressHUD showErrorWithStatus:@"请求超时"];
+
 
 }
 
