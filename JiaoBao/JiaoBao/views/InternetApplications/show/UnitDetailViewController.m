@@ -14,7 +14,7 @@
 @end
 
 @implementation UnitDetailViewController
-@synthesize mModel_unit,mNav_navgationBar,mWebV_js,mProgressV;
+@synthesize mModel_unit,mNav_navgationBar,mWebV_js;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -56,12 +56,6 @@
     
     self.mWebV_js.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
-    
-    
     //设置webview属性
     self.mWebV_js.scalesPageToFit = NO;
 //    [self.mWebV_js.scrollView setScrollEnabled:YES];
@@ -73,10 +67,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -89,10 +80,7 @@
         return;
     }
     [[ShowHttp getInstance] showHttpGetintroduce:self.mModel_unit.UnitID uTyper:self.mModel_unit.UnitType];
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //文章详情通知
@@ -126,7 +114,7 @@
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"WebKitDiskImageCacheEnabled"];//自己添加的，原文没有提到。
@@ -142,19 +130,6 @@
 -(void)myNavigationGoback{
     [utils popViewControllerAnimated:YES];
 }
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
--(void)noMore{
-    sleep(1);
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -18,7 +18,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 @end
 
 @implementation PersonalSpaceViewController
-@synthesize mImgV_head,mBtn_add,mInt_index,mArr_list,mCollectionV_albums,mLab_albums,mLab_arth,mLab_detail,mNav_navgationBar,mScrollV_all,mTableV_arth,mModel_personal,mProgressV,mArr_NewPhoto,mLab_jiaobaohao;
+@synthesize mImgV_head,mBtn_add,mInt_index,mArr_list,mCollectionV_albums,mLab_albums,mLab_arth,mLab_detail,mNav_navgationBar,mScrollV_all,mTableV_arth,mModel_personal,mArr_NewPhoto,mLab_jiaobaohao;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -88,11 +88,6 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     self.mBtn_add.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y+self.mTableV_arth.frame.size.height, [dm getInstance].width, self.mBtn_add.frame.size.height);
     [self.mBtn_add addTarget:self action:@selector(mBtn_addArth:) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
     [self sendRequest];
 }
 
@@ -106,19 +101,13 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     //获取前N张照片
     [[ThemeHttp getInstance] themeHttpGetNewPhoto:self.mModel_personal.AccID Count:@"3"];
     
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -127,18 +116,8 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 
 //个人最新前N张照片后，通知界面
 -(void)GetNewPhoto:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
-//    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-//    
-//    if([ResultCode integerValue]!=0)
-//    {
-//        self.mProgressV.mode = MBProgressHUDModeCustomView;
-//        self.mProgressV.labelText = ResultDesc;
-//        [self.mProgressV show:YES];
-//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-//        return;
-//    }
     NSMutableArray *array = [dic objectForKey:@"array"];
     if (array.count>0) {
         self.mArr_NewPhoto = [NSMutableArray arrayWithArray:array];
@@ -151,12 +130,13 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 }
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_arth reloadData];
 }
 
 //获取到文章的通知
 -(void)TopArthListIndex:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableArray *array = noti.object;
     if (self.mInt_index > 1) {
         if (array.count>0) {
@@ -182,29 +162,10 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
         self.mInt_index = (int)self.mArr_list.count/20+1;
         //发送获取文章请求
         [[ShowHttp getInstance] showHttpGetUnitArthLIstIndexWith:@"99" UnitID:self.mModel_personal.AccID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     } else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self.view];
     }
-}
-
--(void)noMore{
-    sleep(1);
-}
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{

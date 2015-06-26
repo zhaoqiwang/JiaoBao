@@ -819,38 +819,39 @@
                 self.mTableV_list.delegate=self;
                 self.mTableV_list.dataSource=self;
                 [self.mTableV_list reloadData];
-
+                
                 
                 
             });
-
+            
         }
         else
         {
             [self.mTableV_list reloadData];
             
             
-        }    }else{
-        if (self.mInt_index == 0) {
-            //flag=1个人，=2单位
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 1){
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 2){
-            [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 3){
-            [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 4){
-            [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
-            [self ProgressViewLoad:@"加载中..."];
         }
-    }
+    }else{
+            if (self.mInt_index == 0) {
+                //flag=1个人，=2单位
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 1){
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 2){
+                [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 3){
+                [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 4){
+                [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
+                [self ProgressViewLoad:@"加载中..."];
+            }
+        }
 }
 
 //表格开始滑动，
@@ -1502,6 +1503,8 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
         [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{

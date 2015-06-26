@@ -14,7 +14,7 @@
 @end
 
 @implementation RelatedUnitViewController
-@synthesize mModel_unit,mTableV_list,mArr_list,mNav_navgationBar,mStr_title,mStr_UID,mProgressV,mLab_down,mLab_up,mScrollV_all,mTableV_down,mArr_down;
+@synthesize mModel_unit,mTableV_list,mArr_list,mNav_navgationBar,mStr_title,mStr_UID,mLab_down,mLab_up,mScrollV_all,mTableV_down,mArr_down;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -65,12 +65,6 @@
     self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_down.frame.origin.y+0);
     
     [self sendRequest];
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-    //    self.mProgressV.userInteractionEnabled = NO;
-    
 }
 
 
@@ -80,19 +74,13 @@
         return;
     }
     [[ShareHttp getInstance] shareHttpGetMySubUnitInfoWith:self.mStr_UID];
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -101,30 +89,19 @@
 
 //获取到下级单位logo
 -(void)refreshShowViewNew:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_down reloadData];
 }
 
 //获取到的子单位通知
 -(void)MySubUnitInfo:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     self.mArr_down = noti.object;
     //下级列表
     self.mTableV_down.frame = CGRectMake(0, self.mLab_down.frame.origin.y+self.mLab_down.frame.size.height, [dm getInstance].width, 50*self.mArr_down.count);
     //内容大小
     self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_down.frame.origin.y+self.mTableV_down.frame.size.height);
     [self.mTableV_down reloadData];
-}
-
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

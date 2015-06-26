@@ -22,13 +22,8 @@
             //[self removeFromSuperview];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
             [dm getInstance].secondFlag =@"无权限";
-
         }
-
-        
     }
-    
-    
 }
 
 - (instancetype)initWithFrame:(CGRect)frame

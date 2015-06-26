@@ -10,7 +10,7 @@
 
 
 @implementation WorkView_new2
-@synthesize mArr_mySend,mBtn_new,mInt_flag,mInt_index,mProgressV,mTableV_list,mView_button,mArr_reply,mArr_sum,mArr_unRead,mArr_unReply;
+@synthesize mArr_mySend,mBtn_new,mInt_flag,mInt_index,mTableV_list,mView_button,mArr_reply,mArr_sum,mArr_unRead,mArr_unReply;
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
@@ -81,10 +81,7 @@
 //        [self.mBtn_new setTitle:@"新建事务" forState:UIControlStateNormal];
 //        [self.mBtn_new setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //        [self addSubview:self.mBtn_new];
-        
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
+
         self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
         
         self.label.textColor = [UIColor grayColor];
@@ -95,14 +92,13 @@
 
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self clearArray];
     self.mInt_index = 0;
 }
 
 -(void)UnReadMsgCell:(NSNotification *)noti{
-
-    
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
@@ -141,13 +137,6 @@
     }
     
         [self.mTableV_list reloadData];
-
-        
-    
-
-
-
-        
 }
 
 #pragma mark - TableViewdelegate&&TableViewdataSource
@@ -521,19 +510,13 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
@@ -543,23 +526,7 @@
 -(void)loadNoMore{
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"没有更多了";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-}
-
--(void)noMore{
-    sleep(3);
-}
-
-- (void)Loading {
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
+    [MBProgressHUD showError:@"没有更多了" toView:self];
 }
 
 //通知学校界面，切换成功身份成功，清空数组

@@ -19,7 +19,6 @@
     NSInteger timeNum;//倒计时计时器的时间参数
 }
 @property(nonatomic,strong)NSTimer *myTimer;//倒计时计时器
-@property(nonatomic,strong)MBProgressHUD *mProgressV;
 
 @end
 
@@ -89,11 +88,6 @@
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     timeNum = 60;
     [dm getInstance].RegisterSymbol = YES;
-
-
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
 
     self.navigationController.navigationBarHidden = YES;
     if(self.forgetPWSymbol == YES)
@@ -372,25 +366,15 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
     }
 }
 
--(void)noMore{
-    sleep(1);
-}
-
 -(void)progressViewTishi:(NSString *)title{
-    self.mProgressV.labelText = title;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showError:title toView:self.view];
 }
 
 -(void)ProgressViewLoad:(NSString *)title{
@@ -398,18 +382,9 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = title;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:title toView:self.view];
 }
 
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
-}
 //键盘点击DO
 #pragma mark - UITextView Delegate Methods
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{

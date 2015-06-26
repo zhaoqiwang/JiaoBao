@@ -14,7 +14,7 @@
 @end
 
 @implementation MsgDetailViewController
-@synthesize mNav_navgationBar,mScrollV_view,mImgV_head,mLab_name,mTextV_content,mLab_time,mBtn_detail,mTableV_detail,mTextF_text,mBtn_send,mModel_tree2,mModel_unReadMsg,mArr_feeback,mInt_detail,mBtn_more,mView_text,mBtn_trun,mProgressV,mInt_page,mInt_file,mInt_more,mArr_photos;
+@synthesize mNav_navgationBar,mScrollV_view,mImgV_head,mLab_name,mTextV_content,mLab_time,mBtn_detail,mTableV_detail,mTextF_text,mBtn_send,mModel_tree2,mModel_unReadMsg,mArr_feeback,mInt_detail,mBtn_more,mView_text,mBtn_trun,mInt_page,mInt_file,mInt_more,mArr_photos,mProgressV;
 
 //发送请求
 -(void)sendQuest{
@@ -25,9 +25,7 @@
     self.mInt_page = 1;
     [[LoginSendHttp getInstance] msgDetailwithUID:self.mModel_tree2.mStr_TabIDStr page:self.mInt_page feeBack:self.mModel_tree2.mStr_MsgTabIDStr ReadFlag:@""];
     
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -73,7 +71,7 @@
     
     //详情列表
     self.mTableV_detail.frame = CGRectMake(self.mLab_time.frame.origin.x, self.mLab_time.frame.origin.y+20, self.mTextV_content.frame.size.width, 0);
-    
+
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
@@ -83,10 +81,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -95,13 +90,11 @@
 
 //通知信息详情界面回复是否成功
 -(void)addFeeBack:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *str = [dic objectForKey:@"msg"];
     NSString *flag = [dic objectForKey:@"flag"];
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = str;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self.view];
     if ([flag isEqual:@"1"]) {//成功
         MsgDetail_FeebackList *model = [[MsgDetail_FeebackList alloc] init];
         model.FeeBackMsg = self.mTextF_text.text;
@@ -117,6 +110,7 @@
 
 //通知信息详情界面，更新下载文件的进度条
 -(void)loadingProgress:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
     float temp = [str intValue];
     self.mProgressV.progress = temp;
@@ -130,7 +124,7 @@
     //若是回复我的详情，则重新获取待处理消息数量
     [[LoginSendHttp getInstance] getUnreadMessages1];
     [[LoginSendHttp getInstance] getUnreadMessages2];
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSMutableArray *tempArr = [dic valueForKey:@"array"];
     if (self.mInt_page > 1) {
@@ -335,26 +329,12 @@
         D("self.mint.page-====%lu %d",(unsigned long)self.mArr_feeback.count,self.mInt_page);
         [[LoginSendHttp getInstance] msgDetailwithUID:self.mModel_tree2.mStr_TabIDStr page:self.mInt_page feeBack:@"" ReadFlag:@""];
         
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     } else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self.view];
     }
 }
--(void)noMore{
-    sleep(1);
-}
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
+
 //点击发送按钮
 -(void)clickSendBtn:(UIButton *)btn{
     //检查当前网络是否可用
@@ -364,17 +344,12 @@
     D("点击发送按钮");
     [self.mTextF_text resignFirstResponder];
     if (self.mTextF_text.text.length==0) {
-        self.mProgressV.labelText = @"请输入内容";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
     
     [[LoginSendHttp getInstance] addFeeBackWithUID:self.mModel_unReadMsg.TabIDStr content:self.mTextF_text.text];
-    self.mProgressV.labelText = @"发送中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"发送中..." toView:self.view];
 }
 
 //点击转发按钮
@@ -507,10 +482,7 @@
     }
             MsgDetail_AttList *model = [self.mModel_unReadMsg.arrayAttList objectAtIndex:self.mInt_file-1];
             [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename];
-            // Set determinate mode
-            self.mProgressV.mode = MBProgressHUDModeAnnularDeterminate;
-            self.mProgressV.labelText = @"下载中...";
-            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showMessage:@"下载中..." toView:self.view];
         }
     }
 }

@@ -22,7 +22,6 @@
 //    NSString *mStr_UID;//班级ID
     NSMutableArray *mArr_unit;//获取到的文章数组
 //    NSString *mStr_title;//标题
-    MBProgressHUD *mProgressV;//
     int mInt_section;//判断是来自分享0还是展示1
     UnitSectionMessageModel *mModel_unit;//
 }
@@ -32,7 +31,6 @@
 //@property (nonatomic,strong) NSString *mStr_UID;//班级ID
 @property (nonatomic,strong) NSMutableArray *mArr_unit;//获取到的文章数组
 //@property (nonatomic,strong) NSString *mStr_title;//标题
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_section;//判断是来自分享0还是展示1
 @property (nonatomic,strong) UnitSectionMessageModel *mModel_unit;//
 

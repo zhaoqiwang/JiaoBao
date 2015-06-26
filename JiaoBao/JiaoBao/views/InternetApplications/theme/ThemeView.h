@@ -29,7 +29,6 @@
     NSMutableArray *mArr_tabel;//自己的主题
     UIButton *mBtn_add;//加载更多按钮
     int mInt_index;//当前应该加载的第几页
-    MBProgressHUD *mProgressV;//
 }
 
 @property (nonatomic,strong) UIScrollView *mScrollV_share;//放colletionV,tableV
@@ -40,7 +39,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_difine;//表格中的数据
 @property (nonatomic,strong) UIButton *mBtn_add;//加载更多按钮
 @property (nonatomic,assign) int mInt_index;//当前应该加载的第几页
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 - (id)initWithFrame1:(CGRect)frame;
 -(void)ProgressViewLoad;

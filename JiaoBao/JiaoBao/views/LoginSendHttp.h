@@ -27,6 +27,7 @@
 #import "CommMsgRevicerUnitListModel.h"
 #import "UnitListJsonModel.h"
 #import "CommMsgUnitNotice.h"
+#import "MBProgressHUD+AD.h"
 
 @protocol LoginSendHttpDelegate;
 

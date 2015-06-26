@@ -15,7 +15,7 @@
 @end
 
 @implementation UnitPeopleViewController
-@synthesize mNav_navgationBar,mTableV_list,mArr_list,mModel_unit,mInt_index,mArr_sum,mProgressV;
+@synthesize mNav_navgationBar,mTableV_list,mArr_list,mModel_unit,mInt_index,mArr_sum;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -45,23 +45,6 @@
     self.mArr_list = [NSMutableArray array];
     self.mArr_sum = [NSMutableArray array];
     D("self.mlst-===%lu",(unsigned long)[dm getInstance].mArr_unit_member.count);
-    //查找本单位的人员，分组
-//    for (TreeView_node *node in [dm getInstance].mArr_unit_member) {
-//        if ([node.UID isEqual:self.mModel_unit.UnitID]) {
-//            for(TreeView_node *node2 in node.sonNodes){
-//                [self.mArr_sum addObject:node2];
-//                if(node2.isExpanded){
-//                    for(TreeView_node *node3 in node2.sonNodes){
-//                        [self.mArr_sum addObject:node3];
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    [self reloadDataForDisplayArray];
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
     [self sendRequest];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mModel_unit.UnitName];
@@ -87,20 +70,14 @@
             [[ExchangeHttp getInstance] exchangeHttpGetUnitGroupsWith:self.mModel_unit.UnitID from:@"1"];
         }
         
-        self.mProgressV.labelText = @"加载中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -109,63 +86,43 @@
 
 //获得头像后，刷新界面
 -(void)exchangeGetFaceImg:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list reloadData];
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    self.mProgressV.labelText = @"加载超时";
-    //    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
--(void)noMore{
-    sleep(1);
 }
 
 //单位分组的请求
 -(void)UnitPeopleGroupList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *uid = [dic objectForKey:@"UID"];
     NSMutableArray *arr = [dic objectForKey:@"array"];
     //对分组名字进行排序
     NSArray *array = [self userNameChineseSort:arr Flag:2];
-//    for (int i=0; i<array.count; i++) {
-//        UnitSectionMessageModel *model = [array objectAtIndex:i];
-//        D("UnitSectionMessageModel-=--===%@",model.UnitID);
-//        if ([model.IsMyUnit isEqual:@"1"]) {
-            //获取到分组后，获取单位中的人
-            [[ExchangeHttp getInstance] exchangeHttpGetUserUnfoByUnitIDWith:uid filter:@"0" from:@"1"];
-            for (int i=0; i<array.count; i++) {
-                ExchangeUnitGroupsModel *model = [array objectAtIndex:i];
-                D("ExchangeUnitGroupsModel-===%@",model.GroupID);
-                TreeView_node *node7 = [[TreeView_node alloc]init];
-                node7.nodeLevel = 1;
-                node7.type = 1;
-                node7.sonNodes = nil;
-                node7.isExpanded = YES;
-                node7.UID = model.GroupID;
-                node7.readflag = self.mInt_index;
-                self.mInt_index ++;
-                TreeView_Level1_Model *temp7 =[[TreeView_Level1_Model alloc]init];
-                temp7.mStr_name = model.GroupName;
-                temp7.mStr_img_open_close = @"root_close";
-                temp7.mInt_number = 0;
-                node7.nodeData = temp7;
-                [self.mArr_sum addObject:node7];
-            }
-//        }
-//    }
+    //获取到分组后，获取单位中的人
+    [[ExchangeHttp getInstance] exchangeHttpGetUserUnfoByUnitIDWith:uid filter:@"0" from:@"1"];
+    for (int i=0; i<array.count; i++) {
+        ExchangeUnitGroupsModel *model = [array objectAtIndex:i];
+        D("ExchangeUnitGroupsModel-===%@",model.GroupID);
+        TreeView_node *node7 = [[TreeView_node alloc]init];
+        node7.nodeLevel = 1;
+        node7.type = 1;
+        node7.sonNodes = nil;
+        node7.isExpanded = YES;
+        node7.UID = model.GroupID;
+        node7.readflag = self.mInt_index;
+        self.mInt_index ++;
+        TreeView_Level1_Model *temp7 =[[TreeView_Level1_Model alloc]init];
+        temp7.mStr_name = model.GroupName;
+        temp7.mStr_img_open_close = @"root_close";
+        temp7.mInt_number = 0;
+        node7.nodeData = temp7;
+        [self.mArr_sum addObject:node7];
+    }
 }
 
 //分组人员的请求
 -(void)UnitPeoplePeopleList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *uid = [dic objectForKey:@"UID"];
     NSMutableArray *arr = [dic objectForKey:@"array"];
@@ -460,15 +417,6 @@
     TreeView_node *node = [self.mArr_list objectAtIndex:indexPath.row];
     TreeView_Level2_Model *model = node.nodeData;
     if(node.type == 2){
-//        DemoChatViewController *temp = [[DemoChatViewController alloc]init];
-//        temp.currentTarget = [NSString stringWithFormat:@"jb_%@",model.mStr_JiaoBaoHao];
-//        temp.conversationType = ConversationType_PRIVATE;
-//        temp.currentTargetName = model.mStr_name;
-//        temp.enableSettings = YES;
-//        temp.portraitStyle = RCUserAvatarCycle;
-//        UINavigationController *navi = [(AppDelegate*)[UIApplication sharedApplication].delegate navigationController];
-//        [navi setNavigationBarHidden:NO];
-//        [navi pushViewController:temp animated:YES];
         if ([model.mStr_JiaoBaoHao intValue]>0) {
             //生成个人信息
             UserInfoByUnitIDModel *userModel = [[UserInfoByUnitIDModel alloc] init];
@@ -480,10 +428,7 @@
             personal.mModel_personal = userModel;
             [utils pushViewController:personal animated:YES];
         }else{
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"暂时没有开通个人空间";
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showError:@"暂时没有开通个人空间" toView:self.view];
         }
     }else if(node.type == 1){//类型为1的cell
         [self reloadDataForDisplayArrayChangeAt:node.readflag];//修改cell的状态(关闭或打开)

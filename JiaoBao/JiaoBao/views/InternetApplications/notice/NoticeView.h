@@ -34,7 +34,6 @@
 //    NSMutableArray *mArr_tabel;//表格中的数据,教育局、最新更新、推荐
     UIButton *mBtn_add;//加载更多按钮
     int mInt_index;//当前应该加载的第几页
-    MBProgressHUD *mProgressV;//
     UnitNoticeModel *mModel_notice;//获取到的单位信息列表
     
     NSMutableArray *mArr_tabel;//表格中的数据,教育局、最新更新、推荐
@@ -52,7 +51,6 @@
 //@property (nonatomic,strong) NSMutableArray *mArr_tabel;//表格中的数据
 @property (nonatomic,strong) UIButton *mBtn_add;//加载更多按钮
 @property (nonatomic,assign) int mInt_index;//当前应该加载的第几页
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) UnitNoticeModel *mModel_notice;//获取到的单位信息列表
 
 @property (nonatomic,strong) NSMutableArray *mArr_tabel;//表格中的数据

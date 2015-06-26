@@ -14,7 +14,7 @@
 @end
 
 @implementation ClassTopViewController
-@synthesize mArr_list,mTableV_list,mNav_navgationBar,mProgressV,mInt_flag,mInt_unit_class,mStr_classID,mStr_navName,mArr_list_class,mTextF_text,mView_popup,mView_text,mBtn_send;
+@synthesize mArr_list,mTableV_list,mNav_navgationBar,mInt_flag,mInt_unit_class,mStr_classID,mStr_navName,mArr_list_class,mTextF_text,mView_popup,mView_text,mBtn_send;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -81,10 +81,7 @@
     self.mTableV_list.footerRefreshingText = @"正在加载...";
     UIView *view = [[UIView alloc]init];
     self.mTableV_list.tableFooterView = view;
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
+
     //判断应该加载单位1还是班级2
     if (self.mInt_unit_class == 1) {
         [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
@@ -136,7 +133,7 @@
 
 //将获取到的评论列表传到界面
 -(void)AirthCommentsList2:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     CommentsListObjModel *model = [noti.object objectForKey:@"model"];
     NSString *tableID = [noti.object objectForKey:@"tableID"];
     
@@ -195,10 +192,7 @@
         return;
     }
     if (self.mTextF_text.text.length==0) {
-        self.mProgressV.labelText = @"请输入内容";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
     self.mView_popup.hidden = YES;
@@ -209,7 +203,7 @@
 
 //文章评论
 -(void)AirthAddComment:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = [noti.object objectForKey:@"str"];
     NSString *tableID = [noti.object objectForKey:@"tableID"];
     NSString *comment = [noti.object objectForKey:@"comment"];
@@ -247,6 +241,7 @@
 
 //获取文章的附加信息回调
 -(void)GetArthInfo:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     GetArthInfoModel *model = noti.object;
     //判断是否需要点赞请求
     [self sendLike:model];
@@ -279,21 +274,15 @@
             [self ProgressViewLoad:@"点赞中..."];
         }
     }else{//已赞
-        self.mProgressV.labelText = @"已赞";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"已赞" toView:self.view];
     }
 }
 
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = [noti.object objectForKey:@"str"];
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    
+    [MBProgressHUD showSuccess:str toView:self.view];
     //
     NSString *aid = [noti.object objectForKey:@"aid"];
     if (self.mInt_unit_class == 3){
@@ -321,13 +310,13 @@
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
     //刷新，布局
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list reloadData];
 }
 
 //通知学校界面，获取到的单位和个人数据,本单位或本班
 -(void)UnitArthListIndex3:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
@@ -336,10 +325,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]!= 0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
         
     }
@@ -368,7 +354,7 @@
 
 //通知学校界面，获取到的单位和个人数据,本单位或本班
 -(void)AllMyClassArthList3:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
@@ -377,10 +363,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]!= 0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
         
     }
@@ -675,34 +658,6 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NSMutableArray *array = [NSMutableArray array];
-//    if (self.mInt_unit_class == 3){
-//        array = [NSMutableArray arrayWithArray:self.mArr_list_class];
-//    }else{
-//        array = [NSMutableArray arrayWithArray:self.mArr_list];
-//    }
-//    ClassModel *ClassModel = [array objectAtIndex:indexPath.row];
-//    //转model
-//    TopArthListModel *model = [[TopArthListModel alloc] init];
-//    model.TabIDStr = ClassModel.TabIDStr;
-//    model.ClickCount = ClassModel.ClickCount;
-//    model.Context = ClassModel.Context;
-//    model.JiaoBaoHao = ClassModel.JiaoBaoHao;
-//    model.LikeCount = ClassModel.LikeCount;
-//    model.RecDate = ClassModel.RecDate;
-//    model.Source = ClassModel.Source;
-//    model.StarJson = ClassModel.StarJson;
-//    model.State = ClassModel.State;
-//    model.Title = ClassModel.Title;
-//    model.ViewCount = ClassModel.ViewCount;
-//    model.SectionID = ClassModel.SectionID;
-//    model.UserName = ClassModel.UserName;
-//    
-//    ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
-//    arth.Arthmodel = model;
-//    [utils pushViewController:arth animated:YES];
-    
     self.mView_popup.hidden = YES;
     self.mView_text.hidden = YES;
     [self.mTextF_text resignFirstResponder];
@@ -746,36 +701,16 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
     }
-}
-
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    //    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 -(void)ProgressViewLoad:(NSString *)title{
@@ -784,10 +719,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = title;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:title toView:self.view];
 }
 
 //点击点赞评论按钮
@@ -859,10 +791,7 @@
 -(void)loadNoMore{
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"没有更多了";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showError:@"没有更多了" toView:self.view];
 }
 
 //导航条返回按钮回调

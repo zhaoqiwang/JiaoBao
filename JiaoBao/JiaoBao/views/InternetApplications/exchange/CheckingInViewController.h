@@ -26,7 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *secondBtn;//默认考勤
 @property(nonatomic,strong)UITableView *mTableV_left,*mTableV_right;
 @property(nonatomic,strong)UIView *mView_all;
-//@property(nonatomic,strong)MBProgressHUD *progressHUD;
 
 
 @end

@@ -15,7 +15,7 @@
 @end
 
 @implementation RegisterViewController
-@synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mProgressV,mBtn_register,mBtn_forgetPW;
+@synthesize mImgV_bg,mTextF_passwd,mTextF_userName,mImgV_select,mBtn_login,mView_view,mBtn_memberPassWD,mBtn_register,mBtn_forgetPW;
 
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -138,10 +138,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"loginSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess:) name:@"loginSuccess" object:nil];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
@@ -149,34 +145,19 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
     }
 }
 
--(void)noMore{
-    sleep(1);
-}
-- (void)loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
-}
-
 //通知界面，是否登录成功
 -(void)loginSuccess:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
     D("loginSuccess-== %@",str);
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self.view];
 }
 
 -(void)myTask{
@@ -222,10 +203,7 @@
     }
     D("点击登录按钮");
     if (self.mTextF_passwd.text.length==0||self.mTextF_userName.text.length==0) {
-        self.mProgressV.labelText = @"请输入账号或密码";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入账号或密码" toView:self.view];
         return;
     }
     [[NSUserDefaults standardUserDefaults] setValue:self.mTextF_userName.text forKey:@"UserName"];
@@ -233,10 +211,7 @@
     [LoginSendHttp getInstance].mStr_passwd = self.mTextF_passwd.text;
     //先获取时间,然后握手,登录
     [[LoginSendHttp getInstance] hands_login];
-    self.mProgressV.labelText = @"登录中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"登录中..." toView:self.view];
 }
 - (void) keyboardWasShown:(NSNotification *) notif
 {

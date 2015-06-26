@@ -14,7 +14,7 @@
 @end
 
 @implementation ArthDetailViewController
-@synthesize mNav_navgationBar,mWebV_js,Arthmodel,mImgV_click,mImgV_like,mImgV_View,mLab_click,mLab_like,mLab_name,mLab_time,mLab_title,mLab_View,mScrollV_view,mModel,mProgressV,mInt_from,mStr_tableID,mStr_title,mModel_notice,mBtn_send,mTextF_text,mView_text,mArr_feeback,mBtn_more,mInt_page,mTableV_detail,mModel_commentList,mModel_arthInfo;
+@synthesize mNav_navgationBar,mWebV_js,Arthmodel,mImgV_click,mImgV_like,mImgV_View,mLab_click,mLab_like,mLab_name,mLab_time,mLab_title,mLab_View,mScrollV_view,mModel,mInt_from,mStr_tableID,mStr_title,mModel_notice,mBtn_send,mTextF_text,mView_text,mArr_feeback,mBtn_more,mInt_page,mTableV_detail,mModel_commentList,mModel_arthInfo;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -81,10 +81,6 @@
     
     self.mScrollV_view.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
     [self sendRequest];
     
     //设置webview属性
@@ -124,19 +120,13 @@
         self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.Arthmodel.Title];
     }
     D("model.tableID==%@,sectionID-===%@",self.Arthmodel.TabIDStr,self.Arthmodel.SectionID);
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -164,10 +154,7 @@
     }
     D("点击发送按钮");
     if (self.mTextF_text.text.length==0) {
-        self.mProgressV.labelText = @"请输入内容";
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
     NSArray *array = [self.mTextF_text.text componentsSeparatedByString:@":"];
@@ -181,10 +168,7 @@
                 NSString *text = [self.mTextF_text.text substringFromIndex:3+model.Number.length];
                 //判断回复几楼的，内容是否为空
                 if (text.length==0) {
-                    self.mProgressV.labelText = @"请输入内容";
-                    self.mProgressV.mode = MBProgressHUDModeCustomView;
-                    [self.mProgressV show:YES];
-                    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+                    [MBProgressHUD showError:@"请输入内容" toView:self.view];
                     break;
                     return;
                 }
@@ -216,14 +200,12 @@
 
 //将踩、顶回复返回界面
 -(void)AirthAddScore:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *uid = [dic objectForKey:@"uid"];
     NSString *tp = [dic objectForKey:@"tp"];
     NSString *name = [dic objectForKey:@"name"];
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = name;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:name toView:self.view];
     //循环当前显示数组
     for (int i=0; i<self.mModel_commentList.commentsList.count; i++) {
         commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:i];
@@ -247,11 +229,9 @@
 
 //通知文章详情界面刷新点赞
 -(void)AirthLikeIt:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = [noti.object objectForKey:@"str"];
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showSuccess:str toView:self.view];
     self.mModel_arthInfo.LikeCount = self.mModel_arthInfo.LikeCount+1;
     self.mModel_arthInfo.Likeflag = -1;
     self.mModel.Likeflag = @"1";
@@ -263,6 +243,7 @@
 
 //文章评论
 -(void)AirthAddComment:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *str = [noti.object objectForKey:@"str"];
     if ([str isEqualToString:@"评论成功"]) {
         self.mTextF_text.text = @"";
@@ -276,13 +257,14 @@
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     //刷新
     [self.mTableV_detail reloadData];
 }
 
 //将获取到的评论列表传到界面
 -(void)AirthCommentsList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     CommentsListObjModel *model = noti.object;
     if (self.mModel_commentList.commentsList.count==0) {
         self.mModel_commentList = model;
@@ -349,18 +331,9 @@
     return a;
 }
 
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
-}
--(void)noMore{
-    sleep(1);
-}
-
 //文章详情通知
 -(void)ArthDetai:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     if (self.mInt_from == 2) {
         self.mModel_notice = noti.object;
         NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
@@ -458,7 +431,7 @@
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"WebKitDiskImageCacheEnabled"];//自己添加的，原文没有提到。
@@ -737,10 +710,7 @@
 
 -(void)progressViewShow:(NSString *)str{
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    self.mProgressV.labelText = str;
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:str toView:self.view];
 }
 
 - (void) keyboardWasShown:(NSNotification *) notif{

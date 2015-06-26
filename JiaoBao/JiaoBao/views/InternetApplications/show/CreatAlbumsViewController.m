@@ -18,7 +18,7 @@
 @end
 
 @implementation CreatAlbumsViewController
-@synthesize mNav_navgationBar,mProgressV,mLab_name,mTextF_name,mLab_desInfo,mTextF_desInfo,mLab_type,mStr_flag,mStr_unitID,mStr_type,mBtn_type,mTableV_type,mTextF_type,delegate;
+@synthesize mNav_navgationBar,mLab_name,mTextF_name,mLab_desInfo,mTextF_desInfo,mLab_type,mStr_flag,mStr_unitID,mStr_type,mBtn_type,mTableV_type,mTextF_type,delegate;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -83,20 +83,12 @@
     
     [self.mTableV_type.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_type.layer setBorderWidth:2];
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -105,26 +97,21 @@
 
 //创建单位相册回调
 -(void)CreateUnitPhotoGroup:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *flag = noti.object;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
     if ([flag intValue] == 0) {//成功
-        self.mProgressV.labelText = @"创建成功";
+        [MBProgressHUD showSuccess:@"创建成功" toView:self.view];
         //通知相册列表界面，重新刷新
         [self.delegate CreatePhotoGroupSuccess];
         [utils popViewControllerAnimated:YES];
     }else{
-        self.mProgressV.labelText = @"创建失败";
+        [MBProgressHUD showError:@"创建失败" toView:self.view];
     }
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
 }
 
 - (IBAction)changeOpenStatus:(id)sender {
     if (isOpened) {
         [UIView animateWithDuration:0.3 animations:^{
-//            UIImage *closeImage=[UIImage imageNamed:@"dropdown.png"];
-//            [self.mBtn_type setImage:closeImage forState:UIControlStateNormal];
             CGRect frame=self.mTableV_type.frame;
             frame.size.height=0;
             [self.mTableV_type setFrame:frame];
@@ -133,8 +120,6 @@
         }];
     }else{
         [UIView animateWithDuration:0.3 animations:^{
-//            UIImage *openImage=[UIImage imageNamed:@"dropup.png"];
-//            [self.mBtn_type setImage:openImage forState:UIControlStateNormal];
             CGRect frame=self.mTableV_type.frame;
             frame.size.height=90;
             [self.mTableV_type setFrame:frame];
@@ -149,18 +134,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
--(void)noMore{
-    sleep(1);
-}
-
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [utils popViewControllerAnimated:YES];
@@ -171,19 +144,11 @@
         return;
     }
     if (self.mTextF_name.text.length == 0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请输入相册名称";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入相册名称" toView:self.view];
         return;
     }
     if (self.mStr_type.length==0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请选择权限";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请选择权限" toView:self.view];
         return;
     }
     if ([self.mStr_flag intValue] == 1) {
@@ -191,10 +156,7 @@
     }else{
         [[ThemeHttp getInstance] themeHttpCreateUnitPhotoGroup:self.mStr_unitID PhotoName:self.mTextF_name.text CreatBy:[dm getInstance].jiaoBaoHao DesInfo:@"来自手机" ViewType:self.mStr_type];
     }
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 /*

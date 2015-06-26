@@ -35,7 +35,6 @@
     NSMutableArray *mArr_list;//文章数组
     int mInt_index;//加载的第几页文章
     UserInfoByUnitIDModel *mModel_personal;//个人信息
-    MBProgressHUD *mProgressV;//
     NSMutableArray *mArr_NewPhoto;//获取到最新照片的数组
 }
 
@@ -52,7 +51,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_list;////文章数组
 @property (nonatomic,assign) int mInt_index;//加载的第几页文章
 @property (nonatomic,strong) UserInfoByUnitIDModel *mModel_personal;//个人信息
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSMutableArray *mArr_NewPhoto;//获取到最新照片的数组
 
 @end

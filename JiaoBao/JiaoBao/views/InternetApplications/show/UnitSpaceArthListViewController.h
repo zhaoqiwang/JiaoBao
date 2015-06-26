@@ -20,7 +20,6 @@
 @interface UnitSpaceArthListViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_list;//
-    MBProgressHUD *mProgressV;//
     NSString *mStr_flag;//1分享，2展示
     int mInt_index;//第几页
     NSMutableArray *mArr_list;//
@@ -29,7 +28,6 @@
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,strong) NSString *mStr_flag;//1分享，2展示
 @property (nonatomic,assign) int mInt_index;//第几页

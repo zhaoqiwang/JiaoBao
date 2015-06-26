@@ -23,7 +23,6 @@
 @property (assign,nonatomic) NSInteger mInt_userSelectedChannelID;//点击按钮选择名字ID
 @property (assign,nonatomic) NSInteger mInt_scrollViewSelectedChannelID;//滑动列表选择名字ID
 @property(nonatomic,assign)NSUInteger firstSel;
-@property(nonatomic,strong)MBProgressHUD *mProgressV;
 
 
 //+ (NewWorkTopScrollView *)shareInstance;

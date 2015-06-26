@@ -38,9 +38,6 @@ NSString *kCell = @"Forward_cell2";
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;//滚动方向
 
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-    [self addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
     if([dm getInstance].mModel_unitList.UnitClass.count == 0)
     {
         
@@ -126,13 +123,6 @@ NSString *kCell = @"Forward_cell2";
 //手动设置size
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     return CGSizeMake(120, 0);
-}
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    //    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 ////通知界面更新，获取事务信息接收单位列表

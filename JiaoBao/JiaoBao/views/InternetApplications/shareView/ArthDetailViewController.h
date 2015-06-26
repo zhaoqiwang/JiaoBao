@@ -33,7 +33,7 @@
     UILabel *mLab_like;//赞次数
     TopArthListModel *Arthmodel;//传过来的文章的model
     ArthDetailModel *mModel;
-    MBProgressHUD *mProgressV;//
+//    MBProgressHUD *mProgressV;//
     int mInt_from;//来自分享和展示1还是内务2
     NSString *mStr_tableID;//内务的加密ID
     NSString *mStr_title;//内务标题
@@ -64,7 +64,7 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_like;//赞次数
 @property (nonatomic,strong) IBOutlet UILabel *mLab_like;//赞次数
 @property (nonatomic,strong) ArthDetailModel *mModel;
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
+//@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_from;//来自分享和展示1还是内务2
 @property (nonatomic,strong) NSString *mStr_tableID;//内务的加密ID
 @property (nonatomic,strong) NSString *mStr_title;//内务标题

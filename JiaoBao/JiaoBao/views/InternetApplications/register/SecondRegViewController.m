@@ -19,7 +19,6 @@
     id  _observer1,_observer2,_observer3,_observer4;
 
 }
-@property(nonatomic,strong)MBProgressHUD *mProgressV;
 
 
 @end
@@ -65,9 +64,6 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
     self.navigationController.navigationBarHidden = YES;
     if(self.forgetPWSymbol == YES)
     {
@@ -272,25 +268,15 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
     }
 }
 
--(void)noMore{
-    sleep(1);
-}
-
 -(void)progressViewTishi:(NSString *)title{
-    self.mProgressV.labelText = title;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showError:title toView:self.view];
 }
 
 -(void)ProgressViewLoad:(NSString *)title{
@@ -298,17 +284,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = title;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
+    [MBProgressHUD showMessage:title toView:self.view];
 }
 
 //键盘点击DO 回收键盘
@@ -326,10 +302,6 @@
 {
     [self.view endEditing:YES];
 }
-
-
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

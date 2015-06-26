@@ -24,7 +24,6 @@
 @interface UnintAlbumsListViewController : UIViewController<MyNavigationDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MBProgressHUDDelegate,MWPhotoBrowserDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UICollectionView *mCollectionV_albums;//放相册
-    MBProgressHUD *mProgressV;//
     UnitAlbumsModel *mModel_albums;
     NSMutableArray *mArr_list;//
     NSMutableArray *mArr_bigPhoto;//存放大图片路径
@@ -34,7 +33,6 @@
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_albums;//放相册
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) UnitAlbumsModel *mModel_albums;
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,strong) NSMutableArray *mArr_bigPhoto;//存放大图片路径

@@ -14,7 +14,7 @@
 @end
 
 @implementation WorkDetailListViewController
-@synthesize mTableV_detailist,mArr_detail,mInt_page,mInt_tag,mNav_navgationBar,mStr_navName,mStr_url,mProgressV,mInt_refresh;
+@synthesize mTableV_detailist,mArr_detail,mInt_page,mInt_tag,mNav_navgationBar,mStr_navName,mStr_url,mInt_refresh;
 
 
 
@@ -55,8 +55,6 @@
     
     self.mArr_detail = [[NSMutableArray alloc] init];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
     //发送获取请求
     [self firstSendHttp];
 }
@@ -64,10 +62,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -80,12 +75,8 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.labelText = @"加载中...";
-//    self.mProgressV.dimBackground = YES;
-    [self.mProgressV show:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
     self.mInt_page = 1;
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
     if (self.mInt_tag == 6||self.mInt_tag == 7||self.mInt_tag == 8||self.mInt_tag == 9||self.mInt_tag == 4) {
         D("111111111");
         //获取发给我的待处理信息
@@ -114,38 +105,17 @@
                 [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:[NSString stringWithFormat:@"%d",self.mInt_page]];
             }
             
-            self.mProgressV.labelText = @"加载中...";
-//            self.mProgressV.dimBackground = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+            [MBProgressHUD showMessage:@"" toView:self.view];
         } else {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"没有更多了";
-//            self.mProgressV.userInteractionEnabled = NO;
-//            self.mProgressV.dimBackground = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
             [self.mTableV_detailist footerEndRefreshing];
+            [MBProgressHUD showError:@"没有更多了" toView:self.view];
         }
     }
 }
 
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mTableV_detailist headerEndRefreshing];
-    [self.mTableV_detailist footerEndRefreshing];
-    sleep(2);
-}
-
 //通知界面刷新消息cell头像
 -(void)UnReadMsgCellImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_detailist reloadData];
 }
 
@@ -153,42 +123,9 @@
 -(void)UnReadMsgCell:(NSNotification *)noti{
     [self.mTableV_detailist headerEndRefreshing];
     [self.mTableV_detailist footerEndRefreshing];
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSMutableArray *array = [dic valueForKey:@"array"];
-//    if (self.mInt_refresh == 1) {
-//        if (array.count>0) {
-//            [self.mArr_detail removeAllObjects];
-//            self.mArr_detail = [NSMutableArray arrayWithArray:array];
-//        }
-//        if (array.count==20) {
-//            [self.mTableV_detailist addFooterWithTarget:self action:@selector(footerRereshing)];
-//            self.mTableV_detailist.footerPullToRefreshText = @"上拉加载更多";
-//            self.mTableV_detailist.footerReleaseToRefreshText = @"松开加载更多数据";
-//            self.mTableV_detailist.footerRefreshingText = @"正在加载...";
-//        }else{
-//            [self.mTableV_detailist removeFooter];
-//        }
-//    }else{
-//        if (array.count==20) {
-//            [self.mTableV_detailist addFooterWithTarget:self action:@selector(footerRereshing)];
-//            self.mTableV_detailist.footerPullToRefreshText = @"上拉加载更多";
-//            self.mTableV_detailist.footerReleaseToRefreshText = @"松开加载更多数据";
-//            self.mTableV_detailist.footerRefreshingText = @"正在加载...";
-//        }else{
-//            [self.mTableV_detailist removeFooter];
-//        }
-//        if (array.count==0) {
-//            self.mProgressV.mode = MBProgressHUDModeCustomView;
-//            self.mProgressV.labelText = @"没有更多了";
-//            [self.mProgressV show:YES];
-//            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-//        }
-//        for (int i=0; i<array.count; i++) {
-//            UnReadMsg_model *unReadMsgModel = [array objectAtIndex:i];
-//            [self.mArr_detail addObject:unReadMsgModel];
-//        }
-//    }
     if (self.mInt_page == 1) {
         if (array.count>0) {
             [self.mArr_detail removeAllObjects];

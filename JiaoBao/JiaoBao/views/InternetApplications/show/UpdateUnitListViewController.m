@@ -14,7 +14,7 @@
 @end
 
 @implementation UpdateUnitListViewController
-@synthesize mNav_navgationBar,mTableV_list,mProgressV,mStr_title,mArr_list,mInt_index,mStr_flag,mStr_local;
+@synthesize mNav_navgationBar,mTableV_list,mStr_title,mArr_list,mInt_index,mStr_flag,mStr_local;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -51,11 +51,7 @@
     self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
     self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
     self.mTableV_list.headerRefreshingText = @"正在刷新...";
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-    
+
     //发送请求
     [self sendRequest];
 }
@@ -67,19 +63,15 @@
 
 //将获得到的单位信息，通知到界面
 -(void)UpdateUnitList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
 
-    if([ResultCode integerValue]!=0)
-    {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    if([ResultCode integerValue]!=0){
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
@@ -89,12 +81,7 @@
         }
     }else{
         if (array.count == 0) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"没有更多了";
-//            self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            
+            [MBProgressHUD showError:@"没有更多了" toView:self.view];
             return;
         }
         self.mArr_list = [NSMutableArray arrayWithArray:array];
@@ -125,25 +112,16 @@
         self.mInt_index = (int)self.mArr_list.count/20+1;
         [self sendRequest];
         
-        self.mProgressV.labelText = @"加载中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self.view];
     }
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -160,24 +138,7 @@
     }else{
         [[ShowHttp getInstance] showHttpGetUpdateUnitList:self.mStr_flag local:self.mStr_local page:[NSString stringWithFormat:@"%d",self.mInt_index]];
     }
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
--(void)noMore{
-    sleep(1);
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -249,30 +210,7 @@
     cell.mImgV_viewCount.hidden = YES;
     return cell;
 }
-// 用于延时显示图片，以减少内存的使用
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    TopArthListCell *cell0 = (TopArthListCell *)cell;
-//    UpdateUnitListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    
-//    //头像
-//    NSString *imgPath;
-//    if ([self.mStr_flag intValue] == 3) {
-//        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitClassID]];
-//    }else{
-//        if ([model.UnitClassID intValue]>0) {
-//            imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitClassID]];
-//        }else{
-//            imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-//        }
-//    }
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell0.mImgV_headImg setImage:img];
-//    }else{
-//        [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//    }
-//}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([self.mStr_flag intValue] ==3) {

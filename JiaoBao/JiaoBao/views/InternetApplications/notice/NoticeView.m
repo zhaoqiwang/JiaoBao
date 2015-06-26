@@ -11,7 +11,7 @@
 static NSString *NoticeCell = @"ShareCollectionViewCell";
 
 @implementation NoticeView
-@synthesize mLab_name,mBtn_posting,mCollectionV_unit,mScrollV_share,mTableV_detail,mArr_unit,mInt_flag,mBtn_add,mInt_index,mProgressV,mModel_notice,mArr_class,mArr_display,mArr_tabel;
+@synthesize mLab_name,mBtn_posting,mCollectionV_unit,mScrollV_share,mTableV_detail,mArr_unit,mInt_flag,mBtn_add,mInt_index,mModel_notice,mArr_class,mArr_display,mArr_tabel;
 
 
 - (id)initWithFrame1:(CGRect)frame{
@@ -96,11 +96,6 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
         [self.mBtn_posting setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.mBtn_posting addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_posting];
-        
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
-//        self.mProgressV.userInteractionEnabled = NO;
     }
     return self;
 }
@@ -121,35 +116,15 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
         D("self.mint.page-====%lu %d",(unsigned long)self.mModel_notice.noticeInfoArray.count,self.mInt_index);
         UnitSectionMessageModel *model = [self.mArr_unit objectAtIndex:self.mInt_flag];
         [[ShareHttp getInstance] NoticeHttpGetUnitNoticesWith:model.UnitType UnitID:model.UnitID pageNum:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     } else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self];
     }
-}
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mTableV_detail headerEndRefreshing];
-    [self.mTableV_detail footerEndRefreshing];
-    sleep(2);
 }
 
 //加载获取到得单位
 -(void)getUnitInfoShow:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     NSMutableArray *array = noti.object;
     for (int i=0; i<array.count; i++) {
         UnitSectionMessageModel *model = [array objectAtIndex:i];
@@ -183,16 +158,12 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
     [[ShareHttp getInstance] shareHttpGetSectionMessageWith:@"_1" TopFlags:@"2" AccID:[NSString stringWithFormat:@"%d",[dm getInstance].uType]];
     //请求最新更新数据
     [[ShareHttp getInstance] shareHttpGetTopArthListIndexWith:@"2" TopFlag:@"1" Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //获取到关联单位和所有单位
 -(void)getUnitClassNotice:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     int index = [[dic objectForKey:@"index"] intValue];
     NSArray *array = [dic objectForKey:@"array"];
@@ -303,7 +274,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 
 //最新更新、推荐的通知
 -(void)TopArthListIndexShow:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     NSMutableArray *array = noti.object;
     if (self.mInt_index > 1) {
         if (array.count>0) {
@@ -318,7 +289,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
     //刷新，布局
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_detail reloadData];
 }
 
@@ -537,10 +508,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
                     }else if (node.readflag == 2){//所有班级
                         [[ShareHttp getInstance] shareHttpGetUnitClassWith:userInfoModel.UnitID Section:@"2"];
                     }
-                    self.mProgressV.labelText = @"加载中...";
-                    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-                    [self.mProgressV show:YES];
-                    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+                    [MBProgressHUD showMessage:@"" toView:self];
                 }
             }
         } else {//第1层级，点击跳转界面，进入文章列表
@@ -634,10 +602,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
         //发送获取切换单位和个人信息请求
         [[LoginSendHttp getInstance] changeCurUnit];
         [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self];
     }else if ([model.UnitType intValue] ==2){//学校
         [self unitTypeClass];
         [self reloadDataForDisplayArray];//初始化将要显示的数据
@@ -675,7 +640,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 
 //通知到内务获取到的单位通知
 -(void)GetUnitNotices:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     //判断是否是加载更多
     if (self.mModel_notice.noticeInfoArray.count == 0) {
         self.mModel_notice = noti.object;

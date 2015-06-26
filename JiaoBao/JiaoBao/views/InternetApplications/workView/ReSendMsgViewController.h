@@ -11,7 +11,7 @@
 #import "utils.h"
 #import "dm.h"
 #import "define_constant.h"
-#import "MBProgressHUD.h"
+#import "MBProgressHUD+AD.h"
 ;
 @interface ReSendMsgViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MyNavigationDelegate,MBProgressHUDDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
@@ -20,7 +20,6 @@
     UIButton *mBtn_send;//发送按钮
     UIView *mView_text;//放输入框
     NSMutableArray *mArr_member;//人员数组
-    MBProgressHUD *mProgressV;//
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -29,6 +28,5 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_send;//发送按钮
 @property (nonatomic,strong) IBOutlet UIView *mView_text;//放输入框
 @property (nonatomic,strong) NSMutableArray *mArr_member;//人员数组
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 
 @end

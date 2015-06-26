@@ -27,7 +27,6 @@
     NSMutableArray *mArr_list;//上级单位数组
     NSMutableArray *mArr_down;//下级单位数组
     UnitSectionMessageModel *mModel_unit;
-    MBProgressHUD *mProgressV;//
     NSString *mStr_UID;//单位id
 }
 
@@ -41,7 +40,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,strong) NSMutableArray *mArr_down;//下级单位数组
 @property (nonatomic,strong) UnitSectionMessageModel *mModel_unit;
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) NSString *mStr_UID;//单位id
 
 @end

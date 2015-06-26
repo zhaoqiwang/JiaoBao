@@ -14,7 +14,7 @@
 @end
 
 @implementation ThemeSpaceViewController
-@synthesize mImgV_head,mBtn_add,mInt_index,mArr_list,mScrollV_img,mLab_albums,mLab_arth,mLab_detail,mNav_navgationBar,mScrollV_all,mTableV_arth,mProgressV,mStr_title,mStr_unitID,mArr_newPhoto,mPageC_page,mStr_tableID,mBtn_att;
+@synthesize mImgV_head,mBtn_add,mInt_index,mArr_list,mScrollV_img,mLab_albums,mLab_arth,mLab_detail,mNav_navgationBar,mScrollV_all,mTableV_arth,mStr_title,mStr_unitID,mArr_newPhoto,mPageC_page,mStr_tableID,mBtn_att;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -106,22 +106,12 @@
     [self setScrollViewImageShow];
     //发送请求
     [self sendRequest];
-    
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
-    
-    
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -140,10 +130,7 @@
     //获取是否关注此主题
     [[ThemeHttp getInstance] themeHttpExistAtt:self.mStr_tableID];
     
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //点击图片后，实现跳转页面
@@ -158,16 +145,14 @@
 
 //是否关注主题
 -(void)ExistAtt:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
 
@@ -183,32 +168,36 @@
 }
 //添加关注
 -(void)AddAtt:(NSNotification *)noti{
-    [self.mBtn_att setTitle:@"已关注" forState:UIControlStateNormal];
-    self.mBtn_att.tag = 1;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"关注成功";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    //刷新主题界面
-    [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
+    [MBProgressHUD hideHUDForView:self.view];
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue]==0) {
+        [self.mBtn_att setTitle:@"已关注" forState:UIControlStateNormal];
+        self.mBtn_att.tag = 1;
+        //刷新主题界面
+        [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 }
 
 //取消主题关注
 -(void)RemoveAtt:(NSNotification *)noti{
-    [self.mBtn_att setTitle:@"添加关注" forState:UIControlStateNormal];
-    self.mBtn_att.tag = 0;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"取消关注成功";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-    //刷新主题界面
-    //检查当前网络是否可用
-    if([Reachability isEnableNetwork]==NO){
-        
-    }else{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue]==0) {
+        [self.mBtn_att setTitle:@"添加关注" forState:UIControlStateNormal];
+        self.mBtn_att.tag = 0;
+        //刷新主题界面
         [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
+    }else{
+        
     }
-    
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 }
 
 //关注主题按钮
@@ -224,14 +213,12 @@
         //取消关注
         [[ThemeHttp getInstance] themeHttpRemoveAtt:self.mStr_tableID];
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //个人最新前N张照片后，通知界面
 -(void)GetUnitNewPhoto:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
 //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
 //    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -283,12 +270,13 @@
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_arth reloadData];
 }
 
 //获取到文章的通知
 -(void)themeSpace:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableArray *array = noti.object;
     if (self.mInt_index > 1) {
         if (array.count>0) {
@@ -325,28 +313,10 @@
         self.mInt_index = (int)self.mArr_list.count/20+1;
         //发送获取文章请求
         [[ShareHttp getInstance] shareHttpGetUnitArthLIstIndexWith:@"99" UnitID:[NSString stringWithFormat:@"-%@",self.mStr_unitID] Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        self.mProgressV.labelText = @"加载中...";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     } else {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self.view];
     }
-}
-
--(void)noMore{
-    sleep(1);
-}
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -405,20 +375,6 @@
     cell.mImgV_viewCount.frame = CGRectMake(cell.mLab_viewCount.frame.origin.x-lookImg.size.width-5, 70-12-lookImg.size.height, lookImg.size.width, lookImg.size.height);
     cell.mImgV_viewCount.image = lookImg;
     return cell;
-}
-// 用于延时显示图片，以减少内存的使用
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    TopArthListCell *cell0 = (TopArthListCell *)cell;
-    TopArthListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        [cell0.mImgV_headImg setImage:img];
-    }else{
-        [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-    }
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{

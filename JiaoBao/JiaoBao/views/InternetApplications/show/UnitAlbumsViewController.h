@@ -23,7 +23,6 @@
 @interface UnitAlbumsViewController : UIViewController<MyNavigationDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MBProgressHUDDelegate,UIActionSheetDelegate,CreatAlbumsDelegate,UpLoadPhotoDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UICollectionView *mCollectionV_albums;//放相册
-    MBProgressHUD *mProgressV;//
     UnitSectionMessageModel *mModel_unit;//单位信息
     NSMutableArray *mArr_list;//
     UserInfoByUnitIDModel *mModel_personal;//个人信息
@@ -35,7 +34,6 @@
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_albums;//放相册
-@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,strong) UnitSectionMessageModel *mModel_unit;
 @property (nonatomic,strong) NSMutableArray *mArr_list;//
 @property (nonatomic,strong) UserInfoByUnitIDModel *mModel_personal;//个人信息

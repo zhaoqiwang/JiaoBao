@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation ShareViewNew
-@synthesize mScrollV_share,mTableV_detail,mTableV_difine,mInt_index,mArr_tabel,mBtn_add,mLab_name,mProgressV,mArr_difine;
+@synthesize mScrollV_share,mTableV_detail,mTableV_difine,mInt_index,mArr_tabel,mBtn_add,mLab_name,mArr_difine;
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
@@ -45,11 +45,6 @@
         
         [self.mScrollV_share addSubview:self.mTableV_detail];
         [self addSubview:self.mTableV_detail];
-        
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
-//        self.mProgressV.userInteractionEnabled = NO;
     }
     return self;
 }
@@ -57,10 +52,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
@@ -72,10 +64,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 #pragma mark 开始进入刷新状态
@@ -103,21 +92,19 @@
     } else {
         [self.mTableV_detail headerEndRefreshing];
         [self.mTableV_detail footerEndRefreshing];
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self];
     }
 }
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_detail reloadData];
 }
 
 //最新更新、推荐的通知
 -(void)TopArthListIndex:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
     NSMutableArray *array = noti.object;
@@ -145,22 +132,9 @@
 //    [self reSetFrame];
 }
 
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    [self.mTableV_detail headerEndRefreshing];
-    [self.mTableV_detail footerEndRefreshing];
-    sleep(30);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mArr_tabel removeAllObjects];
     [self.mTableV_detail reloadData];
     [dm getInstance].mImt_showUnRead = 0;

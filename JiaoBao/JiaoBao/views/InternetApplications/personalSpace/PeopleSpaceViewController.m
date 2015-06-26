@@ -22,7 +22,7 @@
 @end
 
 @implementation PeopleSpaceViewController
-@synthesize mTableV_personalS,mNav_navgationBar,mProgressV,mArr_personalS;
+@synthesize mTableV_personalS,mNav_navgationBar,mArr_personalS;
 
 
 -(void)dealloc
@@ -127,11 +127,6 @@
 
     self.unitArr = mArr;
     self.unitArr2 = mArr2;
-
-    //加提示类的实例
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
     
     // Do any additional setup after loading the view from its nib.
     
@@ -367,25 +362,15 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
     }
 }
 
--(void)noMore{
-    sleep(1);
-}
-
 -(void)progressViewTishi:(NSString *)title{
-    self.mProgressV.labelText = title;
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showError:title toView:self.view];
 }
 
 -(void)ProgressViewLoad:(NSString *)title{
@@ -393,19 +378,8 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = title;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:title toView:self.view];
 }
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
-}
-
 
 /*
 #pragma mark - Navigation

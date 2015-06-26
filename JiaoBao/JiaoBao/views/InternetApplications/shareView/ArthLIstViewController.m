@@ -14,7 +14,7 @@
 @end
 
 @implementation ArthLIstViewController
-@synthesize mNav_navgationBar,mTableV_list,mStr_classID,mStr_title,mArr_list,mProgressV,mInt_index,mInt_flag,mInt_section,mBtn_posting,mInt_class,mStr_local,mStr_flag;
+@synthesize mNav_navgationBar,mTableV_list,mStr_classID,mStr_title,mArr_list,mInt_index,mInt_flag,mInt_section,mBtn_posting,mInt_class,mStr_local,mStr_flag;
 
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -77,11 +77,6 @@
     [self.mBtn_posting addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.mBtn_posting];
     
-    self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:self.mProgressV];
-    self.mProgressV.delegate = self;
-//    self.mProgressV.userInteractionEnabled = NO;
-    
     //发送请求
     [self sendhttpRequest];
 }
@@ -89,10 +84,7 @@
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
         return YES;
     }else{
         return NO;
@@ -116,7 +108,7 @@
 
 //最新更新、推荐的通知
 -(void)TopArthListIndex:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     NSMutableArray *array = noti.object;
@@ -126,12 +118,7 @@
         }
     }else{
         if (array.count == 0) {
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
-            self.mProgressV.labelText = @"没有更多了";
-//            self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            
+            [MBProgressHUD showError:@"没有更多了" toView:self.view];
             return;
         }
         self.mArr_list = [NSMutableArray arrayWithArray:array];
@@ -160,10 +147,7 @@
         D("self.mint.page-====%lu %d",(unsigned long)self.mArr_list.count,self.mInt_index);
         [self sendhttpRequest];
         
-        self.mProgressV.labelText = @"加载中...";
-        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }
 }
 
@@ -189,26 +173,12 @@
     }else if (self.mInt_flag == 4){//shareNew中的最新文章和推荐文章
         [[ShowHttp getInstance] showHttpGetShareingArthList:self.mStr_flag page:[NSString stringWithFormat:@"%d",self.mInt_index]];
     }
-    self.mProgressV.labelText = @"加载中...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-}
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    [self.mTableV_list headerEndRefreshing];
-    [self.mTableV_list footerEndRefreshing];
-    sleep(2);
-}
--(void)noMore{
-    sleep(1);
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //获取到头像后，更新界面
 -(void)TopArthListIndexImg:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     //刷新，布局
     [self.mTableV_list reloadData];
 }

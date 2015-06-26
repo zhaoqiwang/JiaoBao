@@ -13,7 +13,7 @@
 static NSString *ShowNewCell = @"ShareCollectionViewCell";
 
 @implementation ShowViewNew
-@synthesize mScrollV_view,mArr_define,mLab_myUnit,mArr_myUnit,mTableV_myUnit,mLab_follow,mArr_follow,mTalbeV_follow,mCollectionV_unit,mArr_related,mProgressV;
+@synthesize mScrollV_view,mArr_define,mLab_myUnit,mArr_myUnit,mTableV_myUnit,mLab_follow,mArr_follow,mTalbeV_follow,mCollectionV_unit,mArr_related;
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
@@ -78,30 +78,23 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
         self.mTalbeV_follow.delegate = self;
         self.mTalbeV_follow.tag = 3;
         [self.mScrollV_view addSubview:self.mTalbeV_follow];
-        
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
     }
     return self;
 }
 
 //获取到我关注的单位后，通知界面
 -(void)GetMyAttUnit:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag intValue]==0) {//成功
-        [self.mProgressV hide:YES];
         NSMutableArray *array = noti.object;
         [self.mArr_follow removeAllObjects];
         self.mArr_follow = [NSMutableArray arrayWithArray:array];
         //重置界面
         [self reSetFrame];
     }else{
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"获取单位出错";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"获取单位出错" toView:self];
     }
     
 }
@@ -111,34 +104,17 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
     }
-}
-
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-    sleep(2);
 }
 
 //获取到单位头像后，刷新界面
@@ -149,7 +125,7 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
 
 //加载获取到得单位
 -(void)getUnitInfo:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     NSMutableArray *array = noti.object;
     [self.mArr_myUnit removeAllObjects];
     [self.mArr_related removeAllObjects];
@@ -280,34 +256,6 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
     cell.mImgV_viewCount.hidden = YES;
     return cell;
 }
-// 用于延时显示图片，以减少内存的使用
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    TopArthListCell *cell0 = (TopArthListCell *)cell;
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    if (tableView.tag == 1) {
-//        
-//    }else if (tableView.tag == 2){
-//        UnitSectionMessageModel *model = [self.mArr_myUnit objectAtIndex:indexPath.row];
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell0.mImgV_headImg setImage:img];
-//        }else{
-//            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        }
-//    }else if (tableView.tag == 3){
-//        //文件名
-//        MyAttUnitModel *model = [self.mArr_follow objectAtIndex:indexPath.row];
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.InterestUnitID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell0.mImgV_headImg setImage:img];
-//        }else{
-//            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        }
-//    }
-//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

@@ -10,7 +10,7 @@
 #import "Reachability.h"
 
 @implementation ThemeView
-@synthesize mScrollV_share,mTableV_detail,mTableV_difine,mInt_index,mArr_tabel,mBtn_add,mLab_name,mProgressV,mArr_difine;
+@synthesize mScrollV_share,mTableV_detail,mTableV_difine,mInt_index,mArr_tabel,mBtn_add,mLab_name,mArr_difine;
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
@@ -75,11 +75,6 @@
 //        [self.mBtn_add addTarget:self action:@selector(clickAddBtn:) forControlEvents:UIControlEventTouchUpInside];
 //        [self.mBtn_add setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //        [self.mScrollV_share addSubview:self.mBtn_add];
-        
-        self.mProgressV = [[MBProgressHUD alloc]initWithView:self];
-        [self addSubview:self.mProgressV];
-        self.mProgressV.delegate = self;
-//        self.mProgressV.userInteractionEnabled = NO;
     }
     return self;
 }
@@ -89,18 +84,12 @@
     if ([self checkNetWork]) {
         return;
     }
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    self.mProgressV.labelText = @"加载中...";
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
     if([Reachability isEnableNetwork]==NO){
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = NETWORKENABLE;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:NETWORKENABLE toView:self];
         return YES;
     }else{
         return NO;
@@ -128,11 +117,7 @@
     } else {
         [self.mTableV_detail headerEndRefreshing];
         [self.mTableV_detail footerEndRefreshing];
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"没有更多了" toView:self];
     }
 }
 
@@ -143,7 +128,7 @@
 
 //将我的主题通知界面
 -(void)EnjoyInterestList:(NSNotification *)noti{
-    [self.mProgressV hide:YES];
+    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_detail headerEndRefreshing];
     [self.mTableV_detail footerEndRefreshing];
     NSDictionary *dic = noti.object;
@@ -152,10 +137,7 @@
     
     if([ResultCode integerValue]!=0)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = ResultDesc;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:ResultDesc toView:self];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
@@ -168,69 +150,20 @@
         [self.mArr_tabel addObjectsFromArray:self.mArr_difine];
         [self.mArr_tabel addObjectsFromArray:array];
         if (array.count ==20&&self.mInt_index == 1) {
-//            [self.mTableV_detail addFooterWithTarget:self action:@selector(footerRereshing)];
-//            self.mTableV_detail.footerPullToRefreshText = @"上拉加载更多";
-//            self.mTableV_detail.footerReleaseToRefreshText = @"松开加载更多数据";
-//            self.mTableV_detail.footerRefreshingText = @"正在加载...";
         }
-//        self.mArr_tabel = [NSMutableArray arrayWithArray:array];
     }
     //刷新，布局
 //    [self reSetFrame];
     [self.mTableV_detail reloadData];
 }
 
-//点击查看更多按钮
-//-(void)clickAddBtn:(UIButton *)btn{
-//    D("点击查看更多按钮");
-//    if (self.mArr_tabel.count>=20) {
-//        self.mInt_index = (int)self.mArr_tabel.count/20+1;
-//        D("self.mint.page-====%lu %d",(unsigned long)self.mArr_tabel.count,self.mInt_index);
-//        //获取同事、关注人、好友的分享文章
-//        [[ShowHttp getInstance] showHttpGetMyShareingArth:[dm getInstance].jiaoBaoHao page:[NSString stringWithFormat:@"%d",self.mInt_index] viewFlag:@""];
-//        self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-//        self.mProgressV.labelText = @"加载中...";
-//        [self.mProgressV show:YES];
-//        self.mProgressV.userInteractionEnabled = NO;
-//        [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-//    } else {
-//        self.mProgressV.mode = MBProgressHUDModeCustomView;
-//        self.mProgressV.labelText = @"没有更多了";
-//        self.mProgressV.userInteractionEnabled = NO;
-//        [self.mProgressV show:YES];
-//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-//    }
-//}
--(void)noMore{
-    sleep(1);
-}
-
-- (void)Loading {
-    [self.mTableV_detail headerEndRefreshing];
-    [self.mTableV_detail footerEndRefreshing];
-    sleep(TIMEOUT);
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
-    self.mProgressV.labelText = @"加载超时";
-//    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
-}
-
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mArr_tabel removeAllObjects];
     [dm getInstance].mImt_showUnRead = 0;
     [dm getInstance].mImt_shareUnRead = 0;
 }
-
-//当收到单位回调后，重置界面
-//-(void)reSetFrame{
-//    //单位
-//    [self.mTableV_detail reloadData];
-//    self.mTableV_detail.frame = CGRectMake(0, self.mTableV_detail.frame.origin.y, self.mTableV_detail.frame.size.width, self.mArr_tabel.count *50);
-//    self.mBtn_add.frame = CGRectMake(self.mBtn_add.frame.origin.x, self.mTableV_detail.frame.origin.y+self.mTableV_detail.frame.size.height, self.mBtn_add.frame.size.width, self.mBtn_add.frame.size.height);
-//    //表格,按钮，总大小
-//    self.mScrollV_share.contentSize = CGSizeMake([dm getInstance].width, self.mBtn_add.frame.origin.y+self.mBtn_add.frame.size.height);
-//}
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
 //    if (tableView.tag == 1) {

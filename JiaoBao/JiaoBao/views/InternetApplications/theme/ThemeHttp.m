@@ -611,22 +611,17 @@ static ThemeHttp *themeHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:code forKey:@"ResultCode"];
         [dic setValue:ResultDesc forKey:@"ResultDesc"];
-        if ([code intValue]==0) {
-            if ([code intValue]>0) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAtt" object:nil];
-            }
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAtt" object:nil];
     }else if (_request.tag == 18) {//取消主题关注
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:code forKey:@"ResultCode"];
         [dic setValue:ResultDesc forKey:@"ResultDesc"];
-        if ([code intValue]==0) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAtt" object:nil];
-        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAtt" object:nil];
     }
 }
 //请求失败
 -(void)requestFailed:(ASIHTTPRequest *)request{
+    [MBProgressHUD hideHUDForView:nil];
     D("dataString---theme-tag=%ld,flag----  请求失败",(long)request.tag);
 }
 
