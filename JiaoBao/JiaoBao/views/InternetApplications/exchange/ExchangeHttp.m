@@ -152,6 +152,7 @@ static ExchangeHttp *exchangeHttp = nil;
     NSMutableDictionary *jsonDic = [dataString objectFromJSONString];
     //先对返回值做判断，是否连接超时
     NSString *code = [jsonDic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
     if ([code intValue] == 8) {
         [[LoginSendHttp getInstance] hands_login];
         return;
@@ -165,6 +166,8 @@ static ExchangeHttp *exchangeHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:key forKey:@"UID"];
         [dic setValue:array forKey:@"array"];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
         //通知到界面得到的分组
         if ([_request.username isEqual:@"1"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UnitPeopleGroupList" object:dic];

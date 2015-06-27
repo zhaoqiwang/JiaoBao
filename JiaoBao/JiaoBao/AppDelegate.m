@@ -241,6 +241,14 @@
 //通知到界面得到的分组
 -(void)ExchangeGetUnitGroups:(NSNotification *)noti{
     NSMutableDictionary *dic = noti.object;
+//    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    
+//    if([ResultCode integerValue]!= 0)
+//    {
+//        [MBProgressHUD showError:ResultDesc toView:self.view];
+//        return;
+//    }
     NSString *uid = [dic objectForKey:@"UID"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     D("exchangeUnitGroups-====%@",uid);
