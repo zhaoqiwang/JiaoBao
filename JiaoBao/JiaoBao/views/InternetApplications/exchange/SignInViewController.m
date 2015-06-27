@@ -114,6 +114,12 @@
 -(void)GetDelayedTime:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     NSDictionary *dic = [sender object];
     self.delayTime = [[dic objectForKey:@"Data"] integerValue];
 
@@ -122,6 +128,12 @@
 -(void)getUnitGroups:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     self.groupArr = [sender object];
     //添加导航条
     NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];
@@ -216,14 +228,12 @@
     
     if(days <(-self.delayTime))
     {
-        [SVProgressHUD showErrorWithStatus:@"超出期限"];
+        [MBProgressHUD showError:@"超出期限" toView:self.view];
 
     }
     else if(days >0)
     {
-        
-            [SVProgressHUD showErrorWithStatus:@"不能提前提报日程"];
-
+        [MBProgressHUD showError:@"不能提前提报日程" toView:self.view];
 
     }
     else

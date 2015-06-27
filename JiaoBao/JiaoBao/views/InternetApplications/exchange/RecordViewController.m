@@ -36,6 +36,12 @@
 -(void)GetSignInList:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     if(sender)
     {
 
