@@ -32,7 +32,8 @@ static HomeClassTopScrollView *__singletion;
         if (!__singletion)
         {
             __singletion=[[HomeClassTopScrollView alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48)];
-            
+            NSLog(@"__singletion = %@",__singletion);
+
         }
         
     }
