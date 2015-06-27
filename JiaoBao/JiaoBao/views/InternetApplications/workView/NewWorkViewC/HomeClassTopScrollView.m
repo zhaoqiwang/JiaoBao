@@ -253,7 +253,7 @@ static HomeClassTopScrollView *__singletion;
             
             if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             {
-//                [[dm getInstance].progress hide:YES];
+                [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"1"];
             }
         }
     }else{
@@ -351,7 +351,7 @@ static HomeClassTopScrollView *__singletion;
 }
 -(void)CMRevicer:(NSNotification *)noti{
 
-    [MBProgressHUD hideHUDForView:self];
+    [MBProgressHUD hideHUDForView:nil];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
@@ -374,7 +374,7 @@ static HomeClassTopScrollView *__singletion;
             [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
         }
     }else{
-        [MBProgressHUD showError:@"" toView:self];
+        [MBProgressHUD showError:@"" toView:nil];
     }
 }
 + (void)destroyDealloc

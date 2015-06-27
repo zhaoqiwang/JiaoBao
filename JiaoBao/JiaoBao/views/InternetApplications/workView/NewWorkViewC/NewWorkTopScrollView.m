@@ -38,6 +38,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+
 - (id)initWithFrame
 {
     CGRect frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48);
@@ -125,7 +126,7 @@
         {
             if([[dm getInstance].firstFlag isEqualToString: @"1"])
             {
-                [MBProgressHUD showError:@"没有权限" toView:self];
+                [MBProgressHUD showError:@"没有权限" toView:nil];
             }
             
             [dm getInstance].notificationSymbol = 1;
@@ -158,8 +159,8 @@
                     [dm getInstance].secondFlag = @"无班级";
                 }
                 else{
-                    [MBProgressHUD showMessage:@"" toView:self];
-                [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
+                    [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"0"];
+                    [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
                 }
             }
@@ -168,7 +169,7 @@
                 [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
                 if(![[dm getInstance].secondFlag isEqualToString: @"0"])
                 {
-                    [MBProgressHUD showError:[dm getInstance].secondFlag toView:self];
+                    [MBProgressHUD showError:[dm getInstance].secondFlag toView:nil];
                 }
 
                 

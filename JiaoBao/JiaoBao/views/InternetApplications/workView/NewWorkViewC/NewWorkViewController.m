@@ -37,6 +37,8 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addMBPro:) name:@"addMBPro" object:nil];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
@@ -150,6 +152,24 @@
     }else{
         [MBProgressHUD showError:@"获取权限失败" toView:self.view];
     }
+}
+-(void)addMBPro:(id)sender
+{
+    NSNotification *note = sender;
+    if([note.object isEqualToString:@"0"])
+    {
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view];
+
+        
+    }
+
+        
+        
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -251,6 +251,8 @@
 
 -(void)getCurrentTime:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
     NSDictionary *dic = [sender object];
     NSString *timeStr = [dic objectForKey:@"Data"];
     dateStr = timeStr;
@@ -332,7 +334,8 @@ errorCode:(BMKSearchErrorCode)error{
 #pragma -mark 通知返回数据方法
 -(void)getSignInAddress:(id)sender
 {
- 
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
     NSArray *arr = [sender object];
     if(arr.count >0)
     {
