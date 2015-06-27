@@ -72,7 +72,6 @@
 @property(nonatomic,strong)NSMutableSet *sectionSet;//内部事务界面判断section是否展开的集合
 @property(nonatomic,assign)NSUInteger notificationSymbol;//发布事务区分相同通知的标志
 @property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;
-@property(nonatomic,strong)MBProgressHUD *progress;
 @property(nonatomic,assign)NSUInteger topButtonSymbol;//发布事务界面点击顶部button的标志
 @property(nonatomic,assign)BOOL RegisterSymbol;//是否是注册 是注册 获取手机验证码握手时不获取时间
 @property (nonatomic,strong) NSString *RiCUrl;//日程url

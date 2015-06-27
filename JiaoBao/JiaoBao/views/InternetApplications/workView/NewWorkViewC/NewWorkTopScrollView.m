@@ -125,10 +125,7 @@
         {
             if([[dm getInstance].firstFlag isEqualToString: @"1"])
             {
-                [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-                [dm getInstance].progress.labelText = @"没有权限";
-                [[dm getInstance].progress show:YES];
-                [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+                [MBProgressHUD showError:@"没有权限" toView:self];
             }
             
             [dm getInstance].notificationSymbol = 1;
@@ -161,13 +158,7 @@
                     [dm getInstance].secondFlag = @"无班级";
                 }
                 else{
-                        [dm getInstance].progress.mode = MBProgressHUDModeIndeterminate;
-                        [dm getInstance].progress.labelText = @"正在加载";
-                        [[dm getInstance].progress show:YES];
-                        [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-                        //[[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"正在加载"];
-
-                    
+                    [MBProgressHUD showMessage:@"" toView:self];
                 }
                 [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
@@ -178,11 +169,7 @@
                 [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
                 if(![[dm getInstance].secondFlag isEqualToString: @"0"])
                 {
-                    [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-                    [dm getInstance].progress.labelText = [dm getInstance].secondFlag;
-                    [[dm getInstance].progress show:YES];
-                    [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-                    
+                    [MBProgressHUD showError:[dm getInstance].secondFlag toView:self];
                 }
 
                 

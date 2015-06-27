@@ -69,13 +69,7 @@
     [[LoginSendHttp getInstance]changeCurUnit];
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
     
-    [dm getInstance].progress = [[MBProgressHUD alloc]initWithView:self.view];
-    [self.navigationController.view addSubview:[dm getInstance].progress];
-    [dm getInstance].progress.delegate = self;
-    [dm getInstance].progress.labelText = @"加载中...";
-    [dm getInstance].progress.userInteractionEnabled = YES;
-    [[dm getInstance].progress show:YES];
-    [[dm getInstance].progress showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //通知界面更新，获取事务信息接收单位列表
@@ -96,15 +90,6 @@
     }else{
         [MBProgressHUD showError:@"" toView:self.view];
     }
-}
-
-
-- (void)Loading {
-    sleep(TIMEOUT);
-    [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-    [dm getInstance].progress.labelText = @"加载超时";
-    //    self.mProgressV.userInteractionEnabled = NO;
-    sleep(2);
 }
 
 

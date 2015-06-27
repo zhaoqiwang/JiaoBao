@@ -1443,7 +1443,7 @@ static LoginSendHttp *loginSendHttp = nil;
         }
         //传到事务界面显示
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetmyUserClass" object:dic2];
-    }else if (_request.tag == 32){
+    }else if (_request.tag == 32){//权限
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
         if ([[jsonDic objectForKey:@"ResultCode"] intValue]==0) {
             NSString *str = [jsonDic objectForKey:@"Data"];
