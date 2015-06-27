@@ -338,15 +338,8 @@ static  SignInHttp*__instance;
         NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
         NSDictionary *dicList = [dataString objectFromJSONString];
         NSString *result = [dicList objectForKey:@"ResultDesc"];
-        if([result isEqualToString:@"成功"])
-        {
-            [SVProgressHUD showSuccessWithStatus:@"签报成功"];
-            
-        }
-        else
-        {
-            [SVProgressHUD showErrorWithStatus:@"签报失败"];
-        }
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"checkinResult" object:result];
+
 
         
     }

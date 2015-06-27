@@ -146,7 +146,6 @@
 
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUnitName:) name:@"unitNameNotication" object:nil];
-    [[SignInHttp getInstance]getTime];
 
     BaidumapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64+30, [dm getInstance].width, 568-94)];
     [self.view addSubview:BaidumapView];
@@ -178,8 +177,11 @@
     self.field.inputAccessoryView = self.toolBar;
     self.field.inputView = self.pickView;
     self.selectedRow = 0;
+    
+    [[SignInHttp getInstance]getTime];
     [[SignInHttp getInstance]getSignInAddress];
     [[SignInHttp getInstance]GetSignInGroupByUnitID];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getSignInAddress:) name:@"getSignInAddress" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetSignInGroupByUnitID:) name:@"GetSignInGroupByUnitID" object:nil];
@@ -211,7 +213,7 @@
     locationManager.distanceFilter = 10;
     
 
-
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(checkinResult:) name:@"checkinResult" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(locationAction) name:@"location" object:nil];
 
     //设置定位精确度，默认：kCLLocationAccuracyBest
@@ -231,6 +233,20 @@
     geoCodeSearchOption.city= @"北京市";
     geoCodeSearchOption.address = @"海淀区上地10街10号";
 
+}
+-(void)checkinResult:(id)sender
+{
+    NSNotification *noti = sender;
+    NSString *result = noti.object;
+    if([result isEqualToString:@"成功"])
+    {
+        [MBProgressHUD showSuccess:@"签报成功" toView:self.view];
+        
+    }
+    else
+    {
+        [MBProgressHUD showError:@"签报失败" toView:self.view];
+    }
 }
 
 -(void)getCurrentTime:(id)sender
@@ -348,6 +364,7 @@ errorCode:(BMKSearchErrorCode)error{
 }
 -(void)GetSignInGroupByUnitID:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.groupArr = [sender object];
     
     
@@ -389,9 +406,11 @@ errorCode:(BMKSearchErrorCode)error{
             
             NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
             [[SignInHttp getInstance]CreateSignIn:dic];
+            [MBProgressHUD showMessage:@"" toView:self.view];
         }
         @catch (NSException *exception) {
-            [SVProgressHUD showErrorWithStatus:@"数据异常"];
+            [MBProgressHUD showMessage:@"数据异常" toView:self.view];
+
         }
         @finally {
             
