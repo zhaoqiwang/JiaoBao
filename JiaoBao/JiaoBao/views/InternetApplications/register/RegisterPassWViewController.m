@@ -35,6 +35,7 @@
 }
 -(void)registerPW:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     NSNotification *note = (NSNotification*)sender;
     NSDictionary *dic = note.object;
     NSArray *keyArr =[dic allKeys];

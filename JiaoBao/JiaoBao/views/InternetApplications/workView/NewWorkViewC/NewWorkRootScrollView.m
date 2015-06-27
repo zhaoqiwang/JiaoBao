@@ -57,6 +57,7 @@
 }
 
 -(void)selectNameButton:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     int a = [noti.object intValue];
     self.mInt = a;
     [self setContentOffset:CGPointMake(a*[dm getInstance].width, 0) animated:NO];

@@ -78,6 +78,7 @@
 
 //昵称是否重复
 -(void)registerHttpCheckAccN:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"code"];
     NSString *str = [dic objectForKey:@"str"];
@@ -94,6 +95,7 @@
 
 //修改昵称和姓名
 -(void)registerHttpUpateRecAcc:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"code"];
     NSString *str = [dic objectForKey:@"str"];
@@ -109,6 +111,7 @@
 
 //修改密码
 -(void)registerHttpChangePW:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"code"];
     NSString *str = [dic objectForKey:@"str"];

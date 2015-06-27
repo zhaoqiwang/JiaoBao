@@ -81,6 +81,7 @@
 
 //第一次进入此界面，发送数据请求
 -(void)fristGotoMoreUnit{
+    [MBProgressHUD hideHUDForView:self];
     if (self.mInt_flag ==0) {
         
 //        if (self.mArr_sumData.count>0) {
@@ -96,6 +97,7 @@
 }
 -(void)refreshWorkView:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     [self refreshMoreUnitView];
 }
 

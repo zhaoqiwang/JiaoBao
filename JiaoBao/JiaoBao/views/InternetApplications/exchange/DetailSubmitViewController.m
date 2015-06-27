@@ -93,6 +93,7 @@
 
 -(void)getUpLoadResult:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = [sender object];
     NSString *str = [dic objectForKey:@"ResultDesc"];
     [SVProgressHUD showSuccessWithStatus:str];

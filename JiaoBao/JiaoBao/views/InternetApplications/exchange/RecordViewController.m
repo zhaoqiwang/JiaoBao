@@ -35,6 +35,7 @@
 }
 -(void)GetSignInList:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     if(sender)
     {
 

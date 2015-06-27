@@ -113,6 +113,7 @@
 //获取最多延迟时间
 -(void)GetDelayedTime:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = [sender object];
     self.delayTime = [[dic objectForKey:@"Data"] integerValue];
 
@@ -120,6 +121,7 @@
 //获取组数据列表
 -(void)getUnitGroups:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     self.groupArr = [sender object];
     //添加导航条
     NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];

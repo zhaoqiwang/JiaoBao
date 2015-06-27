@@ -275,6 +275,7 @@
 
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mArr_list removeAllObjects];
     [self.mTableV_list reloadData];
 }

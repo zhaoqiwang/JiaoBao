@@ -49,6 +49,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 -(void)refreshWorkView:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     if([dm getInstance].notificationSymbol ==1)
     {
         [self setFrame];
