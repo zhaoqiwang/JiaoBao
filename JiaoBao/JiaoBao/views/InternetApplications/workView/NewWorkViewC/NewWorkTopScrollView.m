@@ -125,8 +125,7 @@
         {
             if([[dm getInstance].firstFlag isEqualToString: @"1"])
             {
-                [MBProgressHUD showText:@"没有权限" toView:nil];
-
+                [MBProgressHUD showError:@"没有权限" toView:self];
             }
             
             [dm getInstance].notificationSymbol = 1;
@@ -159,24 +158,17 @@
                     [dm getInstance].secondFlag = @"无班级";
                 }
                 else{
-                    
-                    [MBProgressHUD showMessage:@"正在加载" toView:nil];
-
-
-                    
-                }
+                    [MBProgressHUD showMessage:@"" toView:self];
                 [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
-                
+                }
             }
             else
             {
                 [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
                 if(![[dm getInstance].secondFlag isEqualToString: @"0"])
                 {
-                    [MBProgressHUD showText:[dm getInstance].secondFlag toView:nil];
-
-                    
+                    [MBProgressHUD showError:[dm getInstance].secondFlag toView:self];
                 }
 
                 

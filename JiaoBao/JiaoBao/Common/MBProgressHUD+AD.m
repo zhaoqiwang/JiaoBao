@@ -6,6 +6,8 @@
 //
 
 #import "MBProgressHUD+AD.h"
+#import "Reachability.h"
+#import "define_constant.h"
 
 @implementation MBProgressHUD (AD)
 #pragma mark 显示信息
@@ -51,18 +53,24 @@
 
 #pragma mark 显示一些信息
 + (MBProgressHUD *)showMessage:(NSString *)message toView:(UIView *)view {
-    if (message.length==0) {
-        message = @"加载中...";
-    }
-    if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
-    // 快速显示一个提示信息
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = message;
-    // 隐藏时候从父控件中移除
-    hud.removeFromSuperViewOnHide = YES;
-    // YES代表需要蒙版效果
-    hud.dimBackground = NO;
-    return hud;
+    //检查当前网络是否可用
+//    if ([self checkNetWork:view]) {
+////        return;
+//    }else{
+        if (message.length==0) {
+            message = @"加载中...";
+        }
+        if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
+        // 快速显示一个提示信息
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+        hud.labelText = message;
+        // 隐藏时候从父控件中移除
+        hud.removeFromSuperViewOnHide = YES;
+        // YES代表需要蒙版效果
+        hud.dimBackground = NO;
+        return hud;
+//    }
+//    return nil;
 }
 
 + (void)showSuccess:(NSString *)success
@@ -88,6 +96,16 @@
 + (void)hideHUD
 {
     [self hideHUDForView:nil];
+}
+
+//检查当前网络是否可用
++(BOOL)checkNetWork:(UIView *)view{
+    if([Reachability isEnableNetwork]==NO){
+        [MBProgressHUD showError:NETWORKENABLE toView:view];
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 @end

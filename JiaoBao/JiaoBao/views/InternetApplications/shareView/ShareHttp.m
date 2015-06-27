@@ -438,7 +438,7 @@ static ShareHttp *shareHttp = nil;
         NSString *flag = [_request.userInfo objectForKey:@"sectionFlag"];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"0" forKey:@"flag"];
-        [dic setValue:@"array" forKey:@"array"];
+        [dic setValue:array forKey:@"array"];
         if ([flag isEqual:@"1"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
         }else if ([flag isEqual:@"2"]) {
@@ -483,7 +483,7 @@ static ShareHttp *shareHttp = nil;
         NSString *flag = [_request.userInfo objectForKey:@"sectionID"];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"0" forKey:@"flag"];
-        [dic setValue:@"array" forKey:@"array"];
+        [dic setValue:array forKey:@"array"];
         if ([flag isEqual:@"1"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfo" object:dic];
         }else if ([flag isEqual:@"2"]) {
@@ -542,7 +542,7 @@ static ShareHttp *shareHttp = nil;
         [self getDownUnitImg:array];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"0" forKey:@"flag"];
-        [dic setValue:@"array" forKey:@"array"];
+        [dic setValue:array forKey:@"array"];
         //将值传到界面
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MySubUnitInfo" object:dic];
     }else if (_request.tag == 8) {//上传图片

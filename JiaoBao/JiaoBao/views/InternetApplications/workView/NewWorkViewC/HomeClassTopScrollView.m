@@ -253,8 +253,7 @@ static HomeClassTopScrollView *__singletion;
             
             if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             {
-                [[dm getInstance].progress hide:YES];
-                
+//                [[dm getInstance].progress hide:YES];
             }
         }
     }else{
