@@ -142,6 +142,7 @@ NSString *kCell = @"Forward_cell2";
 //}
 -(void)selSecBtn:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     self.datasource = [dm getInstance].mModel_unitList.UnitClass;
 
     self.dataArr = [NSMutableArray arrayWithArray:[sender object] ];

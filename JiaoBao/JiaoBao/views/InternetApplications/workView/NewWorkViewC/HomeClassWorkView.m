@@ -15,6 +15,7 @@
 @synthesize mViewTop,mScrollV_all;
 -(void)refreshWorkView:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     [self setFrame];
     //[self resetFrame];
 }
@@ -26,7 +27,7 @@
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
-    self.mProgressV.mode = MBProgressHUDModeCustomView;
+    [MBProgressHUD hideHUDForView:self];
     NSString *str = noti.object;
     if ([str integerValue]==1) {
         [MBProgressHUD showError:@"超时" toView:self];
@@ -35,11 +36,7 @@
         {
             str = @"成功";
         }
-        //NSLog(@"str = %@",str);
-        self.mProgressV.labelText = str;
-        //    self.mProgressV.userInteractionEnabled = NO;
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:str toView:self];
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
         [self.mViewTop addAccessoryPhoto];
@@ -131,6 +128,7 @@
 }
 -(void)progress:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     NSString *str = [sender object];
     if(![str isEqualToString:@"正在加载"])
     {
@@ -142,19 +140,13 @@
 
             [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
             
-            
         });
         
     }
     else
     {
             //[SVProgressHUD show];
-            self.mProgressV.labelText = str;
-            self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-            self.mProgressV.userInteractionEnabled = NO;
-            [self.mProgressV show:YES];
-            [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-        
+        [MBProgressHUD showMessage:str toView:self];
     }
 
 
@@ -173,6 +165,7 @@
 
 -(void)updateUI:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     [self setFrame];
 }
 - (id)initWithFrame1:(CGRect)frame{

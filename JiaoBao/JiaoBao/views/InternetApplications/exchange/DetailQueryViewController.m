@@ -50,6 +50,7 @@
 }
 -(void)getQueryResult:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     self.dataSource = [sender object];
     [self.tableView reloadData];
 //    

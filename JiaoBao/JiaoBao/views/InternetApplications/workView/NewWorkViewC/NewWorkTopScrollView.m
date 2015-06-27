@@ -66,6 +66,7 @@
 }
 
 -(void)adjustTopScrollViewButton:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self setButtonUnSelect];
     self.mInt_scrollViewSelectedChannelID = [noti.object intValue];
     [self setButtonSelect];

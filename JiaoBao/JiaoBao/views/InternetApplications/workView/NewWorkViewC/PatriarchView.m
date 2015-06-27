@@ -13,6 +13,7 @@
 
 -(void)seleForuth:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self];
     self.datasource = [sender object];
     for(int i=0;i<self.datasource.count;i++)
     {

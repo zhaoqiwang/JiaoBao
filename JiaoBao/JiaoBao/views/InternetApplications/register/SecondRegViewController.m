@@ -255,11 +255,6 @@
         
     }
     
-
-        
-    
-    
-    
 }
 //点击button获取图片验证码
 - (IBAction)getUrlImageAction:(id)sender {

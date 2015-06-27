@@ -120,6 +120,7 @@
 }
 -(void)GetCommPerm:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = [sender object];
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag intValue] ==0) {//成功

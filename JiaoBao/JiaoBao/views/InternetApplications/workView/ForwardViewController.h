@@ -13,7 +13,7 @@
 #import "LoginSendHttp.h"
 #import "Forward_cell.h"
 #import "Forward_section.h"
-#import "MBProgressHUD.h"
+#import "MBProgressHUD+AD.h"
 #import "SMSTreeArrayModel.h"
 #import "ELCImagePickerHeader.h"
 #import <MobileCoreServices/UTCoreTypes.h>

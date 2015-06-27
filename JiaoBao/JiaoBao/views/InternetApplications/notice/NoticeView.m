@@ -277,6 +277,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 
 //切换账号时，更新数据
 -(void)RegisterView:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
     [self.mArr_unit removeAllObjects];
     self.mInt_flag = 0;
     
@@ -635,6 +636,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
 
 //向转发界面传递得到的人员单位列表，在获取通知前，切换单位用到
 -(void)CMRevicer{
+    [MBProgressHUD hideHUDForView:self];
     for (int i=0; i<self.mArr_unit.count; i++) {
         UnitSectionMessageModel *model = [self.mArr_unit objectAtIndex:i];
         if ([dm getInstance].UID == [model.UnitID intValue]) {
