@@ -267,35 +267,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
 }
 
-- (void)Loading {
-    sleep(TIMEOUT);
 
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.timer invalidate];
-//        self.timer = nil;
-//        self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
-//        
-//        
-//    });
-    
-    
-    
-    
-    
-}
--(void)timerAction:(id)sender
-{
-//    self.mProgressV.mode = MBProgressHUDModeCustomView;
-//    self.mProgressV.labelText = @"加载超时";
-//    sleep(2);
-    
-}
 
 
 
 //获取到每个单位中的人员
 -(void)GetUnitRevicer:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+   [MBProgressHUD hideHUDForView:self.parentViewController.view animated:YES];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {

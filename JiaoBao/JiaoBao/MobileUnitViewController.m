@@ -52,6 +52,11 @@
     
     //获取手机自动匹配的单位数据
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        if([note.object isKindOfClass:[NSString class]])
+        {
+            [MBProgressHUD showText:@"加载超时" toView:self.view];
+            return ;
+        }
         NSArray *arr = note.object;
         
         weakSelf.unitArr = arr;
@@ -71,7 +76,7 @@
         NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)
         {
-            [weakSelf progressViewTishi:@"加入成功"];
+            [MBProgressHUD showText:@"加入成功" toView:self.view];
             [weakSelf.addBtn setTitle:@"已加入" forState:UIControlStateNormal];
             weakSelf.addBtn.enabled = NO;
             [[LoginSendHttp getInstance]getIdentityInformation];
@@ -80,7 +85,8 @@
         }
         else
         {
-            [weakSelf progressViewTishi:ResultDesc];
+            [MBProgressHUD showText:ResultDesc toView:self.view];
+
             
         }
         

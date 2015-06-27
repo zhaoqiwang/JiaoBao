@@ -621,7 +621,89 @@ static ThemeHttp *themeHttp = nil;
 }
 //请求失败
 -(void)requestFailed:(ASIHTTPRequest *)request{
-    [MBProgressHUD hideHUDForView:nil];
+    //[MBProgressHUD hideHUDForView:nil];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    NSString *code = @"1000";
+    NSString *ResultDesc = @"请求超时";
+    [dic setValue:code forKey:@"ResultCode"];
+    [dic setValue:ResultDesc forKey:@"ResultDesc"];
+
+    if (request.tag == 1) {//取最新更新的主题
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateUnitList" object:dic];
+        
+
+    }else if (request.tag == 2) {//取我关注的和我所参与的主题
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"EnjoyInterestList" object:dic];
+        
+
+        
+    }else if (request.tag == 3) {//获取单位相册,功能：获取某单位中的相册
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:dic];
+        
+        
+    }else if (request.tag == 5) {//获取单位相册的照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPhotoByGroupID" object:dic];
+
+    }else if (request.tag == 6) {//创建单位相册
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateUnitPhotoGroup" object:@"1"];
+        
+    }else if (request.tag == 7) {//单位相册上传照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpLoadPhotoUnit" object:@"1"];
+        
+    }else if (request.tag == 8) {//获取单位相册的第一张照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitFristPhotoByGroup" object:dic];
+
+    }else if (request.tag == 9) {//个人空间相册上传照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpLoadPhotoUnit" object:@"1"];
+        
+    }else if (request.tag == 10) {//个人空间添加相册
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"CreateUnitPhotoGroup" object:@"1"];
+        
+    }else if (request.tag == 11) {//要获取属于jiaobaohao下的相册
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPhotoList" object:dic];
+
+    }else if (request.tag == 12) {//个人某个相册中的照片
+            //            NSMutableArray *array = [ParserJson_show parserJsonGetPhotoList:str];
+            //            //获取单位相册照片后，通知界面
+            //            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitPGroup" object:array];
+        
+    }else if (request.tag == 13) {//个人最新前N张照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetNewPhoto" object:dic];
+
+    }else if (request.tag == 14) {//个人相册中第一张照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetFristPhotoByGroup" object:dic];
+
+    }else if (request.tag == 15) {//获取单位中最新的N张照片
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNewPhoto" object:dic];
+
+    }else if (request.tag == 16) {//是否关注主题
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ExistAtt" object:dic];
+
+    }else if (request.tag == 17) {//加主题关注
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAtt" object:nil];
+    }else if (request.tag == 18) {//取消主题关注
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:code forKey:@"ResultCode"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveAtt" object:nil];
+    }
     D("dataString---theme-tag=%ld,flag----  请求失败",(long)request.tag);
 }
 

@@ -67,7 +67,7 @@
     [dm getInstance].secondFlag = @"0";
     [dm getInstance].notificationSymbol = 1;
     [[LoginSendHttp getInstance]changeCurUnit];
-    //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+    //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];D
     
     [MBProgressHUD showMessage:@"" toView:self.view];
 }

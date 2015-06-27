@@ -159,10 +159,9 @@
                 }
                 else{
                     [MBProgressHUD showMessage:@"" toView:self];
-                }
                 [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
 
-                
+                }
             }
             else
             {
@@ -180,13 +179,7 @@
         
         if(sender.tag ==102)
         {
-            if([[dm getInstance].thirdFlag isEqualToString: @"1"])
-            {
-//                [dm getInstance].progress.mode = MBProgressHUDModeCustomView;
-//                [dm getInstance].progress.labelText = @"无发送权限或没有其他单位";
-//                [[dm getInstance].progress show:YES];
-//                [[dm getInstance].progress showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            }
+
             [dm getInstance].topButtonSymbol = [dm getInstance].notificationSymbol;
             [dm getInstance].notificationSymbol = 3;
  
@@ -251,5 +244,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"fristGotoMoreUnit" object:nil];
     }
 }
+
 
 @end

@@ -83,10 +83,12 @@
     NSString *str = [dic objectForKey:@"str"];
     if ([flag intValue] ==0) {//昵称可用
         //发送修改昵称和姓名协议
-        [self ProgressViewLoad:@"修改昵称和姓名中"];
+        [MBProgressHUD showText:@"修改昵称和姓名中" toView:self.view];
+        //[self ProgressViewLoad:@"修改昵称和姓名中"];
         [[RegisterHttp getInstance] registerHttpUpateRecAcc:[dm getInstance].jiaoBaoHao NickName:self.mTextF_nickName.text TrueName:self.mTextF_trueName.text];
     }else{//昵称重复
-         [self progressViewTishi:str];
+        [MBProgressHUD showText:str toView:self.view];
+         //[self progressViewTishi:str];
     }
 }
 
@@ -101,7 +103,7 @@
         [dm getInstance].TrueName = self.mTextF_trueName.text;
         [utils popViewControllerAnimated:YES];
     }else{//修改失败
-        [self progressViewTishi:str];
+        [MBProgressHUD showText:str toView:self.view];
     }
 }
 
@@ -115,7 +117,7 @@
         [[NSUserDefaults standardUserDefaults] setValue:self.mTextF_trueName.text forKey:@"PassWD"];
         [utils popViewControllerAnimated:YES];
     }else{//修改失败
-        [self progressViewTishi:str];
+        [MBProgressHUD showText:str toView:self.view];
     }
 }
 

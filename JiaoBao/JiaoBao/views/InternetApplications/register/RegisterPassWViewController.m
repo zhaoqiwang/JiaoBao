@@ -45,7 +45,7 @@
         if([str integerValue ] == 0)
         {
             NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
-                [self progressViewTishi:@"注册成功"];
+                [MBProgressHUD showText:@"注册成功" toView:self.view];
                 [dm getInstance].RegisterSymbol = NO;
                 sleep(2);
                 
@@ -62,15 +62,12 @@
             NSOperationQueue *queue = [[NSOperationQueue alloc]init];
             [queue addOperation:op1];
             [queue addOperation:op2];
-//            [self progressViewTishi:@"注册成功"];
-//            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
             
             
         }
         else
         {
-            [self progressViewTishi:ResultDesc];
-            //[self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+            [MBProgressHUD showText:ResultDesc toView:self.view];
 
         }
         

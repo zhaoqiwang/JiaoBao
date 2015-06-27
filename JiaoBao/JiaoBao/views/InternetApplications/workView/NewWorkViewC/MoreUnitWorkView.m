@@ -189,6 +189,7 @@
 //    }
     
     if (self.mInt_requestCount >0) {
+        
         [MBProgressHUD showMessage:@"" toView:self];
     }
 }
