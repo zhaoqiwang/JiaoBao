@@ -128,24 +128,15 @@
 }
 -(void)progress:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self];
+    //[MBProgressHUD hideHUDForView:self];
     NSString *str = [sender object];
     if(![str isEqualToString:@"正在加载"])
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.mProgressV.mode = MBProgressHUDModeCustomView;
+        [MBProgressHUD showError:str toView:self];
 
-            self.mProgressV.labelText = str;
-            self.mProgressV.userInteractionEnabled = NO;
-
-            [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
-            
-        });
-        
     }
     else
     {
-            //[SVProgressHUD show];
         [MBProgressHUD showMessage:str toView:self];
     }
 
@@ -154,12 +145,7 @@
 }
 -(void)progress2:(id)sender
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.mProgressV hide:YES];
-
-
-                               });
-        
+        [MBProgressHUD hideHUDForView:self];
 
 }
 
@@ -173,8 +159,13 @@
     if (self) {
         // Initialization code
         self.frame = frame;
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateUI" object:nil];
+
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateUI:) name:@"updateUI" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"progress2" object:nil];
+
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(progress2:) name:@"progress2" object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"progress" object:nil];
 
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(progress:) name:@"progress" object:nil];
 

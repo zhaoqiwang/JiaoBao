@@ -274,12 +274,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //获取到每个单位中的人员
 -(void)GetUnitRevicer:(NSNotification *)noti{
-   [MBProgressHUD hideHUDForView:self.parentViewController.view animated:YES];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
         if([dm getInstance].notificationSymbol == 1)
         {
+            [MBProgressHUD hideHUDForView:self.parentViewController.view animated:YES];
+
             NSString *unitID = [dic objectForKey:@"unitID"];
             NSArray *array = [dic objectForKey:@"array"];
             

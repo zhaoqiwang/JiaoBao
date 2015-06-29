@@ -253,11 +253,11 @@
             }
             self.requestSymbol0 = NO;
             self.requestSymbol1 = NO;
-            [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
             
             if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             {
-                //[[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"1"];
+                [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
+                [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"1"];
             }
         }
     }else{
