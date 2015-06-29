@@ -10,7 +10,10 @@
 #import "CustomCell.h"
 
 @implementation PatriarchView
-
+- (void)removeNotification
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 -(void)seleForuth:(id)sender
 {
     [MBProgressHUD hideHUDForView:self];

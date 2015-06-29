@@ -11,6 +11,10 @@
 #import "SMSTreeArrayModel.h"
 
 @implementation SchoolMessage
+- (void)removeNotification
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 -(void)seleForuth:(id)sender
 {
     NSArray *arr = [sender object];

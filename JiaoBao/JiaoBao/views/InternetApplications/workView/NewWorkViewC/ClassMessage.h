@@ -20,6 +20,7 @@
 //@property(nonatomic,strong)myUnit *unit;
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,strong)NSString *unitStr;
+- (void)removeNotification;
 
 
 

@@ -21,6 +21,7 @@
 @property(nonatomic,strong)myUnit *mModel_myUnit;
 @property(nonatomic,strong)NSMutableArray *dataArr;
 @property(nonatomic,strong)NSMutableArray *sectionArr;
+- (void)removeNotification;
 
 
 @end
