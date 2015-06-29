@@ -346,8 +346,73 @@ static  SignInHttp*__instance;
 
 
     }
--(void)requestFailed:(ASIHTTPRequest *)request{
-    [SVProgressHUD showErrorWithStatus:@"请求超时"];
+-(void)requestFailed:(ASIHTTPRequest *)_request{
+    NSString *ResultDesc = @"请求超时";
+    if(_request.tag == 0)
+    {
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetDelayedTime" object:ResultDesc];
+        
+    }
+    if(_request.tag == 1)
+    {
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"getUpLoadResult" object:ResultDesc];
+        
+    }
+    if(_request.tag == 2)
+    {
+
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"getQueryResult" object:ResultDesc];
+            
+            
+        
+    }
+    if(_request.tag == 3)
+    {
+
+        
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"getUnitGroups" object:ResultDesc];
+        
+    }
+    if(_request.tag == 4)
+    {
+
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"getSignInAddress" object:ResultDesc];
+            
+    }
+    if(_request.tag == 5)
+    {
+
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInGroupByUnitID" object:ResultDesc];
+            
+        
+    }
+    if(_request.tag == 6)
+    {
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetTime" object:ResultDesc];
+        
+    }
+    if(_request.tag == 7)
+    {
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:ResultDesc];
+        
+    }
+    if(_request.tag == 10)
+    {
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"checkinResult" object:ResultDesc];
+        
+        
+        
+    }
+    //[SVProgressHUD showErrorWithStatus:@"请求超时"];
 
 
 }

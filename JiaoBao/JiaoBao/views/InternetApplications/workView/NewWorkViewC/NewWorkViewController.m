@@ -102,6 +102,11 @@
     [HomeClassTopScrollView shareInstance].requestSymbol2 =YES;
     [HomeClassTopScrollView shareInstance].requestSymbol3 =YES;
     [HomeClassTopScrollView shareInstance].dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+    [[HomeClassRootScrollView shareInstance].characterView removeNotification];
+    [[HomeClassRootScrollView shareInstance].schoolMessage removeNotification];
+    [[HomeClassRootScrollView shareInstance].patriarchView removeNotification];
+    [[HomeClassRootScrollView shareInstance].classMessageView removeNotification];
+
     [HomeClassTopScrollView destroyDealloc];
     [HomeClassRootScrollView destroyDealloc];
     self.top.firstSel = 0;

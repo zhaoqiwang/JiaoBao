@@ -16,6 +16,7 @@ NSString *kCell = @"Forward_cell2";
 - (instancetype)initWithFrame:(CGRect)frame
 {
    self = [super initWithFrame:frame];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selSecBtn:) name:@"selSecBtn" object:nil];
 
 
@@ -52,6 +53,10 @@ NSString *kCell = @"Forward_cell2";
     
     return self;
     
+}
+- (void)removeNotification
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 #pragma mark - Collection View Data Source
 //collectionView里有多少个组

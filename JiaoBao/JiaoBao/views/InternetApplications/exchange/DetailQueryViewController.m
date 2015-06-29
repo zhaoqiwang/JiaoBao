@@ -51,6 +51,12 @@
 -(void)getQueryResult:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     self.dataSource = [sender object];
     [self.tableView reloadData];
 //    

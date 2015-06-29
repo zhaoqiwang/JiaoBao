@@ -84,7 +84,8 @@
     }
     else
     {
-        [SVProgressHUD showErrorWithStatus:@"不能为空"];
+        [MBProgressHUD showError:@"不能为空" toView:self.view];
+
     }
     
 
@@ -94,9 +95,15 @@
 -(void)getUpLoadResult:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     NSDictionary *dic = [sender object];
     NSString *str = [dic objectForKey:@"ResultDesc"];
-    [SVProgressHUD showSuccessWithStatus:str];
+    [MBProgressHUD showSuccess:str toView:self.view];
     self.textView.text = @"";
     self.textView2.text = @"";
     self.startTime.text = @"";
@@ -241,8 +248,8 @@
                 }
                 if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedDescending)
                 {
+                    [MBProgressHUD showError:@"结束时间必须大于开始时间" toView:self.view];
                     
-                    [SVProgressHUD showErrorWithStatus:@"结束时间必须大于开始时间"];
                 }
                 
                 
@@ -281,8 +288,7 @@
                 }
                 if([self.datePicker.date compare:self.secDatePicker.date]==NSOrderedDescending)
                 {
-                    
-                    [SVProgressHUD showErrorWithStatus:@"结束时间必须大于开始时间"];
+                    [MBProgressHUD showError:@"结束时间必须大于开始时间" toView:self.view];
                 }
                 
                 

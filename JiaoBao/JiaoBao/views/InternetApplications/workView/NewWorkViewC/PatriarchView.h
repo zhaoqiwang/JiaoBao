@@ -22,6 +22,7 @@
 @property(nonatomic,strong)UIButton *mBtn_all;
 @property(nonatomic,assign)NSUInteger allSelSymbol;
 @property(nonatomic,strong)UIButton * rightBtn;
+- (void)removeNotification;
 
 
 @end

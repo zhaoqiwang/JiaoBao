@@ -23,7 +23,7 @@
 #define BUTTONID (sender.tag-100)
 
 
-static HomeClassTopScrollView *__singletion;
+ static HomeClassTopScrollView *__singletion;
 
 
 + (HomeClassTopScrollView *)shareInstance {
@@ -32,7 +32,10 @@ static HomeClassTopScrollView *__singletion;
         if (!__singletion)
         {
             __singletion=[[HomeClassTopScrollView alloc] initWithFrame:CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48)];
-            
+            NSLog(@"__singletion = %@",__singletion);
+            [[NSNotificationCenter defaultCenter] removeObserver:__singletion name:@"GetUnitRevicer" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:__singletion selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+
         }
         
     }
@@ -45,8 +48,7 @@ static HomeClassTopScrollView *__singletion;
     self = [super initWithFrame:frame];
     if (self) {
         self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitRevicer" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitRevicer:) name:@"GetUnitRevicer" object:nil];
+
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CMRevicer1" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CMRevicer:) name:@"CMRevicer1" object:nil];
         self.delegate = self;
@@ -226,13 +228,15 @@ static HomeClassTopScrollView *__singletion;
 
 -(void)GetUnitRevicer:(NSNotification *)noti
 {
-    self.getClassNotiFlag++;
-    [MBProgressHUD hideHUDForView:self];
+
+    //[MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
         if([dm getInstance].notificationSymbol == 100)
         {
+            self.getClassNotiFlag++;
+            D("getClassNotiFlag = %ld",self.getClassNotiFlag);
             NSString *unitID = [dic objectForKey:@"unitID"];
             NSArray *array = [dic objectForKey:@"array"];
             self.genseliArr = [NSMutableArray array];
@@ -253,7 +257,7 @@ static HomeClassTopScrollView *__singletion;
             
             if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             {
-                [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"1"];
+                //[[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"1"];
             }
         }
     }else{
@@ -379,7 +383,7 @@ static HomeClassTopScrollView *__singletion;
 }
 + (void)destroyDealloc
 {
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [[NSNotificationCenter defaultCenter]removeObserver:__singletion];
     __singletion = nil;
 }
 

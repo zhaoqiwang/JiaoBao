@@ -94,6 +94,14 @@
 -(void)UnitPeopleGroupList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+
+    if([ResultCode integerValue]!= 0)
+    {
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+        return;
+    }
     NSString *uid = [dic objectForKey:@"UID"];
     NSMutableArray *arr = [dic objectForKey:@"array"];
     //对分组名字进行排序

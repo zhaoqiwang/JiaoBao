@@ -236,6 +236,13 @@
 }
 -(void)checkinResult:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     NSNotification *noti = sender;
     NSString *result = noti.object;
     if([result isEqualToString:@"成功"])
@@ -252,7 +259,12 @@
 -(void)getCurrentTime:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     NSDictionary *dic = [sender object];
     NSString *timeStr = [dic objectForKey:@"Data"];
     dateStr = timeStr;
@@ -335,7 +347,12 @@ errorCode:(BMKSearchErrorCode)error{
 -(void)getSignInAddress:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     NSArray *arr = [sender object];
     if(arr.count >0)
     {
@@ -368,6 +385,12 @@ errorCode:(BMKSearchErrorCode)error{
 -(void)GetSignInGroupByUnitID:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if([[sender object] isKindOfClass:[NSString class]])
+    {
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        return;
+        
+    }
     self.groupArr = [sender object];
     
     
@@ -380,7 +403,7 @@ errorCode:(BMKSearchErrorCode)error{
     CLLocationDistance distance = [self.location distanceFromLocation:location2];
     if(distance>self.range)
     {
-        [SVProgressHUD showErrorWithStatus:@"超出签到范围"];
+        [MBProgressHUD showError:@"超出签到范围" toView:self.view];
         flag = NO;
         
     }
