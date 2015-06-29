@@ -28,8 +28,8 @@
     UserInfoByUnitIDModel *mModel_personal;//个人信息
     NSString *mStr_flag;//判断是来自单位还是个人,1为个人
     NSMutableArray *mArr_myselfAlbums;//自己创建的相册
-    CreatAlbumsViewController *creatAlbums;
-    UpLoadPhotoViewController *uploadPhoto;
+//    CreatAlbumsViewController *creatAlbums;
+//    UpLoadPhotoViewController *uploadPhoto;
 }
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -39,7 +39,7 @@
 @property (nonatomic,strong) UserInfoByUnitIDModel *mModel_personal;//个人信息
 @property (nonatomic,strong) NSString *mStr_flag;//判断是来自单位还是个人,1为个人
 @property (nonatomic,strong) NSMutableArray *mArr_myselfAlbums;//自己创建的相册
-@property (nonatomic,strong) CreatAlbumsViewController *creatAlbums;
-@property (nonatomic,strong) UpLoadPhotoViewController *uploadPhoto;
+//@property (nonatomic,strong) CreatAlbumsViewController *creatAlbums;
+//@property (nonatomic,strong) UpLoadPhotoViewController *uploadPhoto;
 
 @end

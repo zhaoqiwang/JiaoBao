@@ -24,14 +24,10 @@
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    //上传照片成功
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpLoadPhotoUnit" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpLoadPhotoUnit:) name:@"UpLoadPhotoUnit" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -40,6 +36,10 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
+    //上传照片成功
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpLoadPhotoUnit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpLoadPhotoUnit:) name:@"UpLoadPhotoUnit" object:nil];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"上传照片"];
@@ -103,6 +103,7 @@
 
 //上传照片成功
 -(void)UpLoadPhotoUnit:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     mInt_count = mInt_count + 1;
     if (mInt_count == mInt_uploadCount) {
         [self.delegate UpLoadPhotoSuccess];
@@ -245,6 +246,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
 
