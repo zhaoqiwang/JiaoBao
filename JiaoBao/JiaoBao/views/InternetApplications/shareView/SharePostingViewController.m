@@ -271,7 +271,7 @@
             [MBProgressHUD showSuccess:@"上传图片成功" toView:self.view];
         }
         
-        UploadImgModel *model = noti.object;
+        UploadImgModel *model = [dic objectForKey:@"model"];
         [self.mArr_pic addObject:model];
         //self.mTextV_content.text = [NSString stringWithFormat:@"%@[图片%d]",self.mTextV_content.text,self.];
         self._placeholdLabel.hidden = YES;
