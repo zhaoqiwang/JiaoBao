@@ -17,15 +17,25 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 @end
 
 @implementation UnitAlbumsViewController
-@synthesize mArr_list,mCollectionV_albums,mNav_navgationBar,mModel_unit,mStr_flag,mModel_personal,mArr_myselfAlbums,creatAlbums,uploadPhoto;
+@synthesize mArr_list,mCollectionV_albums,mNav_navgationBar,mModel_unit,mStr_flag,mModel_personal,mArr_myselfAlbums;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     //获取单位相册后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitPGroup" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitPGroup:) name:@"GetUnitPGroup" object:nil];
@@ -38,23 +48,9 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     //获取个人相册的第一张照片后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetFristPhotoByGroup" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetFristPhotoByGroup:) name:@"GetFristPhotoByGroup" object:nil];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     self.mArr_list = [NSMutableArray array];
     self.mArr_myselfAlbums = [NSMutableArray array];
-    self.creatAlbums = [[CreatAlbumsViewController alloc] init];
-    self.creatAlbums.delegate = self;
-    self.uploadPhoto = [[UpLoadPhotoViewController alloc] init];
-    self.uploadPhoto.delegate = self;
     
     NSString *title;
     if ([self.mStr_flag intValue] == 1) {
@@ -91,11 +87,11 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc toView:self.view];
+//        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSString *str = [dic objectForKey:@"groupID"];
@@ -119,11 +115,11 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc toView:self.view];
+//        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSString *str = [dic objectForKey:@"groupID"];
@@ -184,6 +180,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     NSMutableArray *array = [dic objectForKey:@"array"];
     [self.mArr_list removeAllObjects];
     self.mArr_list = [NSMutableArray arrayWithArray:array];
+    [self.mArr_myselfAlbums removeAllObjects];
     D("self.mInt_flag-===%@",self.mStr_flag);
     for (int i=0; i<self.mArr_list.count; i++) {
         UnitAlbumsModel *model = [self.mArr_list objectAtIndex:i];
@@ -326,6 +323,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
 -(void)navigationRightAction:(UIButton *)sender{
@@ -370,24 +368,28 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    UpLoadPhotoViewController *uploadV = [[UpLoadPhotoViewController alloc] init];
+    uploadV.delegate = self;
+    CreatAlbumsViewController *creatV = [[CreatAlbumsViewController alloc] init];
+    creatV.delegate = self;
     if (actionSheet.tag == 1) {//单位
         if (buttonIndex == 0) {//创建相册
-            self.creatAlbums.mStr_flag = @"2";
-            self.creatAlbums.mStr_unitID = self.mModel_unit.UnitID;
-            [utils pushViewController:self.creatAlbums animated:YES];
+            creatV.mStr_flag = @"2";
+            creatV.mStr_unitID = self.mModel_unit.UnitID;
+            [utils pushViewController:creatV animated:YES];
         }else if (buttonIndex == 1){//上传照片
-            self.uploadPhoto.mStr_flag = @"2";
-            self.uploadPhoto.mArr_albums = [NSMutableArray arrayWithArray:self.mArr_myselfAlbums];
-            [utils pushViewController:self.uploadPhoto animated:YES];
+            uploadV.mStr_flag = @"2";
+            uploadV.mArr_albums = [NSMutableArray arrayWithArray:self.mArr_myselfAlbums];
+            [utils pushViewController:uploadV animated:YES];
         }
     }else if (actionSheet.tag == 2){//个人
         if (buttonIndex == 0) {//创建相册
-            self.creatAlbums.mStr_flag = @"1";
-            [utils pushViewController:self.creatAlbums animated:YES];
+            creatV.mStr_flag = @"1";
+            [utils pushViewController:creatV animated:YES];
         }else if (buttonIndex == 1){//上传照片
-            self.uploadPhoto.mStr_flag = @"1";
-            self.uploadPhoto.mArr_albums = [NSMutableArray arrayWithArray:self.mArr_myselfAlbums];
-            [utils pushViewController:self.uploadPhoto animated:YES];
+            uploadV.mStr_flag = @"1";
+            uploadV.mArr_albums = [NSMutableArray arrayWithArray:self.mArr_myselfAlbums];
+            [utils pushViewController:uploadV animated:YES];
         }
     }
 }

@@ -663,7 +663,7 @@
 
 //获取当前用户可以发布动态的单位列表(含班级）
 -(void)GetReleaseNewsUnits:(NSNotification *)noti{
-    
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
