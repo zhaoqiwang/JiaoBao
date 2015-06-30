@@ -79,11 +79,11 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
     [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc toView:self.view];
+        [MBProgressHUD showError:@"数据错误或没有相册" toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];    self.mArr_list = [NSMutableArray arrayWithArray:array];
