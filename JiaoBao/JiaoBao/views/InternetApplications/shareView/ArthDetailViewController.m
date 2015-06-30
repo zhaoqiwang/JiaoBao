@@ -554,7 +554,7 @@
     }else{
         [cell.mImg_head setImage:[UIImage imageNamed:@"root_img"]];
         //获取头像
-        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+//        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
     }
     //人名、单位名
     NSString *tempName = [NSString stringWithFormat:@"%@@%@",model.UserName,model.UnitShortname];

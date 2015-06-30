@@ -236,6 +236,7 @@ static ThemeHttp *themeHttp = nil;
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
+    D("accid-===%@",accid);
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];

@@ -142,11 +142,11 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc toView:self.view];
+//        [MBProgressHUD showError:ResultDesc toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
@@ -155,10 +155,10 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     D("self.mInt_flag-===%@",self.mStr_flag);
     for (int i=0; i<self.mArr_list.count; i++) {
         PersonPhotoModel *model = [self.mArr_list objectAtIndex:i];
-        [[ThemeHttp getInstance] themeHttpGetFristPhotoByGroup:self.mModel_personal.UserID GroupInfo:model.ID];
+        [[ThemeHttp getInstance] themeHttpGetFristPhotoByGroup:self.mModel_personal.AccID GroupInfo:model.ID];
     }
     //区分是否本人的空间
-    if ([self.mModel_personal.UserID isEqual:[dm getInstance].jiaoBaoHao]) {
+    if ([self.mModel_personal.AccID isEqual:[dm getInstance].jiaoBaoHao]) {
         [self.mNav_navgationBar setRightBtnTitle:@"更多"];
         self.mArr_myselfAlbums = [NSMutableArray arrayWithArray:self.mArr_list];
     }
@@ -170,11 +170,11 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+//    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc toView:self.view];
+        [MBProgressHUD showError:@"数据错误或没有相册" toView:self.view];
         return;
     }
     NSMutableArray *array = [dic objectForKey:@"array"];
@@ -230,7 +230,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         if ([self.mModel_unit.UnitType intValue]== 3) {
             [[ThemeHttp getInstance] themeHttpGetPhotoList:[NSString stringWithFormat:@"-%@",self.mModel_unit.UnitID]];
         }else {
-            [[ThemeHttp getInstance] themeHttpGetPhotoList:self.mModel_personal.UserID];
+            [[ThemeHttp getInstance] themeHttpGetPhotoList:self.mModel_personal.AccID];
         }
     }else{
         if ([self.mModel_unit.UnitType intValue]== 3) {
@@ -296,7 +296,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     UnintAlbumsListViewController *albums = [[UnintAlbumsListViewController alloc] init];
     if ([self.mStr_flag intValue] == 1) {
         PersonPhotoModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-        model.accid = self.mModel_personal.UserID;
+        model.accid = self.mModel_personal.AccID;
         albums.mStr_flag = @"1";
         albums.mModel_person = model;
     }else{
