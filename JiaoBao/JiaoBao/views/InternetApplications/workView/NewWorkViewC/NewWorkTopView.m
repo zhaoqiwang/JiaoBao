@@ -376,7 +376,7 @@
                 }
             }
         }
-        [self.mArr_accessory addObject:model];
+       // [self.mArr_accessory addObject:model];
     }
     
     if([lastChosenMediaType isEqual:(NSString *) kUTTypeMovie])
