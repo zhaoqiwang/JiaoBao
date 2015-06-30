@@ -436,7 +436,7 @@ errorCode:(BMKSearchErrorCode)error{
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
         @catch (NSException *exception) {
-            [MBProgressHUD showMessage:@"数据异常" toView:self.view];
+            [MBProgressHUD showError:@"数据异常" toView:self.view];
 
         }
         @finally {
