@@ -27,6 +27,9 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //创建单位相册回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CreateUnitPhotoGroup" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CreateUnitPhotoGroup:) name:@"CreateUnitPhotoGroup" object:nil];
@@ -35,9 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"创建相册"];

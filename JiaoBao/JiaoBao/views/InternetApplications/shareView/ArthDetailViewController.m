@@ -23,6 +23,9 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //通知文章详情界面刷新
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ArthDetai" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ArthDetai:) name:@"ArthDetai" object:nil];
@@ -62,9 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     
     //区分来自分享和展示1还是内务2,然后发不同的请求
     if (self.mInt_from == 2) {

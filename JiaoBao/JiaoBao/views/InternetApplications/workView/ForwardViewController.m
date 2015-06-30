@@ -62,6 +62,9 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setFrame];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
   }
 
 - (void)viewDidLoad {
@@ -79,12 +82,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMsgAllReviceUnitList" object:nil];
     
     [dm getInstance].notificationSymbol = 1;
-
-    
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-
-
     
     self.mModel_myUnit = [[myUnit alloc] init];
 

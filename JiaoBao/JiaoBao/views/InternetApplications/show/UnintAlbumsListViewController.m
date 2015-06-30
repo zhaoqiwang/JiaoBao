@@ -26,6 +26,9 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //获取单位相册照片后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitPhotoByGroupID" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitPhotoByGroupID:) name:@"GetUnitPhotoByGroupID" object:nil];
@@ -36,9 +39,6 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
     // Do any additional setup after loading the view from its nib.
     [[SDImageCache sharedImageCache] clearDisk];
     [[SDImageCache sharedImageCache] clearMemory];
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     self.mArr_list = [NSMutableArray array];
     self.mArr_bigPhoto = [NSMutableArray array];

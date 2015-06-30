@@ -35,7 +35,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [self setValueModel];
-
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
 
 - (void)viewDidLoad {
@@ -86,9 +88,6 @@
         weakSelf.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, weakSelf.mTableV_personalS.frame.size.height+weakSelf.unitTabelView.frame.size.height);
 
     }];
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     //获取关联身份数据 并加入到相应的数组中
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];

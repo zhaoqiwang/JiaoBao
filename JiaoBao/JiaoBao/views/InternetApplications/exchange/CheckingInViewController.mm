@@ -82,6 +82,9 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     [BaidumapView viewWillAppear];
     [_locService startUserLocationService];
 
@@ -138,9 +141,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, self.view.frame.size.height-200, 280, 30)];
     self.nameLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(20, self.view.frame.size.height-100, 280, 30)];
 

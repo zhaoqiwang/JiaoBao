@@ -308,7 +308,7 @@
             TreeView_node *node1;
             for (TreeView_node *node in self.mArr_sumData) {
                 if ([node.flag isEqual:@"+2"]) {
-                    if (self.mModel_unitList.UnitParents.count==0) {
+                    if (self.mModel_unitList.UnitParents.count==0||[self.mModel_right.ParentCommRight intValue] ==0) {
                         [self.mArr_sumData removeObject:node];
                         break;
                     }
@@ -347,16 +347,21 @@
                     node2 = node;
                     
                     //判断是子类还是班级
-                    NSMutableArray *sub_unit ;
+                    NSMutableArray *sub_unit  = [NSMutableArray array];
                     if (self.mModel_unitList.subUnits.count>0) {
                         sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.subUnits];
                     }else{
                         sub_unit = [NSMutableArray arrayWithArray:self.mModel_unitList.UnitClass];
                         NewWorkTree_model *temp2 = node2.nodeData;
                         temp2.mStr_name = @"所有班级";
+                        //不显示班级
+                        [sub_unit removeAllObjects];
                     }
-                    if (sub_unit.count==0) {
+                    if (sub_unit.count==0||[self.mModel_right.SubUnitCommRight intValue] ==0) {
                         [self.mArr_sumData removeObject:node];
+                        if (self.mModel_unitList.UnitParents.count==0||[self.mModel_right.ParentCommRight intValue] ==0) {
+                            [self.mArr_sumData removeAllObjects];
+                        }
                         break;
                     }
                     //对人员进行排序

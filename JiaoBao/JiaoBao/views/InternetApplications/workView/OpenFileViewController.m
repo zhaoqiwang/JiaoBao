@@ -16,12 +16,16 @@
 @implementation OpenFileViewController
 @synthesize mStr_name,mNav_navgationBar,mWebView;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
     
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_name];
     self.mNav_navgationBar.delegate = self;
