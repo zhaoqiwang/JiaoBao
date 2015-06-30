@@ -254,6 +254,21 @@ static RegisterHttp *registerHttp = nil;
     [request startAsynchronous];
 }
 
+//修改个人头像
+-(void)registerHttpUpDateFaceImg:(NSString *)imgPath{
+    NSString *urlString = [NSString stringWithFormat:@"%@ClientSrv/updatefaceimg",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request setFile:imgPath forKey:@"file"];
+    request.tag = 14;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];

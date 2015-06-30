@@ -65,4 +65,7 @@
 //重置用户密码时发送手机验证码
 -(void)registerHttpReSendCheckCode:(NSString *)phone vCode:(NSString *)vCode;
 
+//修改个人头像
+-(void)registerHttpUpDateFaceImg:(NSString *)imgPath;
+
 @end
