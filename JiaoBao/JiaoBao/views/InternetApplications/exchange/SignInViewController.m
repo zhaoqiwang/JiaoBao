@@ -31,9 +31,9 @@
 @implementation SignInViewController
 -(void)dealloc
 {
-    self.calendar = nil;
-    self.calendarView = nil;
-    self.menuView = nil;
+//    self.calendar = nil;
+//    self.calendarView = nil;
+//    self.menuView = nil;
     
 }
 
