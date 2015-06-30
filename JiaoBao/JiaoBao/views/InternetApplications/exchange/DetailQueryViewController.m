@@ -44,7 +44,12 @@
     [[SignInHttp getInstance]querySchedule:dic];
    ;
     self.selectedDate.text = self.selectedDateStr;
-    //self.automaticallyAdjustsScrollViewInsets = NO;
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f)
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        
+    }
+
 
     // Do any additional setup after loading the view from its nib.
 }
