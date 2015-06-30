@@ -51,20 +51,15 @@
     //通知学校界面，切换成功身份成功，清空数组
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit:) name:@"changeCurUnit" object:nil];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
-
-//-(void)viewDidDisappear:(BOOL)animated{
-//    [super viewDidDisappear:YES];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     
     //将dm中的单位人员数组改为未展开、未选中
     for (TreeView_node *node1 in [dm getInstance].mArr_unit_member) {
@@ -588,6 +583,7 @@
     [dm getInstance].name = @"新用户";
     [dm getInstance].url = @"";
     [dm getInstance].UID = 0;
+    [[dm getInstance].identity removeAllObjects];
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];

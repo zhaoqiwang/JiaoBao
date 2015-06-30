@@ -27,6 +27,9 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //发送注册请求
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerGetTime" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(registerGetTime:) name:@"registerGetTime" object:nil];
@@ -118,9 +121,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"输入密码"];

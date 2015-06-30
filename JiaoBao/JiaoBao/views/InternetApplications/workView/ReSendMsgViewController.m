@@ -33,6 +33,9 @@ NSString *kCellID0 = @"Forward_cell";
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //键盘事件
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
@@ -48,9 +51,6 @@ NSString *kCellID0 = @"Forward_cell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"接收人详情"];
     self.mNav_navgationBar.delegate = self;

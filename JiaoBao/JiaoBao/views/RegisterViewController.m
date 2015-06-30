@@ -23,11 +23,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)viewDidLoad {
-    D("dm... %d,%d",[dm getInstance].width, [dm getInstance].height);
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+
+- (void)viewDidLoad {
     [LoginSendHttp getInstance].delegate = self;
     
     self.view.backgroundColor = [UIColor colorWithRed:3/255.0 green:76/255.0 blue:173/255.0 alpha:1];

@@ -78,14 +78,14 @@
     [super viewWillAppear:YES];
     [self addNotification];
 
-    
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+
     timeNum = 60;
     [dm getInstance].RegisterSymbol = YES;
 

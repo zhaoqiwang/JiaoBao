@@ -29,7 +29,9 @@
 {
     [super viewDidAppear:animated];
     [self.calendar reloadData];
-
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
      // （必须要在这里调用）Must be call in viewDidAppear
 }
@@ -96,9 +98,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetSignInList:) name:@"GetSignInList" object:nil];
     self.calendar = [JTCalendar new];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

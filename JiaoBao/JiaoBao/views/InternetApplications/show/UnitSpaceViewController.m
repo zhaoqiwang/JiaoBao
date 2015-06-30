@@ -26,6 +26,9 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //单位最新前N张照片后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitNewPhoto" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitNewPhoto:) name:@"GetUnitNewPhoto" object:nil];
@@ -34,9 +37,6 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     self.mArr_list = [NSMutableArray array];
     self.mArr_list = [NSMutableArray arrayWithObjects:@"单位介绍",@"展示文章",@"分享文章",@"单位成员",@"下级单位",@"单位相册", nil];

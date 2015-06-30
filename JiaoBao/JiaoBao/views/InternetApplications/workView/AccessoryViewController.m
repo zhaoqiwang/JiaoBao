@@ -15,13 +15,17 @@
 
 @implementation AccessoryViewController
 @synthesize mTableV_file,mArr_sumFile,mNav_navgationBar,delegate,mInt_flag,mArr_photo;
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     self.mArr_sumFile = [NSMutableArray array];
     self.mArr_photo = [NSMutableArray array];
     //添加导航条

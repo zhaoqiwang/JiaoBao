@@ -29,6 +29,9 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     //取单个用户发给我消息列表，new
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SendToMeMsgList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SendToMeMsgList:) name:@"SendToMeMsgList" object:nil];
@@ -60,9 +63,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
-    //做bug服务器显示当前的哪个界面
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_name];
