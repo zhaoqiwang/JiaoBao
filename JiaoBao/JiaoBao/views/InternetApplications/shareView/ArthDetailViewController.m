@@ -621,7 +621,7 @@
                     //设置坐标
                     tempView.frame = CGRectMake(0, m, [dm getInstance].width-80, tempBtnLike.frame.origin.y+tempBtnLike.frame.size.height);
                     tempView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
-                    m = tempView.frame.size.height;
+                    m = m+tempView.frame.size.height;
                     [cell.mView_RefID addSubview:tempView];
                     cell.mView_RefID.frame = CGRectMake(70, 35, [dm getInstance].width-90, tempView.frame.origin.y+tempView.frame.size.height);
                 }
