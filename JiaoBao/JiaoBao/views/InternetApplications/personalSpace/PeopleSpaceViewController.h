@@ -21,8 +21,10 @@
 #import "UnitTableViewCell.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
+#import "ELCImagePickerHeader.h"
+#import <MobileCoreServices/UTCoreTypes.h>
 
-@interface PeopleSpaceViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,unitCellDelegate>{
+@interface PeopleSpaceViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,unitCellDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_personalS;//表格
     NSMutableArray *mArr_personalS;//个人信息数组
@@ -35,5 +37,6 @@
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_personalS;
 @property (nonatomic,strong) NSMutableArray *mArr_personalS;//个人信息数组
 @property (weak, nonatomic) IBOutlet UITableView *unitTabelView;//关联单位列表
+@property (nonatomic,strong) NSData *tempData;
 
 @end

@@ -20,7 +20,7 @@
 #import "TreeView_Level2_Model.h"
 
 
-@interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate>{
+@interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate,NSURLConnectionDownloadDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_detail;//详情列表
     UITextField *mTextF_text;//输入框

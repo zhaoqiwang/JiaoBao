@@ -66,6 +66,6 @@
 -(void)registerHttpReSendCheckCode:(NSString *)phone vCode:(NSString *)vCode;
 
 //修改个人头像
--(void)registerHttpUpDateFaceImg:(NSString *)imgPath;
+-(void)registerHttpUpDateFaceImg:(NSData *)imgData;
 
 @end

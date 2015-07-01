@@ -10,6 +10,7 @@
 #import "UnitTableViewCell.h"
 #import "MobileUnitViewController.h"
 
+
 @interface PeopleSpaceViewController ()
 {
     id  _observer1,_observer2;
@@ -18,6 +19,8 @@
 @property(nonatomic,strong)NSArray *unitArr,*unitArr2;//关联单位名称数组、关联单位身份数组
 @property(nonatomic,strong)UIButton *addBtn;//指向点击cell上的addBtn，等数据返回时改变addbtn的title
 @property(nonatomic,strong)UIScrollView *mainScrollView;
+@property(nonatomic,strong)UIImagePickerController *picker;
+
 
 @end
 
@@ -39,9 +42,54 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
+-(void)changeFaceImg:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSNotification *note = sender;
+    NSDictionary *dic = note.object;
+    NSArray *keyArr =[dic allKeys];
+    NSString *str = [keyArr objectAtIndex:0];
+    NSString *ResultDesc = [dic objectForKey:str];
+    if([str integerValue]==0)
+    {
+        [MBProgressHUD showSuccess:@"修改头像成功" toView:self.view];
+    }
+    else
+    {
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 
+    }
+//    [self.mTableV_personalS reloadData];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    //文件名
+    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[dm getInstance].jiaoBaoHao]];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+    if(!yesNo)
+    {
+        [self.tempData writeToFile:imgPath atomically:YES];
+        [self.mTableV_personalS reloadData];
+    }
+    else
+    {
+        BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];
+        if(blDele)
+        {
+            BOOL blDele2 = [self.tempData writeToFile:imgPath atomically:YES];
+            for (;;) {
+                if (blDele2) {
+                    [self.mTableV_personalS reloadData];
+                    break;
+                }
+            }
+        }
+    }
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"changeFaceImg" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeFaceImg:) name:@"changeFaceImg" object:nil];
     __weak PeopleSpaceViewController *weakSelf = self;
 
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"getIdentity" object:nil queue:nil usingBlock:^(NSNotification *note) {
@@ -339,8 +387,91 @@
 }
 -(void)imgBtnAction:(id)sender
 {
-    
+    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"添加附件" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册添加",@"拍照添加",nil];
+    action.tag = 1;
+    [action showInView:self.view];
 }
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (actionSheet.tag == 1) {//单位
+        if (buttonIndex == 0){//相册添加
+            [self getMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+
+//            ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+//            
+//            elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至100
+//            elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
+//            elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
+//            elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
+//            //            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //支持图片和电影类型
+//            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //支持图片和电影类型
+//            elcPicker.imagePickerDelegate = self;
+//            //            [self presentViewController:elcPicker animated:YES completion:nil];
+//            [utils pushViewController1:elcPicker animated:YES];
+        }else if (buttonIndex == 1){//拍照添加
+            [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+        }
+    }
+}
+-(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
+    NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {
+        NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        self.picker=[[UIImagePickerController alloc] init];
+        self.picker.mediaTypes=mediatypes;
+        self.picker.delegate=self;
+        //        picker.allowsEditing=YES;
+        self.picker.sourceType=sourceType;
+        
+        
+        if([[[UIDevice
+              currentDevice] systemVersion] floatValue]>=8.0) {
+            
+            self.picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+            
+        }
+        NSString *requiredmediatype=(NSString *)kUTTypeImage;
+        NSArray *arrmediatypes=[NSArray arrayWithObject:requiredmediatype];
+        [self.picker setMediaTypes:arrmediatypes];
+        
+        //        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+        //            picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+        //        }
+        //        [self presentViewController:picker animated:YES completion:nil];
+        [utils pushViewController1:self.picker animated:YES];
+    }else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"错误信息!" message:@"当前设备不支持拍摄功能" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        [alert show];
+    }
+}
+
+#pragma 拍照模块
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    NSString *lastChosenMediaType=[info objectForKey:UIImagePickerControllerMediaType];
+    if([lastChosenMediaType isEqual:(NSString *) kUTTypeImage])
+    {
+        UIImage *chosenImage=[info objectForKey:UIImagePickerControllerOriginalImage];
+
+        NSData *imageData = UIImageJPEGRepresentation(chosenImage,0);
+        self.tempData  = [[NSData alloc] initWithData:imageData];
+        [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
+        [MBProgressHUD showMessage:@"正在修改" toView:self.view];
+    }
+    
+
+    
+    if([lastChosenMediaType isEqual:(NSString *) kUTTypeMovie])
+    {
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"提示信息!" message:@"系统只支持图片格式" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        [alert show];
+        
+    }
+
+}
+
+
+
+
 -(void)ClickBtnWith:(UIButton *)btn cell:(UnitTableViewCell *)cell
 {
 //    self.addBtn = btn;

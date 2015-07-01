@@ -373,8 +373,8 @@ static LoginSendHttp *loginSendHttp = nil;
 -(void)setProgress:(float)newProgress{
 //    [self.pv setProgress:newProgress];
 //    self.lbPercent.text=[NSString stringWithFormat:@"%0.f%%",newProgress*100];
-    D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*100]);
-    NSString *temp = [NSString stringWithFormat:@"%.0f",newProgress*100];
+    D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*1]);
+    NSString *temp = [NSString stringWithFormat:@"%.0f",newProgress*1];
     //通知信息详情界面，更新下载文件的进度条
     [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingProgress" object:temp];
 }

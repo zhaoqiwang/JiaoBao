@@ -98,6 +98,7 @@
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
     
     [[LoginSendHttp getInstance] msgDetailwithUID:self.mStr_tableID page:1 feeBack:self.mStr_tableID ReadFlag:self.mStr_flag];
     [MBProgressHUD showMessage:@"" toView:self.view];
@@ -723,8 +724,10 @@
 -(void)loadingProgress:(NSNotification *)noti{
     NSString *str = noti.object;
     float temp = [str intValue];
+    //[self.mProgressV show:YES];
+    self.mProgressV.mode = MBProgressHUDModeDeterminateHorizontalBar;
     self.mProgressV.progress = temp;
-    if (temp>=100) {
+    if (temp>=1) {
         [self.mProgressV hide:YES];
     }
 }

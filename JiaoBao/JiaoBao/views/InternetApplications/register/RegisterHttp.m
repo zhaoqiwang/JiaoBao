@@ -255,15 +255,18 @@ static RegisterHttp *registerHttp = nil;
 }
 
 //修改个人头像
--(void)registerHttpUpDateFaceImg:(NSString *)imgPath{
-    NSString *urlString = [NSString stringWithFormat:@"%@ClientSrv/updatefaceimg",MAINURL];
+-(void)registerHttpUpDateFaceImg:(NSData *)imgData{
+    NSString *urlString = [NSString stringWithFormat:@"%@/ClientSrv/updatefaceimg",[dm getInstance].url];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
-    [request setFile:imgPath forKey:@"file"];
+
+    //[request setFile:imgPath forKey:@"file"];
+    [request setData:imgData forKey:@"file"];
+    [request.userInfo setValue:imgData forKey:@"imgData"];
     request.tag = 14;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -272,6 +275,7 @@ static RegisterHttp *registerHttp = nil;
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
+    D("responseData = %@",responseData);
 //    NSError *error;
 //    id jsonObject = [NSJSONSerialization JSONObjectWithData:responseData
 //                                                    options:NSJSONReadingAllowFragments
@@ -381,6 +385,41 @@ static RegisterHttp *registerHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:@{code:ResultDesc}];
 
         
+    }else if (_request.tag == 14)
+    {
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[dm getInstance].jiaoBaoHao]];
+//        NSFileManager *fileManager = [NSFileManager defaultManager];
+//        NSData *imgData = [_request.userInfo objectForKey:@"imgData"];
+//        D("_request.userInfo-==%@",_request.userInfo);
+//        BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+//        if(!yesNo)
+//        {
+//            [imgData writeToFile:imgPath atomically:YES];
+//        }
+//        else
+//        {
+//            BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];
+//            if(blDele)
+//            {
+//                BOOL blDele2 = [imgData writeToFile:imgPath atomically:YES];
+//                for (;;) {
+//                    if (blDele2) {
+//                        [[NSNotificationCenter defaultCenter]postNotificationName:@"changeFaceImg" object:@{ResultCode:ResultDesc}];
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"changeFaceImg" object:@{ResultCode:ResultDesc}];
+
+        
+
+        
+
     }
 }
 //请求失败
@@ -465,6 +504,15 @@ static RegisterHttp *registerHttp = nil;
         NSString *ResultDesc = @"请求超时";
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"get_identi_code" object:@{code:ResultDesc}];
+        
+        
+    }else if (request.tag == 14)
+    {
+        NSString *code = @"1000";
+        NSString *ResultDesc = @"请求超时";
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"changeFaceImg" object:@{code:ResultDesc}];
+        
         
         
     }
