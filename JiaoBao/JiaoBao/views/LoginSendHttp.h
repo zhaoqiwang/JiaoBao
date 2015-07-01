@@ -86,7 +86,7 @@
 -(void)addFeeBackWithUID:(NSString *)uid content:(NSString *)content;
 
 //在信息详情页，点击下载文件
--(void)msgDetailDownLoadFileWithURL:(NSString *)Fileurl fileName:(NSString *)fileName;
+-(void)msgDetailDownLoadFileWithURL:(NSString *)Fileurl fileName:(NSString *)fileName vc:(UIViewController*)vc;
 
 //获取接收人列表或单位列表,flag是短信还是普通请求，all是否群发
 -(void)ReceiveListWithFlag:(int)flag all:(int)all;

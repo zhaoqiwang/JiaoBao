@@ -487,11 +487,28 @@
         return;
     }
             MsgDetail_AttList *model = [self.mModel_unReadMsg.arrayAttList objectAtIndex:self.mInt_file-1];
-            [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename];
-            [MBProgressHUD showMessage:@"下载中..." toView:self.view];
+            [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename vc:self];
+            [self.mProgressV show:YES];
+            self.mProgressV.mode = MBProgressHUDModeDeterminateHorizontalBar;
+            self.mProgressV.progress = 0;
+            //[MBProgressHUD showMessage:@"下载中..." toView:self.view];
         }
     }
 }
+-(void)setProgress:(float)newProgress{
+    [self.mProgressV setProgress:newProgress];
+    self.mProgressV.labelText = [NSString stringWithFormat:@"已经下载：%0.f%%",newProgress*100];
+
+    if (newProgress>=1) {
+        [self.mProgressV hide:YES];
+    }
+
+}
+- (void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength
+{
+    
+}
+
 
 //单击手势
 -(void)pressTap:(UITapGestureRecognizer *)tap{

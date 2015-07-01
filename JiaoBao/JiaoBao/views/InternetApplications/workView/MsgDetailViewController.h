@@ -19,7 +19,7 @@
 #import "ForwardViewController.h"
 #import "Loger.h"
 
-@interface MsgDetailViewController : UIViewController<MyNavigationDelegate,UIGestureRecognizerDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate>{
+@interface MsgDetailViewController : UIViewController<MyNavigationDelegate,UIGestureRecognizerDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate,ASIProgressDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UIScrollView *mScrollV_view;//放所有控件
     UIImageView *mImgV_head;//头像
