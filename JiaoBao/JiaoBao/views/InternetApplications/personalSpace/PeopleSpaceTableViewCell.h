@@ -20,5 +20,6 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_nickName;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_trueName;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line;
+@property (weak, nonatomic) IBOutlet UIButton *imgBtn;
 
 @end

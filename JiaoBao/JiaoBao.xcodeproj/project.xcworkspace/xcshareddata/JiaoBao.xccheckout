@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>4DB75D20-5099-4480-AB62-A896FEADE500</string>
 	<key>IDESourceControlProjectName</key>
-	<string>JiaoBao</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>1614E1303EBB134D404B23AFF616FC54F0E59214</key>
 		<string>https://github.com/zhaoqiwang/JiaoBao.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>JiaoBao/JiaoBao.xcodeproj</string>
+	<string>JiaoBao/JiaoBao.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1614E1303EBB134D404B23AFF616FC54F0E59214</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>1614E1303EBB134D404B23AFF616FC54F0E59214</string>
 			<key>IDESourceControlWCCName</key>
-			<string>gitJiaoBao</string>
+			<string>JiaoBao</string>
 		</dict>
 	</array>
 </dict>
