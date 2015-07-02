@@ -116,6 +116,7 @@
     self.mTextF_text.borderStyle = UITextBorderStyleRoundedRect;
     self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
     [self.mView_text addSubview:self.mTextF_text];
+    [self.mView_text setHidden:YES];
     //发送按钮
 //    self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
 //    self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
@@ -792,7 +793,7 @@
         //判断应该加载单位1还是班级2
         if (self.mInt_unit_class == 1) {
             int a = (int)self.mArr_list.count/5+1;
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
+            [[ClassHttp getInstance] classHttpUnitArthListIndex:[NSString stringWithFormat:@"%d",a] Num:@"5" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"3"];
         } else if (self.mInt_unit_class == 2){
             int a = (int)self.mArr_list.count/5+1;
             [[ClassHttp getInstance] classHttpAllMyClassArthList:[NSString stringWithFormat:@"%d",a] Num:@"5" sectionFlag:@"2" RequestFlag:@"3"];//单位
