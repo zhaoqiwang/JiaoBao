@@ -350,7 +350,7 @@ static LoginSendHttp *loginSendHttp = nil;
 }
 
 //在信息详情页，点击下载文件
--(void)msgDetailDownLoadFileWithURL:(NSString *)Fileurl fileName:(NSString *)fileName{
+-(void)msgDetailDownLoadFileWithURL:(NSString *)Fileurl fileName:(NSString *)fileName vc:(UIViewController*)vc{
     NSURL *url = [NSURL URLWithString:Fileurl];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
     request.timeOutSeconds = TIMEOUT;
@@ -362,7 +362,9 @@ static LoginSendHttp *loginSendHttp = nil;
 //    [request setUploadProgressDelegate:self];
 //    别忘记showAccurateProgress也要设置为YES (默认为NO,则只显示0%和100%):
     request.showAccurateProgress=YES;//
-    [request setDownloadProgressDelegate:self];
+//    UIProgressView *prgress = [[UIProgressView alloc]initWithFrame:CGRectMake(100, 100, 150, 20)];
+//    [prgress setProgressViewStyle:UIProgressViewStyleBar];
+    [request setDownloadProgressDelegate:vc];
 //    request.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%@%@",Fileurl,fileName] forKey:@"fileName"];
     request.userInfo = [NSDictionary dictionaryWithObject:fileName forKey:@"fileName"];
     self.flag_request = 0;
@@ -370,18 +372,18 @@ static LoginSendHttp *loginSendHttp = nil;
     [request startAsynchronous];
 }
 
--(void)setProgress:(float)newProgress{
-//    [self.pv setProgress:newProgress];
-//    self.lbPercent.text=[NSString stringWithFormat:@"%0.f%%",newProgress*100];
-    D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*100]);
-    NSString *temp = [NSString stringWithFormat:@"%.0f",newProgress*100];
-    //通知信息详情界面，更新下载文件的进度条
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingProgress" object:temp];
-}
-
--(void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength{
-    D("请求过程中.... %lld",newLength);
-}
+//-(void)setProgress:(float)newProgress{
+////    [self.pv setProgress:newProgress];
+////    self.lbPercent.text=[NSString stringWithFormat:@"%0.f%%",newProgress*100];
+//    D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*1]);
+//    NSString *temp = [NSString stringWithFormat:@"%.0f",newProgress*1];
+//    //通知信息详情界面，更新下载文件的进度条
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingProgress" object:temp];
+//}
+//
+//-(void)request:(ASIHTTPRequest *)request incrementDownloadSizeBy:(long long)newLength{
+//    D("请求过程中.... %lld",newLength);
+//}
 
 //获取接收人列表或单位列表,flag是短信还是普通请求，all是否群发
 -(void)ReceiveListWithFlag:(int)flag all:(int)all{

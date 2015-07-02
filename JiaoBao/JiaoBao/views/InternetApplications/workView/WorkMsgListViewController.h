@@ -20,7 +20,7 @@
 #import "TreeView_Level2_Model.h"
 
 
-@interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate>{
+@interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate,NSURLConnectionDownloadDelegate,ASIProgressDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITableView *mTableV_detail;//详情列表
     UITextField *mTextF_text;//输入框
@@ -45,6 +45,8 @@
     NSString *mStr_flag;//我自己发送的信息中，未读数量
     NSMutableArray *mArr_photos;
 }
+@property(nonatomic,strong)UIProgressView *progressview;
+
 @property (weak, nonatomic) IBOutlet UIButton *dropDownBtn;
 @property (weak, nonatomic) IBOutlet UILabel *dropDownLabel;
 

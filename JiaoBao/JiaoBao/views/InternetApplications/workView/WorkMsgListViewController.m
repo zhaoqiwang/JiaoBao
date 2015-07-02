@@ -98,6 +98,7 @@
     
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
+    self.mProgressV.delegate = self;
     
     [[LoginSendHttp getInstance] msgDetailwithUID:self.mStr_tableID page:1 feeBack:self.mStr_tableID ReadFlag:self.mStr_flag];
     [MBProgressHUD showMessage:@"" toView:self.view];
@@ -712,19 +713,34 @@
                 return;
             }
             MsgDetail_AttList *model = [self.mArr_attList objectAtIndex:self.mInt_file-1];
-            [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename];
+            [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename vc:self];
+
+            [self.mProgressV show:YES];
+            self.mProgressV.mode = MBProgressHUDModeDeterminateHorizontalBar;
+            self.mProgressV.progress = 0;
             // Set determinate mode
-            [MBProgressHUD showMessage:@"下载中..." toView:self.view];
+            //[MBProgressHUD showMessage:@"下载中..." toView:self.view];
         }
     }
+}
+-(void)setProgress:(float)newProgress{
+        [self.mProgressV setProgress:newProgress];
+    D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*100]);
+    self.mProgressV.labelText = [NSString stringWithFormat:@"已经下载：%0.f%%",newProgress*100];
+    if (newProgress>=1) {
+        [self.mProgressV hide:YES];
+    }
+
 }
 
 //通知信息详情界面，更新下载文件的进度条
 -(void)loadingProgress:(NSNotification *)noti{
     NSString *str = noti.object;
     float temp = [str intValue];
+    //[self.mProgressV show:YES];
+    self.mProgressV.mode = MBProgressHUDModeDeterminateHorizontalBar;
     self.mProgressV.progress = temp;
-    if (temp>=100) {
+    if (temp>=1) {
         [self.mProgressV hide:YES];
     }
 }
