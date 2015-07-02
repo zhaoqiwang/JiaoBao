@@ -158,7 +158,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         [[ThemeHttp getInstance] themeHttpGetFristPhotoByGroup:self.mModel_personal.AccID GroupInfo:model.ID];
     }
     //区分是否本人的空间
-    if ([self.mModel_personal.AccID isEqual:[dm getInstance].jiaoBaoHao]) {
+    if ([self.mModel_personal.AccID integerValue] ==[[dm getInstance].jiaoBaoHao integerValue]) {
         [self.mNav_navgationBar setRightBtnTitle:@"更多"];
         self.mArr_myselfAlbums = [NSMutableArray arrayWithArray:self.mArr_list];
     }
@@ -328,7 +328,11 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 }
 -(void)navigationRightAction:(UIButton *)sender{
     if ([self.mStr_flag intValue] == 1) {
-        
+        if ([self.mModel_personal.AccID integerValue]==[[dm getInstance].jiaoBaoHao integerValue]) {
+            UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"创建相册",@"上传照片",nil];
+            action.tag = 2;
+            [action showInView:self.view.superview];
+        }
     }else{
         //判断自己是否在当前这个单位中
         int a=0;
@@ -361,7 +365,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
             [action showInView:self.view.superview];
         }else if(a>0){
             UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"创建相册",nil];
-            action.tag = 1;
+            action.tag = 3;
             [action showInView:self.view.superview];
         }
     }
@@ -381,6 +385,12 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
             uploadV.mStr_flag = @"2";
             uploadV.mArr_albums = [NSMutableArray arrayWithArray:self.mArr_myselfAlbums];
             [utils pushViewController:uploadV animated:YES];
+        }
+    }else if (actionSheet.tag == 3){//单位
+        if (buttonIndex == 0) {//创建相册
+            creatV.mStr_flag = @"2";
+            creatV.mStr_unitID = self.mModel_unit.UnitID;
+            [utils pushViewController:creatV animated:YES];
         }
     }else if (actionSheet.tag == 2){//个人
         if (buttonIndex == 0) {//创建相册
