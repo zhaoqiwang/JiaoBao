@@ -83,7 +83,7 @@
     }
     else
     {
-        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-40);
+        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
 
         self.dropDownLabel.frame = CGRectZero;
     }
