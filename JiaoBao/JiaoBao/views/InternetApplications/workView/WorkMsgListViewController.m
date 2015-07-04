@@ -103,6 +103,8 @@
     self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
     //输入框
     self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15-70, 51-20);
+    self.mTextF_text.delegate = self;
+    self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
     //发送按钮
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
     [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -785,6 +787,20 @@
                      completion:^(BOOL finished){
                          ;
                      }];
+}
+
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        //若其有输入内容，则发送
+        if (self.mTextF_text.text.length>0) {
+            [self clickSendBtn:nil];
+        }
+        return NO;
+    }
+    return YES;
 }
 
 //导航条返回按钮

@@ -361,7 +361,7 @@
 
 //文章详情通知
 -(void)ArthDetai:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+//    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
@@ -394,7 +394,7 @@
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel_notice.Recdate;
             //内容
-            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+//            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
             D("detail.url-====%@",str);
             [self.mWebV_js loadHTMLString:str baseURL:baseURL];
@@ -429,7 +429,7 @@
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel.RecDate;
             //内容
-            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+//            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
             D("url-====%@",str);
             [self.mWebV_js loadHTMLString:str baseURL:baseURL];
@@ -472,7 +472,7 @@
     D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (self.mInt_from == 2) {
         //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height+20);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height);
         self.mLab_click.hidden = YES;
         self.mLab_like.hidden = YES;
@@ -482,7 +482,7 @@
         self.mImgV_View.hidden = YES;
     }else{
         //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height+20);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
         [self setArthInfo];
         //设置布局
         [self setFrame];

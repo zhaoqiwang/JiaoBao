@@ -128,7 +128,7 @@
     }
     else
     {
-    self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.secondVIew.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*2)];
+    self.mTableV_type = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.secondVIew.frame.origin.y+self.pullDownBtn.frame.size.height, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*3)];
     }
     [self.mTableV_type initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView, NSInteger section) {
         return self.pullArr.count;
@@ -332,27 +332,10 @@
     
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
--(void)noMore{
-    sleep(1);
-}
 
-- (void)Loading {
-    sleep(20);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.timer invalidate];
-//        self.timer = nil;
-//    self.timer = [NSTimer scheduledTimerWithTimeInterval:30 target:self selector:@selector(timerAction:) userInfo:nil repeats:NO];
-//        
-//        
-//    });
-    
-
-}
 -(void)timerAction:(id)sender
 {
     [MBProgressHUD showError:@"加载超时" toView:self.view];
-    sleep(2);
-    
 }
 
 //点击选择图片按钮
@@ -535,7 +518,7 @@
     }
     else
     {
-        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height+320, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*5);
+        self.mTableV_type.frame = CGRectMake(self.pullDownBtn.frame.origin.x, self.pullDownBtn.frame.origin.y+self.pullDownBtn.frame.size.height+320, self.pullDownBtn.frame.size.width, self.pullDownBtn.frame.size.height*3);
     }
     self.isOpen = !self.isOpen;
     [self.mTextF_title resignFirstResponder];
