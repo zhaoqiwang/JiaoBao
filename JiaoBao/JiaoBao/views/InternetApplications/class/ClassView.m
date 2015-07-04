@@ -628,7 +628,7 @@
 //通知学校界面，获取到的单位和个人数据,本单位或本班
 -(void)UnitArthListIndex:(NSNotification *)noti{
     self.finishSybmol2++;
-    [MBProgressHUD hideHUDForView:self];
+//    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
@@ -669,6 +669,8 @@
                 
             }
             self.finishSybmol2 = 0;
+            [MBProgressHUD hideHUDForView:self];
+
             
         }
 
@@ -692,6 +694,8 @@
                 
             }
             self.finishSybmol2 = 0;
+            [MBProgressHUD hideHUDForView:self];
+
             
         }
     }

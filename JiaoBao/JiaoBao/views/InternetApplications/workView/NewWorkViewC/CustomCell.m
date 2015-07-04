@@ -11,7 +11,9 @@
 @implementation CustomCell
 
 - (void)awakeFromNib {
-    [self.rightBtn setEnabled:NO];
+    //[self.rightBtn setEnabled:YES];
+    self.rightBtn.userInteractionEnabled = NO;
+    
     //[self.rightBtn setImage:[UIImage imageNamed:@"balnk.png"] forState:UIControlStateNormal];
     // Initialization code
 }

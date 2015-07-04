@@ -52,6 +52,7 @@
     
     //获取手机自动匹配的单位数据
     _observer2 = [[NSNotificationCenter defaultCenter]addObserverForName:@"GetMyMobileUnitList" object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if([note.object isKindOfClass:[NSString class]])
         {
             [MBProgressHUD showText:@"加载超时" toView:self.view];
@@ -67,6 +68,7 @@
     }];
     //向服务器请求手机自动匹配单位数据
     [[RegisterHttp getInstance]registerHttpGetMyMobileUnitList:[dm getInstance].jiaoBaoHao];
+    [MBProgressHUD showMessage:@"" toView:self.view];
     
     //点击加入单位获取返回信息
     _observer1 = [[NSNotificationCenter defaultCenter]addObserverForName:@"JoinUnitOP" object:nil queue:nil usingBlock:^(NSNotification *note) {

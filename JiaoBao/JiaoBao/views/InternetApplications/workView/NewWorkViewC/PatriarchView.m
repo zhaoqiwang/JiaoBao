@@ -8,6 +8,7 @@
 
 #import "PatriarchView.h"
 #import "CustomCell.h"
+#import "HomeClassWorkView.h"
 
 @implementation PatriarchView
 - (void)removeNotification
@@ -36,6 +37,9 @@
     }
 
     [self.tableView reloadData];
+    HomeClassWorkView *home = (HomeClassWorkView*)[[[self superview]superview]superview];
+    [home setFrame];
+    
     
 }
 - (instancetype)initWithFrame:(CGRect)frame
@@ -104,8 +108,13 @@
     {
         [self.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
         self.allSelSymbol = 1;
-        SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
-        for(int i=0;i<model.smsTree.count;i++)
+        SMSTreeArrayModel *model;
+        if(self.datasource.count>0)
+        {
+            model =[self.datasource objectAtIndex:1];
+            
+            
+        }        for(int i=0;i<model.smsTree.count;i++)
         {
             SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
             subModel.mInt_select = 1;
@@ -118,8 +127,13 @@
         {
             [self.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
             self.allSelSymbol = 0;
-            SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
-            for(int i=0;i<model.smsTree.count;i++)
+            SMSTreeArrayModel *model;
+            if(self.datasource.count>0)
+            {
+                model =[self.datasource objectAtIndex:1];
+                
+                
+            }            for(int i=0;i<model.smsTree.count;i++)
             {
                 SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
                 subModel.mInt_select = 0;
@@ -129,8 +143,13 @@
         {
             [self.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
             self.allSelSymbol = 1;
-            SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
-            for(int i=0;i<model.smsTree.count;i++)
+            SMSTreeArrayModel *model;
+            if(self.datasource.count>0)
+            {
+                model =[self.datasource objectAtIndex:1];
+                
+                
+            }            for(int i=0;i<model.smsTree.count;i++)
             {
                 SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
                 subModel.mInt_select = 1;
@@ -139,8 +158,13 @@
         }
         else if (self.allSelSymbol == 2)
         {
-            SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
-            for(int i=0;i<model.smsTree.count;i++)
+            SMSTreeArrayModel *model;
+            if(self.datasource.count>0)
+            {
+                model =[self.datasource objectAtIndex:1];
+                
+                
+            }            for(int i=0;i<model.smsTree.count;i++)
             {
                 SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:i];
                 if(subModel.mInt_select == 0)
@@ -172,14 +196,26 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
+    if(self.datasource.count>0)
+    {
+        SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
+        return model.smsTree.count;
+
+        
+    }
+    return 0;
     
     
-    return model.smsTree.count;
 }
 - (void)configureCell:(CustomCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
+    SMSTreeArrayModel *model;
+    if(self.datasource.count>0)
+    {
+        model =[self.datasource objectAtIndex:1];
+
+        
+    }
     SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:indexPath.row];
     cell.nameLabel.text =subModel.name;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -194,11 +230,6 @@
         
     }
 
-    
-    
-    
-    
-    
     
 }
 
@@ -221,8 +252,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CustomCell *cell = (CustomCell*)[tableView cellForRowAtIndexPath:indexPath];
-    SMSTreeArrayModel *model =[self.datasource objectAtIndex:1];
-    SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:indexPath.row];
+    SMSTreeArrayModel *model;
+    if(self.datasource.count>0)
+    {
+        model =[self.datasource objectAtIndex:1];
+        
+        
+    }    SMSTreeUnitModel *subModel = [model.smsTree objectAtIndex:indexPath.row];
     if(self.allSelSymbol == 0)
     {
         if(model.smsTree.count ==1)

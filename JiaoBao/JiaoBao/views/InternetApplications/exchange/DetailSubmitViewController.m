@@ -119,7 +119,7 @@
 {
     if([textView isEqual:self.textView2])
     {
-        self.view.frame = CGRectMake(0, -90, self.view.frame.size.width, self.view.frame.size.height);
+        self.view.frame = CGRectMake(0, -90, [dm getInstance].width, [dm getInstance].height);
     }
     return YES;
 }

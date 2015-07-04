@@ -19,7 +19,6 @@
 
 @implementation AppDelegate
 @synthesize mInternet,mRegister_view,mInt_index;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
 

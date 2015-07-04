@@ -267,12 +267,29 @@
 }
 -(void)resetFrame
 {
-    CGRect mCollectionV_listFrame = [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame;
-    [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame = CGRectMake(mCollectionV_listFrame.origin.x, mCollectionV_listFrame.origin.y, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
-    [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame.size.height+150);
-    self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48);
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        CGRect mCollectionV_listFrame = [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame;
+        [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame = CGRectMake(mCollectionV_listFrame.origin.x, mCollectionV_listFrame.origin.y, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.collectionViewLayout.collectionViewContentSize.height);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].characterView.mCollectionV_list.frame.size.height+150);
+        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48);
+        
+        [HomeClassRootScrollView shareInstance].characterView.frame  = CGRectMake([dm getInstance].width, 0, 320, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
+        
+    }
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        [HomeClassTopScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y, [dm getInstance].width, 48);
+        CGRect tableViewFrame = [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame;
+        [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame =CGRectMake(tableViewFrame.origin.x, tableViewFrame.origin.y, [dm getInstance].width, [HomeClassRootScrollView shareInstance].patriarchView.tableView.contentSize.height);
+        [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].patriarchView.tableView.frame.size.height+50);
+        self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48+self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y);
+        
+        [HomeClassRootScrollView shareInstance].patriarchView.frame  = CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
+        
+    }
 
-    [HomeClassRootScrollView shareInstance].characterView.frame  = CGRectMake([dm getInstance].width, 0, 320, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
+
 
 }
 
