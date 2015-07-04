@@ -119,7 +119,8 @@
 {
     if([textView isEqual:self.textView2])
     {
-        self.view.frame = CGRectMake(0, -90, [dm getInstance].width, [dm getInstance].height);
+        //self.mainView.frame.origin.y+self.textView2.frame.origin.y
+        self.mainView.frame = CGRectMake(0,self.mainView.frame.origin.y-90, self.mainView.frame.size.width, self.mainView.frame.size.height);
     }
     return YES;
 }
@@ -128,7 +129,7 @@
 {
     if([textView isEqual:self.textView2])
     {
-        self.view.frame = CGRectMake(0,0 , self.view.frame.size.width, self.view.frame.size.height);
+        self.mainView.frame = CGRectMake(0,51 , self.mainView.frame.size.width, self.mainView.frame.size.height);
     }
     [self.view endEditing:YES];
     return YES;

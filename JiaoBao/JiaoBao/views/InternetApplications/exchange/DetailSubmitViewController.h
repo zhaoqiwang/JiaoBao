@@ -32,5 +32,6 @@
 @property (strong, nonatomic) IBOutlet UIToolbar *SecToolBar;
 @property (strong, nonatomic) IBOutlet UIDatePicker *secDatePicker;
 @property(strong,nonatomic)NSDictionary *groupDic;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
 
 @end
