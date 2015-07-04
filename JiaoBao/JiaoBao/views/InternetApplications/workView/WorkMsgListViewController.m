@@ -61,6 +61,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f)
+    {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        
+    }
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
     
@@ -70,12 +75,16 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+40, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-40);
-    
+    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     //添加表格的下拉刷新
     self.mTableV_detail.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mTableV_detail.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     if (self.mInt_flag == 1) {
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
+        label.font = [UIFont systemFontOfSize:13];
+        label.text = @"                              下拉加载更多";
+        label.textAlignment = NSTextAlignmentLeft;
+        self.mTableV_detail.tableHeaderView = label;
         [self.mTableV_detail addHeaderWithTarget:self action:@selector(headerRereshing)];
         self.mTableV_detail.headerPullToRefreshText = @"下拉刷新";
         self.mTableV_detail.headerReleaseToRefreshText = @"松开后刷新";
@@ -83,9 +92,11 @@
     }
     else
     {
-        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+        self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+        self.mTableV_detail.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 10)];
 
         self.dropDownLabel.frame = CGRectZero;
+        
     }
     
     //输入View坐标
@@ -269,8 +280,8 @@
         [[LoginSendHttp getInstance] login_SendToMeMsgList:@"20" Page:[NSString stringWithFormat:@"%d",self.mInt_msg] senderAccId:model.JiaoBaoHao sDate:@"" eDate:@"" readFlag:@"" lastId:self.mStr_lastID];
     }
     [self.dropDownLabel setFrame:CGRectZero];
-    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
-    
+    self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+    self.mTableV_detail.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 10)];
     [self ProgressViewLoad];
 }
 - (void)footerRereshing{
