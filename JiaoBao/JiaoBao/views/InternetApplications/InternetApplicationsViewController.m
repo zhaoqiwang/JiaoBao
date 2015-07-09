@@ -11,6 +11,7 @@
 #import "SignInViewController.h"
 #import "CheckingInViewController.h"
 #import "MBProgressHUD+AD.h"
+#import "MobClick.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -54,6 +55,13 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
+     [MobClick beginLogPageView:UMMESSAGE];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:UMMESSAGE];
 }
 
 - (void)viewDidLoad {
