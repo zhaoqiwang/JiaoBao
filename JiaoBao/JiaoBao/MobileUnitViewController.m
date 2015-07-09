@@ -12,6 +12,8 @@
 #import "MBProgressHUD.h"
 #import "RegisterHttp.h"
 #import "Reachability.h"
+#import "MobClick.h"
+
 
 @interface MobileUnitViewController ()<unitCellDelegate,MBProgressHUDDelegate>
 {
@@ -30,6 +32,17 @@
     [[NSNotificationCenter defaultCenter]removeObserver:_observer1];
     [[NSNotificationCenter defaultCenter]removeObserver:_observer2];
 
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+    
 }
 
 - (void)viewDidLoad {

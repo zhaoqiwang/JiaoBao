@@ -12,6 +12,7 @@
 #import "SecondRegViewController.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
+#import "MobClick.h"
 
 @interface FirstRegViewController ()<MBProgressHUDDelegate>
 {
@@ -49,6 +50,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     [dm getInstance].RegisterSymbol = NO;
     
     //移除通知
@@ -77,7 +79,7 @@
     //加通知
     [super viewWillAppear:YES];
     [self addNotification];
-
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];

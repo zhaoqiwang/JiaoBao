@@ -9,6 +9,7 @@
 #import "DetailQueryViewController.h"
 #import "SignInHttp.h"
 #import "DetailQueryCell.h"
+#import "MobClick.h"
 
 @interface DetailQueryViewController ()
 @property(nonatomic,strong)NSArray *keyArr;//把需要的字典中的key存到数组中
@@ -21,9 +22,15 @@
 {
     
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];

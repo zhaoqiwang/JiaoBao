@@ -11,7 +11,7 @@
 #import "Forward_cell.h"
 #import "Forward_section.h"
 #import "MsgDetail_ReaderList.h"
-
+#import "MobClick.h"
 #define Margin 10//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 
@@ -33,6 +33,7 @@ NSString *kCellID0 = @"Forward_cell";
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -45,6 +46,7 @@ NSString *kCellID0 = @"Forward_cell";
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
