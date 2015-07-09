@@ -10,6 +10,7 @@
 #import "UncaughtExceptionHandler.h"
 #import "Reachability.h"
 #import<AVFoundation/AVFoundation.h>
+#import "MobClick.h"
 
 //CLLocationManager *locationManager;
 
@@ -21,8 +22,10 @@
 @synthesize mInternet,mRegister_view,mInt_index;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-
+    [MobClick startWithAppkey:@"5599e2cd67e58e42a9009b79" reportPolicy:BATCH channelId:@""];
     BMKMapManager *mapManager = [[BMKMapManager alloc]init];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [mapManager start:@"iqYoKFAodVcfY8oRpi0KtuHs"  generalDelegate:self];
     if (!ret) {
@@ -38,6 +41,9 @@
     }
     //全局异常捕获,bug服务器
     InstallUncaughtExceptionHandler();
+    
+    
+    
     //添加网络切换时的处理
 //    Reachability *_internetReach = [Reachability reachabilityForInternetConnection];
 //    [_internetReach startNotifier];

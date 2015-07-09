@@ -199,7 +199,6 @@
                 //赋值滑动列表选择ID
                 mInt_scrollViewSelectedChannelID = sender.tag;
                 [self sendRequest];
-
             }
         }];
     }
@@ -352,7 +351,6 @@
 }
 -(void)updateRequestSymbol1:(id)sender
 {
-    
     mInt_share = 0;
     NSTimer *timer = (NSTimer*)sender;
     [timer invalidate];

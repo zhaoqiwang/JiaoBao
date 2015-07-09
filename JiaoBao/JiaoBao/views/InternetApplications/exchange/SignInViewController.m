@@ -89,8 +89,6 @@
         [menuItems addObject:menuItem];
     }
 
-
-    
     //    KxMenuItem *first = menuItems[0];
     //    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
     //    first.alignment = NSTextAlignmentCenter;
@@ -108,11 +106,7 @@
    // self.mNav_navgationBar.label_Title.text = menuItem.title;
     [self.mNav_navgationBar leftBtnAction:menuItem.title];
 
-    
-    
 }
-
-
 
 //获取最多延迟时间
 -(void)GetDelayedTime:(id)sender
@@ -218,18 +212,11 @@
     NSDate *curDate = [NSDate date];
     NSString *curDateStr = [dateFormatter stringFromDate:curDate];
     NSDate *currDate = [dateFormatter dateFromString:curDateStr];
-        NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
-    
-         int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
-        NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
-    NSInteger days = [comps day] ;
-    
-    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
+    NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
+    NSInteger days = [comps day];
 
-
-
-    
-    
     if(days <(-self.delayTime))
     {
         [MBProgressHUD showError:@"超出期限" toView:self.view];
@@ -242,12 +229,10 @@
     }
     else
     {
-
         DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
-            detail.selectedStr = self.selcetedDateStr;
-            detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
-            
-            [self.navigationController pushViewController:detail animated:YES];
+        detail.selectedStr = self.selcetedDateStr;
+        detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
+        [self.navigationController pushViewController:detail animated:YES];
 
     }
 
@@ -259,11 +244,11 @@
 - (IBAction)queryAction:(id)sender {
     DetailQueryViewController *detail = [[DetailQueryViewController alloc]init];
     detail.selectedDateStr = self.selcetedDateStr;
-    
     [self.navigationController pushViewController:detail animated:YES];
 }
 
--(void)myNavigationGoback{
+-(void)myNavigationGoback
+{
     [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)leftBtnAction:(id)sender {
