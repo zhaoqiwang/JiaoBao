@@ -7,6 +7,7 @@
 //
 
 #import "NoticeListViewController.h"
+#import "MobClick.h"
 
 @interface NoticeListViewController ()
 
@@ -17,11 +18,13 @@
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];

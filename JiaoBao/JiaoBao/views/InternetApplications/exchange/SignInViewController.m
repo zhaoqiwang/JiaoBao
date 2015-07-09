@@ -13,6 +13,7 @@
 #import "SignInHttp.h"
 #import "SVProgressHUD.h"
 #import "KxMenu.h"
+#import "MobClick.h"
 
 @interface SignInViewController ()<JTCalendarDataSource>
 @property (weak, nonatomic) IBOutlet JTCalendarMenuView *menuView;
@@ -39,9 +40,15 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
 }
 
 - (void)viewDidLoad {
@@ -150,14 +157,7 @@
     
     [self.calendar reloadData]; // （必须要在这里调用）Must be call in viewDidAppear
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:YES];
-//    self.calendar = nil;
-//    self.calendarView = nil;
-//    self.menuView = nil;
-    
-}
+
 
 - (BOOL)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date
 {

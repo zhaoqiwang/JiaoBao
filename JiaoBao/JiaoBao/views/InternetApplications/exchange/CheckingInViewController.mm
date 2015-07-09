@@ -12,6 +12,7 @@
 #import "dm.h"
 #import "MBProgressHUD.h"
 #import "RecordViewController.h"
+#import "MobClick.h"
 
 @interface CheckingInViewController ()
 {
@@ -82,6 +83,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -99,6 +101,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     [BaidumapView viewWillDisappear];
     [_locService stopUserLocationService];
 

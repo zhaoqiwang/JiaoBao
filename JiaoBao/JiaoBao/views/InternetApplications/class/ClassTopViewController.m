@@ -8,6 +8,7 @@
 
 #import "ClassTopViewController.h"
 #import "Reachability.h"
+#import "MobClick.h"
 
 @interface ClassTopViewController ()
 
@@ -21,12 +22,18 @@
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+        [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
     //通知学校界面，获取到的单位和个人数据,本单位或本班
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UnitArthListIndex3" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UnitArthListIndex3:) name:@"UnitArthListIndex3" object:nil];

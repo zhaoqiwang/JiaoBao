@@ -11,6 +11,7 @@
 #import "SignInHttp.h"
 #import "SVProgressHUD.h"
 #import "RecordCell.h"
+#import "MobClick.h"
 
 @interface RecordViewController ()<JTCalendarDataSource>
 @property (weak, nonatomic) IBOutlet JTCalendarMenuView *menuView;
@@ -34,6 +35,19 @@
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
      // （必须要在这里调用）Must be call in viewDidAppear
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+    
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
 }
 -(void)GetSignInList:(id)sender
 {
