@@ -19,6 +19,8 @@
 
 #define SHOWRONGYUN 0//1显示，0不显示
 #define NETWORKENABLE @"请检查当前网络"
+//友盟提示中的角色信息和单位id
+#define UMMESSAGE [NSString stringWithFormat:@"%d--%d--%@",[dm getInstance].uType,[dm getInstance].UID,[dm getInstance].jiaoBaoHao]
 
 @interface define_constant : NSObject
 
