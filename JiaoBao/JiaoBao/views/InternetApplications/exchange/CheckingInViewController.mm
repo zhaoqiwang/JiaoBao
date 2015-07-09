@@ -470,9 +470,6 @@ if(component == 0)
         NSArray *GroupItems = [dic objectForKey:@"GroupItems"];
         return GroupItems.count;
 
-        
-        
-
     }
     return 0;
 }
@@ -480,7 +477,6 @@ if(component == 0)
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString *rowTitle;
-
     if(component == 0)
     {
         NSDictionary *dic = [self.groupArr objectAtIndex:row];
@@ -499,10 +495,7 @@ if(component == 0)
         return itemStr;
         
     }
-
-
     return rowTitle;
-
     
 }
 
@@ -515,9 +508,6 @@ if(component == 0)
         NSArray *arr = [[self.groupArr objectAtIndex:row]objectForKey:@"GroupItems"];
         NSDictionary *dic = [arr objectAtIndex:0];
         self.SignInGroupID = [dic objectForKey:@"TabID"];
-
-
-        
         self.selectedRow = row;
         [self.pickView reloadComponent:1];
         [self.FirstBtn setTitle:str forState:UIControlStateNormal];
@@ -526,10 +516,8 @@ if(component == 0)
     if(component == 1)
     {
         NSDictionary *dic = [self.groupArr objectAtIndex:self.selectedRow];
-        
         NSArray *GroupItems = [dic objectForKey:@"GroupItems"];
         NSString *title = [[GroupItems objectAtIndex:row]objectForKey:@"GroupName"];
-
         NSString *itemStr = [[GroupItems objectAtIndex:row]objectForKey:@"TabID"];
         [self.secondBtn setTitle:title forState:UIControlStateNormal];
         self.SignInGroupID = itemStr;

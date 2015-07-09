@@ -695,7 +695,8 @@
                  menuItems:array];
 }
 
--(void)shareAdd2:(id)sender{//进入好友列表
+-(void)shareAdd2:(id)sender{
+    //进入好友列表
     MyFriendsViewController *friends = [[MyFriendsViewController alloc] init];
     friends.mStr_title = @"好友空间";
     friends.mInt_flag = 1;
