@@ -14,6 +14,7 @@
 #import "Loger.h"
 //#import "BMapKit.h"
 #import <BaiduMapAPI/BMapKit.h>
+#import "MobClick.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{
 //    RootViewController *mRoot_view;
