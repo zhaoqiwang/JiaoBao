@@ -698,6 +698,8 @@
 		A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE672F1AA70A250038D0C5 /* themeTotal.png */; };
 		A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */; };
 		A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */; };
+		A7D504551B4E043100BBB7C8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */; };
+		A7D504561B4E043100BBB7C8 /* libMobClickLibraryS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */; };
 		A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */; };
 		A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */; };
 		A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */; };
@@ -778,8 +780,6 @@
 		F76B646B1B1EA8CB008F6961 /* bj.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64681B1EA8CB008F6961 /* bj.png */; };
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
-		F76DA19E1B4A1BF8005AE9C9 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F76DA19B1B4A1BF8005AE9C9 /* libMobClickLibrary.a */; };
-		F76DA1A01B4A1C39005AE9C9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F76DA19F1B4A1C39005AE9C9 /* libz.dylib */; };
 		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
 		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
@@ -1783,6 +1783,10 @@
 		A7CE672F1AA70A250038D0C5 /* themeTotal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = themeTotal.png; path = Image/InternetApp/themeTotal.png; sourceTree = "<group>"; };
 		A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@2x.png"; path = "Image/InternetApp/themeTotal@2x.png"; sourceTree = "<group>"; };
 		A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@3x.png"; path = "Image/InternetApp/themeTotal@3x.png"; sourceTree = "<group>"; };
+		A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = Common/UMAnalytics_Sdk_3.5.8/libMobClickLibrary.a; sourceTree = "<group>"; };
+		A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibraryS.a; path = Common/UMAnalytics_Sdk_3.5.8/libMobClickLibraryS.a; sourceTree = "<group>"; };
+		A7D504531B4E043100BBB7C8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Common/UMAnalytics_Sdk_3.5.8/MobClick.h; sourceTree = "<group>"; };
+		A7D504541B4E043100BBB7C8 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = Common/UMAnalytics_Sdk_3.5.8/MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceViewController.h; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.h; sourceTree = "<group>"; };
 		A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleSpaceViewController.m; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.m; sourceTree = "<group>"; };
 		A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleSpaceViewController.xib; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.xib; sourceTree = "<group>"; };
@@ -1893,10 +1897,6 @@
 		F76B64681B1EA8CB008F6961 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bj.png; path = Image/InternetApp/class/bj.png; sourceTree = "<group>"; };
 		F76B64691B1EA8CB008F6961 /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@2x.png"; path = "Image/InternetApp/class/bj@2x.png"; sourceTree = "<group>"; };
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
-		F76DA19B1B4A1BF8005AE9C9 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
-		F76DA19C1B4A1BF8005AE9C9 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
-		F76DA19D1B4A1BF8005AE9C9 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
-		F76DA19F1B4A1C39005AE9C9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
 		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
 		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
@@ -2012,7 +2012,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F76DA1A01B4A1C39005AE9C9 /* libz.dylib in Frameworks */,
 				F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */,
 				F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */,
 				F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */,
@@ -2020,6 +2019,7 @@
 				A7595EC11A5FC56A0027848E /* MessageUI.framework in Frameworks */,
 				A7595EBF1A5FC55E0027848E /* AssetsLibrary.framework in Frameworks */,
 				A74339631A455B0C00AFC0A5 /* ImageIO.framework in Frameworks */,
+				A7D504561B4E043100BBB7C8 /* libMobClickLibraryS.a in Frameworks */,
 				A73789101A2F108100DF8882 /* CoreGraphics.framework in Frameworks */,
 				A73789261A2F112C00DF8882 /* SystemConfiguration.framework in Frameworks */,
 				A73789241A2F112000DF8882 /* QuartzCore.framework in Frameworks */,
@@ -2043,7 +2043,7 @@
 				A755E6AD19F254A600BBDF3D /* Security.framework in Frameworks */,
 				A755E6AB19F2549B00BBDF3D /* UIKit.framework in Frameworks */,
 				A755E6A919F2548E00BBDF3D /* Foundation.framework in Frameworks */,
-				F76DA19E1B4A1BF8005AE9C9 /* libMobClickLibrary.a in Frameworks */,
+				A7D504551B4E043100BBB7C8 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2602,7 +2602,6 @@
 		A755E69719F24AC500BBDF3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F76DA19F1B4A1C39005AE9C9 /* libz.dylib */,
 				F74639961B0EC5DA00365EB7 /* CoreText.framework */,
 				F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */,
 				F74639921B0EC53D00365EB7 /* libicucore.dylib */,
@@ -2663,11 +2662,8 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				F76DA19A1B4A1B56005AE9C9 /* UMeng */,
+				A7D504501B4E03DA00BBB7C8 /* UMAnalytics_Sdk */,
 				A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */,
-				F76DA19B1B4A1BF8005AE9C9 /* libMobClickLibrary.a */,
-				F76DA19C1B4A1BF8005AE9C9 /* MobClick.h */,
-				F76DA19D1B4A1BF8005AE9C9 /* MobClickSocialAnalytics.h */,
 				A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */,
 				A78FE2341B3AA43D00C8D1FD /* MBProgressHUD+AD.h */,
 				A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */,
@@ -3647,6 +3643,17 @@
 			path = Common/MJPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		A7D504501B4E03DA00BBB7C8 /* UMAnalytics_Sdk */ = {
+			isa = PBXGroup;
+			children = (
+				A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */,
+				A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */,
+				A7D504531B4E043100BBB7C8 /* MobClick.h */,
+				A7D504541B4E043100BBB7C8 /* MobClickSocialAnalytics.h */,
+			);
+			name = UMAnalytics_Sdk;
+			sourceTree = "<group>";
+		};
 		A7E2E5E51B20312B003F85B5 /* personalSpace */ = {
 			isa = PBXGroup;
 			children = (
@@ -3779,13 +3786,6 @@
 				F76B64321B1EA205008F6961 /* RCLabel.m */,
 			);
 			name = RCLabel;
-			sourceTree = "<group>";
-		};
-		F76DA19A1B4A1B56005AE9C9 /* UMeng */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UMeng;
 			sourceTree = "<group>";
 		};
 		F79D84451ABD4A0900897477 /* BaiduSDK */ = {
@@ -4815,7 +4815,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiaoBao/Common/RongYun",
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
-					"$(PROJECT_DIR)/JiaoBao",
+					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
@@ -4846,7 +4846,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiaoBao/Common/RongYun",
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
-					"$(PROJECT_DIR)/JiaoBao",
+					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
