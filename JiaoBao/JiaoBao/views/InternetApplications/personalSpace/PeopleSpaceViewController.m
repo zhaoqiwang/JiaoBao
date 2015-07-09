@@ -9,6 +9,7 @@
 #import "PeopleSpaceViewController.h"
 #import "UnitTableViewCell.h"
 #import "MobileUnitViewController.h"
+#import "MobClick.h"
 
 
 @interface PeopleSpaceViewController ()
@@ -41,6 +42,13 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    [MobClick beginLogPageView:[NSString stringWithUTF8String:object_getClassName(self)]];
+
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:[NSString stringWithUTF8String:object_getClassName(self)]];
 }
 -(void)changeFaceImg:(id)sender
 {
