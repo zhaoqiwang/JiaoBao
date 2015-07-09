@@ -10,7 +10,7 @@
 #import "ShareCollectionViewCell.h"
 #import "UnitAlbumsViewController.h"
 #import "Reachability.h"
-
+#import "MobClick.h"
 static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 
 @interface PersonalSpaceViewController ()
@@ -24,9 +24,14 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     [super viewDidDisappear:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    [MobClick endLogPageView:UMMESSAGE];
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [MobClick beginLogPageView:UMMESSAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
