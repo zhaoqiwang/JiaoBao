@@ -31,7 +31,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-    [MobClick endLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+    [MobClick endLogPageView:UMMESSAGE];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -40,7 +40,7 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-    [MobClick beginLogPageView:[NSString stringWithFormat:@"%@%@",[NSString stringWithUTF8String:object_getClassName(self)],UMMESSAGE]];
+    [MobClick beginLogPageView:UMMESSAGE];
     //通知界面刷新信息详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MsgDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MsgDetail:) name:@"MsgDetail" object:nil];
