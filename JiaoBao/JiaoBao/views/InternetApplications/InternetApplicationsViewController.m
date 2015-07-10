@@ -557,6 +557,7 @@
 
 //附件
 - (void) pushMenuItem7:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"下载的附件"];
     AccessoryViewController *access = [[AccessoryViewController alloc] init];
     access.mInt_flag = 1;
 //    access.delegate = self;
@@ -565,6 +566,7 @@
 
 //切换单位
 - (void) pushMenuItem2:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"切换单位"];
     self.mView_all.hidden = NO;
     self.mTableV_left.hidden = NO;
     self.mTableV_right.hidden = NO;
@@ -575,6 +577,7 @@
 }
 //切换账号
 - (void) pushMenuItem3:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"切换账号"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //发送注销登录请求
     [[LoginSendHttp getInstance] loginHttpLogout];
@@ -603,6 +606,7 @@
 
 //发表文章动态
 - (void) pushMenuItem4:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"发布单位动态"];
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
@@ -617,6 +621,7 @@
 
 //发表文章分享
 - (void) pushMenuItem5:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"发布分享"];
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
@@ -635,6 +640,7 @@
 
 //新建事务
 - (void) pushMenuItem6:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"新建事务"];
     //记录当前为被动切换单位请求
     [InternetAppRootScrollView shareInstance].classView.mInt_changeUnit =0;
     self.mView_all.hidden = YES;
@@ -654,6 +660,7 @@
 
 //个人中心
 -(void)pushMenuItem8:(id)sender{
+    [MobClick event:@"InternetApplications_more" label:@"个人中心"];
     self.mView_all.hidden = YES;
     self.mTableV_left.hidden = YES;
     self.mTableV_right.hidden = YES;
