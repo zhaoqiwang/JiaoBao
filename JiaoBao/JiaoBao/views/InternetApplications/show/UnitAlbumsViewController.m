@@ -302,11 +302,13 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     UnintAlbumsListViewController *albums = [[UnintAlbumsListViewController alloc] init];
     if ([self.mStr_flag intValue] == 1) {
+        [MobClick event:@"UnitAlbums_didSelectItem" label:@"个人相簿"];
         PersonPhotoModel *model = [self.mArr_list objectAtIndex:indexPath.row];
         model.accid = self.mModel_personal.AccID;
         albums.mStr_flag = @"1";
         albums.mModel_person = model;
     }else{
+        [MobClick event:@"UnitAlbums_didSelectItem" label:@"单位相簿"];
         UnitAlbumsModel *model = [self.mArr_list objectAtIndex:indexPath.row];
         albums.mModel_albums = model;
         albums.mStr_flag = @"2";

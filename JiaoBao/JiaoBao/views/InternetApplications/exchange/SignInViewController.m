@@ -126,7 +126,18 @@
         
     }
     NSDictionary *dic = [sender object];
-    self.delayTime = [[dic objectForKey:@"Data"] integerValue];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]==0)
+    {
+        self.delayTime = [[dic objectForKey:@"Data"] integerValue];
+
+    }
+    else
+    {
+        [MBProgressHUD showError:@"获取延迟时间失败" toView:self.view];
+
+    }
 
 }
 //获取组数据列表

@@ -403,6 +403,7 @@ errorCode:(BMKSearchErrorCode)error{
 }
 #pragma  mark - 底部按钮方法
 - (IBAction)checkInAction:(id)sender {
+    [MobClick event:@"CheckingInView_checkInAction" label:@""];
     CLLocation *location2 = [[CLLocation alloc]initWithLatitude:BaidumapView.centerCoordinate.latitude longitude:BaidumapView.centerCoordinate.longitude];
     CLLocationDistance distance = [self.location distanceFromLocation:location2];
     if(distance>self.range)
@@ -451,6 +452,7 @@ errorCode:(BMKSearchErrorCode)error{
     
 }
 - (IBAction)recordAction:(id)sender {
+    [MobClick event:@"CheckingInView_recordAction" label:@""];
     RecordViewController *record = [[RecordViewController alloc]init];
     [utils pushViewController:record animated:YES];
     

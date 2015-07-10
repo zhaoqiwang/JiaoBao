@@ -317,6 +317,8 @@
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    [MobClick event:@"WorkMsgList_clickSendBtn" label:@""];
+
     CommMsgListModel *model = [self.mArr_msg objectAtIndex:self.mArr_msg.count-1];
     [[LoginSendHttp getInstance] addFeeBackWithUID:model.TabIDStr content:self.mTextF_text.text];
     [MBProgressHUD showMessage:@"发送中..." toView:self.view];

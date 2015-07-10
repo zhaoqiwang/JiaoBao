@@ -8,6 +8,7 @@
 
 #import "ClassView.h"
 #import "Reachability.h"
+#import "MobClick.h"
 
 @implementation ClassView
 @synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text,mInt_changeUnit;
@@ -251,6 +252,7 @@
     [self.mView_popup.mBtn_like setTitle:@"点赞" forState:UIControlStateNormal];
     
     if (btn.tag == 0) {
+        [MobClick event:@"ClassView_PopupWindowClickBtn" label:@"点赞"];
         //先判断是否已经获取到是否已经点赞的附加信息
         if (self.mView_popup.mModel_class.mModel_info.TabID >0) {//获取到
             if (self.mView_popup.mModel_class.mModel_info.Likeflag >=0){//没有点赞，发送点赞请求
@@ -268,6 +270,7 @@
             [self ProgressViewLoad:@"获取信息中..."];
         }
     }else{
+        [MobClick event:@"ClassView_PopupWindowClickBtn" label:@"评论"];
         [self.mTextF_text becomeFirstResponder];
     }
 }
@@ -820,7 +823,27 @@
             //[self.mTableV_list reloadData];
 
         }
-        
+        if(self.mInt_index == 0)
+        {
+            [MobClick event:@"ClassView_btnChange" label:@"本单位"];
+        }
+        else if (self.mInt_index == 1)
+        {
+            [MobClick event:@"ClassView_btnChange" label:@"本班"];
+        }
+        else if (self.mInt_index == 2)
+        {
+            [MobClick event:@"ClassView_btnChange" label:@"本地"];
+        }
+        else if (self.mInt_index == 3)
+        {
+            [MobClick event:@"ClassView_btnChange" label:@"关注"];
+        }
+        else if (self.mInt_index == 4)
+        {
+            [MobClick event:@"ClassView_btnChange" label:@"全部"];
+        }
+
         D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
         
     }
@@ -1470,6 +1493,8 @@
 
 //点击内容或者标题时触发cell点击事件
 -(void)ClassTableViewCellContentPress:(ClassTableViewCell *)classCell{
+    [MobClick event:@"ClassView_didSelectRow" label:@""];
+
     self.mView_popup.hidden = YES;
     self.mView_text.hidden = YES;
     [self.mTextF_text resignFirstResponder];
@@ -1516,6 +1541,7 @@
         topView.mInt_unit_class = 2;
         topView.mStr_navName = @"班级动态";
     }
+    [MobClick event:@"ClassView_MoreUnit" label:@""];
     [utils pushViewController:topView animated:YES];
 }
 

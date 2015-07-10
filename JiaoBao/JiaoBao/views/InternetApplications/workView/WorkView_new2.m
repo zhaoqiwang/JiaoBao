@@ -7,6 +7,7 @@
 //
 #import "WorkView_new2.h"
 #import "Reachability.h"
+#import "MobClick.h"
 
 
 @implementation WorkView_new2
@@ -339,6 +340,8 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [MobClick event:@"WorkView_didSelectRow" label:@""];
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self clickImg:(int)indexPath.row flag:2];
 }
@@ -409,6 +412,28 @@
             }
         }
     }
+    if(self.mInt_index == 0)
+    {
+        [MobClick event:@"WorkView_btnChange" label:@"全部"];
+    }
+    else if (self.mInt_index == 1)
+    {
+        [MobClick event:@"WorkView_btnChange" label:@"未读"];
+    }
+    else if (self.mInt_index == 2)
+    {
+        [MobClick event:@"WorkView_btnChange" label:@"未回复"];
+    }
+    else if (self.mInt_index == 3)
+    {
+        [MobClick event:@"WorkView_btnChange" label:@"已回复"];
+    }
+    else if (self.mInt_index == 4)
+    {
+        [MobClick event:@"WorkView_btnChange" label:@"我发的"];
+    }
+    
+    
     [self.mTableV_list reloadData];
 }
 

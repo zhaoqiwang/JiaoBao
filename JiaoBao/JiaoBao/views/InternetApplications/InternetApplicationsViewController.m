@@ -543,6 +543,7 @@
                  menuItems:menuItems];
 }
 - (void) pushMenuItemSignIn:(id)sender{
+    [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
     CheckingInViewController *check = [[CheckingInViewController alloc]init];
     check.mView_all = self.mView_all;
     check.mTableV_left = self.mTableV_left;
@@ -551,6 +552,8 @@
 }
 
 - (void) pushMenuItemSchedule:(id)sender{
+    [MobClick event:@"InternetApplications_add" label:@"日程记录"];
+
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
 }
@@ -577,6 +580,7 @@
 }
 //切换账号
 - (void) pushMenuItem3:(id)sender{
+    
     [MobClick event:@"InternetApplications_more" label:@"切换账号"];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //发送注销登录请求
