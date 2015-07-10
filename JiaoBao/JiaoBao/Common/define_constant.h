@@ -21,6 +21,8 @@
 #define NETWORKENABLE @"请检查当前网络"
 //友盟提示中的角色信息、单位id、教宝号、哪个页面
 #define UMMESSAGE [NSString stringWithFormat:@"页面信息--%@--%d--%d--%@",[NSString stringWithUTF8String:object_getClassName(self)],[dm getInstance].uType,[dm getInstance].UID,[dm getInstance].jiaoBaoHao]
+//来自哪个页面
+#define UMPAGE [NSString stringWithFormat:@"%@",[NSString stringWithUTF8String:object_getClassName(self)]]
 
 @interface define_constant : NSObject
 
