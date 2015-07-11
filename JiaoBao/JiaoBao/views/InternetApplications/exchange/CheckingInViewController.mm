@@ -433,8 +433,6 @@ errorCode:(BMKSearchErrorCode)error{
             NSArray *value= [NSArray arrayWithObjects:dateStr,longitude,Latitude,address,dmInstance.userInfo.UserID,dmInstance.userInfo.UserName,dmInstance.userInfo.UserType,dmInstance.userInfo.UnitID,dmInstance.mStr_unit, @"1.00.5",@"8295",SignInTypeID,self.SignInGroupID,year,month,day,@"0",SignInTypeName,SignInGroupName,@"0",@"", nil];
             NSArray *key = [NSArray arrayWithObjects:@"SignInDateTime",@"Longitude",@"Latitude",@"Place",@"UserID",@"UserName",@"UserTypeID",@"UnitID",@"UnitName",@"MobileEdition",@"MobileModel",@"SignInTypeID",@"SignInGroupID",@"Year",@"Month",@"day",@"HandleFlag",@"SignInTypeName",@"SignInGroupName",@"SignInFlag",@"Remark", nil];
             
-            
-            
             NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
             [[SignInHttp getInstance]CreateSignIn:dic];
             [MBProgressHUD showMessage:@"" toView:self.view];
@@ -485,7 +483,6 @@ if(component == 0)
     if(component == 0)
     {
         NSDictionary *dic = [self.groupArr objectAtIndex:row];
-
         NSString *GroupTypeName = [dic objectForKey:@"GroupTypeName"];
         return GroupTypeName;
         
@@ -493,7 +490,6 @@ if(component == 0)
     if(component == 1)
     {
         NSDictionary *dic = [self.groupArr objectAtIndex:self.selectedRow];
-
         NSArray *GroupItems = [dic objectForKey:@"GroupItems"];
         NSString *itemStr = [[GroupItems objectAtIndex:row]objectForKey:@"GroupName"];
         self.SignInGroupID = [[GroupItems objectAtIndex:row]objectForKey:@"TabID"];
