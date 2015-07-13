@@ -1222,27 +1222,27 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     //文件名
-    NSString *imgPath;
-    if ([model.flag intValue] ==1) {//展示
-        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
-    }else{
-        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-    }
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        [cell.mImgV_head setImage:img];
-    }else{
-        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//    NSString *imgPath;
+//    if ([model.flag intValue] ==1) {//展示
+//        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
+//    }else{
+//        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+//    }
+//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//    if (img.size.width>0) {
+//        [cell.mImgV_head setImage:img];
+//    }else{
+//        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
         //获取头像
         if ([model.flag intValue] ==1) {//展示
-             [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%@",model.unitId] Size:@""];
+            [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.unitId] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         }else{
-            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+            [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         }
-    }
-    cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
+//    }
+//    cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
     //姓名
     NSString *tempName;
     //判断应该显示姓名，还是单位名

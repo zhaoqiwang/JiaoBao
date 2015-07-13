@@ -20,6 +20,7 @@
 #import "UnitSpaceViewController.h"
 #import "MWPhotoBrowser.h"
 #import "PopupWindow.h"
+#import "UIImageView+WebCache.h"
 
 @interface ClassView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,ClassTableViewCellDelegate,ClassTableViewCellHeadImgDelegate,MWPhotoBrowserDelegate,PopupWindowDelegate,UITextFieldDelegate>{
     UIView *mView_button;//放四个按钮

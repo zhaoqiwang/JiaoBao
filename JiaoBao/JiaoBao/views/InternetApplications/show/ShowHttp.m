@@ -30,19 +30,19 @@ static ShowHttp *showHttp = nil;
 
 //获取单位logo
 -(void)showHttpGetUnitLogo:(NSString *)unitID Size:(NSString *)size{
-    NSString *urlString = [NSString stringWithFormat:@"%@/ClientSrv/getUnitlogo",[dm getInstance].url];
-    NSURL *url = [NSURL URLWithString:urlString];
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
-    request.timeOutSeconds = TIMEOUT;
-    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
-    [request addRequestHeader:@"charset" value:@"UTF8"];
-    [request setRequestMethod:@"POST"];
-    [request addPostValue:unitID forKey:@"UnitID"];
-    [request addPostValue:@"64" forKey:@"Size"];
-    request.userInfo = [NSDictionary dictionaryWithObject:unitID forKey:@"unitID"];
-    request.tag = 0;//设置请求tag
-    [request setDelegate:self];
-    [request startAsynchronous];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/ClientSrv/getUnitlogo",[dm getInstance].url];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+//    request.timeOutSeconds = TIMEOUT;
+//    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+//    [request addRequestHeader:@"charset" value:@"UTF8"];
+//    [request setRequestMethod:@"POST"];
+//    [request addPostValue:unitID forKey:@"UnitID"];
+//    [request addPostValue:@"64" forKey:@"Size"];
+//    request.userInfo = [NSDictionary dictionaryWithObject:unitID forKey:@"unitID"];
+//    request.tag = 0;//设置请求tag
+//    [request setDelegate:self];
+//    [request startAsynchronous];
 }
 
 //取同事、关注人、好友的分享文章

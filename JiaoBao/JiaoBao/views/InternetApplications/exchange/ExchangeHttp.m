@@ -78,19 +78,20 @@ static ExchangeHttp *exchangeHttp = nil;
 
 //通过用户的accid，获取头像
 -(void)getUserInfoFace:(NSString *)accid{
-    NSString *urlString = [NSString stringWithFormat:@"%@/ClientSrv/getfaceimg",[dm getInstance].url];
-    NSURL *url = [NSURL URLWithString:urlString];
-    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
-    request.timeOutSeconds = TIMEOUT;
-    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
-    [request addRequestHeader:@"charset" value:@"UTF8"];
-    [request setRequestMethod:@"POST"];
-    //用户自定义数据   字典类型  （可选）
-    request.userInfo = [NSDictionary dictionaryWithObject:accid forKey:@"JiaoBaoHao"];
-    [request addPostValue:accid forKey:@"AccID"];
-    request.tag = 3;//设置请求tag
-    [request setDelegate:self];
-    [request startAsynchronous];
+//    NSString *urlString = [NSString stringWithFormat:@"%@/ClientSrv/getfaceimg",[dm getInstance].url];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+//    request.timeOutSeconds = TIMEOUT;
+//    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+//    [request addRequestHeader:@"charset" value:@"UTF8"];
+//    [request setRequestMethod:@"POST"];
+//    //用户自定义数据   字典类型  （可选）
+//    request.userInfo = [NSDictionary dictionaryWithObject:accid forKey:@"JiaoBaoHao"];
+//    [request addPostValue:accid forKey:@"AccID"];
+//    request.tag = 3;//设置请求tag
+//    D("lskjkljk-=====%@",request.url);
+//    [request setDelegate:self];
+//    [request startAsynchronous];
 }
 
 //获取融云网络用户token

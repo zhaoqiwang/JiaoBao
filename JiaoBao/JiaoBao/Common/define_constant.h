@@ -20,9 +20,14 @@
 #define SHOWRONGYUN 0//1显示，0不显示
 #define NETWORKENABLE @"请检查当前网络"
 //友盟提示中的角色信息、单位id、教宝号、哪个页面
-#define UMMESSAGE [NSString stringWithFormat:@"页面信息--%@--%d--%d--%@",[NSString stringWithUTF8String:object_getClassName(self)],[dm getInstance].uType,[dm getInstance].UID,[dm getInstance].jiaoBaoHao]
+#define UMMESSAGE [NSString stringWithFormat:@"%@--%d--%d--%@",[NSString stringWithUTF8String:object_getClassName(self)],[dm getInstance].uType,[dm getInstance].UID,[dm getInstance].jiaoBaoHao]
 //来自哪个页面
 #define UMPAGE [NSString stringWithFormat:@"%@",[NSString stringWithUTF8String:object_getClassName(self)]]
+
+//获取个人头像
+#define AccIDImg [NSURL URLWithString:[NSString stringWithFormat:@"%@/ClientSrv/getfaceimg?accid=",[dm getInstance].url]]
+//获取单位头像
+#define UnitIDImg [NSURL URLWithString:[NSString stringWithFormat:@"%@/ClientSrv/getUnitlogo?UnitID=",[dm getInstance].url]]
 
 @interface define_constant : NSObject
 
