@@ -32,6 +32,8 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -41,6 +43,7 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //通知界面刷新信息详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MsgDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MsgDetail:) name:@"MsgDetail" object:nil];

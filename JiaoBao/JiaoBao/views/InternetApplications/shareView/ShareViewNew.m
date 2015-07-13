@@ -217,18 +217,7 @@
         }
         TopArthListModel *model = [self.mArr_tabel objectAtIndex:indexPath.row];
         [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        cell.mImgV_headImg.frame = CGRectMake(13, 10, 48, 48);
-//        if (img.size.width>0) {
-//            [cell.mImgV_headImg setImage:img];
-//        }else{
-//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取头像
-//            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//        }
+
         //添加头像点击事件
         [cell headImgClick];
         cell.delegate = self;

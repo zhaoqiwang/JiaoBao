@@ -42,12 +42,15 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
 }
 -(void)GetSignInList:(id)sender
 {

@@ -212,21 +212,7 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
             [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.UnitID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
 
         }
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_headImg setImage:img];
-//        }else{
-//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取单位logo
-//            if ([model.UnitType integerValue] == 3) {
-//                [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"-%@",model.UnitID] Size:@""];
-//                
-//            }else{
-//                [[ShowHttp getInstance] showHttpGetUnitLogo:model.UnitID Size:@""];
-//            }
-//        }
+
         //标题
         CGSize numSize = [model.UnitName sizeWithFont:[UIFont systemFontOfSize:14]];
         cell.mLab_title.frame = CGRectMake(cell.mLab_title.frame.origin.x, cell.mLab_title.frame.origin.y, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);
@@ -242,20 +228,7 @@ static NSString *ShowNewCell = @"ShareCollectionViewCell";
             }
         }
         [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.InterestUnitID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",unitID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_headImg setImage:img];
-//        }else{
-//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取单位logo
-////            if ([model.unitType integerValue] == 3) {
-////                [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"-%@",model.InterestUnitID] Size:@""];
-////            }else{
-//                [[ShowHttp getInstance] showHttpGetUnitLogo:model.InterestUnitID Size:@""];
-////            }
-//            D("lsjdljlsjldjljlk-====%@,%@,%@",model.unitName,model.unitType,model.InterestUnitID);
-//        }
+
         
         //标题
         CGSize numSize = [model.unitName sizeWithFont:[UIFont systemFontOfSize:14]];

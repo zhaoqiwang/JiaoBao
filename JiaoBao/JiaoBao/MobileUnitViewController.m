@@ -37,11 +37,14 @@
 {
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
     
 }
 

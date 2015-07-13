@@ -25,11 +25,13 @@
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -555,18 +557,7 @@
     cell.mLab_Number.frame = CGRectMake(10, 10, 50, 15);
     cell.mLab_Number.text = model.Number;
     //头像
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    cell.mImg_head.frame = CGRectMake(10, 30, 50, 50);
-//    if (img.size.width>0) {
-//        [cell.mImg_head setImage:img];
-//    }else{
-//        [cell.mImg_head setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取头像
-////        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//    }
+
     [cell.mImg_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //人名、单位名
     NSString *tempName = [NSString stringWithFormat:@"%@@%@",model.UserName,model.UnitShortname];

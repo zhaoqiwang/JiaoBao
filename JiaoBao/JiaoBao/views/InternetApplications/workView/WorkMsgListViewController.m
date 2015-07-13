@@ -31,6 +31,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -59,6 +60,8 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -341,17 +344,7 @@
     if (self.mArr_msg.count>indexPath.row) {
         CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_head setImage:img];
-//        }else{
-//            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取头像
-//            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//        }
+
         cell.mImgV_head.frame = CGRectMake(10, 33, 40, 40);
         //姓名
         cell.mLab_name.hidden = YES;
@@ -482,17 +475,7 @@
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.Jiaobaohao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_head setImage:img];
-//        }else{
-//            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取头像
-//            [[ExchangeHttp getInstance] getUserInfoFace:model.Jiaobaohao];
-//        }
+
         cell.mImgV_head.frame = CGRectMake([dm getInstance].width-50, 20, 40, 40);
         
         //时间
@@ -547,30 +530,30 @@
 
 // 用于延时显示图片，以减少内存的使用
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    WorkMsgListCell *cell2 = (WorkMsgListCell *)cell;
-    if (self.mArr_msg.count>indexPath.row) {
-        CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell2.mImgV_head setImage:img];
-        }else{
-            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-        }
-    }else{
-        MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell2.mImgV_head setImage:img];
-        }else{
-            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-        }
-    }
+//    WorkMsgListCell *cell2 = (WorkMsgListCell *)cell;
+//    if (self.mArr_msg.count>indexPath.row) {
+//        CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell2.mImgV_head setImage:img];
+//        }else{
+//            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//        }
+//    }else{
+//        MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell2.mImgV_head setImage:img];
+//        }else{
+//            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//        }
+//    }
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{

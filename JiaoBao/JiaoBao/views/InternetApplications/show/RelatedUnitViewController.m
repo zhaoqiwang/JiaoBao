@@ -25,10 +25,13 @@
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -138,16 +141,7 @@
     if (tableView.tag == 1) {
         UnitSectionMessageModel *model = [self.mArr_list objectAtIndex:indexPath.row];
         [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.UnitID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_headImg setImage:img];
-//        }else{
-//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取单位logo
-//            [[ShowHttp getInstance] showHttpGetUnitLogo:model.UnitID Size:@""];
-//        }
+
         cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
         //标题
         CGSize numSize = [model.UnitName sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -156,16 +150,7 @@
     }else if (tableView.tag == 2){
         UnitInfoModel *model = [self.mArr_down objectAtIndex:indexPath.row];
         [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.TabID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.TabID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_headImg setImage:img];
-//        }else{
-//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取单位logo
-//            [[ShowHttp getInstance] showHttpGetUnitLogo:model.TabID Size:@""];
-//        }
+
         cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
         //标题
         CGSize numSize = [model.UintName sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -189,31 +174,31 @@
     return cell;
 }
 // 用于延时显示图片，以减少内存的使用
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    TopArthListCell *cell0 = (TopArthListCell *)cell;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    if (tableView.tag == 1) {
-        UnitSectionMessageModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell0.mImgV_headImg setImage:img];
-        }else{
-            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-        }
-    }else if (tableView.tag == 2){
-        UnitInfoModel *model = [self.mArr_down objectAtIndex:indexPath.row];
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.TabID]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell0.mImgV_headImg setImage:img];
-        }else{
-            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-        }
-    }
-}
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    TopArthListCell *cell0 = (TopArthListCell *)cell;
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    if (tableView.tag == 1) {
+//        UnitSectionMessageModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell0.mImgV_headImg setImage:img];
+//        }else{
+//            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
+//        }
+//    }else if (tableView.tag == 2){
+//        UnitInfoModel *model = [self.mArr_down objectAtIndex:indexPath.row];
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.TabID]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell0.mImgV_headImg setImage:img];
+//        }else{
+//            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
+//        }
+//    }
+//}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView.tag == 1){

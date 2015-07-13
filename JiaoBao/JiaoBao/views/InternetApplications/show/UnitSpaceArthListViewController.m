@@ -26,11 +26,14 @@
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -171,18 +174,7 @@
     }
     TopArthListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
     [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    cell.mImgV_headImg.frame = CGRectMake(13, 10, 48, 48);
-//    if (img.size.width>0) {
-//        [cell.mImgV_headImg setImage:img];
-//    }else{
-//        [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取头像
-//        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//    }
+
     //标题
     CGSize numSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_title.frame = CGRectMake(cell.mLab_title.frame.origin.x, cell.mLab_title.frame.origin.y, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);

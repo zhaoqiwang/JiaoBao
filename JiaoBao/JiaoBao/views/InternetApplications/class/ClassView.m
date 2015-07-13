@@ -1245,19 +1245,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-//    NSString *imgPath;
-//    if ([model.flag intValue] ==1) {//展示
-//        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.unitId]];
-//    }else{
-//        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    }
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell.mImgV_head setImage:img];
-//    }else{
-//        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+
         //获取头像
         if ([model.flag intValue] ==1) {//展示
             [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.unitId] placeholderImage:[UIImage  imageNamed:@"root_img"]];

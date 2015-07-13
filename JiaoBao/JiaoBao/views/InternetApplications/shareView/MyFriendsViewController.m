@@ -25,10 +25,13 @@
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+ 
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -103,18 +106,7 @@
         cell.frame = CGRectMake(0, 0, [dm getInstance].width, 50);
     }
     FriendSpaceModel *model = [self.mArr_friends objectAtIndex:indexPath.row];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Friendjiaobaohao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
-//    if (img.size.width>0) {
-//        [cell.mImgV_headImg setImage:img];
-//    }else{
-//        [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取头像
-//        [[ExchangeHttp getInstance] getUserInfoFace:model.Friendjiaobaohao];
-//    }
+
     [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.Friendjiaobaohao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     D("cellforrowm-====%@,",model.Friendjiaobaohao);
     //标题

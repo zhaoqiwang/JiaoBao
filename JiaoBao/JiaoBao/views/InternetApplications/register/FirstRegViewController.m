@@ -51,6 +51,8 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
     [dm getInstance].RegisterSymbol = NO;
     
     //移除通知
@@ -80,6 +82,7 @@
     [super viewWillAppear:YES];
     [self addNotification];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];

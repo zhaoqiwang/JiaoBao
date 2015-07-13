@@ -44,12 +44,15 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
 
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
 }
 -(void)changeFaceImg:(id)sender
 {
@@ -341,17 +344,7 @@
     
     if (indexPath.row ==0) {
         cell.mImgV_head.hidden = NO;
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[dm getInstance].jiaoBaoHao]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell.mImgV_head setImage:img];
-//        }else{
-//            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//            //获取头像
-//            [[ExchangeHttp getInstance] getUserInfoFace:[dm getInstance].jiaoBaoHao];
-//        }
+
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         cell.mImgV_head.frame = CGRectMake(10, 10, cell.mImgV_head.frame.size.width, cell.mImgV_head.frame.size.height);
         cell.imgBtn.frame = cell.mImgV_head.frame;
