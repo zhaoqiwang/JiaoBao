@@ -357,6 +357,7 @@
         cell.mLab_name.hidden = YES;
         //时间
         CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
+        D("jkljkjk-====%@",model.JiaoBaoHao);
         cell.mLab_time.frame = CGRectMake(([dm getInstance].width-timeSize.width-20)/2, 0, 70, 20);
         cell.mLab_time.text = model.RecDate;
         cell.mLab_time.textColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1];
@@ -471,7 +472,7 @@
         cell.mLab_name.hidden = NO;
         cell.mLab_name.numberOfLines = 0;
         cell.mLab_name.lineBreakMode = NSLineBreakByCharWrapping;
-
+        D("jkljkjk-====%@",model.Jiaobaohao);
         cell.mLab_name.text = model.UserName;
         cell.mLab_name.textAlignment = NSTextAlignmentLeft;
         cell.mLab_name.font = [UIFont systemFontOfSize:11];
