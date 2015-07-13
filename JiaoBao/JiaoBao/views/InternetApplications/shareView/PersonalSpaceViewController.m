@@ -243,6 +243,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     return 70;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [MobClick event:@"PersonalSpace_didSelectRow" label:@""];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TopArthListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
     ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
@@ -278,6 +279,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [MobClick event:@"PersonalSpace_didSelectItem" label:@""];
     UnitAlbumsViewController *Albums = [[UnitAlbumsViewController alloc] init];
     Albums.mStr_flag = @"1";//来自个人
     Albums.mModel_personal = self.mModel_personal;

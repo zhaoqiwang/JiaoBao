@@ -317,6 +317,8 @@
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    [MobClick event:@"WorkMsgList_clickSendBtn" label:@""];
+
     CommMsgListModel *model = [self.mArr_msg objectAtIndex:self.mArr_msg.count-1];
     [[LoginSendHttp getInstance] addFeeBackWithUID:model.TabIDStr content:self.mTextF_text.text];
     [MBProgressHUD showMessage:@"发送中..." toView:self.view];
@@ -783,7 +785,16 @@
     [animationDurationValue getValue:&animationDuration];
     [UIView animateWithDuration:animationDuration
                      animations:^{
-                         self.mTableV_detail.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
+                         if(self.mInt_flag ==0)
+                         {
+                            self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+                         }
+                         else
+                         {
+                            self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+                         }
+   
+                         //self.mTableV_detail.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
                          self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
                      }
                      completion:^(BOOL finished){

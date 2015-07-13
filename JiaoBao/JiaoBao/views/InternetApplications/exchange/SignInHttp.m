@@ -231,118 +231,135 @@ static  SignInHttp*__instance;
 
 
 - (void)requestFinished:(ASIHTTPRequest *)_request{
-    if(_request.tag == 0)
+    NSData *responseData = [_request responseData];
+    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+    NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+    NSDictionary *dicList = [dataString objectFromJSONString];
+    NSString *ResultCode = [dicList objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dicList objectForKey:@"ResultDesc"];
+    if([ResultCode isEqual:[NSNull null]]== NO)
     {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetDelayedTime" object:dicList];
-        
-    }
-    if(_request.tag == 1)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSDictionary *dicList = [dataString objectFromJSONString];
-
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"getUpLoadResult" object:dicList];
-        
-    }
-    if(_request.tag == 2)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        NSArray *dataList = [dicList  objectForKey:@"Data"];
-        if(![dataList isEqual:[NSNull null]])
+        if([ResultCode integerValue]==0)
         {
-
+            if(_request.tag == 0)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"GetDelayedTime" object:dicList];
+                
+            }
+            if(_request.tag == 1)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"getUpLoadResult" object:dicList];
+                
+            }
+            if(_request.tag == 2)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSArray *dataList = [dicList  objectForKey:@"Data"];
+                if(![dataList isEqual:[NSNull null]])
+                {
+                    
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"getQueryResult" object:dataList];
+                    
+                    
+                }
+                
+            }
+            if(_request.tag == 3)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *UnitGroupInfoDic = [dataString objectFromJSONString];
+                NSString *dataStr = [UnitGroupInfoDic objectForKey:@"Data"];
+                NSString *str000 = [DESTool decryptWithText:dataStr Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+                NSArray *groupArr = [str000 objectFromJSONString];
+                
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"getUnitGroups" object:groupArr];
+                
+            }
+            if(_request.tag == 4)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSDictionary *dicData = [dicList  objectForKey:@"Data"];
+                if(![dicData isEqual:[NSNull null]])
+                {
+                    
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"getSignInAddress" object:dicData];
+                    
+                }
+            }
+            if(_request.tag == 5)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSDictionary *dicData = [dicList  objectForKey:@"Data"];
+                if(![dicData isEqual:[NSNull null]])
+                {
+                    
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInGroupByUnitID" object:dicData];
+                    
+                }
+                
+            }
+            if(_request.tag == 6)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"GetTime" object:dicList];
+                
+            }
+            if(_request.tag == 7)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSArray *arr = [dicList objectForKey:@"Data"];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
+                
+                
+            }
+            if(_request.tag == 10)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSString *result = [dicList objectForKey:@"ResultDesc"];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"checkinResult" object:result];
+                
+                
+                
+            }
             
-        
         }
-
-    }
-    if(_request.tag == 3)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSDictionary *UnitGroupInfoDic = [dataString objectFromJSONString];
-        NSString *dataStr = [UnitGroupInfoDic objectForKey:@"Data"];
-        NSString *str000 = [DESTool decryptWithText:dataStr Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        NSArray *groupArr = [str000 objectFromJSONString];
-
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"getUnitGroups" object:groupArr];
         
     }
-    if(_request.tag == 4)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        NSDictionary *dicData = [dicList  objectForKey:@"Data"];
-        if(![dicData isEqual:[NSNull null]])
-        {
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"getSignInAddress" object:dicData];
-        
-    }
-    }
-    if(_request.tag == 5)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        NSDictionary *dicData = [dicList  objectForKey:@"Data"];
-        if(![dicData isEqual:[NSNull null]])
-        {
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInGroupByUnitID" object:dicData];
-            
-        }
-        
-    }
-    if(_request.tag == 6)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetTime" object:dicList];
-        
-    }
-    if(_request.tag == 7)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        NSArray *arr = [dicList objectForKey:@"Data"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
-        
-    }
-    if(_request.tag == 10)
-    {
-        NSData *responseData = [_request responseData];
-        NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
-        NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-        NSDictionary *dicList = [dataString objectFromJSONString];
-        NSString *result = [dicList objectForKey:@"ResultDesc"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"checkinResult" object:result];
 
 
-        
-    }
 
 
     }

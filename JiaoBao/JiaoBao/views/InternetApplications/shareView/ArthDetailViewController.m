@@ -166,11 +166,13 @@
     if ([self checkNetWork]) {
         return;
     }
+    
     D("点击发送按钮");
     if (self.mTextF_text.text.length==0) {
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    [MobClick event:@"ArthDetail_clickSendBtn" label:@""];
     NSArray *array = [self.mTextF_text.text componentsSeparatedByString:@":"];
     int a=0;
     if (array.count>0) {
@@ -206,6 +208,7 @@
     if ([self checkNetWork]){
         return;
     }
+    [MobClick event:@"ArthDetail_tapLikeImg" label:@""];
     if (self.mModel_arthInfo.Likeflag >=0){
         [[ShareHttp getInstance] shareHttpAirthLikeIt:self.mModel.TabIDStr Flag:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.Likeflag]];
         [self progressViewShow:@"提交中"];
@@ -705,6 +708,7 @@
 
 //向cell中添加头像点击手势
 - (void) AirthCommentsListCellHeadTapHeadPress:(AirthCommentsListCell *) airthCommentsListCell{
+    [MobClick event:@"ArthDetail_cell_headImg" label:@""];
     commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:airthCommentsListCell.tag];
     //先生成个人信息
     UserInfoByUnitIDModel *userModel = [[UserInfoByUnitIDModel alloc] init];
@@ -718,6 +722,7 @@
 //向cell中添加按钮事件
 //回复
 - (void) mBtn_reply:(AirthCommentsListCell *) airthCommentsListCell{
+    [MobClick event:@"ArthDetail_Cell_reply" label:@""];
     commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:airthCommentsListCell.tag];
     NSString *str = [NSString stringWithFormat:@"回复%@:",model.Number];
     self.mTextF_text.text = str;
@@ -729,6 +734,7 @@
     if ([self checkNetWork]) {
         return;
     }
+    [MobClick event:@"ArthDetail_Cell_Like" label:@""];
     commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:airthCommentsListCell.tag];
     [[ShareHttp getInstance] shareHttpAirthAddScore:model.TabIDStr tp:@"1"];
     [self progressViewShow:@"提交中"];
@@ -739,6 +745,7 @@
     if ([self checkNetWork]) {
         return;
     }
+     [MobClick event:@"ArthDetail_Cell_Cai" label:@""];
     commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:airthCommentsListCell.tag];
     [[ShareHttp getInstance] shareHttpAirthAddScore:model.TabIDStr tp:@"0"];
     [self progressViewShow:@"提交中"];

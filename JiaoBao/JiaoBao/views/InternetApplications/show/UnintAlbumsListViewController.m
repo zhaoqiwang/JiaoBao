@@ -153,6 +153,7 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [MobClick event:@"UnintAlbumsList_didSelectItem" label:@""];
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
 //    for (int i = 0; i < [self.mArr_bigPhoto count]; i++) {

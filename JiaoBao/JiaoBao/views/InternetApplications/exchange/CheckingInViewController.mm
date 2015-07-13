@@ -403,6 +403,7 @@ errorCode:(BMKSearchErrorCode)error{
 }
 #pragma  mark - 底部按钮方法
 - (IBAction)checkInAction:(id)sender {
+    [MobClick event:@"CheckingInView_checkInAction" label:@""];
     CLLocation *location2 = [[CLLocation alloc]initWithLatitude:BaidumapView.centerCoordinate.latitude longitude:BaidumapView.centerCoordinate.longitude];
     CLLocationDistance distance = [self.location distanceFromLocation:location2];
     if(distance>self.range)
@@ -432,8 +433,6 @@ errorCode:(BMKSearchErrorCode)error{
             NSArray *value= [NSArray arrayWithObjects:dateStr,longitude,Latitude,address,dmInstance.userInfo.UserID,dmInstance.userInfo.UserName,dmInstance.userInfo.UserType,dmInstance.userInfo.UnitID,dmInstance.mStr_unit, @"1.00.5",@"8295",SignInTypeID,self.SignInGroupID,year,month,day,@"0",SignInTypeName,SignInGroupName,@"0",@"", nil];
             NSArray *key = [NSArray arrayWithObjects:@"SignInDateTime",@"Longitude",@"Latitude",@"Place",@"UserID",@"UserName",@"UserTypeID",@"UnitID",@"UnitName",@"MobileEdition",@"MobileModel",@"SignInTypeID",@"SignInGroupID",@"Year",@"Month",@"day",@"HandleFlag",@"SignInTypeName",@"SignInGroupName",@"SignInFlag",@"Remark", nil];
             
-            
-            
             NSDictionary *dic = [NSDictionary dictionaryWithObjects:value forKeys:key];
             [[SignInHttp getInstance]CreateSignIn:dic];
             [MBProgressHUD showMessage:@"" toView:self.view];
@@ -451,6 +450,7 @@ errorCode:(BMKSearchErrorCode)error{
     
 }
 - (IBAction)recordAction:(id)sender {
+    [MobClick event:@"CheckingInView_recordAction" label:@""];
     RecordViewController *record = [[RecordViewController alloc]init];
     [utils pushViewController:record animated:YES];
     
@@ -483,7 +483,6 @@ if(component == 0)
     if(component == 0)
     {
         NSDictionary *dic = [self.groupArr objectAtIndex:row];
-
         NSString *GroupTypeName = [dic objectForKey:@"GroupTypeName"];
         return GroupTypeName;
         
@@ -491,7 +490,6 @@ if(component == 0)
     if(component == 1)
     {
         NSDictionary *dic = [self.groupArr objectAtIndex:self.selectedRow];
-
         NSArray *GroupItems = [dic objectForKey:@"GroupItems"];
         NSString *itemStr = [[GroupItems objectAtIndex:row]objectForKey:@"GroupName"];
         self.SignInGroupID = [[GroupItems objectAtIndex:row]objectForKey:@"TabID"];

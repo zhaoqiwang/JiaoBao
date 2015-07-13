@@ -8,6 +8,7 @@
 
 #import "ThemeView.h"
 #import "Reachability.h"
+#import "MobClick.h"
 
 @implementation ThemeView
 @synthesize mScrollV_share,mTableV_detail,mTableV_difine,mInt_index,mArr_tabel,mBtn_add,mLab_name,mArr_difine;
@@ -291,12 +292,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 //    if (tableView.tag == 1) {
     if (indexPath.row == 0) {
+        [MobClick event:@"ThemeView_didSelectRow_new" label:@""];
         UpdateUnitListViewController *unitList = [[UpdateUnitListViewController alloc] init];
         unitList.mStr_flag = @"3";
         unitList.mStr_title = @"最新更新主题";
         [utils pushViewController:unitList animated:YES];
     }else if (tableView.tag == 1){
     }else {
+        [MobClick event:@"ThemeView_didSelectRow" label:@""];
         ThemeListModel *model = [self.mArr_tabel objectAtIndex:indexPath.row];
         ThemeSpaceViewController *themeSpace = [[ThemeSpaceViewController alloc] init];
         themeSpace.mStr_title = model.InterestName;

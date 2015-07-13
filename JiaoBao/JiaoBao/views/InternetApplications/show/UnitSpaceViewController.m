@@ -203,24 +203,29 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {//单位介绍
+        [MobClick event:@"UnitSpace_didSelectItem" label:@"单位介绍"];
         UnitDetailViewController *detail = [[UnitDetailViewController alloc] init];
         detail.mModel_unit = self.mModel_unit;
         [utils pushViewController:detail animated:YES];
     }else if (indexPath.row == 1){//展示文章
+        [MobClick event:@"UnitSpace_didSelectItem" label:@"展示文章"];
         UnitSpaceArthListViewController *list = [[UnitSpaceArthListViewController alloc] init];
         list.mStr_flag = @"2";//1共享2展示
         list.mModel_unit = self.mModel_unit;
         [utils pushViewController:list animated:YES];
     }else if (indexPath.row == 2){//分享文章
+        [MobClick event:@"UnitSpace_didSelectItem" label:@"分享文章"];
         UnitSpaceArthListViewController *list = [[UnitSpaceArthListViewController alloc] init];
         list.mStr_flag = @"1";//1共享2展示
         list.mModel_unit = self.mModel_unit;
         [utils pushViewController:list animated:YES];
     }else if (indexPath.row == 3){//单位成员
+        [MobClick event:@"UnitSpace_didSelectItem" label:@"单位成员"];
         UnitPeopleViewController *people = [[UnitPeopleViewController alloc] init];
         people.mModel_unit = self.mModel_unit;
         [utils pushViewController:people animated:YES];
     }else if (indexPath.row == 4){//下级单位
+        [MobClick event:@"UnitSpace_didSelectItem" label:@"下级单位"];
         if ([self.mModel_unit.UnitType intValue] == 3) {
             [MBProgressHUD showError:@"班级没有下级" toView:self.view];
         }else{
@@ -230,6 +235,7 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
             [utils pushViewController:subUnit animated:YES];
         }
     }else if (indexPath.row == 5){//单位相册
+        [MobClick event:@"UnitSpace_didSelectItem" label:@"单位相册"];
         UnitAlbumsViewController *Albums = [[UnitAlbumsViewController alloc] init];
         Albums.mModel_unit = self.mModel_unit;
         Albums.mStr_flag = @"2";

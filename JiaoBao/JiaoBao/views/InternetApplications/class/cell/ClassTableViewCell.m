@@ -11,6 +11,7 @@
 #import "dm.h"
 #import "ClassTableViewCell.h"
 #import "utils.h"
+#import "MobClick.h"
 
 @implementation ClassTableViewCell
 
@@ -174,6 +175,7 @@
 }
 
 -(void)headImgClick:(UIGestureRecognizer *)gest{
+    [MobClick event:@"ClassView_HeadImgTapPress" label:@""];
     [headImgDelegate ClassTableViewCellHeadImgTapPress:self];
 }
 
