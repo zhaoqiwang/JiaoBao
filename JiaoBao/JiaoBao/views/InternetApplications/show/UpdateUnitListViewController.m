@@ -168,25 +168,26 @@
     NSString *imgPath;
     NSString *tempUnit;
     if ([self.mStr_flag intValue] == 3) {
-        imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitClassID]];
+        //imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitClassID]];
         tempUnit = [NSString stringWithFormat:@"-%@",model.UnitClassID];
     }else{
         if ([model.UnitClassID intValue]>0) {
-            imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitClassID]];
+            //imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitClassID]];
             tempUnit = [NSString stringWithFormat:@"-%@",model.UnitClassID];
         }else{
-            imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
+            //imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
             tempUnit = model.UnitID;
         }
     }
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        [cell.mImgV_headImg setImage:img];
-    }else{
-        [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-        //获取单位logo
-        [[ShowHttp getInstance] showHttpGetUnitLogo:tempUnit Size:@""];
-    }
+    [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,tempUnit] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//    if (img.size.width>0) {
+//        [cell.mImgV_headImg setImage:img];
+//    }else{
+//        [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
+//        //获取单位logo
+//        [[ShowHttp getInstance] showHttpGetUnitLogo:tempUnit Size:@""];
+//    }
     
     //标题
     NSString *name;

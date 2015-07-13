@@ -137,16 +137,17 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     if (tableView.tag == 1) {
         UnitSectionMessageModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell.mImgV_headImg setImage:img];
-        }else{
-            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-            //获取单位logo
-            [[ShowHttp getInstance] showHttpGetUnitLogo:model.UnitID Size:@""];
-        }
+        [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.UnitID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell.mImgV_headImg setImage:img];
+//        }else{
+//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
+//            //获取单位logo
+//            [[ShowHttp getInstance] showHttpGetUnitLogo:model.UnitID Size:@""];
+//        }
         cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
         //标题
         CGSize numSize = [model.UnitName sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -154,16 +155,17 @@
         cell.mLab_title.text = model.UnitName;
     }else if (tableView.tag == 2){
         UnitInfoModel *model = [self.mArr_down objectAtIndex:indexPath.row];
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.TabID]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell.mImgV_headImg setImage:img];
-        }else{
-            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-            //获取单位logo
-            [[ShowHttp getInstance] showHttpGetUnitLogo:model.TabID Size:@""];
-        }
+        [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.TabID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.TabID]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell.mImgV_headImg setImage:img];
+//        }else{
+//            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
+//            //获取单位logo
+//            [[ShowHttp getInstance] showHttpGetUnitLogo:model.TabID Size:@""];
+//        }
         cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
         //标题
         CGSize numSize = [model.UintName sizeWithFont:[UIFont systemFontOfSize:14]];

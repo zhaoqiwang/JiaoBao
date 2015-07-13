@@ -484,19 +484,20 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0)
-    {
-        [cell.mImgV_head setImage:img];
-    }else{
-        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-        //获取头像
-        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//        [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%@",model.unitId] Size:@""];
-    }
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    //文件名
+//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//    if (img.size.width>0)
+//    {
+//        [cell.mImgV_head setImage:img];
+//    }else{
+//        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//        //获取头像
+//        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+////        [[ShowHttp getInstance] showHttpGetUnitLogo:[NSString stringWithFormat:@"%@",model.unitId] Size:@""];
+//    }
+    [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
     //姓名
     CGSize nameSize = [[NSString stringWithFormat:@"%@",model.UserName] sizeWithFont:[UIFont systemFontOfSize:14]];

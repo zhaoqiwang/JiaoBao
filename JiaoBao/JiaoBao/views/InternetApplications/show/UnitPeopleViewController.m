@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "UIImageView+WebCache.h"
 
 @interface UnitPeopleViewController ()
 
@@ -378,18 +379,18 @@
         cell2.mLab_time.hidden = YES;
         cell2.mImgV_head.frame = CGRectMake(35, 3, 34, 34);
         cell2.mLab_name.frame = CGRectMake(cell2.mImgV_head.frame.origin.x+40, 0, [dm getInstance].width-cell2.mLab_name.frame.origin.x, 40);
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",nodeData.mStr_JiaoBaoHao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell2.mImgV_head setImage:img];
-        }else{
-            [cell2.mImgV_head setImage:[UIImage imageNamed:nodeData.mStr_headImg]];
-            //获取头像
-            [[ExchangeHttp getInstance] getUserInfoFace:nodeData.mStr_JiaoBaoHao];
-        }
+        [cell2.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,nodeData.mStr_JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",nodeData.mStr_JiaoBaoHao]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell2.mImgV_head setImage:img];
+//        }else{
+//            [cell2.mImgV_head setImage:[UIImage imageNamed:nodeData.mStr_headImg]];
+//            //获取头像
+//            [[ExchangeHttp getInstance] getUserInfoFace:nodeData.mStr_JiaoBaoHao];
+//        }
     }
 }
 

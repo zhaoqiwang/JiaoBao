@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "ReSendMsgViewController.h"
 #import "MobClick.h"
+#import "UIImageView+WebCache.h"
 @interface WorkMsgListViewController ()
 
 @end
@@ -339,17 +340,18 @@
     //判断要显示哪种类型的数据
     if (self.mArr_msg.count>indexPath.row) {
         CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell.mImgV_head setImage:img];
-        }else{
-            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-            //获取头像
-            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-        }
+        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell.mImgV_head setImage:img];
+//        }else{
+//            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//            //获取头像
+//            [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
+//        }
         cell.mImgV_head.frame = CGRectMake(10, 33, 40, 40);
         //姓名
         cell.mLab_name.hidden = YES;
@@ -477,20 +479,20 @@
 //                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:11],NSFontAttributeName, nil]  context:nil];
         CGSize size = [cell.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:11] constrainedToSize:CGSizeMake(40, 1000)];
         cell.mLab_name.frame = CGRectMake([dm getInstance].width-55, 62, 40, size.height);
-
+        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.Jiaobaohao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell.mImgV_head setImage:img];
-        }else{
-            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-            //获取头像
-            [[ExchangeHttp getInstance] getUserInfoFace:model.Jiaobaohao];
-        }
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
+//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//        if (img.size.width>0) {
+//            [cell.mImgV_head setImage:img];
+//        }else{
+//            [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//            //获取头像
+//            [[ExchangeHttp getInstance] getUserInfoFace:model.Jiaobaohao];
+//        }
         cell.mImgV_head.frame = CGRectMake([dm getInstance].width-50, 20, 40, 40);
         
         //时间

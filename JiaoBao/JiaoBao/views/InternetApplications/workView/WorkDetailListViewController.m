@@ -9,6 +9,7 @@
 #import "WorkDetailListViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "UIImageView+WebCache.h"
 @interface WorkDetailListViewController ()
 
 @end
@@ -194,17 +195,18 @@
     }
     cell2.mLab_time.text = unReadMsgModel.RecDate;
     cell2.mLab_time.frame = CGRectMake([dm getInstance].width-cell2.mLab_time.frame.size.width-20, cell2.mLab_time.frame.origin.y, cell2.mLab_time.frame.size.width, cell2.mLab_time.frame.size.height);
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",unReadMsgModel.JiaoBaoHao]];
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        [cell2.mImgV_head setImage:img];
-    }else{
-        [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-        //获取头像
-        [[ExchangeHttp getInstance] getUserInfoFace:unReadMsgModel.JiaoBaoHao];
-    }
+    [cell2.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,unReadMsgModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    //文件名
+//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",unReadMsgModel.JiaoBaoHao]];
+//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
+//    if (img.size.width>0) {
+//        [cell2.mImgV_head setImage:img];
+//    }else{
+//        [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
+//        //获取头像
+//        [[ExchangeHttp getInstance] getUserInfoFace:unReadMsgModel.JiaoBaoHao];
+//    }
     return cell2;
 }
 // 用于延时显示图片，以减少内存的使用
