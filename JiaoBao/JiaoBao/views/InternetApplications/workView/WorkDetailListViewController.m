@@ -22,12 +22,15 @@
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -196,6 +199,13 @@
     cell2.mLab_time.text = unReadMsgModel.RecDate;
     cell2.mLab_time.frame = CGRectMake([dm getInstance].width-cell2.mLab_time.frame.size.width-20, cell2.mLab_time.frame.origin.y, cell2.mLab_time.frame.size.width, cell2.mLab_time.frame.size.height);
     [cell2.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,unReadMsgModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+
+    return cell2;
+}
+// 用于延时显示图片，以减少内存的使用
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    TreeView_Level2_Cell *cell2 = (TreeView_Level2_Cell *)cell;
+//    UnReadMsg_model *unReadMsgModel = [self.mArr_detail objectAtIndex:indexPath.row];
 //    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
 //    //文件名
 //    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",unReadMsgModel.JiaoBaoHao]];
@@ -204,25 +214,8 @@
 //        [cell2.mImgV_head setImage:img];
 //    }else{
 //        [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取头像
-//        [[ExchangeHttp getInstance] getUserInfoFace:unReadMsgModel.JiaoBaoHao];
 //    }
-    return cell2;
-}
-// 用于延时显示图片，以减少内存的使用
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    TreeView_Level2_Cell *cell2 = (TreeView_Level2_Cell *)cell;
-    UnReadMsg_model *unReadMsgModel = [self.mArr_detail objectAtIndex:indexPath.row];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",unReadMsgModel.JiaoBaoHao]];
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        [cell2.mImgV_head setImage:img];
-    }else{
-        [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-    }
-}
+//}
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     return 65;

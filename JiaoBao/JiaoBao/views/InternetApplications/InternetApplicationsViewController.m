@@ -57,12 +57,15 @@
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
      [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

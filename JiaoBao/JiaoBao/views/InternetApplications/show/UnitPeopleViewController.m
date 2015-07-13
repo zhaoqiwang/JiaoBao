@@ -27,11 +27,14 @@
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -380,6 +383,21 @@
         cell2.mImgV_head.frame = CGRectMake(35, 3, 34, 34);
         cell2.mLab_name.frame = CGRectMake(cell2.mImgV_head.frame.origin.x+40, 0, [dm getInstance].width-cell2.mLab_name.frame.origin.x, 40);
         [cell2.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,nodeData.mStr_JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+
+    }
+}
+
+// 用于延时显示图片，以减少内存的使用
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    TreeView_node *node = [self.mArr_list objectAtIndex:indexPath.row];
+//    if(node.type == 0){//类型为0的cell
+//        
+//    }else if(node.type == 1){//类型为1的cell
+//        
+//    }else{//类型为2的cell
+//        TreeView_Level2_Cell *cell2 = (TreeView_Level2_Cell*)cell;
+//        TreeView_Level2_Model *nodeData = node.nodeData;
+//        
 //        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
 //        //文件名
 //        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",nodeData.mStr_JiaoBaoHao]];
@@ -388,34 +406,9 @@
 //            [cell2.mImgV_head setImage:img];
 //        }else{
 //            [cell2.mImgV_head setImage:[UIImage imageNamed:nodeData.mStr_headImg]];
-//            //获取头像
-//            [[ExchangeHttp getInstance] getUserInfoFace:nodeData.mStr_JiaoBaoHao];
 //        }
-    }
-}
-
-// 用于延时显示图片，以减少内存的使用
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    TreeView_node *node = [self.mArr_list objectAtIndex:indexPath.row];
-    if(node.type == 0){//类型为0的cell
-        
-    }else if(node.type == 1){//类型为1的cell
-        
-    }else{//类型为2的cell
-        TreeView_Level2_Cell *cell2 = (TreeView_Level2_Cell*)cell;
-        TreeView_Level2_Model *nodeData = node.nodeData;
-        
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",nodeData.mStr_JiaoBaoHao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell2.mImgV_head setImage:img];
-        }else{
-            [cell2.mImgV_head setImage:[UIImage imageNamed:nodeData.mStr_headImg]];
-        }
-    }
-}
+//    }
+//}
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     TreeView_node *node = [self.mArr_list objectAtIndex:indexPath.row];

@@ -286,17 +286,7 @@
     
     
     UnReadMsg_model *model = [array objectAtIndex:indexPath.row];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell.mImgV_head setImage:img];
-//    }else{
-//        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取头像
-//        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//    }
+
     [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     cell.mImgV_head.frame = CGRectMake(10, 10, 45, 45);
     cell.delegate = self;

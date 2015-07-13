@@ -25,10 +25,13 @@
 {
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
+    [MobClick endLogPageView:UMPAGE];
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [MobClick beginLogPageView:UMMESSAGE];
+    [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -180,14 +183,7 @@
         }
     }
     [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,tempUnit] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell.mImgV_headImg setImage:img];
-//    }else{
-//        [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取单位logo
-//        [[ShowHttp getInstance] showHttpGetUnitLogo:tempUnit Size:@""];
-//    }
+
     
     //标题
     NSString *name;

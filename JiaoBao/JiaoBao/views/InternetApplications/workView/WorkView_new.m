@@ -190,17 +190,7 @@
     }
     CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
     [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell.mImgV_head setImage:img];
-//    }else{
-//        [cell.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//        //获取头像
-//        [[ExchangeHttp getInstance] getUserInfoFace:model.JiaoBaoHao];
-//    }
+
     cell.mImgV_head.frame = CGRectMake(10, 7, 40, 40);
     //未读数量
     if ([model.NoReadCount intValue]>0) {
