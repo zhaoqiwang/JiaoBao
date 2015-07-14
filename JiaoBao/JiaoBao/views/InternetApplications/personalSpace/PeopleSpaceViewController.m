@@ -71,31 +71,8 @@
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 
     }
-//    [self.mTableV_personalS reloadData];
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    //文件名
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",[dm getInstance].jiaoBaoHao]];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
-    if(!yesNo)
-    {
-        [self.tempData writeToFile:imgPath atomically:YES];
-        [self.mTableV_personalS reloadData];
-    }
-    else
-    {
-        BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];
-        if(blDele)
-        {
-            BOOL blDele2 = [self.tempData writeToFile:imgPath atomically:YES];
-            for (;;) {
-                if (blDele2) {
-                    [self.mTableV_personalS reloadData];
-                    break;
-                }
-            }
-        }
-    }
+    [[SDImageCache sharedImageCache] clearDisk];
+    [self.mTableV_personalS reloadData];
     
 }
 - (void)viewDidLoad {
