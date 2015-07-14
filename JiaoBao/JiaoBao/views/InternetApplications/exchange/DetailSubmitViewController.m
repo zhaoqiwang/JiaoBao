@@ -55,7 +55,6 @@
     self.textView.layer.borderWidth = 1.0;
     self.textView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
 
-
     self.textView2.layer.masksToBounds = YES;
     self.textView2.layer.cornerRadius = 3.0;
     self.textView2.layer.borderWidth = 1.0;
@@ -80,11 +79,9 @@
 -(void)navigationRightAction:(UIButton *)sender
 {
     NSString *flagStr = [NSString stringWithFormat:@"%ld",self.dayInterval];
-
     dm *dmInsance = [dm getInstance];
     NSString *startStr = [NSString stringWithFormat:@"%@ %@",self.selectedStr,self.startTime.text];
     NSString *endStr = [NSString stringWithFormat:@"%@ %@",self.selectedStr,self.endTime.text];
-
     
     NSString *DetptID = [NSString stringWithFormat:@"%@",[self.groupDic objectForKey:@"GroupID"]];
     NSString *DetptName = [NSString stringWithFormat:@"%@",[self.groupDic objectForKey:@"GroupName"]];

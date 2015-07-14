@@ -17,6 +17,8 @@
 #import "MobClick.h"
 
 @interface UpLoadPhotoViewController ()
+@property(nonatomic,strong)UIImagePickerController *picker;
+
 
 @end
 
@@ -62,9 +64,10 @@
     self.mTextF_name.frame = CGRectMake(self.mLab_name.frame.origin.x+self.mLab_name.frame.size.width+10, self.mLab_name.frame.origin.y, self.mTextF_name.frame.size.width, self.mTextF_name.frame.size.height);
     self.mBtn_name.frame = self.mTextF_name.frame;
     self.mTableV_name.frame = CGRectMake(self.mTextF_name.frame.origin.x, self.mTextF_name.frame.origin.y+self.mTextF_name.frame.size.height, self.mTextF_name.frame.size.width, 0);
-    self.mBtn_upload.frame = CGRectMake(20, self.mTextF_name.frame.origin.y+self.mTextF_name.frame.size.height+30, self.mBtn_upload.frame.size.width, self.mBtn_upload.frame.size.height);
+    self.mBtn_upload.frame = CGRectMake([dm getInstance].width/2-self.mBtn_upload.frame.size.width/2, self.mTextF_name.frame.origin.y+self.mTextF_name.frame.size.height+30, self.mBtn_upload.frame.size.width, self.mBtn_upload.frame.size.height);
     
     isOpened=NO;
+    self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.mTextF_name.frame.origin.x, self.mTextF_name.frame.origin.y+30, 179, 0)] ;
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
         return self.mArr_albums.count;
     } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
@@ -99,6 +102,7 @@
     
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:2];
+    [self.view addSubview:self.mTableV_name];
 }
 
 //检查当前网络是否可用
@@ -132,14 +136,18 @@
             CGRect frame=self.mTableV_name.frame;
             frame.size.height=0;
             [self.mTableV_name setFrame:frame];
+            
         } completion:^(BOOL finished){
             isOpened=NO;
         }];
     }else{
         [UIView animateWithDuration:0.3 animations:^{
-            CGRect frame=self.mTableV_name.frame;
+            CGRect frame=self.mTextF_name.frame;
             frame.size.height=90;
+            frame.origin.y = frame.origin.y+ 30;
+            
             [self.mTableV_name setFrame:frame];
+            D("mTableV_name_frame = %@",NSStringFromCGRect(self.mTableV_name.frame));
         } completion:^(BOOL finished){
             isOpened=YES;
         }];
@@ -155,24 +163,65 @@
         [MBProgressHUD showError:@"请先选择相册" toView:self.view];
         return;
     }
-    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"上传照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册选择",nil];
+    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"上传照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册选择",@"相机选择",nil];
     action.tag = 1;
     [action showInView:self.view.superview];
 }
 
+
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-    
-    elcPicker.maximumImagesCount = 100; //设置的图像的最大数目来选择至100
-    elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
-    elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
-    elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
-//    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //支持图片和电影类型
-    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //支持图片和电影类型
-    
-    elcPicker.imagePickerDelegate = self;
-    
-    [self presentViewController:elcPicker animated:YES completion:nil];
+    if(buttonIndex == 0)
+    {
+        ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+        
+        elcPicker.maximumImagesCount = 100; //设置的图像的最大数目来选择至100
+        elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
+        elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
+        elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
+        //    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //支持图片和电影类型
+        elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //支持图片和电影类型
+        
+        elcPicker.imagePickerDelegate = self;
+        
+        [self presentViewController:elcPicker animated:YES completion:nil];
+    }
+    else if(buttonIndex == 1)
+    {
+        [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+    }
+
+}
+-(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
+    NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {
+        NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
+        self.picker=[[UIImagePickerController alloc] init];
+        self.picker.mediaTypes=mediatypes;
+        self.picker.delegate=self;
+        //        picker.allowsEditing=YES;
+        self.picker.sourceType=sourceType;
+        
+        
+        if([[[UIDevice
+              currentDevice] systemVersion] floatValue]>=8.0) {
+            
+            self.picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+            
+        }
+        NSString *requiredmediatype=(NSString *)kUTTypeImage;
+        NSArray *arrmediatypes=[NSArray arrayWithObject:requiredmediatype];
+        [self.picker setMediaTypes:arrmediatypes];
+        
+        //        if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+        //            picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+        //        }
+        //        [self presentViewController:picker animated:YES completion:nil];
+        [utils pushViewController1:self.picker animated:YES];
+    }else{
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"错误信息!" message:@"当前设备不支持拍摄功能" delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 #pragma mark ELCImagePickerControllerDelegate Methods
@@ -253,6 +302,60 @@
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+#pragma 拍照模块
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        
+        
+    }];
+    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+
+    UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
+    if (!image) {
+        image=[info objectForKey:UIImagePickerControllerOriginalImage];
+    }
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSData *imageData = UIImageJPEGRepresentation(image,0);
+    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
+    D("图片路径是：%@",imgPath);
+    
+    
+    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+    if (!yesNo) {//不存在，则直接写入后通知界面刷新
+        BOOL result = [imageData writeToFile:imgPath atomically:YES];
+        for (;;) {
+            if (result) {
+                if ([self.mStr_flag intValue] == 1) {
+                    [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:[NSString stringWithFormat:@"%@.png",timeSp] Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
+                }else{
+                    UnitAlbumsModel *model = [self.mArr_albums objectAtIndex:0];
+                    [[ThemeHttp getInstance] themeHttpUpLoadPhotoUnit:model.UnitID GroupID:self.mStr_groupID Creatby:[dm getInstance].jiaoBaoHao Fiel:imgPath];
+                }
+                break;
+            }
+        }
+    }else {
+        //存在
+        BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
+        if (blDele) {//删除成功后，写入，通知界面
+            BOOL result = [imageData writeToFile:imgPath atomically:YES];
+            for (;;) {
+                if (result) {
+                    if ([self.mStr_flag intValue] == 1) {
+                        [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:[NSString stringWithFormat:@"%@.png",timeSp] Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
+                    }else{
+                        UnitAlbumsModel *model = [self.mArr_albums objectAtIndex:0];
+                        [[ThemeHttp getInstance] themeHttpUpLoadPhotoUnit:model.UnitID GroupID:self.mStr_groupID Creatby:[dm getInstance].jiaoBaoHao Fiel:imgPath];
+                    }
+                    break;
+                }
+            }
+        }
+    }}
+
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
