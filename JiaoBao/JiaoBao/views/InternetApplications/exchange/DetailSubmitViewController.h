@@ -9,15 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "MyNavigationBar.h"
 #import "utils.h"
+#import "TableViewWithBlock.h"
+#import "Identity_UserUnits_model.h"
 
 
 
 
 @interface DetailSubmitViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UITextFieldDelegate>
+- (IBAction)pullBtnAction:(id)sender;
+@property(nonatomic,assign) BOOL isOpen;
+@property (weak, nonatomic) IBOutlet UITextField *unitTF;
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UITextView *textView2;
-
+@property (nonatomic,strong) TableViewWithBlock *mTableV_name;//下拉选择框
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *selectedDate;
 @property (weak, nonatomic) IBOutlet UILabel *recordDate;
@@ -33,5 +38,7 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *secDatePicker;
 @property(strong,nonatomic)NSDictionary *groupDic;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
+@property(strong,nonatomic)NSArray *unitArr;
+@property(nonatomic,strong)Identity_UserUnits_model *UserUnits_model;
 
 @end
