@@ -529,34 +529,6 @@
     return cell;
 }
 
-// 用于延时显示图片，以减少内存的使用
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    WorkMsgListCell *cell2 = (WorkMsgListCell *)cell;
-//    if (self.mArr_msg.count>indexPath.row) {
-//        CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell2.mImgV_head setImage:img];
-//        }else{
-//            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//        }
-//    }else{
-//        MsgDetail_FeebackList *model = [self.mArr_list objectAtIndex:indexPath.row];
-//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.Jiaobaohao]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell2.mImgV_head setImage:img];
-//        }else{
-//            [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//        }
-//    }
-}
-
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
     if (cell) {

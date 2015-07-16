@@ -173,32 +173,7 @@
     cell.mImgV_viewCount.hidden = YES;
     return cell;
 }
-// 用于延时显示图片，以减少内存的使用
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    TopArthListCell *cell0 = (TopArthListCell *)cell;
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    if (tableView.tag == 1) {
-//        UnitSectionMessageModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.UnitID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell0.mImgV_headImg setImage:img];
-//        }else{
-//            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        }
-//    }else if (tableView.tag == 2){
-//        UnitInfoModel *model = [self.mArr_down objectAtIndex:indexPath.row];
-//        //文件名
-//        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.TabID]];
-//        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//        if (img.size.width>0) {
-//            [cell0.mImgV_headImg setImage:img];
-//        }else{
-//            [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//        }
-//    }
-//}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (tableView.tag == 1){

@@ -342,9 +342,11 @@
         [button removeFromSuperview];
     }
     button = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGSize btnSize = [title sizeWithFont:[UIFont systemFontOfSize:15]];
+//    CGSize btnSize = [title sizeWithFont:[UIFont systemFontOfSize:15]];
     [button.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-btnSize.width)/2-10, (MAIN_TOPBAR_HEIGHT-btnSize.height)/2+[dm getInstance].statusBar, btnSize.width, btnSize.height);
+    int tempWidth = 40;
+//    button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-btnSize.width)/2-10, (MAIN_TOPBAR_HEIGHT-btnSize.height)/2+[dm getInstance].statusBar, btnSize.width, btnSize.height);
+    button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-tempWidth)/2-10, 0+[dm getInstance].statusBar, tempWidth, tempWidth);
     [button setTitle:title forState:UIControlStateNormal];
     button.tag = BTN_RIGHT_TAG;
     [button addTarget:self action:@selector(rightbtnAction:) forControlEvents:UIControlEventTouchUpInside];

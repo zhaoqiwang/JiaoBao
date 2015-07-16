@@ -8,6 +8,7 @@
 
 #import "WorkView.h"
 #import "Reachability.h"
+#import "UIImageView+WebCache.h"
 
 @implementation WorkView
 @synthesize mTableV_work,mBtn_new,mArr_display,mArr_sumData,mProgressV;
@@ -490,15 +491,7 @@
         cell2.mLab_time.text = nodeData.mStr_time;
         cell2.mLab_time.frame = CGRectMake([dm getInstance].width-cell2.mLab_time.frame.size.width-20, cell2.mLab_time.frame.origin.y, cell2.mLab_time.frame.size.width, cell2.mLab_time.frame.size.height);
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",nodeData.mStr_JiaoBaoHao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-        if (img.size.width>0) {
-            [cell2.mImgV_head setImage:img];
-        }else{
-            [cell2.mImgV_head setImage:[UIImage imageNamed:nodeData.mStr_headImg]];
-        }
+        [cell2.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,nodeData.mStr_JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     }
 }
 

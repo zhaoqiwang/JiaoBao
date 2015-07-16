@@ -249,20 +249,6 @@
     cell.mImgV_viewCount.image = lookImg;
     return cell;
 }
-// 用于延时显示图片，以减少内存的使用
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    TopArthListCell *cell0 = (TopArthListCell *)cell;
-//    TopArthListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell0.mImgV_headImg setImage:img];
-//    }else{
-//        [cell0.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-//    }
-//}
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     return 70;
