@@ -91,6 +91,7 @@
     }else{
         [self.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
     }
+    [self.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@-%@",UnitIDImg,self.mStr_unitID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //个人简介
     self.mLab_detail.frame = CGRectMake(70, 10, [dm getInstance].width-80, 40);
     //相册标签

@@ -65,7 +65,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     //个人头像
     self.mImgV_head.frame = CGRectMake(18, 15, 57, 57);
-    [self.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,self.mModel_personal.AccID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    [self.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,self.mModel_personal.AccID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //个人简介
     self.mLab_detail.frame = CGRectMake(93, 20, [dm getInstance].width-100, 20);
     self.mLab_detail.text = @"暂无简介";

@@ -378,16 +378,8 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, 70);
         }
         NoticeInfoModel *model = [self.mModel_notice.noticeInfoArray objectAtIndex:indexPath.row];
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",model.JiaoBaoHao]];
-        UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
         cell.mImgV_headImg.frame = CGRectMake(13, 10, 48, 48);
-        if (img.size.width>0) {
-            [cell.mImgV_headImg setImage:img];
-        }else{
-            [cell.mImgV_headImg setImage:[UIImage imageNamed:@"root_img"]];
-        }
+        [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //标题
         CGSize numSize = [[NSString stringWithFormat:@"%@",model.Subject] sizeWithFont:[UIFont systemFontOfSize:14]];
         cell.mLab_title.frame = CGRectMake(cell.mLab_title.frame.origin.x, cell.mLab_title.frame.origin.y, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);

@@ -202,20 +202,6 @@
 
     return cell2;
 }
-// 用于延时显示图片，以减少内存的使用
-//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-//    TreeView_Level2_Cell *cell2 = (TreeView_Level2_Cell *)cell;
-//    UnReadMsg_model *unReadMsgModel = [self.mArr_detail objectAtIndex:indexPath.row];
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-//    //文件名
-//    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",unReadMsgModel.JiaoBaoHao]];
-//    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-//    if (img.size.width>0) {
-//        [cell2.mImgV_head setImage:img];
-//    }else{
-//        [cell2.mImgV_head setImage:[UIImage imageNamed:@"root_img"]];
-//    }
-//}
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     return 65;

@@ -9,6 +9,7 @@
 #import "MsgDetailViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "UIImageView+WebCache.h"
 
 @interface MsgDetailViewController ()
 
@@ -161,16 +162,8 @@
 -(void)setFrame{
     self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
     D("self.mScrollV_view.frame-==  %@",NSStringFromCGRect(self.mScrollV_view.frame));
-    //获取头像路径
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",self.mModel_unReadMsg.JiaoBaoHao]];
-    UIImage *img= [UIImage imageWithContentsOfFile:imgPath];
-    if (img.size.width>0) {
-        self.mImgV_head.image = img;
-    }else{
-        self.mImgV_head.image = [UIImage imageNamed:@"root_img"];
-    }
-    
+
+    [self.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,self.mModel_unReadMsg.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     self.mImgV_head.frame = CGRectMake(9, 9, 38, 38);
     
     //姓名
