@@ -12,6 +12,7 @@
 #import "SVProgressHUD.h"
 #import "MobClick.h"
 #import "SelectionCell.h"
+#import "LoginSendHttp.h"
 
 
 @interface DetailSubmitViewController ()
@@ -93,7 +94,6 @@
                 [mArr addObject:model2.UnitName];
                 [mArr2 addObject:model2];
                 
-                
             }
             
         }
@@ -106,9 +106,8 @@
             
         }
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.unitTF.frame.origin.x, self.unitTF.frame.origin.y+30, 200, 0)] ;
-    
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
-        return mArr.count;
+    return mArr.count;
     } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
         SelectionCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
         if (!cell) {
@@ -127,6 +126,10 @@
         self.mTableV_name.frame = CGRectMake(self.unitTF.frame.origin.x, self.unitTF.frame.origin.y+30, 200, 0);
         self.isOpen = NO;
         self.UserUnits_model = [mArr2 objectAtIndex:indexPath.row];
+        NSString *unitID = self.UserUnits_model.UnitID;
+
+        [[LoginSendHttp getInstance]getUserInfoWith:[dm getInstance].jiaoBaoHao UID:unitID];
+
 
     }];
     
@@ -152,6 +155,7 @@
     NSString *unitType = self.UserUnits_model.UnitType;
     NSString *unitID = self.UserUnits_model.UnitID;
     NSString *unitTypeName ;
+    NSString *userID = [dm getInstance].userInfo.UserID;
 
     if([unitType integerValue] == 0)
     {
@@ -162,10 +166,9 @@
         unitTypeName = @"老师";
     }
 
-    
     if(![self.textView.text isEqualToString:@""]&&![self.textView2.text isEqualToString:@""]&&![self.startTime.text isEqualToString:@""]&&![self.endTime.text isEqualToString:@""])
     {
-        NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,unitName,unitType,unitTypeName,DetptID,DetptName,@"0",@"未审核",dmInsance.userInfo.UserID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,unitName,unitType,unitTypeName,DetptID,DetptName,@"0",@"未审核",userID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
         [[SignInHttp getInstance]uploadschedule:dic];
         
     }
@@ -181,6 +184,7 @@
 
 -(void)getUpLoadResult:(id)sender
 {
+    
     [MBProgressHUD hideHUDForView:self.view];
     if([[sender object] isKindOfClass:[NSString class]])
     {
