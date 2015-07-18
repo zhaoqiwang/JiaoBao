@@ -11,6 +11,8 @@
 #import "dm.h"
 #import "SVProgressHUD.h"
 #import "MobClick.h"
+#import "SelectionCell.h"
+#import "LoginSendHttp.h"
 
 
 @interface DetailSubmitViewController ()
@@ -74,6 +76,68 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    NSMutableArray *mArr2 = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<[dm getInstance].identity.count;i++)
+    {
+        Identity_model *model= [[dm getInstance].identity objectAtIndex:i];
+        if([model.RoleIdName isEqualToString:@"家长"]|[model.RoleIdName isEqualToString:@"学生"])
+        {
+
+            
+        }
+        else
+        {
+            for(int i=0;i<model.UserUnits.count;i++)
+            {
+                Identity_UserUnits_model *model2 = [model.UserUnits objectAtIndex:i];
+                [mArr addObject:model2.UnitName];
+                [mArr2 addObject:model2];
+                
+            }
+            
+        }
+        
+    self.unitArr = mArr;
+        if(mArr.count>0)
+        {
+            self.unitTF.text = [mArr objectAtIndex:0];
+            self.UserUnits_model = [mArr2 objectAtIndex:0];
+            
+        }
+    self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.unitTF.frame.origin.x, self.unitTF.frame.origin.y+30, 200, 0)] ;
+    [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
+    return mArr.count;
+    } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
+        SelectionCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
+        if (!cell) {
+            cell=[[[NSBundle mainBundle]loadNibNamed:@"SelectionCell" owner:self options:nil]objectAtIndex:0];
+            [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+        }
+
+            [cell.lb setText:[mArr objectAtIndex:indexPath.row]];
+        
+        
+        return cell;
+    } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
+        SelectionCell *cell=(SelectionCell*)[tableView cellForRowAtIndexPath:indexPath];
+
+        self.unitTF.text=cell.lb.text;
+        self.mTableV_name.frame = CGRectMake(self.unitTF.frame.origin.x, self.unitTF.frame.origin.y+30, 200, 0);
+        self.isOpen = NO;
+        self.UserUnits_model = [mArr2 objectAtIndex:indexPath.row];
+        NSString *unitID = self.UserUnits_model.UnitID;
+
+        [[LoginSendHttp getInstance]getUserInfoWith:[dm getInstance].jiaoBaoHao UID:unitID];
+
+
+    }];
+    
+    [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.mTableV_name.layer setBorderWidth:2];
+    [self.view addSubview:self.mTableV_name];
+}
+
     // Do any additional setup after loading the view from its nib.
 }
 -(void)navigationRightAction:(UIButton *)sender
@@ -85,11 +149,26 @@
     
     NSString *DetptID = [NSString stringWithFormat:@"%@",[self.groupDic objectForKey:@"GroupID"]];
     NSString *DetptName = [NSString stringWithFormat:@"%@",[self.groupDic objectForKey:@"GroupName"]];
-    NSString *unitID = [NSString stringWithFormat:@"%d",dmInsance.UID];
-    NSString *uType = [NSString stringWithFormat:@"%d",dmInsance.uType];
+//    NSString *unitID = [NSString stringWithFormat:@"%d",dmInsance.UID];
+//    NSString *uType = [NSString stringWithFormat:@"%d",dmInsance.uType];
+    NSString *unitName = self.UserUnits_model.UnitName;
+    NSString *unitType = self.UserUnits_model.UnitType;
+    NSString *unitID = self.UserUnits_model.UnitID;
+    NSString *unitTypeName ;
+    NSString *userID = [dm getInstance].userInfo.UserID;
+
+    if([unitType integerValue] == 0)
+    {
+        unitTypeName = @"教育局人员";
+    }
+    else if ([unitType integerValue] == 1)
+    {
+        unitTypeName = @"老师";
+    }
+
     if(![self.textView.text isEqualToString:@""]&&![self.textView2.text isEqualToString:@""]&&![self.startTime.text isEqualToString:@""]&&![self.endTime.text isEqualToString:@""])
     {
-        NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,dmInsance.mStr_unit,uType,dmInsance.mStr_unit,DetptID,DetptName,@"0",@"未审核",dmInsance.userInfo.UserID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,unitName,unitType,unitTypeName,DetptID,DetptName,@"0",@"未审核",userID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
         [[SignInHttp getInstance]uploadschedule:dic];
         
     }
@@ -105,6 +184,7 @@
 
 -(void)getUpLoadResult:(id)sender
 {
+    
     [MBProgressHUD hideHUDForView:self.view];
     if([[sender object] isKindOfClass:[NSString class]])
     {
@@ -321,4 +401,18 @@
     [self.view endEditing:YES];
 }
 
+- (IBAction)pullBtnAction:(id)sender {
+    if(self.isOpen == NO)
+    {
+        self.isOpen = !self.isOpen;
+        self.mTableV_name.frame = CGRectMake(self.unitTF.frame.origin.x, self.unitTF.frame.origin.y+30+45, 200,self.unitArr.count *30 );
+        D("frame = %@",NSStringFromCGRect(self.mTableV_name.frame));
+    }
+    else
+    {
+        self.isOpen = !self.isOpen;
+        self.mTableV_name.frame = CGRectMake(self.unitTF.frame.origin.x, self.unitTF.frame.origin.y+30, 200, 0);
+    }
+    
+}
 @end

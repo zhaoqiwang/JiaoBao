@@ -794,6 +794,7 @@
 		F76B646B1B1EA8CB008F6961 /* bj.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64681B1EA8CB008F6961 /* bj.png */; };
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
+		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
 		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
 		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
@@ -1925,6 +1926,7 @@
 		F76B64681B1EA8CB008F6961 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bj.png; path = Image/InternetApp/class/bj.png; sourceTree = "<group>"; };
 		F76B64691B1EA8CB008F6961 /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@2x.png"; path = "Image/InternetApp/class/bj@2x.png"; sourceTree = "<group>"; };
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
+		F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailQueryCell.xib; sourceTree = "<group>"; };
 		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
 		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
 		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
@@ -3194,6 +3196,7 @@
 			children = (
 				F79D84B91ABD4DC000897477 /* DetailQueryCell.h */,
 				F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */,
+				F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */,
 				F79D84BB1ABD4DC000897477 /* DetailQueryViewController.h */,
 				F79D84BC1ABD4DC000897477 /* DetailQueryViewController.m */,
 				F79D84BD1ABD4DC000897477 /* DetailQueryViewController.xib */,
@@ -4262,6 +4265,7 @@
 				F7502A1D1AEE1E50004F822F /* HomeClass_Click_3.png in Resources */,
 				A753E52D1A1B3D8C005A8EED /* share_look.png in Resources */,
 				A71D61EE1A1C96A400B8D33D /* share_school0@2x.png in Resources */,
+				F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */,
 				A761D4001A7F697900DCAEB9 /* rootTableSelect_1@3x.png in Resources */,
 				A74D26951B58FAE200E63DFB /* record_animate_07.png in Resources */,
 				A7BEEA121A43D0C8003C9EAD /* UnitAlbumsViewController.xib in Resources */,
