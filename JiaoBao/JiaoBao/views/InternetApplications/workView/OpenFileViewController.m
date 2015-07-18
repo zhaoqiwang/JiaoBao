@@ -59,11 +59,11 @@
 }
 
 -(void)openFile{
-    NSArray * rslt = [self.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
-    NSString * fileType = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
+//    NSArray * rslt = [self.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
+//    NSString * fileType = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
     
-    if ([fileType isEqual:@"doc"]||[fileType isEqual: @"docx"]||[fileType isEqual:@"pdf"]||[fileType isEqual:@"mp4"]||[fileType isEqual:@"wav"]||[fileType isEqual:@"txt"]||[fileType isEqual:@"xls"]||[fileType isEqual:@"xlsx"]||[fileType isEqual:@"ppt"]||[fileType isEqual:@"pptx"]||[fileType isEqual:@"avi"]||[fileType isEqual:@"htm"]||[fileType isEqual:@"html"]||[fileType isEqual:@"pps"]||[fileType isEqual:@"m4v"]) {
-        
+//    if ([fileType isEqual:@"doc"]||[fileType isEqual: @"docx"]||[fileType isEqual:@"pdf"]||[fileType isEqual:@"mp4"]||[fileType isEqual:@"wav"]||[fileType isEqual:@"txt"]||[fileType isEqual:@"xls"]||[fileType isEqual:@"xlsx"]||[fileType isEqual:@"ppt"]||[fileType isEqual:@"pptx"]||[fileType isEqual:@"avi"]||[fileType isEqual:@"htm"]||[fileType isEqual:@"html"]||[fileType isEqual:@"pps"]||[fileType isEqual:@"m4v"]) {
+    
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
         NSString * mStr_filePath = [NSString stringWithFormat:@"%@/%@",tempPath,self.mStr_name];
@@ -71,12 +71,12 @@
         NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.mWebView loadRequest:request];
-    }
-    else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        alert.tag = 11;
-        [alert show];
-    }
+//    }
+//    else {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        alert.tag = 11;
+//        [alert show];
+//    }
 }
 
 //导航条返回按钮
