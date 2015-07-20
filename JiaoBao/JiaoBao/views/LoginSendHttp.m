@@ -929,7 +929,7 @@ static LoginSendHttp *loginSendHttp = nil;
         NSArray *arrlist=[str000 objectFromJSONString];
         D("%lu",(unsigned long)[arrlist count]);
         for (int i=0; i<[arrlist count]; i++) {
-            NSDictionary *item=[arrlist objectAtIndex:i];
+            NSDictionary *item=(NSDictionary *)[arrlist objectAtIndex:i];
             NSString *url=[item objectForKey:@"Value"];
             D("url-==  %@",url);
             if (i==0) {

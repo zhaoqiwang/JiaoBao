@@ -10,6 +10,8 @@
 
 @implementation NewWorkTopView
 
+#define kRecordAudioFile @"myRecord.wav"
+
 @synthesize mArr_accessory,mInt_sendMsg,mView_accessory,mBtn_accessory,mBtn_send,mBtn_sendMsg,mBtn_photos,mTextV_input,delegate;
 
 - (id)init{
@@ -18,6 +20,9 @@
         // Initialization code
 //        self.frame = frame;
         self.mArr_accessory = [NSMutableArray array];
+        
+        //音频
+        [self audio];
         //输入框
         self.mTextV_input = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, [dm getInstance].width-20, 60)];
         //添加边框
@@ -45,7 +50,9 @@
         [self.mBtn_photos setImage:[UIImage imageNamed:@"NewWork_photo"] forState:UIControlStateNormal];
         [self.mBtn_photos setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_photos.titleLabel.font = [UIFont systemFontOfSize:12];
-        [self.mBtn_photos addTarget:self action:@selector(mBtn_photo:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mBtn_photos addTarget:self action:@selector(btnVoiceDown:) forControlEvents:UIControlEventTouchDown];
+        [self.mBtn_photos addTarget:self action:@selector(btnVoiceUp:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mBtn_photos addTarget:self action:@selector(btnVoiceDragUp:) forControlEvents:UIControlEventTouchDragExit];
         [self addSubview:self.mBtn_photos];
         //短信提醒
         self.mBtn_sendMsg = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -72,6 +79,16 @@
         [self addSubview:self.mView_accessory];
         //上半部分frame
         self.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_accessory.frame.origin.y+self.mView_accessory.frame.size.height);
+        
+        AVAudioSession *audioSession=[AVAudioSession sharedInstance];
+        //设置为播放和录音状态，以便可以在录制完之后播放录音
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
+        [audioSession setActive:YES error:nil];
+        
+        self.imageView = [[UIImageView alloc] init];
+        self.imageView.frame = CGRectMake(([dm getInstance].width-80)/2, 20, 80, 100);
+        [self addSubview:self.imageView];
+        [self.imageView setHidden:YES];
     }
     return self;
 }
@@ -144,7 +161,7 @@
         tempBtn.tag = i;
         tempBtn.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
         [tempBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [tempBtn addTarget:self action:@selector(clickAccessoryPhoto:) forControlEvents:UIControlEventTouchUpInside];
+        [tempBtn addTarget:self action:@selector(clickAccessoryPhoto:) forControlEvents:UIControlEventTouchUpInside];
         [self.mView_accessory addSubview:tempBtn];
         rect0 = CGRectMake(0, but.frame.origin.y+25, 0, 25);
     }
@@ -182,7 +199,9 @@
 
 //点击附件
 -(void)clickAccessoryPhoto:(UIButton *)btn{
-    NSString *name = [self.mArr_accessory objectAtIndex:btn.tag];
+//    NSString *name = [self.mArr_accessory objectAtIndex:btn.tag];
+    AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
+    NSString *name = model.mStr_name;
     if([[name pathExtension] isEqualToString:@"png"]) {  //取得后缀名这.png的文件名
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
@@ -199,6 +218,9 @@
         [imgV setImage:img];
         [tempView addSubview:imgV];
         [self addSubview:tempView];
+    }else if([[name pathExtension] isEqualToString:@"aac"]) {  //取得后缀名这.aac的文件名,录音
+//        AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
+        [self playRecordSound:model.pathStr];
     }
 }
 
@@ -401,6 +423,247 @@
     }
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
+}
+
+- (void)playRecordSound:(NSString *)path
+{
+    if (self.audioPlayer.playing) {
+        [self.audioPlayer stop];
+        return;
+    }
+    NSURL *url = [NSURL fileURLWithPath:path];
+    AVAudioPlayer *player = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
+    self.audioPlayer = player;
+    [self.audioPlayer play];
+}
+
+- (void)btnVoiceDown:(id)sender
+{
+    [self.imageView setHidden:NO];
+    //创建录音文件，准备录音
+    if ([self.recorder prepareToRecord]) {
+        //开始
+        [self.recorder record];
+    }
+    
+    //设置定时检测
+    timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+}
+- (void)btnVoiceUp:(id)sender
+{
+    [self.imageView setHidden:YES];
+    double cTime = self.recorder.currentTime;
+    if (cTime > 2) {//如果录制时间<2 不发送
+        NSLog(@"发出去");
+    }else {
+        //删除记录的文件
+        [self.recorder deleteRecording];
+        //删除存储的
+    }
+    [self.recorder stop];
+    [timer invalidate];
+}
+- (void)btnVoiceDragUp:(id)sender
+{
+    [self.imageView setHidden:YES];
+    //删除录制文件
+    [self.recorder deleteRecording];
+    [self.recorder stop];
+    [timer invalidate];
+    
+    D("取消发送");
+}
+- (void)audio
+{
+    //录音设置
+    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc]init];
+    //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
+    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+    [recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
+    //录音通道数  1 或 2
+    [recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
+    //线性采样位数  8、16、24、32
+    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    //录音的质量
+    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+    
+    mStr_path = [self audioRecordingPath];
+    NSURL *url = [NSURL fileURLWithPath:mStr_path];
+//    urlPlay = url;
+    
+    NSError *error;
+    //初始化
+    self.recorder = [[AVAudioRecorder alloc]initWithURL:url settings:recordSetting error:&error];
+    //开启音量检测
+    self.recorder.meteringEnabled = YES;
+    self.recorder.delegate = self;
+}
+
+- (void)detectionVoice
+{
+    [self.recorder updateMeters];//刷新音量数据
+    //获取音量的平均值  [recorder averagePowerForChannel:0];
+    //音量的最大值  [recorder peakPowerForChannel:0];
+    
+    double lowPassResults = pow(10, (0.05 * [self.recorder peakPowerForChannel:0]));
+//    NSLog(@"111111----===%lf",lowPassResults);
+    //最大50  0
+    //图片 小-》大
+    if (0<lowPassResults<=0.06) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_01"]];
+    }else if (0.06<lowPassResults<=0.13) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_02"]];
+    }else if (0.13<lowPassResults<=0.20) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_03"]];
+    }else if (0.20<lowPassResults<=0.27) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_04"]];
+    }else if (0.27<lowPassResults<=0.34) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_05"]];
+    }else if (0.34<lowPassResults<=0.41) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_06"]];
+    }else if (0.41<lowPassResults<=0.48) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_07"]];
+    }else if (0.48<lowPassResults<=0.55) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_08"]];
+    }else if (0.55<lowPassResults<=0.62) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_09"]];
+    }else if (0.62<lowPassResults<=0.69) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_10"]];
+    }else if (0.69<lowPassResults<=0.76) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_11"]];
+    }else if (0.76<lowPassResults<=0.83) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_12"]];
+    }else if (0.83<lowPassResults<=0.9) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_13"]];
+    }else {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_14"]];
+    }
+}
+
+- (void) updateImage
+{
+    [self.imageView setImage:[UIImage imageNamed:@"record_animate_01"]];
+}
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder
+                           successfully:(BOOL)flag{
+    if (flag){
+        NSLog(@"Successfully stopped the audio recording process.");
+        /* Let's try to retrieve the data for the recorded file */
+//        NSError *playbackError = nil;
+        AccessoryModel *model = [[AccessoryModel  alloc] init];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *readingError = nil;
+        NSData *fileData =[NSData dataWithContentsOfFile:mStr_path
+                               options:NSDataReadingMapped
+                                 error:&readingError];
+        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+        NSString *path = [self audioRecordingPath];
+        
+        BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:path];
+        
+        if (!yesNo) {//不存在，则直接写入后通知界面刷新
+            BOOL result = [fileData writeToFile:mStr_path atomically:YES];
+            for (;;) {
+                if (result) {
+                    model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
+                    //                model.pathStr = mStr_path;
+                    model.pathStr = path;
+                    model.fileAttributeDic = [fileManager attributesOfItemAtPath:path error:nil];
+                    [self.mArr_accessory addObject:model];
+                    
+                    break;
+                }
+            }
+        }else {//存在
+            BOOL blDele= [fileManager removeItemAtPath:path error:nil];//先删除
+            if (blDele) {//删除成功后，写入，通知界面
+                BOOL result = [fileData writeToFile:mStr_path atomically:YES];
+                for (;;) {
+                    if (result) {
+                        model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
+                        //                model.pathStr = mStr_path;
+                        model.pathStr = path;
+                        model.fileAttributeDic = [fileManager attributesOfItemAtPath:path error:nil];
+                        [self.mArr_accessory addObject:model];
+                        
+                        break;
+                    }
+                }
+            }
+        }
+        //添加显示附件
+        [self addAccessoryPhoto];
+        /* Form an audio player and make it play the recorded data */
+//        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:fileData
+//                                                         error:&playbackError];
+//        /* Could we instantiate the audio player? */
+//        if (self.audioPlayer != nil){
+//            self.audioPlayer.delegate = self;
+//            /* Prepare to play and start playing */
+//            if ([self.audioPlayer prepareToPlay] && [self.audioPlayer play]){
+//                NSLog(@"Started playing the recorded audio.");
+//            } else {
+//                NSLog(@"Could not play the audio.");
+//            }
+//        } else {
+//            NSLog(@"Failed to create an audio player.");
+//        }
+    } else {
+        NSLog(@"Stopping the audio recording failed.");
+    }
+    /* Here we don't need the audio recorder anymore */
+//    self.recorder = nil;
+}
+
+//- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag{
+//    if (flag){
+//        NSLog(@"Audio player stopped correctly.");
+//    } else {
+//        NSLog(@"Audio player did not stop correctly.");
+//    }
+//    if ([player isEqual:self.audioPlayer]){
+//        self.audioPlayer = nil;
+//    } else {
+//        /* This is not the player */
+//    }
+//}
+
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player{
+    D("eeeeeeeeeeee");
+    /* The audio session has been deactivated here */
+}
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
+                         withFlags:(NSUInteger)flags{
+    D("ttttttttttt");
+    if (flags == AVAudioSessionInterruptionFlags_ShouldResume){
+        [player play];
+    }
+}
+     
+-(NSString *)audioRecordingPath{
+    NSString *result = nil;
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    mStr_time = timeSp;
+    NSString *tempPath = [self audioRecordingPath000];
+    result = [tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
+    return result;
+}
+
+-(NSString *)audioRecordingPath000{
+    NSString *result = nil;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    result = tempPath;
+    return result;
 }
 
 @end
