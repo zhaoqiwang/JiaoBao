@@ -33,5 +33,7 @@
 -(void)CreateSignIn:(NSDictionary*)SignInJsonData;
 -(void)getTime;
 -(void)GetSignInListForMobile:(NSString*)year Month:(NSString*)month;
+-(void)WorkPlanSelectContentByMonth:(NSString*)UnitID UserID:(NSString*)UserID strSelectDate:(NSString*)strSelectDate;
+
 
 @end

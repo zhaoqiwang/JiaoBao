@@ -25,6 +25,8 @@
 @property(nonatomic,strong)NSArray *groupArr;//点击导航栏右侧按钮所获列表数据
 @property(nonatomic,assign)NSUInteger selectedTag;//点击组数据列表行的标志
 @property(nonatomic,assign)NSInteger delayTime;
+@property(nonatomic,strong)DetailQueryViewController *detail;
+
 
 
 @end
@@ -32,6 +34,7 @@
 @implementation SignInViewController
 -(void)dealloc
 {
+    [self.detail removeFromParentViewController];
 //    self.calendar = nil;
 //    self.calendarView = nil;
 //    self.menuView = nil;
@@ -53,9 +56,40 @@
     [MobClick endLogPageView:UMPAGE];
 
 }
+-(void)getDateMark:(id)sender
+{
+    NSString *dateStr = [sender object];
+    self.dateArr = nil;
+    if(dateStr&&[dateStr isEqual:[NSNull null]]==NO)
+    {
+        self.dateArr = [dateStr componentsSeparatedByString:@","];
+    }
+    if([self.strFlag isEqualToString:@"left"])
+    {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];
 
+    }
+    if([self.strFlag isEqualToString:@"right"])
+    {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"rightBtnAction" object:@"right"];
+        
+    }
+    if([self.strFlag isEqualToString:@"minusYear"])
+    {
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"minusYearAction" object:@"minusYear"];
+    }
+    if([self.strFlag isEqualToString:@"addYear"])
+    {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"addYearAction" object:@"addYear"];
+    }
+
+    self.strFlag = @"";
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getDateMark:) name:@"getDateMark" object:nil];
     self.calendar = [JTCalendar new];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -71,8 +105,12 @@
     [self.calendar setMenuMonthsView:self.menuView];
     [self.calendar setContentView:self.calendarView];
     [self.calendar setDataSource:self];
+    NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
+    [dateFormatter2 setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter2 stringFromDate:self.calendar.currentDate];
+    [dm getInstance].monthStr = dateString;
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nil];
 
-    
     //通过通知获取最多延迟时间
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetDelayedTime:) name:@"GetDelayedTime" object:nil];
     //通过通知获取组列表数据
@@ -81,31 +119,77 @@
     [[SignInHttp getInstance]getDelayedTime:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     //请求组数据
     [[SignInHttp getInstance]getUnitGroups:[dm getInstance].UID];
+    self.detail = [[DetailQueryViewController alloc]initWithNibName:@"DetailQueryViewController" bundle:nil];
+    self.detail.selectedDateStr = self.selcetedDateStr;
+    [self addChildViewController:self.detail];
+    [self.detail didMoveToParentViewController:self];
+    [self.bottomView addSubview:self.detail.view];
+    
     //self.calendarView.delegate = self;
     // Do any additional setup after loading the view from its nib.
+    
 }
 
 //点击导航栏右侧按钮方法
 -(void)navigationRightAction:(UIButton *)sender
 {
-    NSMutableArray *menuItems =[[NSMutableArray alloc]initWithCapacity:0];
-    for(int i=0;i<self.groupArr.count;i++)
-    {
-        KxMenuItem *menuItem = [KxMenuItem menuItem:[[self.groupArr objectAtIndex:i]objectForKey:@"GroupName"]
-                                              image:[UIImage imageNamed:@"appNav_groupChat"]
-                                             target:self
-                                             action:@selector(selecteGroup:)];
-        menuItem.tag = i;
-        [menuItems addObject:menuItem];
-    }
-
-    //    KxMenuItem *first = menuItems[0];
-    //    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-    //    first.alignment = NSTextAlignmentCenter;
+    //    NSTimeZone* localzone = [NSTimeZone localTimeZone];
+    //    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    //    NSDate *curDate = [NSDate date];
+    //    NSLog(@"curDate = %@",curDate);
+    //    NSTimeInterval  interval = 24*60*60;
+    //    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
+    //    NSLog(@"destDate = %@",destDate);
+    //    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *slectedDate = [dateFormatter dateFromString:self.selcetedDateStr];
+    //    [dateFormatter setTimeZone:GTMzone];
+    //    [dateFormatter setTimeZone:localzone];
+    NSDate *curDate = [NSDate date];
+    NSString *curDateStr = [dateFormatter stringFromDate:curDate];
+    NSDate *currDate = [dateFormatter dateFromString:curDateStr];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
+    NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
+    NSInteger days = [comps day];
     
-    [KxMenu showMenuInView:self.view
-                  fromRect:sender.frame
-                 menuItems:menuItems];
+    if(days <(-self.delayTime))
+    {
+        [MBProgressHUD showError:@"超出期限" toView:self.view];
+        
+    }
+    else if(days >0)
+    {
+        [MBProgressHUD showError:@"不能提前提报日程" toView:self.view];
+        
+    }
+    else
+    {
+        DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+        detail.selectedStr = self.selcetedDateStr;
+        detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
+        [self.navigationController pushViewController:detail animated:YES];
+        
+    }
+//    NSMutableArray *menuItems =[[NSMutableArray alloc]initWithCapacity:0];
+//    for(int i=0;i<self.groupArr.count;i++)
+//    {
+//        KxMenuItem *menuItem = [KxMenuItem menuItem:[[self.groupArr objectAtIndex:i]objectForKey:@"GroupName"]
+//                                              image:[UIImage imageNamed:@"appNav_groupChat"]
+//                                             target:self
+//                                             action:@selector(selecteGroup:)];
+//        menuItem.tag = i;
+//        [menuItems addObject:menuItem];
+//    }
+//
+//    //    KxMenuItem *first = menuItems[0];
+//    //    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
+//    //    first.alignment = NSTextAlignmentCenter;
+//    
+//    [KxMenu showMenuInView:self.view
+//                  fromRect:sender.frame
+//                 menuItems:menuItems];
     
 }
 //点击组数据列表某行的方法
@@ -157,7 +241,9 @@
     //添加导航条
     NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
-    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
+//    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
+    [self.mNav_navgationBar setRightBtnTitle:@"填写"];
+
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar leftBtnAction:str];
     [self.view addSubview:self.mNav_navgationBar];
@@ -175,7 +261,27 @@
 
 - (BOOL)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date
 {
-    return NO;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    NSString *currentDateString = [dateFormatter stringFromDate:calendar.currentDate];
+    //NSString *currentDateString2 = [NSString stringWithFormat:@"%@-"
+    NSString * monthStr = [dm getInstance].monthStr;
+    if([dateString isEqualToString:[dm getInstance].monthStr])
+    {
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"dd"];
+        NSInteger dayInt = [[dateFormatter stringFromDate:date]integerValue];
+        NSString *dayString = [NSString stringWithFormat:@"%ld",dayInt];
+        if([self.dateArr containsObject:dayString])
+        {
+            return 1;
+
+        }
+
+        
+    }
+    return 0;
 }
 //选择日期的方法
 - (void)calendarDidDateSelected:(JTCalendar *)calendar date:(NSDate *)date
@@ -191,6 +297,7 @@
 //    NSLog(@"date = %@",date);
     NSString *destDateString = [dateFormatter stringFromDate:date];
     self.selcetedDateStr = destDateString;
+    self.detail.selectedDateStr = self.selcetedDateStr;
 //    NSDate *curDate = [NSDate date];
 //    NSString *destDateString2 = [dateFormatter stringFromDate:curDate];
 //    NSLog(@"curDate = %@",destDateString2);
@@ -209,46 +316,10 @@
 
 //点击提交按钮所响应的方法
 - (IBAction)submitAction:(id)sender
-{
-//    NSTimeZone* localzone = [NSTimeZone localTimeZone];
-//    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-//    NSDate *curDate = [NSDate date];
-//    NSLog(@"curDate = %@",curDate);
-//    NSTimeInterval  interval = 24*60*60;
-//    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
-//    NSLog(@"destDate = %@",destDate);
-//    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *slectedDate = [dateFormatter dateFromString:self.selcetedDateStr];
-//    [dateFormatter setTimeZone:GTMzone];
-//    [dateFormatter setTimeZone:localzone];
-    NSDate *curDate = [NSDate date];
-    NSString *curDateStr = [dateFormatter stringFromDate:curDate];
-    NSDate *currDate = [dateFormatter dateFromString:curDateStr];
-    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
-    int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
-    NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
-    NSInteger days = [comps day];
+{    DetailQueryViewController *detail = [[DetailQueryViewController alloc]init];
+    detail.selectedDateStr = self.selcetedDateStr;
+    [self.navigationController pushViewController:detail animated:YES];
 
-    if(days <(-self.delayTime))
-    {
-        [MBProgressHUD showError:@"超出期限" toView:self.view];
-
-    }
-    else if(days >0)
-    {
-        [MBProgressHUD showError:@"不能提前提报日程" toView:self.view];
-
-    }
-    else
-    {
-        DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
-        detail.selectedStr = self.selcetedDateStr;
-        detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
-        [self.navigationController pushViewController:detail animated:YES];
-
-    }
 
 
     
@@ -256,9 +327,46 @@
 }
 //点击请求所响应的方法
 - (IBAction)queryAction:(id)sender {
-    DetailQueryViewController *detail = [[DetailQueryViewController alloc]init];
-    detail.selectedDateStr = self.selcetedDateStr;
-    [self.navigationController pushViewController:detail animated:YES];
+    //    NSTimeZone* localzone = [NSTimeZone localTimeZone];
+    //    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    //    NSDate *curDate = [NSDate date];
+    //    NSLog(@"curDate = %@",curDate);
+    //    NSTimeInterval  interval = 24*60*60;
+    //    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
+    //    NSLog(@"destDate = %@",destDate);
+    //    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *slectedDate = [dateFormatter dateFromString:self.selcetedDateStr];
+    //    [dateFormatter setTimeZone:GTMzone];
+    //    [dateFormatter setTimeZone:localzone];
+    NSDate *curDate = [NSDate date];
+    NSString *curDateStr = [dateFormatter stringFromDate:curDate];
+    NSDate *currDate = [dateFormatter dateFromString:curDateStr];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierChinese];
+    int unitFlags = NSDayCalendarUnit|NSHourCalendarUnit;
+    NSDateComponents *comps = [gregorian components:unitFlags fromDate:currDate toDate:slectedDate options:0];
+    NSInteger days = [comps day];
+    
+    if(days <(-self.delayTime))
+    {
+        [MBProgressHUD showError:@"超出期限" toView:self.view];
+        
+    }
+    else if(days >0)
+    {
+        [MBProgressHUD showError:@"不能提前提报日程" toView:self.view];
+        
+    }
+    else
+    {
+        DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+        detail.selectedStr = self.selcetedDateStr;
+        detail.groupDic = [self.groupArr objectAtIndex:self.selectedTag];
+        [self.navigationController pushViewController:detail animated:YES];
+        
+    }
+
 }
 
 -(void)myNavigationGoback
@@ -266,19 +374,80 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)leftBtnAction:(id)sender {
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:0];
+    [adcomps setMonth:-1];
+    [adcomps setDay:0];
+    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
+    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
+    [dm getInstance].monthStr = nextStr;
+    self.strFlag = @"left";
+
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
+    //[[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];
 }
 
 - (IBAction)rightBtnAction:(id)sender {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"rightBtnAction" object:@"right"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:0];
+    [adcomps setMonth:1];
+    [adcomps setDay:0];
+    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
+    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
+    [dm getInstance].monthStr = nextStr;
+    self.strFlag = @"right";
+
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
+
+        //[[NSNotificationCenter defaultCenter]postNotificationName:@"rightBtnAction" object:@"right"];
 }
 
 - (IBAction)minusYearAction:(id)sender {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"minusYearAction" object:@"minusYear"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:-1];
+    [adcomps setMonth:0];
+    [adcomps setDay:0];
+    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
+    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
+    [dm getInstance].monthStr = nextStr;
+    self.strFlag = @"minusYear";
+
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
+
+
+
+
 }
 
 - (IBAction)addYearAction:(id)sender {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"addYearAction" object:@"addYear"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+    [adcomps setYear:1];
+    [adcomps setMonth:0];
+    [adcomps setDay:0];
+    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
+    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
+    [dm getInstance].monthStr = nextStr;
+    self.strFlag = @"addYear";
+
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
+
+    //[[NSNotificationCenter defaultCenter]postNotificationName:@"addYearAction" object:@"addYear"];
 }
 
 

@@ -12,6 +12,7 @@
 @interface JTCalendarMenuMonthView : UIView
 
 @property (weak, nonatomic) JTCalendar *calendarManager;
+@property(nonatomic,strong)NSString *monthStr;
 
 - (void)setMonthIndex:(NSInteger)monthIndex year:(NSUInteger)year;
 

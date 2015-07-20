@@ -35,15 +35,15 @@
 
 -(void)minusYearAction:(id)sender
 {
-    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.contentView.frame.size.width*5.5, self.contentView.contentOffset.y);
-    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.menuMonthsView.frame.size.width*5.5, self.menuMonthsView.contentOffset.y);
+    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.contentView.frame.size.width*6, self.contentView.contentOffset.y);
+    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.menuMonthsView.frame.size.width*6, self.menuMonthsView.contentOffset.y);
     [self updatePage];
     
 }
 -(void)addYearAction:(id)sender
 {
-    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.contentView.frame.size.width*5.5, self.contentView.contentOffset.y);
-    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.menuMonthsView.frame.size.width*5.5, self.menuMonthsView.contentOffset.y);
+    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.contentView.frame.size.width*6, self.contentView.contentOffset.y);
+    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.menuMonthsView.frame.size.width*6, self.menuMonthsView.contentOffset.y);
     [self updatePage];
     
 }

@@ -143,6 +143,15 @@
 }
 - (BOOL)calendarHaveEvent:(JTCalendar *)calendar date:(NSDate *)date
 {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *destDateString = [dateFormatter stringFromDate:date];
+    if([self.selectedArrSymbol containsObject:destDateString])
+    {
+        return YES;
+    }
+
+
     return NO;
 }
 
@@ -170,9 +179,6 @@
 
     }
 
-
-    
-    
 }
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
