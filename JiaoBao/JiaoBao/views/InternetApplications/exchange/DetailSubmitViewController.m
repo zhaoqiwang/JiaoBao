@@ -43,7 +43,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUpLoadResult:) name:@"getUpLoadResult" object:nil];
     self.datePicker.backgroundColor = [UIColor whiteColor];
     self.secDatePicker.backgroundColor = [UIColor whiteColor];

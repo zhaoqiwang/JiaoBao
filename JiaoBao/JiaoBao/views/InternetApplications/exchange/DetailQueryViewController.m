@@ -20,7 +20,7 @@
 @implementation DetailQueryViewController
 -(void)dealloc
 {
-    
+    [self removeObserver:self forKeyPath:@"selectedDateStr"];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -42,14 +42,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self addObserver:self forKeyPath:@"selectedDateStr" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:@"dateChanged"];
     //去掉多余的cell分割线
     self.tableView.tableFooterView=[[UIView alloc]init];
     
     self.keyArr = [NSArray arrayWithObjects:@"sWorkPlace",@"dSdate",@"dEdate",@"sSubject",@"dRecDate", nil];
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"日程记录"];
-    self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar setGoBack];
-    [self.view addSubview:self.mNav_navgationBar];
+//    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"日程记录"];
+//    self.mNav_navgationBar.delegate = self;
+//    [self.mNav_navgationBar setGoBack];
+//    [self.view addSubview:self.mNav_navgationBar];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"getQueryResult" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getQueryResult:) name:@"getQueryResult" object:nil];
     NSString *unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];//单位ID
@@ -66,6 +67,17 @@
 
 
     // Do any additional setup after loading the view from its nib.
+}
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"selectedDateStr"])
+    {
+        self.selectedDate.text = self.selectedDateStr;
+        NSString *unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];//单位ID
+        NSString *userId = [NSString stringWithFormat:@"%@",[dm getInstance].userInfo.UserID];//用户ID
+        NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:self.selectedDateStr,unitId,userId, nil] forKeys:[NSArray arrayWithObjects:@"WorkPlanDate",@"UnitID",@"UserID", nil]];
+        [[SignInHttp getInstance]querySchedule:dic];
+    }
 }
 -(void)getQueryResult:(id)sender
 {

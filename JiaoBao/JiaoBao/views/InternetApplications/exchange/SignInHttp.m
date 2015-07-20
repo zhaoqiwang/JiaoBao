@@ -227,6 +227,32 @@ static  SignInHttp*__instance;
     
 }
 
+-(void)WorkPlanSelectContentByMonth:(NSString*)UnitID UserID:(NSString*)UserID strSelectDate:(NSString*)strSelectDate
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/WorkPlanMobileInterface/WorkPlanSelectContentByMonth",[dm getInstance].RiCUrl ];
+    NSURL *url = [NSURL URLWithString:urlString];
+
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    
+    NSString *userID = [dm getInstance].userInfo.UserID;
+    NSString *unitID = [dm getInstance].userInfo.UnitID;
+    NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    [request addPostValue:userID forKey:@"UserID"];
+    [request addPostValue:unitID forKey:@"UnitID"];
+    [request addPostValue:[dm getInstance].monthStr forKey:@"strSelectDate"];
+    
+    request.tag = 8;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+    
+}
 
 
 
@@ -237,6 +263,16 @@ static  SignInHttp*__instance;
     NSDictionary *dicList = [dataString objectFromJSONString];
     NSString *ResultCode = [dicList objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dicList objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]==1)
+    {
+        if(_request.tag == 8)
+        {
+
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"getDateMark" object:nil];
+            
+            
+        }
+    }
     if([ResultCode isEqual:[NSNull null]]== NO)
     {
         if([ResultCode integerValue]==0)
@@ -340,6 +376,18 @@ static  SignInHttp*__instance;
                 NSArray *arr = [dicList objectForKey:@"Data"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"GetSignInList" object:arr];
                 
+                
+            }
+            if(_request.tag == 8)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSString *dateStr = [dicList objectForKey:@"Data"];
+                D("dateStr = %@",dateStr);
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"getDateMark" object:dateStr];
+
                 
             }
             if(_request.tag == 10)

@@ -6,6 +6,7 @@
 //
 
 #import "JTCalendarMenuMonthView.h"
+#import "dm.h"
 
 @interface JTCalendarMenuMonthView(){
     UILabel *textLabel;
@@ -82,6 +83,7 @@
 //    }
     NSString *chMonth = [self monthToChinese:[[dateFormatter standaloneMonthSymbols][monthIndex - 1] capitalizedString]];
     textLabel.text = [NSString stringWithFormat:@"%ld年%@",year,chMonth];
+    NSString *monthStr = [chMonth stringByReplacingOccurrencesOfString:@"月" withString:@""];
 }
 
 - (void)layoutSubviews
