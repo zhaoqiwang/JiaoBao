@@ -12,6 +12,7 @@
 #import "ELCImagePickerHeader.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AVFoundation/AVFoundation.h>
+#import "VideoRecorderViewController.h"
 
 @class NewWorkTopViewProtocol;
 
@@ -31,7 +32,7 @@
 
 @end
 
-@interface NewWorkTopView : UIView<UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,AccessoryViewControllerProtocol,UITextViewDelegate,AVAudioRecorderDelegate,AVAudioPlayerDelegate>{
+@interface NewWorkTopView : UIView<UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,AccessoryViewControllerProtocol,UITextViewDelegate,AVAudioRecorderDelegate,AVAudioPlayerDelegate,VideoRecorderViewControllerProtocol>{
     UITextView *mTextV_input;//输入内容
     UIButton *mBtn_accessory;//附件按钮
     UIButton *mBtn_photos;//拍照按钮
