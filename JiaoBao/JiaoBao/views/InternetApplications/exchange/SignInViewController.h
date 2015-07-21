@@ -21,6 +21,8 @@
 @property(nonatomic,strong)NSString *strFlag;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property(nonatomic,strong)NSDate *currentDate;
+@property(nonatomic,assign)BOOL firstFlag;
 - (IBAction)leftBtnAction:(id)sender;
 - (IBAction)rightBtnAction:(id)sender;
 - (IBAction)minusYearAction:(id)sender;

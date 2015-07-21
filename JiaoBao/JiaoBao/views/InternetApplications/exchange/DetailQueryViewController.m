@@ -20,11 +20,12 @@
 @implementation DetailQueryViewController
 -(void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"selectedDateStr"];
+    
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    [self removeObserver:self forKeyPath:@"selectedDateStr"];
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
 
@@ -72,6 +73,11 @@
 {
     if([keyPath isEqualToString:@"selectedDateStr"])
     {
+        if([self.selectedDateStr isEqualToString:@""])
+        {
+            self.dataSource = nil;
+            [self.tableView reloadData];
+        }
         self.selectedDate.text = self.selectedDateStr;
         NSString *unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];//单位ID
         NSString *userId = [NSString stringWithFormat:@"%@",[dm getInstance].userInfo.UserID];//用户ID

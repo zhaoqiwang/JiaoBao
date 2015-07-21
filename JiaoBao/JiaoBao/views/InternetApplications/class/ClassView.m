@@ -20,6 +20,10 @@
 
 - (id)initWithFrame1:(CGRect)frame{
     self = [super init];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
     self.finishSymbol = 0;
     self.finishSybmol2 = 0;
     if (self) {

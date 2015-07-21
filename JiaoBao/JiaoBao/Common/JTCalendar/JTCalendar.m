@@ -6,6 +6,7 @@
 //
 
 #import "JTCalendar.h"
+#import "SignInHttp.h"
 
 #define NUMBER_PAGES_LOADED 5 // Must be the same in JTCalendarView, JTCalendarMenuView, JTCalendarContentView
 
@@ -17,36 +18,9 @@
 @end
 
 @implementation JTCalendar
--(void)leftAction:(id)sender
-{
-        self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.contentView.frame.size.width/2, self.contentView.contentOffset.y);
-        self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.menuMonthsView.frame.size.width/2, self.menuMonthsView.contentOffset.y);
-    [self updatePage];
-    
-}
 
--(void)rightAction:(id)sender
-{
-    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.contentView.frame.size.width/2, self.contentView.contentOffset.y);
-    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.menuMonthsView.frame.size.width/2, self.menuMonthsView.contentOffset.y);
-    [self updatePage];
-    
-}
 
--(void)minusYearAction:(id)sender
-{
-    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.contentView.frame.size.width*6, self.contentView.contentOffset.y);
-    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x -self.menuMonthsView.frame.size.width*6, self.menuMonthsView.contentOffset.y);
-    [self updatePage];
-    
-}
--(void)addYearAction:(id)sender
-{
-    self.contentView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.contentView.frame.size.width*6, self.contentView.contentOffset.y);
-    self.menuMonthsView.contentOffset = CGPointMake(self.contentView.contentOffset.x +self.menuMonthsView.frame.size.width*6, self.menuMonthsView.contentOffset.y);
-    [self updatePage];
-    
-}
+
 
 - (instancetype)init
 {
@@ -58,10 +32,7 @@
     
     self->_currentDate = [NSDate date];
     calendarAppearance = [JTCalendarAppearance new];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(leftAction:) name:@"leftBtnAction" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(rightAction:) name:@"rightBtnAction" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(minusYearAction:) name:@"minusYearAction" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addYearAction:) name:@"addYearAction" object:nil];
+
 
     
     return self;
@@ -97,6 +68,9 @@
 
 - (void)reloadData
 {
+
+
+    //[[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:[dm getInstance].monthStr];
     // Position to the middle page
     CGFloat pageWidth = CGRectGetWidth(self.contentView.frame);
     self.contentView.contentOffset = CGPointMake(pageWidth * ((NUMBER_PAGES_LOADED / 2)), self.contentView.contentOffset.y);
@@ -120,6 +94,8 @@
 
 - (void)setCurrentDate:(NSDate *)currentDate
 {
+
+
     self->_currentDate = currentDate;
     
     [self.menuMonthsView setCurrentDate:currentDate];
@@ -151,6 +127,7 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+
     if(scrollView == self.contentView){
         self.menuMonthsView.scrollEnabled = NO;
     }
@@ -168,10 +145,12 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self updatePage];
+    
 }
 
 - (void)updatePage
 {
+
     CGFloat pageWidth = CGRectGetWidth(self.contentView.frame);
     CGFloat fractionalPage = self.contentView.contentOffset.x / pageWidth;
         
@@ -195,6 +174,7 @@
     NSDate *currentDate = [calendar dateByAddingComponents:dayComponent toDate:self.currentDate options:0];
     
     [self setCurrentDate:currentDate];
+
     
     self.menuMonthsView.scrollEnabled = YES;
     self.contentView.scrollEnabled = YES;
