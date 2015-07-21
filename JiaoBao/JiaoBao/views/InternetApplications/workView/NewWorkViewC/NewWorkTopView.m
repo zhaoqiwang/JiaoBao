@@ -44,10 +44,11 @@
         self.mBtn_accessory.titleLabel.font = [UIFont systemFontOfSize:12];
         [self.mBtn_accessory addTarget:self action:@selector(mBtn_accessory:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.mBtn_accessory];
-        //拍照
+        //拍照----录音
         self.mBtn_photos = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_photos.frame = CGRectMake(self.mBtn_accessory.frame.origin.x+self.mBtn_accessory.frame.size.width+a, self.mBtn_accessory.frame.origin.y, 60, 30);
-        [self.mBtn_photos setImage:[UIImage imageNamed:@"NewWork_photo"] forState:UIControlStateNormal];
+        [self.mBtn_photos setImage:[UIImage imageNamed:@"NewWork_photo1"] forState:UIControlStateNormal];
+        
         [self.mBtn_photos setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         self.mBtn_photos.titleLabel.font = [UIFont systemFontOfSize:12];
         [self.mBtn_photos addTarget:self action:@selector(btnVoiceDown:) forControlEvents:UIControlEventTouchDown];
@@ -106,16 +107,17 @@
 
 //附件按钮点击事件
 -(void)mBtn_accessory:(UIButton *)btn{
-    AccessoryViewController *access = [[AccessoryViewController alloc] init];
-    access.delegate = self;
-    [utils pushViewController:access animated:YES];
+//    AccessoryViewController *access = [[AccessoryViewController alloc] init];
+//    access.delegate = self;
+//    [utils pushViewController:access animated:YES];
+    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"添加附件" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册添加",@"拍照添加",@"录制视频",@"本地附件",nil];
+    action.tag = 1;
+    [action showInView:self.superview];
 }
 
 //点击照片
 -(void)mBtn_photo:(UIButton *)btn{
-    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"添加附件" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册添加",@"拍照添加",nil];
-    action.tag = 1;
-    [action showInView:self.superview];
+    
 }
 
 //发送按钮
@@ -134,6 +136,13 @@
 //附件选择界面的回调
 -(void)selectFile:(NSMutableArray *)array{
     [self.mArr_accessory addObjectsFromArray:array];
+    //添加显示附件
+    [self addAccessoryPhoto];
+}
+
+//视频返回
+-(void)VideoRecorderSelectFile:(AccessoryModel *)model{
+    [self.mArr_accessory addObject:model];
     //添加显示附件
     [self addAccessoryPhoto];
 }
@@ -193,6 +202,14 @@
             [utils pushViewController1:elcPicker animated:YES];
         }else if (buttonIndex == 1){//拍照添加
             [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+        }else if (buttonIndex ==2){//本地附件
+            VideoRecorderViewController *video = [[VideoRecorderViewController alloc] init];
+            video.delegate = self;
+            [utils pushViewController:video animated:NO];
+        }else if (buttonIndex ==3){//本地附件
+            AccessoryViewController *access = [[AccessoryViewController alloc] init];
+            access.delegate = self;
+            [utils pushViewController:access animated:YES];
         }
     }
 }
@@ -202,25 +219,29 @@
 //    NSString *name = [self.mArr_accessory objectAtIndex:btn.tag];
     AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
     NSString *name = model.mStr_name;
-    if([[name pathExtension] isEqualToString:@"png"]) {  //取得后缀名这.png的文件名
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        //文件名
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
-        NSString *imgPath=[tempPath stringByAppendingPathComponent:name];
-        UIImage *img = [UIImage imageWithContentsOfFile:imgPath];
-        UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
-        D("tempviewshgkeh-====%@",NSStringFromCGRect(self.frame));
-        tempView.backgroundColor = [UIColor blackColor];
-        tempView.tag = 998;
-        UITapGestureRecognizer *tempTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTempViewRemove:)];
-        [tempView addGestureRecognizer:tempTap];
-        UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, (self.frame.size.height-320)/2, 320, 320)];
-        [imgV setImage:img];
-        [tempView addSubview:imgV];
-        [self addSubview:tempView];
-    }else if([[name pathExtension] isEqualToString:@"aac"]) {  //取得后缀名这.aac的文件名,录音
-//        AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
+    if([[name pathExtension] isEqualToString:@"aac"]) {  //取得后缀名这.aac的文件名,录音
+        //        AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
         [self playRecordSound:model.pathStr];
+//    }else if([[name pathExtension] isEqualToString:@"png"]) {  //取得后缀名这.png的文件名
+        }else {  //取得后缀名这.png的文件名
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        //文件名
+//        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+//        NSString *imgPath=[tempPath stringByAppendingPathComponent:name];
+//        UIImage *img = [UIImage imageWithContentsOfFile:imgPath];
+//        UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
+//        D("tempviewshgkeh-====%@",NSStringFromCGRect(self.frame));
+//        tempView.backgroundColor = [UIColor blackColor];
+//        tempView.tag = 998;
+//        UITapGestureRecognizer *tempTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTempViewRemove:)];
+//        [tempView addGestureRecognizer:tempTap];
+//        UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, (self.frame.size.height-320)/2, 320, 320)];
+//        [imgV setImage:img];
+//        [tempView addSubview:imgV];
+//        [self addSubview:tempView];
+        OpenFileViewController *openFile = [[OpenFileViewController alloc] init];
+        openFile.mStr_name = model.mStr_name;
+        [utils pushViewController:openFile animated:YES];
     }
 }
 
@@ -296,11 +317,11 @@
                     }
                 }
             } else {
-                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+                D("UIImagePickerControllerReferenceURL = %@", dict);
             }
         }
         else {
-            NSLog(@"Uknown asset type");
+            D("Uknown asset type");
         }
         timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
     }
@@ -454,7 +475,7 @@
     [self.imageView setHidden:YES];
     double cTime = self.recorder.currentTime;
     if (cTime > 2) {//如果录制时间<2 不发送
-        NSLog(@"发出去");
+        D("发出去");
     }else {
         //删除记录的文件
         [self.recorder deleteRecording];
@@ -548,22 +569,23 @@
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder
                            successfully:(BOOL)flag{
     if (flag){
-        NSLog(@"Successfully stopped the audio recording process.");
+        D("Successfully stopped the audio recording process.");
         /* Let's try to retrieve the data for the recorded file */
 //        NSError *playbackError = nil;
         AccessoryModel *model = [[AccessoryModel  alloc] init];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSError *readingError = nil;
         NSData *fileData =[NSData dataWithContentsOfFile:mStr_path
-                               options:NSDataReadingMapped
-                                 error:&readingError];
+                                                 options:NSDataReadingMapped
+                                                   error:&readingError];
         NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
-        NSString *path = [self audioRecordingPath];
+        NSString *path = [self audioRecordingPath000];
+        path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
         
         BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:path];
         
         if (!yesNo) {//不存在，则直接写入后通知界面刷新
-            BOOL result = [fileData writeToFile:mStr_path atomically:YES];
+            BOOL result = [fileData writeToFile:path atomically:YES];
             for (;;) {
                 if (result) {
                     model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
@@ -578,7 +600,7 @@
         }else {//存在
             BOOL blDele= [fileManager removeItemAtPath:path error:nil];//先删除
             if (blDele) {//删除成功后，写入，通知界面
-                BOOL result = [fileData writeToFile:mStr_path atomically:YES];
+                BOOL result = [fileData writeToFile:path atomically:YES];
                 for (;;) {
                     if (result) {
                         model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
@@ -594,23 +616,8 @@
         }
         //添加显示附件
         [self addAccessoryPhoto];
-        /* Form an audio player and make it play the recorded data */
-//        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:fileData
-//                                                         error:&playbackError];
-//        /* Could we instantiate the audio player? */
-//        if (self.audioPlayer != nil){
-//            self.audioPlayer.delegate = self;
-//            /* Prepare to play and start playing */
-//            if ([self.audioPlayer prepareToPlay] && [self.audioPlayer play]){
-//                NSLog(@"Started playing the recorded audio.");
-//            } else {
-//                NSLog(@"Could not play the audio.");
-//            }
-//        } else {
-//            NSLog(@"Failed to create an audio player.");
-//        }
     } else {
-        NSLog(@"Stopping the audio recording failed.");
+        D("Stopping the audio recording failed.");
     }
     /* Here we don't need the audio recorder anymore */
 //    self.recorder = nil;
@@ -646,7 +653,7 @@
     NSString *result = nil;
     
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
-    mStr_time = timeSp;
+//    mStr_time = timeSp;
     NSString *tempPath = [self audioRecordingPath000];
     result = [tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
     return result;

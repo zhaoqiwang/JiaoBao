@@ -414,6 +414,12 @@
 		A761D4081A7F697900DCAEB9 /* rootTableSelect_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3EA1A7F697900DCAEB9 /* rootTableSelect_4@2x.png */; };
 		A761D4091A7F697900DCAEB9 /* rootTableSelect_4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3EB1A7F697900DCAEB9 /* rootTableSelect_4@3x.png */; };
 		A761D40D1A7F7B4C00DCAEB9 /* GetArthInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A761D40C1A7F7B4C00DCAEB9 /* GetArthInfoModel.m */; };
+		A76255D21B5C9EDB00AD8089 /* VideoRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A76255D01B5C9EDB00AD8089 /* VideoRecorderViewController.m */; };
+		A76255D31B5C9EDB00AD8089 /* VideoRecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76255D11B5C9EDB00AD8089 /* VideoRecorderViewController.xib */; };
+		A76255D71B5C9F6200AD8089 /* AVCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A76255D61B5C9F6200AD8089 /* AVCaptureManager.m */; };
+		A76255DB1B5CD1E900AD8089 /* NewWork_photo1.png in Resources */ = {isa = PBXBuildFile; fileRef = A76255D81B5CD1E900AD8089 /* NewWork_photo1.png */; };
+		A76255DC1B5CD1E900AD8089 /* NewWork_photo1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A76255D91B5CD1E900AD8089 /* NewWork_photo1@2x.png */; };
+		A76255DD1B5CD1E900AD8089 /* NewWork_photo1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A76255DA1B5CD1E900AD8089 /* NewWork_photo1@3x.png */; };
 		A7626FC11B0D7EDB006957F2 /* popupWindow_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = A7626FB81B0D7EDB006957F2 /* popupWindow_comment.png */; };
 		A7626FC21B0D7EDB006957F2 /* popupWindow_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7626FB91B0D7EDB006957F2 /* popupWindow_comment@2x.png */; };
 		A7626FC31B0D7EDB006957F2 /* popupWindow_comment@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7626FBA1B0D7EDB006957F2 /* popupWindow_comment@3x.png */; };
@@ -1417,6 +1423,14 @@
 		A761D3EB1A7F697900DCAEB9 /* rootTableSelect_4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rootTableSelect_4@3x.png"; path = "Image/root/rootTableSelect_4@3x.png"; sourceTree = "<group>"; };
 		A761D40B1A7F7B4C00DCAEB9 /* GetArthInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetArthInfoModel.h; path = views/InternetApplications/shareView/model/GetArthInfoModel.h; sourceTree = "<group>"; };
 		A761D40C1A7F7B4C00DCAEB9 /* GetArthInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetArthInfoModel.m; path = views/InternetApplications/shareView/model/GetArthInfoModel.m; sourceTree = "<group>"; };
+		A76255CF1B5C9EDB00AD8089 /* VideoRecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoRecorderViewController.h; path = views/InternetApplications/workView/NewWorkViewC/VideoRecorderViewController.h; sourceTree = "<group>"; };
+		A76255D01B5C9EDB00AD8089 /* VideoRecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VideoRecorderViewController.m; path = views/InternetApplications/workView/NewWorkViewC/VideoRecorderViewController.m; sourceTree = "<group>"; };
+		A76255D11B5C9EDB00AD8089 /* VideoRecorderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VideoRecorderViewController.xib; path = views/InternetApplications/workView/NewWorkViewC/VideoRecorderViewController.xib; sourceTree = "<group>"; };
+		A76255D51B5C9F6200AD8089 /* AVCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVCaptureManager.h; path = Common/AVCaptureManager/AVCaptureManager.h; sourceTree = "<group>"; };
+		A76255D61B5C9F6200AD8089 /* AVCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVCaptureManager.m; path = Common/AVCaptureManager/AVCaptureManager.m; sourceTree = "<group>"; };
+		A76255D81B5CD1E900AD8089 /* NewWork_photo1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewWork_photo1.png; path = Image/InternetApp/workView/NewWorkView/NewWork_photo1.png; sourceTree = "<group>"; };
+		A76255D91B5CD1E900AD8089 /* NewWork_photo1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWork_photo1@2x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWork_photo1@2x.png"; sourceTree = "<group>"; };
+		A76255DA1B5CD1E900AD8089 /* NewWork_photo1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWork_photo1@3x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWork_photo1@3x.png"; sourceTree = "<group>"; };
 		A7626FB81B0D7EDB006957F2 /* popupWindow_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = popupWindow_comment.png; path = Image/InternetApp/class/popup/popupWindow_comment.png; sourceTree = "<group>"; };
 		A7626FB91B0D7EDB006957F2 /* popupWindow_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popupWindow_comment@2x.png"; path = "Image/InternetApp/class/popup/popupWindow_comment@2x.png"; sourceTree = "<group>"; };
 		A7626FBA1B0D7EDB006957F2 /* popupWindow_comment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "popupWindow_comment@3x.png"; path = "Image/InternetApp/class/popup/popupWindow_comment@3x.png"; sourceTree = "<group>"; };
@@ -2713,6 +2727,7 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A76255D41B5C9F3C00AD8089 /* AVCaptureManager */,
 				A7D504501B4E03DA00BBB7C8 /* UMAnalytics_Sdk */,
 				A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */,
 				A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */,
@@ -3088,6 +3103,15 @@
 			name = class;
 			sourceTree = "<group>";
 		};
+		A76255D41B5C9F3C00AD8089 /* AVCaptureManager */ = {
+			isa = PBXGroup;
+			children = (
+				A76255D51B5C9F6200AD8089 /* AVCaptureManager.h */,
+				A76255D61B5C9F6200AD8089 /* AVCaptureManager.m */,
+			);
+			name = AVCaptureManager;
+			sourceTree = "<group>";
+		};
 		A7626FB71B0D7E7C006957F2 /* pupup */ = {
 			isa = PBXGroup;
 			children = (
@@ -3364,6 +3388,9 @@
 				F76B64501B1EA4CE008F6961 /* CustomCell.xib */,
 				F72A726A1B2BBCFC00378C95 /* RightModel.h */,
 				F72A726B1B2BBCFC00378C95 /* RightModel.m */,
+				A76255CF1B5C9EDB00AD8089 /* VideoRecorderViewController.h */,
+				A76255D01B5C9EDB00AD8089 /* VideoRecorderViewController.m */,
+				A76255D11B5C9EDB00AD8089 /* VideoRecorderViewController.xib */,
 			);
 			name = NewWorkViewC;
 			sourceTree = "<group>";
@@ -3371,6 +3398,9 @@
 		A7781F2C1AE8951200F03AEB /* NewWorkView */ = {
 			isa = PBXGroup;
 			children = (
+				A76255D81B5CD1E900AD8089 /* NewWork_photo1.png */,
+				A76255D91B5CD1E900AD8089 /* NewWork_photo1@2x.png */,
+				A76255DA1B5CD1E900AD8089 /* NewWork_photo1@3x.png */,
 				A74D26801B58FA8600E63DFB /* Recorder */,
 				F75029E51AEE1CB3004F822F /* insideworkImage */,
 				A782AEAD1AE9D71A00547B0F /* NewWork_accessory.png */,
@@ -4057,6 +4087,7 @@
 				A7BB180019F4F91E00A81286 /* Regiser_bg@2x.png in Resources */,
 				A754D3301A22CBE1000E356A /* SharePostingViewController.xib in Resources */,
 				A7CE67321AA70A250038D0C5 /* shareArticle.png in Resources */,
+				A76255DC1B5CD1E900AD8089 /* NewWork_photo1@2x.png in Resources */,
 				A74D26961B58FAE200E63DFB /* record_animate_08.png in Resources */,
 				A7357A1C1A3FE1E000A195C5 /* MyFriendsViewController.xib in Resources */,
 				A75E6EBC1ABACDBD00B51B18 /* classView_1@2x.png in Resources */,
@@ -4128,12 +4159,14 @@
 				F7502A261AEE1E50004F822F /* rTri@3x.png in Resources */,
 				F7502A191AEE1E50004F822F /* HomeClass_Click_1.png in Resources */,
 				F7502A1B1AEE1E50004F822F /* HomeClass_Click_2.png in Resources */,
+				A76255D31B5C9EDB00AD8089 /* VideoRecorderViewController.xib in Resources */,
 				A782AECA1AE9D71A00547B0F /* NewWork_unSendMsg@3x.png in Resources */,
 				A76ED5C01AD67855006F3E0B /* workView_4@3x.png in Resources */,
 				A761D4061A7F697900DCAEB9 /* rootTableSelect_3@3x.png in Resources */,
 				A766B4451ACB9E1B00018D46 /* classView_more@2x.png in Resources */,
 				A7AD8C5219F644A2002E65FB /* tabbar_center1.png in Resources */,
 				A727C7DD1A6F93780019C4CD /* share_lookBig.png in Resources */,
+				A76255DD1B5CD1E900AD8089 /* NewWork_photo1@3x.png in Resources */,
 				A76ED5CA1AD67855006F3E0B /* workView_click_3.png in Resources */,
 				A77608F81B09844000A25DC3 /* appNav_access.png in Resources */,
 				A7AD8C5819F644A2002E65FB /* tabbar_student2.png in Resources */,
@@ -4153,6 +4186,7 @@
 				F7F460B71AE891C70069820F /* triangle@2x.png in Resources */,
 				A761D3EE1A7F697900DCAEB9 /* rootTable_0@3x.png in Resources */,
 				A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */,
+				A76255DB1B5CD1E900AD8089 /* NewWork_photo1.png in Resources */,
 				A71D61E41A1C96A400B8D33D /* share_new1@2x.png in Resources */,
 				A782AEC01AE9D71A00547B0F /* NewWork_photo@2x.png in Resources */,
 				F7502A121AEE1E50004F822F /* HomeClass_1@2x.png in Resources */,
@@ -4628,6 +4662,7 @@
 				A77FF02E1A650B3F00DB85E3 /* JSONModel+networking.m in Sources */,
 				A7375F451A0B235B00B31926 /* Forward_cell.m in Sources */,
 				A7BEEA111A43D0C8003C9EAD /* UnitAlbumsViewController.m in Sources */,
+				A76255D21B5C9EDB00AD8089 /* VideoRecorderViewController.m in Sources */,
 				A7595EA31A5FC2F30027848E /* PSTCollectionViewUpdateItem.m in Sources */,
 				A7595E981A5FC2F30027848E /* DACircularProgressView.m in Sources */,
 				A73AD82C1A20721E00F68C47 /* UnitInfoModel.m in Sources */,
@@ -4674,6 +4709,7 @@
 				A73CAD561A071EC200D6C5AA /* WorkDetailListViewController.m in Sources */,
 				A7357A391A4025B800A195C5 /* ThemeListModel.m in Sources */,
 				A773FC4C1A4C0563005F84C2 /* ELCConsole.m in Sources */,
+				A76255D71B5C9F6200AD8089 /* AVCaptureManager.m in Sources */,
 				A73B52B919FB980F00187CB9 /* ParserJson.m in Sources */,
 				A7781F2B1AE88F2200F03AEB /* MoreUnitWorkView.m in Sources */,
 				A755E6A619F24EBD00BBDF3D /* RegisterViewController.m in Sources */,
