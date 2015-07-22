@@ -437,7 +437,7 @@ static ShareHttp *shareHttp = nil;
         //通知shareview界面，将得到的值，传到界面
         NSString *flag = [_request.userInfo objectForKey:@"sectionFlag"];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:array forKey:@"array"];
         if ([flag isEqual:@"1"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"TopArthListIndex" object:dic];
@@ -482,7 +482,7 @@ static ShareHttp *shareHttp = nil;
         //通知shareview界面，将得到的值，传到界面
         NSString *flag = [_request.userInfo objectForKey:@"sectionID"];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:array forKey:@"array"];
         if ([flag isEqual:@"1"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfo" object:dic];
@@ -497,7 +497,7 @@ static ShareHttp *shareHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"1" forKey:@"index"];
         [dic setValue:array forKey:@"array"];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         //将值传到界面
         NSString *flag = [_request.userInfo objectForKey:@"flag"];
         if ([flag isEqual:@"1"]) {//分享
@@ -515,7 +515,7 @@ static ShareHttp *shareHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:@"2" forKey:@"index"];
         [dic setValue:array forKey:@"array"];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         //将值传到界面
         NSString *flag = [_request.userInfo objectForKey:@"flag"];
         if ([flag isEqual:@"1"]) {//分享
@@ -530,7 +530,7 @@ static ShareHttp *shareHttp = nil;
         ArthDetailModel *model = [ParserJson_share parserJsonArthDetailWith:str000];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:model forKey:@"model"];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         //通知文章详情界面刷新
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:dic];
     }else if (_request.tag == 7) {//获取本单位的所有下级单位基础信息
@@ -541,7 +541,7 @@ static ShareHttp *shareHttp = nil;
         //获取下级单位logo
         [self getDownUnitImg:array];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:array forKey:@"array"];
         //将值传到界面
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MySubUnitInfo" object:dic];
@@ -552,7 +552,7 @@ static ShareHttp *shareHttp = nil;
         UploadImgModel *model = [ParserJson_share parserJsonUploadImgWith:str000];
         //通知界面
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UploadImg" object:dic];
     }else if (_request.tag == 9) {//发表文章
@@ -598,7 +598,7 @@ static ShareHttp *shareHttp = nil;
         //获取头像
         [self getFaceImg:model.noticeInfoArray flag:2];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:model forKey:@"model"];
         //通知到内务获取到的单位通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitNotices" object:dic];
@@ -609,7 +609,7 @@ static ShareHttp *shareHttp = nil;
         NoticeInfoModel *model = [ParserJson_share parserJsonNoticeDetailWith:str000];
         //通知文章详情界面刷新
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ArthDetai" object:dic];
     }else if (_request.tag == 13) {//文章点赞
@@ -637,7 +637,7 @@ static ShareHttp *shareHttp = nil;
         NSString *flag = [_request.userInfo objectForKey:@"flag"];
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         if ([flag intValue]==2) {//学校圈总界面
             [dic setValue:model forKey:@"model"];
             [dic setValue:tableID forKey:@"tableID"];
@@ -656,10 +656,10 @@ static ShareHttp *shareHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         if ([time intValue] ==0) {
             str = @"评论成功";
-            [dic setValue:@"0" forKey:@"flag"];
+            [dic setValue:code forKey:@"flag"];
         }else{
             str = @"评论失败";
-            [dic setValue:@"1" forKey:@"flag"];
+            [dic setValue:code forKey:@"flag"];
         }
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
         NSString *comment = [_request.userInfo objectForKey:@"comment"];
@@ -675,10 +675,10 @@ static ShareHttp *shareHttp = nil;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         if ([time intValue] ==0) {
             str = @"成功";
-            [dic setValue:@"0" forKey:@"flag"];
+            [dic setValue:code forKey:@"flag"];
         }else{
             str = @"失败";
-            [dic setValue:@"1" forKey:@"flag"];
+            [dic setValue:code forKey:@"flag"];
         }
         NSString *temp1 = [_request.userInfo objectForKey:@"uid"];
         NSString *temp2 = [_request.userInfo objectForKey:@"tp"];
@@ -696,7 +696,7 @@ static ShareHttp *shareHttp = nil;
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
         model.TabIDStr = tableID;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"0" forKey:@"flag"];
+        [dic setValue:code forKey:@"flag"];
         [dic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:dic];
     }

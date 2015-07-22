@@ -58,8 +58,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
     // Do any additional setup after loading the view from its nib.
     
     self.mArr_list = [NSMutableArray array];
