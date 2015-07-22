@@ -240,13 +240,10 @@ static  SignInHttp*__instance;
     
     NSString *userID = [dm getInstance].userInfo.UserID;
     NSString *unitID = [dm getInstance].userInfo.UnitID;
-    NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *dateString = [dateFormatter stringFromDate:date];
+
     [request addPostValue:userID forKey:@"UserID"];
     [request addPostValue:unitID forKey:@"UnitID"];
-    [request addPostValue:[dm getInstance].monthStr forKey:@"strSelectDate"];
+    [request addPostValue:strSelectDate forKey:@"strSelectDate"];
     
     request.tag = 8;//设置请求tag
     [request setDelegate:self];
@@ -310,6 +307,11 @@ static  SignInHttp*__instance;
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"getQueryResult" object:dataList];
                     
                     
+                }
+                else
+                {
+                    NSArray *arr ;
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"getQueryResult" object:arr];
                 }
                 
             }
@@ -385,7 +387,6 @@ static  SignInHttp*__instance;
                 NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
                 NSDictionary *dicList = [dataString objectFromJSONString];
                 NSString *dateStr = [dicList objectForKey:@"Data"];
-                D("dateStr = %@",dateStr);
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"getDateMark" object:dateStr];
 
                 

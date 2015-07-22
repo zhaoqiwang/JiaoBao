@@ -195,6 +195,26 @@
         } completion:^(BOOL finished) {
             if (finished) {
                 //设置页出现
+                //做bug服务器显示当前的哪个界面
+                if(sender.tag == 100)
+                {
+                    NSString *nowViewStr = @"classView";
+                    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+                    
+                    
+                }
+                if(sender.tag == 101)
+                {
+                    NSString *nowViewStr = @"WorkView_new2";
+                    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+
+                }
+                if(sender.tag == 102)
+                {
+                    NSString *nowViewStr = @"themeView";
+                    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+                }
+
             [[InternetAppRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
                 //赋值滑动列表选择ID
                 mInt_scrollViewSelectedChannelID = sender.tag;

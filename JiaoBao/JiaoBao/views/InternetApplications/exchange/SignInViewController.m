@@ -60,29 +60,48 @@
 {
     NSString *dateStr = [sender object];
     self.dateArr = nil;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
     if(dateStr&&[dateStr isEqual:[NSNull null]]==NO)
     {
         self.dateArr = [dateStr componentsSeparatedByString:@","];
     }
-    if([self.strFlag isEqualToString:@"left"])
+    D("dateArr = %@",self.dateArr);
+    if([self.strFlag isEqualToString:@"addYear"])
     {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];
-
-    }
-    if([self.strFlag isEqualToString:@"right"])
-    {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"rightBtnAction" object:@"right"];
-        
+        JTCalendar *jt_calendar = self.calendar;
+        jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
+        jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
     }
     if([self.strFlag isEqualToString:@"minusYear"])
     {
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"minusYearAction" object:@"minusYear"];
+        JTCalendar *jt_calendar = self.calendar;
+        jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
+        jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
     }
-    if([self.strFlag isEqualToString:@"addYear"])
+    
+        if([self.selcetedDateStr rangeOfString:dateString].location!=NSNotFound)
+        {
+            self.detail.selectedDateStr = self.selcetedDateStr;
+        }
+        else
+        {
+            self.detail.selectedDateStr = @"";
+            
+        }
+    if(self.firstFlag ==NO)
     {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"addYearAction" object:@"addYear"];
+        [self.calendar updatePage];
+
+        
+    }
+    else
+    {
+        self.firstFlag = NO;
     }
 
+    
     self.strFlag = @"";
     
 }
@@ -105,11 +124,12 @@
     [self.calendar setMenuMonthsView:self.menuView];
     [self.calendar setContentView:self.calendarView];
     [self.calendar setDataSource:self];
+    self.currentDate = self.calendar.currentDate;
+    self.firstFlag = YES;
     NSDateFormatter *dateFormatter2 = [[NSDateFormatter alloc] init];
     [dateFormatter2 setDateFormat:@"yyyy-MM"];
     NSString *dateString = [dateFormatter2 stringFromDate:self.calendar.currentDate];
-    [dm getInstance].monthStr = dateString;
-    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nil];
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
 
     //通过通知获取最多延迟时间
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetDelayedTime:) name:@"GetDelayedTime" object:nil];
@@ -133,19 +153,11 @@
 //点击导航栏右侧按钮方法
 -(void)navigationRightAction:(UIButton *)sender
 {
-    //    NSTimeZone* localzone = [NSTimeZone localTimeZone];
-    //    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    //    NSDate *curDate = [NSDate date];
-    //    NSLog(@"curDate = %@",curDate);
-    //    NSTimeInterval  interval = 24*60*60;
-    //    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
-    //    NSLog(@"destDate = %@",destDate);
-    //    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *slectedDate = [dateFormatter dateFromString:self.selcetedDateStr];
-    //    [dateFormatter setTimeZone:GTMzone];
-    //    [dateFormatter setTimeZone:localzone];
+
     NSDate *curDate = [NSDate date];
     NSString *curDateStr = [dateFormatter stringFromDate:curDate];
     NSDate *currDate = [dateFormatter dateFromString:curDateStr];
@@ -172,24 +184,7 @@
         [self.navigationController pushViewController:detail animated:YES];
         
     }
-//    NSMutableArray *menuItems =[[NSMutableArray alloc]initWithCapacity:0];
-//    for(int i=0;i<self.groupArr.count;i++)
-//    {
-//        KxMenuItem *menuItem = [KxMenuItem menuItem:[[self.groupArr objectAtIndex:i]objectForKey:@"GroupName"]
-//                                              image:[UIImage imageNamed:@"appNav_groupChat"]
-//                                             target:self
-//                                             action:@selector(selecteGroup:)];
-//        menuItem.tag = i;
-//        [menuItems addObject:menuItem];
-//    }
-//
-//    //    KxMenuItem *first = menuItems[0];
-//    //    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-//    //    first.alignment = NSTextAlignmentCenter;
-//    
-//    [KxMenu showMenuInView:self.view
-//                  fromRect:sender.frame
-//                 menuItems:menuItems];
+
     
 }
 //点击组数据列表某行的方法
@@ -264,15 +259,14 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM"];
     NSString *dateString = [dateFormatter stringFromDate:date];
+    NSLog(@"calendarHaveEventDate = %@" ,date);
     NSString *currentDateString = [dateFormatter stringFromDate:calendar.currentDate];
-    //NSString *currentDateString2 = [NSString stringWithFormat:@"%@-"
-    NSString * monthStr = [dm getInstance].monthStr;
-    if([dateString isEqualToString:[dm getInstance].monthStr])
+    if([dateString isEqualToString:currentDateString])
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"dd"];
         NSInteger dayInt = [[dateFormatter stringFromDate:date]integerValue];
-        NSString *dayString = [NSString stringWithFormat:@"%ld",dayInt];
+        NSString *dayString = [NSString stringWithFormat:@"%ld",(long)dayInt];
         if([self.dateArr containsObject:dayString])
         {
             return 1;
@@ -288,19 +282,11 @@
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-   // NSTimeInterval  interval = 24*60*60;
-    
-//    NSDate *destDate = [date dateByAddingTimeInterval:interval];
-//    NSLog(@"destDate = %@",destDate);
-//    //self.calendar.currentDateSelected = destDate;
-//
-//    NSLog(@"date = %@",date);
+
     NSString *destDateString = [dateFormatter stringFromDate:date];
     self.selcetedDateStr = destDateString;
-    self.detail.selectedDateStr = self.selcetedDateStr;
-//    NSDate *curDate = [NSDate date];
-//    NSString *destDateString2 = [dateFormatter stringFromDate:curDate];
-//    NSLog(@"curDate = %@",destDateString2);
+    self.detail.selectedDateStr = destDateString;
+
 
     
     
@@ -327,19 +313,11 @@
 }
 //点击请求所响应的方法
 - (IBAction)queryAction:(id)sender {
-    //    NSTimeZone* localzone = [NSTimeZone localTimeZone];
-    //    NSTimeZone* GTMzone = [NSTimeZone timeZoneForSecondsFromGMT:0];
-    //    NSDate *curDate = [NSDate date];
-    //    NSLog(@"curDate = %@",curDate);
-    //    NSTimeInterval  interval = 24*60*60;
-    //    NSDate *destDate = [self.calendar.currentDateSelected dateByAddingTimeInterval:interval];
-    //    NSLog(@"destDate = %@",destDate);
-    //    DetailSubmitViewController *detail = [[DetailSubmitViewController alloc]init];
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *slectedDate = [dateFormatter dateFromString:self.selcetedDateStr];
-    //    [dateFormatter setTimeZone:GTMzone];
-    //    [dateFormatter setTimeZone:localzone];
+
     NSDate *curDate = [NSDate date];
     NSString *curDateStr = [dateFormatter stringFromDate:curDate];
     NSDate *currDate = [dateFormatter dateFromString:curDateStr];
@@ -374,80 +352,85 @@
     [self.navigationController popViewControllerAnimated:NO];
 }
 - (IBAction)leftBtnAction:(id)sender {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM"];
-    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    JTCalendar *jt_calendar = self.calendar;
+
+    jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.contentView.frame.size.width/2, jt_calendar.contentView.contentOffset.y);
+    jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.menuMonthsView.frame.size.width/2, jt_calendar.menuMonthsView.contentOffset.y);
+    //[jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
     [adcomps setYear:0];
     [adcomps setMonth:-1];
     [adcomps setDay:0];
-    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
-    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
-    [dm getInstance].monthStr = nextStr;
-    self.strFlag = @"left";
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.calendar.currentDate options:0];
+    //[self.calendar setCurrentDate:nextDate];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
 
-    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
-    //[[NSNotificationCenter defaultCenter]postNotificationName:@"leftBtnAction" object:@"left"];
 }
 
 - (IBAction)rightBtnAction:(id)sender {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM"];
-    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    JTCalendar *jt_calendar = self.calendar;
+    jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.contentView.frame.size.width/2, jt_calendar.contentView.contentOffset.y);
+    jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.menuMonthsView.frame.size.width/2, jt_calendar.menuMonthsView.contentOffset.y);
+    //[jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
     [adcomps setYear:0];
     [adcomps setMonth:1];
     [adcomps setDay:0];
-    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
-    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
-    [dm getInstance].monthStr = nextStr;
-    self.strFlag = @"right";
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+    //[self.calendar setCurrentDate:nextDate];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
 
-    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
-
-        //[[NSNotificationCenter defaultCenter]postNotificationName:@"rightBtnAction" object:@"right"];
 }
 
 - (IBAction)minusYearAction:(id)sender {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM"];
-    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    JTCalendar *jt_calendar = self.calendar;
+
+    jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
+    jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
+    //[jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
     [adcomps setYear:-1];
     [adcomps setMonth:0];
     [adcomps setDay:0];
-    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
-    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
-    [dm getInstance].monthStr = nextStr;
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+    //[self.calendar setCurrentDate:nextDate];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
     self.strFlag = @"minusYear";
-
-    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
-
-
-
 
 }
 
 - (IBAction)addYearAction:(id)sender {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM"];
-    NSDate *date = [dateFormatter dateFromString:[dm getInstance].monthStr];
+    JTCalendar *jt_calendar = self.calendar;
+
+    jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
+    jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
+    //[jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
     [adcomps setYear:1];
     [adcomps setMonth:0];
     [adcomps setDay:0];
-    NSDate *nextDate = [calendar dateByAddingComponents:adcomps toDate:date options:0];
-    NSString *nextStr = [dateFormatter stringFromDate:nextDate];
-    [dm getInstance].monthStr = nextStr;
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM"];
+    NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
+    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
     self.strFlag = @"addYear";
 
-    [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:nextStr];
+    //[self.calendar setCurrentDate:nextDate];
 
-    //[[NSNotificationCenter defaultCenter]postNotificationName:@"addYearAction" object:@"addYear"];
 }
 
 

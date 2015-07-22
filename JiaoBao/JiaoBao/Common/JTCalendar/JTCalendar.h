@@ -22,7 +22,8 @@
 
 @property (strong, nonatomic) NSDate *currentDate;
 @property (strong, nonatomic) NSDate *currentDateSelected;
-
+@property(assign,nonatomic)BOOL isYear;
+- (void)updatePage;
 - (JTCalendarAppearance *)calendarAppearance;
 
 - (void)reloadData;
@@ -30,6 +31,7 @@
 
 - (void)loadPreviousMonth;
 - (void)loadNextMonth;
+-(void)removeNotification;
 
 @end
 

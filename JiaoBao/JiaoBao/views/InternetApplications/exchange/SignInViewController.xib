@@ -27,7 +27,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ylP-GG-Hb3">
-                    <rect key="frame" x="20" y="80" width="20" height="20"/>
+                    <rect key="frame" x="20" y="80" width="30" height="30"/>
                     <state key="normal" image="kal_left_arrow.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -36,7 +36,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eUS-vw-8My">
-                    <rect key="frame" x="77" y="80" width="20" height="20"/>
+                    <rect key="frame" x="77" y="80" width="20" height="30"/>
                     <state key="normal" image="kal_left_arrow.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -45,7 +45,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVY-Uz-PPc">
-                    <rect key="frame" x="87" y="80" width="20" height="20"/>
+                    <rect key="frame" x="87" y="80" width="30" height="30"/>
                     <state key="normal" image="kal_left_arrow.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -54,7 +54,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oht-SZ-zoX">
-                    <rect key="frame" x="226" y="80" width="20" height="20"/>
+                    <rect key="frame" x="226" y="80" width="20" height="30"/>
                     <state key="normal" image="kal_right_arrow.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -63,7 +63,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VdV-Gw-CLi">
-                    <rect key="frame" x="236" y="80" width="20" height="20"/>
+                    <rect key="frame" x="236" y="80" width="30" height="30"/>
                     <state key="normal" image="kal_right_arrow.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -72,7 +72,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="akn-9t-gB1">
-                    <rect key="frame" x="290" y="80" width="20" height="20"/>
+                    <rect key="frame" x="290" y="80" width="30" height="30"/>
                     <state key="normal" image="kal_right_arrow.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
