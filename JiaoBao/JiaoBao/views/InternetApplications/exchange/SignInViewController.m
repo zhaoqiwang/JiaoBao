@@ -70,15 +70,11 @@
     D("dateArr = %@",self.dateArr);
     if([self.strFlag isEqualToString:@"addYear"])
     {
-        JTCalendar *jt_calendar = self.calendar;
-        jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
-        jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
+        [self.calendar reloadData];
     }
     if([self.strFlag isEqualToString:@"minusYear"])
     {
-        JTCalendar *jt_calendar = self.calendar;
-        jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
-        jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
+        [self.calendar reloadData];
     }
     
         if([self.selcetedDateStr rangeOfString:dateString].location!=NSNotFound)
@@ -395,7 +391,7 @@
 
     jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
     jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x -jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
-    //[jt_calendar updatePage];
+    [jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
     [adcomps setYear:-1];
@@ -416,7 +412,7 @@
 
     jt_calendar.contentView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.contentView.frame.size.width*6, jt_calendar.contentView.contentOffset.y);
     jt_calendar.menuMonthsView.contentOffset = CGPointMake(jt_calendar.contentView.contentOffset.x +jt_calendar.menuMonthsView.frame.size.width*6, jt_calendar.menuMonthsView.contentOffset.y);
-    //[jt_calendar updatePage];
+    [jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
     [adcomps setYear:1];

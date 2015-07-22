@@ -1211,6 +1211,7 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"indexpath= [%d %d]",indexPath.section,indexPath.row);
     static NSString *indentifier = @"ClassTableViewCell";
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if(cell == nil)
@@ -1386,11 +1387,7 @@
     cell.mLab_likeCount.frame = CGRectMake(cell.mBtn_comment.frame.origin.x-10-likeSize.width, cell.mLab_time.frame.origin.y, likeSize.width, cell.mLab_likeCount.frame.size.height);
     cell.mLab_likeCount.text = model.LikeCount;
     cell.mLab_like.frame = CGRectMake(cell.mLab_likeCount.frame.origin.x-cell.mLab_like.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_like.frame.size.width, cell.mLab_like.frame.size.height);
-    //评论
-//    CGSize feeBackSize = [[NSString stringWithFormat:@"%@",model.FeeBackCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-//    cell.mLab_assessCount.frame = CGRectMake(cell.mLab_like.frame.origin.x-likeSize.width-10, cell.mLab_time.frame.origin.y, feeBackSize.width, cell.mLab_assessCount.frame.size.height);
-//    cell.mLab_assessCount.text = model.FeeBackCount;
-//    cell.mLab_assess.frame = CGRectMake(cell.mLab_assessCount.frame.origin.x-cell.mLab_assess.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_assess.frame.size.width, cell.mLab_assess.frame.size.height);
+
     cell.mLab_assess.hidden = YES;
     cell.mLab_assessCount.hidden = YES;
     //点击量
@@ -1407,14 +1404,9 @@
         NSString *string2 = tempModel.Commnets;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-//        NSString *string1 = [self.nameArr objectAtIndex:i ];
-//        NSString *string2 = [self.commentArr objectAtIndex:i];
+
         NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-//        NSAttributedString* atrString = [[NSAttributedString alloc] initWithString:string];
-//        NSRange range = NSMakeRange(0, atrString.length);
-//        NSDictionary* dic = [atrString attributesAtIndex:0 effectiveRange:&range];
-//        CGRect rect=[string boundingRectWithSize:CGSizeMake(cell.frame.size.width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
-//                                                                                                            attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+
             CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
 
         h = h+size.height;

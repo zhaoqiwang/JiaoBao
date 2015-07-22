@@ -265,6 +265,8 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"indexpath= [%d %d]",indexPath.section,indexPath.row);
+
     static NSString *indentifier = @"WorkViewListCell";
     WorkViewListCell *cell = (WorkViewListCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if(cell == nil){
