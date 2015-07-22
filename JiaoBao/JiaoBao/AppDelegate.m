@@ -331,22 +331,22 @@
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application{
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+//    [[NSURLCache sharedURLCache] removeAllCachedResponses];
     // 清除内存中的图片缓存
-    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
-    [mgr cancelAll];
-    [mgr.imageCache clearMemory];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+//    [mgr cancelAll];
+//    [mgr.imageCache clearMemory];
+////    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
 }
 -(void)didReceiveMemoryWarnin{
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+//    [[NSURLCache sharedURLCache] removeAllCachedResponses];
     // 清除内存中的图片缓存
-    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
-    [mgr cancelAll];
-    [mgr.imageCache clearMemory];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+//    [mgr cancelAll];
+//    [mgr.imageCache clearMemory];
+////    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

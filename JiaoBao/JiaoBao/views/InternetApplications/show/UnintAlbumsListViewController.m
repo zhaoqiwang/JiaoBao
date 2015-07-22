@@ -47,8 +47,8 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
     
     self.mArr_list = [NSMutableArray array];
     self.mArr_bigPhoto = [NSMutableArray array];
@@ -126,8 +126,8 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
     return self.mArr_list.count;
 }
 //定义并返回每个cell
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ShareCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:UnitListAlbums forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    ShareCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UnitListAlbums forIndexPath:indexPath];
     if (!cell) {
         
     }
@@ -250,13 +250,13 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+//    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
     
-    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
-    [mgr cancelAll];
-    [mgr.imageCache clearMemory];
+//    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
+//    [mgr cancelAll];
+//    [mgr.imageCache clearMemory];
     // Dispose of any resources that can be recreated.
 }
 

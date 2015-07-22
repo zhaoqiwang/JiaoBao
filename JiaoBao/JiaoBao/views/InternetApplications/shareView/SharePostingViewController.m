@@ -53,6 +53,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //音频
+    [self audio];
     //上传图片
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UploadImg:) name:@"UploadImg" object:nil];
@@ -169,6 +171,8 @@
     
     [self.cameraBtn.layer setCornerRadius:6];
     [self.albumBtn.layer setCornerRadius:6];
+    [self.videoBtn.layer setCornerRadius:6];
+    [self.voiceBtn.layer setCornerRadius:6];
     [self.mBtn_send.layer setCornerRadius:6];
     [self.pullDownBtn.layer setCornerRadius:3];
     
@@ -192,7 +196,7 @@
     //内容
     //self.mTextV_content.frame = CGRectMake(10, self.mTextF_title.frame.origin.y+self.mTextF_title.frame.size.height+15, [dm getInstance].width-20, 80);
     //添加边框
-    self.mTextV_content.layer.borderWidth = .5;
+    self. mTextV_content.layer.borderWidth = .5;
     self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 8;
@@ -226,6 +230,11 @@
     tap.delegate = self;//设置代理，防止手势和按钮的点击事件冲突
     self.mLab_hidden.userInteractionEnabled = YES;
     [self.mLab_hidden addGestureRecognizer:tap];
+    
+    self.imageView = [[UIImageView alloc] init];
+    self.imageView.frame = CGRectMake(([dm getInstance].width-80)/2, 70, 80, 100);
+    [self.view addSubview:self.imageView];
+    [self.imageView setHidden:YES];
 }
 
 -(void)pressTap:(UITapGestureRecognizer *)tap{
@@ -275,15 +284,15 @@
         self.imageCount--;
         if(self.imageCount == 0)
         {
-            [MBProgressHUD showSuccess:@"上传图片成功" toView:self.view];
+            [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
         }
         
         UploadImgModel *model = [dic objectForKey:@"model"];
         [self.mArr_pic addObject:model];
-        //self.mTextV_content.text = [NSString stringWithFormat:@"%@[图片%d]",self.mTextV_content.text,self.];
+        self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
         self._placeholdLabel.hidden = YES;
     }else{
-        [MBProgressHUD showError:@"超时" toView:self.view];
+        [MBProgressHUD showError:@"失败" toView:self.view];
     }
 }
 
@@ -341,10 +350,10 @@
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
--(void)timerAction:(id)sender
-{
-    [MBProgressHUD showError:@"加载超时" toView:self.view];
-}
+//-(void)timerAction:(id)sender
+//{
+//    [MBProgressHUD showError:@"加载超时" toView:self.view];
+//}
 
 //点击选择图片按钮
 -(void)clickSelectPic:(UIButton *)btn{
@@ -459,7 +468,7 @@
                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                 
                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                 break;
             }
         }
@@ -473,7 +482,7 @@
                     NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                     
                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+//                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                     break;
                 }
             }
@@ -497,8 +506,8 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
-    [self.timer invalidate];
-    self.timer = nil;
+//    [self.timer invalidate];
+//    self.timer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     [utils popViewControllerAnimated:YES];
@@ -566,7 +575,7 @@
                     
                     // NSLog(@"%lu",(unsigned long)imageData.length);
                     
-                    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+                    NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
                     
                     //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
                     //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
@@ -580,12 +589,8 @@
                                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                                 
                                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-                                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+//                                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                                 self.mInt_index ++;
-                                
-                                
-                                
-                                
                                 break;
                             }
                         }
@@ -599,7 +604,7 @@
                                     NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                                     
                                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-                                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+//                                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                                     self.mInt_index ++;
                                     
                                     break;
@@ -632,16 +637,16 @@
 - (IBAction)cameraBtnAction:(id)sender {
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-    NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = NO;
-    imagePickerController.sourceType = sourceType;
+        NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
+        UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+        imagePickerController.delegate = self;
+        imagePickerController.allowsEditing = NO;
+        imagePickerController.sourceType = sourceType;
         if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
             self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
         }
-    [self presentViewController:imagePickerController animated:YES completion:^{}];
-
+        [self presentViewController:imagePickerController animated:YES completion:^{}];
+        
     }
     else
     {
@@ -662,6 +667,12 @@
     elcPicker.imagePickerDelegate = self;
     
     [self presentViewController:elcPicker animated:YES completion:nil];
+}
+
+- (IBAction)videoBtnAction:(id)sender{
+    VideoRecorderViewController *video = [[VideoRecorderViewController alloc] init];
+    video.delegate = self;
+    [utils pushViewController:video animated:NO];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)theTextField {  // 这个方法是UITextFieldDelegate协议里面的
@@ -690,4 +701,192 @@
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
 }
+
+//视频返回
+-(void)VideoRecorderSelectFile:(AccessoryModel *)model{
+    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
+    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:model.pathStr Name:@""];
+}
+
+- (void)btnVoiceDown:(id)sender
+{
+    [self.imageView setHidden:NO];
+    //创建录音文件，准备录音
+    if ([self.recorder prepareToRecord]) {
+        //开始
+        [self.recorder record];
+    }
+    
+    //设置定时检测
+    timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+}
+- (void)btnVoiceUp:(id)sender
+{
+    [self.imageView setHidden:YES];
+    double cTime = self.recorder.currentTime;
+    if (cTime > 2) {//如果录制时间<2 不发送
+        D("发出去");
+    }else {
+        //删除记录的文件
+        [self.recorder deleteRecording];
+        //删除存储的
+    }
+    [self.recorder stop];
+    [timer invalidate];
+}
+- (void)btnVoiceDragUp:(id)sender
+{
+    [self.imageView setHidden:YES];
+    //删除录制文件
+    [self.recorder deleteRecording];
+    [self.recorder stop];
+    [timer invalidate];
+    
+    D("取消发送");
+}
+- (void)audio
+{
+    //录音设置
+    NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc]init];
+    //设置录音格式  AVFormatIDKey==kAudioFormatLinearPCM
+    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
+    //设置录音采样率(Hz) 如：AVSampleRateKey==8000/44100/96000（影响音频的质量）
+    [recordSetting setValue:[NSNumber numberWithFloat:44100] forKey:AVSampleRateKey];
+    //录音通道数  1 或 2
+    [recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
+    //线性采样位数  8、16、24、32
+    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    //录音的质量
+    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityHigh] forKey:AVEncoderAudioQualityKey];
+    
+    mStr_path = [self audioRecordingPath];
+    NSURL *url = [NSURL fileURLWithPath:mStr_path];
+    //    urlPlay = url;
+    
+    NSError *error;
+    //初始化
+    self.recorder = [[AVAudioRecorder alloc]initWithURL:url settings:recordSetting error:&error];
+    //开启音量检测
+    self.recorder.meteringEnabled = YES;
+    self.recorder.delegate = self;
+}
+
+- (void)detectionVoice
+{
+    [self.recorder updateMeters];//刷新音量数据
+    //获取音量的平均值  [recorder averagePowerForChannel:0];
+    //音量的最大值  [recorder peakPowerForChannel:0];
+    
+    double lowPassResults = pow(10, (0.05 * [self.recorder peakPowerForChannel:0]));
+    //    NSLog(@"111111----===%lf",lowPassResults);
+    //最大50  0
+    //图片 小-》大
+    if (0<lowPassResults<=0.06) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_01"]];
+    }else if (0.06<lowPassResults<=0.13) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_02"]];
+    }else if (0.13<lowPassResults<=0.20) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_03"]];
+    }else if (0.20<lowPassResults<=0.27) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_04"]];
+    }else if (0.27<lowPassResults<=0.34) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_05"]];
+    }else if (0.34<lowPassResults<=0.41) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_06"]];
+    }else if (0.41<lowPassResults<=0.48) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_07"]];
+    }else if (0.48<lowPassResults<=0.55) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_08"]];
+    }else if (0.55<lowPassResults<=0.62) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_09"]];
+    }else if (0.62<lowPassResults<=0.69) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_10"]];
+    }else if (0.69<lowPassResults<=0.76) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_11"]];
+    }else if (0.76<lowPassResults<=0.83) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_12"]];
+    }else if (0.83<lowPassResults<=0.9) {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_13"]];
+    }else {
+        [self.imageView setImage:[UIImage imageNamed:@"record_animate_14"]];
+    }
+}
+
+- (void) updateImage
+{
+    [self.imageView setImage:[UIImage imageNamed:@"record_animate_01"]];
+}
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder
+                           successfully:(BOOL)flag{
+    if (flag){
+        D("Successfully stopped the audio recording process.");
+        [MBProgressHUD showMessage:@"正在上传" toView:self.view];
+        /* Let's try to retrieve the data for the recorded file */
+        //        NSError *playbackError = nil;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSError *readingError = nil;
+        NSData *fileData =[NSData dataWithContentsOfFile:mStr_path
+                                                 options:NSDataReadingMapped
+                                                   error:&readingError];
+        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+        NSString *path = [self audioRecordingPath000];
+        path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
+        
+        BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:path];
+        
+        if (!yesNo) {//不存在，则直接写入后通知界面刷新
+            BOOL result = [fileData writeToFile:path atomically:YES];
+            for (;;) {
+                if (result) {
+                    NSString *name = [NSString stringWithFormat:@"%@.aac",timeSp];
+                    [[ShareHttp getInstance] shareHttpUploadSectionImgWith:path Name:name];
+                    break;
+                }
+            }
+        }else {//存在
+            BOOL blDele= [fileManager removeItemAtPath:path error:nil];//先删除
+            if (blDele) {//删除成功后，写入，通知界面
+                BOOL result = [fileData writeToFile:path atomically:YES];
+                for (;;) {
+                    if (result) {
+                        NSString *name = [NSString stringWithFormat:@"%@.aac",timeSp];
+                        [[ShareHttp getInstance] shareHttpUploadSectionImgWith:path Name:name];
+                        break;
+                    }
+                }
+            }
+        }
+        //添加显示附件
+//        [self addAccessoryPhoto];
+    } else {
+        D("Stopping the audio recording failed.");
+    }
+    /* Here we don't need the audio recorder anymore */
+    //    self.recorder = nil;
+}
+
+-(NSString *)audioRecordingPath{
+    NSString *result = nil;
+    
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+    //    mStr_time = timeSp;
+    NSString *tempPath = [self audioRecordingPath000];
+    result = [tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
+    return result;
+}
+
+-(NSString *)audioRecordingPath000{
+    NSString *result = nil;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    result = tempPath;
+    return result;
+}
+
 @end

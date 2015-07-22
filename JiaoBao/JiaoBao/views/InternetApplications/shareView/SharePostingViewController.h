@@ -16,8 +16,10 @@
 #import "ELCImagePickerHeader.h"
 #import "ReleaseNewsUnitsModel.h"
 #import "GetmyUserClassModel.h"
+#import "VideoRecorderViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate>{
+@interface SharePostingViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,ELCImagePickerControllerDelegate,UIGestureRecognizerDelegate,UITextFieldDelegate,VideoRecorderViewControllerProtocol,AVAudioRecorderDelegate,AVAudioPlayerDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UITextView *mTextV_content;//内容
     UIButton *mBtn_send;//发表文章按钮
@@ -36,6 +38,11 @@
     UILabel *mLab_hidden;//点击时输入框消失
     UILabel *_placeholderLabel;
     NSMutableArray *pullArr;
+    
+    NSTimer *timer;
+    NSURL *urlPlay;
+    NSString *mStr_path;//录音时的临时路径
+    NSString *mStr_time;//录音时的临时时间戳
 }
 @property (weak, nonatomic) IBOutlet UILabel *_placeholdLabel;
 @property (weak, nonatomic) IBOutlet UIButton *pullDownBtn;
@@ -59,12 +66,23 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_hidden;//点击时输入框消失
 @property (weak, nonatomic) IBOutlet UIButton *cameraBtn;
 @property (weak, nonatomic) IBOutlet UIButton *albumBtn;
+@property (weak, nonatomic) IBOutlet UIButton *videoBtn;
+@property (weak, nonatomic) IBOutlet UIButton *voiceBtn;
 @property (nonatomic,strong) NSMutableArray *pullArr;
-@property(nonatomic,strong)NSTimer *timer;
+//@property(nonatomic,strong)NSTimer *timer;
+
+@property (nonatomic,strong) AVAudioRecorder *recorder;//音频录音机
+@property (retain, nonatomic) AVAudioPlayer *audioPlayer;
+@property (retain, nonatomic) UIImageView *imageView;
 
 
 - (IBAction)cameraBtnAction:(id)sender;
 - (IBAction)albumBtnAction:(id)sender;
+- (IBAction)videoBtnAction:(id)sender;
+- (IBAction)btnVoiceDown:(id)sender;
+- (IBAction)btnVoiceUp:(id)sender;
+- (IBAction)btnVoiceDragUp:(id)sender;
+
 @property (weak, nonatomic) IBOutlet UIView *secondVIew;
 @property(nonatomic,assign)NSUInteger imageCount;
 

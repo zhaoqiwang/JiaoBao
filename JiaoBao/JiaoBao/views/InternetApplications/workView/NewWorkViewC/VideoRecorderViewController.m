@@ -72,25 +72,26 @@
     self.captureManager.delegate = self;
     
     // Setup images for the Shutter Button
-    UIImage *image;
-    image = [UIImage imageNamed:@"ShutterButtonStart"];
-    self.recStartImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [self.recBtn setImage:self.recStartImage
-                 forState:UIControlStateNormal];
+//    UIImage *image;
+//    image = [UIImage imageNamed:@"ShutterButtonStart"];
+//    self.recStartImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//    [self.recBtn setImage:self.recStartImage
+//                 forState:UIControlStateNormal];
     
-    image = [UIImage imageNamed:@"ShutterButtonStop"];
-    self.recStopImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//    image = [UIImage imageNamed:@"ShutterButtonStop"];
+//    self.recStopImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
-    [self.recBtn setTintColor:[UIColor colorWithRed:245./255.
-                                              green:51./255.
-                                               blue:51./255.
-                                              alpha:1.0]];
+//    [self.recBtn setTintColor:[UIColor colorWithRed:245./255.
+//                                              green:51./255.
+//                                               blue:51./255.
+//                                              alpha:1.0]];
     self.topView.frame = CGRectMake(0, 0, [dm getInstance].width, self.topView.frame.size.height);
     self.statusLabel.frame = self.topView.frame;
     self.rootView.frame = CGRectMake(0, [dm getInstance].height-self.rootView.frame.size.height, [dm getInstance].width, self.rootView.frame.size.height);
     self.recBtn.frame = CGRectMake(([dm getInstance].width-self.recBtn.frame.size.width)/2, (self.rootView.frame.size.height-self.recBtn.frame.size.height)/2, self.recBtn.frame.size.width, self.recBtn.frame.size.height);
     self.cancelBtn.frame = CGRectMake([dm getInstance].width-self.cancelBtn.frame.size.width-10, (self.rootView.frame.size.height-self.cancelBtn.frame.size.height)/2, self.cancelBtn.frame.size.width, self.cancelBtn.frame.size.height);
     self.sureBtn.frame = CGRectMake(10, (self.rootView.frame.size.height-self.sureBtn.frame.size.height)/2, self.sureBtn.frame.size.width, self.sureBtn.frame.size.height);
+    [self.recBtn setImage:[UIImage imageNamed:@"VideoShot0"] forState:UIControlStateNormal];
     [self.sureBtn setHidden:YES];
 //    self.outerImage1 = [UIImage imageNamed:@"outer1"];
 //    self.outerImage2 = [UIImage imageNamed:@"outer2"];
@@ -228,9 +229,9 @@
     
     // REC START
     if (!self.captureManager.isRecording) {
-        
+        [self.recBtn setImage:[UIImage imageNamed:@"VideoShot1"] forState:UIControlStateNormal];
         // change UI
-        [self.recBtn setImage:self.recStopImage forState:UIControlStateNormal];
+//        [self.recBtn setImage:self.recStopImage forState:UIControlStateNormal];
         
         // timer start
         startTime = [[NSDate date] timeIntervalSince1970];
@@ -245,7 +246,7 @@
     }
     // REC STOP
     else {
-        
+        [self.recBtn setImage:[UIImage imageNamed:@"VideoShot0"] forState:UIControlStateNormal];
         isNeededToSave = YES;
         [self.captureManager stopRecording];
         
@@ -253,8 +254,7 @@
         self.timer = nil;
         
         // change UI
-        [self.recBtn setImage:self.recStartImage
-                     forState:UIControlStateNormal];
+//        [self.recBtn setImage:self.recStartImage forState:UIControlStateNormal];
         [self.sureBtn setHidden:NO];
     }
 }

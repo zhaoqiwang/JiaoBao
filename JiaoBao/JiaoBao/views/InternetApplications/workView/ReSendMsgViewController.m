@@ -105,8 +105,8 @@ NSString *kCellID0 = @"Forward_cell";
     return self.mArr_member.count;
 }
 //定义并返回每个cell
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    Forward_cell *cell = [cv dequeueReusableCellWithReuseIdentifier:kCellID0 forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    Forward_cell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kCellID0 forIndexPath:indexPath];
     if (!cell) {
         
     }

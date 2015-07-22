@@ -729,8 +729,8 @@ static NSString *DetailedViewControllerID = @"Forward_section";
     return self.mArr_unit.count;
 }
 //定义并返回每个cell
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ShareCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CellID forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    ShareCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellID forIndexPath:indexPath];
     if (!cell) {
         
     }

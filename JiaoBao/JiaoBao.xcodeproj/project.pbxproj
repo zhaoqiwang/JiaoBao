@@ -521,6 +521,15 @@
 		A771CAA71A240B85000B41F2 /* share_click.png in Resources */ = {isa = PBXBuildFile; fileRef = A771CAA51A240B85000B41F2 /* share_click.png */; };
 		A771CAA81A240B85000B41F2 /* share_click@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A771CAA61A240B85000B41F2 /* share_click@2x.png */; };
 		A771CAAF1A2430CD000B41F2 /* Loger.mm in Sources */ = {isa = PBXBuildFile; fileRef = A771CAAE1A2430CD000B41F2 /* Loger.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A7724D591B5DF94C0095850A /* VideoShot0.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D501B5DF94C0095850A /* VideoShot0.png */; };
+		A7724D5A1B5DF94C0095850A /* VideoShot0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D511B5DF94C0095850A /* VideoShot0@2x.png */; };
+		A7724D5B1B5DF94C0095850A /* VideoShot0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D521B5DF94C0095850A /* VideoShot0@3x.png */; };
+		A7724D5C1B5DF94C0095850A /* VideoShot1.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D531B5DF94C0095850A /* VideoShot1.png */; };
+		A7724D5D1B5DF94C0095850A /* VideoShot1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D541B5DF94C0095850A /* VideoShot1@2x.png */; };
+		A7724D5E1B5DF94C0095850A /* VideoShot1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D551B5DF94C0095850A /* VideoShot1@3x.png */; };
+		A7724D5F1B5DF94C0095850A /* VideoSwitch.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D561B5DF94C0095850A /* VideoSwitch.png */; };
+		A7724D601B5DF94C0095850A /* VideoSwitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D571B5DF94C0095850A /* VideoSwitch@2x.png */; };
+		A7724D611B5DF94C0095850A /* VideoSwitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D581B5DF94C0095850A /* VideoSwitch@3x.png */; };
 		A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A773FC1E1A4B9869005F84C2 /* SelectionCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A773FC271A4B9869005F84C2 /* SelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A773FC1F1A4B9869005F84C2 /* SelectionCell.xib */; };
 		A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A773FC211A4B9869005F84C2 /* TableViewWithBlock.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1551,6 +1560,15 @@
 		A771CAA61A240B85000B41F2 /* share_click@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_click@2x.png"; path = "Image/InternetApp/share/share_click@2x.png"; sourceTree = "<group>"; };
 		A771CAAD1A2430CD000B41F2 /* Loger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Loger.h; path = Common/Loger.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A771CAAE1A2430CD000B41F2 /* Loger.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; name = Loger.mm; path = Common/Loger.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		A7724D501B5DF94C0095850A /* VideoShot0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = VideoShot0.png; path = Image/InternetApp/workView/NewWorkView/Recorder/VideoShot0.png; sourceTree = "<group>"; };
+		A7724D511B5DF94C0095850A /* VideoShot0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoShot0@2x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoShot0@2x.png"; sourceTree = "<group>"; };
+		A7724D521B5DF94C0095850A /* VideoShot0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoShot0@3x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoShot0@3x.png"; sourceTree = "<group>"; };
+		A7724D531B5DF94C0095850A /* VideoShot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = VideoShot1.png; path = Image/InternetApp/workView/NewWorkView/Recorder/VideoShot1.png; sourceTree = "<group>"; };
+		A7724D541B5DF94C0095850A /* VideoShot1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoShot1@2x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoShot1@2x.png"; sourceTree = "<group>"; };
+		A7724D551B5DF94C0095850A /* VideoShot1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoShot1@3x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoShot1@3x.png"; sourceTree = "<group>"; };
+		A7724D561B5DF94C0095850A /* VideoSwitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = VideoSwitch.png; path = Image/InternetApp/workView/NewWorkView/Recorder/VideoSwitch.png; sourceTree = "<group>"; };
+		A7724D571B5DF94C0095850A /* VideoSwitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoSwitch@2x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoSwitch@2x.png"; sourceTree = "<group>"; };
+		A7724D581B5DF94C0095850A /* VideoSwitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoSwitch@3x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoSwitch@3x.png"; sourceTree = "<group>"; };
 		A773FC1D1A4B9869005F84C2 /* SelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectionCell.h; path = Common/dropView/SelectionCell.h; sourceTree = "<group>"; };
 		A773FC1E1A4B9869005F84C2 /* SelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectionCell.m; path = Common/dropView/SelectionCell.m; sourceTree = "<group>"; };
 		A773FC1F1A4B9869005F84C2 /* SelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectionCell.xib; path = Common/dropView/SelectionCell.xib; sourceTree = "<group>"; };
@@ -2444,6 +2462,15 @@
 		A74D26801B58FA8600E63DFB /* Recorder */ = {
 			isa = PBXGroup;
 			children = (
+				A7724D501B5DF94C0095850A /* VideoShot0.png */,
+				A7724D511B5DF94C0095850A /* VideoShot0@2x.png */,
+				A7724D521B5DF94C0095850A /* VideoShot0@3x.png */,
+				A7724D531B5DF94C0095850A /* VideoShot1.png */,
+				A7724D541B5DF94C0095850A /* VideoShot1@2x.png */,
+				A7724D551B5DF94C0095850A /* VideoShot1@3x.png */,
+				A7724D561B5DF94C0095850A /* VideoSwitch.png */,
+				A7724D571B5DF94C0095850A /* VideoSwitch@2x.png */,
+				A7724D581B5DF94C0095850A /* VideoSwitch@3x.png */,
 				A74D26811B58FAE200E63DFB /* record_animate_01.png */,
 				A74D26821B58FAE200E63DFB /* record_animate_02.png */,
 				A74D26831B58FAE200E63DFB /* record_animate_03.png */,
@@ -4017,6 +4044,7 @@
 				A7AAC4D019F75DB200A0ED40 /* appNav_search@2x.png in Resources */,
 				A77116021A4D11930042CB91 /* noPhoto.png in Resources */,
 				A74C802B1A30466C0043D335 /* rootNav_rongYun.png in Resources */,
+				A7724D611B5DF94C0095850A /* VideoSwitch@3x.png in Resources */,
 				F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */,
 				A7AAC4CE19F75DB200A0ED40 /* appNav_add@2x.png in Resources */,
 				F7502A0D1AEE1E50004F822F /* blank@3x.png in Resources */,
@@ -4071,6 +4099,7 @@
 				A7BB180419F4F91E00A81286 /* Regiser_login.png in Resources */,
 				A749B9C719F89A530036F480 /* root_detail@2x.png in Resources */,
 				A75E6EC01ABACDBD00B51B18 /* classView_2@3x.png in Resources */,
+				A7724D591B5DF94C0095850A /* VideoShot0.png in Resources */,
 				A7595EBA1A5FC2F30027848E /* MWPhotoBrowser.bundle in Resources */,
 				A763A53B1A48F372008365B5 /* photo_default.png in Resources */,
 				A71D61ED1A1C96A400B8D33D /* share_school0.png in Resources */,
@@ -4110,15 +4139,18 @@
 				A753FAF21A1DDC0300AB5F22 /* share_tableV_school@2x.png in Resources */,
 				A74C11981A01D9FC00925230 /* icon_ios7.png in Resources */,
 				A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */,
+				A7724D5B1B5DF94C0095850A /* VideoShot0@3x.png in Resources */,
 				A757DFD61A80BDEF001172A4 /* appNav_groupChat.png in Resources */,
 				A7781F451AE8A0F300F03AEB /* NewWorkView_2.png in Resources */,
 				A7AD8C5919F644A2002E65FB /* tabbar_student2@2x.png in Resources */,
 				A753FAF11A1DDC0300AB5F22 /* share_tableV_school.png in Resources */,
+				A7724D601B5DF94C0095850A /* VideoSwitch@2x.png in Resources */,
 				F76B646B1B1EA8CB008F6961 /* bj.png in Resources */,
 				A782AEC61AE9D71A00547B0F /* NewWork_SendMsg@2x.png in Resources */,
 				A749B9D119F89A530036F480 /* root_sendMsg@2x.png in Resources */,
 				A768297F1AC69B21003B31EB /* classView_4.png in Resources */,
 				F7502A1F1AEE1E50004F822F /* HomeClass_Click_4.png in Resources */,
+				A7724D5F1B5DF94C0095850A /* VideoSwitch.png in Resources */,
 				A75046911A0A14BC00C54ECC /* forward_select2.png in Resources */,
 				A749B9CA19F89A530036F480 /* root_forwardNotice.png in Resources */,
 				A7781F491AE8A0F300F03AEB /* NewWorkView_click_0@2x.png in Resources */,
@@ -4190,6 +4222,7 @@
 				A71D61E41A1C96A400B8D33D /* share_new1@2x.png in Resources */,
 				A782AEC01AE9D71A00547B0F /* NewWork_photo@2x.png in Resources */,
 				F7502A121AEE1E50004F822F /* HomeClass_1@2x.png in Resources */,
+				A7724D5A1B5DF94C0095850A /* VideoShot0@2x.png in Resources */,
 				F7F460B61AE891C70069820F /* triangle.png in Resources */,
 				F79D84DB1ABD4DC000897477 /* sectionView.xib in Resources */,
 				F7502A1E1AEE1E50004F822F /* HomeClass_Click_3@2x.png in Resources */,
@@ -4324,6 +4357,7 @@
 				A7BB180F19F4FB1A00A81286 /* Regiser_bg-568h@2x.png in Resources */,
 				A73CAD571A071EC200D6C5AA /* WorkDetailListViewController.xib in Resources */,
 				A71EC8BA1A11A61500422BB0 /* root_img@2x.png in Resources */,
+				A7724D5C1B5DF94C0095850A /* VideoShot1.png in Resources */,
 				A7113F291A41661E00F927DD /* ThemeSpaceViewController.xib in Resources */,
 				A76D747D1A691292008F5856 /* AirthCommentsListCell.xib in Resources */,
 				A77116041A4D11930042CB91 /* noPhoto@3x.png in Resources */,
@@ -4399,6 +4433,7 @@
 				A727C7DC1A6F93780019C4CD /* share_likeBig_1@3x.png in Resources */,
 				A71D61E71A1C96A400B8D33D /* share_next1.png in Resources */,
 				A749B9C419F89A530036F480 /* root_close.png in Resources */,
+				A7724D5E1B5DF94C0095850A /* VideoShot1@3x.png in Resources */,
 				A71D61DE1A1C96A400B8D33D /* share_education0@2x.png in Resources */,
 				A7BB180519F4F91E00A81286 /* Regiser_login@2x.png in Resources */,
 				A76ED5B31AD67855006F3E0B /* workView_0@2x.png in Resources */,
@@ -4422,6 +4457,7 @@
 				A76D74751A69095A008F5856 /* share_like_0@3x.png in Resources */,
 				A70179891AB91D2100E7093F /* work_accessory@3x.png in Resources */,
 				A761D3F91A7F697900DCAEB9 /* rootTable_4@2x.png in Resources */,
+				A7724D5D1B5DF94C0095850A /* VideoShot1@2x.png in Resources */,
 				A78D65D81A89E41400BE6326 /* WorkMsgListCell.xib in Resources */,
 				A757DFD71A80BDEF001172A4 /* appNav_groupChat@2x.png in Resources */,
 				A76ED5C21AD67855006F3E0B /* workView_click_0@2x.png in Resources */,

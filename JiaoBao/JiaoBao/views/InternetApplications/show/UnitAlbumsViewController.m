@@ -43,8 +43,8 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
     
     //获取单位相册后，通知界面
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnitPGroup" object:nil];
@@ -266,8 +266,8 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     return self.mArr_list.count;
 }
 //定义并返回每个cell
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ShareCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:UnitAlbums forIndexPath:indexPath];
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    ShareCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UnitAlbums forIndexPath:indexPath];
     if (!cell) {
         
     }
@@ -419,8 +419,8 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
 }
 
 /*

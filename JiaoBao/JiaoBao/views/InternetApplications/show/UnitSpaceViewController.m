@@ -168,8 +168,8 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
     return self.mArr_list.count;
 }
 //定义并返回每个cell
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ShareCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:UnitSpaceCell forIndexPath:indexPath];
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    ShareCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:UnitSpaceCell forIndexPath:indexPath];
     if (!cell) {
         
     }
@@ -267,8 +267,8 @@ static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];
+//    [[SDImageCache sharedImageCache] clearDisk];
+//    [[SDImageCache sharedImageCache] clearMemory];
 }
 
 /*

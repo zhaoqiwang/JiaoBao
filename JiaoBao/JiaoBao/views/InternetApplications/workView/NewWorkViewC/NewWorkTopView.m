@@ -202,7 +202,7 @@
             [utils pushViewController1:elcPicker animated:YES];
         }else if (buttonIndex == 1){//拍照添加
             [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
-        }else if (buttonIndex ==2){//本地附件
+        }else if (buttonIndex ==2){//视频
             VideoRecorderViewController *video = [[VideoRecorderViewController alloc] init];
             video.delegate = self;
             [utils pushViewController:video animated:NO];
