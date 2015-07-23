@@ -65,16 +65,40 @@
     NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
     if(dateStr&&[dateStr isEqual:[NSNull null]]==NO)
     {
-        self.dateArr = [dateStr componentsSeparatedByString:@","];
+        [dm getInstance].scrollArr = [dateStr componentsSeparatedByString:@","];
+        self.dateArr = [dm getInstance].scrollArr;
     }
     D("dateArr = %@",self.dateArr);
     if([self.strFlag isEqualToString:@"addYear"])
     {
         [self.calendar reloadData];
     }
-    if([self.strFlag isEqualToString:@"minusYear"])
+    else if([self.strFlag isEqualToString:@"minusYear"])
     {
         [self.calendar reloadData];
+    }
+    else
+    {
+        if([[dm getInstance].strFlag isEqualToString:@"0"])
+        {
+            [self.calendar reloadData];
+            [dm getInstance].strFlag =@"1";
+        }
+        else
+        {
+            if(self.firstFlag ==NO)
+            {
+                [self.calendar updatePage];
+                
+                
+            }
+            else
+            {
+                self.firstFlag = NO;
+            }
+            
+        }
+
     }
     
         if([self.selcetedDateStr rangeOfString:dateString].location!=NSNotFound)
@@ -86,16 +110,7 @@
             self.detail.selectedDateStr = @"";
             
         }
-    if(self.firstFlag ==NO)
-    {
-        [self.calendar updatePage];
 
-        
-    }
-    else
-    {
-        self.firstFlag = NO;
-    }
 
     
     self.strFlag = @"";

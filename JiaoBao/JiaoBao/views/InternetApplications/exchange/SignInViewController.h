@@ -17,7 +17,7 @@
 @interface SignInViewController : UIViewController<MyNavigationDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
-@property(nonatomic,strong)NSArray *dateArr;
+@property(nonatomic,weak)NSArray *dateArr;
 @property(nonatomic,strong)NSString *strFlag;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;

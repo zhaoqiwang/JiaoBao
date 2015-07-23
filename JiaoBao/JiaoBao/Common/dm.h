@@ -77,8 +77,8 @@
 @property (nonatomic,strong) NSString *RiCUrl;//日程url
 @property (nonatomic,strong) NSString *KaoQUrl;//考勤url
 @property(nonatomic,strong)NSString *firstFlag,*secondFlag,*thirdFlag;//发布事务权限标志
-
-
+@property(nonatomic,strong)NSString *strFlag;
+@property(nonatomic,strong)NSArray *scrollArr;
 + (dm*) getInstance;
 
 
