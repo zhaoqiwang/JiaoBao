@@ -25,6 +25,10 @@
     [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"test"];//channelId默认会被被当作@"App Store"渠道
     //初始化
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    D("tempPath-====%@",tempPath);
 
     BMKMapManager *mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数

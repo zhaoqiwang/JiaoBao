@@ -734,6 +734,8 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    // 清除内存中的图片缓存
+//    [[SDImageCache sharedImageCache] clearMemory];
     // Dispose of any resources that can be recreated.
 }
 

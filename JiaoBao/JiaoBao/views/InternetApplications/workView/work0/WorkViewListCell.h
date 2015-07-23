@@ -34,6 +34,8 @@
 //给图片添加点击事件
 -(void)headImgClick;
 
+//- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
+
 @end
 
 @protocol WorkViewListCellDelegate <NSObject>
