@@ -224,13 +224,21 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *identifier = @"cell";
+    static NSString *indentifier = @"cell";
     RecordCell *cell = [tableView dequeueReusableCellWithIdentifier:
-                             identifier];
-    if(cell == nil)
-    {
-        NSArray *cellArr = [[NSBundle mainBundle]loadNibNamed:@"RecordCell" owner:self options:nil];
-        cell = (RecordCell*)[cellArr objectAtIndex:0];
+                             indentifier];
+    if (cell == nil) {
+        cell = [[RecordCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"RecordCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (RecordCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"RecordCell" bundle:[NSBundle mainBundle]];
+        [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
     }
     [self configureCell:cell atIndexPath:indexPath];
     return cell;

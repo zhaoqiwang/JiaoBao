@@ -31,8 +31,12 @@
 #endif
     else {
         image = [[UIImage alloc] initWithData:data];
+        NSLog(@"kjlkjljlkjlkjljlk-====%lu",(unsigned long)data.length);
         //
         if (data.length/1024 > 1024) {
+            image = [self compressImageWith:image];
+        }
+        if (image.size.width > 1024||image.size.height>1024) {
             image = [self compressImageWith:image];
         }
         
@@ -119,7 +123,8 @@
 {
     float imageWidth = image.size.width;
     float imageHeight = image.size.height;
-    float width = 640;
+//    float width = 640;
+    float width = 320;
     float height = image.size.height/(image.size.width/width);
     
     float widthScale = imageWidth /width;

@@ -335,6 +335,7 @@
 
     //分割线
     cell.mLab_line.frame = CGRectMake(0, 64, [dm getInstance].width, .5);
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, 65);
     
     return cell;
 }

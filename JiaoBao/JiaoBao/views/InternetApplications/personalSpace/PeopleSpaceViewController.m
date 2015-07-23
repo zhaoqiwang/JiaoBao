@@ -279,11 +279,21 @@
     //如果是关联单位的列表
     if([tableView isEqual:self.unitTabelView])
     {
-        static NSString *cellIdentifier = @"unitTabelViewCell";
-        UnitTableViewCell *cell = (UnitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        static NSString *indentifier = @"unitTabelViewCell";
+        UnitTableViewCell *cell = (UnitTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"UnitTableViewCell" owner:self options:nil] lastObject];
+        if (cell == nil) {
+            cell = [[UnitTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"UnitTableViewCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (UnitTableViewCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"UnitTableViewCell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_personalS registerNib:n forCellReuseIdentifier:indentifier];
         }
         //cell.delegate = self;
         cell.tag = indexPath.row;

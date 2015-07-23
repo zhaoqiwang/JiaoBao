@@ -173,9 +173,18 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *indentifier = @"TreeView_Level0_Cell";
     TreeView_Level0_Cell *cell0 = (TreeView_Level0_Cell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell0 == nil){
-        cell0 = [[[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil] lastObject];
-        cell0.frame = CGRectMake(0, 0, [dm getInstance].width, 48);
+    if (cell0 == nil) {
+        cell0 = [[TreeView_Level0_Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell0 = (TreeView_Level0_Cell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"TreeView_Level0_Cell" bundle:[NSBundle mainBundle]];
+        [self.mTableV_unit registerNib:n forCellReuseIdentifier:indentifier];
     }
     if ([self.mModel_unit.UnitType intValue] == 1) {
         UnitInfoModel *model = [mArr_unit objectAtIndex:indexPath.row];

@@ -54,14 +54,20 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSLog(@"tableview_superview = %@",[[tableView superview]superview]);
-//    ClassTableViewCell *classCell = (ClassTableViewCell*)[[tableView superview]superview];
-//    NSLog(@"cell = %@",classCell);
     static NSString *indentifier = @"CommentCell";
     CommentCell *cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell == nil)
-    {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil] lastObject];
+    if (cell == nil) {
+        cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (CommentCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"CommentCell" bundle:[NSBundle mainBundle]];
+        [self.tableview registerNib:n forCellReuseIdentifier:indentifier];
     }
     commentsListModel *tempModel = [self.mModel_class.mArr_comment objectAtIndex:indexPath.row];
 
@@ -107,11 +113,13 @@
     [self.headImgDelegate didSelectedCell];
 }
 
+-(void)initModel{
+    self.mModel_class = [mModel_class init];
+}
 
 //给头像添加点击事件
 -(void)thumbImgClick
 {
-    self.mModel_class = [mModel_class init];
     self.mImgV_0.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImgClick0:)];
     [self.mImgV_0 addGestureRecognizer:tap];
