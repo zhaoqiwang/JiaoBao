@@ -21,7 +21,7 @@
     UILabel *mLab_class;//班级
     UILabel *mLab_assessContent;//评价
     UIView *mView_background;//背景色
-    UIImageView *mImgV_airPhoto;//文章logo
+//    UIImageView *mImgV_airPhoto;//文章logo
     UILabel *mLab_content;//内容
     UILabel *mLab_time;//时间
     UILabel *mLab_click;//点击量
@@ -32,9 +32,9 @@
     UILabel *mLab_likeCount;//赞个数
     UIView *mView_img;//显示文章中的图片
     //需要显示的3张预览图片
-    UIImageView *mImgV_0;
-    UIImageView *mImgV_1;
-    UIImageView *mImgV_2;
+//    UIImageView *mImgV_0;
+//    UIImageView *mImgV_1;
+//    UIImageView *mImgV_2;
     UIButton *mBtn_comment;//弹出点赞和评论
 //    id<ClassTableViewCellDelegate> delegate;
     ClassModel *mModel_class;//
@@ -47,7 +47,7 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_class;//班级
 @property (nonatomic,strong) IBOutlet UILabel *mLab_assessContent;//评价
 @property (nonatomic,strong) IBOutlet UIView *mView_background;//背景色
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_airPhoto;//文章logo
+@property (nonatomic,weak) IBOutlet UIImageView *mImgV_airPhoto;//文章logo
 @property (nonatomic,strong) IBOutlet UILabel *mLab_content;//内容
 @property (nonatomic,strong) IBOutlet UILabel *mLab_time;//时间
 @property (nonatomic,strong) IBOutlet UILabel *mLab_click;//点击量
@@ -58,9 +58,9 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_likeCount;//赞个数
 @property (nonatomic,strong) IBOutlet UIView *mView_img;//显示文章中的图片
 //需要显示的3张预览图片
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_0;
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_1;
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_2;
+@property (nonatomic,weak) IBOutlet UIImageView *mImgV_0;
+@property (nonatomic,weak) IBOutlet UIImageView *mImgV_1;
+@property (nonatomic,weak) IBOutlet UIImageView *mImgV_2;
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_comment;//弹出点赞和评论
 
 @property (weak,nonatomic) id<ClassTableViewCellDelegate> delegate;
@@ -69,7 +69,7 @@
 @property (weak,nonatomic) id<ClassTableViewCellHeadImgDelegate> headImgDelegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIView *tableBackView;
-@property (weak, nonatomic) IBOutlet UIImageView *backImgV;
+@property (weak, weak) IBOutlet UIImageView *backImgV;
 - (IBAction)moreBtnAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 

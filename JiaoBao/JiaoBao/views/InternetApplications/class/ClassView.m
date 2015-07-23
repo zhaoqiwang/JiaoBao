@@ -1211,13 +1211,27 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"indexpath= [%d %d]",indexPath.section,indexPath.row);
+//    NSLog(@"indexpath= [%d %d]",indexPath.section,indexPath.row);
     static NSString *indentifier = @"ClassTableViewCell";
+    
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell == nil)
-    {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] lastObject];
-
+    if (cell == nil) {
+        cell = [[ClassTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (ClassTableViewCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        [cell thumbImgClick];
+        cell.delegate = self;
+        //添加头像点击事件
+        [cell headImgClick];
+        cell.headImgDelegate = self;
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"ClassTableViewCell" bundle:[NSBundle mainBundle]];
+        [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
     }
     //找到当前应该显示的数组
     NSMutableArray *array = [NSMutableArray array];
@@ -1250,15 +1264,15 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
-
-        //获取头像
-        if ([model.flag intValue] ==1) {//展示
-            [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.unitId] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-        }else{
-            [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-        }
-//    }
-//    cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
+    
+    //获取头像
+    if ([model.flag intValue] ==1) {//展示
+        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.unitId] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    }else{
+        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    }
+    //    }
+    //    cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
     //姓名
     NSString *tempName;
     //判断应该显示姓名，还是单位名
@@ -1322,13 +1336,13 @@
     cell.mLab_content.text = model.Abstracts;
     
     //添加图片点击事件
-    [cell thumbImgClick];
+//    [cell thumbImgClick];
     cell.mModel_class = model;
-    cell.delegate = self;
+//    cell.delegate = self;
     cell.tag = indexPath.row;
     //添加头像点击事件
-    [cell headImgClick];
-    cell.headImgDelegate = self;
+//    [cell headImgClick];
+//    cell.headImgDelegate = self;
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+8);
     //是否有文章图片需要显示
@@ -1930,5 +1944,6 @@
     [self.mArr_unit removeAllObjects];
     [self.mArr_unitTop removeAllObjects];
 }
+
 
 @end

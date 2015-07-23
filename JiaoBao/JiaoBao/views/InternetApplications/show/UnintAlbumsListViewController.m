@@ -252,7 +252,7 @@ static NSString *UnitListAlbums = @"ShareCollectionViewCell";
     [super didReceiveMemoryWarning];
 //    [[NSURLCache sharedURLCache] removeAllCachedResponses];
 //    [[SDImageCache sharedImageCache] clearDisk];
-//    [[SDImageCache sharedImageCache] clearMemory];
+    [[SDImageCache sharedImageCache] clearMemory];
     
 //    SDWebImageManager *mgr = [SDWebImageManager sharedManager];
 //    [mgr cancelAll];

@@ -19,8 +19,8 @@
 
 - (void)awakeFromNib {
 
-    self.tableview.delegate = self;
-    self.tableview.dataSource = self;
+//    self.tableview.delegate = self;
+//    self.tableview.dataSource = self;
     self.tableview.scrollEnabled = NO;
 //    self.moreBtn.enabled = NO;
    // Initialization code

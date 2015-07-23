@@ -133,8 +133,8 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <connections>
-                            <outlet property="dataSource" destination="-1" id="6S5-4F-Fqg"/>
-                            <outlet property="delegate" destination="-1" id="n75-h1-m6u"/>
+                            <outlet property="dataSource" destination="KGk-i7-Jjw" id="bf5-eQ-Aev"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="ZWa-hQ-FFn"/>
                         </connections>
                     </tableView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ggM-jm-YTy">
