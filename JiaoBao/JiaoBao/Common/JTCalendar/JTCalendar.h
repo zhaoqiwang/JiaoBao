@@ -23,6 +23,9 @@
 @property (strong, nonatomic) NSDate *currentDate;
 @property (strong, nonatomic) NSDate *currentDateSelected;
 @property(assign,nonatomic)BOOL isYear;
+@property(nonatomic,assign)float startContentOffsetX;
+@property(nonatomic,assign)float willEndContentOffsetX;
+@property(nonatomic,assign)float endContentOffsetX;
 - (void)updatePage;
 - (JTCalendarAppearance *)calendarAppearance;
 

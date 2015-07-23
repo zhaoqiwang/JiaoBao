@@ -127,13 +127,20 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-
+    [dm getInstance].strFlag = @"0" ;
+    [dm getInstance].scrollArr = nil;
+ self.startContentOffsetX = scrollView.contentOffset.x;
     if(scrollView == self.contentView){
         self.menuMonthsView.scrollEnabled = NO;
     }
     else if(scrollView == self.menuMonthsView){
         self.contentView.scrollEnabled = NO;
     }
+}
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{    //将要停止前的坐标
+    
+    self.willEndContentOffsetX = scrollView.contentOffset.x;
+    
 }
 
 // Use for scroll with scrollRectToVisible or setContentOffset
@@ -144,6 +151,40 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    self.endContentOffsetX = scrollView.contentOffset.x;
+    
+    if (self.endContentOffsetX < self.willEndContentOffsetX && self.willEndContentOffsetX < self.startContentOffsetX) { //画面从右往左移动，前一页
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+        [adcomps setYear:0];
+        [adcomps setMonth:-1];
+        [adcomps setDay:0];
+        NSDate* currentDate2 = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+        //[self.calendar setCurrentDate:nextDate];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM"];
+        NSString *dateString = [dateFormatter stringFromDate:currentDate2];
+     
+        
+        [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
+        
+    } else if (self.endContentOffsetX > self.willEndContentOffsetX && self.willEndContentOffsetX > self.startContentOffsetX) {//画面从左往右移动，后一页
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *adcomps = [[NSDateComponents alloc] init];
+        [adcomps setYear:0];
+        [adcomps setMonth:1];
+        [adcomps setDay:0];
+        NSDate* currentDate2 = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+        //[self.calendar setCurrentDate:nextDate];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM"];
+        NSString *dateString = [dateFormatter stringFromDate:currentDate2];
+
+
+        
+        [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
+        
+    }
     [self updatePage];
     
 }
