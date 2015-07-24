@@ -371,11 +371,20 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
     static NSString *indentifier = @"TreeView_Level0_Cell";
     UnitSectionMessageModel *userInfoModel = [self.mArr_unit objectAtIndex:self.mInt_flag];
     if ([userInfoModel.UnitType intValue] ==1||[userInfoModel.UnitType intValue] ==0){//当为教育局或最新更新、推荐
-        static NSString *CellWithIdentifier = @"TopArthListCell";
-        TopArthListCell *cell = (TopArthListCell *)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 70);
+        static NSString *indentifier = @"TopArthListCell";
+        TopArthListCell *cell = (TopArthListCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+        if (cell == nil) {
+            cell = [[TopArthListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (TopArthListCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"TopArthListCell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
         }
         NoticeInfoModel *model = [self.mModel_notice.noticeInfoArray objectAtIndex:indexPath.row];
         cell.mImgV_headImg.frame = CGRectMake(13, 10, 48, 48);
@@ -403,9 +412,18 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
         return cell;
     }else if ([userInfoModel.UnitType intValue] ==2){//当为关联班级
         TreeView_Level0_Cell *cell = (TreeView_Level0_Cell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 48);
+        if (cell == nil) {
+            cell = [[TreeView_Level0_Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (TreeView_Level0_Cell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"TreeView_Level0_Cell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
         }
         TreeView_node *node = [mArr_display objectAtIndex:indexPath.row];
         if(node.type == 0){//类型为0的cell

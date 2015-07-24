@@ -1284,15 +1284,11 @@
             cell = (ClassTableViewCell *)[nib objectAtIndex:0];
             //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
         }
-        //添加图片点击事件
-        [cell thumbImgClick];
-        cell.delegate = self;
-        //添加头像点击事件
-        [cell headImgClick];
-        cell.headImgDelegate = self;
+        [cell initModel];
         //若是需要重用，需要写上以下两句代码
         UINib * n= [UINib nibWithNibName:@"ClassTableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
+        
     }
     //找到当前应该显示的数组
     NSMutableArray *array = [NSMutableArray array];
@@ -1397,13 +1393,15 @@
     cell.mLab_content.text = model.Abstracts;
     
     //添加图片点击事件
-//    [cell thumbImgClick];
-    cell.mModel_class = model;
-//    cell.delegate = self;
     cell.tag = indexPath.row;
+    cell.delegate = self;
+    cell.headImgDelegate = self;
+    //添加图片点击事件
+    [cell thumbImgClick];
     //添加头像点击事件
-//    [cell headImgClick];
-//    cell.headImgDelegate = self;
+    [cell headImgClick];
+    cell.mModel_class = model;
+    
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+8);
     //是否有文章图片需要显示
@@ -1494,7 +1492,6 @@
         cell.backImgV.frame = CGRectZero;
         cell.moreBtn.frame = CGRectZero;
         cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+10);
-        
     }
     else
     {
@@ -1509,8 +1506,6 @@
             cell.backImgV.image = backImage;
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+3+10);
 //            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
-
-            
         }
         else{
             cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, h+7+10);
@@ -1522,16 +1517,10 @@
             //cell.backImgV.image = backImage;
             cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height, [dm getInstance].width-60-10, 30);
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5+5+10);
-            
         }
-
-        
-        
     }
 
     cell.tableview.backgroundColor = [UIColor clearColor];
-
-
     //cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5);
 
     return cell;

@@ -176,23 +176,33 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellWithIdentifier = @"TopArthListCell";
-    TopArthListCell *cell = (TopArthListCell *)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
-    
+    static NSString *indentifier = @"TopArthListCell";
+    TopArthListCell *cell = (TopArthListCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+    if (cell == nil) {
+        cell = [[TopArthListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (TopArthListCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"TopArthListCell" bundle:[NSBundle mainBundle]];
+        [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
+    }
 //    if (tableView.tag == 1){
     if (indexPath.row == 0){
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 50);
-        }
         cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
         [cell.mImgV_headImg setImage:[UIImage imageNamed:@"themeTotal"]];
+        [cell.mImgV_headImg setHidden:NO];
+        cell.backgroundColor = [UIColor whiteColor];
         //标题
         NSString *str = [self.mArr_difine objectAtIndex:indexPath.row];
         CGSize numSize = [str sizeWithFont:[UIFont systemFontOfSize:14]];
-        cell.mLab_title.frame = CGRectMake(cell.mLab_title.frame.origin.x, 5, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);
+        cell.mLab_title.frame = CGRectMake(70, 5, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);
         cell.mLab_title.text = str;
-        
+        cell.mLab_title.font = [UIFont systemFontOfSize:14];
         //姓名
         cell.mLab_name.hidden = YES;
         //时间
@@ -207,10 +217,6 @@
         cell.mImgV_viewCount.hidden = YES;
         return cell;
     }if (indexPath.row == 1){
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 20);
-        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor groupTableViewBackgroundColor];
         cell.mImgV_headImg.hidden = YES;
@@ -234,16 +240,15 @@
         cell.mImgV_viewCount.hidden = YES;
         return cell;
     }else {
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 50);
-        }
         ThemeListModel *model = [self.mArr_tabel objectAtIndex:indexPath.row];
         [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,[NSString stringWithFormat:@"-%@",model.TabID]] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         cell.mImgV_headImg.frame = CGRectMake(13, 5, 40, 40);
+        cell.mImgV_headImg.hidden = NO;
+        cell.mLab_title.font = [UIFont systemFontOfSize:14];
+        cell.backgroundColor = [UIColor whiteColor];
         //标题
         CGSize numSize = [[NSString stringWithFormat:@"%@",model.InterestName] sizeWithFont:[UIFont systemFontOfSize:14]];
-        cell.mLab_title.frame = CGRectMake(cell.mLab_title.frame.origin.x, cell.mLab_title.frame.origin.y, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);
+        cell.mLab_title.frame = CGRectMake(70, cell.mLab_title.frame.origin.y, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);
         cell.mLab_title.text = model.InterestName;
         if (numSize.width>cell.mLab_title.frame.size.width) {
             cell.mLab_title.numberOfLines = 2;
@@ -288,7 +293,7 @@
         unitList.mStr_flag = @"3";
         unitList.mStr_title = @"最新更新主题";
         [utils pushViewController:unitList animated:YES];
-    }else if (tableView.tag == 1){
+    }else if (indexPath.row == 1){
     }else {
         [MobClick event:@"ThemeView_didSelectRow" label:@""];
         ThemeListModel *model = [self.mArr_tabel objectAtIndex:indexPath.row];

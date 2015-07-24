@@ -78,12 +78,22 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *indentifier = @"AccessoryTableViewCell";
     AccessoryTableViewCell *cell = (AccessoryTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell == nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"AccessoryTableViewCell" owner:self options:nil] lastObject];
+    if (cell == nil) {
+        cell = [[AccessoryTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AccessoryTableViewCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (AccessoryTableViewCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        cell.delegate = self;
+        [cell headImgClick];
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"AccessoryTableViewCell" bundle:[NSBundle mainBundle]];
+        [self.mTableV_file registerNib:n forCellReuseIdentifier:indentifier];
     }
-    cell.delegate = self;
     cell.tag = indexPath.row;
-    [cell headImgClick];
     AccessoryModel *model = [self.mArr_sumFile objectAtIndex:indexPath.row];
     cell.mImgV_select.frame = CGRectMake(10, 5, 34, 34);
     if (model.mInt_select == 0) {

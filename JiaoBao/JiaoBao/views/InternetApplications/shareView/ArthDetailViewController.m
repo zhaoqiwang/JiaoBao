@@ -541,16 +541,24 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellWithIdentifier = @"AirthCommentsListCell";
-    AirthCommentsListCell *cell = (AirthCommentsListCell *)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
-    if(cell == nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"AirthCommentsListCell" owner:self options:nil] lastObject];
+    static NSString *indentifier = @"AirthCommentsListCell";
+    AirthCommentsListCell *cell = (AirthCommentsListCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+    if (cell == nil) {
+        cell = [[AirthCommentsListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"AirthCommentsListCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (AirthCommentsListCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"AirthCommentsListCell" bundle:[NSBundle mainBundle]];
+        [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
+        
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.delegate = self;
-    //给头像添加点击事件
-    cell.headDelegate = self;
-    [cell headImgClick];
+    
     cell.tag = indexPath.row;
     commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:indexPath.row];
     //第几楼
@@ -633,6 +641,7 @@
         cell.mView_RefID.hidden = YES;
         cell.mView_RefID.frame = cell.mLab_time.frame;
     }
+    
     //内容
     CGSize sizeContent = [model.Commnets sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-90, 99999)];
     cell.mLab_Commnets.frame = CGRectMake(70, cell.mView_RefID.frame.origin.y+cell.mView_RefID.frame.size.height+10, sizeContent.width, sizeContent.height);
@@ -652,6 +661,10 @@
     cell.mBtn_LikeCount.frame = CGRectMake(cell.mBtn_CaiCount.frame.origin.x-30-sizeLike.width, cell.mBtn_CaiCount.frame.origin.y, sizeLike.width+20, 30);
     [cell.mBtn_LikeCount setTitle:tempLike forState:UIControlStateNormal];
     
+    
+    //给头像添加点击事件
+    cell.delegate = self;
+    [cell headImgClick];
     
     int a=0;
     float b = cell.mBtn_LikeCount.frame.origin.y+cell.mBtn_LikeCount.frame.size.height+10;

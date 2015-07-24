@@ -472,9 +472,18 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
     UnitSectionMessageModel *userInfoModel = [self.mArr_unit objectAtIndex:self.mInt_flag];
     if ([userInfoModel.UnitType intValue] ==1||[userInfoModel.UnitType intValue] ==0){//当为教育局或最新更新、推荐
         TopArthListCell *cell = (TopArthListCell *)[tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 70);
+        if (cell == nil) {
+            cell = [[TopArthListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TopArthListCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (TopArthListCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"TopArthListCell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
         }
         TopArthListModel *model = [self.mArr_tabel objectAtIndex:indexPath.row];
         cell.mImgV_headImg.frame = CGRectMake(13, 10, 48, 48);
@@ -512,9 +521,18 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
         return cell;
     }else if ([userInfoModel.UnitType intValue] ==2){//当为关联班级
         TreeView_Level0_Cell *cell = (TreeView_Level0_Cell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-        if(cell == nil){
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil] lastObject];
-            cell.frame = CGRectMake(0, 0, [dm getInstance].width, 48);
+        if (cell == nil) {
+            cell = [[TreeView_Level0_Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (TreeView_Level0_Cell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"TreeView_Level0_Cell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
         }
         TreeView_node *node = [mArr_display objectAtIndex:indexPath.row];
         if(node.type == 0){//类型为0的cell
@@ -537,9 +555,18 @@ static NSString *ShowCell = @"ShareCollectionViewCell";
     }else if ([userInfoModel.UnitType intValue] == 4){//所有班级
         UnitSectionMessageModel *model = [self.mArr_class objectAtIndex:indexPath.row];
         TreeView_Level0_Cell *cell0 = (TreeView_Level0_Cell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-        if(cell0 == nil){
-            cell0 = [[[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil] lastObject];
-            cell0.frame = CGRectMake(0, 0, [dm getInstance].width, 48);
+        if (cell0 == nil) {
+            cell0 = [[TreeView_Level0_Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeView_Level0_Cell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell0 = (TreeView_Level0_Cell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"TreeView_Level0_Cell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_detail registerNib:n forCellReuseIdentifier:indentifier];
         }
         cell0.mLab_name.text = model.UnitName;
         CGSize nameSize = [model.UnitName sizeWithFont:[UIFont systemFontOfSize:15]];

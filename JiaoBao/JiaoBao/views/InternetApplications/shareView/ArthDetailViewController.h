@@ -18,7 +18,7 @@
 #import "AirthCommentsListCell.h"
 #import "PersonalSpaceViewController.h"
 
-@interface ArthDetailViewController : UIViewController<MyNavigationDelegate,UIWebViewDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,AirthCommentsListCellDelegate,AirthCommentsListCellHeadDelegate,UITextFieldDelegate>{
+@interface ArthDetailViewController : UIViewController<MyNavigationDelegate,UIWebViewDelegate,MBProgressHUDDelegate,UITableViewDataSource,UITableViewDelegate,AirthCommentsListCellDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UIScrollView *mScrollV_view;
     UILabel *mLab_title;//标题

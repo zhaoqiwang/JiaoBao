@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol AirthCommentsListCellDelegate;
-@protocol AirthCommentsListCellHeadDelegate;
+//@protocol AirthCommentsListCellHeadDelegate;
 
 @interface AirthCommentsListCell : UITableViewCell
 
@@ -23,7 +23,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_CaiCount;
 @property (nonatomic,strong) IBOutlet UIView *mView_RefID;
 @property (weak,nonatomic) id<AirthCommentsListCellDelegate> delegate;
-@property (weak,nonatomic) id<AirthCommentsListCellHeadDelegate> headDelegate;
+//@property (weak,nonatomic) id<AirthCommentsListCellHeadDelegate> headDelegate;
 
 -(IBAction)mBtn_reply:(UIButton *)sender;
 -(IBAction)mBtn_LikeCount:(UIButton *)sender;
@@ -40,9 +40,9 @@
 - (void) mBtn_LikeCount:(AirthCommentsListCell *) airthCommentsListCell;
 - (void) mBtn_CaiCount:(AirthCommentsListCell *) airthCommentsListCell;
 
-@end
-
-@protocol AirthCommentsListCellHeadDelegate <NSObject>
+//@end
+//
+//@protocol AirthCommentsListCellHeadDelegate <NSObject>
 
 //向cell中添加头像点击手势
 - (void) AirthCommentsListCellHeadTapHeadPress:(AirthCommentsListCell *) airthCommentsListCell;

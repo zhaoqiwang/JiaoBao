@@ -239,10 +239,18 @@
 {
     CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:
                              @"customCell"];
-    if(cell == nil)
-    {
-        NSArray *cellArr = [[NSBundle mainBundle]loadNibNamed:@"CustomCell" owner:self options:nil];
-        cell = (CustomCell*)[cellArr objectAtIndex:0];
+    if (cell == nil) {
+        cell = [[CustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"customCell"];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (CustomCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"CustomCell" bundle:[NSBundle mainBundle]];
+        [self.tableView registerNib:n forCellReuseIdentifier:@"customCell"];
     }
     [self configureCell:cell atIndexPath:indexPath];
     

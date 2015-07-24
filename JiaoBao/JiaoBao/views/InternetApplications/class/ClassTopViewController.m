@@ -474,8 +474,19 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *indentifier = @"ClassTableViewCell";
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if(cell == nil){
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] lastObject];
+    if (cell == nil) {
+        cell = [[ClassTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (ClassTableViewCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"ClassTableViewCell" bundle:[NSBundle mainBundle]];
+        [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
+        [cell initModel];
     }
     cell.tag = indexPath.row;
     NSMutableArray *array ;
@@ -509,13 +520,11 @@
         cell.ClassDelegate = self;
         [cell classLabClick];
     }
+    cell.mModel_class = model;
+    cell.tag = indexPath.row;
     //添加图片点击事件
     [cell thumbImgClick];
-    cell.mModel_class = model;
-    //NSLog(@"classModel.mArr_comment.count = %lu",model.mArr_comment.count);
-
     cell.delegate = self;
-    cell.tag = indexPath.row;
     //添加头像点击事件
     [cell headImgClick];
     cell.headImgDelegate = self;

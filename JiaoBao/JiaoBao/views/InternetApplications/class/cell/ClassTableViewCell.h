@@ -82,6 +82,8 @@
 //给头像添加点击事件
 -(void)headImgClick;
 
+-(void)initModel;
+
 @end
 
 //向cell中添加图片点击手势
