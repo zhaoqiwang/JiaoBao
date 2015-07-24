@@ -33,6 +33,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [self addObserver:self forKeyPath:@"selectedDateStr" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:@"dateChanged"];
     [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
@@ -43,7 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self addObserver:self forKeyPath:@"selectedDateStr" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:@"dateChanged"];
+
     //去掉多余的cell分割线
     self.tableView.tableFooterView=[[UIView alloc]init];
     
