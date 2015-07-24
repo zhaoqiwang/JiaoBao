@@ -427,11 +427,11 @@
 
 //每个cell返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    if (cell) {
-        return cell.frame.size.height;
-    }
-    return 0;
+//    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
+//    if (cell) {
+//        return cell.frame.size.height;
+//    }
+    return [self cellHeight:indexPath];
 }
 
 //在每个section中，显示多少cell
@@ -489,7 +489,7 @@
         [cell initModel];
     }
     cell.tag = indexPath.row;
-    NSMutableArray *array ;
+    NSMutableArray *array = [NSMutableArray array];
     if (self.mInt_unit_class == 3){
         array = [NSMutableArray arrayWithArray:self.mArr_list_class];
     }else{
@@ -678,15 +678,90 @@
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5+5+10);
             
         }
-        
-        
-        
     }
     
     cell.tableview.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
+-(CGFloat)cellHeight:(NSIndexPath *)indexPath{
+    CGFloat tempFloat = 0;
+    //找到当前应该显示的数组
+    NSMutableArray *array = [NSMutableArray array];
+    if (self.mInt_unit_class == 3){
+        array = [NSMutableArray arrayWithArray:self.mArr_list_class];
+    }else{
+        array = [NSMutableArray arrayWithArray:self.mArr_list];
+    }
+    
+    //显示具体界面
+    ClassModel *model = [array objectAtIndex:indexPath.row];
+    tempFloat = tempFloat +18+21;
+    tempFloat = tempFloat +21;
+    //文章logo
+    CGSize contentSize;
+    //详情
+    contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
+    if (contentSize.height>26) {
+        contentSize = CGSizeMake([dm getInstance].width-82, 30);
+    }
+    if (model.Abstracts.length==0) {
+        contentSize = CGSizeMake([dm getInstance].width-82, 0);
+    }
+    tempFloat = tempFloat +4+contentSize.height;
+    //是否有文章图片需要显示
+    if (model.Thumbnail.count>0) {
+        //最多显示6个图片
+        int a;
+        if (model.Thumbnail.count>=3) {
+            a=3;
+        }else{
+            a = (int)model.Thumbnail.count;
+        }
+        //显示图片的宽度
+        int m = ([dm getInstance].width-82)/3;
+        //开始塞图片
+        BOOL notFirst = NO;
+        float y = 5;    float x = 0;
+        
+        for (int i=0; i<a; i++,x++) {
+            if ((i%3)==0 && notFirst) {
+                y = y+(m+5);
+                x = 0;
+            }
+        }
+        tempFloat = tempFloat+m+10;
+    }else{
+        
+    }
+    NSUInteger h = 0;
+    for(int i=0;i<model.mArr_comment.count;i++)
+    {
+        commentsListModel *tempModel = [model.mArr_comment objectAtIndex:i];
+        
+        NSString *string1 = tempModel.UserName;
+        NSString *string2 = tempModel.Commnets;
+        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        
+        NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        
+        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
+        
+        h = h+size.height;
+    }
+    
+    if(model.mArr_comment.count == 0){
+        tempFloat = tempFloat+21+10+5;
+    }else{
+        if(model.mArr_comment.count<5){
+            tempFloat = tempFloat+21+h+15+3+10+10;
+        }else{
+            tempFloat = tempFloat+21+h+15+30+5+5+10+10;
+        }
+    }
+    return tempFloat;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.mView_popup.hidden = YES;

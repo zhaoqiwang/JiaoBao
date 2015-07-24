@@ -729,6 +729,7 @@
 		A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */; };
 		A7D504551B4E043100BBB7C8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */; };
 		A7D504561B4E043100BBB7C8 /* libMobClickLibraryS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */; };
+		A7D829A91B61D0D400812340 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A7D829A61B61D0D400812340 /* UIImage+Resize.m */; };
 		A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */; };
 		A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */; };
 		A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */; };
@@ -1848,6 +1849,8 @@
 		A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibraryS.a; path = Common/UMAnalytics_Sdk_3.5.8/libMobClickLibraryS.a; sourceTree = "<group>"; };
 		A7D504531B4E043100BBB7C8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Common/UMAnalytics_Sdk_3.5.8/MobClick.h; sourceTree = "<group>"; };
 		A7D504541B4E043100BBB7C8 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = Common/UMAnalytics_Sdk_3.5.8/MobClickSocialAnalytics.h; sourceTree = "<group>"; };
+		A7D829A51B61D0D400812340 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Common/UIImage+Resize.h"; sourceTree = "<group>"; };
+		A7D829A61B61D0D400812340 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Common/UIImage+Resize.m"; sourceTree = "<group>"; };
 		A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceViewController.h; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.h; sourceTree = "<group>"; };
 		A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleSpaceViewController.m; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.m; sourceTree = "<group>"; };
 		A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleSpaceViewController.xib; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.xib; sourceTree = "<group>"; };
@@ -2754,6 +2757,9 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A7D829AB1B61E62100812340 /* Chat */,
+				A7D829A51B61D0D400812340 /* UIImage+Resize.h */,
+				A7D829A61B61D0D400812340 /* UIImage+Resize.m */,
 				A76255D41B5C9F3C00AD8089 /* AVCaptureManager */,
 				A7D504501B4E03DA00BBB7C8 /* UMAnalytics_Sdk */,
 				A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */,
@@ -3764,6 +3770,13 @@
 			name = UMAnalytics_Sdk;
 			sourceTree = "<group>";
 		};
+		A7D829AB1B61E62100812340 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
 		A7E2E5E51B20312B003F85B5 /* personalSpace */ = {
 			isa = PBXGroup;
 			children = (
@@ -4579,6 +4592,7 @@
 				F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */,
 				A755E70719F278B900BBDF3D /* ASIInputStream.m in Sources */,
 				A77FF0271A650B3F00DB85E3 /* JSONModel.m in Sources */,
+				A7D829A91B61D0D400812340 /* UIImage+Resize.m in Sources */,
 				A755E71419F278B900BBDF3D /* ASIS3ObjectRequest.m in Sources */,
 				F79D84D41ABD4DC000897477 /* DetailSubmitViewController.m in Sources */,
 				A74339551A452B7700AFC0A5 /* UIButton+WebCache.m in Sources */,

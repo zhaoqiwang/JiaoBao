@@ -31,7 +31,6 @@
 #endif
     else {
         image = [[UIImage alloc] initWithData:data];
-        NSLog(@"kjlkjljlkjlkjljlk-====%lu",(unsigned long)data.length);
         //
         if (data.length/1024 > 1024) {
             image = [self compressImageWith:image];
