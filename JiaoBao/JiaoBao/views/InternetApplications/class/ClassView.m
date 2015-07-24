@@ -999,41 +999,7 @@
 
 //每个cell返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
-//    NSMutableArray *array = [NSMutableArray array];
-//    if (indexPath.section == 0) {
-//        if (self.mInt_index == 0) {
-//            array = [NSMutableArray arrayWithArray:self.mArr_unitTop];
-//        }else if (self.mInt_index == 1){
-//            array = [NSMutableArray arrayWithArray:self.mArr_classTop];
-//        }else if (self.mInt_index == 2){
-//            array = [NSMutableArray arrayWithArray:self.mArr_local];
-//        }else if (self.mInt_index == 3){
-//            array = [NSMutableArray arrayWithArray:self.mArr_attention];
-//        }else if (self.mInt_index == 4){
-//            array = [NSMutableArray arrayWithArray:self.mArr_sum];
-//        }
-//    }else{
-//        if (self.mInt_index == 0) {
-//            array = [NSMutableArray arrayWithArray:self.mArr_unit];
-//        }else if (self.mInt_index == 1){
-//            array = [NSMutableArray arrayWithArray:self.mArr_class];
-//        }else if (self.mInt_index == 2){
-//            array = [NSMutableArray arrayWithArray:self.mArr_local];
-//        }else if (self.mInt_index == 3){
-//            array = [NSMutableArray arrayWithArray:self.mArr_attention];
-//        }else if (self.mInt_index == 4){
-//            array = [NSMutableArray arrayWithArray:self.mArr_sum];
-//        }
-//    }
-//    
-//    //显示具体界面
-//    ClassModel *model = [array objectAtIndex:indexPath.row];
-    if (cell) {
-        return cell.frame.size.height;
-        
-    }
-    return 0;
+    return [self cellHeight:indexPath];
 }
 //每个section头返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -1269,12 +1235,9 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    NSLog(@"indexpath= [%d %d]",indexPath.section,indexPath.row);
     static NSString *indentifier = @"ClassTableViewCell";
 
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    NSLog(@"cell===========%@",cell);
 
     if (cell == nil) {
         cell = [[ClassTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
@@ -1394,13 +1357,14 @@
     
     //添加图片点击事件
     cell.tag = indexPath.row;
+    cell.mModel_class = model;
+    [cell.tableview reloadData];
     cell.delegate = self;
     cell.headImgDelegate = self;
     //添加图片点击事件
     [cell thumbImgClick];
     //添加头像点击事件
     [cell headImgClick];
-    cell.mModel_class = model;
     
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+8);
@@ -1526,6 +1490,104 @@
     return cell;
 }
 
+-(CGFloat)cellHeight:(NSIndexPath *)indexPath{
+    CGFloat tempFloat = 0;
+    //找到当前应该显示的数组
+    NSMutableArray *array = [NSMutableArray array];
+    if (indexPath.section == 0) {
+        if (self.mInt_index == 0) {
+            array = [NSMutableArray arrayWithArray:self.mArr_unitTop];
+        }else if (self.mInt_index == 1){
+            array = [NSMutableArray arrayWithArray:self.mArr_classTop];
+        }else if (self.mInt_index == 2){
+            array = [NSMutableArray arrayWithArray:self.mArr_local];
+        }else if (self.mInt_index == 3){
+            array = [NSMutableArray arrayWithArray:self.mArr_attention];
+        }else if (self.mInt_index == 4){
+            array = [NSMutableArray arrayWithArray:self.mArr_sum];
+        }
+    }else{
+        if (self.mInt_index == 0) {
+            array = [NSMutableArray arrayWithArray:self.mArr_unit];
+        }else if (self.mInt_index == 1){
+            array = [NSMutableArray arrayWithArray:self.mArr_class];
+        }else if (self.mInt_index == 2){
+            array = [NSMutableArray arrayWithArray:self.mArr_local];
+        }else if (self.mInt_index == 3){
+            array = [NSMutableArray arrayWithArray:self.mArr_attention];
+        }else if (self.mInt_index == 4){
+            array = [NSMutableArray arrayWithArray:self.mArr_sum];
+        }
+    }
+    
+    //显示具体界面
+    ClassModel *model = [array objectAtIndex:indexPath.row];
+    tempFloat = tempFloat +18+21;
+    tempFloat = tempFloat +21;
+    //文章logo
+    CGSize contentSize;
+    //详情
+    contentSize = [model.Abstracts sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-72, 99999)];
+    if (contentSize.height>26) {
+        contentSize = CGSizeMake([dm getInstance].width-82, 30);
+    }
+    if (model.Abstracts.length==0) {
+        contentSize = CGSizeMake([dm getInstance].width-82, 0);
+    }
+    tempFloat = tempFloat +4+contentSize.height;
+    //是否有文章图片需要显示
+    if (model.Thumbnail.count>0) {
+        //最多显示6个图片
+        int a;
+        if (model.Thumbnail.count>=3) {
+            a=3;
+        }else{
+            a = (int)model.Thumbnail.count;
+        }
+        //显示图片的宽度
+        int m = ([dm getInstance].width-82)/3;
+        //开始塞图片
+        BOOL notFirst = NO;
+        float y = 5;    float x = 0;
+        
+        for (int i=0; i<a; i++,x++) {
+            if ((i%3)==0 && notFirst) {
+                y = y+(m+5);
+                x = 0;
+            }
+        }
+        tempFloat = tempFloat+m+10;
+    }else{
+        
+    }
+    NSUInteger h = 0;
+    for(int i=0;i<model.mArr_comment.count;i++)
+    {
+        commentsListModel *tempModel = [model.mArr_comment objectAtIndex:i];
+        
+        NSString *string1 = tempModel.UserName;
+        NSString *string2 = tempModel.Commnets;
+        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        
+        NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        
+        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
+        
+        h = h+size.height;
+    }
+    
+    if(model.mArr_comment.count == 0){
+        tempFloat = tempFloat+21+10+5;
+    }else{
+        if(model.mArr_comment.count<5){
+            tempFloat = tempFloat+21+h+15+3+10+10;
+        }else{
+            tempFloat = tempFloat+21+h+15+30+5+5+10+10;
+        }
+    }
+    return tempFloat;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.mView_popup.hidden = YES;
@@ -1753,7 +1815,6 @@
 //    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
 //    browser.photos = photos; // 设置所有的图片
 //    [browser show];
-    
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -1802,7 +1863,6 @@
 //    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
 //    browser.photos = photos; // 设置所有的图片
 //    [browser show];
-    
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -1855,7 +1915,6 @@
 //    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
 //    browser.photos = photos; // 设置所有的图片
 //    [browser show];
-        
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
