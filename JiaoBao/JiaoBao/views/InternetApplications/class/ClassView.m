@@ -193,6 +193,8 @@
                 ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
+
                     break;
                 }
             }
@@ -200,6 +202,7 @@
                 ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
                     break;
                 }
             }
@@ -208,6 +211,7 @@
                 ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
                     break;
                 }
             }
@@ -215,6 +219,7 @@
                 ClassModel *classModel = [self.mArr_class objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
                     break;
                 }
             }
@@ -223,6 +228,7 @@
                 ClassModel *classModel = [self.mArr_local objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
                     break;
                 }
             }
@@ -231,6 +237,7 @@
                 ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
                     break;
                 }
             }
@@ -239,6 +246,7 @@
                 ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
+                    [self getCommentHeight:classModel];
                     break;
                 }
             }
@@ -249,7 +257,28 @@
         [MBProgressHUD showError:@"超时" toView:self];
     }
 }
-
+-(float)getCommentHeight:(ClassModel*)classModel
+{
+    float h = 0;
+    for(int i=0;i<classModel.mArr_comment.count;i++)
+    {
+        commentsListModel *tempModel = [classModel.mArr_comment objectAtIndex:i];
+        
+        NSString *string1 = tempModel.UserName;
+        NSString *string2 = tempModel.Commnets;
+        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        
+        NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        
+        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
+        
+        h = h+size.height;
+        
+    }
+    classModel.commentHeight = h;
+    return classModel.commentHeight;
+}
 //点击弹出框中的赞或者评论按钮
 -(void)PopupWindowClickBtn:(PopupWindow *)PopupWindow Button:(UIButton *)btn{
     self.mView_popup.hidden = YES;
@@ -970,12 +999,6 @@
 
 //每个cell返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
-//    if (cell) {
-//        return cell.frame.size.height;
-//        
-//    }
-    
     return [self cellHeight:indexPath];
 }
 //每个section头返回的高度
@@ -1212,10 +1235,10 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"indexpath= [%d %d]",indexPath.section,indexPath.row);
     static NSString *indentifier = @"ClassTableViewCell";
-    
+
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+
     if (cell == nil) {
         cell = [[ClassTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil];
@@ -1462,6 +1485,7 @@
 
     cell.tableview.backgroundColor = [UIColor clearColor];
     //cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5);
+
     return cell;
 }
 

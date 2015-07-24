@@ -60,6 +60,7 @@
 @property (nonatomic,strong) NSString *unitId;//单位号
 @property (nonatomic,strong) NSMutableArray *mArr_comment;//当前文章的前N条评论
 @property (nonatomic,strong) GetArthInfoModel *mModel_info;//附加信息
+@property(nonatomic,assign)float commentHeight;
 
 @end
 

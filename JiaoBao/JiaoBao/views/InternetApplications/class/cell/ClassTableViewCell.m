@@ -55,12 +55,8 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *indentifier = @"CommentCell";
-    BOOL nibsRegistered = NO;
-    if (!nibsRegistered) {
-        UINib *nib = [UINib nibWithNibName:NSStringFromClass([CommentCell class]) bundle:nil];
-        [tableView registerNib:nib forCellReuseIdentifier:indentifier];
-        nibsRegistered = YES;
-    }
+
+
     CommentCell *cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if (cell == nil) {
         cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
