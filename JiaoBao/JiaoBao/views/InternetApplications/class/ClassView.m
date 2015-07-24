@@ -1357,13 +1357,14 @@
     
     //添加图片点击事件
     cell.tag = indexPath.row;
+    cell.mModel_class = model;
+    [cell.tableview reloadData];
     cell.delegate = self;
     cell.headImgDelegate = self;
     //添加图片点击事件
     [cell thumbImgClick];
     //添加头像点击事件
     [cell headImgClick];
-    cell.mModel_class = model;
     
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+8);

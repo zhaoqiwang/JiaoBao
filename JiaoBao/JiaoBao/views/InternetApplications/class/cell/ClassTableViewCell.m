@@ -36,15 +36,7 @@
 #pragma mark - TableViewdelegate&&TableViewdataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSLog(@"model = %@",self.mModel_class.mArr_comment);
-    UITableViewCell *cell= [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    if (cell)
-    {
-
-        return cell.frame.size.height;
-        
-    }
-    return 30;
+    return [self cellFloat:indexPath];
 }
 
 //在每个section中，显示多少cell
@@ -55,8 +47,6 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *indentifier = @"CommentCell";
-
-
     CommentCell *cell = (CommentCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     if (cell == nil) {
         cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
@@ -107,6 +97,21 @@
     
     
     return cell;
+}
+
+-(CGFloat)cellFloat:(NSIndexPath *)indexPath{
+    CGFloat tempFloat =0;
+    commentsListModel *tempModel = [self.mModel_class.mArr_comment objectAtIndex:indexPath.row];
+    NSString *string1 = tempModel.UserName;
+    NSString *string2 = tempModel.Commnets;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    
+    
+    NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
+    tempFloat = size.height+3;
+    return tempFloat;
 }
 
 
