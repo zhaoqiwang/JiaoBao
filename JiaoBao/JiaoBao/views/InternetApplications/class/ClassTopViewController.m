@@ -521,6 +521,7 @@
         [cell classLabClick];
     }
     cell.mModel_class = model;
+    [cell.tableview reloadData];
     cell.tag = indexPath.row;
     //添加图片点击事件
     [cell thumbImgClick];
