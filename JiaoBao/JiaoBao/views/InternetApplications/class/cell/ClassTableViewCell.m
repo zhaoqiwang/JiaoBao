@@ -41,6 +41,19 @@
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.mModel_class.Thumbnail.count==1) {
+        self.mImgV_0.hidden = NO;
+        self.mImgV_1.hidden = YES;
+        self.mImgV_2.hidden = YES;
+    }else if (self.mModel_class.Thumbnail.count==2){
+        self.mImgV_0.hidden = NO;
+        self.mImgV_1.hidden = NO;
+        self.mImgV_2.hidden = YES;
+    }else if (self.mModel_class.Thumbnail.count>=3){
+        self.mImgV_0.hidden = NO;
+        self.mImgV_1.hidden = NO;
+        self.mImgV_2.hidden = NO;
+    }
     NSUInteger num = self.mModel_class.mArr_comment.count;
     return num;
 }

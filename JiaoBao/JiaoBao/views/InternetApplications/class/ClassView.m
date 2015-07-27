@@ -1355,17 +1355,6 @@
     cell.mLab_content.frame = CGRectMake(62+5, cell.mLab_assessContent.frame.origin.y+cell.mLab_assessContent.frame.size.height+4, contentSize.width, contentSize.height);
     cell.mLab_content.text = model.Abstracts;
     
-    //添加图片点击事件
-    cell.tag = indexPath.row;
-    cell.mModel_class = model;
-    [cell.tableview reloadData];
-    cell.delegate = self;
-    cell.headImgDelegate = self;
-    //添加图片点击事件
-    [cell thumbImgClick];
-    //添加头像点击事件
-    [cell headImgClick];
-    
     //详情背景色
     cell.mView_background.frame = CGRectMake(62, cell.mLab_content.frame.origin.y-4, [dm getInstance].width-72, contentSize.height+8);
     //是否有文章图片需要显示
@@ -1410,6 +1399,16 @@
         cell.mView_img.hidden = YES;
         cell.mView_img.frame = cell.mView_background.frame;
     }
+    //添加图片点击事件
+    cell.tag = indexPath.row;
+    cell.mModel_class = model;
+    [cell.tableview reloadData];
+    cell.delegate = self;
+    cell.headImgDelegate = self;
+    //添加图片点击事件
+    [cell thumbImgClick];
+    //添加头像点击事件
+    [cell headImgClick];
     
     //时间
     cell.mLab_time.frame = CGRectMake(62, cell.mView_img.frame.origin.y+cell.mView_img.frame.size.height+5, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
