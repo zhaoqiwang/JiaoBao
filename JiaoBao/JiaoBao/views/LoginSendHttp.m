@@ -1241,7 +1241,14 @@ static LoginSendHttp *loginSendHttp = nil;
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("tag-=== 19=== %@",str000);
         UserInfoModel *model = [ParserJson parserJsonUserInfoWith:str000];
+        if([[dm getInstance].onlyGetInfo isEqualToString: @"1"] )
+        {
+            [dm getInstance].onlyGetInfo = model.UserID;
+            return;
+            
+        }
         [dm getInstance].userInfo = model;
+
         //判断当前单位显示
         if ([[dm getInstance].mStr_unit isKindOfClass:[NSNull class]]||[[dm getInstance].mStr_unit isEqual:@"null"]||[[dm getInstance].mStr_unit isEqual:@"nil"]||[dm getInstance].mStr_unit == Nil||[dm getInstance].mStr_unit.length==0) {
             for (Identity_model *model in [dm getInstance].identity) {

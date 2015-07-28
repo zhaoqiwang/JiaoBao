@@ -9,6 +9,7 @@
 #import "HomeClassWorkView.h"
 #import "Reachability.h"
 #import "SVProgressHUD.h"
+#import "MBProgressHUD+AD.h"
 
 
 @implementation HomeClassWorkView
@@ -313,18 +314,13 @@
     
     if(fileSizeSum>10000000)
     {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"上传文件不能大于10M";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"上传文件不能大于10M" toView:self];
+
         return;
         
     }
     if (self.mViewTop.mTextV_input.text.length == 0) {
-        self.mProgressV.mode = MBProgressHUDModeCustomView;
-        self.mProgressV.labelText = @"请输入内容";
-        [self.mProgressV show:YES];
-        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        [MBProgressHUD showError:@"请输入内容" toView:self];
         return;
     }
     NSMutableArray *genArr = [[NSMutableArray alloc]initWithCapacity:0];
@@ -379,6 +375,11 @@ if([dm getInstance].notificationSymbol == 100)
 
         
     }
+    if(genArr.count ==0)
+    {
+        [MBProgressHUD showError:@"请选择人员" toView:self];
+        return;
+    }
         [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
 
 
@@ -420,6 +421,11 @@ if([dm getInstance].notificationSymbol == 100)
             
         }
         //int num = (int)genArr.count;
+        if(genArr.count ==0)
+        {
+            [MBProgressHUD showError:@"请选择人员" toView:self];
+            return;
+        }
         
             [[LoginSendHttp getInstance] creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
         
@@ -441,6 +447,11 @@ if([dm getInstance].notificationSymbol == 100)
                     }
 
             }
+            }
+            if(genArr.count ==0)
+            {
+                [MBProgressHUD showError:@"请选择人员" toView:self];
+                return;
             }
             
             [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
@@ -475,6 +486,11 @@ if([dm getInstance].notificationSymbol == 100)
                     
                 }
 
+        }
+        if(genArr.count ==0)
+        {
+            [MBProgressHUD showError:@"请选择人员" toView:self];
+            return;
         }
                     [[LoginSendHttp getInstance]creatCommMsgWith:self.mViewTop.mTextV_input.text SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
         

@@ -36,6 +36,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    [ dm getInstance].onlyGetInfo = @"0";
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
 
@@ -43,6 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [dm getInstance].onlyGetInfo = [dm getInstance].userInfo.UserID;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUpLoadResult:) name:@"getUpLoadResult" object:nil];
     self.datePicker.backgroundColor = [UIColor whiteColor];
     self.secDatePicker.backgroundColor = [UIColor whiteColor];
@@ -126,7 +128,7 @@
         self.isOpen = NO;
         self.UserUnits_model = [mArr2 objectAtIndex:indexPath.row];
         NSString *unitID = self.UserUnits_model.UnitID;
-
+        [dm getInstance].onlyGetInfo = @"1";
         [[LoginSendHttp getInstance]getUserInfoWith:[dm getInstance].jiaoBaoHao UID:unitID];
 
 
@@ -154,15 +156,23 @@
     NSString *unitType = self.UserUnits_model.UnitType;
     NSString *unitID = self.UserUnits_model.UnitID;
     NSString *unitTypeName ;
-    NSString *userID = [dm getInstance].userInfo.UserID;
+    NSString *userID = [dm getInstance].onlyGetInfo;
 
-    if([unitType integerValue] == 0)
+    if([unitType integerValue] == 1)
     {
         unitTypeName = @"教育局人员";
     }
-    else if ([unitType integerValue] == 1)
+    else if ([unitType integerValue] == 2)
     {
         unitTypeName = @"老师";
+    }
+    else if ([unitType integerValue] == 3)
+    {
+        unitTypeName = @"家长";
+    }
+    else
+    {
+        unitTypeName = @"学生";
     }
 
     if(![self.textView.text isEqualToString:@""]&&![self.textView2.text isEqualToString:@""]&&![self.startTime.text isEqualToString:@""]&&![self.endTime.text isEqualToString:@""])
