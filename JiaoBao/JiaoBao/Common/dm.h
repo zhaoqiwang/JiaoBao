@@ -80,6 +80,7 @@
 @property(nonatomic,strong)NSString *strFlag;
 @property(nonatomic,strong)NSArray *scrollArr;
 @property(nonatomic,strong)NSString *classStr;
+@property(nonatomic,strong)NSString * onlyGetInfo;
 + (dm*) getInstance;
 
 
