@@ -23,6 +23,7 @@
 #import "ParserJson_theme.h"
 
 @interface SignInHttp : NSObject<ASIHTTPRequestDelegate>
+@property(nonatomic,strong)ASIFormDataRequest *ASIFormDataRequest;
 +(SignInHttp *)getInstance;
 -(void)getDelayedTime:(NSString *)UnitID;
 -(void)uploadschedule:(NSDictionary*)dic;

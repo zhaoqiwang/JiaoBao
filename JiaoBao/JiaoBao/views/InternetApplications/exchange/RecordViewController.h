@@ -14,6 +14,13 @@
 
 @interface RecordViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
+@property(nonatomic,strong)NSDate *currentDate;
+@property(nonatomic,assign)BOOL firstFlag;
+@property(nonatomic,strong)NSString *strFlag;
 
+- (IBAction)leftBtnAction:(id)sender;
+- (IBAction)rightBtnAction:(id)sender;
+- (IBAction)minusYearAction:(id)sender;
+- (IBAction)addYearAction:(id)sender;
 
 @end
