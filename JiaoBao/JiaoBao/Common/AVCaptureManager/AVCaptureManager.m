@@ -16,7 +16,7 @@
 {
     CMTime defaultVideoMaxFrameDuration;
 }
-@property (nonatomic, strong) AVCaptureSession *captureSession;
+//@property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureMovieFileOutput *fileOutput;
 @property (nonatomic, strong) AVCaptureDeviceFormat *defaultFormat;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;

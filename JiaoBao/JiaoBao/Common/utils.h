@@ -34,6 +34,8 @@
 //当前时间用时间转化过之后显示的double值
 +(double)todayTimeConvertToDouble;
 
+//计算文件大小
++(NSString*) getFileSize:(int) number;
 
 
 @end

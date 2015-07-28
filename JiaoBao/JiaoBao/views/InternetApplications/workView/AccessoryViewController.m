@@ -65,6 +65,9 @@
         model.mStr_name = [tempArr objectAtIndex:i];
         model.pathStr = [tempPath stringByAppendingPathComponent:[pathArr objectAtIndex:i]];
         model.fileAttributeDic = [fileManager attributesOfItemAtPath:model.pathStr error:nil];
+        NSData *tempData = [NSData dataWithContentsOfFile:model.pathStr];
+        NSString *tempSize = [utils getFileSize:(int)tempData.length];
+        model.mStr_size = tempSize;
         [self.mArr_sumFile addObject:model];
     }
     
@@ -86,14 +89,15 @@
             cell = (AccessoryTableViewCell *)[nib objectAtIndex:0];
             //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
         }
-        cell.delegate = self;
-        [cell headImgClick];
+        
         //添加图片点击事件
         //若是需要重用，需要写上以下两句代码
         UINib * n= [UINib nibWithNibName:@"AccessoryTableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTableV_file registerNib:n forCellReuseIdentifier:indentifier];
     }
     cell.tag = indexPath.row;
+    cell.delegate = self;
+    [cell headImgClick];
     AccessoryModel *model = [self.mArr_sumFile objectAtIndex:indexPath.row];
     cell.mImgV_select.frame = CGRectMake(10, 5, 34, 34);
     if (model.mInt_select == 0) {
@@ -101,9 +105,11 @@
     }else{
         cell.mImgV_select.image = [UIImage imageNamed:@"selected"];
     }
-    cell.mLab_name.frame = CGRectMake(47, 0, [dm getInstance].width-50, 44);
+    cell.mLab_name.frame = CGRectMake(47, 5, [dm getInstance].width-50, 15);
     cell.mLab_name.text = model.mStr_name;
     
+    cell.mLab_size.frame = CGRectMake(47, 44-5-15, [dm getInstance].width-50, 15);
+    cell.mLab_size.text = model.mStr_size;
     return cell;
 }
 

@@ -69,6 +69,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:TRUE];
     
     self.captureManager = [[AVCaptureManager alloc] initWithPreviewView:self.view];
+    [self.captureManager.captureSession setSessionPreset:AVCaptureSessionPreset352x288];
     self.captureManager.delegate = self;
     
     // Setup images for the Shutter Button
