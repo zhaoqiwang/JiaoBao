@@ -13,6 +13,7 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import <AVFoundation/AVFoundation.h>
 #import "VideoRecorderViewController.h"
+#import "MBProgressHUD+AD.h"
 
 @class NewWorkTopViewProtocol;
 
@@ -64,6 +65,7 @@
 //@property (nonatomic,strong) NSTimer *timer;//录音声波监控（注意这里暂时不对播放进行监控）
 @property (retain, nonatomic) AVAudioPlayer *audioPlayer;
 @property (retain, nonatomic) UIImageView *imageView;
+@property (nonatomic,assign) double mInt_time;//录音时间
 
 @property(nonatomic,strong)UIImagePickerController *picker;
 

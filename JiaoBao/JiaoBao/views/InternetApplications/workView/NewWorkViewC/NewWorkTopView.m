@@ -474,7 +474,8 @@
 {
     [self.imageView setHidden:YES];
     double cTime = self.recorder.currentTime;
-    if (cTime > 2) {//如果录制时间<2 不发送
+    self.mInt_time = cTime;
+    if (cTime > 1) {//如果录制时间<2 不发送
         D("发出去");
     }else {
         //删除记录的文件
@@ -569,37 +570,24 @@
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder
                            successfully:(BOOL)flag{
     if (flag){
+        
         D("Successfully stopped the audio recording process.");
         /* Let's try to retrieve the data for the recorded file */
 //        NSError *playbackError = nil;
-        AccessoryModel *model = [[AccessoryModel  alloc] init];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSError *readingError = nil;
-        NSData *fileData =[NSData dataWithContentsOfFile:mStr_path
-                                                 options:NSDataReadingMapped
-                                                   error:&readingError];
-        NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
-        NSString *path = [self audioRecordingPath000];
-        path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
-        
-        BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:path];
-        
-        if (!yesNo) {//不存在，则直接写入后通知界面刷新
-            BOOL result = [fileData writeToFile:path atomically:YES];
-            for (;;) {
-                if (result) {
-                    model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
-                    //                model.pathStr = mStr_path;
-                    model.pathStr = path;
-                    model.fileAttributeDic = [fileManager attributesOfItemAtPath:path error:nil];
-                    [self.mArr_accessory addObject:model];
-                    
-                    break;
-                }
-            }
-        }else {//存在
-            BOOL blDele= [fileManager removeItemAtPath:path error:nil];//先删除
-            if (blDele) {//删除成功后，写入，通知界面
+        if (self.mInt_time > 1) {//如果录制时间<2 不发送
+            AccessoryModel *model = [[AccessoryModel  alloc] init];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSError *readingError = nil;
+            NSData *fileData =[NSData dataWithContentsOfFile:mStr_path
+                                                     options:NSDataReadingMapped
+                                                       error:&readingError];
+            NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
+            NSString *path = [self audioRecordingPath000];
+            path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.aac",timeSp]];
+            
+            BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:path];
+            
+            if (!yesNo) {//不存在，则直接写入后通知界面刷新
                 BOOL result = [fileData writeToFile:path atomically:YES];
                 for (;;) {
                     if (result) {
@@ -612,10 +600,30 @@
                         break;
                     }
                 }
+            }else {//存在
+                BOOL blDele= [fileManager removeItemAtPath:path error:nil];//先删除
+                if (blDele) {//删除成功后，写入，通知界面
+                    BOOL result = [fileData writeToFile:path atomically:YES];
+                    for (;;) {
+                        if (result) {
+                            model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
+                            //                model.pathStr = mStr_path;
+                            model.pathStr = path;
+                            model.fileAttributeDic = [fileManager attributesOfItemAtPath:path error:nil];
+                            [self.mArr_accessory addObject:model];
+                            
+                            break;
+                        }
+                    }
+                }
             }
+            //添加显示附件
+            [self addAccessoryPhoto];
+        }else {
+            D("按住时间太短");
+            [MBProgressHUD showError:@"按住时间太短" toView:self];
         }
-        //添加显示附件
-        [self addAccessoryPhoto];
+        
     } else {
         D("Stopping the audio recording failed.");
     }

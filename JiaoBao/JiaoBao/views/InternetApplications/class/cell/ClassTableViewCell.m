@@ -41,6 +41,19 @@
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.mModel_class.Thumbnail.count==1) {
+        self.mImgV_0.hidden = NO;
+        self.mImgV_1.hidden = YES;
+        self.mImgV_2.hidden = YES;
+    }else if (self.mModel_class.Thumbnail.count==2){
+        self.mImgV_0.hidden = NO;
+        self.mImgV_1.hidden = NO;
+        self.mImgV_2.hidden = YES;
+    }else if (self.mModel_class.Thumbnail.count>=3){
+        self.mImgV_0.hidden = NO;
+        self.mImgV_1.hidden = NO;
+        self.mImgV_2.hidden = NO;
+    }
     NSUInteger num = self.mModel_class.mArr_comment.count;
     return num;
 }
@@ -71,11 +84,24 @@
     
 
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
+//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
 //    CGRect rect=[string boundingRectWithSize:CGSizeMake([dm getInstance].width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
 //                                  attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, [dm getInstance].width-65, 100)];
+    label.numberOfLines = 0;
+    label.backgroundColor = [UIColor redColor];
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.font = [UIFont systemFontOfSize:14];
+    
+    label.text = string;
+    
+    CGSize size11 = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
+    
+//    label.frame =CGRectMake(10, 100, 300, size.height);
 
-    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, size.height+5);
+//    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, size.height+5);
+    cell.contentLabel.frame = CGRectMake(0, 0, [dm getInstance].width-65, size11.height+5);
     NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
     [row4 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
@@ -93,7 +119,7 @@
 
 
 
-    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, size.height+3);
+    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, size11.height+3);
     
     
     return cell;
@@ -109,8 +135,17 @@
     
     
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
-    tempFloat = size.height+3;
+//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, [dm getInstance].width-65, 100)];
+    label.numberOfLines = 0;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    label.font = [UIFont systemFontOfSize:14];
+    
+    label.text = string;
+    
+    CGSize size11 = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
+//    tempFloat = size.height+3;
+    tempFloat = size11.height+3;
     return tempFloat;
 }
 

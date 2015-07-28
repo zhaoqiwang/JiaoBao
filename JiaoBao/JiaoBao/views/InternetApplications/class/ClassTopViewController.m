@@ -521,6 +521,7 @@
         [cell classLabClick];
     }
     cell.mModel_class = model;
+    [cell.tableview reloadData];
     cell.tag = indexPath.row;
     //添加图片点击事件
     [cell thumbImgClick];
@@ -528,6 +529,7 @@
     //添加头像点击事件
     [cell headImgClick];
     cell.headImgDelegate = self;
+    
     //标题
     //    CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_assessContent.frame = CGRectMake(62, cell.mLab_name.frame.origin.y+cell.mLab_name.frame.size.height, [dm getInstance].width-72, cell.mLab_assessContent.frame.size.height);
@@ -576,10 +578,13 @@
             notFirst = YES;
             if (i==0) {
                 cell.mImgV_0.hidden = NO;
+                cell.mImgV_1.hidden = YES;
+                cell.mImgV_2.hidden = YES;
                 [cell.mImgV_0 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
                 [cell.mImgV_0 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }else if (i==1){
                 cell.mImgV_1.hidden = NO;
+                cell.mImgV_2.hidden = YES;
                 [cell.mImgV_1 setFrame:CGRectMake(0+(5+m)*x, y, m, m)];
                 [cell.mImgV_1 sd_setImageWithURL:[NSURL  URLWithString:[model.Thumbnail objectAtIndex:i]] placeholderImage:[UIImage  imageNamed:@"photo_default"]];
             }else if (i==2){
