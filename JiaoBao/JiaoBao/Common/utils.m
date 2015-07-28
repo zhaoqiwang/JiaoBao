@@ -106,5 +106,22 @@
     return date;
 }
 
++(NSString*) getFileSize:(int) number
+{
+    NSString* smble = @"";
+    
+    if(number>1024*1024*1024) {
+        return [NSString stringWithFormat:@"%.2fG",number/1024.f/1024.f/1024.f];
+    } else if(number>1024*1024) {
+        return [NSString stringWithFormat:@"%.3fM", number/1024.f/1024.f];
+    } else if(number>1024) {
+        return [NSString stringWithFormat:@"%.1fKB",  number/1024.f];
+    } else if(number>=0) {
+        return [NSString stringWithFormat:@"%iBytes", number];
+    }
+    
+    return [NSString stringWithFormat:@"%@%dB", smble, 0];
+}
+
 
 @end

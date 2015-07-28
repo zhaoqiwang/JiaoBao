@@ -18,6 +18,7 @@
 
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_select;//是否选择
 @property (nonatomic,strong) IBOutlet UILabel *mLab_name;//文件名称
+@property (nonatomic,strong) IBOutlet UILabel *mLab_size;//文件大小
 @property (weak,nonatomic) id<AccessoryTableViewCellDelegate> delegate;
 
 //给头像添加点击事件

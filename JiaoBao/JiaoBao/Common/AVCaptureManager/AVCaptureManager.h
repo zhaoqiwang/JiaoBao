@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @protocol AVCaptureManagerDelegate <NSObject>
 - (void)didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
@@ -20,6 +21,7 @@
 
 @property (nonatomic, assign) id<AVCaptureManagerDelegate> delegate;
 @property (nonatomic, readonly) BOOL isRecording;
+@property (nonatomic, strong) AVCaptureSession *captureSession;
 
 - (id)initWithPreviewView:(UIView *)previewView;
 - (void)toggleContentsGravity;

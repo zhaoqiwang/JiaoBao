@@ -11,6 +11,7 @@
 #import "MobileUnitViewController.h"
 #import "MobClick.h"
 #import "UIImageView+WebCache.h"
+#import "SDImageCache.h"
 
 
 @interface PeopleSpaceViewController ()
@@ -65,6 +66,7 @@
     if([str integerValue]==0)
     {
         [MBProgressHUD showSuccess:@"修改头像成功" toView:self.view];
+        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao]];
     }
     else
     {
