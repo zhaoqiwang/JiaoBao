@@ -35,9 +35,12 @@
 -(void)dealloc
 {
     [self.detail removeFromParentViewController];
-//    self.calendar = nil;
-//    self.calendarView = nil;
-//    self.menuView = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    self.calendar.contentView.delegate = nil;
+    self.calendar.menuMonthsView.delegate = nil;
+    self.calendar = nil;
+    self.calendarView = nil;
+    self.menuView = nil;
     
 }
 
@@ -118,7 +121,15 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [dm getInstance].classStr = @"SignInViewController";
+    NSString *str = [NSString stringWithFormat:@"%@",[dm getInstance].mStr_unit];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
+    //    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
+    [self.mNav_navgationBar setRightBtnTitle:@"填写"];
     
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar leftBtnAction:str];
+    [self.view addSubview:self.mNav_navgationBar];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getDateMark:) name:@"getDateMark" object:nil];
     self.calendar = [JTCalendar new];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -245,14 +256,14 @@
     }
     self.groupArr = [sender object];
     //添加导航条
-    NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
-//    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
-    [self.mNav_navgationBar setRightBtnTitle:@"填写"];
-
-    self.mNav_navgationBar.delegate = self;
-    [self.mNav_navgationBar leftBtnAction:str];
-    [self.view addSubview:self.mNav_navgationBar];
+//    NSString *str = [NSString stringWithFormat:@"%@",[[self.groupArr objectAtIndex:0]objectForKey:@"GroupName"]];
+//    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@""];
+////    [self.mNav_navgationBar setRightBtn:[UIImage imageNamed:@"appNav_contact"]];
+//    [self.mNav_navgationBar setRightBtnTitle:@"填写"];
+//
+//    self.mNav_navgationBar.delegate = self;
+//    [self.mNav_navgationBar leftBtnAction:str];
+//    [self.view addSubview:self.mNav_navgationBar];
     
     
 }
@@ -392,7 +403,7 @@
     [adcomps setYear:0];
     [adcomps setMonth:1];
     [adcomps setDay:0];
-    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.calendar.currentDate options:0];
     //[self.calendar setCurrentDate:nextDate];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM"];
@@ -409,14 +420,15 @@
     [jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
-    [adcomps setYear:-1];
+    [adcomps setYear:0];
     [adcomps setMonth:0];
     [adcomps setDay:0];
-    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.calendar.currentDate options:0];
     //[self.calendar setCurrentDate:nextDate];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM"];
     NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
+    [[SignInHttp getInstance].ASIFormDataRequest clearDelegatesAndCancel];
     [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
     self.strFlag = @"minusYear";
 
@@ -430,13 +442,14 @@
     [jt_calendar updatePage];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *adcomps = [[NSDateComponents alloc] init];
-    [adcomps setYear:1];
+    [adcomps setYear:0];
     [adcomps setMonth:0];
     [adcomps setDay:0];
-    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.currentDate options:0];
+    self.currentDate = [calendar dateByAddingComponents:adcomps toDate:self.calendar.currentDate options:0];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM"];
     NSString *dateString = [dateFormatter stringFromDate:self.currentDate];
+    [[SignInHttp getInstance].ASIFormDataRequest clearDelegatesAndCancel];
     [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
     self.strFlag = @"addYear";
 

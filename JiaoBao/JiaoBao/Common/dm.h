@@ -79,6 +79,7 @@
 @property(nonatomic,strong)NSString *firstFlag,*secondFlag,*thirdFlag;//发布事务权限标志
 @property(nonatomic,strong)NSString *strFlag;
 @property(nonatomic,strong)NSArray *scrollArr;
+@property(nonatomic,strong)NSString *classStr;
 + (dm*) getInstance;
 
 

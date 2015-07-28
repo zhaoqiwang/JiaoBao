@@ -164,9 +164,18 @@
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM"];
         NSString *dateString = [dateFormatter stringFromDate:currentDate2];
-     
-        
-        [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
+        NSString *destDateString = [dateFormatter stringFromDate:currentDate2];
+        NSArray *dateArr = [destDateString componentsSeparatedByString:@"-"];
+        if([[dm getInstance].classStr isEqualToString:@"SignInViewController"])
+        {
+            [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
+            
+        }
+        else
+        {
+            [[SignInHttp getInstance]GetSignInListForMobile:[dateArr objectAtIndex:0] Month:[dateArr objectAtIndex:1]];
+
+        }
         
     } else if (self.endContentOffsetX > self.willEndContentOffsetX && self.willEndContentOffsetX > self.startContentOffsetX) {//画面从左往右移动，后一页
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -180,9 +189,18 @@
         [dateFormatter setDateFormat:@"yyyy-MM"];
         NSString *dateString = [dateFormatter stringFromDate:currentDate2];
 
-
-        
-        [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
+        NSString *destDateString = [dateFormatter stringFromDate:currentDate2];
+        NSArray *dateArr = [destDateString componentsSeparatedByString:@"-"];
+        if([[dm getInstance].classStr isEqualToString:@"SignInViewController"])
+        {
+            [[SignInHttp getInstance]WorkPlanSelectContentByMonth:nil UserID:nil strSelectDate:dateString];
+            
+        }
+        else
+        {
+            [[SignInHttp getInstance]GetSignInListForMobile:[dateArr objectAtIndex:0] Month:[dateArr objectAtIndex:1]];
+            
+        }
         
     }
     [self updatePage];

@@ -233,6 +233,9 @@ static  SignInHttp*__instance;
     NSURL *url = [NSURL URLWithString:urlString];
 
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    [SignInHttp getInstance].ASIFormDataRequest = request;
+    NSLog(@"request = %@ ASIFormDataRequest = %@",request,[SignInHttp getInstance].ASIFormDataRequest);
+
     request.timeOutSeconds = TIMEOUT;
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
