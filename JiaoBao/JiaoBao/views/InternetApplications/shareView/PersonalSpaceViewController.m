@@ -128,6 +128,9 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
         UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.mCollectionV_albums.frame.origin.y, [dm getInstance].width, self.mCollectionV_albums.frame.size.height)];
         img.image = [UIImage imageNamed:@"noPhoto"];
         [self.mScrollV_all addSubview:img];
+        img.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(collectionView:didSelectItemAtIndexPath:)];
+        [img addGestureRecognizer:tap];
     }
 }
 //获取到头像后，更新界面
