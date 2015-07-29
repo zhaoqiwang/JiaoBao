@@ -1325,6 +1325,8 @@
         }else{
             tempUnit = [NSString stringWithFormat:@"(%@)",model.UnitName];
         }
+        cell.mLab_class.backgroundColor = [UIColor clearColor];
+        cell.mLab_class.textColor = [UIColor grayColor];
         cell.mLab_class.hidden = NO;
         //cell.tableview.frame = CGRectMake(0, cell.mLab_class.frame.origin, <#CGFloat width#>, <#CGFloat height#>)
         cell.mLab_class.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width, 18, [dm getInstance].width-cell.mLab_name.frame.origin.x-nameSize.width-10, cell.mLab_class.frame.size.height);
