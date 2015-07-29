@@ -281,15 +281,29 @@
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
+
+
         self.imageCount--;
-        if(self.imageCount == 0)
-        {
-            [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
-        }
+
         
         UploadImgModel *model = [dic objectForKey:@"model"];
         [self.mArr_pic addObject:model];
-        self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
+        if(self.imageCount == 0)
+        {
+            self.mTextV_content.text = @"";
+            [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
+            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+                return [p1.originalName compare:p2.originalName];
+            }];
+            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+            for(int i=0;i<self.mArr_pic.count;i++)
+            {
+                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
+                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
+
+            }
+
+        }
         self._placeholdLabel.hidden = YES;
     }else{
         [MBProgressHUD showError:@"失败" toView:self.view];

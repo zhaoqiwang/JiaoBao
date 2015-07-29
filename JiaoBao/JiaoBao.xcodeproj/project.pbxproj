@@ -755,6 +755,9 @@
 		F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F71803421AB3C71A00E6167F /* SVProgressHUD.m */; };
 		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F73804AD1B6867AA007907D6 /* PhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73804AB1B6867AA007907D6 /* PhotoCollectionCell.m */; };
+		F73804AE1B6867AA007907D6 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F73804AC1B6867AA007907D6 /* PhotoCollectionCell.xib */; };
+		F73804B01B68846E007907D6 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F73804AF1B68846E007907D6 /* 删除键@2x.png */; };
 		F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639921B0EC53D00365EB7 /* libicucore.dylib */; };
 		F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */; };
 		F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639961B0EC5DA00365EB7 /* CoreText.framework */; };
@@ -1894,6 +1897,10 @@
 		F72A726B1B2BBCFC00378C95 /* RightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightModel.m; path = views/InternetApplications/workView/NewWorkViewC/RightModel.m; sourceTree = "<group>"; };
 		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
 		F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHImagePickerMutilSelector.m; path = Common/MHImagePick/MHImagePickerMutilSelector.m; sourceTree = "<group>"; };
+		F73804AA1B6867AA007907D6 /* PhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoCollectionCell.h; sourceTree = "<group>"; };
+		F73804AB1B6867AA007907D6 /* PhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoCollectionCell.m; sourceTree = "<group>"; };
+		F73804AC1B6867AA007907D6 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCollectionCell.xib; sourceTree = "<group>"; };
+		F73804AF1B68846E007907D6 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "删除键@2x.png"; sourceTree = "<group>"; };
 		F74639921B0EC53D00365EB7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		F74639961B0EC5DA00365EB7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -3326,6 +3333,10 @@
 				A773FC2B1A4BBD02005F84C2 /* UpLoadPhotoViewController.h */,
 				A773FC2C1A4BBD02005F84C2 /* UpLoadPhotoViewController.m */,
 				A773FC2D1A4BBD02005F84C2 /* UpLoadPhotoViewController.xib */,
+				F73804AA1B6867AA007907D6 /* PhotoCollectionCell.h */,
+				F73804AB1B6867AA007907D6 /* PhotoCollectionCell.m */,
+				F73804AC1B6867AA007907D6 /* PhotoCollectionCell.xib */,
+				F73804AF1B68846E007907D6 /* 删除键@2x.png */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -4286,6 +4297,7 @@
 				A76D74761A69095A008F5856 /* share_like_1.png in Resources */,
 				A7781F4E1AE8A0F300F03AEB /* NewWorkView_click_2.png in Resources */,
 				A7626FC41B0D7EDB006957F2 /* popupWindow_like_comment.png in Resources */,
+				F73804AE1B6867AA007907D6 /* PhotoCollectionCell.xib in Resources */,
 				A74C11991A01D9FC00925230 /* icon.png in Resources */,
 				A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */,
 				A71D61E01A1C96A400B8D33D /* share_education1@2x.png in Resources */,
@@ -4334,6 +4346,7 @@
 				A768298C1AC69B21003B31EB /* classView_click_3@2x.png in Resources */,
 				A782AEC81AE9D71A00547B0F /* NewWork_unSendMsg.png in Resources */,
 				A701798D1AB91D2100E7093F /* work_photo.png in Resources */,
+				F73804B01B68846E007907D6 /* 删除键@2x.png in Resources */,
 				A753E5281A1B2C79005A8EED /* ShareCollectionViewCell.xib in Resources */,
 				A73AD8291A20271600F68C47 /* ArthLIstViewController.xib in Resources */,
 				A76829841AC69B21003B31EB /* classView_click_0@3x.png in Resources */,
@@ -4636,6 +4649,7 @@
 				A7357A321A40207400A195C5 /* ThemeView.m in Sources */,
 				A74370411A3ED555008AF29B /* PersonalSpaceViewController.m in Sources */,
 				A76B6A6D1AB2C98F00B6ED12 /* AccessoryViewController.m in Sources */,
+				F73804AD1B6867AA007907D6 /* PhotoCollectionCell.m in Sources */,
 				A755E72219F27B9E00BBDF3D /* RSATool.m in Sources */,
 				A76B6A761AB2D1BC00B6ED12 /* AccessoryModel.m in Sources */,
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,
