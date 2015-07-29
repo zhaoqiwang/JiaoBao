@@ -1614,6 +1614,7 @@
     ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
     arth.Arthmodel = model;
     [utils pushViewController:arth animated:YES];
+    D("test");
 }
 
 //发表文章按钮
