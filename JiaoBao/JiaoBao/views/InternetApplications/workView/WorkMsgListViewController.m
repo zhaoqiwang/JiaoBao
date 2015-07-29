@@ -427,7 +427,12 @@
         [cell.mLab_content setNumberOfLines:0];
         cell.mLab_content.frame = CGRectMake(65, 38, cellFloat, contentSize.height);
         D("lsjfljglsj-====%@,%ld,%f,%f",NSStringFromCGRect(cell.mLab_content.frame),(long)cell.mLab_content.numberOfLines,contentSize.width,tempW);
-        CGRect rect = cell.mLab_content.frame;
+//        CGRect rect = cell.mLab_content.frame;
+        cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, 0, 0);
+        CGRect rect = CGRectMake(0, 0, 0, 0);
+        for (UIButton *btn in cell.mView_att.subviews) {
+            [btn removeFromSuperview];
+        }
         if (self.mArr_msg.count == indexPath.row+1) {
             //是否有附件
             for (int i=0; i<self.mArr_attList.count; i++) {
@@ -440,7 +445,7 @@
                 if (size.width>cellFloat) {
                     cellFloat = size.width;
                 }
-                rect = CGRectMake(rect.origin.x, rect.origin.y+rect.size.height+2, size.width, size.height);
+                rect = CGRectMake(0, rect.origin.y+rect.size.height+5, size.width, size.height);
                 UIButton *tempBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                 tempBtn.frame = rect;
                 tempBtn.titleLabel.font = [UIFont systemFontOfSize: 13];
@@ -448,7 +453,7 @@
                 [tempBtn setTitleColor:[UIColor colorWithRed:17/255.0 green:107/255.0 blue:255/255.0 alpha:1] forState:UIControlStateNormal];
                 tempBtn.tag = i+1;
                 [tempBtn addTarget:self action:@selector(clickAttListBtn:) forControlEvents:UIControlEventTouchUpInside];
-                [cell addSubview:tempBtn];
+                [cell.mView_att addSubview:tempBtn];
                 
                 D("detail.attListModel -== %@,%@,%@",model.dlurl,model.OrgFilename,model.FileSize);
             }

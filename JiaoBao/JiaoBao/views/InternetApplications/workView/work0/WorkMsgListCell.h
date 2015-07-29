@@ -25,5 +25,6 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_background;
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_work;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line;
+@property (nonatomic,strong) IBOutlet UIView *mView_att;//放置附件
 
 @end

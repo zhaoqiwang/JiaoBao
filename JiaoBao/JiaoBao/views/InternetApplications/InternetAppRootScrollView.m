@@ -42,39 +42,16 @@
         userContentOffsetX = 0;
         self.mInt = 0;
         if (SHOWRONGYUN == 1) {
-            //添加事务
-//            self.workView = [[WorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-//            self.workView = [[WorkView_new alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-            self.workView = [[WorkView_new2 alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.workView];
-            //添加分享
-            self.shareView = [[ShareViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.shareView];
-            //添加展示
-//            self.showView = [[ShowViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
-//            [self addSubview:self.showView];
-            self.classView = [[ClassView alloc] initWithFrame1:CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.classView];
-            //主题
-            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*4, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.themeView];
         }else{
-            self.classView = [[ClassView alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
+            //主题
+            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
+            [self addSubview:self.themeView];
+            //学校圈
+            self.classView = [[ClassView alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.classView];
             //添加事务
-//            self.workView = [[WorkView_new alloc] initWithFrame1:CGRectMake([dm getInstance].width*0, 0, [dm getInstance].width, self.frame.size.height)];
-            self.workView = [[WorkView_new2 alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
+            self.workView = [[WorkView_new2 alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
             [self addSubview:self.workView];
-            //添加分享
-//            self.shareView = [[ShareViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*1, 0, [dm getInstance].width, self.frame.size.height)];
-//            [self addSubview:self.shareView];
-            //添加展示
-//            self.showView = [[ShowViewNew alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-//            [self addSubview:self.showView];
-            
-            //主题
-            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.themeView];
         }
     }
     return self;
