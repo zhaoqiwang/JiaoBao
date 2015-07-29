@@ -89,7 +89,7 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mScrollV_view.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+//    self.mScrollV_view.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
     [self sendRequest];
     
@@ -334,7 +334,8 @@
 
 //设置界面布局
 -(void)setFrame{
-    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, [self tableViewHeight]);
+//    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, [self tableViewHeight]);
+    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, self.mTableV_detail.contentSize.height);
     int a = (int)self.mModel_commentList.commentsList.count;
     if (a>0&&(a%20)==0) {
         self.mBtn_more.hidden = NO;
@@ -360,16 +361,16 @@
 }
 
 //计算表格的总高度
--(int)tableViewHeight{
-    int a=0;
-    for (int i=0; i<self.mModel_commentList.commentsList.count; i++) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection: 0];
-        UITableViewCell *cell= [self tableView:self.mTableV_detail cellForRowAtIndexPath:indexPath];
-        a = a + cell.frame.size.height;
-    }
-    
-    return a;
-}
+//-(int)tableViewHeight{
+//    int a=0;
+//    for (int i=0; i<self.mModel_commentList.commentsList.count; i++) {
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection: 0];
+//        UITableViewCell *cell= [self tableView:self.mTableV_detail cellForRowAtIndexPath:indexPath];
+//        a = a + cell.frame.size.height;
+//    }
+//    
+//    return a;
+//}
 
 //文章详情通知
 -(void)ArthDetai:(NSNotification *)noti{
@@ -452,23 +453,23 @@
 }
 
 //获取宽度已经适配于webView的html。这里的原始html也可以通过js从webView里获取
-- (NSString *)htmlAdjustWithPageWidth:(CGFloat )pageWidth
-                                 html:(NSString *)html
-                              webView:(UIWebView *)webView
-{
-    NSMutableString *str = [NSMutableString stringWithString:html];
-    //计算要缩放的比例
-    CGFloat initialScale = webView.frame.size.width/pageWidth;
-    D("initialScale-===%f,%f,%f",initialScale,pageWidth,webView.frame.size.width);
-    //将</head>替换为meta+head
-    NSString *stringForReplace = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\" initial-scale=%f, minimum-scale=0.1, maximum-scale=2.0, user-scalable=yes\"></head>",initialScale];
-    
-    NSRange range =  NSMakeRange(0, str.length);
-    //替换
-    [str replaceOccurrencesOfString:@"</head>" withString:stringForReplace options:NSLiteralSearch range:range];
-    D("str-==%@",str);
-    return str;
-}
+//- (NSString *)htmlAdjustWithPageWidth:(CGFloat )pageWidth
+//                                 html:(NSString *)html
+//                              webView:(UIWebView *)webView
+//{
+//    NSMutableString *str = [NSMutableString stringWithString:html];
+//    //计算要缩放的比例
+//    CGFloat initialScale = webView.frame.size.width/pageWidth;
+//    D("initialScale-===%f,%f,%f",initialScale,pageWidth,webView.frame.size.width);
+//    //将</head>替换为meta+head
+//    NSString *stringForReplace = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\" initial-scale=%f, minimum-scale=0.1, maximum-scale=2.0, user-scalable=yes\"></head>",initialScale];
+//    
+//    NSRange range =  NSMakeRange(0, str.length);
+//    //替换
+//    [str replaceOccurrencesOfString:@"</head>" withString:stringForReplace options:NSLiteralSearch range:range];
+//    D("str-==%@",str);
+//    return str;
+//}
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{

@@ -154,8 +154,8 @@
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
-                            <rect key="frame" x="84" y="170" width="65" height="29"/>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
+                            <rect key="frame" x="171" y="170" width="90" height="29"/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="相册取图">
@@ -181,7 +181,7 @@
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x97-gE-mvi">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x97-gE-mvi">
                             <rect key="frame" x="157" y="171" width="65" height="28"/>
                             <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -193,8 +193,22 @@
                                 <action selector="videoBtnAction:" destination="-1" eventType="touchUpInside" id="UcG-gU-p7I"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bae-zF-XCz">
-                            <rect key="frame" x="10" y="170" width="65" height="29"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEj-6T-Bnb">
+                            <rect key="frame" x="230" y="170" width="65" height="29"/>
+                            <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="录制音频">
+                                <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="btnVoiceDown:" destination="-1" eventType="touchDown" id="QY1-lU-Sr2"/>
+                                <action selector="btnVoiceDragUp:" destination="-1" eventType="touchDragExit" id="Kwc-Ou-Nrj"/>
+                                <action selector="btnVoiceUp:" destination="-1" eventType="touchUpInside" id="ATK-Gj-laX"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bae-zF-XCz">
+                            <rect key="frame" x="50" y="170" width="94" height="29"/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="13c-66-Kn2"/>
@@ -207,20 +221,6 @@
                             </state>
                             <connections>
                                 <action selector="cameraBtnAction:" destination="-1" eventType="touchUpInside" id="PYW-ge-74e"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEj-6T-Bnb">
-                            <rect key="frame" x="230" y="170" width="65" height="29"/>
-                            <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="录制音频">
-                                <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="btnVoiceDown:" destination="-1" eventType="touchDown" id="QY1-lU-Sr2"/>
-                                <action selector="btnVoiceDragUp:" destination="-1" eventType="touchDragExit" id="Kwc-Ou-Nrj"/>
-                                <action selector="btnVoiceUp:" destination="-1" eventType="touchUpInside" id="ATK-Gj-laX"/>
                             </connections>
                         </button>
                     </subviews>
