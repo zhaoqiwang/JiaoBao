@@ -61,7 +61,7 @@
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -100,7 +100,7 @@
     {
         self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
         self.mTableV_detail.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 10)];
-
+        
         self.dropDownLabel.frame = CGRectZero;
         
     }
@@ -195,7 +195,8 @@
         //将值倒序插入
         if (model.CommMsgList.count>1) {
             if (self.mArr_msg.count==1) {
-                for (int i=1; i<model.CommMsgList.count; i++) {
+                //                for (int i=1; i<model.CommMsgList.count; i++) {
+                for (int i=0; i<model.CommMsgList.count; i++) {
                     CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
                     [self.mArr_msg insertObject:modelTemp atIndex:0];
                 }
@@ -223,7 +224,8 @@
         if (array.count>1) {
             //将值倒序插入
             if (self.mArr_msg.count==1) {
-                for (int i=1; i<array.count; i++) {
+                //                for (int i=1; i<array.count; i++) {
+                for (int i=0; i<array.count; i++) {
                     CommMsgListModel *modelTemp = [array objectAtIndex:i];
                     [self.mArr_msg insertObject:modelTemp atIndex:0];
                 }
@@ -277,7 +279,7 @@
         return;
     }
     CommMsgListModel *model = [self.mArr_msg objectAtIndex:0];
-//    self.mInt_index = 1;
+    //    self.mInt_index = 1;
     //取单个用户发给我消息列表 new
     self.mInt_msg = (int)self.mArr_msg.count/20+1;
     if (self.mInt_our == 1) {
@@ -322,7 +324,7 @@
         return;
     }
     [MobClick event:@"WorkMsgList_clickSendBtn" label:@""];
-
+    
     CommMsgListModel *model = [self.mArr_msg objectAtIndex:self.mArr_msg.count-1];
     [[LoginSendHttp getInstance] addFeeBackWithUID:model.TabIDStr content:self.mTextF_text.text];
     [MBProgressHUD showMessage:@"发送中..." toView:self.view];
@@ -354,13 +356,12 @@
     if (self.mArr_msg.count>indexPath.row) {
         CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-
+        
         cell.mImgV_head.frame = CGRectMake(10, 33, 40, 40);
         //姓名
         cell.mLab_name.hidden = YES;
         //时间
         CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-        D("jkljkjk-====%@",model.JiaoBaoHao);
         cell.mLab_time.frame = CGRectMake(([dm getInstance].width-timeSize.width-20)/2, 0, 70, 20);
         cell.mLab_time.text = model.RecDate;
         cell.mLab_time.textColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1];
@@ -385,9 +386,9 @@
             if (self.mArr_msg.count==indexPath.row+1) {
                 cell.mBtn_work.hidden = YES;
                 tempW = [dm getInstance].width-50-30;
-//                cell.mBtn_work.enabled = YES;
-//                [cell.mBtn_work setTitle:@"再发" forState:UIControlStateNormal];
-//                [cell.mBtn_work addTarget:self action:@selector(clickAttListSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+                //                cell.mBtn_work.enabled = YES;
+                //                [cell.mBtn_work setTitle:@"再发" forState:UIControlStateNormal];
+                //                [cell.mBtn_work addTarget:self action:@selector(clickAttListSendBtn:) forControlEvents:UIControlEventTouchUpInside];
             }else{
                 cell.mBtn_work.enabled = NO;
                 [cell.mBtn_work setTitle:@"详情" forState:UIControlStateNormal];
@@ -414,7 +415,6 @@
         CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 20000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.MsgContent;
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
-        D("contenent0-0--==%f,%f,%@",contentSize.width,contentSize.height,model.MsgContent);
         //计算宽度
         CGFloat cellFloat;
         if (contentSize.width<tempW) {
@@ -423,13 +423,12 @@
             cellFloat = tempW;
         }
         //计算行数
-//        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+        //        cell.mLab_content.numberOfLines = contentSize.width/tempW;
         [cell.mLab_content setNumberOfLines:0];
         cell.mLab_content.frame = CGRectMake(65, 37, cellFloat, contentSize.height);
-        D("lsjfljglsj-====%@,%ld,%f,%f",NSStringFromCGRect(cell.mLab_content.frame),(long)cell.mLab_content.numberOfLines,contentSize.width,tempW);
-//        CGRect rect = cell.mLab_content.frame;
+        //        CGRect rect = cell.mLab_content.frame;
         cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, 0, 0);
-//        CGRect rect = CGRectMake(65, 37+contentSize.height+2, 0, 0);
+        //        CGRect rect = CGRectMake(65, 37+contentSize.height+2, 0, 0);
         CGRect rect = CGRectMake(0, 0, 0, 0);
         for (UIButton *btn in cell.mView_att.subviews) {
             [btn removeFromSuperview];
@@ -467,7 +466,7 @@
         
         cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, rect.size.width, rect.size.height);
         //背景色
-//        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
+        //        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
         cell.mImgV_background.frame = CGRectMake(55, cell.mLab_content.frame.origin.y-5, cellFloat+15, rect.origin.y+rect.size.height-15);
         //再计算行高,看内容是否高于头像
@@ -488,24 +487,23 @@
         cell.mLab_name.hidden = NO;
         cell.mLab_name.numberOfLines = 0;
         cell.mLab_name.lineBreakMode = NSLineBreakByCharWrapping;
-        D("jkljkjk-====%@",model.Jiaobaohao);
         cell.mLab_name.text = model.UserName;
         cell.mLab_name.textAlignment = NSTextAlignmentLeft;
         cell.mLab_name.font = [UIFont systemFontOfSize:11];
-//        CGRect rect=[cell.mLab_name.text boundingRectWithSize:CGSizeMake(40, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
-//                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:11],NSFontAttributeName, nil]  context:nil];
+        //        CGRect rect=[cell.mLab_name.text boundingRectWithSize:CGSizeMake(40, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
+        //                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:11],NSFontAttributeName, nil]  context:nil];
         CGSize size = [cell.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:11] constrainedToSize:CGSizeMake(40, 1000)];
         cell.mLab_name.frame = CGRectMake([dm getInstance].width-55, 62, 40, size.height);
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.Jiaobaohao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
-
+        
         cell.mImgV_head.frame = CGRectMake([dm getInstance].width-50, 20, 40, 40);
         
         //时间
-//        CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-//        cell.mLab_time.frame = CGRectMake(0, 2, [dm getInstance].width, timeSize.height);
-//        cell.mLab_time.text = model.RecDate;
+        //        CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
+        //        cell.mLab_time.frame = CGRectMake(0, 2, [dm getInstance].width, timeSize.height);
+        //        cell.mLab_time.text = model.RecDate;
         cell.mLab_time.hidden = YES;
         //按钮
         cell.mBtn_work.hidden = YES;
@@ -525,11 +523,11 @@
             cellFloat = tempW;
         }
         //计算行数
-//        cell.mLab_content.numberOfLines = contentSize.width/tempW;
+        //        cell.mLab_content.numberOfLines = contentSize.width/tempW;
         [cell.mLab_content setNumberOfLines:0];
         cell.mLab_content.frame = CGRectMake([dm getInstance].width-cellFloat-60, cell.mImgV_head.frame.origin.y+5, cellFloat, contentSize.height);
         //背景色
-//        cell.mImgV_background.image = [UIImage imageNamed:@"workDetail"];
+        //        cell.mImgV_background.image = [UIImage imageNamed:@"workDetail"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workDetail"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
         cell.mImgV_background.frame = CGRectMake([dm getInstance].width-cellFloat-65, cell.mLab_content.frame.origin.y-5, cellFloat+10, cell.mLab_content.frame.size.height+20);
         //再计算行高,看内容是否高于头像
@@ -542,7 +540,7 @@
             lineH = tempBack1;
         }
         //分割线
-//        cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
+        //        cell.mLab_line.frame = CGRectMake(0, lineH-1, [dm getInstance].width, .5);
         cell.mLab_line.hidden = YES;
         cell.frame = CGRectMake(0, 0, [dm getInstance].width, lineH);
         
@@ -613,8 +611,8 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     //文件名
-//    NSString *fileName = [NSString stringWithFormat:@"%@%@",model.dlurl,model.OrgFilename];
-//    fileName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@""];
+    //    NSString *fileName = [NSString stringWithFormat:@"%@%@",model.dlurl,model.OrgFilename];
+    //    fileName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@""];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
@@ -631,10 +629,10 @@
         alert.tag = 10;
         [alert show];
     }else {//存在
-//        self.mProgressV.labelText = @"已下载此文件";
-//        self.mProgressV.mode = MBProgressHUDModeCustomView;
-//        [self.mProgressV show:YES];
-//        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
+        //        self.mProgressV.labelText = @"已下载此文件";
+        //        self.mProgressV.mode = MBProgressHUDModeCustomView;
+        //        [self.mProgressV show:YES];
+        //        [self.mProgressV showWhileExecuting:@selector(noMore) onTarget:self withObject:nil animated:YES];
         // 1.封装图片数据
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
@@ -712,7 +710,7 @@
             }
             MsgDetail_AttList *model = [self.mArr_attList objectAtIndex:self.mInt_file-1];
             [[LoginSendHttp getInstance] msgDetailDownLoadFileWithURL:model.dlurl fileName:model.OrgFilename vc:self];
-
+            
             [self.mProgressV show:YES];
             self.mProgressV.mode = MBProgressHUDModeDeterminateHorizontalBar;
             self.mProgressV.progress = 0;
@@ -722,13 +720,13 @@
     }
 }
 -(void)setProgress:(float)newProgress{
-        [self.mProgressV setProgress:newProgress];
+    [self.mProgressV setProgress:newProgress];
     D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*100]);
     self.mProgressV.labelText = [NSString stringWithFormat:@"已经下载：%0.f%%",newProgress*100];
     if (newProgress>=1) {
         [self.mProgressV hide:YES];
     }
-
+    
 }
 
 //通知信息详情界面，更新下载文件的进度条
@@ -768,13 +766,13 @@
                      animations:^{
                          if(self.mInt_flag ==0)
                          {
-                            self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+                             self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
                          }
                          else
                          {
-                            self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
+                             self.mTableV_detail.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
                          }
-   
+                         
                          //self.mTableV_detail.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
                          self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
                      }
@@ -808,13 +806,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

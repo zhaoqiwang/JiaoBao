@@ -102,7 +102,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLikeImg)];
     [self.mImgV_like addGestureRecognizer:tap];
     
-    self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
+    self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     self.mTableV_detail.frame = CGRectMake(0, 0, 0, 0);
     //输入View坐标
     self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
@@ -771,7 +771,7 @@
     [animationDurationValue getValue:&animationDuration];
     [UIView animateWithDuration:animationDuration
                      animations:^{
-                         self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-keyboardSize.height+[dm getInstance].statusBar);
+                         self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-keyboardSize.height);
                          self.mView_text.frame = CGRectMake(0, [dm getInstance].height-keyboardSize.height-51, [dm getInstance].width, 51);
                      }
                      completion:^(BOOL finished){
@@ -785,7 +785,7 @@
     [animationDurationValue getValue:&animationDuration];
     [UIView animateWithDuration:animationDuration
                      animations:^{
-                         self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
+                         self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
                          self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
                      }
                      completion:^(BOOL finished){
