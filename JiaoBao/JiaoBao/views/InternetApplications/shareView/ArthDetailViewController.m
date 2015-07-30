@@ -380,7 +380,8 @@
     if ([flag integerValue]==0) {
         if (self.mInt_from == 2) {
             self.mModel_notice = [dic objectForKey:@"model"];
-            NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
+//            NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
+            NSString *str = @"http://7xkkc0.media1.z0.glb.clouddn.com/1438049114437.mp3";
             for (int i=320; i<1000; i++) {
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
@@ -414,20 +415,22 @@
         }else{
             self.mModel = [dic objectForKey:@"model"];
             //        NSString *str = self.mModel.Context;
-            NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-            for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
-            }
-            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
-            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
-            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
-            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
-            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+//            NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
+//            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' controls='controls' width='480px' height='320px' autoplay='autoplay'/>";
+            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' width='320px' height='320px' autoplay='autoplay'/>";
+//            for (int i=320; i<1000; i++) {
+//                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+//                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
+//            }
+//            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
+//            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
+//            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
+//            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
+//            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
+//            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
+//            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
+//            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
+//            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
             
             //标题
             CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -442,10 +445,11 @@
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel.RecDate;
             //内容
-//            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
             D("url-====%@",str);
             [self.mWebV_js loadHTMLString:str baseURL:baseURL];
+            
         }
     }else{
         [MBProgressHUD showError:@"获取文章详情超时" toView:self.view];
