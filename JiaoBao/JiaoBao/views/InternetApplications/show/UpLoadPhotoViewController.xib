@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UpLoadPhotoViewController">
             <connections>
+                <outlet property="collectionView" destination="svR-4A-q1Z" id="iOo-76-7aZ"/>
                 <outlet property="mBtn_name" destination="Ef5-P0-kVM" id="nWg-MD-RGt"/>
                 <outlet property="mBtn_upload" destination="o7Q-dC-CHT" id="Wdr-Ki-WMX"/>
                 <outlet property="mLab_name" destination="Srf-9t-zYc" id="D5I-HS-sHW"/>
@@ -42,8 +43,23 @@
                         <action selector="changeOpenStatus:" destination="-1" eventType="touchUpInside" id="HMU-qK-FZm"/>
                     </connections>
                 </button>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" id="svR-4A-q1Z">
+                    <rect key="frame" x="0.0" y="160" width="320" height="408"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7X4-IC-J3F">
+                        <size key="itemSize" width="60" height="60"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="u43-cM-lih"/>
+                        <outlet property="delegate" destination="-1" id="TxU-as-naq"/>
+                    </connections>
+                </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="o7Q-dC-CHT">
-                    <rect key="frame" x="63" y="142" width="136" height="30"/>
+                    <rect key="frame" x="92" y="105" width="136" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.72556455289999999" green="0.72549019609999998" blue="0.72549019609999998" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>

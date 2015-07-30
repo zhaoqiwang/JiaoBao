@@ -208,6 +208,7 @@ static ThemeHttp *themeHttp = nil;
     [request addPostValue:describe forKey:@"PhotoDescribe"];
     [request addPostValue:group forKey:@"GroupID"];
     [request setFile:file forKey:@"file"];
+    //[request setData:file forKey:@"file"];
     request.tag = 9;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];

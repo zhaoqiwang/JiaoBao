@@ -813,6 +813,9 @@
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
 		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
 		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
+		F78DEA231B69B06E00B29342 /* PhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78DEA211B69B06E00B29342 /* PhotoCollectionCell.m */; };
+		F78DEA241B69B06E00B29342 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78DEA221B69B06E00B29342 /* PhotoCollectionCell.xib */; };
+		F78DEA261B69B07E00B29342 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F78DEA251B69B07E00B29342 /* 删除键@2x.png */; };
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
 		F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */; };
 		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
@@ -1965,6 +1968,10 @@
 		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
 		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
 		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
+		F78DEA201B69B06E00B29342 /* PhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCollectionCell.h; path = views/InternetApplications/show/PhotoCollectionCell.h; sourceTree = "<group>"; };
+		F78DEA211B69B06E00B29342 /* PhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionCell.m; path = views/InternetApplications/show/PhotoCollectionCell.m; sourceTree = "<group>"; };
+		F78DEA221B69B06E00B29342 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionCell.xib; path = views/InternetApplications/show/PhotoCollectionCell.xib; sourceTree = "<group>"; };
+		F78DEA251B69B07E00B29342 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "删除键@2x.png"; path = "Image/InternetApp/删除键@2x.png"; sourceTree = "<group>"; };
 		F78EF17A1B2150CB003B6603 /* UnitTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitTableViewCell.h; path = views/InternetApplications/personalSpace/UnitTableViewCell.h; sourceTree = "<group>"; };
 		F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitTableViewCell.m; path = views/InternetApplications/personalSpace/UnitTableViewCell.m; sourceTree = "<group>"; };
 		F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnitTableViewCell.xib; path = views/InternetApplications/personalSpace/UnitTableViewCell.xib; sourceTree = "<group>"; };
@@ -3326,6 +3333,10 @@
 				A773FC2B1A4BBD02005F84C2 /* UpLoadPhotoViewController.h */,
 				A773FC2C1A4BBD02005F84C2 /* UpLoadPhotoViewController.m */,
 				A773FC2D1A4BBD02005F84C2 /* UpLoadPhotoViewController.xib */,
+				F78DEA201B69B06E00B29342 /* PhotoCollectionCell.h */,
+				F78DEA211B69B06E00B29342 /* PhotoCollectionCell.m */,
+				F78DEA221B69B06E00B29342 /* PhotoCollectionCell.xib */,
+				F78DEA251B69B07E00B29342 /* 删除键@2x.png */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -4286,6 +4297,7 @@
 				A76D74761A69095A008F5856 /* share_like_1.png in Resources */,
 				A7781F4E1AE8A0F300F03AEB /* NewWorkView_click_2.png in Resources */,
 				A7626FC41B0D7EDB006957F2 /* popupWindow_like_comment.png in Resources */,
+				F78DEA241B69B06E00B29342 /* PhotoCollectionCell.xib in Resources */,
 				A74C11991A01D9FC00925230 /* icon.png in Resources */,
 				A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */,
 				A71D61E01A1C96A400B8D33D /* share_education1@2x.png in Resources */,
@@ -4334,6 +4346,7 @@
 				A768298C1AC69B21003B31EB /* classView_click_3@2x.png in Resources */,
 				A782AEC81AE9D71A00547B0F /* NewWork_unSendMsg.png in Resources */,
 				A701798D1AB91D2100E7093F /* work_photo.png in Resources */,
+				F78DEA261B69B07E00B29342 /* 删除键@2x.png in Resources */,
 				A753E5281A1B2C79005A8EED /* ShareCollectionViewCell.xib in Resources */,
 				A73AD8291A20271600F68C47 /* ArthLIstViewController.xib in Resources */,
 				A76829841AC69B21003B31EB /* classView_click_0@3x.png in Resources */,
@@ -4636,6 +4649,7 @@
 				A7357A321A40207400A195C5 /* ThemeView.m in Sources */,
 				A74370411A3ED555008AF29B /* PersonalSpaceViewController.m in Sources */,
 				A76B6A6D1AB2C98F00B6ED12 /* AccessoryViewController.m in Sources */,
+				F78DEA231B69B06E00B29342 /* PhotoCollectionCell.m in Sources */,
 				A755E72219F27B9E00BBDF3D /* RSATool.m in Sources */,
 				A76B6A761AB2D1BC00B6ED12 /* AccessoryModel.m in Sources */,
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,

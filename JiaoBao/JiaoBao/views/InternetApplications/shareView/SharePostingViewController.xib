@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -154,7 +154,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
                             <rect key="frame" x="171" y="170" width="90" height="29"/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -181,20 +181,8 @@
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x97-gE-mvi">
-                            <rect key="frame" x="157" y="171" width="65" height="28"/>
-                            <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="录制视频">
-                                <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="videoBtnAction:" destination="-1" eventType="touchUpInside" id="UcG-gU-p7I"/>
-                            </connections>
-                        </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEj-6T-Bnb">
-                            <rect key="frame" x="230" y="170" width="65" height="29"/>
+                            <rect key="frame" x="171" y="139" width="90" height="29"/>
                             <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="录制音频">
@@ -207,12 +195,12 @@
                                 <action selector="btnVoiceUp:" destination="-1" eventType="touchUpInside" id="ATK-Gj-laX"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bae-zF-XCz">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bae-zF-XCz">
                             <rect key="frame" x="50" y="170" width="94" height="29"/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="13c-66-Kn2"/>
-                                <constraint firstAttribute="width" constant="65" id="t2W-py-yNs"/>
+                                <constraint firstAttribute="width" constant="94" id="t2W-py-yNs"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="拍照取图">
@@ -223,13 +211,25 @@
                                 <action selector="cameraBtnAction:" destination="-1" eventType="touchUpInside" id="PYW-ge-74e"/>
                             </connections>
                         </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x97-gE-mvi">
+                            <rect key="frame" x="50" y="139" width="94" height="28"/>
+                            <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="录制视频">
+                                <color key="titleColor" red="0.99607843139999996" green="0.99607843139999996" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="videoBtnAction:" destination="-1" eventType="touchUpInside" id="UcG-gU-p7I"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="W5t-Wo-Bcq" secondAttribute="trailing" constant="171" id="1P7-w4-RSh"/>
+                        <constraint firstAttribute="trailing" secondItem="W5t-Wo-Bcq" secondAttribute="trailing" constant="59" id="1P7-w4-RSh"/>
                         <constraint firstItem="Du8-IG-Nug" firstAttribute="leading" secondItem="9XG-IG-Z0o" secondAttribute="leading" id="7Il-iC-ZNs"/>
-                        <constraint firstItem="W5t-Wo-Bcq" firstAttribute="leading" secondItem="bae-zF-XCz" secondAttribute="trailing" constant="9" id="Erv-dY-pxh"/>
-                        <constraint firstItem="bae-zF-XCz" firstAttribute="leading" secondItem="QRk-rb-CI8" secondAttribute="leading" constant="10" id="O7d-xZ-SaJ"/>
+                        <constraint firstItem="W5t-Wo-Bcq" firstAttribute="leading" secondItem="bae-zF-XCz" secondAttribute="trailing" constant="27" id="Erv-dY-pxh"/>
+                        <constraint firstItem="bae-zF-XCz" firstAttribute="leading" secondItem="QRk-rb-CI8" secondAttribute="leading" constant="50" id="O7d-xZ-SaJ"/>
                         <constraint firstItem="Du8-IG-Nug" firstAttribute="centerX" secondItem="QRk-rb-CI8" secondAttribute="centerX" id="Unw-ao-ezq"/>
                         <constraint firstAttribute="bottom" secondItem="bae-zF-XCz" secondAttribute="bottom" constant="20" id="X7Q-bX-JOV"/>
                         <constraint firstItem="bae-zF-XCz" firstAttribute="top" secondItem="BBf-Ty-Qge" secondAttribute="bottom" constant="77" id="d6c-pU-z6l"/>
