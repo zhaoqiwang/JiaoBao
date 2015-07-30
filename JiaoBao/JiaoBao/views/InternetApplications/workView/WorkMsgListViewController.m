@@ -425,10 +425,11 @@
         //计算行数
 //        cell.mLab_content.numberOfLines = contentSize.width/tempW;
         [cell.mLab_content setNumberOfLines:0];
-        cell.mLab_content.frame = CGRectMake(65, 38, cellFloat, contentSize.height);
+        cell.mLab_content.frame = CGRectMake(65, 37, cellFloat, contentSize.height);
         D("lsjfljglsj-====%@,%ld,%f,%f",NSStringFromCGRect(cell.mLab_content.frame),(long)cell.mLab_content.numberOfLines,contentSize.width,tempW);
 //        CGRect rect = cell.mLab_content.frame;
         cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, 0, 0);
+//        CGRect rect = CGRectMake(65, 37+contentSize.height+2, 0, 0);
         CGRect rect = CGRectMake(0, 0, 0, 0);
         for (UIButton *btn in cell.mView_att.subviews) {
             [btn removeFromSuperview];
@@ -458,6 +459,13 @@
                 D("detail.attListModel -== %@,%@,%@",model.dlurl,model.OrgFilename,model.FileSize);
             }
         }
+        if (self.mArr_attList.count>0) {
+            rect = CGRectMake(65, 37+contentSize.height+2, rect.size.width, rect.origin.y+rect.size.height+2);
+        }else{
+            rect = cell.mLab_content.frame;
+        }
+        
+        cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, rect.size.width, rect.size.height);
         //背景色
 //        cell.mImgV_background.image = [UIImage imageNamed:@"workMsg"];
         [cell.mImgV_background setImage:[[UIImage imageNamed:@"workMsg"]stretchableImageWithLeftCapWidth:25 topCapHeight:20]];
