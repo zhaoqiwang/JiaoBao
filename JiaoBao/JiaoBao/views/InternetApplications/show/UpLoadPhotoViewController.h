@@ -44,6 +44,8 @@
 @property (nonatomic,strong) NSString *mStr_groupID;//相册id
 @property (nonatomic,strong) NSMutableArray *mArr_albums;//相册数组
 @property (weak,nonatomic) id<UpLoadPhotoDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property(nonatomic,strong)NSMutableArray *mArr_photo;
 
 - (IBAction)changeOpenStatus:(id)sender;
 

@@ -444,7 +444,6 @@
     if([lastChosenMediaType isEqual:(NSString *) kUTTypeImage])
     {
         UIImage *chosenImage=[info objectForKey:UIImagePickerControllerOriginalImage];
-
         NSData *imageData = UIImageJPEGRepresentation(chosenImage,0);
         self.tempData  = [[NSData alloc] initWithData:imageData];
         [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
