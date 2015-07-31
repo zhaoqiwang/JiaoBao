@@ -29,7 +29,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
-
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -129,7 +129,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
         img.image = [UIImage imageNamed:@"noPhoto"];
         [self.mScrollV_all addSubview:img];
         img.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(collectionView:didSelectItemAtIndexPath:)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectImg)];
         [img addGestureRecognizer:tap];
     }
 }
@@ -203,7 +203,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     }
     TopArthListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
     [cell.mImgV_headImg sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-
+    
     //标题
     CGSize numSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_title.frame = CGRectMake(cell.mLab_title.frame.origin.x, cell.mLab_title.frame.origin.y, [dm getInstance].width-cell.mImgV_headImg.frame.size.width-23, numSize.height*2);
@@ -278,6 +278,10 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self didSelectImg];
+}
+
+-(void)didSelectImg{
     [MobClick event:@"PersonalSpace_didSelectItem" label:@""];
     UnitAlbumsViewController *Albums = [[UnitAlbumsViewController alloc] init];
     Albums.mStr_flag = @"1";//来自个人
@@ -309,13 +313,13 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
