@@ -102,7 +102,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLikeImg)];
     [self.mImgV_like addGestureRecognizer:tap];
     
-    self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
+    self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     self.mTableV_detail.frame = CGRectMake(0, 0, 0, 0);
     //输入View坐标
     self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
@@ -415,22 +415,22 @@
         }else{
             self.mModel = [dic objectForKey:@"model"];
             //        NSString *str = self.mModel.Context;
-//            NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
+            NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
 //            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' controls='controls' width='480px' height='320px' autoplay='autoplay'/>";
-            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' width='320px' height='320px' autoplay='autoplay'/>";
-//            for (int i=320; i<1000; i++) {
-//                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
-//                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
-//            }
-//            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
-//            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
-//            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
-//            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
-//            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
-//            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
-//            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
-//            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-//            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+//            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' width='320px' height='320px' autoplay='autoplay'/>";
+            for (int i=320; i<1000; i++) {
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
+            }
+            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
+            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
+            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
+            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
+            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
             
             //标题
             CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -775,7 +775,7 @@
     [animationDurationValue getValue:&animationDuration];
     [UIView animateWithDuration:animationDuration
                      animations:^{
-                         self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-keyboardSize.height+[dm getInstance].statusBar);
+                         self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51-keyboardSize.height);
                          self.mView_text.frame = CGRectMake(0, [dm getInstance].height-keyboardSize.height-51, [dm getInstance].width, 51);
                      }
                      completion:^(BOOL finished){
@@ -789,7 +789,7 @@
     [animationDurationValue getValue:&animationDuration];
     [UIView animateWithDuration:animationDuration
                      animations:^{
-                         self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
+                         self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
                          self.mView_text.frame = CGRectMake(0, [dm getInstance].height-51, [dm getInstance].width, 51);
                      }
                      completion:^(BOOL finished){

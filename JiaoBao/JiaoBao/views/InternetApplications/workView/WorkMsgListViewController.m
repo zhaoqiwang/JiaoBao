@@ -195,7 +195,8 @@
         //将值倒序插入
         if (model.CommMsgList.count>1) {
             if (self.mArr_msg.count==1) {
-                for (int i=1; i<model.CommMsgList.count; i++) {
+//                for (int i=1; i<model.CommMsgList.count; i++) {
+                for (int i=0; i<model.CommMsgList.count; i++) {
                     CommMsgListModel *modelTemp = [model.CommMsgList objectAtIndex:i];
                     [self.mArr_msg insertObject:modelTemp atIndex:0];
                 }
@@ -223,7 +224,8 @@
         if (array.count>1) {
             //将值倒序插入
             if (self.mArr_msg.count==1) {
-                for (int i=1; i<array.count; i++) {
+//                for (int i=1; i<array.count; i++) {
+                for (int i=0; i<array.count; i++) {
                     CommMsgListModel *modelTemp = [array objectAtIndex:i];
                     [self.mArr_msg insertObject:modelTemp atIndex:0];
                 }
@@ -360,7 +362,6 @@
         cell.mLab_name.hidden = YES;
         //时间
         CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
-        D("jkljkjk-====%@",model.JiaoBaoHao);
         cell.mLab_time.frame = CGRectMake(([dm getInstance].width-timeSize.width-20)/2, 0, 70, 20);
         cell.mLab_time.text = model.RecDate;
         cell.mLab_time.textColor = [UIColor colorWithRed:255/255.0 green:255/255.0 blue:255/255.0 alpha:1];
@@ -414,7 +415,6 @@
         CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 20000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.MsgContent;
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
-        D("contenent0-0--==%f,%f,%@",contentSize.width,contentSize.height,model.MsgContent);
         //计算宽度
         CGFloat cellFloat;
         if (contentSize.width<tempW) {
@@ -426,7 +426,6 @@
         //        cell.mLab_content.numberOfLines = contentSize.width/tempW;
         [cell.mLab_content setNumberOfLines:0];
         cell.mLab_content.frame = CGRectMake(65, 37, cellFloat, contentSize.height);
-        D("lsjfljglsj-====%@,%ld,%f,%f",NSStringFromCGRect(cell.mLab_content.frame),(long)cell.mLab_content.numberOfLines,contentSize.width,tempW);
         //        CGRect rect = cell.mLab_content.frame;
         cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, 0, 0);
         //        CGRect rect = CGRectMake(65, 37+contentSize.height+2, 0, 0);
@@ -488,7 +487,6 @@
         cell.mLab_name.hidden = NO;
         cell.mLab_name.numberOfLines = 0;
         cell.mLab_name.lineBreakMode = NSLineBreakByCharWrapping;
-        D("jkljkjk-====%@",model.Jiaobaohao);
         cell.mLab_name.text = model.UserName;
         cell.mLab_name.textAlignment = NSTextAlignmentLeft;
         cell.mLab_name.font = [UIFont systemFontOfSize:11];
