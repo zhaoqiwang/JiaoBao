@@ -130,7 +130,6 @@
             [self.pullArr addObject:dic];
         }
     }
-    
     self.mTableV_type.tag = 2;
     if(self.isOpen == NO)
     {
@@ -281,11 +280,7 @@
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
-
-
         self.imageCount--;
-
-        
         UploadImgModel *model = [dic objectForKey:@"model"];
         [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
@@ -357,6 +352,7 @@
     if (self.mInt_section == 0) {//分享
         D("self.mStr_unitID = %@",self.mStr_unitID);
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
+        
     }else if (self.mInt_section == 1){//展示
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }
@@ -631,7 +627,11 @@
                 }
             }
             else {
+                [MBProgressHUD hideHUDForView:self.view];
+                [MBProgressHUD showError:@"视频格式不识别" toView:self.view];
+                [self.mArr_pic removeAllObjects];
                 NSLog(@"Uknown asset type");
+                return ;
             }
             timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
         }

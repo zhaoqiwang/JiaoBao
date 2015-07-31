@@ -336,6 +336,7 @@
 {
     for(int i=0;i<self.mArr_photo.count;i++)
     {
+        [MBProgressHUD showMessage:@"正在上传" toView:self.view];
         NSString *timeSp = [NSString stringWithFormat:@"图片%d.png", i];
         UIImage *image = [self.mArr_photo objectAtIndex:i];
         NSData *imageData = UIImageJPEGRepresentation(image,0);
