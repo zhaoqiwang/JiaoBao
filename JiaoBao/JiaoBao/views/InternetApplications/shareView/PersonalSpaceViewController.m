@@ -129,7 +129,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
         img.image = [UIImage imageNamed:@"noPhoto"];
         [self.mScrollV_all addSubview:img];
         img.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(collectionView:didSelectItemAtIndexPath:)];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectImg)];
         [img addGestureRecognizer:tap];
     }
 }
@@ -278,6 +278,10 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self didSelectImg];
+}
+
+-(void)didSelectImg{
     [MobClick event:@"PersonalSpace_didSelectItem" label:@""];
     UnitAlbumsViewController *Albums = [[UnitAlbumsViewController alloc] init];
     Albums.mStr_flag = @"1";//来自个人
