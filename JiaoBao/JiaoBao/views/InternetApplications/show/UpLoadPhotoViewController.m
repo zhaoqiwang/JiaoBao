@@ -174,16 +174,25 @@
 
 //上传照片成功
 -(void)UpLoadPhotoUnit:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    //[MBProgressHUD hideHUDForView:self.view];
     mInt_count = mInt_count + 1;
-    if (mInt_count == mInt_uploadCount) {
+    if (mInt_count == self.mArr_photo.count) {
         [self.delegate UpLoadPhotoSuccess];
         NSString *flag = noti.object;
         if ([flag intValue] == 0) {//成功
+            [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
+            mInt_count=0;
+            [self.mArr_photo removeAllObjects];
+            [self.collectionView reloadData];
         }else{
+            [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showError:@"上传失败" toView:self.view];
+            mInt_count =0;
+            [self.mArr_photo removeAllObjects];
+            [self.collectionView reloadData];
         }
+
     }
 }
 
@@ -287,7 +296,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     if (info.count>0) {
         mInt_count = 0;
-        mInt_uploadCount = (int)info.count;
+        mInt_uploadCount = (int)info.count+mInt_uploadCount;
     }
     for (NSDictionary *dict in info) {
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
@@ -334,6 +343,8 @@
 
 -(void)navigationRightAction:(UIButton *)sender
 {
+    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
+
     for(int i=0;i<self.mArr_photo.count;i++)
     {
         NSString *timeSp = [NSString stringWithFormat:@"图片%d.png", i];

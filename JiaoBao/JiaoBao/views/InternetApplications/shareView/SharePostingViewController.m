@@ -130,7 +130,6 @@
             [self.pullArr addObject:dic];
         }
     }
-    
     self.mTableV_type.tag = 2;
     if(self.isOpen == NO)
     {
@@ -281,11 +280,7 @@
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
-
-
         self.imageCount--;
-
-        
         UploadImgModel *model = [dic objectForKey:@"model"];
         [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
@@ -293,7 +288,17 @@
             self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-                return [p1.originalName compare:p2.originalName];
+                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+                int p1_int = [su_p11 integerValue];
+                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
+
+                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+                int p2_int = [su_p22 integerValue];
+                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
+
+                return [p1_num compare:p2_num];
             }];
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
             for(int i=0;i<self.mArr_pic.count;i++)
@@ -357,6 +362,7 @@
     if (self.mInt_section == 0) {//分享
         D("self.mStr_unitID = %@",self.mStr_unitID);
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
+        
     }else if (self.mInt_section == 1){//展示
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }
@@ -560,12 +566,13 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
+    [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+
     
     [self dismissViewControllerAnimated:YES completion:^{
         //发送选中图片上传请求
         if (info.count>0) {
             D("info.count-===%lu",(unsigned long)info.count);
-            [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
         }
         
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
@@ -631,7 +638,11 @@
                 }
             }
             else {
+                [MBProgressHUD hideHUDForView:self.view];
+                [MBProgressHUD showError:@"视频格式不识别" toView:self.view];
+                [self.mArr_pic removeAllObjects];
                 NSLog(@"Uknown asset type");
+                return ;
             }
             timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
         }
