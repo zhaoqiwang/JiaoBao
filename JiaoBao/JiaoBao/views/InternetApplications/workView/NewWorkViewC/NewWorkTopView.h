@@ -66,8 +66,10 @@
 @property (retain, nonatomic) AVAudioPlayer *audioPlayer;
 @property (retain, nonatomic) UIImageView *imageView;
 @property (nonatomic,assign) double mInt_time;//录音时间
+@property (nonatomic,assign) int mInt_flag;//录音按钮是否按下状态
 
 @property(nonatomic,strong)UIImagePickerController *picker;
+
 
 //刷新显示附件
 -(void)addAccessoryPhoto;
