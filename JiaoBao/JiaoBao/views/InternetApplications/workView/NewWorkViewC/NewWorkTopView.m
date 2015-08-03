@@ -96,6 +96,7 @@
 
 //点击发送短信按钮
 -(void)sendMsgBtn:(UIButton *)btn{
+    [self btnVoiceUp:nil];
     if (self.mInt_sendMsg == 0) {
         self.mInt_sendMsg = 1;
         [self.mBtn_sendMsg setImage:[UIImage imageNamed:@"NewWork_unSendMsg"] forState:UIControlStateNormal];
@@ -107,6 +108,7 @@
 
 //附件按钮点击事件
 -(void)mBtn_accessory:(UIButton *)btn{
+    [self btnVoiceUp:nil];
 //    AccessoryViewController *access = [[AccessoryViewController alloc] init];
 //    access.delegate = self;
 //    [utils pushViewController:access animated:YES];
@@ -122,11 +124,13 @@
 
 //发送按钮
 -(void)mBtn_send:(UIButton *)btn{
+    [self btnVoiceUp:nil];
     [self.delegate mBtn_send:btn];
 }
 
 //点击删除附件
 -(void)deleteAccessoryPhoto:(UIButton *)btn{
+    [self btnVoiceUp:nil];
     //从数组中删除
     [self.mArr_accessory removeObjectAtIndex:btn.tag];
     //刷新界面
@@ -216,11 +220,15 @@
 
 //点击附件
 -(void)clickAccessoryPhoto:(UIButton *)btn{
+    [self btnVoiceUp:nil];
 //    NSString *name = [self.mArr_accessory objectAtIndex:btn.tag];
     AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
     NSString *name = model.mStr_name;
     if([[name pathExtension] isEqualToString:@"aac"]) {  //取得后缀名这.aac的文件名,录音
         //        AccessoryModel *model = [self.mArr_accessory objectAtIndex:btn.tag];
+//        var audioSession = AVAudioSession.sharedInstance()
+//        audioSession.setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
         [self playRecordSound:model.pathStr];
 //    }else if([[name pathExtension] isEqualToString:@"png"]) {  //取得后缀名这.png的文件名
         }else {  //取得后缀名这.png的文件名
@@ -460,6 +468,8 @@
 
 - (void)btnVoiceDown:(id)sender
 {
+    self.mInt_flag = 1;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
     [self.imageView setHidden:NO];
     //创建录音文件，准备录音
     if ([self.recorder prepareToRecord]) {
@@ -472,18 +482,21 @@
 }
 - (void)btnVoiceUp:(id)sender
 {
-    [self.imageView setHidden:YES];
-    double cTime = self.recorder.currentTime;
-    self.mInt_time = cTime;
-    if (cTime > 1) {//如果录制时间<2 不发送
-        D("发出去");
-    }else {
-        //删除记录的文件
-        [self.recorder deleteRecording];
-        //删除存储的
+    if (self.mInt_flag ==1) {
+        self.mInt_flag = 0;
+        [self.imageView setHidden:YES];
+        double cTime = self.recorder.currentTime;
+        self.mInt_time = cTime;
+        if (cTime > 1) {//如果录制时间<2 不发送
+            D("发出去");
+        }else {
+            //删除记录的文件
+            [self.recorder deleteRecording];
+            //删除存储的
+        }
+        [self.recorder stop];
+        [timer invalidate];
     }
-    [self.recorder stop];
-    [timer invalidate];
 }
 - (void)btnVoiceDragUp:(id)sender
 {
