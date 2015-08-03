@@ -19,6 +19,7 @@
 #import "UpdateUnitListViewController.h"
 #import "ThemeSpaceViewController.h"
 #import "MJRefresh.h"//上拉下拉刷新
+#import "KnowledgeHttp.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
 //    UIScrollView *mScrollV_share;//放colletionV,tableV

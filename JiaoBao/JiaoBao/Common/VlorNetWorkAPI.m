@@ -7,8 +7,8 @@
 //
 
 #import "VlorNetWorkAPI.h"
-#import "FMDatabase.h"
-#import "FMResultSet.h"
+//#import "FMDatabase.h"
+//#import "FMResultSet.h"
 
 @implementation NSString (VlorNetWorkAPI)
 
@@ -407,28 +407,28 @@
 +(NSMutableArray *)SelectDataUser:(NSString *)sql attributeListArray:(NSMutableArray *)listArray
 {
     
-    FMDatabase *db = [FMDatabase databaseWithPath:DATABASE_PATH];
+//    FMDatabase *db = [FMDatabase databaseWithPath:DATABASE_PATH];
     NSMutableArray *array=[[NSMutableArray alloc] init];
-    if (![db open]) {
-        NSLog(@"数据库打开失败");
-    };
-    BOOL worked;
-    if (listArray==nil) {
-       worked =[db executeUpdate:sql];
-        
-    }
-    
-    FMResultSet *rs=[db executeQuery:sql];
-    while ([rs next]) {
-        NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
-        for (int i=0; i<[listArray count]; i++) {
-            [dict setObject:[rs stringForColumn:[rs stringForColumn:[listArray objectAtIndex:i]]] forKey:[listArray objectAtIndex:i]];
-
-        }
-        [array addObject:dict];
-    }
-    [rs close];
-    [db close];
+//    if (![db open]) {
+//        NSLog(@"数据库打开失败");
+//    };
+//    BOOL worked;
+//    if (listArray==nil) {
+//       worked =[db executeUpdate:sql];
+//        
+//    }
+//    
+//    FMResultSet *rs=[db executeQuery:sql];
+//    while ([rs next]) {
+//        NSMutableDictionary *dict=[[NSMutableDictionary alloc] init];
+//        for (int i=0; i<[listArray count]; i++) {
+//            [dict setObject:[rs stringForColumn:[rs stringForColumn:[listArray objectAtIndex:i]]] forKey:[listArray objectAtIndex:i]];
+//
+//        }
+//        [array addObject:dict];
+//    }
+//    [rs close];
+//    [db close];
     return array;
     
 }

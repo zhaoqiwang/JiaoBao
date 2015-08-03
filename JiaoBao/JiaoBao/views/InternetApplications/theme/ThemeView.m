@@ -21,52 +21,6 @@
         //做bug服务器显示当前的哪个界面
         NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
         [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-        //将我的主题通知界面
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"EnjoyInterestList" object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(EnjoyInterestList:) name:@"EnjoyInterestList" object:nil];
-//        //获取到单位头像后，刷新界面
-//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshShowViewNew" object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshShowViewNew) name:@"refreshShowViewNew" object:nil];
-//        
-//        self.mArr_tabel = [NSMutableArray array];
-//        self.mArr_difine = [NSMutableArray array];
-//        self.mArr_difine = [NSMutableArray arrayWithObjects:@"最新更新主题",@"我关注及我参与的主题", nil];
-//        self.mInt_index = 1;
-//        [self.mArr_tabel addObjectsFromArray:self.mArr_difine];
-//        
-//        //scrollview
-////        self.mScrollV_share = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
-////        [self addSubview:self.mScrollV_share];
-//        
-//        //表格,更改里面的自定义cell
-////        self.mTableV_difine = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 50)];
-////        self.mTableV_difine.delegate = self;
-////        self.mTableV_difine.dataSource = self;
-////        self.mTableV_difine.tag = 1;
-////        self.mTableV_difine.scrollEnabled = NO;
-////        [self.mScrollV_share addSubview:self.mTableV_difine];
-//        
-//        //表格的标签
-////        self.mLab_name = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, [dm getInstance].width, 20)];
-////        self.mLab_name.backgroundColor = [UIColor grayColor];
-////        self.mLab_name.text = @"  我关注及我参与的主题";
-////        self.mLab_name.font = [UIFont systemFontOfSize:12];
-////        [self.mScrollV_share addSubview:self.mLab_name];
-//        
-//        //表格,更改里面的自定义cell
-////        self.mTableV_detail = [[UITableView alloc] initWithFrame:CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height, [dm getInstance].width, 0)];
-//        self.mTableV_detail = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height)];
-//        self.mTableV_detail.delegate = self;
-//        self.mTableV_detail.dataSource = self;
-////        self.mTableV_detail.scrollEnabled = NO;
-//        self.mTableV_detail.tag = 2;
-////        [self.mScrollV_share addSubview:self.mTableV_detail];
-//        [self addSubview:self.mTableV_detail];
-//        [self.mTableV_detail addHeaderWithTarget:self action:@selector(headerRereshing)];
-//        self.mTableV_detail.headerPullToRefreshText = @"下拉刷新";
-//        self.mTableV_detail.headerReleaseToRefreshText = @"松开后刷新";
-//        self.mTableV_detail.headerRefreshingText = @"正在刷新...";
-        
     }
     return self;
 }
@@ -76,6 +30,8 @@
     if ([self checkNetWork]) {
         return;
     }
+    [[KnowledgeHttp getInstance] knowledgeHttpGetProvice];
+//    [[KnowledgeHttp getInstance] knowledgeHttpGetCity:@"" level:@""];
     [MBProgressHUD showMessage:@"" toView:self];
 }
 //检查当前网络是否可用

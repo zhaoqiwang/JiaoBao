@@ -316,7 +316,7 @@
     }else{
         if (mInt_userSelectedChannelID == 100) {//求知
 
-            
+            [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
             
         }else if (mInt_userSelectedChannelID == 101) {//学校圈
             if (mInt_show == 0) {
