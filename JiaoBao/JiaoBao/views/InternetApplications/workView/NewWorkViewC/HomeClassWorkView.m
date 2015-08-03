@@ -16,7 +16,7 @@
 @synthesize mViewTop,mScrollV_all;
 -(void)refreshWorkView:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self];
+    //[MBProgressHUD hideHUDForView:self];
     [self setFrame];
     //[self resetFrame];
 }
@@ -37,7 +37,7 @@
         {
             str = @"成功";
         }
-        [MBProgressHUD showError:str toView:self];
+        [MBProgressHUD showSuccess:str toView:self];
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
         [self.mViewTop addAccessoryPhoto];
