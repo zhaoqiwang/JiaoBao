@@ -16,7 +16,7 @@
 @synthesize mViewTop,mScrollV_all;
 -(void)refreshWorkView:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self];
+    //[MBProgressHUD hideHUDForView:self];
     [self setFrame];
     //[self resetFrame];
 }
@@ -37,7 +37,7 @@
         {
             str = @"成功";
         }
-        [MBProgressHUD showError:str toView:self];
+        [MBProgressHUD showSuccess:str toView:self];
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
         [self.mViewTop addAccessoryPhoto];
@@ -497,18 +497,8 @@ if([dm getInstance].notificationSymbol == 100)
     }
    
 
+    [MBProgressHUD showMessage:@"正在发送..." toView:self];
 
-
-
-
-    
-    self.mProgressV.labelText = @"正在发送...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    //        self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-    
-    
     
 }
 //检查当前网络是否可用
