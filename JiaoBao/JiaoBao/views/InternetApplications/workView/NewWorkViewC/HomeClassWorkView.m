@@ -497,18 +497,8 @@ if([dm getInstance].notificationSymbol == 100)
     }
    
 
+    [MBProgressHUD showMessage:@"正在发送..." toView:self];
 
-
-
-
-    
-    self.mProgressV.labelText = @"正在发送...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    //        self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-    
-    
     
 }
 //检查当前网络是否可用

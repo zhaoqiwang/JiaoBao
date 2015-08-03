@@ -153,12 +153,6 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-
-    
-    
-    
-    
-    
     
 }
 
@@ -337,6 +331,7 @@
     NSData *imageData = UIImageJPEGRepresentation(image,0);
     UIImage *img = [UIImage imageWithData:imageData];
     [self.mArr_photo addObject:img];
+    [self.collectionView reloadData];
 
     
 }
