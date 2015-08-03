@@ -15,8 +15,12 @@
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "Reachability.h"
 #import "MobClick.h"
+#import "PhotoCollectionCell.h"
 
 @interface UpLoadPhotoViewController ()
+{
+     BOOL isLongpress;
+}
 @property(nonatomic,strong)UIImagePickerController *picker;
 
 
@@ -47,8 +51,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mArr_photo = [[NSMutableArray alloc]initWithCapacity:0];
     // Do any additional setup after loading the view from its nib.
-    
+        [self.collectionView registerNib:[UINib nibWithNibName:@"PhotoCollectionCell" bundle:nil]forCellWithReuseIdentifier:@"cell"];
+    [[NSNotificationCenter defaultCenter ]addObserver:self selector:@selector(deleteCell:) name:@"delete" object:nil];
+
     //上传照片成功
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpLoadPhotoUnit" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpLoadPhotoUnit:) name:@"UpLoadPhotoUnit" object:nil];
@@ -57,6 +64,8 @@
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"上传照片"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
+    [self.mNav_navgationBar setRightBtnTitle:@"上传"];
+
     [self.view addSubview:self.mNav_navgationBar];
     
     //
@@ -104,6 +113,48 @@
     [self.mTableV_name.layer setBorderWidth:2];
     [self.view addSubview:self.mTableV_name];
 }
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.mArr_photo.count;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    
+    return 1;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    PhotoCollectionCell *cell = (PhotoCollectionCell*) [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"
+                                                                                                 forIndexPath:indexPath];
+    cell.imgV.image = [self.mArr_photo objectAtIndex:indexPath.row];
+    cell.deleteBtn.tag = indexPath.row;
+
+    return cell;
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(20, 10, 15, 10);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 10;
+}
+
+// 定义左右cell的最小间距
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 10;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
 
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
@@ -117,16 +168,25 @@
 
 //上传照片成功
 -(void)UpLoadPhotoUnit:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    //[MBProgressHUD hideHUDForView:self.view];
     mInt_count = mInt_count + 1;
-    if (mInt_count == mInt_uploadCount) {
+    if (mInt_count == self.mArr_photo.count) {
         [self.delegate UpLoadPhotoSuccess];
         NSString *flag = noti.object;
         if ([flag intValue] == 0) {//成功
+            [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
+            mInt_count=0;
+            [self.mArr_photo removeAllObjects];
+            [self.collectionView reloadData];
         }else{
+            [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showError:@"上传失败" toView:self.view];
+            mInt_count =0;
+            [self.mArr_photo removeAllObjects];
+            [self.collectionView reloadData];
         }
+
     }
 }
 
@@ -230,73 +290,27 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     if (info.count>0) {
         mInt_count = 0;
-        mInt_uploadCount = (int)info.count;
-        [MBProgressHUD showMessage:@"上传中..." toView:self.view];
+        mInt_uploadCount = (int)info.count+mInt_uploadCount;
     }
-    
-    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
-//    NSMutableArray *imagesFilePath = [NSMutableArray array];//路径
-//    NSMutableArray *imagesName = [NSMutableArray array];//名字
     for (NSDictionary *dict in info) {
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                NSData *imageData = UIImageJPEGRepresentation(image,1.0);
-                
-                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-                //文件名
-                NSFileManager* fileManager=[NSFileManager defaultManager];
-                NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
-                BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
-                if (!yesNo) {//不存在，则直接写入后通知界面刷新
-                    BOOL result = [imageData writeToFile:imgPath atomically:YES];
-                    for (;;) {
-                        if (result) {
-                            if ([self.mStr_flag intValue] == 1) {
-                                [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:[NSString stringWithFormat:@"%@.png",timeSp] Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
-                            }else{
-                                UnitAlbumsModel *model = [self.mArr_albums objectAtIndex:0];
-                                [[ThemeHttp getInstance] themeHttpUpLoadPhotoUnit:model.UnitID GroupID:self.mStr_groupID Creatby:[dm getInstance].jiaoBaoHao Fiel:imgPath];
-                            }
-                            break;
-                        }
-                    }
-                }else {//存在
-                    BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
-                    if (blDele) {//删除成功后，写入，通知界面
-                        BOOL result = [imageData writeToFile:imgPath atomically:YES];
-                        for (;;) {
-                            if (result) {
-                                if ([self.mStr_flag intValue] == 1) {
-                                    [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:[NSString stringWithFormat:@"%@.png",timeSp] Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
-                                }else{
-                                    UnitAlbumsModel *model = [self.mArr_albums objectAtIndex:0];
-                                    [[ThemeHttp getInstance] themeHttpUpLoadPhotoUnit:model.UnitID GroupID:self.mStr_groupID Creatby:[dm getInstance].jiaoBaoHao Fiel:imgPath];
-                                }
-                                break;
-                            }
-                        }
-                    }
-                }
-//                [imagesFilePath addObject:imgPath];
+                NSData *imageData = UIImageJPEGRepresentation(image,0);
+                UIImage *img = [UIImage imageWithData:imageData];
+                [self.mArr_photo addObject:img];
+
                 
             } else {
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
         }
-//        else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
-//            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-//                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-////                [images addObject:image];
-//            } else {
-//                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
-//            }
-//        }
+
         else {
             NSLog(@"Uknown asset type");
         }
-        timeSp = [NSString stringWithFormat:@"%d",[timeSp intValue] +1];
     }
+    [self.collectionView reloadData];
 }
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker{
@@ -308,28 +322,38 @@
         
         
     }];
-    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
-    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
 
     UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     
     NSData *imageData = UIImageJPEGRepresentation(image,0);
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
-    D("图片路径是：%@",imgPath);
+    UIImage *img = [UIImage imageWithData:imageData];
+    [self.mArr_photo addObject:img];
+    [self.collectionView reloadData];
+
     
-    
-    BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
-    if (!yesNo) {//不存在，则直接写入后通知界面刷新
+}
+
+-(void)navigationRightAction:(UIButton *)sender
+{
+    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
+
+    for(int i=0;i<self.mArr_photo.count;i++)
+    {
+        NSString *timeSp = [NSString stringWithFormat:@"图片%d.png", i];
+        UIImage *image = [self.mArr_photo objectAtIndex:i];
+        NSData *imageData = UIImageJPEGRepresentation(image,0);
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        
+        NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
+
         BOOL result = [imageData writeToFile:imgPath atomically:YES];
         for (;;) {
             if (result) {
                 if ([self.mStr_flag intValue] == 1) {
-                    [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:[NSString stringWithFormat:@"%@.png",timeSp] Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
+                    [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:timeSp Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
                 }else{
                     UnitAlbumsModel *model = [self.mArr_albums objectAtIndex:0];
                     [[ThemeHttp getInstance] themeHttpUpLoadPhotoUnit:model.UnitID GroupID:self.mStr_groupID Creatby:[dm getInstance].jiaoBaoHao Fiel:imgPath];
@@ -337,25 +361,20 @@
                 break;
             }
         }
-    }else {
-        //存在
-        BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
-        if (blDele) {//删除成功后，写入，通知界面
-            BOOL result = [imageData writeToFile:imgPath atomically:YES];
-            for (;;) {
-                if (result) {
-                    if ([self.mStr_flag intValue] == 1) {
-                        [[ThemeHttp getInstance] themeHttpUpLoadPhotoFromAPP:[dm getInstance].jiaoBaoHao FileName:[NSString stringWithFormat:@"%@.png",timeSp] Describe:@"" GroupID:self.mStr_groupID FIle:imgPath];
-                    }else{
-                        UnitAlbumsModel *model = [self.mArr_albums objectAtIndex:0];
-                        [[ThemeHttp getInstance] themeHttpUpLoadPhotoUnit:model.UnitID GroupID:self.mStr_groupID Creatby:[dm getInstance].jiaoBaoHao Fiel:imgPath];
-                    }
-                    break;
-                }
-            }
-        }
-    }}
 
+    }
+
+
+    
+}
+
+-(void)deleteCell:(id)sender
+{
+    UIButton *btn =(UIButton*)[sender object];
+    [self.mArr_photo removeObjectAtIndex:btn.tag];
+    [self.collectionView reloadData];
+    
+}
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
