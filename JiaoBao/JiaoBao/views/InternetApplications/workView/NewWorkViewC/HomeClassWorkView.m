@@ -37,7 +37,11 @@
         {
             str = @"成功";
         }
-        [MBProgressHUD showError:str toView:self];
+        if([str isEqualToString:@"成功"]==YES)
+        {
+            
+        }
+        [MBProgressHUD showSuccess:str toView:self];
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
         [self.mViewTop addAccessoryPhoto];
@@ -353,7 +357,11 @@ if([dm getInstance].notificationSymbol == 100)
             }
             else
             {
-                model = [unit.list objectAtIndex:0];
+                if(unit.list.count>0)
+                {
+                    model = [unit.list objectAtIndex:0];
+
+                }
 
                 
             }
@@ -501,15 +509,7 @@ if([dm getInstance].notificationSymbol == 100)
 
 
 
-    
-    self.mProgressV.labelText = @"正在发送...";
-    self.mProgressV.mode = MBProgressHUDModeIndeterminate;
-    //        self.mProgressV.userInteractionEnabled = NO;
-    [self.mProgressV show:YES];
-    [self.mProgressV showWhileExecuting:@selector(Loading) onTarget:self withObject:nil animated:YES];
-    
-    
-    
+    [MBProgressHUD showMessage:@"正在发送..." toView:self];
 }
 //检查当前网络是否可用
 -(BOOL)checkNetWork{
