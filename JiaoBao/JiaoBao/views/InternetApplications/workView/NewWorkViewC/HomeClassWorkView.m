@@ -16,7 +16,7 @@
 @synthesize mViewTop,mScrollV_all;
 -(void)refreshWorkView:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self];
+    //[MBProgressHUD hideHUDForView:self];
     [self setFrame];
     //[self resetFrame];
 }

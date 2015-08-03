@@ -676,7 +676,7 @@
     elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
     elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
     elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
-    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
+    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
     
     elcPicker.imagePickerDelegate = self;
     
