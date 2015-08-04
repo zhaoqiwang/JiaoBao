@@ -85,5 +85,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *secondVIew;
 @property(nonatomic,assign)NSUInteger imageCount;
+@property(nonatomic,assign)int tfContentTag;
 
 @end

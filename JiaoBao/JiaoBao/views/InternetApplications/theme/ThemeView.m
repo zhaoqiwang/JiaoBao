@@ -30,9 +30,13 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[KnowledgeHttp getInstance] knowledgeHttpGetProvice];
+    [[KnowledgeHttp getInstance]GetCategoryWithParentId:nil subject:nil];
+    //[[KnowledgeHttp getInstance]GetUserInfo];
+//    [[KnowledgeHttp getInstance] knowledgeHttpGetProvice];
+//    [[KnowledgeHttp getInstance]GetAccIdbyNickname:@[@"123",@"456"]];
+    
 //    [[KnowledgeHttp getInstance] knowledgeHttpGetCity:@"" level:@""];
-    [MBProgressHUD showMessage:@"" toView:self];
+    //[MBProgressHUD showMessage:@"" toView:self];
 }
 //检查当前网络是否可用
 -(BOOL)checkNetWork{

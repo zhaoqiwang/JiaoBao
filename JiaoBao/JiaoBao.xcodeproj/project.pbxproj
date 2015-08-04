@@ -807,7 +807,10 @@
 		F76B646B1B1EA8CB008F6961 /* bj.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64681B1EA8CB008F6961 /* bj.png */; };
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
+		F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77118D61B70476100CA8FAC /* NickNameModel.m */; };
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
+		F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFF81B70560800E8A31B /* CategoryModel.m */; };
+		F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFFB1B70566400E8A31B /* UserInformationModel.m */; };
 		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
 		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
@@ -1972,7 +1975,13 @@
 		F76B64681B1EA8CB008F6961 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bj.png; path = Image/InternetApp/class/bj.png; sourceTree = "<group>"; };
 		F76B64691B1EA8CB008F6961 /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@2x.png"; path = "Image/InternetApp/class/bj@2x.png"; sourceTree = "<group>"; };
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
+		F77118D51B70476100CA8FAC /* NickNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickNameModel.h; path = views/InternetApplications/theme/model/NickNameModel.h; sourceTree = "<group>"; };
+		F77118D61B70476100CA8FAC /* NickNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NickNameModel.m; path = views/InternetApplications/theme/model/NickNameModel.m; sourceTree = "<group>"; };
 		F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailQueryCell.xib; sourceTree = "<group>"; };
+		F787CFF71B70560800E8A31B /* CategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryModel.h; path = views/InternetApplications/theme/model/CategoryModel.h; sourceTree = "<group>"; };
+		F787CFF81B70560800E8A31B /* CategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryModel.m; path = views/InternetApplications/theme/model/CategoryModel.m; sourceTree = "<group>"; };
+		F787CFFA1B70566400E8A31B /* UserInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInformationModel.h; path = views/InternetApplications/theme/model/UserInformationModel.h; sourceTree = "<group>"; };
+		F787CFFB1B70566400E8A31B /* UserInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInformationModel.m; path = views/InternetApplications/theme/model/UserInformationModel.m; sourceTree = "<group>"; };
 		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
 		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
 		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
@@ -2218,6 +2227,12 @@
 				A75E3F901B6F63ED00284C3D /* ParserJson_knowledge.m */,
 				A75E3F911B6F63ED00284C3D /* ProviceModel.h */,
 				A75E3F921B6F63ED00284C3D /* ProviceModel.m */,
+				F77118D51B70476100CA8FAC /* NickNameModel.h */,
+				F77118D61B70476100CA8FAC /* NickNameModel.m */,
+				F787CFFA1B70566400E8A31B /* UserInformationModel.h */,
+				F787CFFB1B70566400E8A31B /* UserInformationModel.m */,
+				F787CFF71B70560800E8A31B /* CategoryModel.h */,
+				F787CFF81B70560800E8A31B /* CategoryModel.m */,
 				A7357A3A1A4026CF00A195C5 /* ParserJson_theme.h */,
 				A7357A3B1A4026CF00A195C5 /* ParserJson_theme.m */,
 				A7357A371A4025B800A195C5 /* ThemeListModel.h */,
@@ -4645,6 +4660,7 @@
 				F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */,
 				A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */,
 				A7255F8E1A19878C005F9CCE /* ParserJson_share.m in Sources */,
+				F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */,
 				A771CAAF1A2430CD000B41F2 /* Loger.mm in Sources */,
 				A7A74DB71A7638AE0014CCE9 /* ChineseString.m in Sources */,
 				A74937E01ACA8A4F00F96741 /* ClassTopViewController.m in Sources */,
@@ -4747,6 +4763,7 @@
 				A7BEEA111A43D0C8003C9EAD /* UnitAlbumsViewController.m in Sources */,
 				A76255D21B5C9EDB00AD8089 /* VideoRecorderViewController.m in Sources */,
 				A7595EA31A5FC2F30027848E /* PSTCollectionViewUpdateItem.m in Sources */,
+				F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */,
 				A7595E981A5FC2F30027848E /* DACircularProgressView.m in Sources */,
 				A73AD82C1A20721E00F68C47 /* UnitInfoModel.m in Sources */,
 				A73AD8301A2076A500F68C47 /* SubUnitInfoViewController.m in Sources */,
@@ -4889,6 +4906,7 @@
 				A755E6B319F25B9000BBDF3D /* dm.m in Sources */,
 				A75E3F941B6F63ED00284C3D /* ProviceModel.m in Sources */,
 				A72B58251A3D7D5C004D8920 /* UnitSpaceArthListViewController.m in Sources */,
+				F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */,
 				A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */,
 				A7216E361A3A7B010093876A /* KxMenu.m in Sources */,
 				A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */,

@@ -281,31 +281,28 @@
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
-
-
         self.imageCount--;
-
-        
         UploadImgModel *model = [dic objectForKey:@"model"];
         [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
         {
-            self.mTextV_content.text = @"";
+            //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
                 NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
                 NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p1_int = [su_p11 integerValue];
+                int p1_int = [su_p11 intValue];
                 NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
                 
                 NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
                 NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p2_int = [su_p22 integerValue];
+                int p2_int = [su_p22 intValue];
                 NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
                 
-                return [p1_num compare:p2_num];            }];
+                return [p1_num compare:p2_num];
+            }];
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            for(int i=0;i<self.mArr_pic.count;i++)
+            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
             {
                 UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
@@ -466,6 +463,7 @@
     self.imageCount = 1;
     D("info_count = %ld",(unsigned long)info.count);
     [picker dismissViewControllerAnimated:YES completion:^{
+        
         
 
     }];
@@ -668,6 +666,7 @@
         if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
             self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
         }
+        self.tfContentTag = self.mArr_pic.count;
         [self presentViewController:imagePickerController animated:YES completion:^{}];
         
     }
@@ -688,6 +687,7 @@
     elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
     
     elcPicker.imagePickerDelegate = self;
+    self.tfContentTag= self.mArr_pic.count;
     
     [self presentViewController:elcPicker animated:YES completion:nil];
 }
