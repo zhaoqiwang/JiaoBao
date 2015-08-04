@@ -499,7 +499,8 @@
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
 
-    [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+//    [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",UnitIDImg,model.unitId] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     cell.mImgV_head.frame = CGRectMake(10, 15, 42, 42);
     //姓名
     CGSize nameSize = [[NSString stringWithFormat:@"%@",model.UserName] sizeWithFont:[UIFont systemFontOfSize:14]];
