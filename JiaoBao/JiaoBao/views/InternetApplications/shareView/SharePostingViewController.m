@@ -285,23 +285,22 @@
         [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
         {
-            self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
                 NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
                 NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p1_int = [su_p11 integerValue];
+                int p1_int = [su_p11 intValue];
                 NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
 
                 NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
                 NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p2_int = [su_p22 integerValue];
+                int p2_int = [su_p22 intValue];
                 NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
 
                 return [p1_num compare:p2_num];
             }];
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            for(int i=0;i<self.mArr_pic.count;i++)
+            for(int i=self.tfContentFlag;i<self.mArr_pic.count;i++)
             {
                 UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
@@ -662,6 +661,7 @@
 - (IBAction)cameraBtnAction:(id)sender {
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
+        self.tfContentFlag =self.mArr_pic.count;
         NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
         imagePickerController.delegate = self;
@@ -681,6 +681,7 @@
 }
 
 - (IBAction)albumBtnAction:(id)sender {
+    self.tfContentFlag = self.mArr_pic.count;
     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
     
     elcPicker.maximumImagesCount = 100; //Set the maximum number of images to select to 100
