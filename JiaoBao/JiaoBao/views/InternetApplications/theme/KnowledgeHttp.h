@@ -54,5 +54,8 @@
 //取所有话题
 -(void)GetAllCategory;
 
+//话题的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)-(话题Id)
+-(void)CategoryIndexQuestionWith:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid;
+
 
 @end

@@ -120,9 +120,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        D("JSON--------GetUserInfo: %@,", result);
+        D("JSON--------SetIdflagWithAccId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------GetUserInfo: %@", error);
+        D("Error---------SetIdflagWithAccId: %@", error);
     }];
 }
 
@@ -141,9 +141,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetCategory:[jsonDic objectForKey:@"Data"]];
-        D("JSON--------GetUserInfo: %@,", result);
+        D("JSON--------GetCategoryWithParentId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------GetUserInfo: %@", error);
+        D("Error---------GetCategoryWithParentId: %@", error);
     }];
 }
 
@@ -162,9 +162,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         CategoryModel *model = [ParserJson_knowledge parserJsonGetCategoryById:[jsonDic objectForKey:@"Data"]];
-        D("JSON--------GetUserInfo: %@,", result);
+        D("JSON--------GetCategoryById: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------GetUserInfo: %@", error);
+        D("Error---------GetCategoryById: %@", error);
     }];
 }
 
@@ -184,9 +184,31 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSArray *arr = [jsonDic objectForKey:@"Data"];
         
         
-        D("JSON--------GetUserInfo: %@,", result);
+        D("JSON--------GetAllCategory: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------GetUserInfo: %@", error);
+        D("Error---------GetAllCategory: %@", error);
+    }];
+}
+
+//话题的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)-(话题Id)
+-(void)CategoryIndexQuestionWith:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CategoryIndexQuestion",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount,@"flag":flag,@"uid":uid};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------CategoryIndexQuestionWith: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------CategoryIndexQuestionWith: %@", error);
     }];
 }
 

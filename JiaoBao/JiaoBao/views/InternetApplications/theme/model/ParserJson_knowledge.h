@@ -28,4 +28,8 @@
 
 //获取单一话题
 +(CategoryModel*)parserJsonGetCategoryById:(NSString*)json;
+
+//话题的问题列表
++(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json;
+
 @end

@@ -9,6 +9,8 @@
 #import "ParserJson_knowledge.h"
 #import "NickNameModel.h"
 #import "CategoryModel.h"
+#import "QuestionModel.h"
+#import "AnswerModel.h"
 
 @implementation ParserJson_knowledge
 
@@ -88,6 +90,45 @@
     model.QCount = [dic objectForKey:@"QCount"];
     model.AttCount = [dic objectForKey:@"AttCount"];
     return model;
+}
++(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++)
+    {
+        QuestionModel *model = [[QuestionModel alloc ]init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.TabID = [dic objectForKey:@"TabID"];
+        model.Title = [dic objectForKey:@"Title"];
+        model.AnswersCount = [dic objectForKey:@"AnswersCount"];
+        model.AttCount = [dic objectForKey:@"AttCount"];
+        model.ViewCount = [dic objectForKey:@"ViewCount"];
+        model.CategorySuject = [dic objectForKey:@"CategorySuject"];
+        model.CategoryId = [dic objectForKey:@"CategoryId"];
+        model.LastUpdate = [dic objectForKey:@"LastUpdate"];
+        model.AreaCode = [dic objectForKey:@"AreaCode"];
+        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
+        model.rowCount = [dic objectForKey:@"rowCount"];
+        
+        NSDictionary *answerDic =  [dic objectForKey:@"answer"];
+        model.answerModel = [[AnswerModel alloc]init];
+        model.answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
+        model.answerModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
+        model.answerModel.AFlag = [answerDic objectForKey:@"AFlag"];
+        model.answerModel.TabID = [answerDic objectForKey:@"TabID"];
+        model.answerModel.RecDate = [answerDic objectForKey:@"RecDate"];
+        model.answerModel.LikeCount = [answerDic objectForKey:@"LikeCount"];
+        model.answerModel.CaiCount = [answerDic objectForKey:@"CaiCount"];
+        model.answerModel.JiaoBaoHao = [answerDic objectForKey:@"JiaoBaoHao"];
+        model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        model.answerModel.Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+
+        [array addObject:model];
+    }
+    
+    return array;
+    
 }
 
 

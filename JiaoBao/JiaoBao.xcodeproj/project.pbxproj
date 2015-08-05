@@ -819,6 +819,8 @@
 		F79B61201B71B014005FEA44 /* AllCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B611F1B71B014005FEA44 /* AllCategoryModel.m */; };
 		F79B61231B71B0FC005FEA44 /* SubItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61221B71B0FC005FEA44 /* SubItemModel.m */; };
 		F79B61261B71B753005FEA44 /* ItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61251B71B753005FEA44 /* ItemModel.m */; };
+		F79B61291B71E745005FEA44 /* QuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61281B71E745005FEA44 /* QuestionModel.m */; };
+		F79B612C1B71E7CA005FEA44 /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B612B1B71E7CA005FEA44 /* AnswerModel.m */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
 		F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BC1ABD4DC000897477 /* DetailQueryViewController.m */; };
@@ -2001,6 +2003,10 @@
 		F79B61221B71B0FC005FEA44 /* SubItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubItemModel.m; sourceTree = "<group>"; };
 		F79B61241B71B753005FEA44 /* ItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemModel.h; sourceTree = "<group>"; };
 		F79B61251B71B753005FEA44 /* ItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemModel.m; sourceTree = "<group>"; };
+		F79B61271B71E745005FEA44 /* QuestionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionModel.h; sourceTree = "<group>"; };
+		F79B61281B71E745005FEA44 /* QuestionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionModel.m; sourceTree = "<group>"; };
+		F79B612A1B71E7CA005FEA44 /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerModel.h; sourceTree = "<group>"; };
+		F79B612B1B71E7CA005FEA44 /* AnswerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerModel.m; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -2246,6 +2252,10 @@
 				F79B611F1B71B014005FEA44 /* AllCategoryModel.m */,
 				F79B61241B71B753005FEA44 /* ItemModel.h */,
 				F79B61251B71B753005FEA44 /* ItemModel.m */,
+				F79B61271B71E745005FEA44 /* QuestionModel.h */,
+				F79B61281B71E745005FEA44 /* QuestionModel.m */,
+				F79B612A1B71E7CA005FEA44 /* AnswerModel.h */,
+				F79B612B1B71E7CA005FEA44 /* AnswerModel.m */,
 				F79B61211B71B0FC005FEA44 /* SubItemModel.h */,
 				F79B61221B71B0FC005FEA44 /* SubItemModel.m */,
 				A7357A3A1A4026CF00A195C5 /* ParserJson_theme.h */,
@@ -4720,6 +4730,7 @@
 				F79B61201B71B014005FEA44 /* AllCategoryModel.m in Sources */,
 				A7AD8C3319F63CC7002E65FB /* InternetApplicationsViewController.m in Sources */,
 				A753FAF51A1DED7000AB5F22 /* UserClassModel.m in Sources */,
+				F79B612C1B71E7CA005FEA44 /* AnswerModel.m in Sources */,
 				A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */,
 				A7AD8C3F19F63DA5002E65FB /* ApplicationCenterViewController.m in Sources */,
 				A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */,
@@ -4764,6 +4775,7 @@
 				A74821AF19FF745900234020 /* MsgDetail_TrunToList.m in Sources */,
 				A74339591A452B7700AFC0A5 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A70E3CA21A1EECB700E6D0EC /* ArthDetailViewController.m in Sources */,
+				F79B61291B71E745005FEA44 /* QuestionModel.m in Sources */,
 				A743703C1A3E8CB6008AF29B /* ShareViewNew.m in Sources */,
 				F71803431AB3C71A00E6167F /* SVIndefiniteAnimatedView.m in Sources */,
 				A749B9ED19F8F19F0036F480 /* TreeView_Level1_Model.m in Sources */,
