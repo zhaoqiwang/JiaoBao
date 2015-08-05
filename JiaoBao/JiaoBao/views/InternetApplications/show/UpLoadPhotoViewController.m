@@ -203,7 +203,7 @@
     }else{
         [UIView animateWithDuration:0.3 animations:^{
             CGRect frame=self.mTextF_name.frame;
-            frame.size.height=90;
+            frame.size.height=self.mArr_albums.count*30;
             frame.origin.y = frame.origin.y+ 30;
             
             [self.mTableV_name setFrame:frame];

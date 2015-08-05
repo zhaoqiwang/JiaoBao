@@ -55,6 +55,7 @@
         model.UnitType = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitType"]];
         if ([model.UnitType intValue]==3) {//班级id，单独字段
             model.unitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitClassID"]];
+            model.unitId2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitId"]];
         }else{
             model.unitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"unitId"]];
         }

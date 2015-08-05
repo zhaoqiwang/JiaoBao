@@ -204,26 +204,30 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
     int a=0;
     for (int i=0; i<[dm getInstance].identity.count; i++) {
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
-        if (i==0||i==1) {
+        if ([idenModel.RoleIdentity integerValue]==1||[idenModel.RoleIdentity integerValue]==2) {
             NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
                 Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
-                if ([userUnitsModel.UnitID intValue] == [self.mModel_unit.UnitID intValue]) {
+                if ([userUnitsModel.UnitID intValue] == [self.mModel_unit.UnitID intValue]||[userUnitsModel.UnitID intValue] == [self.mModel_unit.UnitID2 intValue]) {
                     a++;
                 }
             }
-        }else if(i==2||i==3){
+        }else if ([idenModel.RoleIdentity integerValue]==3||[idenModel.RoleIdentity integerValue]==4) {
             NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
-                if ([userUnitsModel.ClassID intValue]==[self.mModel_unit.UnitID intValue]) {
+                if ([userUnitsModel.ClassID intValue]==[self.mModel_unit.UnitID intValue]||[userUnitsModel.ClassID intValue] == [self.mModel_unit.UnitID2 intValue]) {
                     a++;
                 }
             }
         }
     }
+//    D("hfkldhfl-====%@,%d",self.mModel_unit.UnitID,[dm getInstance].UID);
+//    if ([self.mModel_unit.UnitID integerValue]==[dm getInstance].UID) {
+//        [self.mNav_navgationBar setRightBtnTitle:@"更多"];
+//    }
     if (a>0) {
         [self.mNav_navgationBar setRightBtnTitle:@"更多"];
     }
@@ -355,7 +359,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
                 array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                 for (int m=0; m<array.count; m++) {
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
-                    if ([userUnitsModel.UnitID intValue] == [self.mModel_unit.UnitID intValue]) {
+                    if ([userUnitsModel.UnitID intValue] == [self.mModel_unit.UnitID intValue]||[userUnitsModel.UnitID intValue] == [self.mModel_unit.UnitID2 intValue]) {
                         a++;
                     }
                 }
@@ -364,7 +368,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
                 array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                 for (int m=0; m<array.count; m++) {
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
-                    if ([userUnitsModel.ClassID intValue]==[self.mModel_unit.UnitID intValue]) {
+                    if ([userUnitsModel.ClassID intValue]==[self.mModel_unit.UnitID intValue]||[userUnitsModel.ClassID intValue] == [self.mModel_unit.UnitID intValue]) {
                         a++;
                     }
                 }
