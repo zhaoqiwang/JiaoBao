@@ -638,9 +638,9 @@
             //若是需要重用，需要写上以下两句代码
             UINib * n= [UINib nibWithNibName:@"TreeView_Level0_Cell" bundle:[NSBundle mainBundle]];
             [self.mTableV_work registerNib:n forCellReuseIdentifier:indentifier];
-            cell.delegate = self;
+            
         }
-        
+        cell.delegate = self;
         cell.mNode = node;
         cell.mBtn_detail.userInteractionEnabled = NO;
         [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -680,9 +680,9 @@
             //若是需要重用，需要写上以下两句代码
             UINib * n= [UINib nibWithNibName:@"TreeView_Level0_Cell" bundle:[NSBundle mainBundle]];
             [self.mTableV_work registerNib:n forCellReuseIdentifier:indentifier];
-            cell.delegate = self;
+            
         }
-        
+        cell.delegate = self;
         cell.mNode = node;
         cell.mBtn_detail.userInteractionEnabled = NO;
         [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -1112,7 +1112,11 @@
 //循环计算是否应该勾选状态
 -(void)selectedNowBtn:(NSString *)nodeFlag{
     NSArray *array = [nodeFlag componentsSeparatedByString:@"-"];
-    NSString *tempStr = [NSString stringWithFormat:@"%@-",[array objectAtIndex:0]];
+    NSString *tempStr;
+    if (array.count>0) {
+        tempStr = [NSString stringWithFormat:@"%@-",[array objectAtIndex:0]];
+    }
+    
     for (int i=1; i<array.count-1; i++) {
         tempStr = [NSString stringWithFormat:@"%@%@-",tempStr,[array objectAtIndex:i]];
     };
