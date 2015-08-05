@@ -434,6 +434,8 @@
 		A763A53C1A48F372008365B5 /* photo_default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A763A5391A48F372008365B5 /* photo_default@2x.png */; };
 		A763A53D1A48F372008365B5 /* photo_default@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A763A53A1A48F372008365B5 /* photo_default@3x.png */; };
 		A763A5401A49663C008365B5 /* PersonPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A763A53F1A49663C008365B5 /* PersonPhotoModel.m */; };
+		A7660A9B1B71B97C00EF0FA9 /* KnowledgeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7660A991B71B97C00EF0FA9 /* KnowledgeTableViewCell.m */; };
+		A7660A9C1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7660A9A1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib */; };
 		A766B4441ACB9E1B00018D46 /* classView_more.png in Resources */ = {isa = PBXBuildFile; fileRef = A766B4411ACB9E1B00018D46 /* classView_more.png */; };
 		A766B4451ACB9E1B00018D46 /* classView_more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A766B4421ACB9E1B00018D46 /* classView_more@2x.png */; };
 		A766B4461ACB9E1B00018D46 /* classView_more@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A766B4431ACB9E1B00018D46 /* classView_more@3x.png */; };
@@ -1473,6 +1475,9 @@
 		A763A53A1A48F372008365B5 /* photo_default@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "photo_default@3x.png"; path = "Image/InternetApp/share/photo_default@3x.png"; sourceTree = "<group>"; };
 		A763A53E1A49663C008365B5 /* PersonPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonPhotoModel.h; path = views/InternetApplications/shareView/model/PersonPhotoModel.h; sourceTree = "<group>"; };
 		A763A53F1A49663C008365B5 /* PersonPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonPhotoModel.m; path = views/InternetApplications/shareView/model/PersonPhotoModel.m; sourceTree = "<group>"; };
+		A7660A981B71B97C00EF0FA9 /* KnowledgeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnowledgeTableViewCell.h; path = views/InternetApplications/theme/KnowledgeTableViewCell.h; sourceTree = "<group>"; };
+		A7660A991B71B97C00EF0FA9 /* KnowledgeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KnowledgeTableViewCell.m; path = views/InternetApplications/theme/KnowledgeTableViewCell.m; sourceTree = "<group>"; };
+		A7660A9A1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KnowledgeTableViewCell.xib; path = views/InternetApplications/theme/KnowledgeTableViewCell.xib; sourceTree = "<group>"; };
 		A766B4411ACB9E1B00018D46 /* classView_more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classView_more.png; path = Image/InternetApp/class/classView_more.png; sourceTree = "<group>"; };
 		A766B4421ACB9E1B00018D46 /* classView_more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_more@2x.png"; path = "Image/InternetApp/class/classView_more@2x.png"; sourceTree = "<group>"; };
 		A766B4431ACB9E1B00018D46 /* classView_more@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_more@3x.png"; path = "Image/InternetApp/class/classView_more@3x.png"; sourceTree = "<group>"; };
@@ -2197,6 +2202,7 @@
 		A7357A2C1A401FFB00A195C5 /* theme */ = {
 			isa = PBXGroup;
 			children = (
+				A76D1D011B70503200ABB9DF /* Knowledge */,
 				A75E3F951B6F63FF00284C3D /* KnowledgeHttp.h */,
 				A75E3F961B6F63FF00284C3D /* KnowledgeHttp.m */,
 				A7357A361A40258400A195C5 /* model */,
@@ -3261,6 +3267,16 @@
 			name = model;
 			sourceTree = "<group>";
 		};
+		A76D1D011B70503200ABB9DF /* Knowledge */ = {
+			isa = PBXGroup;
+			children = (
+				A7660A981B71B97C00EF0FA9 /* KnowledgeTableViewCell.h */,
+				A7660A991B71B97C00EF0FA9 /* KnowledgeTableViewCell.m */,
+				A7660A9A1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib */,
+			);
+			name = Knowledge;
+			sourceTree = "<group>";
+		};
 		A76ED5931AD6780C006F3E0B /* newWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -4164,6 +4180,7 @@
 				F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */,
 				A7BB180019F4F91E00A81286 /* Regiser_bg@2x.png in Resources */,
 				A754D3301A22CBE1000E356A /* SharePostingViewController.xib in Resources */,
+				A7660A9C1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib in Resources */,
 				A7CE67321AA70A250038D0C5 /* shareArticle.png in Resources */,
 				A76255DC1B5CD1E900AD8089 /* NewWork_photo1@2x.png in Resources */,
 				A74D26961B58FAE200E63DFB /* record_animate_08.png in Resources */,
@@ -4870,6 +4887,7 @@
 				F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */,
 				A74821AC19FF741400234020 /* MsgDetail_ReaderList.m in Sources */,
 				A74339511A452B7700AFC0A5 /* SDWebImageDownloader.m in Sources */,
+				A7660A9B1B71B97C00EF0FA9 /* KnowledgeTableViewCell.m in Sources */,
 				A755E71619F278B900BBDF3D /* ASIS3ServiceRequest.m in Sources */,
 				A74D127F1A3BF15600A93CAC /* ParserJson_show.m in Sources */,
 				A74339521A452B7700AFC0A5 /* SDWebImageDownloaderOperation.m in Sources */,

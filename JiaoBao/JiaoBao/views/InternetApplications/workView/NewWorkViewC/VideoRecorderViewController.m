@@ -190,7 +190,11 @@
     NSTimeInterval current = [[NSDate date] timeIntervalSince1970];
     NSTimeInterval recorded = current - startTime;
     
-    self.statusLabel.text = [NSString stringWithFormat:@"%.2f", recorded];
+    self.statusLabel.text = [NSString stringWithFormat:@"%.2f", 10-recorded];
+    if ([self.statusLabel.text floatValue]<=0) {
+        self.statusLabel.text = [NSString stringWithFormat:@"00:00"];
+        [self recStop];
+    }
 }
 
 
@@ -230,6 +234,7 @@
     
     // REC START
     if (!self.captureManager.isRecording) {
+        self.statusLabel.text = [NSString stringWithFormat:@"10.00"];
         [self.recBtn setImage:[UIImage imageNamed:@"VideoShot1"] forState:UIControlStateNormal];
         // change UI
 //        [self.recBtn setImage:self.recStopImage forState:UIControlStateNormal];
@@ -247,17 +252,21 @@
     }
     // REC STOP
     else {
-        [self.recBtn setImage:[UIImage imageNamed:@"VideoShot0"] forState:UIControlStateNormal];
-        isNeededToSave = YES;
-        [self.captureManager stopRecording];
-        
-        [self.timer invalidate];
-        self.timer = nil;
-        
-        // change UI
-//        [self.recBtn setImage:self.recStartImage forState:UIControlStateNormal];
-        [self.sureBtn setHidden:NO];
+        [self recStop];
     }
+}
+
+-(void)recStop{
+    [self.recBtn setImage:[UIImage imageNamed:@"VideoShot0"] forState:UIControlStateNormal];
+    isNeededToSave = YES;
+    [self.captureManager stopRecording];
+    
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    // change UI
+    //        [self.recBtn setImage:self.recStartImage forState:UIControlStateNormal];
+    [self.sureBtn setHidden:NO];
 }
 
 -(NSString *)audioRecordingPath000{
