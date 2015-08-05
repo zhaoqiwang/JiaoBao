@@ -114,8 +114,8 @@
         //列表
 //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        self.mTableV_list.delegate=self;
-        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *view = [[UIView alloc]init];
         self.mTableV_list.tableFooterView = view;
@@ -188,7 +188,7 @@
     if ([flag integerValue]==0) {
         CommentsListObjModel *model = [noti.object objectForKey:@"model"];
         NSString *tableID = [noti.object objectForKey:@"tableID"];
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             for (int i=0; i<self.mArr_unitTop.count; i++) {
                 ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -206,7 +206,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             for (int i=0; i<self.mArr_classTop.count; i++) {
                 ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -223,7 +223,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             for (int i=0; i<self.mArr_local.count; i++) {
                 ClassModel *classModel = [self.mArr_local objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -232,7 +232,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             for (int i=0; i<self.mArr_attention.count; i++) {
                 ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -241,7 +241,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             for (int i=0; i<self.mArr_sum.count; i++) {
                 ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -344,7 +344,7 @@
         if ([str isEqualToString:@"评论成功"]) {
             self.mTextF_text.text = @"";
         }
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             for (int i=0; i<self.mArr_unitTop.count; i++) {
                 ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -359,7 +359,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             for (int i=0; i<self.mArr_classTop.count; i++) {
                 ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -374,7 +374,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             for (int i=0; i<self.mArr_local.count; i++) {
                 ClassModel *classModel = [self.mArr_local objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -382,7 +382,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             for (int i=0; i<self.mArr_attention.count; i++) {
                 ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -390,7 +390,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             for (int i=0; i<self.mArr_sum.count; i++) {
                 ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:tableID]) {
@@ -414,7 +414,7 @@
         GetArthInfoModel *model = [dic objectForKey:@"model"];
         //判断是否需要点赞请求
         [self sendLike:model];
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             for (int i=0; i<self.mArr_unitTop.count; i++) {
                 ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
@@ -429,7 +429,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             for (int i=0; i<self.mArr_classTop.count; i++) {
                 ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
@@ -444,7 +444,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             for (int i=0; i<self.mArr_local.count; i++) {
                 ClassModel *classModel = [self.mArr_local objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
@@ -452,7 +452,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             for (int i=0; i<self.mArr_attention.count; i++) {
                 ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
@@ -460,7 +460,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             for (int i=0; i<self.mArr_sum.count; i++) {
                 ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:model.TabIDStr]) {
@@ -498,7 +498,7 @@
         
         //
         NSString *aid = [noti.object objectForKey:@"aid"];
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             for (int i=0; i<self.mArr_unitTop.count; i++) {
                 ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:aid]) {
@@ -515,7 +515,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             for (int i=0; i<self.mArr_classTop.count; i++) {
                 ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:aid]) {
@@ -532,7 +532,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             for (int i=0; i<self.mArr_local.count; i++) {
                 ClassModel *classModel = [self.mArr_local objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:aid]) {
@@ -541,7 +541,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             for (int i=0; i<self.mArr_attention.count; i++) {
                 ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:aid]) {
@@ -550,7 +550,7 @@
                     break;
                 }
             }
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             for (int i=0; i<self.mArr_sum.count; i++) {
                 ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
                 if ([classModel.TabIDStr isEqual:aid]) {
@@ -817,7 +817,7 @@
         self.mView_popup.hidden = YES;
         
         //点击按钮时，判断是否应该进行数据获取
-        if (self.mInt_index == 2&&(self.mArr_unitTop.count==0||self.mArr_unit.count==0)) {
+        if (self.mInt_index == 0&&(self.mArr_unitTop.count==0||self.mArr_unit.count==0)) {
             int a=0;
             if (self.mArr_unitTop.count==0) {
                 [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
@@ -830,7 +830,7 @@
             if (a>0) {
                 [self ProgressViewLoad:@"加载中..."];
             }
-        }else if (self.mInt_index == 3&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
+        }else if (self.mInt_index == 1&&(self.mArr_class.count==0||self.mArr_classTop.count==0)){
             int a=0;
             if (self.mArr_classTop.count==0) {
                 [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
@@ -843,20 +843,20 @@
             if (a>0) {
                 [self ProgressViewLoad:@"加载中..."];
             }
-        }else if (self.mInt_index == 1&&self.mArr_local.count == 0){
+        }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
             [self tableViewDownReloadData];
             //[self.mTableV_list reloadData];
 
-        }else if (self.mInt_index == 4&&self.mArr_attention.count==0){
+        }else if (self.mInt_index == 3&&self.mArr_attention.count==0){
             [self tableViewDownReloadData];
             //[self.mTableV_list reloadData];
 
-        }else if (self.mInt_index == 0&&self.mArr_sum.count==0){
+        }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
             [self tableViewDownReloadData];
             //[self.mTableV_list reloadData];
 
         }
-        if(self.mInt_index == 2)
+        if(self.mInt_index == 0)
         {
             [MobClick event:@"ClassView_btnChange" label:@"本单位"];
         }
@@ -915,22 +915,22 @@
             
         }
     }else{
-            if (self.mInt_index == 2 ){
+            if (self.mInt_index == 0) {
                 //flag=1个人，=2单位
                 [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
                 [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
                 [self ProgressViewLoad:@"加载中..."];
-            }else if (self.mInt_index == 3 ){
+            }else if (self.mInt_index == 1){
                 [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
                 [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
                 [self ProgressViewLoad:@"加载中..."];
-            }else if (self.mInt_index == 1 ){
+            }else if (self.mInt_index == 2){
                 [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
                 [self ProgressViewLoad:@"加载中..."];
-            }else if (self.mInt_index == 4 ){
+            }else if (self.mInt_index == 3){
                 [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
                 [self ProgressViewLoad:@"加载中..."];
-            }else if (self.mInt_index == 0 ){
+            }else if (self.mInt_index == 4){
                 [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
                 [self ProgressViewLoad:@"加载中..."];
             }
@@ -952,7 +952,7 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor  = [UIColor grayColor];
     [view addSubview:label];
-    if(mInt_index == 2)
+    if(mInt_index == 0)
     {
         if(section == 0)
         {
@@ -971,7 +971,7 @@
             }
         }
     }
-    if(mInt_index == 3)
+    if(mInt_index == 1)
     {
         if(section == 0)
         {
@@ -1003,7 +1003,7 @@
 }
 //每个section头返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (self.mInt_index == 2||self.mInt_index == 3) {
+    if (self.mInt_index == 0||self.mInt_index == 1) {
         return 20;
     }else{
         return 0;
@@ -1012,7 +1012,7 @@
 }
 //每个section底返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if(self.mInt_index == 2)
+    if(self.mInt_index == 0)
     {
         if(section == 0)
         {
@@ -1030,7 +1030,7 @@
         }
     }
     
-    if(self.mInt_index == 3)
+    if(self.mInt_index == 1)
     {
         if(section == 0)
         {
@@ -1064,12 +1064,12 @@
 
 //返回section头的uiview
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (self.mInt_index == 2||self.mInt_index == 3) {
+    if (self.mInt_index == 0||self.mInt_index == 1) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 22)];
         view.backgroundColor = [UIColor colorWithRed:240/255.0 green:239/255.0 blue:247/255.0 alpha:1];
         UILabel *tempLab = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, [dm getInstance].width-20, 22)];
         if (section ==0) {
-            if (self.mInt_index == 2 ){
+            if (self.mInt_index == 0) {
                 tempLab.text = @"单位动态";
             }else{
                 tempLab.text = @"班级动态";
@@ -1098,21 +1098,21 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
     if (section == 0) {
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
 
                 [self.label  removeFromSuperview];
             
             
 
             return self.mArr_unitTop.count;
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
 
                 [self.label  removeFromSuperview];
             
             
 
             return self.mArr_classTop.count;
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             if(self.mArr_local.count == 0)
             {
                 
@@ -1129,7 +1129,7 @@
 
             
             return self.mArr_local.count;
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             if(self.mArr_attention.count == 0)
             {
                 
@@ -1145,7 +1145,7 @@
             }
 
             return self.mArr_attention.count;
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             if(self.mArr_sum.count == 0)
             {
                 
@@ -1163,13 +1163,13 @@
             return self.mArr_sum.count;
         }
     }else{
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
 
             return self.mArr_unit.count;
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
    
             return self.mArr_class.count;
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             if(self.mArr_local.count == 0)
             {
                 
@@ -1185,7 +1185,7 @@
             }
 
             return self.mArr_local.count;
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             if(self.mArr_attention.count == 0)
             {
                 
@@ -1201,7 +1201,7 @@
             }
 
             return self.mArr_attention.count;
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             if(self.mArr_sum.count == 0)
             {
                 
@@ -1225,7 +1225,7 @@
 }
 //有多少section
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (self.mInt_index == 2||self.mInt_index == 3) {
+    if (self.mInt_index == 0||self.mInt_index == 1) {
         return 2;
     }else {
         return 1;
@@ -1256,27 +1256,27 @@
     //找到当前应该显示的数组
     NSMutableArray *array = [NSMutableArray array];
     if (indexPath.section == 0) {
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             array = [NSMutableArray arrayWithArray:self.mArr_unitTop];
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             array = [NSMutableArray arrayWithArray:self.mArr_classTop];
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             array = [NSMutableArray arrayWithArray:self.mArr_local];
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             array = [NSMutableArray arrayWithArray:self.mArr_attention];
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             array = [NSMutableArray arrayWithArray:self.mArr_sum];
         }
     }else{
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             array = [NSMutableArray arrayWithArray:self.mArr_unit];
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             array = [NSMutableArray arrayWithArray:self.mArr_class];
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             array = [NSMutableArray arrayWithArray:self.mArr_local];
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             array = [NSMutableArray arrayWithArray:self.mArr_attention];
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             array = [NSMutableArray arrayWithArray:self.mArr_sum];
         }
     }
@@ -1307,7 +1307,7 @@
     //发布单位
     NSString *tempUnit;
     if ([model.flag intValue] ==1) {//展示
-        if (self.mInt_index == 2||self.mInt_index == 3) {
+        if (self.mInt_index == 0||self.mInt_index == 1) {
             cell.mLab_class.hidden = YES;
         }else{
             tempUnit = [NSString stringWithFormat:@" 动态 "];
@@ -1481,27 +1481,27 @@
     //找到当前应该显示的数组
     NSMutableArray *array = [NSMutableArray array];
     if (indexPath.section == 0) {
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             array = [NSMutableArray arrayWithArray:self.mArr_unitTop];
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             array = [NSMutableArray arrayWithArray:self.mArr_classTop];
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             array = [NSMutableArray arrayWithArray:self.mArr_local];
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             array = [NSMutableArray arrayWithArray:self.mArr_attention];
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             array = [NSMutableArray arrayWithArray:self.mArr_sum];
         }
     }else{
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             array = [NSMutableArray arrayWithArray:self.mArr_unit];
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             array = [NSMutableArray arrayWithArray:self.mArr_class];
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             array = [NSMutableArray arrayWithArray:self.mArr_local];
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             array = [NSMutableArray arrayWithArray:self.mArr_attention];
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             array = [NSMutableArray arrayWithArray:self.mArr_sum];
         }
     }
@@ -1614,6 +1614,7 @@
     ArthDetailViewController *arth = [[ArthDetailViewController alloc] init];
     arth.Arthmodel = model;
     [utils pushViewController:arth animated:YES];
+    D("test");
 }
 
 //发表文章按钮
@@ -1631,7 +1632,7 @@
 //点击senction中的更多
 -(void)clickMoreUnit{
     ClassTopViewController *topView = [[ClassTopViewController alloc] init];
-    if (self.mInt_index ==2) {
+    if (self.mInt_index ==0) {
         topView.mInt_unit_class = 1;
         topView.mStr_navName = @"单位动态";
     }else{
@@ -1689,7 +1690,7 @@
         [self.mTableV_list reloadData];
     }else{
         
-        if (self.mInt_index == 2 ){
+        if (self.mInt_index == 0) {
             if (self.mArr_unit.count>=5&&self.mArr_unit.count%5==0) {
                 //检查当前网络是否可用
                 if ([self checkNetWork]) {
@@ -1701,7 +1702,7 @@
             } else {
                 [self loadNoMore:@"没有更多了"];
             }
-        }else if (self.mInt_index == 3 ){
+        }else if (self.mInt_index == 1){
             if (self.mArr_class.count>=5&&self.mArr_class.count%5==0) {
                 //检查当前网络是否可用
                 if ([self checkNetWork]) {
@@ -1713,7 +1714,7 @@
             } else {
                 [self loadNoMore:@"没有更多了"];
             }
-        }else if (self.mInt_index == 1 ){
+        }else if (self.mInt_index == 2){
             if (self.mArr_local.count>=5&&self.mArr_local.count%5==0) {
                 //检查当前网络是否可用
                 if ([self checkNetWork]) {
@@ -1725,7 +1726,7 @@
             } else {
                 [self loadNoMore:@"没有更多了"];
             }
-        }else if (self.mInt_index == 4 ){
+        }else if (self.mInt_index == 3){
             if (self.mArr_attention.count>=5&&self.mArr_attention.count%5==0) {
                 //检查当前网络是否可用
                 if ([self checkNetWork]) {
@@ -1737,7 +1738,7 @@
             } else {
                 [self loadNoMore:@"没有更多了"];
             }
-        }else if (self.mInt_index == 0 ){
+        }else if (self.mInt_index == 4){
             if (self.mArr_sum.count>=5&&self.mArr_sum.count%5==0) {
                 //检查当前网络是否可用
                 if ([self checkNetWork]) {
@@ -1935,6 +1936,7 @@
     if ([ClassModel.flag intValue] ==1) {//展示
         UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
         model.UnitID = ClassModel.unitId;
+        model.UnitID2 = ClassModel.unitId2;
         if (ClassModel.className.length>0) {
             model.UnitName = ClassModel.className;
         }else{
