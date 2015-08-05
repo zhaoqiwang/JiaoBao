@@ -30,7 +30,10 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[KnowledgeHttp getInstance]CategoryIndexQuestionWith:@"10" pageNum:@"1" RowCount:@"0" flag:@"1" uid:@"15"];
+    [[KnowledgeHttp getInstance]QuestionIndexWithNumPerPage:@"20" pageNum:@"1" CategoryId:@"15"];
+//    [[KnowledgeHttp getInstance]UpdateQuestionWithTabIDStr:@"15" KnContent:@"2 + 2 = ?" TagsList:@""];没成功 TabIDStr参数不知道在哪获取
+//    [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:@"15" Title:@"加法" KnContent:@"1 + 1 = ?" TagsList:@"加,减,乘,除" QFlag:@"1" AreaCode:@"" atAccIds:@""];
+//    [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1" uid:@"15"];
     //[[KnowledgeHttp getInstance]GetAllCategory];
     //[[KnowledgeHttp getInstance]GetCategoryWithParentId:nil subject:nil];
     //[[KnowledgeHttp getInstance]GetUserInfo];

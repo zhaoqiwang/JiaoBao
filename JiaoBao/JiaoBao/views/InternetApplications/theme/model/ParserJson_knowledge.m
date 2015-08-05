@@ -11,6 +11,10 @@
 #import "CategoryModel.h"
 #import "QuestionModel.h"
 #import "AnswerModel.h"
+#import "AllCategoryModel.h"
+#import "SubItemModel.h"
+#import "ItemModel.h"
+#import "QuestionIndexModel.h"
 
 @implementation ParserJson_knowledge
 
@@ -91,6 +95,65 @@
     model.AttCount = [dic objectForKey:@"AttCount"];
     return model;
 }
+
+//取所有话题
++(NSMutableArray*)parserJsonGetAllCategory:(NSString*)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++)
+    {
+        
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        AllCategoryModel *allCategoryModel = [[AllCategoryModel alloc]init];
+        //item
+        allCategoryModel.item = [[ItemModel alloc]init];
+        allCategoryModel.item.TabID = [dic objectForKey:@"TabID"];
+        allCategoryModel.item.Subject = [dic objectForKey:@"Subject"];
+        allCategoryModel.item.QCount = [dic objectForKey:@"QCount"];
+        allCategoryModel.item.AttCount = [dic objectForKey:@"AttCount"];
+        allCategoryModel.item.ParentId = [dic objectForKey:@"ParentId"];
+        //subItem
+        NSArray *arr = [dic objectForKey:@"subitem"];
+        for(int i=0;i<arr.count;i++)
+        {
+            NSDictionary *subDic = [arr objectAtIndex:i];
+            allCategoryModel.subitem = [[ItemModel alloc]init];
+            allCategoryModel.subitem.TabID = [subDic objectForKey:@"TabID"];
+            allCategoryModel.subitem.Subject = [subDic objectForKey:@"Subject"];
+            allCategoryModel.subitem.QCount = [subDic objectForKey:@"QCount"];
+            allCategoryModel.subitem.AttCount = [subDic objectForKey:@"AttCount"];
+            allCategoryModel.subitem.ParentId = [subDic objectForKey:@"ParentId"];
+            [allCategoryModel.mArr_subItem addObject:allCategoryModel.subitem];
+            
+        }
+
+        [array addObject:allCategoryModel];
+    }
+    return array;
+    
+}
+//问题列表
++(NSMutableArray*)parserJsonQuestionIndex:(NSString*)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++)
+    {
+        QuestionIndexModel *model = [[QuestionIndexModel alloc ]init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.TabID = [dic objectForKey:@"TabID"];
+        model.Title = [dic objectForKey:@"Title"];
+        model.Abstracts = [dic objectForKey:@"Abstracts"];
+        model.ViewCount = [dic objectForKey:@"ViewCount"];
+        model.LastUpdate = [dic objectForKey:@"LastUpdate"];
+        model.AnswersCount = [dic objectForKey:@"AnswersCount"];
+        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+        [array addObject:model];
+    }
+    return array;
+}
+//话题的问题列表
 +(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
 {
     NSMutableArray *array = [NSMutableArray array];

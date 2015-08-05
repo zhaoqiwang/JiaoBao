@@ -55,7 +55,14 @@
 -(void)GetAllCategory;
 
 //话题的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)-(话题Id)
--(void)CategoryIndexQuestionWith:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid;
+-(void)CategoryIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid;
 
+//发布问题 参数描述：所属话题Id-标题-问题内容-（关键字，多个以,隔开）-（QFlag）-(区域代码)-(atAccIds)
+-(void)NewQuestionWithCategoryId:(NSString*)CategoryId Title:(NSString*)Title KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList QFlag:(NSString*)QFlag AreaCode:(NSString*)AreaCode atAccIds:(NSString*)atAccIds;
 
+//问题内容修改
+-(void)UpdateQuestionWithTabIDStr:(NSString*)TabIDStr KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList;
+
+//问题列表
+-(void)QuestionIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum CategoryId:(NSString*)CategoryId;
 @end

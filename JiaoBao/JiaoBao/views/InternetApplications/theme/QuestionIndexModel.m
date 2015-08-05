@@ -1,13 +1,14 @@
 //
-//  ItemModel.h
+//  QuestionIndexModel.m
 //  JiaoBao
 //
 //  Created by songyanming on 15/8/5.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "QuestionIndexModel.h"
 
-@interface ItemModel : NSObject
+@implementation QuestionIndexModel
+
 
 @end

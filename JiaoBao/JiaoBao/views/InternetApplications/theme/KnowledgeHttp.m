@@ -181,8 +181,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSArray *arr = [jsonDic objectForKey:@"Data"];
-        
+        NSArray *array = [ParserJson_knowledge parserJsonGetAllCategory:[jsonDic objectForKey:@"Data"]];
         
         D("JSON--------GetAllCategory: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -190,8 +189,74 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
+//发布问题 参数描述：所属话题Id-标题-问题内容-（关键字，多个以,隔开）-（QFlag）-(区域代码)-(atAccIds)
+-(void)NewQuestionWithCategoryId:(NSString*)CategoryId Title:(NSString*)Title KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList QFlag:(NSString*)QFlag AreaCode:(NSString*)AreaCode atAccIds:(NSString*)atAccIds
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/NewQuestion",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"CategoryId":CategoryId,@"Title":Title,@"KnContent":KnContent,@"TagsList":TagsList,@"QFlag":QFlag,@"AreaCode":AreaCode,@"atAccIds":atAccIds};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+        
+        D("JSON--------NewQuestionWithCategoryId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------NewQuestionWithCategoryId: %@", error);
+    }];
+
+    
+}
+
+//问题内容修改
+-(void)UpdateQuestionWithTabIDStr:(NSString*)TabIDStr KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UpdateQuestion",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"TabIDStr":TabIDStr,@"KnContent":KnContent,@"TagsList":TagsList};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        
+        D("JSON--------UpdateQuestionWithTabIDStr: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------UpdateQuestionWithTabIDStr: %@", error);
+    }];
+}
+//问题列表
+-(void)QuestionIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum CategoryId:(NSString*)CategoryId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/QuestionIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"CategoryId":CategoryId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonQuestionIndex:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------QuestionIndexWithNumPerPage: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------QuestionIndexWithNumPerPage: %@", error);
+    }];
+}
 //话题的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)-(话题Id)
--(void)CategoryIndexQuestionWith:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid
+-(void)CategoryIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CategoryIndexQuestion",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
