@@ -181,6 +181,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *arr = [jsonDic objectForKey:@"Data"];
+        
         
         D("JSON--------GetUserInfo: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

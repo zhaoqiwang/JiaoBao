@@ -30,7 +30,8 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[KnowledgeHttp getInstance]GetCategoryWithParentId:nil subject:nil];
+    [[KnowledgeHttp getInstance]GetAllCategory];
+    //[[KnowledgeHttp getInstance]GetCategoryWithParentId:nil subject:nil];
     //[[KnowledgeHttp getInstance]GetUserInfo];
 //    [[KnowledgeHttp getInstance] knowledgeHttpGetProvice];
 //    [[KnowledgeHttp getInstance]GetAccIdbyNickname:@[@"123",@"456"]];
