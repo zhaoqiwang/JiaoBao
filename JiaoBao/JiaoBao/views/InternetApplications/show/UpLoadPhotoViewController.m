@@ -203,7 +203,7 @@
     }else{
         [UIView animateWithDuration:0.3 animations:^{
             CGRect frame=self.mTextF_name.frame;
-            frame.size.height=90;
+            frame.size.height=self.mArr_albums.count*30;
             frame.origin.y = frame.origin.y+ 30;
             
             [self.mTableV_name setFrame:frame];
@@ -235,7 +235,7 @@
     {
         ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
         
-        elcPicker.maximumImagesCount = 100; //设置的图像的最大数目来选择至100
+        elcPicker.maximumImagesCount = 10; //设置的图像的最大数目来选择至10
         elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
         elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
         elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单

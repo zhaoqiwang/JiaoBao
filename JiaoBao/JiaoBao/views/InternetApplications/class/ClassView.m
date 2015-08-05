@@ -1992,6 +1992,7 @@
     if ([ClassModel.flag intValue] ==1) {//展示
         UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
         model.UnitID = ClassModel.unitId;
+        model.UnitID2 = ClassModel.unitId2;
         if (ClassModel.className.length>0) {
             model.UnitName = ClassModel.className;
         }else{

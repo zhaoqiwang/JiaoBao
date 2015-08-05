@@ -33,13 +33,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/workView/ForwardViewController.m"
-            timestampString = "460028458.916064"
+            filePath = "JiaoBao/views/InternetApplications/show/UnitAlbumsViewController.m"
+            timestampString = "460430156.28887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "768"
-            endingLineNumber = "768"
-            landmarkName = "-didReceiveMemoryWarning"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "-GetPhotoList:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -49,45 +49,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/shareView/SharePostingViewController.m"
-            timestampString = "460256924.118273"
+            filePath = "JiaoBao/views/InternetApplications/theme/KnowledgeHttp.m"
+            timestampString = "460435198.125849"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
-            landmarkName = "-actionSheet:clickedButtonAtIndex:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/shareView/SharePostingViewController.m"
-            timestampString = "460256938.028842"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "-actionSheet:clickedButtonAtIndex:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/workView/NewWorkViewC/HomeClassWorkView.m"
-            timestampString = "460261782.680024"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "-updateUI:"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "-GetAllCategory"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
