@@ -79,10 +79,14 @@
 //举报答案 参数描述:答案id
 -(void)reportanswerWithAId:(NSString*)AId;
 
+//评价答案 参数描述:答案id - (0=反对，1=支持)
+-(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag;
 
+//答案明细 参数描述:答案id
+-(void)AnswerDetailWithAId:(NSString*)AId;
 
-
-
+//添加评论 参数描述：答案Id - 评论内容 - 引用评论ID
+-(void)AddCommentWithAId:(NSString*)AId comment:(NSString*)comment RefID:(NSString*)RefID;
 
 //首页问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)
 -(void)UserIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag;

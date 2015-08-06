@@ -81,8 +81,11 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
-   // [[KnowledgeHttp getInstance]reportanswerWithAId:@"85"];//没有成功
+    [[KnowledgeHttp getInstance]AddCommentWithAId:@"85" comment:@"very good" RefID:@""];
+    //[[KnowledgeHttp getInstance]AnswerDetailWithAId:@"85"];
+    //[[KnowledgeHttp getInstance]SetYesNoWithAId:@"85" yesNoFlag:@"1"];
+//    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
+    //[[KnowledgeHttp getInstance]reportanswerWithAId:@"85"];//没有成功
 //    [[KnowledgeHttp getInstance]GetAnswerByIdWithNumPerPage:@"20" pageNum:@"1" QId:@"15" flag:@"1"];
 //    [[KnowledgeHttp getInstance]UpdateAnswerWithTabID:@"15" Title:@"" AContent:@"333333"];
 //    [[KnowledgeHttp getInstance]AddAnswerWithQId:@"15" Title:@"" AContent:@"2" UserName:@""];

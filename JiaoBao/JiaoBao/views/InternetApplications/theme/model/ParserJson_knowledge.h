@@ -12,6 +12,7 @@
 #import "UserInformationModel.h"
 #import "CategoryModel.h"
 #import "QuestionDetailModel.h"
+#import "AnswerDetailModel.h"
 
 @interface ParserJson_knowledge : NSObject
 
@@ -44,6 +45,9 @@
 
 //获取问题的答案列表
 +(NSMutableArray*)parserJsonGetAnswerById:(NSString*)json;
+
+//答案明细
++(AnswerDetailModel*)parserJsonAnswerDetail:(NSString*)json;
 
 
 @end

@@ -16,6 +16,7 @@
 #import "ItemModel.h"
 #import "QuestionIndexModel.h"
 #import "AnswerByIdModel.h"
+#import "AnswerDetailModel.h"
 
 @implementation ParserJson_knowledge
 
@@ -199,7 +200,26 @@
     return array;
 }
 
+//答案明细
++(AnswerDetailModel*)parserJsonAnswerDetail:(NSString*)json
+{
 
+        AnswerDetailModel *model = [[AnswerDetailModel alloc ]init];
+        NSDictionary *dic = [json objectFromJSONString];
+        model.TabID = [dic objectForKey:@"TabID"];
+        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
+        model.QId = [dic objectForKey:@"QId"];
+        model.RecDate = [dic objectForKey:@"RecDate"];
+        model.Title = [dic objectForKey:@"Title"];
+        model.CCount = [dic objectForKey:@"CCount"];
+        model.LikeCount = [dic objectForKey:@"LikeCount"];
+        model.Flag = [dic objectForKey:@"Flag"];
+        model.Abstracts = [dic objectForKey:@"Abstracts"];
+        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+        model.IdFlag = [dic objectForKey:@"IdFlag"];
+        model.AContent = [dic objectForKey:@"AContent"];
+    return model;
+}
 
 
 
