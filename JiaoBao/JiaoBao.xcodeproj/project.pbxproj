@@ -845,6 +845,8 @@
 		F7B271991B6F151F00DA3FE4 /* PhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */; };
 		F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */; };
 		F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */; };
+		F7C8AB631B72EF4200E829A4 /* QuestionDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */; };
+		F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB681B72FD5900E829A4 /* AnswerByIdModel.m */; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
 		F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */; };
 		F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */; };
@@ -2108,6 +2110,10 @@
 		F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionCell.m; path = views/InternetApplications/show/PhotoCollectionCell.m; sourceTree = "<group>"; };
 		F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionCell.xib; path = views/InternetApplications/show/PhotoCollectionCell.xib; sourceTree = "<group>"; };
 		F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "删除键@2x.png"; path = "Image/InternetApp/删除键@2x.png"; sourceTree = "<group>"; };
+		F7C8AB611B72EF4200E829A4 /* QuestionDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionDetailModel.h; path = views/InternetApplications/theme/QuestionDetailModel.h; sourceTree = "<group>"; };
+		F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionDetailModel.m; path = views/InternetApplications/theme/QuestionDetailModel.m; sourceTree = "<group>"; };
+		F7C8AB671B72FD5900E829A4 /* AnswerByIdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerByIdModel.h; path = views/InternetApplications/theme/AnswerByIdModel.h; sourceTree = "<group>"; };
+		F7C8AB681B72FD5900E829A4 /* AnswerByIdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnswerByIdModel.m; path = views/InternetApplications/theme/AnswerByIdModel.m; sourceTree = "<group>"; };
 		F7DBA8AC1B1016A100C865D5 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bj.png; sourceTree = "<group>"; };
 		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
 		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
@@ -2269,6 +2275,10 @@
 				F79B61361B7202A5005FEA44 /* SubItemModel.m */,
 				F79B613F1B72068A005FEA44 /* QuestionIndexModel.h */,
 				F79B61401B72068A005FEA44 /* QuestionIndexModel.m */,
+				F7C8AB611B72EF4200E829A4 /* QuestionDetailModel.h */,
+				F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */,
+				F7C8AB671B72FD5900E829A4 /* AnswerByIdModel.h */,
+				F7C8AB681B72FD5900E829A4 /* AnswerByIdModel.m */,
 				A7357A3A1A4026CF00A195C5 /* ParserJson_theme.h */,
 				A7357A3B1A4026CF00A195C5 /* ParserJson_theme.m */,
 				A7357A371A4025B800A195C5 /* ThemeListModel.h */,
@@ -4890,6 +4900,7 @@
 				A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */,
 				A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */,
 				F76B64551B1EA597008F6961 /* TopView.m in Sources */,
+				F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */,
 				A7781F1F1AE889B400F03AEB /* NewWorkTopScrollView.m in Sources */,
 				A7BB17E519F4AB4600A81286 /* LoginSendHttp.m in Sources */,
 				A7B0F9581A47C37D00C1863A /* MBProgressHUD+Add.m in Sources */,
@@ -4917,6 +4928,7 @@
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,
 				A755E70119F278B900BBDF3D /* ASIAuthenticationDialog.m in Sources */,
 				F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */,
+				F7C8AB631B72EF4200E829A4 /* QuestionDetailModel.m in Sources */,
 				F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */,
 				A74736F41A78C2F90042F110 /* UncaughtExceptionHandler.m in Sources */,
 				A755E71119F278B900BBDF3D /* ASIS3Bucket.m in Sources */,

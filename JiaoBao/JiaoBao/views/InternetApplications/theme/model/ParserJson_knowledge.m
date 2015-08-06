@@ -15,6 +15,7 @@
 #import "SubItemModel.h"
 #import "ItemModel.h"
 #import "QuestionIndexModel.h"
+#import "AnswerByIdModel.h"
 
 @implementation ParserJson_knowledge
 
@@ -153,7 +154,57 @@
     }
     return array;
 }
-//话题的问题列表
+
+//问题明细
++(QuestionDetailModel*)parserJsonQuestionDetail:(NSString*)json
+{
+    NSDictionary *dic = [json objectFromJSONString];
+    QuestionDetailModel *model = [[QuestionDetailModel alloc ]init];
+    model.TabID = [dic objectForKey:@"TabID"];
+    model.Title = [dic objectForKey:@"Title"];
+    model.Abstracts = [dic objectForKey:@"Abstracts"];
+    model.ViewCount = [dic objectForKey:@"ViewCount"];
+    model.LastUpdate = [dic objectForKey:@"LastUpdate"];
+    model.AnswersCount = [dic objectForKey:@"AnswersCount"];
+    model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+    model.KnContent = [dic objectForKey:@"KnContent"];
+    model.AreaCode = [dic objectForKey:@"AreaCode"];
+    model.AtAccIds = [dic objectForKey:@"AtAccIds"];
+    return model;
+}
+
+//获取问题的答案列表
++(NSMutableArray*)parserJsonGetAnswerById:(NSString*)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++)
+    {
+        AnswerByIdModel *model = [[AnswerByIdModel alloc ]init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.TabID = [dic objectForKey:@"TabID"];
+        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
+        model.QId = [dic objectForKey:@"QId"];
+        model.RecDate = [dic objectForKey:@"RecDate"];
+        model.ATitle = [dic objectForKey:@"ATitle"];
+        model.CCount = [dic objectForKey:@"CCount"];
+        model.LikeCount = [dic objectForKey:@"LikeCount"];
+        model.CCount = [dic objectForKey:@"CCount"];
+        model.Flag = [dic objectForKey:@"Flag"];
+        model.Abstracts = [dic objectForKey:@"Abstracts"];
+        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+        model.IdFlag = [dic objectForKey:@"IdFlag"];
+        [array addObject:model];
+    }
+    return array;
+}
+
+
+
+
+
+
+//首页问题列表和话题的问题列表
 +(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -185,7 +236,12 @@
         model.answerModel.CaiCount = [answerDic objectForKey:@"CaiCount"];
         model.answerModel.JiaoBaoHao = [answerDic objectForKey:@"JiaoBaoHao"];
         model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
-        model.answerModel.Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+        if([answerDic objectForKey:@"Thumbnail"])
+        {
+            model.answerModel.Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+
+            
+        }
 
         [array addObject:model];
     }
