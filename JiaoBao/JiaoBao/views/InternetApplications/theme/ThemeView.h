@@ -15,6 +15,7 @@
 #import "QuestionModel.h"
 #import "KnowledgeTableViewCell.h"
 #import "UIImageView+WebCache.h"
+#import "AllCategoryModel.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
     
@@ -23,15 +24,17 @@
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//首页精选等
 @property (nonatomic,strong) UITableView *mTableV_knowledge;//
 @property (nonatomic,assign) int mInt_index;//首页等选择的索引
-@property (nonatomic,strong) NSMutableArray *mArr_first;//首页
-@property (nonatomic,strong) NSMutableArray *mArr_choice;//精选
-@property (nonatomic,strong) NSMutableArray *mArr_recommend;//推荐
-@property (nonatomic,strong) NSMutableArray *mArr_education;//教育
-@property (nonatomic,strong) NSMutableArray *mArr_science;//科普
-@property (nonatomic,strong) NSMutableArray *mArr_life;//生活
-@property (nonatomic,strong) NSMutableArray *mArr_happy;//娱乐
-@property (nonatomic,strong) NSMutableArray *mArr_paternity;//亲子
-@property (nonatomic,strong) NSMutableArray *mArr_extracurricular;//课外
+//@property (nonatomic,strong) NSMutableArray *mArr_first;//首页
+//@property (nonatomic,strong) NSMutableArray *mArr_choice;//精选
+//@property (nonatomic,strong) NSMutableArray *mArr_recommend;//推荐
+//@property (nonatomic,strong) NSMutableArray *mArr_education;//教育
+//@property (nonatomic,strong) NSMutableArray *mArr_science;//科普
+//@property (nonatomic,strong) NSMutableArray *mArr_life;//生活
+//@property (nonatomic,strong) NSMutableArray *mArr_happy;//娱乐
+//@property (nonatomic,strong) NSMutableArray *mArr_paternity;//亲子
+//@property (nonatomic,strong) NSMutableArray *mArr_extracurricular;//课外
+@property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
+@property (nonatomic,strong) NSMutableArray *mArr_AllCategory;//首页精选等一级主题数组
 
 
 - (id)initWithFrame1:(CGRect)frame;

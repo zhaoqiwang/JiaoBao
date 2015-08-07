@@ -25,38 +25,24 @@
         //首页问题列表
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UserIndexQuestion" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UserIndexQuestion:) name:@"UserIndexQuestion" object:nil];
+        //获取所有话题
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAllCategory" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAllCategory:) name:@"GetAllCategory" object:nil];
         
-        self.mArr_first = [NSMutableArray array];
-        self.mArr_choice = [NSMutableArray array];
-        self.mArr_education = [NSMutableArray array];
-        self.mArr_extracurricular = [NSMutableArray array];
-        self.mArr_happy = [NSMutableArray array];
-        self.mArr_life = [NSMutableArray array];
-        self.mArr_paternity = [NSMutableArray array];
-        self.mArr_recommend = [NSMutableArray array];
-        self.mArr_science = [NSMutableArray array];
+        self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
+        self.mInt_reloadData = 0;
         //首页精选等
         self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 0, [dm getInstance].width-20-40, 48)];
-        int tempWidth = 50;
-        for (int i=0; i<9; i++) {
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            [button setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
-            [button setTag:i];
-            if (i==0) {
-                button.selected = YES;
-            }
-            [button setTitleColor:[UIColor colorWithRed:130/255.0 green:129/255.0 blue:130/255.0 alpha:1] forState:UIControlStateNormal];
-            [button setTitleColor:[UIColor colorWithRed:91/255.0 green:178/255.0 blue:57/255.0 alpha:1] forState:UIControlStateSelected];
-            [button setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
-            //设置标题位置
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"NewWorkView_click_%d",0]] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"NewWorkView_%d",0]] forState:UIControlStateSelected];
-            
-            [button addTarget:self action:@selector(selectScrollButton:) forControlEvents:UIControlEventTouchUpInside];
-            [self.mScrollV_all addSubview:button];
+        
+        NSMutableArray *tempArray = [NSMutableArray arrayWithObjects:@"首页",@"精选",@"推荐", nil];
+        for (int i=0; i<tempArray.count; i++) {
+            AllCategoryModel *model = [[AllCategoryModel alloc] init];
+            model.item.Subject = [tempArray objectAtIndex:i];
+            [self.mArr_AllCategory addObject:model];
         }
-        self.mScrollV_all.contentSize = CGSizeMake(50*9, 48);
+        [self addScrollViewBtn:0];
+        
         [self addSubview:self.mScrollV_all];
         //表格
         self.mTableV_knowledge = [[UITableView alloc] initWithFrame:CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48)];
@@ -64,8 +50,51 @@
         self.mTableV_knowledge.dataSource = self;
         self.mTableV_knowledge.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:self.mTableV_knowledge];
+        [self.mTableV_knowledge addHeaderWithTarget:self action:@selector(headerRereshing)];
+        self.mTableV_knowledge.headerPullToRefreshText = @"下拉刷新";
+        self.mTableV_knowledge.headerReleaseToRefreshText = @"松开后刷新";
+        self.mTableV_knowledge.headerRefreshingText = @"正在刷新...";
+        [self.mTableV_knowledge addFooterWithTarget:self action:@selector(footerRereshing)];
+        self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
+        self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
+        self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
     }
     return self;
+}
+
+//加载一级话题列表
+-(void)addScrollViewBtn:(int)index{
+    for (UIButton *btn in self.mScrollV_all.subviews) {
+        [btn removeFromSuperview];
+    }
+    int tempWidth = 50;
+    for (int i=0; i<self.mArr_AllCategory.count; i++) {
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:i];
+        D("dlkjglk-===%@",model.item.Subject);
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [btn setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
+        [btn setTag:i];
+        if (i==0) {
+            btn.selected = YES;
+        }
+        [btn setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
+        
+        //设置button下划线
+        //            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[tempArray objectAtIndex:i]];
+        //            NSRange strRange = {0,[str length]};
+        //            [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:130/255.0 green:129/255.0 blue:130/255.0 alpha:1] range:strRange];//设置颜色
+        //            [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:strRange];
+        
+        [btn setTitle:model.item.Subject forState:UIControlStateNormal];
+        [btn setTitle:model.item.Subject forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateSelected];
+        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[UIImage imageNamed:@"topBtnSelect0"] forState:UIControlStateSelected];
+        [btn addTarget:self action:@selector(selectScrollButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.mScrollV_all addSubview:btn];
+    }
+    self.mScrollV_all.contentSize = CGSizeMake(50*self.mArr_AllCategory.count, 48);
 }
 
 -(void)selectScrollButton:(UIButton *)btn{
@@ -79,6 +108,7 @@
             }
         }
     }
+    [self.mTableV_knowledge reloadData];
 }
 
 -(void)ProgressViewLoad{
@@ -86,13 +116,16 @@
     if ([self checkNetWork]) {
         return;
     }
+    //取所有话题
+    [[KnowledgeHttp getInstance] GetAllCategory];
+    [self sendRequest];
 //    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
    // [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" flag:@"-1" uid:@"15"];
     //[[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:@"85"];
    // [[KnowledgeHttp getInstance]AddCommentWithAId:@"85" comment:@"very good" RefID:@""];
     //[[KnowledgeHttp getInstance]AnswerDetailWithAId:@"85"];
     //[[KnowledgeHttp getInstance]SetYesNoWithAId:@"85" yesNoFlag:@"1"];
-    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
+//    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
     //[[KnowledgeHttp getInstance]reportanswerWithAId:@"85"];//没有成功
 //    [[KnowledgeHttp getInstance]GetAnswerByIdWithNumPerPage:@"20" pageNum:@"1" QId:@"15" flag:@"1"];
 //    [[KnowledgeHttp getInstance]UpdateAnswerWithTabID:@"15" Title:@"" AContent:@"333333"];
@@ -100,18 +133,41 @@
 //    [[KnowledgeHttp getInstance]QuestionDetailWithQId:@"15"];
 //    [[KnowledgeHttp getInstance] knowledgeHttpGetProvice];
 //    [[KnowledgeHttp getInstance] knowledgeHttpGetCity:@"" level:@""];
-//    [MBProgressHUD showMessage:@"" toView:self];
+//    [MBProgressHUD showMessage:@"加载中..." toView:self];
     
 }
 
--(void)UserIndexQuestion:(NSNotification *)noti{
+//获取所有话题
+-(void)GetAllCategory:(NSNotification *)noti{
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue] ==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
-        self.mArr_first = [NSMutableArray arrayWithArray:array];
-        [self.mTableV_knowledge reloadData];
+        for (int i=0; i<array.count; i++) {
+            AllCategoryModel *model = [array objectAtIndex:i];
+            [self.mArr_AllCategory addObject:model];
+        }
+        [self addScrollViewBtn:(int)array.count];
     }
+}
+
+//首页问题列表
+-(void)UserIndexQuestion:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
+    [self.mTableV_knowledge headerEndRefreshing];
+    [self.mTableV_knowledge footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue] ==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        if (self.mInt_reloadData ==0) {
+            model.mArr_Category = [NSMutableArray arrayWithArray:array];
+        }else{
+            [model.mArr_Category addObjectsFromArray:array];
+        }
+    }
+    [self.mTableV_knowledge reloadData];
 }
 
 //检查当前网络是否可用
@@ -132,39 +188,8 @@
 }
 
 -(NSMutableArray *)arrayDataSource{
-    NSMutableArray *array = [NSMutableArray array];
-    switch (self.mInt_index) {
-        case 0:
-            array = [NSMutableArray arrayWithArray:self.mArr_first];
-            break;
-        case 1:
-            array = [NSMutableArray arrayWithArray:self.mArr_choice];
-            break;
-        case 2:
-            array = [NSMutableArray arrayWithArray:self.mArr_recommend];
-            break;
-        case 3:
-            array = [NSMutableArray arrayWithArray:self.mArr_education];
-            break;
-        case 4:
-            array = [NSMutableArray arrayWithArray:self.mArr_science];
-            break;
-        case 5:
-            array = [NSMutableArray arrayWithArray:self.mArr_life];
-            break;
-        case 6:
-            array = [NSMutableArray arrayWithArray:self.mArr_happy];
-            break;
-        case 7:
-            array = [NSMutableArray arrayWithArray:self.mArr_paternity];
-            break;
-        case 8:
-            array = [NSMutableArray arrayWithArray:self.mArr_extracurricular];
-            break;
-        default:
-            break;
-    }
-    return array;
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    return model.mArr_Category;
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -264,12 +289,11 @@
         NSString *string2 = model.answerModel.Abstracts;
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
-        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='#FFFFFF' background-color= '#FF8503' >依据 : </font> <font size=14 color=black>%@</font>",string2];
+        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
         NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
         CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
         if (size.height>20) {
             size = CGSizeMake(size.width, 32);
-            //        cell.mLab_ATitle.numberOfLines = 0;
         }
         cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, size.height);
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
@@ -379,6 +403,75 @@
         tempF = tempF+20;
     }
     return tempF;
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_reloadData = 0;
+    [self sendRequest];
+}
+
+- (void)footerRereshing{
+    self.mInt_reloadData = 1;
+    [self sendRequest];
+}
+
+-(void)sendRequest{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    NSString *page = @"";
+    if (self.mInt_reloadData == 0) {
+        page = @"1";
+        [MBProgressHUD showMessage:@"加载中..." toView:self];
+    }else{
+        NSMutableArray *array = [self arrayDataSource];
+        if (array.count>=10&&array.count%10==0) {
+            //检查当前网络是否可用
+            if ([self checkNetWork]) {
+                return;
+            }
+            page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
+            [MBProgressHUD showMessage:@"加载中..." toView:self];
+        } else {
+            [self.mTableV_knowledge headerEndRefreshing];
+            [self.mTableV_knowledge footerEndRefreshing];
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self];
+            return;
+        }
+    }
+    switch (self.mInt_index) {
+        case 0:
+            [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:@"0" flag:@"1"];
+            break;
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            break;
+        case 5:
+            
+            break;
+        case 6:
+            
+            break;
+        case 7:
+            
+            break;
+        case 8:
+            
+            break;
+        default:
+            break;
+    }
 }
 
 @end
