@@ -10,4 +10,11 @@
 
 @implementation AnswerModel
 
+-(instancetype)init{
+    if (self) {
+        self.Thumbnail = [NSMutableArray array];
+    }
+    return self;
+}
+
 @end

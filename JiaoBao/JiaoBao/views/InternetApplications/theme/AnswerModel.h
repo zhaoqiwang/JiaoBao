@@ -18,6 +18,6 @@
 @property(nonatomic,strong)NSString *CaiCount;//反对数量
 @property(nonatomic,strong)NSString *JiaoBaoHao;//JiaoBaoHao
 @property(nonatomic,strong)NSString *IdFlag;//用户昵称或姓名，匿名为空字符串
-@property(nonatomic,strong)NSString *Thumbnail;//图片url,字符串（url)json数组
+@property(nonatomic,strong)NSMutableArray *Thumbnail;//图片url,字符串（url)json数组
 
 @end
