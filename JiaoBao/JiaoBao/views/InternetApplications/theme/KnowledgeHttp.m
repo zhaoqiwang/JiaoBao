@@ -412,6 +412,29 @@ static KnowledgeHttp *knowledgeHttp = nil;
     
 }
 
+//评论列表 参数描述：(取回的记录数量，默认20) - (第几页，默认为1) - 答案Id
+-(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum AId:(NSString*)AId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CommentsList",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------CommentsListWithNumPerPage: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------CommentsListWithNumPerPage: %@", error);
+    }];
+    
+}
+
 //答案明细 参数描述:答案id
 -(void)AnswerDetailWithAId:(NSString*)AId
 {

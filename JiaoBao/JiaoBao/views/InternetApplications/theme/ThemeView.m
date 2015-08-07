@@ -81,7 +81,10 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[KnowledgeHttp getInstance]AddCommentWithAId:@"85" comment:@"very good" RefID:@""];
+    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
+   // [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" flag:@"-1" uid:@"15"];
+    //[[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:@"85"];
+   // [[KnowledgeHttp getInstance]AddCommentWithAId:@"85" comment:@"very good" RefID:@""];
     //[[KnowledgeHttp getInstance]AnswerDetailWithAId:@"85"];
     //[[KnowledgeHttp getInstance]SetYesNoWithAId:@"85" yesNoFlag:@"1"];
 //    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];

@@ -17,6 +17,8 @@
 #import "QuestionIndexModel.h"
 #import "AnswerByIdModel.h"
 #import "AnswerDetailModel.h"
+#import "commentListModel.h"
+#import "utils.h"
 
 @implementation ParserJson_knowledge
 
@@ -43,7 +45,7 @@
     {
         NickNameModel *model = [[NickNameModel alloc ]init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.NickName = [dic objectForKey:@"JiaoBaoHao"];
+        model.NickName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         model.JiaoBaoHao = [dic objectForKey:@"NickName"];
         [array addObject:model];
     }
@@ -55,30 +57,31 @@
 {
     UserInformationModel *model = [[UserInformationModel alloc]init];
     NSDictionary *dic = [json objectFromJSONString];
-    model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
+    model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
     model.NickName = [dic objectForKey:@"NickName"];
     model.UserName = [dic objectForKey:@"UserName"];
     model.IdFlag = [dic objectForKey:@"IdFlag"];
-    model.State = [dic objectForKey:@"State"];
+    model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
     return model;
 }
 
 //取系统话题列表
 +(NSMutableArray*)parserJsonGetCategory:(NSString *)json
 {
+    
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
     for(int i=0;i<arrList.count;i++)
     {
         CategoryModel *model = [[CategoryModel alloc ]init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.Subject = [dic objectForKey:@"Subject"];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+                model.Subject = [dic objectForKey:@"Subject"];
         model.ParentId = [dic objectForKey:@"ParentId"];
         model.LogoPath = [dic objectForKey:@"LogoPath"];
         model.Description = [dic objectForKey:@"Description"];
-        model.QCount = [dic objectForKey:@"QCount"];
-        model.AttCount = [dic objectForKey:@"AttCount"];
+        model.QCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QCount"]];
+        model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
         [array addObject:model];
     }
     return array;
@@ -88,13 +91,13 @@
 {
     NSDictionary *dic = [json objectFromJSONString];
     CategoryModel *model = [[CategoryModel alloc ]init];
-    model.TabID = [dic objectForKey:@"TabID"];
+    model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
     model.Subject = [dic objectForKey:@"Subject"];
     model.ParentId = [dic objectForKey:@"ParentId"];
     model.LogoPath = [dic objectForKey:@"LogoPath"];
     model.Description = [dic objectForKey:@"Description"];
-    model.QCount = [dic objectForKey:@"QCount"];
-    model.AttCount = [dic objectForKey:@"AttCount"];
+    model.QCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QCount"]];
+    model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
     return model;
 }
 
@@ -110,22 +113,22 @@
         AllCategoryModel *allCategoryModel = [[AllCategoryModel alloc]init];
         //item
         allCategoryModel.item = [[ItemModel alloc]init];
-        allCategoryModel.item.TabID = [dic objectForKey:@"TabID"];
+        allCategoryModel.item.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         allCategoryModel.item.Subject = [dic objectForKey:@"Subject"];
-        allCategoryModel.item.QCount = [dic objectForKey:@"QCount"];
-        allCategoryModel.item.AttCount = [dic objectForKey:@"AttCount"];
-        allCategoryModel.item.ParentId = [dic objectForKey:@"ParentId"];
+        allCategoryModel.item.QCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QCount"]];
+        allCategoryModel.item.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
+        allCategoryModel.item.ParentId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ParentId"]];
         //subItem
         NSArray *arr = [dic objectForKey:@"subitem"];
         for(int i=0;i<arr.count;i++)
         {
             NSDictionary *subDic = [arr objectAtIndex:i];
             allCategoryModel.subitem = [[ItemModel alloc]init];
-            allCategoryModel.subitem.TabID = [subDic objectForKey:@"TabID"];
+            allCategoryModel.subitem.TabID = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"TabID"]];
             allCategoryModel.subitem.Subject = [subDic objectForKey:@"Subject"];
-            allCategoryModel.subitem.QCount = [subDic objectForKey:@"QCount"];
-            allCategoryModel.subitem.AttCount = [subDic objectForKey:@"AttCount"];
-            allCategoryModel.subitem.ParentId = [subDic objectForKey:@"ParentId"];
+            allCategoryModel.subitem.QCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"QCount"]];
+            allCategoryModel.subitem.AttCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"AttCount"]];
+            allCategoryModel.subitem.ParentId = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"ParentId"]];
             [allCategoryModel.mArr_subItem addObject:allCategoryModel.subitem];
             
         }
@@ -144,11 +147,19 @@
     {
         QuestionIndexModel *model = [[QuestionIndexModel alloc ]init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.TabID = [dic objectForKey:@"TabID"];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         model.Title = [dic objectForKey:@"Title"];
         model.Abstracts = [dic objectForKey:@"Abstracts"];
         model.ViewCount = [dic objectForKey:@"ViewCount"];
         model.LastUpdate = [dic objectForKey:@"LastUpdate"];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str2 = [dic objectForKey:@"LastUpdate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            model.LastUpdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.LastUpdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
         model.AnswersCount = [dic objectForKey:@"AnswersCount"];
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         [array addObject:model];
@@ -161,12 +172,20 @@
 {
     NSDictionary *dic = [json objectFromJSONString];
     QuestionDetailModel *model = [[QuestionDetailModel alloc ]init];
-    model.TabID = [dic objectForKey:@"TabID"];
+    model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
     model.Title = [dic objectForKey:@"Title"];
     model.Abstracts = [dic objectForKey:@"Abstracts"];
-    model.ViewCount = [dic objectForKey:@"ViewCount"];
+    model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
     model.LastUpdate = [dic objectForKey:@"LastUpdate"];
-    model.AnswersCount = [dic objectForKey:@"AnswersCount"];
+    NSString *str = [utils getLocalTimeDate];
+    NSString *str2 = [dic objectForKey:@"LastUpdate"];
+    NSRange range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        model.LastUpdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+    }else{
+        model.LastUpdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    }
+    model.AnswersCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AnswersCount"]];
     model.Thumbnail = [dic objectForKey:@"Thumbnail"];
     model.KnContent = [dic objectForKey:@"KnContent"];
     model.AreaCode = [dic objectForKey:@"AreaCode"];
@@ -183,15 +202,23 @@
     {
         AnswerByIdModel *model = [[AnswerByIdModel alloc ]init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
-        model.QId = [dic objectForKey:@"QId"];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
         model.RecDate = [dic objectForKey:@"RecDate"];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str2 = [dic objectForKey:@"RecDate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
         model.ATitle = [dic objectForKey:@"ATitle"];
-        model.CCount = [dic objectForKey:@"CCount"];
-        model.LikeCount = [dic objectForKey:@"LikeCount"];
-        model.CCount = [dic objectForKey:@"CCount"];
-        model.Flag = [dic objectForKey:@"Flag"];
+        model.CCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CCount"]];
+        model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
+        model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
+        model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
         model.Abstracts = [dic objectForKey:@"Abstracts"];
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         model.IdFlag = [dic objectForKey:@"IdFlag"];
@@ -206,21 +233,88 @@
 
         AnswerDetailModel *model = [[AnswerDetailModel alloc ]init];
         NSDictionary *dic = [json objectFromJSONString];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
-        model.QId = [dic objectForKey:@"QId"];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
         model.RecDate = [dic objectForKey:@"RecDate"];
+    NSString *str = [utils getLocalTimeDate];
+    NSString *str2 = [dic objectForKey:@"RecDate"];
+    NSRange range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+    }else{
+        model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    }
         model.Title = [dic objectForKey:@"Title"];
-        model.CCount = [dic objectForKey:@"CCount"];
-        model.LikeCount = [dic objectForKey:@"LikeCount"];
-        model.Flag = [dic objectForKey:@"Flag"];
+        model.CCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CCount"]];
+        model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
+        model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
         model.Abstracts = [dic objectForKey:@"Abstracts"];
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         model.IdFlag = [dic objectForKey:@"IdFlag"];
         model.AContent = [dic objectForKey:@"AContent"];
     return model;
 }
+//评论列表
++(AllCommentListModel *)parserJsonCommentsList:(NSString*)json
+{
+    AllCommentListModel *model = [[AllCommentListModel alloc ]init];
+    NSDictionary *dic = [json objectFromJSONString];
+    
+    NSMutableArray *mArr_commentsList = [dic objectForKey:@"commentsList"];
+    model.mArr_CommentList = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<mArr_commentsList.count;i++)
+    {
+        commentListModel*subModel = [[commentListModel alloc]init];
+        NSDictionary *subDic = [mArr_commentsList objectAtIndex:i];
+        subModel.TabID = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"TabID"]];
+        subModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"JiaoBaoHao"]];
+        subModel.Number = [subDic objectForKey:@"Number"];
+        subModel.RefIds = [subDic objectForKey:@"RefIds"];
+        subModel.RecDate = [subDic objectForKey:@"RecDate"];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str2 = [dic objectForKey:@"RecDate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            subModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            subModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+        subModel.CaiCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"CaiCount"]];
+        subModel.LikeCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"LikeCount"]];
+        subModel.WContent = [subDic objectForKey:@"WContent"];
+        subModel.UserName = [subDic objectForKey:@"UserName"];
+        [model.mArr_CommentList addObject:subModel];
+    }
+    
+    NSMutableArray *mArr_refcomments = [dic objectForKey:@"refcomments"];
+    model.mArr_refcomments = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<mArr_refcomments.count;i++)
+    {
+        commentListModel *subModel = [[commentListModel alloc]init];
+        NSDictionary *subDic = [mArr_refcomments objectAtIndex:i];
+        subModel.TabID = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"TabID"]];
+        subModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"JiaoBaoHao"]];
+        subModel.RecDate = [subDic objectForKey:@"RecDate"];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str2 = [dic objectForKey:@"RecDate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            subModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            subModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+        subModel.CaiCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"CaiCount"]];
+        subModel.LikeCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"LikeCount"]];
+        subModel.WContent = [subDic objectForKey:@"WContent"];
+        subModel.UserName = [subDic objectForKey:@"UserName"];
+        [model.mArr_refcomments addObject:subModel];
+    }
+    return model;
 
+
+    
+}
 
 
 
@@ -246,7 +340,6 @@
         model.rowCount = [dic objectForKey:@"rowCount"];
         
         NSDictionary *answerDic =  [dic objectForKey:@"answer"];
-        model.answerModel = [[AnswerModel alloc]init];
         model.answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
         model.answerModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
         model.answerModel.AFlag = [answerDic objectForKey:@"AFlag"];

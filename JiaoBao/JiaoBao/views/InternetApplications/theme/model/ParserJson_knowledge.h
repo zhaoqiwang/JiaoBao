@@ -13,6 +13,7 @@
 #import "CategoryModel.h"
 #import "QuestionDetailModel.h"
 #import "AnswerDetailModel.h"
+#import "AllCommentListModel.h"
 
 @interface ParserJson_knowledge : NSObject
 
@@ -48,6 +49,9 @@
 
 //答案明细
 +(AnswerDetailModel*)parserJsonAnswerDetail:(NSString*)json;
+
+//评论列表
++(AllCommentListModel *)parserJsonCommentsList:(NSString*)json;
 
 
 @end
