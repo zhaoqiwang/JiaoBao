@@ -11,7 +11,8 @@
 @implementation QuestionModel
 
 -(instancetype)init{
-    self.answerModel = [[AnswerModel alloc] init];
+    self = [super init];
+    self.answerModel = [[AnswerModel alloc]init];
     return self;
 }
 

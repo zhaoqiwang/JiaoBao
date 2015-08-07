@@ -366,9 +366,98 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
+//评价答案 参数描述:答案id - (0=反对，1=支持)
+-(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/SetYesNo",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"AId":AId,@"yesNoFlag":yesNoFlag};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        
+        D("JSON--------SetYesNoWithAId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------SetYesNoWithAId: %@", error);
+    }];
+    
+}
 
+//添加评论 参数描述：答案Id - 评论内容 - 引用评论ID
+-(void)AddCommentWithAId:(NSString*)AId comment:(NSString*)comment RefID:(NSString*)RefID
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddComment",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"AId":AId,@"comment":comment,@"RefID":RefID};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        
+        D("JSON--------AddCommentWithAId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AddCommentWithAId: %@", error);
+    }];
+    
+}
 
+//评论列表 参数描述：(取回的记录数量，默认20) - (第几页，默认为1) - 答案Id
+-(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum AId:(NSString*)AId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CommentsList",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------CommentsListWithNumPerPage: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------CommentsListWithNumPerPage: %@", error);
+    }];
+    
+}
 
+//答案明细 参数描述:答案id
+-(void)AnswerDetailWithAId:(NSString*)AId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AnswerDetail",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"AId":AId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        AnswerDetailModel *model = [ParserJson_knowledge parserJsonAnswerDetail:[jsonDic objectForKey:@"Data"]];
+
+        
+        D("JSON--------AnswerDetailWithAId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AnswerDetailWithAId: %@", error);
+    }];
+    
+}
 
 
 
