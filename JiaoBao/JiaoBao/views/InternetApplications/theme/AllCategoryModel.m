@@ -9,5 +9,13 @@
 #import "AllCategoryModel.h"
 
 @implementation AllCategoryModel
+-(instancetype)init
+{
+    self = [super init];
+    self.item = [[ItemModel alloc]init];
+    self.subitem = [[ItemModel alloc]init];
+    self.mArr_subItem = [[NSMutableArray alloc]initWithCapacity:0];
+    return self;
+}
 
 @end

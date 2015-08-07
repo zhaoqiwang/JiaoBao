@@ -9,5 +9,11 @@
 #import "AllCommentListModel.h"
 
 @implementation AllCommentListModel
-
+-(instancetype)init
+{
+    self = [super init];
+    self.mArr_CommentList = [[NSMutableArray alloc]initWithCapacity:0];
+    self.mArr_refcomments = [[NSMutableArray alloc]initWithCapacity:0];
+    return self;
+}
 @end

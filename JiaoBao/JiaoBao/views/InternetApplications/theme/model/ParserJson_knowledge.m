@@ -112,7 +112,6 @@
         NSDictionary *dic = [arrList objectAtIndex:i];
         AllCategoryModel *allCategoryModel = [[AllCategoryModel alloc]init];
         //item
-        allCategoryModel.item = [[ItemModel alloc]init];
         allCategoryModel.item.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         allCategoryModel.item.Subject = [dic objectForKey:@"Subject"];
         allCategoryModel.item.QCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QCount"]];
@@ -123,7 +122,6 @@
         for(int i=0;i<arr.count;i++)
         {
             NSDictionary *subDic = [arr objectAtIndex:i];
-            allCategoryModel.subitem = [[ItemModel alloc]init];
             allCategoryModel.subitem.TabID = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"TabID"]];
             allCategoryModel.subitem.Subject = [subDic objectForKey:@"Subject"];
             allCategoryModel.subitem.QCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"QCount"]];
@@ -262,7 +260,6 @@
     NSDictionary *dic = [json objectFromJSONString];
     
     NSMutableArray *mArr_commentsList = [dic objectForKey:@"commentsList"];
-    model.mArr_CommentList = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<mArr_commentsList.count;i++)
     {
         commentListModel*subModel = [[commentListModel alloc]init];
@@ -288,7 +285,6 @@
     }
     
     NSMutableArray *mArr_refcomments = [dic objectForKey:@"refcomments"];
-    model.mArr_refcomments = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<mArr_refcomments.count;i++)
     {
         commentListModel *subModel = [[commentListModel alloc]init];
