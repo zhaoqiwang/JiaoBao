@@ -62,6 +62,7 @@
         self.mTableV_knowledge = [[UITableView alloc] initWithFrame:CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48)];
         self.mTableV_knowledge.delegate = self;
         self.mTableV_knowledge.dataSource = self;
+        self.mTableV_knowledge.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:self.mTableV_knowledge];
     }
     return self;
@@ -85,13 +86,13 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
+//    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
    // [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" flag:@"-1" uid:@"15"];
     //[[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:@"85"];
    // [[KnowledgeHttp getInstance]AddCommentWithAId:@"85" comment:@"very good" RefID:@""];
     //[[KnowledgeHttp getInstance]AnswerDetailWithAId:@"85"];
     //[[KnowledgeHttp getInstance]SetYesNoWithAId:@"85" yesNoFlag:@"1"];
-//    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
+    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
     //[[KnowledgeHttp getInstance]reportanswerWithAId:@"85"];//没有成功
 //    [[KnowledgeHttp getInstance]GetAnswerByIdWithNumPerPage:@"20" pageNum:@"1" QId:@"15" flag:@"1"];
 //    [[KnowledgeHttp getInstance]UpdateAnswerWithTabID:@"15" Title:@"" AContent:@"333333"];
@@ -252,7 +253,8 @@
         cell.mLab_IdFlag.text = model.answerModel.IdFlag;
         //回答标题
         NSString *string1 = model.answerModel.ATitle;
-        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#3229CA'>答 : </font> <font size=14 color=black>%@</font>",string1];
+        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
         cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, cell.mLab_ATitle.frame.size.height);
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
         [row1 setObject:name forKey:@"text"];
@@ -260,7 +262,9 @@
         cell.mLab_ATitle.componentsAndPlainText = componentsDS;
         //回答内容
         NSString *string2 = model.answerModel.Abstracts;
-        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='#3229CA'>依据 : </font> <font size=14 color=black>%@</font>",string2];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
+        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='#FFFFFF' background-color= '#FF8503' >依据 : </font> <font size=14 color=black>%@</font>",string2];
         NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
         CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
         if (size.height>20) {
@@ -278,11 +282,10 @@
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
         if (model.answerModel.Thumbnail.count>0) {
-            cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, cell.mCollectionV_pic.collectionViewLayout.collectionViewContentSize.height);
+            cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
         }else{
             cell.mCollectionV_pic.frame = cell.mView_background.frame;
         }
-        [cell.mCollectionV_pic reloadData];
         //时间
         cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
         cell.mLab_RecDate.text = model.answerModel.RecDate;
@@ -291,7 +294,11 @@
         cell.mLab_commentCount.frame = CGRectMake([dm getInstance].width-9-commentSize.width, cell.mLab_RecDate.frame.origin.y, commentSize.width, cell.mLab_commentCount.frame.size.height);
         cell.mLab_commentCount.text = model.ViewCount;
         cell.mLab_comment.frame = CGRectMake(cell.mLab_commentCount.frame.origin.x-2-cell.mLab_comment.frame.size.width, cell.mLab_RecDate.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_comment.frame.size.height);
-        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
+        if (model.answerModel.Thumbnail.count>0) {
+            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
+        }else{
+            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
+        }
     }else{
         //分割线
         cell.mLab_line.hidden = YES;
@@ -357,8 +364,8 @@
             //图片
             tempF = tempF+5+([dm getInstance].width-65-30)/3;
             //时间
-            tempF = tempF+5+21;
-            tempF = tempF+10;
+            tempF = tempF+10+21;
+            tempF = tempF+20;
         }else{
             //赞
             tempF = tempF+15+22;
@@ -366,10 +373,10 @@
             tempF = tempF+10+42;
             //姓名
             tempF = tempF+10+21;
-            tempF = tempF+10;
+            tempF = tempF+20;
         }
     }else{
-        tempF = tempF+10;
+        tempF = tempF+20;
     }
     return tempF;
 }

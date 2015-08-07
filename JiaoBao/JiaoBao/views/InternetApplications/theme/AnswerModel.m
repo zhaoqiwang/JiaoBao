@@ -11,9 +11,8 @@
 @implementation AnswerModel
 
 -(instancetype)init{
-    if (self) {
-        self.Thumbnail = [NSMutableArray array];
-    }
+    self = [super init];
+    self.Thumbnail = [NSMutableArray array];
     return self;
 }
 
