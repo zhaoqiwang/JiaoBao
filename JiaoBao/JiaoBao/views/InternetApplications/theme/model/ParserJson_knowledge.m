@@ -16,6 +16,7 @@
 #import "ItemModel.h"
 #import "QuestionIndexModel.h"
 #import "AnswerByIdModel.h"
+#import "Loger.h"
 #import "AnswerDetailModel.h"
 #import "commentListModel.h"
 #import "utils.h"
@@ -313,7 +314,7 @@
 }
 
 
-
+//[{"TabID":84,"Title":"人为什么要吃饭呢？                           ","AnswersCount":1,"AttCount":0,"ViewCount":9,"CategorySuject":"生物","CategoryId":71,"LastUpdate":"2015-08-03T14:32:29","AreaCode":null,"JiaoBaoHao":5232580,"rowCount":8,"answer":{"ATitle":"人是铁，饭是钢，一顿不吃饿的慌。","Abstracts":"","AFlag":0,"TabID":75,"RecDate":"2015-08-03T14:32:29","LikeCount":0,"CaiCount":0,"JiaoBaoHao":5182507,"IdFlag":"mhm","Thumbnail":null}}]
 //首页问题列表和话题的问题列表
 +(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
 {
@@ -323,33 +324,48 @@
     {
         QuestionModel *model = [[QuestionModel alloc ]init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.TabID = [dic objectForKey:@"TabID"];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         model.Title = [dic objectForKey:@"Title"];
-        model.AnswersCount = [dic objectForKey:@"AnswersCount"];
-        model.AttCount = [dic objectForKey:@"AttCount"];
-        model.ViewCount = [dic objectForKey:@"ViewCount"];
+        model.AnswersCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AnswersCount"]];
+        model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
         model.CategorySuject = [dic objectForKey:@"CategorySuject"];
-        model.CategoryId = [dic objectForKey:@"CategoryId"];
+        model.CategoryId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CategoryId"]];
         model.LastUpdate = [dic objectForKey:@"LastUpdate"];
-        model.AreaCode = [dic objectForKey:@"AreaCode"];
-        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
-        model.rowCount = [dic objectForKey:@"rowCount"];
+        NSString *AreaCode = [dic objectForKey:@"AreaCode"];
+        if ([AreaCode isKindOfClass:[NSNull class]]||[AreaCode isEqual:@"null"]) {
+            model.AreaCode = @"";
+        }else{
+            model.AreaCode = [dic objectForKey:@"AreaCode"];
+        }
+        
+        model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        model.rowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"rowCount"]];
         
         NSDictionary *answerDic =  [dic objectForKey:@"answer"];
         model.answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
         model.answerModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
-        model.answerModel.AFlag = [answerDic objectForKey:@"AFlag"];
-        model.answerModel.TabID = [answerDic objectForKey:@"TabID"];
-        model.answerModel.RecDate = [answerDic objectForKey:@"RecDate"];
-        model.answerModel.LikeCount = [answerDic objectForKey:@"LikeCount"];
-        model.answerModel.CaiCount = [answerDic objectForKey:@"CaiCount"];
-        model.answerModel.JiaoBaoHao = [answerDic objectForKey:@"JiaoBaoHao"];
+        model.answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
+        model.answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str2 = [answerDic objectForKey:@"RecDate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            model.answerModel.RecDate = [[[answerDic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.answerModel.RecDate = [[[answerDic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+//        model.answerModel.RecDate = [answerDic objectForKey:@"RecDate"];
+        model.answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
+        model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
+        model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
-        if([answerDic objectForKey:@"Thumbnail"])
-        {
-            model.answerModel.Thumbnail = [answerDic objectForKey:@"Thumbnail"];
-
+        NSString *Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+        if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
             
+        }else{
+            NSArray *temp = [Thumbnail objectFromJSONString];
+            model.answerModel.Thumbnail = [NSMutableArray arrayWithArray:temp];
         }
 
         [array addObject:model];

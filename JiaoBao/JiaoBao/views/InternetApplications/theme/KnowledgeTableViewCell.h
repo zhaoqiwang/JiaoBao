@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RCLabel.h"
+#import "QuestionModel.h"
 
-@interface KnowledgeTableViewCell : UITableViewCell
+@interface KnowledgeTableViewCell : UITableViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_Category0;//话题
@@ -20,8 +22,8 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_View;//访问
 @property (nonatomic,strong) IBOutlet UILabel *mLab_ViewCount;//访问数量
 @property (nonatomic,strong) IBOutlet UILabel *mLab_LikeCount;//点赞
-@property (nonatomic,strong) IBOutlet UILabel *mLab_ATitle;//答案标题
-@property (nonatomic,strong) IBOutlet UILabel *mLab_Abstracts;//答案内容
+@property (nonatomic,strong) IBOutlet RCLabel *mLab_ATitle;//答案标题
+@property (nonatomic,strong) IBOutlet RCLabel *mLab_Abstracts;//答案内容
 @property (nonatomic,strong) IBOutlet UILabel *mLab_IdFlag;//回答者姓名
 @property (nonatomic,strong) IBOutlet UILabel *mLab_RecDate;//时间
 @property (nonatomic,strong) IBOutlet UILabel *mLab_comment;//评论
@@ -29,5 +31,8 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line;//区分线
 @property (nonatomic,strong) IBOutlet UIView *mView_background;//回答内容背景色
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;//头像
+@property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_pic;//图片显示
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
+@property (nonatomic,strong) QuestionModel *model;
 
 @end

@@ -12,6 +12,9 @@
 #import "utils.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "KnowledgeHttp.h"
+#import "QuestionModel.h"
+#import "KnowledgeTableViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
     
