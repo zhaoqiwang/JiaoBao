@@ -24,6 +24,7 @@
 @property (nonatomic,strong) NSString *UnitType;
 @property (nonatomic,strong) NSString *imgName;//图片
 @property (nonatomic,strong) NSString *UnitID2;//
+@property(nonatomic,strong)NSString *classID;
 
 @end
 //[{"UnitID":1,"UnitName":"测试单位","IsMyUnit":2,"MessageCount":0,"UnitType":1},{"UnitID":983,"UnitName":"测试单位下级","IsMyUnit":1,"MessageCount":0,"UnitType":1},{"UnitID":987,"UnitName":"测试教育局4","IsMyUnit":2,"MessageCount":0,"UnitType":1},{"UnitID":990,"UnitName":"教育局测试4","IsMyUnit":1,"MessageCount":0,"UnitType":1},{"UnitID":991,"UnitName":"学校4","IsMyUnit":1,"MessageCount":0,"UnitType":2},{"UnitID":1070,"UnitName":"支撑学校","IsMyUnit":1,"MessageCount":5,"UnitType":2}]

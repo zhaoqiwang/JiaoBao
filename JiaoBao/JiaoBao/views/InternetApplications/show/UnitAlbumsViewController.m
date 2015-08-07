@@ -396,6 +396,10 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         if (buttonIndex == 0) {//创建相册
             creatV.mStr_flag = @"2";
             creatV.mStr_unitID = self.mModel_unit.UnitID;
+            if([self.mModel_unit.UnitID isEqualToString:self.mModel_unit.UnitID2]==NO)
+            {
+                creatV.mStr_unitID = self.mModel_unit.classID;
+            }
             [utils pushViewController:creatV animated:YES];
         }else if (buttonIndex == 1){//上传照片
             uploadV.mStr_flag = @"2";
@@ -406,6 +410,11 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         if (buttonIndex == 0) {//创建相册
             creatV.mStr_flag = @"2";
             creatV.mStr_unitID = self.mModel_unit.UnitID;
+            if([self.mModel_unit.UnitID isEqualToString:self.mModel_unit.UnitID2]==NO)
+            {
+                creatV.mStr_unitID = self.mModel_unit.classID;
+            }
+
             [utils pushViewController:creatV animated:YES];
         }
     }else if (actionSheet.tag == 2){//个人

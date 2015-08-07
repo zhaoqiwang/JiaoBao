@@ -1994,6 +1994,7 @@
         UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
         model.UnitID = ClassModel.unitId;
         model.UnitID2 = ClassModel.unitId2;
+        model.classID = ClassModel.classID;
         if (ClassModel.className.length>0) {
             model.UnitName = ClassModel.className;
         }else{
