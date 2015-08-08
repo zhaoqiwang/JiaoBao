@@ -108,6 +108,10 @@
             }
         }
     }
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    if (model.mArr_Category.count==0) {
+        [self sendRequest];
+    }
     [self.mTableV_knowledge reloadData];
 }
 
@@ -441,36 +445,15 @@
             return;
         }
     }
-    switch (self.mInt_index) {
-        case 0:
-            [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:@"0" flag:@"1"];
-            break;
-        case 1:
-            
-            break;
-        case 2:
-            
-            break;
-        case 3:
-            
-            break;
-        case 4:
-            
-            break;
-        case 5:
-            
-            break;
-        case 6:
-            
-            break;
-        case 7:
-            
-            break;
-        case 8:
-            
-            break;
-        default:
-            break;
+    if (self.mInt_index ==0) {
+        [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:@"0" flag:@"1"];
+    }else if (self.mInt_index ==1){
+        
+    }else if (self.mInt_index ==2){
+        
+    }else{
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        [[KnowledgeHttp getInstance] QuestionIndexWithNumPerPage:@"10" pageNum:page CategoryId:model.item.TabID];
     }
 }
 
