@@ -396,7 +396,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         if (buttonIndex == 0) {//创建相册
             creatV.mStr_flag = @"2";
             creatV.mStr_unitID = self.mModel_unit.UnitID;
-            if([self.mModel_unit.UnitID isEqualToString:self.mModel_unit.UnitID2]==NO)
+            if([self.mModel_unit.UnitType integerValue] == 3 )
             {
                 creatV.mStr_unitID = self.mModel_unit.classID;
             }
@@ -410,7 +410,7 @@ static NSString *UnitAlbums = @"ShareCollectionViewCell";
         if (buttonIndex == 0) {//创建相册
             creatV.mStr_flag = @"2";
             creatV.mStr_unitID = self.mModel_unit.UnitID;
-            if([self.mModel_unit.UnitID isEqualToString:self.mModel_unit.UnitID2]==NO)
+            if([self.mModel_unit.UnitType integerValue] == 3 )
             {
                 creatV.mStr_unitID = self.mModel_unit.classID;
             }
