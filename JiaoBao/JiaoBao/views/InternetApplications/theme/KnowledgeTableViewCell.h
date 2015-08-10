@@ -10,6 +10,8 @@
 #import "RCLabel.h"
 #import "QuestionModel.h"
 
+@protocol KnowledgeTableViewCellDelegate;
+
 @interface KnowledgeTableViewCell : UITableViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
@@ -34,5 +36,22 @@
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_pic;//图片显示
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
 @property (nonatomic,strong) QuestionModel *model;
+@property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
+
+//给标题和答案添加点击事件
+-(void)addTapClick;
+
+@end
+
+//向cell中添加点击事件
+@protocol KnowledgeTableViewCellDelegate <NSObject>
+
+@optional
+
+//点击标题
+-(void) KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+
+//点击答案、依据
+-(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 
 @end

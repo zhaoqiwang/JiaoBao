@@ -28,6 +28,9 @@
         //获取所有话题
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAllCategory" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAllCategory:) name:@"GetAllCategory" object:nil];
+        //取回话题的话题列表
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CategoryIndexQuestion" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CategoryIndexQuestion:) name:@"CategoryIndexQuestion" object:nil];
         
         self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
@@ -141,6 +144,25 @@
     
 }
 
+//取回话题的话题列表
+-(void)CategoryIndexQuestion:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
+    [self.mTableV_knowledge headerEndRefreshing];
+    [self.mTableV_knowledge footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue] ==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        if (self.mInt_reloadData ==0) {
+            model.mArr_Category = [NSMutableArray arrayWithArray:array];
+        }else{
+            [model.mArr_Category addObjectsFromArray:array];
+        }
+    }
+    [self.mTableV_knowledge reloadData];
+}
+
 //获取所有话题
 -(void)GetAllCategory:(NSNotification *)noti{
     NSMutableDictionary *dic = noti.object;
@@ -216,6 +238,9 @@
         UINib * n= [UINib nibWithNibName:@"KnowledgeTableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTableV_knowledge registerNib:n forCellReuseIdentifier:indentifier];
     }
+    //添加点击事件
+    cell.delegate = self;
+    [cell addTapClick];
     NSMutableArray *array = [self arrayDataSource];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
     cell.model = model;
@@ -445,16 +470,34 @@
             return;
         }
     }
+    NSString *rowCount = @"0";
+    NSMutableArray *array = [self arrayDataSource];
+    if (array.count>0) {
+        QuestionModel *model = [array objectAtIndex:array.count-1];
+        rowCount = model.rowCount;
+    }
+    
     if (self.mInt_index ==0) {
-        [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:@"0" flag:@"1"];
+        [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:@"1"];
     }else if (self.mInt_index ==1){
         
     }else if (self.mInt_index ==2){
         
     }else{
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-        [[KnowledgeHttp getInstance] QuestionIndexWithNumPerPage:@"10" pageNum:page CategoryId:model.item.TabID];
+        [[KnowledgeHttp getInstance] QuestionIndexWithNumPerPage:@"3" pageNum:page CategoryId:model.item.TabID];
+//        [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"3" pageNum:page RowCount:rowCount flag:@"1" uid:[dm getInstance].jiaoBaoHao];
     }
+}
+
+//cell的点击事件---答案
+-(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    D("234");
+}
+
+//cell的点击事件---标题
+-(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    D("123");
 }
 
 @end
