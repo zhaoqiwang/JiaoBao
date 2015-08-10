@@ -17,7 +17,7 @@
 #import "UIImageView+WebCache.h"
 #import "AllCategoryModel.h"
 
-@interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate>{
+@interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate>{
     
 }
 

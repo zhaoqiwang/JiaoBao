@@ -133,5 +133,27 @@
 }
 
 
+//添加标题、答案点击事件
+-(void) addTapClick{
+    self.mLab_title.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(knowledgeTableViewCellClickTitle:)];
+    [self.mLab_title addGestureRecognizer:tap];
+    
+    self.mLab_ATitle.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(knowledgeTableViewCellClickATitle:)];
+    [self.mLab_ATitle addGestureRecognizer:tap1];
+    
+    self.mLab_Abstracts.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(knowledgeTableViewCellClickATitle:)];
+    [self.mLab_Abstracts addGestureRecognizer:tap2];
+}
+
+-(void)knowledgeTableViewCellClickTitle:(UIGestureRecognizer *)gest{
+    [self.delegate KnowledgeTableViewCellTitleBtn:self];
+}
+
+-(void)knowledgeTableViewCellClickATitle:(UIGestureRecognizer *)gest{
+    [self.delegate KnowledgeTableViewCellAnswers:self];
+}
 
 @end

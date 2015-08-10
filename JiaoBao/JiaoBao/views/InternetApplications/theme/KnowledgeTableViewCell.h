@@ -10,8 +10,11 @@
 #import "RCLabel.h"
 #import "QuestionModel.h"
 #import "MWPhotoBrowser.h"
+@protocol KnowledgeTableViewCellDelegate;
 
 @interface KnowledgeTableViewCell : UITableViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MWPhotoBrowserDelegate>
+
+
 
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_Category0;//话题
@@ -37,5 +40,22 @@
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
 
+@property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
+
+//给标题和答案添加点击事件
+-(void)addTapClick;
+
+@end
+
+//向cell中添加点击事件
+@protocol KnowledgeTableViewCellDelegate <NSObject>
+
+@optional
+
+//点击标题
+-(void) KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+
+//点击答案、依据
+-(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 
 @end
