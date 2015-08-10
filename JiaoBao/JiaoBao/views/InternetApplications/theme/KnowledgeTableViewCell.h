@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RCLabel.h"
 #import "QuestionModel.h"
+#import "AnswerByIdModel.h"
 
 @protocol KnowledgeTableViewCellDelegate;
 
@@ -36,7 +37,10 @@
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_pic;//图片显示
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
 @property (nonatomic,strong) QuestionModel *model;
+@property (nonatomic,strong) AnswerByIdModel *answerModel;
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
+@property (nonatomic,assign) int mInt_flag;//
+
 
 //给标题和答案添加点击事件
 -(void)addTapClick;

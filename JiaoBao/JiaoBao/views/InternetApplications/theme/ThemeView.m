@@ -497,6 +497,9 @@
 
 //cell的点击事件---标题
 -(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    queston.mModel_question = knowledgeTableViewCell.model;
+    [utils pushViewController:queston animated:YES];
     D("123");
 }
 

@@ -16,6 +16,7 @@
 #import "KnowledgeTableViewCell.h"
 #import "UIImageView+WebCache.h"
 #import "AllCategoryModel.h"
+#import "KnowledgeQuestionViewController.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate>{
     

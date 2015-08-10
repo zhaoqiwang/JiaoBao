@@ -197,6 +197,7 @@
 //获取问题的答案列表
 +(NSMutableArray*)parserJsonGetAnswerById:(NSString*)json
 {
+    D("sldhghgrhjlksjd-=====%@",json);
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
     for(int i=0;i<arrList.count;i++)
@@ -221,7 +222,14 @@
         model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
         model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
         model.Abstracts = [dic objectForKey:@"Abstracts"];
-        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+//        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+        NSString *Thumbnail = [dic objectForKey:@"Thumbnail"];
+        if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
+            
+        }else{
+            NSArray *temp = [Thumbnail objectFromJSONString];
+            model.Thumbnail = [NSMutableArray arrayWithArray:temp];
+        }
         model.IdFlag = [dic objectForKey:@"IdFlag"];
         [array addObject:model];
     }
