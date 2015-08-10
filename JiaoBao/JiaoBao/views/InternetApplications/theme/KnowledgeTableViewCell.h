@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "RCLabel.h"
 #import "QuestionModel.h"
+#import "MWPhotoBrowser.h"
 
-@interface KnowledgeTableViewCell : UITableViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface KnowledgeTableViewCell : UITableViewCell<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,MWPhotoBrowserDelegate>
 
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_Category0;//话题
@@ -34,5 +35,7 @@
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_pic;//图片显示
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
 @property (nonatomic,strong) QuestionModel *model;
+@property(nonatomic,strong)NSMutableArray *photos;
+
 
 @end

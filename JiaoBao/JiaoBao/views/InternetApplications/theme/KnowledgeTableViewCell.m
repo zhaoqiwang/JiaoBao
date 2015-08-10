@@ -10,6 +10,7 @@
 #import "dm.h"
 #import "Forward_cell.h"
 #import "UIImageView+WebCache.h"
+#import "utils.h"
 
 @implementation KnowledgeTableViewCell
 
@@ -59,6 +60,36 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    NSMutableArray *photos = [NSMutableArray array];
+    
+    for (int i = 0; i < [self.model.answerModel.Thumbnail count]; i++) {
+        // 替换为中等尺寸图片
+        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.model.answerModel.Thumbnail objectAtIndex:i]];
+        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+    }
+    self.photos = photos;
+    // Create browser
+    MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+    browser.displayActionButton = NO;//分享按钮,默认是
+    browser.displayNavArrows = NO;//左右分页切换,默认否
+    browser.displaySelectionButtons = NO;//是否显示选择按钮在图片上,默认否
+    browser.alwaysShowControls = NO;//控制条件控件 是否显示,默认否
+    browser.zoomPhotosToFill = NO;//是否全屏,默认是
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
+    browser.wantsFullScreenLayout = YES;//是否全屏
+#endif
+    browser.enableGrid = NO;//是否允许用网格查看所有图片,默认是
+    browser.startOnGrid = NO;//是否第一张,默认否
+    browser.enableSwipeToDismiss = NO;
+    [browser setCurrentPhotoIndex:indexPath.row];
+    
+    double delayInSeconds = 0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+    });
+    [utils pushViewController:browser animated:YES];
     
 }
 
@@ -78,6 +109,29 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 5;
 }
+
+#pragma mark - MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return self.photos.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+    if (index < self.photos.count)
+        return [self.photos objectAtIndex:index];
+    return nil;
+}
+
+- (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected {
+    NSLog(@"Photo at index %lu selected %@", (unsigned long)index, selected ? @"YES" : @"NO");
+}
+
+- (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
+    // If we subscribe to this method we must dismiss the view controller ourselves
+    NSLog(@"Did finish modal presentation");
+    //    [self dismissViewControllerAnimated:YES completion:nil];
+    [utils popViewControllerAnimated:YES];
+}
+
 
 
 @end
