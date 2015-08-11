@@ -9,6 +9,7 @@
 #import "ThemeView.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "CommentViewController.h"
 
 @implementation ThemeView
 
@@ -493,6 +494,10 @@
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     D("234");
+    CommentViewController *commentVC = [[CommentViewController alloc]init];
+    commentVC.questionModel = knowledgeTableViewCell.model;
+    commentVC.cellHeight = knowledgeTableViewCell.frame.size.height+150;
+    [utils pushViewController:commentVC animated:YES];
 }
 
 //cell的点击事件---标题

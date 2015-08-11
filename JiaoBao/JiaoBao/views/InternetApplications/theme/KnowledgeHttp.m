@@ -432,7 +432,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSArray *array = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
+        AllCommentListModel *model = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:model ];
         
         D("JSON--------CommentsListWithNumPerPage: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
