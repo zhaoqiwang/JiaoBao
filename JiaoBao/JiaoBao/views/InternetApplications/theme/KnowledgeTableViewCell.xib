@@ -152,9 +152,21 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="49E-wJ-i3G">
+                        <rect key="frame" x="254" y="1" width="46" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="详情">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="detailBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vrO-uy-AH8"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="mBtn_detail" destination="49E-wJ-i3G" id="DQ4-4u-3qv"/>
                 <outlet property="mCollectionV_pic" destination="sO8-PT-Jn0" id="FeL-iq-2Km"/>
                 <outlet property="mImgV_head" destination="l7y-Ci-9bg" id="XFO-9y-zak"/>
                 <outlet property="mLab_Answers" destination="VRm-pt-R6C" id="Zel-nL-IVx"/>

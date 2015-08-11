@@ -246,8 +246,10 @@
     QuestionModel *model = [array objectAtIndex:indexPath.row];
     cell.model = model;
     //标题
-    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, cell.mLab_title.frame.size.height);
+    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
     cell.mLab_title.text = model.Title;
+    //详情
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, cell.mBtn_detail.frame.size.height);
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -506,6 +508,11 @@
     queston.mModel_question = knowledgeTableViewCell.model;
     [utils pushViewController:queston animated:YES];
     D("123");
+}
+
+//cell的点击事件---详情
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    
 }
 
 @end

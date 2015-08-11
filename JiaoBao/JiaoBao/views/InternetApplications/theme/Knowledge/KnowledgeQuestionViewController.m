@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
     //获取问题的答案列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAnswerById" object:nil];
@@ -49,8 +49,17 @@
     NSMutableArray *temp = [NSMutableArray array];
     for (int i=0; i<3; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
-        model.mStr_title = @"关注问题";
-        model.mStr_img = @"buttonView1";
+        if (i==0) {
+            model.mStr_title = @"回答问题";
+            model.mStr_img = @"buttonView1";
+        }else if (i==1){
+            model.mStr_title = @"邀请问题";
+            model.mStr_img = @"buttonView4";
+        }else if (i==2){
+            model.mStr_title = @"关注问题";
+            model.mStr_img = @"buttonView3";
+        }
+        
         [temp addObject:model];
     }
     self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, 50) Array:temp];
@@ -64,6 +73,7 @@
     self.mTableV_answers.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-(self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height));
     self.mTableV_answers.delegate = self;
     self.mTableV_answers.dataSource = self;
+    self.mTableV_answers.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.mTableV_answers addHeaderWithTarget:self action:@selector(headerRereshing)];
     self.mTableV_answers.headerPullToRefreshText = @"下拉刷新";
     self.mTableV_answers.headerReleaseToRefreshText = @"松开后刷新";
@@ -96,9 +106,11 @@
 //设置标题栏布局
 -(void)setTitleCell:(QuestionModel *)model{
     //标题
-    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
+    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 16);
     self.mView_titlecell.mLab_title.text = model.Title;
     self.mView_titlecell.mLab_title.hidden = NO;
+    //详情
+    self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
     //话题
     self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+16+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -182,164 +194,103 @@
     NSMutableArray *array = self.mArr_answers;
     AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
     cell.answerModel = model;
-//    cell.model = model;
-    //标题
-//    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, cell.mLab_title.frame.size.height);
-//    cell.mLab_title.text = model.Title;
     cell.mLab_title.hidden = YES;
-//    //话题
-//    cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
+    //话题
     cell.mLab_Category0.hidden = YES;
-//    CGSize CategorySize = [[NSString stringWithFormat:@"%@",model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
-//    cell.mLab_Category1.frame = CGRectMake(30+cell.mLab_Category0.frame.size.width+2, cell.mLab_Category0.frame.origin.y, CategorySize.width, cell.mLab_Category0.frame.size.height);
-//    cell.mLab_Category1.text = model.CategorySuject;
     cell.mLab_Category1.hidden = YES;
-//    //访问
-//    CGSize ViewSize = [[NSString stringWithFormat:@"%@",model.ViewCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-//    cell.mLab_ViewCount.frame = CGRectMake([dm getInstance].width-9-ViewSize.width, cell.mLab_Category0.frame.origin.y, ViewSize.width, cell.mLab_Category0.frame.size.height);
-//    cell.mLab_ViewCount.text = model.ViewCount;
+    //访问
     cell.mLab_ViewCount.hidden = YES;
-//    cell.mLab_View.frame = CGRectMake(cell.mLab_ViewCount.frame.origin.x-2-cell.mLab_View.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_View.frame.size.height);
     cell.mLab_View.hidden = YES;
-//    //回答
-//    CGSize AnswersSize = [[NSString stringWithFormat:@"%@",model.AnswersCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-//    cell.mLab_AnswersCount.frame = CGRectMake(cell.mLab_View.frame.origin.x-5-AnswersSize.width, cell.mLab_Category0.frame.origin.y, AnswersSize.width, cell.mLab_Category0.frame.size.height);
-//    cell.mLab_AnswersCount.text = model.AnswersCount;
+    //回答
     cell.mLab_AnswersCount.hidden = YES;
-//    cell.mLab_Answers.frame = CGRectMake(cell.mLab_AnswersCount.frame.origin.x-2-cell.mLab_Answers.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_Answers.frame.size.width, cell.mLab_Answers.frame.size.height);
     cell.mLab_Answers.hidden = YES;
-//    //关注
-//    CGSize AttSize = [[NSString stringWithFormat:@"%@",model.AttCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-//    cell.mLab_AttCount.frame = CGRectMake(cell.mLab_Answers.frame.origin.x-5-AttSize.width, cell.mLab_Category0.frame.origin.y, AttSize.width, cell.mLab_Category0.frame.size.height);
-//    cell.mLab_AttCount.text = model.AttCount;
+    //关注
     cell.mLab_AttCount.hidden = YES;
-//    cell.mLab_Att.frame = CGRectMake(cell.mLab_AttCount.frame.origin.x-2-cell.mLab_Att.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_Att.frame.size.width, cell.mLab_Att.frame.size.height);
     cell.mLab_Att.hidden = YES;
-    //判断是否有回答
-//    if ([model.AnswersCount integerValue]>0) {
-        //分割线
-        cell.mLab_line.hidden = NO;
-        //赞
-        cell.mLab_LikeCount.hidden = NO;
-        //头像
-        cell.mImgV_head.hidden = NO;
-        //姓名
-        cell.mLab_IdFlag.hidden = NO;
-        //回答标题
-        cell.mLab_ATitle.hidden = NO;
-        //回答内容
-        cell.mLab_Abstracts.hidden = NO;
-        //背景色
-        cell.mView_background.hidden = NO;
-        //图片
-        cell.mCollectionV_pic.hidden = NO;
-        //时间
-        cell.mLab_RecDate.hidden = NO;
-        //评论
-        cell.mLab_commentCount.hidden = NO;
-        cell.mLab_comment.hidden = NO;
-        //分割线
-//        cell.mLab_line.frame = CGRectMake(20, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+5, [dm getInstance].width-20, .5);
+    //分割线
+    cell.mLab_line.hidden = NO;
+    //赞
+    cell.mLab_LikeCount.hidden = NO;
+    //头像
+    cell.mImgV_head.hidden = NO;
+    //姓名
+    cell.mLab_IdFlag.hidden = NO;
+    //回答标题
+    cell.mLab_ATitle.hidden = NO;
+    //回答内容
+    cell.mLab_Abstracts.hidden = NO;
+    //背景色
+    cell.mView_background.hidden = NO;
+    //图片
+    cell.mCollectionV_pic.hidden = NO;
+    //时间
+    cell.mLab_RecDate.hidden = NO;
+    //评论
+    cell.mLab_commentCount.hidden = NO;
+    cell.mLab_comment.hidden = NO;
+    //分割线
     cell.mLab_line.hidden = YES;
     cell.mLab_line.frame = CGRectMake(20, 5, [dm getInstance].width-20, .5);
-//    @property(nonatomic,strong)NSString *TabID;//答案ID
-//    @property(nonatomic,strong)NSString *JiaoBaoHao;//教宝号
-//    @property(nonatomic,strong)NSString *QId;//问题ID
-//    @property(nonatomic,strong)NSString *RecDate;//回答时间
-//    @property(nonatomic,strong)NSString *ATitle;//答案标题
-//    @property(nonatomic,strong)NSString *CCount;//评论数量
-//    @property(nonatomic,strong)NSString *LikeCount;//点赞数量
-//    @property(nonatomic,strong)NSString *CaiCount;//反对数量
-//    @property(nonatomic,strong)NSString *Flag;//0:普通回答  1:求真回答
-//    @property(nonatomic,strong)NSString *Abstracts;//摘要
-//    @property(nonatomic,strong)NSMutableArray *Thumbnail;//缩略图地址
-//    @property(nonatomic,strong)NSString *IdFlag;//回答者姓名
-        //赞
-        cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 22);
-        NSString *strLike = model.LikeCount;
-        if ([model.LikeCount integerValue]>0) {
-            strLike = @"99+";
-        }
-        cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
-        //头像
-        cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
-        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-        //姓名
-        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
-        cell.mLab_IdFlag.text = model.IdFlag;
-        //回答标题
-        NSString *string1 = model.ATitle;
-        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
-        cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, cell.mLab_ATitle.frame.size.height);
-        NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-        [row1 setObject:name forKey:@"text"];
-        RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
-        cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-        //回答内容
-        NSString *string2 = model.Abstracts;
-        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
-        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-        NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
-        if (size.height>20) {
-            size = CGSizeMake(size.width, 32);
-        }
-        cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, size.height);
-        NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-        [row2 setObject:name2 forKey:@"text"];
-        RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-        cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
-        //背景色
-        cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-70, cell.mLab_Abstracts.frame.size.height+4);
-        //图片
-        [cell.mCollectionV_pic reloadData];
-        cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
-        if (model.Thumbnail.count>0) {
-            cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
-        }else{
-            cell.mCollectionV_pic.frame = cell.mView_background.frame;
-        }
-        //时间
-        cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
-        cell.mLab_RecDate.text = model.RecDate;
-        //评论
-        CGSize commentSize = [[NSString stringWithFormat:@"%@",model.CCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-        cell.mLab_commentCount.frame = CGRectMake([dm getInstance].width-9-commentSize.width, cell.mLab_RecDate.frame.origin.y, commentSize.width, cell.mLab_commentCount.frame.size.height);
-        cell.mLab_commentCount.text = model.CCount;
-        cell.mLab_comment.frame = CGRectMake(cell.mLab_commentCount.frame.origin.x-2-cell.mLab_comment.frame.size.width, cell.mLab_RecDate.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_comment.frame.size.height);
-        if (model.Thumbnail.count>0) {
-            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
-        }else{
-            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
-        }
-//    }else{
-//        //分割线
-//        cell.mLab_line.hidden = YES;
-//        //赞
-//        cell.mLab_LikeCount.hidden = YES;
-//        //头像
-//        cell.mImgV_head.hidden = YES;
-//        //姓名
-//        cell.mLab_IdFlag.hidden = YES;
-//        //回答标题
-//        cell.mLab_ATitle.hidden = YES;
-//        //回答内容
-//        cell.mLab_Abstracts.hidden = YES;
-//        //背景色
-//        cell.mView_background.hidden = YES;
-//        //图片
-//        [cell.mCollectionV_pic reloadData];
-//        cell.mCollectionV_pic.hidden = YES;
-//        //时间
-//        cell.mLab_RecDate.hidden = YES;
-//        //评论
-//        cell.mLab_commentCount.hidden = YES;
-//        cell.mLab_comment.hidden = YES;
-//        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
-//    }
-    
+    //赞
+    cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 22);
+    NSString *strLike = model.LikeCount;
+    if ([model.LikeCount integerValue]>0) {
+        strLike = @"99+";
+    }
+    cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
+    //头像
+    cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
+    [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    //姓名
+    cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
+    cell.mLab_IdFlag.text = model.IdFlag;
+    //回答标题
+    NSString *string1 = model.ATitle;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
+    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, cell.mLab_ATitle.frame.size.height);
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    cell.mLab_ATitle.componentsAndPlainText = componentsDS;
+    //回答内容
+    NSString *string2 = model.Abstracts;
+    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
+    NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
+    NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
+    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+    if (size.height>20) {
+        size = CGSizeMake(size.width, 32);
+    }
+    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, size.height);
+    NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
+    [row2 setObject:name2 forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+    cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+    //背景色
+    cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-70, cell.mLab_Abstracts.frame.size.height+4);
+    //图片
+    [cell.mCollectionV_pic reloadData];
+    cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
+    if (model.Thumbnail.count>0) {
+        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+    }else{
+        cell.mCollectionV_pic.frame = cell.mView_background.frame;
+    }
+    //时间
+    cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
+    cell.mLab_RecDate.text = model.RecDate;
+    //评论
+    CGSize commentSize = [[NSString stringWithFormat:@"%@",model.CCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+    cell.mLab_commentCount.frame = CGRectMake([dm getInstance].width-9-commentSize.width, cell.mLab_RecDate.frame.origin.y, commentSize.width, cell.mLab_commentCount.frame.size.height);
+    cell.mLab_commentCount.text = model.CCount;
+    cell.mLab_comment.frame = CGRectMake(cell.mLab_commentCount.frame.origin.x-2-cell.mLab_comment.frame.size.width, cell.mLab_RecDate.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_comment.frame.size.height);
+    if (model.Thumbnail.count>0) {
+        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
+    }else{
+        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
+    }
     
     return cell;
 }
@@ -447,8 +398,9 @@
 }
 
 //ButtonView回调
--(void)ButtonViewTitleBtn:(UIView *)view{
+-(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
     D("view.tag-=====%ld",(long)view.tag);
+    view.mLab_title.text = @"取消关注";
 }
 
 //导航条返回按钮回调

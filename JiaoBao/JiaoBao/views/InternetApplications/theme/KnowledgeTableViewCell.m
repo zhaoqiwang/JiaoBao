@@ -158,14 +158,26 @@
     self.mLab_Abstracts.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(knowledgeTableViewCellClickATitle:)];
     [self.mLab_Abstracts addGestureRecognizer:tap2];
+    
+    self.mLab_LikeCount.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(knowledgeTableViewCellClickLike:)];
+    [self.mLab_LikeCount addGestureRecognizer:tap3];
 }
 
 -(void)knowledgeTableViewCellClickTitle:(UIGestureRecognizer *)gest{
     [self.delegate KnowledgeTableViewCellTitleBtn:self];
 }
 
+-(void)knowledgeTableViewCellClickLike:(UIGestureRecognizer *)gest{
+    [self.delegate KnowledgeTableVIewCellLike:self];
+}
+
 -(void)knowledgeTableViewCellClickATitle:(UIGestureRecognizer *)gest{
     [self.delegate KnowledgeTableViewCellAnswers:self];
+}
+
+-(void)detailBtn:(id)sender{
+    [self.delegate KnowledgeTableVIewCellDetailBtn:self];
 }
 
 @end
