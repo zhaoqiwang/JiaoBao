@@ -9,6 +9,12 @@
 #import "QuestionIndexModel.h"
 
 @implementation QuestionIndexModel
+-(instancetype)init
+{
+    self = [super init];
+    self.Thumbnail = [[NSMutableArray alloc]initWithCapacity:0];
+    return self;
+}
 
 
 @end

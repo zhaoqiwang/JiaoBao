@@ -162,7 +162,13 @@
             model.LastUpdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
         }
         model.AnswersCount = [dic objectForKey:@"AnswersCount"];
-        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+        NSString *Thumbnail = [dic objectForKey:@"Thumbnail"];
+        if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
+            
+        }else{
+            NSArray *temp = [Thumbnail objectFromJSONString];
+            model.Thumbnail = [NSMutableArray arrayWithArray:temp];
+        }
         [array addObject:model];
     }
     return array;
@@ -187,7 +193,13 @@
         model.LastUpdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
     }
     model.AnswersCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AnswersCount"]];
-    model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+    NSString *Thumbnail = [dic objectForKey:@"Thumbnail"];
+    if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
+        
+    }else{
+        NSArray *temp = [Thumbnail objectFromJSONString];
+        model.Thumbnail = [NSMutableArray arrayWithArray:temp];
+    }
     model.KnContent = [dic objectForKey:@"KnContent"];
     model.AreaCode = [dic objectForKey:@"AreaCode"];
     model.AtAccIds = [dic objectForKey:@"AtAccIds"];
@@ -259,7 +271,13 @@
         model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
         model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
         model.Abstracts = [dic objectForKey:@"Abstracts"];
-        model.Thumbnail = [dic objectForKey:@"Thumbnail"];
+    NSString *Thumbnail = [dic objectForKey:@"Thumbnail"];
+    if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
+        
+    }else{
+        NSArray *temp = [Thumbnail objectFromJSONString];
+        model.Thumbnail = [NSMutableArray arrayWithArray:temp];
+    }
         model.IdFlag = [dic objectForKey:@"IdFlag"];
         model.AContent = [dic objectForKey:@"AContent"];
     return model;

@@ -9,5 +9,11 @@
 #import "AnswerDetailModel.h"
 
 @implementation AnswerDetailModel
+-(instancetype)init
+{
+    self = [super init];
+    self.Thumbnail = [[NSMutableArray alloc]initWithCapacity:0];
+    return self;
+}
 
 @end
