@@ -11,6 +11,9 @@
 @implementation CommentListTableViewCell
 
 - (void)awakeFromNib {
+    self.WContent.lineBreakMode = NSLineBreakByWordWrapping;
+    self.WContent.font = [UIFont systemFontOfSize:13];
+    self.WContent.numberOfLines =0;
     // Initialization code
 }
 

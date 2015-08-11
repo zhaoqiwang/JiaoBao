@@ -24,6 +24,12 @@
 -(void)CommentsListWithNumPerPage:(id)sender
 {
     self.AllCommentListModel = [sender object];
+    self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
+    D("tableViewFrame = %@",NSStringFromCGRect(self.tableView.frame));
+    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, self.tableView.frame.origin.y+self.tableView.frame.size.height+10);
+    D("mainScrollViewFrame = %@",NSStringFromCGRect(self.mainScrollView.frame));
+    self.tableView.scrollEnabled = NO;
+    [self.tableView reloadData];
     
 }
 
@@ -44,7 +50,6 @@
     }
     self.mainScrollView.frame = CGRectMake(0, 44+10, [dm getInstance].width, [dm getInstance].height-44-10);
     self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, 1000);
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, self.cellHeight);
     [self.mainScrollView addSubview:cell];
     cell.model = self.questionModel;
     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, cell.mLab_title.frame.size.height);
@@ -180,18 +185,54 @@
         cell.mLab_comment.hidden = YES;
         cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
     }
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height+cell.frame.origin.y-100, [dm  getInstance].width, 500) style:UITableViewStylePlain];
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
+    NSMutableArray *temp = [NSMutableArray array];
+    for (int i=0; i<3; i++) {
+        ButtonViewModel *model = [[ButtonViewModel alloc] init];
+        if(i == 0)
+        {
+            model.mStr_title = @"举报";
+
+        }
+        if(i == 1)
+        {
+            model.mStr_title = @"评论";
+            
+        }
+        if(i == 2)
+        {
+            model.mStr_title = @"反对";
+            
+        }
+        model.mStr_img = @"buttonView1";
+        [temp addObject:model];
+    }
+    self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, cell.frame.origin.y+cell.frame.size.height, [dm getInstance].width, 50) Array:temp];
+    self.mBtnV_btn.delegate = self;
+    [self.mainScrollView addSubview:self.mBtnV_btn];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.mainScrollView addSubview:self.tableView];
-    self.tableView.scrollEnabled = NO;
-
-    
     // Do any additional setup after loading the view from its nib.
 }
 
 
+-(float)tableViewCellHeight
+{
+    float h = 0;
+    NSArray *arr = self.AllCommentListModel.mArr_CommentList;
+    for(int i=0;i<arr.count;i++)
+    {
+        commentListModel *model = [arr objectAtIndex:i];
+    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+        float cellHeight = Size.height + 50;
+        h = h + cellHeight;
+    }
 
+
+    return h;
+}
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     return self.AllCommentListModel.mArr_CommentList.count;
 }
@@ -212,17 +253,33 @@
         UINib * n= [UINib nibWithNibName:@"CommentListTableViewCell" bundle:[NSBundle mainBundle]];
         [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
     }
+    commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:indexPath.row];
+    cell.headImaV.frame = CGRectMake(10, 10, 50, 50);
+    [cell.headImaV sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    cell.UserName.text = model.UserName;
+    cell.UserName.frame = CGRectMake(70, 10, 100, 21);
+    cell.WContent.text = model.WContent;
+
+
+    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+    cell.WContent.frame = CGRectMake(70,10+21+10 , 228, Size.height);
+    cell.RecDate.text = model.RecDate;
     
     return cell;
 
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 100;
+    NSArray *arr = self.AllCommentListModel.mArr_CommentList;
+    commentListModel *model = [arr objectAtIndex:indexPath.row];
+    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+    float cellHeight = Size.height + 50;
+    return cellHeight;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
 
 
 -(void)myNavigationGoback{
