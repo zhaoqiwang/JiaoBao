@@ -258,6 +258,22 @@
 		A75046951A0A14BC00C54ECC /* forward_sendMsg2.png in Resources */ = {isa = PBXBuildFile; fileRef = A750468B1A0A14BC00C54ECC /* forward_sendMsg2.png */; };
 		A75046961A0A14BC00C54ECC /* forward_sendMsg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A750468C1A0A14BC00C54ECC /* forward_sendMsg2@2x.png */; };
 		A75046991A0A3BD900C54ECC /* UnitClassRevicerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75046981A0A3BD900C54ECC /* UnitClassRevicerModel.m */; };
+		A75082611B7990920031E7C9 /* ButtonViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A75082601B7990920031E7C9 /* ButtonViewCell.m */; };
+		A75082711B7998E60031E7C9 /* buttonView2.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082621B7998E60031E7C9 /* buttonView2.png */; };
+		A75082721B7998E60031E7C9 /* buttonView2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082631B7998E60031E7C9 /* buttonView2@2x.png */; };
+		A75082731B7998E60031E7C9 /* buttonView2@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082641B7998E60031E7C9 /* buttonView2@3x.png */; };
+		A75082741B7998E60031E7C9 /* buttonView3.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082651B7998E60031E7C9 /* buttonView3.png */; };
+		A75082751B7998E60031E7C9 /* buttonView3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082661B7998E60031E7C9 /* buttonView3@2x.png */; };
+		A75082761B7998E60031E7C9 /* buttonView3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082671B7998E60031E7C9 /* buttonView3@3x.png */; };
+		A75082771B7998E60031E7C9 /* buttonView4.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082681B7998E60031E7C9 /* buttonView4.png */; };
+		A75082781B7998E60031E7C9 /* buttonView4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082691B7998E60031E7C9 /* buttonView4@2x.png */; };
+		A75082791B7998E60031E7C9 /* buttonView4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826A1B7998E60031E7C9 /* buttonView4@3x.png */; };
+		A750827A1B7998E60031E7C9 /* buttonView5.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826B1B7998E60031E7C9 /* buttonView5.png */; };
+		A750827B1B7998E60031E7C9 /* buttonView5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826C1B7998E60031E7C9 /* buttonView5@2x.png */; };
+		A750827C1B7998E60031E7C9 /* buttonView5@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826D1B7998E60031E7C9 /* buttonView5@3x.png */; };
+		A750827D1B7998E60031E7C9 /* buttonView6.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826E1B7998E60031E7C9 /* buttonView6.png */; };
+		A750827E1B7998E60031E7C9 /* buttonView6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826F1B7998E60031E7C9 /* buttonView6@2x.png */; };
+		A750827F1B7998E60031E7C9 /* buttonView6@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082701B7998E60031E7C9 /* buttonView6@3x.png */; };
 		A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A751A2131A8D9B92008922FC /* ReSendMsgViewController.m */; };
 		A751A2161A8D9B92008922FC /* ReSendMsgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A751A2141A8D9B92008922FC /* ReSendMsgViewController.xib */; };
 		A753E51D1A1AF611005A8EED /* TopArthListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A753E51C1A1AF611005A8EED /* TopArthListModel.m */; };
@@ -1221,6 +1237,23 @@
 		A750468C1A0A14BC00C54ECC /* forward_sendMsg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward_sendMsg2@2x.png"; path = "Image/InternetApp/forward/forward_sendMsg2@2x.png"; sourceTree = "<group>"; };
 		A75046971A0A3BD900C54ECC /* UnitClassRevicerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitClassRevicerModel.h; path = views/InternetApplications/workView/model/UnitClassRevicerModel.h; sourceTree = "<group>"; };
 		A75046981A0A3BD900C54ECC /* UnitClassRevicerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitClassRevicerModel.m; path = views/InternetApplications/workView/model/UnitClassRevicerModel.m; sourceTree = "<group>"; };
+		A750825F1B7990920031E7C9 /* ButtonViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonViewCell.h; path = views/InternetApplications/theme/Knowledge/ButtonViewCell.h; sourceTree = "<group>"; };
+		A75082601B7990920031E7C9 /* ButtonViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonViewCell.m; path = views/InternetApplications/theme/Knowledge/ButtonViewCell.m; sourceTree = "<group>"; };
+		A75082621B7998E60031E7C9 /* buttonView2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView2.png; path = Image/InternetApp/knowledge/buttonView2.png; sourceTree = "<group>"; };
+		A75082631B7998E60031E7C9 /* buttonView2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView2@2x.png"; path = "Image/InternetApp/knowledge/buttonView2@2x.png"; sourceTree = "<group>"; };
+		A75082641B7998E60031E7C9 /* buttonView2@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView2@3x.png"; path = "Image/InternetApp/knowledge/buttonView2@3x.png"; sourceTree = "<group>"; };
+		A75082651B7998E60031E7C9 /* buttonView3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView3.png; path = Image/InternetApp/knowledge/buttonView3.png; sourceTree = "<group>"; };
+		A75082661B7998E60031E7C9 /* buttonView3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView3@2x.png"; path = "Image/InternetApp/knowledge/buttonView3@2x.png"; sourceTree = "<group>"; };
+		A75082671B7998E60031E7C9 /* buttonView3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView3@3x.png"; path = "Image/InternetApp/knowledge/buttonView3@3x.png"; sourceTree = "<group>"; };
+		A75082681B7998E60031E7C9 /* buttonView4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView4.png; path = Image/InternetApp/knowledge/buttonView4.png; sourceTree = "<group>"; };
+		A75082691B7998E60031E7C9 /* buttonView4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView4@2x.png"; path = "Image/InternetApp/knowledge/buttonView4@2x.png"; sourceTree = "<group>"; };
+		A750826A1B7998E60031E7C9 /* buttonView4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView4@3x.png"; path = "Image/InternetApp/knowledge/buttonView4@3x.png"; sourceTree = "<group>"; };
+		A750826B1B7998E60031E7C9 /* buttonView5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView5.png; path = Image/InternetApp/knowledge/buttonView5.png; sourceTree = "<group>"; };
+		A750826C1B7998E60031E7C9 /* buttonView5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView5@2x.png"; path = "Image/InternetApp/knowledge/buttonView5@2x.png"; sourceTree = "<group>"; };
+		A750826D1B7998E60031E7C9 /* buttonView5@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView5@3x.png"; path = "Image/InternetApp/knowledge/buttonView5@3x.png"; sourceTree = "<group>"; };
+		A750826E1B7998E60031E7C9 /* buttonView6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView6.png; path = Image/InternetApp/knowledge/buttonView6.png; sourceTree = "<group>"; };
+		A750826F1B7998E60031E7C9 /* buttonView6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView6@2x.png"; path = "Image/InternetApp/knowledge/buttonView6@2x.png"; sourceTree = "<group>"; };
+		A75082701B7998E60031E7C9 /* buttonView6@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView6@3x.png"; path = "Image/InternetApp/knowledge/buttonView6@3x.png"; sourceTree = "<group>"; };
 		A751A2121A8D9B92008922FC /* ReSendMsgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReSendMsgViewController.h; path = views/InternetApplications/workView/ReSendMsgViewController.h; sourceTree = "<group>"; };
 		A751A2131A8D9B92008922FC /* ReSendMsgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReSendMsgViewController.m; path = views/InternetApplications/workView/ReSendMsgViewController.m; sourceTree = "<group>"; };
 		A751A2141A8D9B92008922FC /* ReSendMsgViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReSendMsgViewController.xib; path = views/InternetApplications/workView/ReSendMsgViewController.xib; sourceTree = "<group>"; };
@@ -3407,6 +3440,8 @@
 				A7804C991B789219007C0DC6 /* KnowledgeQuestionViewController.h */,
 				A7804C9A1B789219007C0DC6 /* KnowledgeQuestionViewController.m */,
 				A7804C9B1B789219007C0DC6 /* KnowledgeQuestionViewController.xib */,
+				A750825F1B7990920031E7C9 /* ButtonViewCell.h */,
+				A75082601B7990920031E7C9 /* ButtonViewCell.m */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -3740,6 +3775,21 @@
 		A7804C9E1B789487007C0DC6 /* knowledge */ = {
 			isa = PBXGroup;
 			children = (
+				A75082621B7998E60031E7C9 /* buttonView2.png */,
+				A75082631B7998E60031E7C9 /* buttonView2@2x.png */,
+				A75082641B7998E60031E7C9 /* buttonView2@3x.png */,
+				A75082651B7998E60031E7C9 /* buttonView3.png */,
+				A75082661B7998E60031E7C9 /* buttonView3@2x.png */,
+				A75082671B7998E60031E7C9 /* buttonView3@3x.png */,
+				A75082681B7998E60031E7C9 /* buttonView4.png */,
+				A75082691B7998E60031E7C9 /* buttonView4@2x.png */,
+				A750826A1B7998E60031E7C9 /* buttonView4@3x.png */,
+				A750826B1B7998E60031E7C9 /* buttonView5.png */,
+				A750826C1B7998E60031E7C9 /* buttonView5@2x.png */,
+				A750826D1B7998E60031E7C9 /* buttonView5@3x.png */,
+				A750826E1B7998E60031E7C9 /* buttonView6.png */,
+				A750826F1B7998E60031E7C9 /* buttonView6@2x.png */,
+				A75082701B7998E60031E7C9 /* buttonView6@3x.png */,
 				A7804C9F1B789516007C0DC6 /* buttonView1.png */,
 				A7804CA01B789516007C0DC6 /* buttonView1@2x.png */,
 				A7804CA11B789516007C0DC6 /* buttonView1@3x.png */,
@@ -4256,6 +4306,7 @@
 				A757DFE41A80C7B9001172A4 /* appNav_changeUser@3x.png in Resources */,
 				A768298F1AC69B21003B31EB /* classView_click_4@2x.png in Resources */,
 				A74D26921B58FAE200E63DFB /* record_animate_04.png in Resources */,
+				A75082721B7998E60031E7C9 /* buttonView2@2x.png in Resources */,
 				A7AAC4D019F75DB200A0ED40 /* appNav_search@2x.png in Resources */,
 				A77116021A4D11930042CB91 /* noPhoto.png in Resources */,
 				A74C802B1A30466C0043D335 /* rootNav_rongYun.png in Resources */,
@@ -4288,6 +4339,7 @@
 				A71D61EA1A1C96A400B8D33D /* share_recommend0@2x.png in Resources */,
 				A782AEC91AE9D71A00547B0F /* NewWork_unSendMsg@2x.png in Resources */,
 				A76ED5C51AD67855006F3E0B /* workView_click_1@2x.png in Resources */,
+				A75082731B7998E60031E7C9 /* buttonView2@3x.png in Resources */,
 				A76ED5BA1AD67855006F3E0B /* workView_2@3x.png in Resources */,
 				A75E6EC11ABACDBD00B51B18 /* classView_3.png in Resources */,
 				A761D3F41A7F697900DCAEB9 /* rootTable_2@3x.png in Resources */,
@@ -4298,6 +4350,7 @@
 				A763A53D1A48F372008365B5 /* photo_default@3x.png in Resources */,
 				A7BB17FF19F4F91E00A81286 /* Regiser_bg.png in Resources */,
 				A751A2161A8D9B92008922FC /* ReSendMsgViewController.xib in Resources */,
+				A750827C1B7998E60031E7C9 /* buttonView5@3x.png in Resources */,
 				A73702E41A7C7A7E0020BCB4 /* rootNav_rongYun@2x.png in Resources */,
 				F7502A101AEE1E50004F822F /* bTri@3x.png in Resources */,
 				A7781F4C1AE8A0F300F03AEB /* NewWorkView_click_1@2x.png in Resources */,
@@ -4341,6 +4394,7 @@
 				A761D4031A7F697900DCAEB9 /* rootTableSelect_2@3x.png in Resources */,
 				A76ED5CD1AD67855006F3E0B /* workView_click_4.png in Resources */,
 				A7AD8C4019F63DA5002E65FB /* ApplicationCenterViewController.xib in Resources */,
+				A75082751B7998E60031E7C9 /* buttonView3@2x.png in Resources */,
 				A727C7D41A6F93780019C4CD /* share_clickBig.png in Resources */,
 				A74D12871A3C45DE00A93CAC /* UpdateUnitListViewController.xib in Resources */,
 				A7AD8C5519F644A2002E65FB /* tabbar_center2@2x.png in Resources */,
@@ -4355,6 +4409,7 @@
 				A74C11981A01D9FC00925230 /* icon_ios7.png in Resources */,
 				A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */,
 				A7724D5B1B5DF94C0095850A /* VideoShot0@3x.png in Resources */,
+				A750827F1B7998E60031E7C9 /* buttonView6@3x.png in Resources */,
 				A757DFD61A80BDEF001172A4 /* appNav_groupChat.png in Resources */,
 				A7781F451AE8A0F300F03AEB /* NewWorkView_2.png in Resources */,
 				A7AD8C5919F644A2002E65FB /* tabbar_student2@2x.png in Resources */,
@@ -4405,6 +4460,7 @@
 				A74821A519FF452200234020 /* msgDetail_send@2x.png in Resources */,
 				A75046931A0A14BC00C54ECC /* forward_sendMsg1.png in Resources */,
 				F7502A261AEE1E50004F822F /* rTri@3x.png in Resources */,
+				A75082761B7998E60031E7C9 /* buttonView3@3x.png in Resources */,
 				F7502A191AEE1E50004F822F /* HomeClass_Click_1.png in Resources */,
 				F7502A1B1AEE1E50004F822F /* HomeClass_Click_2.png in Resources */,
 				A76255D31B5C9EDB00AD8089 /* VideoRecorderViewController.xib in Resources */,
@@ -4501,6 +4557,7 @@
 				A7AAC4CF19F75DB200A0ED40 /* appNav_search.png in Resources */,
 				A76ED5CE1AD67855006F3E0B /* workView_click_4@2x.png in Resources */,
 				A7CE67371AA70A250038D0C5 /* showArticle@3x.png in Resources */,
+				A75082711B7998E60031E7C9 /* buttonView2.png in Resources */,
 				A727C7DB1A6F93780019C4CD /* share_likeBig_1@2x.png in Resources */,
 				F7502A221AEE1E50004F822F /* plus@2x.png in Resources */,
 				A7BB180619F4F91E00A81286 /* Regiser_passwd_1.png in Resources */,
@@ -4524,6 +4581,7 @@
 				A7AD8C5019F644A2002E65FB /* tabbar_app2.png in Resources */,
 				A769C6021B7464E0006C6B76 /* topBtnSelect1@3x.png in Resources */,
 				A782AEC71AE9D71A00547B0F /* NewWork_SendMsg@3x.png in Resources */,
+				A750827E1B7998E60031E7C9 /* buttonView6@2x.png in Resources */,
 				A7B0F94D1A47BC4300C1863A /* MJPhotoBrowser.bundle in Resources */,
 				A76829901AC69B21003B31EB /* classView_click_4@3x.png in Resources */,
 				A773FC4F1A4C0563005F84C2 /* ELCAlbumPickerController.xib in Resources */,
@@ -4600,6 +4658,7 @@
 				A75E6EB91ABACDBD00B51B18 /* classView_0@2x.png in Resources */,
 				A74C11931A01D7CE00925230 /* Default-568h@2x.png in Resources */,
 				A749B9D519F89A530036F480 /* root_SMS@2x.png in Resources */,
+				A75082791B7998E60031E7C9 /* buttonView4@3x.png in Resources */,
 				A701797B1AB914D900E7093F /* work_deleteAccessory@2x.png in Resources */,
 				A701798A1AB91D2100E7093F /* work_accessoryPhoto.png in Resources */,
 				A757DFE11A80C7B9001172A4 /* appNav_changeUnit@3x.png in Resources */,
@@ -4618,6 +4677,7 @@
 				A727C7DA1A6F93780019C4CD /* share_likeBig_1.png in Resources */,
 				A782AEBC1AE9D71A00547B0F /* NewWork_accessory.png in Resources */,
 				A749B9D619F89A530036F480 /* root_waitingProcess.png in Resources */,
+				A750827D1B7998E60031E7C9 /* buttonView6.png in Resources */,
 				F79D84D81ABD4DC000897477 /* RecordCell.xib in Resources */,
 				A761D3FF1A7F697900DCAEB9 /* rootTableSelect_1@2x.png in Resources */,
 				A7BB180919F4F91E00A81286 /* Regiser_passwd_2@2x.png in Resources */,
@@ -4645,8 +4705,10 @@
 				A74D26901B58FAE200E63DFB /* record_animate_02.png in Resources */,
 				A7BB180D19F4F91E00A81286 /* Regiser_userName@2x.png in Resources */,
 				A74D26941B58FAE200E63DFB /* record_animate_06.png in Resources */,
+				A750827B1B7998E60031E7C9 /* buttonView5@2x.png in Resources */,
 				A7781F4A1AE8A0F300F03AEB /* NewWorkView_click_0@3x.png in Resources */,
 				A71D61E61A1C96A400B8D33D /* share_next0@2x.png in Resources */,
+				A750827A1B7998E60031E7C9 /* buttonView5.png in Resources */,
 				A76D74781A69095A008F5856 /* share_like_1@3x.png in Resources */,
 				A78D65E11A8A04E800BE6326 /* workDetail@3x.png in Resources */,
 				A727C7DC1A6F93780019C4CD /* share_likeBig_1@3x.png in Resources */,
@@ -4663,12 +4725,14 @@
 				A71D61E11A1C96A400B8D33D /* share_new0.png in Resources */,
 				A782AEBD1AE9D71A00547B0F /* NewWork_accessory@2x.png in Resources */,
 				F7502A1A1AEE1E50004F822F /* HomeClass_Click_1@2x.png in Resources */,
+				A75082741B7998E60031E7C9 /* buttonView3.png in Resources */,
 				A7781F411AE8A0F300F03AEB /* NewWorkView_0@3x.png in Resources */,
 				A7AAC4D219F75DB200A0ED40 /* appNav_setting@2x.png in Resources */,
 				A749B9D219F89A530036F480 /* root_sendNotice.png in Resources */,
 				A749B9C919F89A530036F480 /* root_dian@2x.png in Resources */,
 				A77F9F3D1AFCAAC90003E579 /* appNav_dongtai.png in Resources */,
 				A746CB691A4AAD600003657A /* CreatAlbumsViewController.xib in Resources */,
+				A75082781B7998E60031E7C9 /* buttonView4@2x.png in Resources */,
 				A76976A41A8372C3002A4FB3 /* message.wav in Resources */,
 				A749B9D919F89A530036F480 /* top_dian@2x.png in Resources */,
 				A72B58301A3D8EEE004D8920 /* UnitPeopleViewController.xib in Resources */,
@@ -4693,6 +4757,7 @@
 				A7CE67351AA70A250038D0C5 /* showArticle.png in Resources */,
 				A749B9C819F89A530036F480 /* root_dian.png in Resources */,
 				A757DFD41A80BDEF001172A4 /* appNav_contact@2x.png in Resources */,
+				A75082771B7998E60031E7C9 /* buttonView4.png in Resources */,
 				A757DFD81A80BDEF001172A4 /* appNav_groupChat@3x.png in Resources */,
 				A77F9F401AFCAAC90003E579 /* appNav_share.png in Resources */,
 				A761D3EC1A7F697900DCAEB9 /* rootTable_0.png in Resources */,
@@ -4914,6 +4979,7 @@
 				A773FC481A4C0563005F84C2 /* ELCAlbumPickerController.m in Sources */,
 				A7595E9A1A5FC2F30027848E /* README.mdown in Sources */,
 				A74339501A452B7700AFC0A5 /* SDWebImageDecoder.m in Sources */,
+				A75082611B7990920031E7C9 /* ButtonViewCell.m in Sources */,
 				A7141DC01A17022E00940A3E /* ShareView.m in Sources */,
 				A74821AF19FF745900234020 /* MsgDetail_TrunToList.m in Sources */,
 				F7EE1A0A1B78896000B31D79 /* CommentViewController.m in Sources */,

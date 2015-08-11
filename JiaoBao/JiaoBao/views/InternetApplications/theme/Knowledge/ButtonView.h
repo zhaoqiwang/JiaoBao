@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ButtonViewModel.h"
+#import "ButtonViewCell.h"
 
 @protocol ButtonViewDelegate;
 
@@ -25,6 +26,6 @@
 @optional
 
 //点击
--(void) ButtonViewTitleBtn:(UIView *) view;
+-(void) ButtonViewTitleBtn:(ButtonViewCell *) view;
 
 @end

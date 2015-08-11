@@ -22,35 +22,18 @@
         float tempF = [dm getInstance].width/array.count;
         for (int i=0; i<array.count; i++) {
             ButtonViewModel *model = [array objectAtIndex:i];
-            UIView *tempView = [[UIView alloc] initWithFrame:CGRectMake(tempF*i, 0, tempF, rect.size.height)];
-            tempView.tag = i+100;
-            [self addSubview:tempView];
             
-            NSString *str = [NSString stringWithFormat:@"     %@",model.mStr_title];
-            CGSize titleSize = [str sizeWithFont:[UIFont systemFontOfSize:12]];
-            UILabel *tempLabel = [[UILabel alloc] initWithFrame:CGRectMake((tempF-titleSize.width)/2, (rect.size.height-titleSize.height)/2, titleSize.width, titleSize.height)];
-            tempLabel.font = [UIFont systemFontOfSize:12];
-            tempLabel.backgroundColor = [UIColor clearColor];
-            tempLabel.textColor = [UIColor grayColor];
-            tempLabel.text = str;
-            tempLabel.tag = i+100;
-            [tempView addSubview:tempLabel];
+            ButtonViewCell *btn = [[ButtonViewCell alloc] initWithFrame:CGRectMake(tempF*i, 0, tempF, rect.size.height) Model:model Flag:(int)array.count-i];
+            btn.tag = i+100;
+            [self addSubview:btn];
             
-            UIImageView *tempImgV = [[UIImageView alloc] initWithFrame:CGRectMake(tempLabel.frame.origin.x, tempLabel.frame.origin.y, 15, 15)];
-            [tempImgV setImage:[UIImage imageNamed:model.mStr_img]];
-            tempImgV.tag = i+100;
-            [tempView addSubview:tempImgV];
-            
-            tempView.userInteractionEnabled = YES;
-            tempView.tag = i+100;
+            btn.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(buttonViewClick:)];
-            [tempView addGestureRecognizer:tap];
+            [btn addGestureRecognizer:tap];
             
             //
             if (i<array.count-1) {
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(tempF-1, 7, .5, rect.size.height-14)];
-                label.backgroundColor = [UIColor grayColor];
-                [tempView addSubview:label];
+                
             }
         }
     }
@@ -58,7 +41,7 @@
 }
 
 -(void)buttonViewClick:(UIGestureRecognizer *)gest{
-    [self.delegate ButtonViewTitleBtn:gest.view];
+    [self.delegate ButtonViewTitleBtn:(ButtonViewCell *)gest.view];
     D("idsjgldjgl;kjsl;d-=====%ld",(long)gest.view.tag);
 }
 

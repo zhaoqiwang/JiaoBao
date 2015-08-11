@@ -39,6 +39,7 @@
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_head;//头像
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_pic;//图片显示
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_detail;//详情按钮
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
 
@@ -47,8 +48,10 @@
 @property (nonatomic,assign) int mInt_flag;//
 
 
-//给标题和答案添加点击事件
+//给标题和答案添加点击事件,赞
 -(void)addTapClick;
+
+-(IBAction)detailBtn:(id)sender;
 
 @end
 
@@ -62,5 +65,11 @@
 
 //点击答案、依据
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+
+//点赞
+-(void)KnowledgeTableVIewCellLike:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+
+//详情按钮
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 
 @end
