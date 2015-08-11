@@ -18,6 +18,7 @@
 
 
 
+@property (weak, nonatomic) IBOutlet UIButton *LikeBtn;
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_Category0;//话题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_Category1;//话题
