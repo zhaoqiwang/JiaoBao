@@ -27,6 +27,7 @@
     [self.contentView addSubview:self.mLab_Abstracts];
     
     self.model = [[QuestionModel alloc] init];
+    self.answerModel = [[AnswerByIdModel alloc] init];
     
     //人员列表
     self.mCollectionV_pic.frame = CGRectMake(0,0, 0, 0);
@@ -42,6 +43,9 @@
 #pragma mark - Collection View Data Source
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
+    if (self.mInt_flag == 1) {
+        return self.answerModel.Thumbnail.count;
+    }
     return self.model.answerModel.Thumbnail.count;
 }
 //定义并返回每个cell
@@ -50,10 +54,18 @@
     if (!cell) {
         
     }
-    NSString *str = [self.model.answerModel.Thumbnail objectAtIndex:indexPath.row];
-    cell.mLab_name.hidden = YES;
-    [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-    cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
+    if (self.mInt_flag == 1) {
+        NSString *str = [self.answerModel.Thumbnail objectAtIndex:indexPath.row];
+        cell.mLab_name.hidden = YES;
+        [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+        cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
+    }else{
+        NSString *str = [self.model.answerModel.Thumbnail objectAtIndex:indexPath.row];
+        cell.mLab_name.hidden = YES;
+        [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+        cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
+    }
+    
     
     return cell;
 }

@@ -608,6 +608,13 @@
 		A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0261A650B3F00DB85E3 /* JSONValueTransformer.m */; };
 		A77FF0331A6510F500DB85E3 /* UnitParentsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0321A6510F500DB85E3 /* UnitParentsModel.m */; };
 		A77FF0361A6511AB00DB85E3 /* UnitClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A77FF0351A6511AB00DB85E3 /* UnitClassModel.m */; };
+		A7804C951B7888DA007C0DC6 /* ButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7804C941B7888DA007C0DC6 /* ButtonView.m */; };
+		A7804C981B788B02007C0DC6 /* ButtonViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7804C971B788B02007C0DC6 /* ButtonViewModel.m */; };
+		A7804C9C1B789219007C0DC6 /* KnowledgeQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7804C9A1B789219007C0DC6 /* KnowledgeQuestionViewController.m */; };
+		A7804C9D1B789219007C0DC6 /* KnowledgeQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7804C9B1B789219007C0DC6 /* KnowledgeQuestionViewController.xib */; };
+		A7804CA21B789516007C0DC6 /* buttonView1.png in Resources */ = {isa = PBXBuildFile; fileRef = A7804C9F1B789516007C0DC6 /* buttonView1.png */; };
+		A7804CA31B789516007C0DC6 /* buttonView1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7804CA01B789516007C0DC6 /* buttonView1@2x.png */; };
+		A7804CA41B789516007C0DC6 /* buttonView1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7804CA11B789516007C0DC6 /* buttonView1@3x.png */; };
 		A782AEBC1AE9D71A00547B0F /* NewWork_accessory.png in Resources */ = {isa = PBXBuildFile; fileRef = A782AEAD1AE9D71A00547B0F /* NewWork_accessory.png */; };
 		A782AEBD1AE9D71A00547B0F /* NewWork_accessory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A782AEAE1AE9D71A00547B0F /* NewWork_accessory@2x.png */; };
 		A782AEBE1AE9D71A00547B0F /* NewWork_accessory@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A782AEAF1AE9D71A00547B0F /* NewWork_accessory@3x.png */; };
@@ -1728,6 +1735,16 @@
 		A77FF0321A6510F500DB85E3 /* UnitParentsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitParentsModel.m; path = views/InternetApplications/workView/model/UnitParentsModel.m; sourceTree = "<group>"; };
 		A77FF0341A6511AB00DB85E3 /* UnitClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnitClassModel.h; path = views/InternetApplications/workView/model/UnitClassModel.h; sourceTree = "<group>"; };
 		A77FF0351A6511AB00DB85E3 /* UnitClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnitClassModel.m; path = views/InternetApplications/workView/model/UnitClassModel.m; sourceTree = "<group>"; };
+		A7804C931B7888DA007C0DC6 /* ButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonView.h; path = views/InternetApplications/theme/Knowledge/ButtonView.h; sourceTree = "<group>"; };
+		A7804C941B7888DA007C0DC6 /* ButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonView.m; path = views/InternetApplications/theme/Knowledge/ButtonView.m; sourceTree = "<group>"; };
+		A7804C961B788B02007C0DC6 /* ButtonViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ButtonViewModel.h; path = views/InternetApplications/theme/Knowledge/ButtonViewModel.h; sourceTree = "<group>"; };
+		A7804C971B788B02007C0DC6 /* ButtonViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ButtonViewModel.m; path = views/InternetApplications/theme/Knowledge/ButtonViewModel.m; sourceTree = "<group>"; };
+		A7804C991B789219007C0DC6 /* KnowledgeQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnowledgeQuestionViewController.h; path = views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.h; sourceTree = "<group>"; };
+		A7804C9A1B789219007C0DC6 /* KnowledgeQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KnowledgeQuestionViewController.m; path = views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m; sourceTree = "<group>"; };
+		A7804C9B1B789219007C0DC6 /* KnowledgeQuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KnowledgeQuestionViewController.xib; path = views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.xib; sourceTree = "<group>"; };
+		A7804C9F1B789516007C0DC6 /* buttonView1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView1.png; path = Image/InternetApp/knowledge/buttonView1.png; sourceTree = "<group>"; };
+		A7804CA01B789516007C0DC6 /* buttonView1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView1@2x.png"; path = "Image/InternetApp/knowledge/buttonView1@2x.png"; sourceTree = "<group>"; };
+		A7804CA11B789516007C0DC6 /* buttonView1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView1@3x.png"; path = "Image/InternetApp/knowledge/buttonView1@3x.png"; sourceTree = "<group>"; };
 		A782AEAD1AE9D71A00547B0F /* NewWork_accessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewWork_accessory.png; path = Image/InternetApp/workView/NewWorkView/NewWork_accessory.png; sourceTree = "<group>"; };
 		A782AEAE1AE9D71A00547B0F /* NewWork_accessory@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWork_accessory@2x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWork_accessory@2x.png"; sourceTree = "<group>"; };
 		A782AEAF1AE9D71A00547B0F /* NewWork_accessory@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWork_accessory@3x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWork_accessory@3x.png"; sourceTree = "<group>"; };
@@ -3383,6 +3400,13 @@
 				A7660A981B71B97C00EF0FA9 /* KnowledgeTableViewCell.h */,
 				A7660A991B71B97C00EF0FA9 /* KnowledgeTableViewCell.m */,
 				A7660A9A1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib */,
+				A7804C931B7888DA007C0DC6 /* ButtonView.h */,
+				A7804C941B7888DA007C0DC6 /* ButtonView.m */,
+				A7804C961B788B02007C0DC6 /* ButtonViewModel.h */,
+				A7804C971B788B02007C0DC6 /* ButtonViewModel.m */,
+				A7804C991B789219007C0DC6 /* KnowledgeQuestionViewController.h */,
+				A7804C9A1B789219007C0DC6 /* KnowledgeQuestionViewController.m */,
+				A7804C9B1B789219007C0DC6 /* KnowledgeQuestionViewController.xib */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -3713,6 +3737,16 @@
 			path = JSONModelTransformations;
 			sourceTree = "<group>";
 		};
+		A7804C9E1B789487007C0DC6 /* knowledge */ = {
+			isa = PBXGroup;
+			children = (
+				A7804C9F1B789516007C0DC6 /* buttonView1.png */,
+				A7804CA01B789516007C0DC6 /* buttonView1@2x.png */,
+				A7804CA11B789516007C0DC6 /* buttonView1@3x.png */,
+			);
+			name = knowledge;
+			sourceTree = "<group>";
+		};
 		A796B32D1B1D98FB00FA1735 /* register */ = {
 			isa = PBXGroup;
 			children = (
@@ -3751,6 +3785,7 @@
 		A7AAC4C519F75D6E00A0ED40 /* InternetApp */ = {
 			isa = PBXGroup;
 			children = (
+				A7804C9E1B789487007C0DC6 /* knowledge */,
 				A75E6EAB1ABACD8300B51B18 /* class */,
 				A7CE67261AA70A250038D0C5 /* shareArticle.png */,
 				A7CE67271AA70A250038D0C5 /* shareArticle@2x.png */,
@@ -4228,6 +4263,7 @@
 				F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */,
 				A7AAC4CE19F75DB200A0ED40 /* appNav_add@2x.png in Resources */,
 				A769C5FD1B7464E0006C6B76 /* topBtnSelect0.png in Resources */,
+				A7804CA41B789516007C0DC6 /* buttonView1@3x.png in Resources */,
 				F7502A0D1AEE1E50004F822F /* blank@3x.png in Resources */,
 				A7375F411A0B233A00B31926 /* Forward_section.xib in Resources */,
 				A727C7DF1A6F93780019C4CD /* share_lookBig@3x.png in Resources */,
@@ -4510,6 +4546,7 @@
 				F7502A1D1AEE1E50004F822F /* HomeClass_Click_3.png in Resources */,
 				A753E52D1A1B3D8C005A8EED /* share_look.png in Resources */,
 				A71D61EE1A1C96A400B8D33D /* share_school0@2x.png in Resources */,
+				A7804CA31B789516007C0DC6 /* buttonView1@2x.png in Resources */,
 				F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */,
 				A761D4001A7F697900DCAEB9 /* rootTableSelect_1@3x.png in Resources */,
 				A74D26951B58FAE200E63DFB /* record_animate_07.png in Resources */,
@@ -4569,6 +4606,7 @@
 				A761D4021A7F697900DCAEB9 /* rootTableSelect_2@2x.png in Resources */,
 				A701798F1AB91D2100E7093F /* work_photo@3x.png in Resources */,
 				A766B4461ACB9E1B00018D46 /* classView_more@3x.png in Resources */,
+				A7804CA21B789516007C0DC6 /* buttonView1.png in Resources */,
 				A7AD8C5719F644A2002E65FB /* tabbar_student1@2x.png in Resources */,
 				A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */,
 				A71D61F01A1C96A400B8D33D /* share_school1@2x.png in Resources */,
@@ -4595,6 +4633,7 @@
 				A701797C1AB914D900E7093F /* work_deleteAccessory@3x.png in Resources */,
 				A782AEC51AE9D71A00547B0F /* NewWork_SendMsg.png in Resources */,
 				A782AEC31AE9D71A00547B0F /* NewWork_Send@2x.png in Resources */,
+				A7804C9D1B789219007C0DC6 /* KnowledgeQuestionViewController.xib in Resources */,
 				A73D9C141A368EDF004CE4D5 /* RongYun_group.png in Resources */,
 				A73AD8351A20824C00F68C47 /* share_tableV_class@2x.png in Resources */,
 				A7BB17E819F4B22000A81286 /* jsyiamsCA.cer in Resources */,
@@ -4728,6 +4767,7 @@
 				A7BEEA1D1A442451003C9EAD /* UnitAlbumsListModel.m in Sources */,
 				A7595E9F1A5FC2F30027848E /* PSTCollectionViewData.m in Sources */,
 				A75A373B1A08BD13009D2464 /* CMRevicerModel.m in Sources */,
+				A7804C981B788B02007C0DC6 /* ButtonViewModel.m in Sources */,
 				A73CAD701A07755B00D6C5AA /* MJRefreshHeaderView.m in Sources */,
 				A7BEEA191A441E10003C9EAD /* UnintAlbumsListViewController.m in Sources */,
 				A73B52B619FB930D00187CB9 /* UnReadMsg_model.m in Sources */,
@@ -4988,6 +5028,7 @@
 				A75A37471A08C3F0009D2464 /* groupselit_selitModel.m in Sources */,
 				A755E70C19F278B900BBDF3D /* ASICloudFilesContainerRequest.m in Sources */,
 				A7595EA71A5FC2F30027848E /* PSTGridLayoutSection.m in Sources */,
+				A7804C951B7888DA007C0DC6 /* ButtonView.m in Sources */,
 				A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */,
 				A743394E1A452B7700AFC0A5 /* SDImageCache.m in Sources */,
 				A7595E951A5FC2F30027848E /* MWTapDetectingImageView.m in Sources */,
@@ -5053,6 +5094,7 @@
 				A755E71C19F278B900BBDF3D /* SBJsonWriter.m in Sources */,
 				A7595EA01A5FC2F30027848E /* PSTCollectionViewFlowLayout.m in Sources */,
 				A7B0A6B01A1205CA002D770A /* selitadminModel.m in Sources */,
+				A7804C9C1B789219007C0DC6 /* KnowledgeQuestionViewController.m in Sources */,
 				A73CAD6E1A07755B00D6C5AA /* MJRefreshConst.m in Sources */,
 				A75A37441A08C2EA009D2464 /* UserListModel.m in Sources */,
 			);

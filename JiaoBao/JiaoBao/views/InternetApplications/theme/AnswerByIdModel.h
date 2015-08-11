@@ -19,7 +19,7 @@
 @property(nonatomic,strong)NSString *CaiCount;//反对数量
 @property(nonatomic,strong)NSString *Flag;//0:普通回答  1:求真回答
 @property(nonatomic,strong)NSString *Abstracts;//摘要
-@property(nonatomic,strong)NSString *Thumbnail;//缩略图地址
+@property(nonatomic,strong)NSMutableArray *Thumbnail;//缩略图地址
 @property(nonatomic,strong)NSString *IdFlag;//回答者姓名
 
 @end
