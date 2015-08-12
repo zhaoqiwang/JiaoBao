@@ -14,6 +14,13 @@
 
 @implementation KnowledgeQuestionViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
@@ -163,7 +170,6 @@
     self.mView_titlecell.mLab_comment.hidden = YES;
     self.mView_titlecell.mLab_line2.hidden = YES;
     self.mView_titlecell.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+21);
-    D("sidghsjghkld-====%@",NSStringFromCGRect(self.mView_titlecell.frame));
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -195,6 +201,7 @@
     AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
     cell.answerModel = model;
     cell.mLab_title.hidden = YES;
+    cell.mBtn_detail.hidden = YES;
     //话题
     cell.mLab_Category0.hidden = YES;
     cell.mLab_Category1.hidden = YES;

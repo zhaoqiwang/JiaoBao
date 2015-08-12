@@ -177,6 +177,7 @@
 //问题明细
 +(QuestionDetailModel*)parserJsonQuestionDetail:(NSString*)json
 {
+    D("soiudhgousdh-====%@",json);
     NSDictionary *dic = [json objectFromJSONString];
     QuestionDetailModel *model = [[QuestionDetailModel alloc ]init];
     model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];

@@ -274,6 +274,8 @@
 		A750827D1B7998E60031E7C9 /* buttonView6.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826E1B7998E60031E7C9 /* buttonView6.png */; };
 		A750827E1B7998E60031E7C9 /* buttonView6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A750826F1B7998E60031E7C9 /* buttonView6@2x.png */; };
 		A750827F1B7998E60031E7C9 /* buttonView6@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75082701B7998E60031E7C9 /* buttonView6@3x.png */; };
+		A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75082811B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m */; };
+		A75082841B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A75082821B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.xib */; };
 		A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A751A2131A8D9B92008922FC /* ReSendMsgViewController.m */; };
 		A751A2161A8D9B92008922FC /* ReSendMsgViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A751A2141A8D9B92008922FC /* ReSendMsgViewController.xib */; };
 		A753E51D1A1AF611005A8EED /* TopArthListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A753E51C1A1AF611005A8EED /* TopArthListModel.m */; };
@@ -646,6 +648,10 @@
 		A782AEC81AE9D71A00547B0F /* NewWork_unSendMsg.png in Resources */ = {isa = PBXBuildFile; fileRef = A782AEB91AE9D71A00547B0F /* NewWork_unSendMsg.png */; };
 		A782AEC91AE9D71A00547B0F /* NewWork_unSendMsg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A782AEBA1AE9D71A00547B0F /* NewWork_unSendMsg@2x.png */; };
 		A782AECA1AE9D71A00547B0F /* NewWork_unSendMsg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A782AEBB1AE9D71A00547B0F /* NewWork_unSendMsg@3x.png */; };
+		A78459951B7B302300EA7D5D /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = A78459941B7B302300EA7D5D /* NullSafe.m */; };
+		A78459991B7B369D00EA7D5D /* buttonView7.png in Resources */ = {isa = PBXBuildFile; fileRef = A78459961B7B369D00EA7D5D /* buttonView7.png */; };
+		A784599A1B7B369D00EA7D5D /* buttonView7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A78459971B7B369D00EA7D5D /* buttonView7@2x.png */; };
+		A784599B1B7B369D00EA7D5D /* buttonView7@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A78459981B7B369D00EA7D5D /* buttonView7@3x.png */; };
 		A78D65D11A89B35500BE6326 /* WorkMsgListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D65CF1A89B35500BE6326 /* WorkMsgListViewController.m */; };
 		A78D65D21A89B35500BE6326 /* WorkMsgListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A78D65D01A89B35500BE6326 /* WorkMsgListViewController.xib */; };
 		A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D65D51A89E41400BE6326 /* WorkMsgListCell.m */; };
@@ -1254,6 +1260,9 @@
 		A750826E1B7998E60031E7C9 /* buttonView6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView6.png; path = Image/InternetApp/knowledge/buttonView6.png; sourceTree = "<group>"; };
 		A750826F1B7998E60031E7C9 /* buttonView6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView6@2x.png"; path = "Image/InternetApp/knowledge/buttonView6@2x.png"; sourceTree = "<group>"; };
 		A75082701B7998E60031E7C9 /* buttonView6@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView6@3x.png"; path = "Image/InternetApp/knowledge/buttonView6@3x.png"; sourceTree = "<group>"; };
+		A75082801B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnowledgeAddAnswerViewController.h; path = views/InternetApplications/theme/Knowledge/KnowledgeAddAnswerViewController.h; sourceTree = "<group>"; };
+		A75082811B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KnowledgeAddAnswerViewController.m; path = views/InternetApplications/theme/Knowledge/KnowledgeAddAnswerViewController.m; sourceTree = "<group>"; };
+		A75082821B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KnowledgeAddAnswerViewController.xib; path = views/InternetApplications/theme/Knowledge/KnowledgeAddAnswerViewController.xib; sourceTree = "<group>"; };
 		A751A2121A8D9B92008922FC /* ReSendMsgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReSendMsgViewController.h; path = views/InternetApplications/workView/ReSendMsgViewController.h; sourceTree = "<group>"; };
 		A751A2131A8D9B92008922FC /* ReSendMsgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReSendMsgViewController.m; path = views/InternetApplications/workView/ReSendMsgViewController.m; sourceTree = "<group>"; };
 		A751A2141A8D9B92008922FC /* ReSendMsgViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReSendMsgViewController.xib; path = views/InternetApplications/workView/ReSendMsgViewController.xib; sourceTree = "<group>"; };
@@ -1793,6 +1802,10 @@
 		A782AEB91AE9D71A00547B0F /* NewWork_unSendMsg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NewWork_unSendMsg.png; path = Image/InternetApp/workView/NewWorkView/NewWork_unSendMsg.png; sourceTree = "<group>"; };
 		A782AEBA1AE9D71A00547B0F /* NewWork_unSendMsg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWork_unSendMsg@2x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWork_unSendMsg@2x.png"; sourceTree = "<group>"; };
 		A782AEBB1AE9D71A00547B0F /* NewWork_unSendMsg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "NewWork_unSendMsg@3x.png"; path = "Image/InternetApp/workView/NewWorkView/NewWork_unSendMsg@3x.png"; sourceTree = "<group>"; };
+		A78459941B7B302300EA7D5D /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NullSafe.m; path = Common/JsonKit/NullSafe.m; sourceTree = "<group>"; };
+		A78459961B7B369D00EA7D5D /* buttonView7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView7.png; path = Image/InternetApp/knowledge/buttonView7.png; sourceTree = "<group>"; };
+		A78459971B7B369D00EA7D5D /* buttonView7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView7@2x.png"; path = "Image/InternetApp/knowledge/buttonView7@2x.png"; sourceTree = "<group>"; };
+		A78459981B7B369D00EA7D5D /* buttonView7@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView7@3x.png"; path = "Image/InternetApp/knowledge/buttonView7@3x.png"; sourceTree = "<group>"; };
 		A78D65CE1A89B35500BE6326 /* WorkMsgListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkMsgListViewController.h; path = views/InternetApplications/workView/WorkMsgListViewController.h; sourceTree = "<group>"; };
 		A78D65CF1A89B35500BE6326 /* WorkMsgListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkMsgListViewController.m; path = views/InternetApplications/workView/WorkMsgListViewController.m; sourceTree = "<group>"; };
 		A78D65D01A89B35500BE6326 /* WorkMsgListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkMsgListViewController.xib; path = views/InternetApplications/workView/WorkMsgListViewController.xib; sourceTree = "<group>"; };
@@ -3442,6 +3455,9 @@
 				A7804C9B1B789219007C0DC6 /* KnowledgeQuestionViewController.xib */,
 				A750825F1B7990920031E7C9 /* ButtonViewCell.h */,
 				A75082601B7990920031E7C9 /* ButtonViewCell.m */,
+				A75082801B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.h */,
+				A75082811B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m */,
+				A75082821B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.xib */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -3775,6 +3791,9 @@
 		A7804C9E1B789487007C0DC6 /* knowledge */ = {
 			isa = PBXGroup;
 			children = (
+				A78459961B7B369D00EA7D5D /* buttonView7.png */,
+				A78459971B7B369D00EA7D5D /* buttonView7@2x.png */,
+				A78459981B7B369D00EA7D5D /* buttonView7@3x.png */,
 				A75082621B7998E60031E7C9 /* buttonView2.png */,
 				A75082631B7998E60031E7C9 /* buttonView2@2x.png */,
 				A75082641B7998E60031E7C9 /* buttonView2@3x.png */,
@@ -3902,6 +3921,7 @@
 		A7AD8C2519F60011002E65FB /* JsonKit */ = {
 			isa = PBXGroup;
 			children = (
+				A78459941B7B302300EA7D5D /* NullSafe.m */,
 				A7AD8C2619F6002A002E65FB /* JSONKit.h */,
 				A7AD8C2719F6002A002E65FB /* JSONKit.m */,
 			);
@@ -4515,6 +4535,7 @@
 				F7502A271AEE1E50004F822F /* selected.png in Resources */,
 				A73AD8341A20824C00F68C47 /* share_tableV_class.png in Resources */,
 				A749B9C219F89A530036F480 /* root_addBtn.png in Resources */,
+				A784599A1B7B369D00EA7D5D /* buttonView7@2x.png in Resources */,
 				A76ED5C71AD67855006F3E0B /* workView_click_2.png in Resources */,
 				A7781F431AE8A0F300F03AEB /* NewWorkView_1@2x.png in Resources */,
 				A74D26981B58FAE200E63DFB /* record_animate_10.png in Resources */,
@@ -4689,6 +4710,7 @@
 				A7BB180819F4F91E00A81286 /* Regiser_passwd_2.png in Resources */,
 				A71D61EB1A1C96A400B8D33D /* share_recommend1.png in Resources */,
 				A7626FC91B0D7EDB006957F2 /* popupWindow_like@3x.png in Resources */,
+				A784599B1B7B369D00EA7D5D /* buttonView7@3x.png in Resources */,
 				A75E6EBD1ABACDBD00B51B18 /* classView_1@3x.png in Resources */,
 				A701797C1AB914D900E7093F /* work_deleteAccessory@3x.png in Resources */,
 				A782AEC51AE9D71A00547B0F /* NewWork_SendMsg.png in Resources */,
@@ -4746,6 +4768,7 @@
 				A749B9D819F89A530036F480 /* top_dian.png in Resources */,
 				A71D61E21A1C96A400B8D33D /* share_new0@2x.png in Resources */,
 				A7AD8C3419F63CC7002E65FB /* InternetApplicationsViewController.xib in Resources */,
+				A75082841B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.xib in Resources */,
 				F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */,
 				A74821A819FF452200234020 /* nav_return.png in Resources */,
 				A71D61E91A1C96A400B8D33D /* share_recommend0.png in Resources */,
@@ -4795,6 +4818,7 @@
 				A75E6EC21ABACDBD00B51B18 /* classView_3@2x.png in Resources */,
 				F7502A111AEE1E50004F822F /* HomeClass_1.png in Resources */,
 				A769C6081B749FBC006C6B76 /* rootTable_1@3x.png in Resources */,
+				A78459991B7B369D00EA7D5D /* buttonView7.png in Resources */,
 				F7502A241AEE1E50004F822F /* rTri.png in Resources */,
 				A7626FC11B0D7EDB006957F2 /* popupWindow_comment.png in Resources */,
 				A7626FC21B0D7EDB006957F2 /* popupWindow_comment@2x.png in Resources */,
@@ -4917,6 +4941,7 @@
 				A75E3F931B6F63ED00284C3D /* ParserJson_knowledge.m in Sources */,
 				A76B6A761AB2D1BC00B6ED12 /* AccessoryModel.m in Sources */,
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,
+				A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */,
 				A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */,
 				A7357A1B1A3FE1E000A195C5 /* MyFriendsViewController.m in Sources */,
 				A7141DCE1A174A5D00940A3E /* ShareHttp.m in Sources */,
@@ -5106,6 +5131,7 @@
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				F76B64631B1EA6DB008F6961 /* FirstRegViewController.m in Sources */,
+				A78459951B7B302300EA7D5D /* NullSafe.m in Sources */,
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,
 				A755E70119F278B900BBDF3D /* ASIAuthenticationDialog.m in Sources */,
 				F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */,
