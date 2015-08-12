@@ -30,4 +30,7 @@
 @property (nonatomic,weak) IBOutlet UILabel *mLab_answer;//回答提示
 @property (nonatomic,weak) IBOutlet UILabel *mLab_content;//内容提示
 
+-(IBAction)mBtn_submit:(id)sender;
+-(IBAction)mBtn_anSubmit:(id)sender;
+
 @end

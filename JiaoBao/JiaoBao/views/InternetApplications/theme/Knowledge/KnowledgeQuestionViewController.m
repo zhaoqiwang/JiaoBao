@@ -173,7 +173,6 @@
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
-    D("ifjglakjrglks-====%@",NSStringFromCGRect(self.mTableV_answers.frame));
     return self.mArr_answers.count;
 }
 

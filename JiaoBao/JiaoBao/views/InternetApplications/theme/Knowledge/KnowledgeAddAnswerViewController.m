@@ -8,6 +8,7 @@
 
 #import "KnowledgeAddAnswerViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "IQKeyboardManager.h"
 
 @interface KnowledgeAddAnswerViewController ()
 
@@ -25,14 +26,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //键盘事件
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
     //问题详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
+    //提交答案
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddAnswer" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddAnswer:) name:@"AddAnswer" object:nil];
+    
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
@@ -70,6 +76,21 @@
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
+}
+
+//提交答案
+-(void)AddAnswer:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue]==0) {
+        self.mTextV_content.text = @"";
+        self.mTextV_answer.text = @"";
+        self.mLab_answer.hidden = NO;
+        self.mLab_content.hidden = NO;
+    }
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 }
 
 //问题详情
@@ -178,7 +199,35 @@
     self.mLab_content.frame = CGRectMake(12, self.mTextV_content.frame.origin.y+3, self.mLab_content.frame.size.width, self.mLab_content.frame.size.height);
 }
 
+-(IBAction)mBtn_submit:(id)sender{
+    [self submitAnswer:0];
+}
+-(IBAction)mBtn_anSubmit:(id)sender{
+    [self submitAnswer:1];
+}
+
+//提交答案
+-(void)submitAnswer:(int)flag{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    if (self.mTextV_answer.text.length==0) {
+        [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
+    }
+    if (self.mTextV_content.text.length ==0) {
+        [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
+    }
+    NSString *name = @"";
+    if (flag ==0) {
+        name = [dm getInstance].NickName;
+    }
+    [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:self.mTextV_content.text UserName:name];
+    [MBProgressHUD showMessage:@"提交中..." toView:self.view];
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    D("dijgldgj-====%@,%@",textView.text,text);
     if ([self.mTextV_answer.text isEqualToString:@""]) {
         self.mLab_answer.hidden = NO;
     }else{
@@ -192,13 +241,6 @@
     
     // Any new character added is passed in as the "text" parameter
     if ([text isEqualToString:@"\n"]) {
-        NSTimeInterval animationDuration = 0.30f;
-//        [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:animationDuration];
-        CGRect rect = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, [dm getInstance].height);
-        self.view.frame = rect;
-        [UIView commitAnimations];
         // Be sure to test for equality using the "isEqualToString" message
         [textView resignFirstResponder];
         
@@ -209,98 +251,19 @@
     return TRUE;
 }
 
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.3];
-//    [UIView setAnimationDelegate:self];
-//    self.view.center = CGPointMake(160, 0);
-//    [UIView commitAnimations];
-    D("1111111");
-    CGRect frame = textView.frame;
-    int offset = frame.origin.y + 32 - (self.view.frame.size.height - 250.0);//键盘高度216
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyBoard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    float width = self.view.frame.size.width;
-    float height = self.view.frame.size.height;
-    if(offset > 0)
-    {
-        CGRect rect = CGRectMake(0.0f, -offset,width,height);
-        self.view.frame = rect;
+//检查当前网络是否可用
+-(BOOL)checkNetWork{
+    if([Reachability isEnableNetwork]==NO){
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
+        return YES;
+    }else{
+        return NO;
     }
-    [UIView commitAnimations];
-    return YES;
-}
-
--(void)textViewDidEndEditing:(UITextView *)textView{
-//    CGRect frame = textView.frame;
-//    float  offset = frame.origin.y + 32 - (self.view.frame.size.height + 216.0); //view向上移动的距离
-    NSTimeInterval animationDuration = 0.30f;
-    [UIView beginAnimations:@"ResizeForKeyBoard"context:nil];
-    [UIView setAnimationDuration:animationDuration];
-//    float width = self.view.frame.size.width;
-//    float height = self.view.frame.size.height;
-    CGRect rect = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, [dm getInstance].height);
-    self.view.frame = rect;
-    [UIView commitAnimations];
-}
-
-- (void) keyboardWasShown:(NSNotification *) notif{
-    NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
-    NSValue *animationDurationValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    [UIView animateWithDuration:animationDuration
-                     animations:^{
-                         CGRect frame = self.view.frame;
-                         frame.size = CGSizeMake(frame.size.width, frame.size.height - keyboardSize.height);
-                         [self.view setFrame:frame];
-                     }
-                     completion:^(BOOL finished){
-                         ;
-                     }];
-    
-//    float height = keyboardSize.height;
-//    CGRect frame = self.view.frame;
-//    frame.size = CGSizeMake(frame.size.width, frame.size.height - height);
-////    [UIView beginAnimations:@"Curl"context:nil];//动画开始
-//    [UIView beginAnimations:nil context:nil];//动画开始
-//    [UIView setAnimationDuration:0.30];
-//    [UIView setAnimationDelegate:self];
-//    [self.view setFrame:frame];
-//    [UIView commitAnimations];
-}
-- (void) keyboardWasHidden:(NSNotification *) notif{
-    NSDictionary *userInfo = [notif userInfo];
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    [UIView animateWithDuration:animationDuration
-                     animations:^{
-                         [UIView setAnimationDuration:animationDuration];
-                         CGRect rect = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, [dm getInstance].height);
-                         self.view.frame = rect;
-                     }
-                     completion:^(BOOL finished){
-                         ;
-                     }];
-    
-//    NSTimeInterval animationDuration = 0.30f;
-////    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:animationDuration];
-//    CGRect rect = CGRectMake(0.0f, 20.0f, self.view.frame.size.width, self.view.frame.size.height);
-//    self.view.frame = rect;
-//    [UIView commitAnimations];
-    
-    [self.mTextV_answer resignFirstResponder];
-    [self.mTextV_content resignFirstResponder];
 }
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [utils popViewControllerAnimated:YES];
 }
 
