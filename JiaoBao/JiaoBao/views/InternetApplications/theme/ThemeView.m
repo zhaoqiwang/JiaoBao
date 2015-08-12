@@ -114,6 +114,7 @@
     }
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
     if (model.mArr_Category.count==0) {
+        self.mInt_reloadData = 0;
         [self sendRequest];
     }
     [self.mTableV_knowledge reloadData];
@@ -378,7 +379,8 @@
         //评论
         cell.mLab_commentCount.hidden = YES;
         cell.mLab_comment.hidden = YES;
-        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
+        cell.mLab_line2.hidden = NO;
+        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+10, [dm getInstance].width, 10);
     }
     
     
@@ -481,15 +483,14 @@
     }
     
     if (self.mInt_index ==0) {
-        [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:@"1"];
+        [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:@"-1"];
     }else if (self.mInt_index ==1){
         
     }else if (self.mInt_index ==2){
         
     }else{
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-        [[KnowledgeHttp getInstance] QuestionIndexWithNumPerPage:@"3" pageNum:page CategoryId:model.item.TabID];
-//        [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"3" pageNum:page RowCount:rowCount flag:@"1" uid:[dm getInstance].jiaoBaoHao];
+        [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:@"-1" uid:model.item.TabID];
     }
 }
 
@@ -512,7 +513,9 @@
 
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    
+    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+    detail.mModel_question = knowledgeTableViewCell.model;
+    [utils pushViewController:detail animated:YES];
 }
 
 @end

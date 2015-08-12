@@ -282,15 +282,20 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"QId":QId};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        QuestionDetailModel *array = [ParserJson_knowledge parserJsonQuestionDetail:[jsonDic objectForKey:@"Data"]];
+        QuestionDetailModel *model = [ParserJson_knowledge parserJsonQuestionDetail:[jsonDic objectForKey:@"Data"]];
         
         D("JSON--------QuestionDetailWithQId: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"QuestionDetail" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------QuestionDetailWithQId: %@", error);
     }];
