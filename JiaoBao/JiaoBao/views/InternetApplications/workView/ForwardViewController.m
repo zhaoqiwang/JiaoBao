@@ -395,7 +395,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
         CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
         if (size.width>cell.mLab_name.frame.size.width) {
-            cell.mLab_name.numberOfLines = 2;
+            cell.mLab_name.numberOfLines =0;
         }
         cell.mLab_name.text = groupModel.Name;
         

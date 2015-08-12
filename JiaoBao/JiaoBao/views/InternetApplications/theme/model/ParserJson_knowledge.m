@@ -300,7 +300,7 @@
         subModel.RefIds = [subDic objectForKey:@"RefIds"];
         subModel.RecDate = [subDic objectForKey:@"RecDate"];
         NSString *str = [utils getLocalTimeDate];
-        NSString *str2 = [dic objectForKey:@"RecDate"];
+        NSString *str2 = [subDic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];
         if (range.length>0) {
             subModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
@@ -310,7 +310,17 @@
         subModel.CaiCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"CaiCount"]];
         subModel.LikeCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"LikeCount"]];
         subModel.WContent = [subDic objectForKey:@"WContent"];
-        subModel.UserName = [subDic objectForKey:@"UserName"];
+        NSString *userName = [subDic objectForKey:@"UserName"];
+        if( [userName isKindOfClass:[NSNull class]]||[userName isEqual:@"null"])
+        {
+            subModel.UserName = @"";
+
+        }
+        else
+        {
+            subModel.UserName = [subDic objectForKey:@"UserName"];
+
+        }
         [model.mArr_CommentList addObject:subModel];
     }
     

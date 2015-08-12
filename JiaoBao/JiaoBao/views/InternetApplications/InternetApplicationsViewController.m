@@ -12,6 +12,7 @@
 #import "CheckingInViewController.h"
 #import "MBProgressHUD+AD.h"
 #import "MobClick.h"
+#import "AddQuestionViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -309,7 +310,10 @@
         NSArray *menuItems ;
         if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
             menuItems =
-            @[
+            @[ [KxMenuItem menuItem:@"添加问题"
+                            image:[UIImage imageNamed:@"appNav_dongtai"]
+                            target:self
+                            action:@selector(pushMenuItem9:)],
               [KxMenuItem menuItem:@"发布单位动态"
                              image:[UIImage imageNamed:@"appNav_dongtai"]
                             target:self
@@ -677,6 +681,11 @@
     }
     PeopleSpaceViewController *view = [[PeopleSpaceViewController alloc] init];
     [utils pushViewController:view animated:YES];
+}
+-(void)pushMenuItem9:(id)sender
+{
+    AddQuestionViewController *addQuestionVC = [[AddQuestionViewController alloc]init];
+    [utils pushViewController:addQuestionVC animated:YES];
 }
 
 //获取当前用户可以发布动态的单位列表(含班级）

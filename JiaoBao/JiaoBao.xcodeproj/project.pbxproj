@@ -889,6 +889,8 @@
 		F7C8AB721B73407100E829A4 /* AllCommentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB711B73407100E829A4 /* AllCommentListModel.m */; };
 		F7C8AB751B73451700E829A4 /* commentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB741B73451700E829A4 /* commentListModel.m */; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
+		F7E981071B79F6FE008B42E9 /* AddQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E981051B79F6FE008B42E9 /* AddQuestionViewController.m */; };
+		F7E981081B79F6FE008B42E9 /* AddQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E981061B79F6FE008B42E9 /* AddQuestionViewController.xib */; };
 		F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */; };
 		F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */; };
 		F7EE1A0A1B78896000B31D79 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EE1A081B78896000B31D79 /* CommentViewController.m */; };
@@ -2211,6 +2213,9 @@
 		F7DBA8AC1B1016A100C865D5 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bj.png; sourceTree = "<group>"; };
 		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
 		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
+		F7E981041B79F6FE008B42E9 /* AddQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddQuestionViewController.h; path = views/InternetApplications/theme/AddQuestionViewController.h; sourceTree = "<group>"; };
+		F7E981051B79F6FE008B42E9 /* AddQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddQuestionViewController.m; path = views/InternetApplications/theme/AddQuestionViewController.m; sourceTree = "<group>"; };
+		F7E981061B79F6FE008B42E9 /* AddQuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddQuestionViewController.xib; path = views/InternetApplications/theme/AddQuestionViewController.xib; sourceTree = "<group>"; };
 		F7EC84A71B1FE08A00CBE0C1 /* SecondRegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondRegViewController.h; path = views/InternetApplications/register/SecondRegViewController.h; sourceTree = "<group>"; };
 		F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondRegViewController.m; path = views/InternetApplications/register/SecondRegViewController.m; sourceTree = "<group>"; };
 		F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SecondRegViewController.xib; path = views/InternetApplications/register/SecondRegViewController.xib; sourceTree = "<group>"; };
@@ -2347,6 +2352,9 @@
 				F7EE1A0C1B789CD200B31D79 /* CommentListTableViewCell.h */,
 				F7EE1A0D1B789CD200B31D79 /* CommentListTableViewCell.m */,
 				F7EE1A0E1B789CD200B31D79 /* CommentListTableViewCell.xib */,
+				F7E981041B79F6FE008B42E9 /* AddQuestionViewController.h */,
+				F7E981051B79F6FE008B42E9 /* AddQuestionViewController.m */,
+				F7E981061B79F6FE008B42E9 /* AddQuestionViewController.xib */,
 				A7357A331A4021F900A195C5 /* ThemeHttp.h */,
 				A7357A341A4021F900A195C5 /* ThemeHttp.m */,
 				A7113F251A41661E00F927DD /* ThemeSpaceViewController.h */,
@@ -4540,6 +4548,7 @@
 				A7781F431AE8A0F300F03AEB /* NewWorkView_1@2x.png in Resources */,
 				A74D26981B58FAE200E63DFB /* record_animate_10.png in Resources */,
 				A77F9F411AFCAAC90003E579 /* appNav_share@2x.png in Resources */,
+				F7E981081B79F6FE008B42E9 /* AddQuestionViewController.xib in Resources */,
 				A74C118F1A01D23F00925230 /* Default@2x.png in Resources */,
 				A78D65D21A89B35500BE6326 /* WorkMsgListViewController.xib in Resources */,
 				F7502A251AEE1E50004F822F /* rTri@2x.png in Resources */,
@@ -5019,6 +5028,7 @@
 				F76B64471B1EA440008F6961 /* SchoolMessage.m in Sources */,
 				A755E70A19F278B900BBDF3D /* ASICloudFilesCDNRequest.m in Sources */,
 				A75E3F9A1B6F646400284C3D /* VlorNetWorkAPI.m in Sources */,
+				F7E981071B79F6FE008B42E9 /* AddQuestionViewController.m in Sources */,
 				A71D61C81A1C82EF00B8D33D /* UnitSectionMessageModel.m in Sources */,
 				A755E71B19F278B900BBDF3D /* SBJsonParser.m in Sources */,
 				A7595EA61A5FC2F30027848E /* PSTGridLayoutRow.m in Sources */,

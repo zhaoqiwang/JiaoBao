@@ -419,10 +419,12 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        
-        
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
         D("JSON--------AddCommentWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
         D("Error---------AddCommentWithAId: %@", error);
     }];
     
@@ -442,12 +444,19 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
         AllCommentListModel *model = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:model ];
+        NSDictionary *resultDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:resultDic ];
+
+
         
         D("JSON--------CommentsListWithNumPerPage: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CommentsListWithNumPerPage: %@", error);
+        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:resultDic ];
     }];
     
 }

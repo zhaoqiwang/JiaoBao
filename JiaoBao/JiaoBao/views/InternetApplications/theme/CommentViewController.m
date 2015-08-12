@@ -13,6 +13,7 @@
 #import "define_constant.h"
 #import "CommentListTableViewCell.h"
 #import "AllCommentListModel.h"
+#import "ButtonViewCell.h"
 
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
@@ -23,30 +24,226 @@
 @implementation CommentViewController
 -(void)CommentsListWithNumPerPage:(id)sender
 {
-    self.AllCommentListModel = [sender object];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+
+    
+    //[MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    self.AllCommentListModel = [dic objectForKey:@"model"];
+    ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:101];
+    btn.mLab_title.text = [NSString stringWithFormat:@"评论%d",self.AllCommentListModel.mArr_CommentList.count];
+    self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
+    D("tableViewFrame = %@",NSStringFromCGRect(self.tableView.frame));
+    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, self.tableView.frame.origin.y+self.tableView.frame.size.height+10);
+    D("mainScrollViewFrame = %@",NSStringFromCGRect(self.mainScrollView.frame));
+    self.tableView.scrollEnabled = NO;
+    [self.tableView reloadData];
     
 }
+-(void) ButtonViewTitleBtn:(ButtonViewCell *) view
+{
+    if(view.tag == 100)
+    {
+        [[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
+    }
+    if(view.tag == 101)
+    {
+        [self.mView_text setHidden:NO];
+        [self.mTextF_text becomeFirstResponder];
+    }
+    if(view.tag == 102 )
+    {
+        
+        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
+    }
+}
+-(void)refreshComment:(id)sender
+{[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!=0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
+    else
+    {
+        [MBProgressHUD showSuccess:ResultDesc];
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];
+        
+    }
 
+
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshComment" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshComment:) name:@"refreshComment" object:nil];
+
+    //键盘事件
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CommentsListWithNumPerPage" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CommentsListWithNumPerPage:) name:@"CommentsListWithNumPerPage" object:nil];
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"评论"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    //输入View坐标
+    self.mView_text = [[UIView alloc] init];
+    self.mView_text.frame = CGRectMake(0, 500, [dm getInstance].width, 51);
+    self.mView_text.backgroundColor = [UIColor whiteColor];
+    //添加边框
+    self.mView_text.layer.borderWidth = .5;
+    self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    [self.view addSubview:self.mView_text];
+
+    //输入框
+    self.mTextF_text = [[UITextField alloc] init];
+    self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15*2, 51-20);
+    self.mTextF_text.placeholder = @"请输入评论内容";
+    self.mTextF_text.delegate = self;
+    self.mTextF_text.font = [UIFont systemFontOfSize:14];
+    self.mTextF_text.borderStyle = UITextBorderStyleRoundedRect;
+    self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+    [self.mView_text addSubview:self.mTextF_text];
+    [self.mView_text setHidden:YES];
+
+    [MBProgressHUD showMessage:@"" toView:self.view];
     [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];
+
+    KnowledgeTableViewCell *cell = [self getMainView];
+    self.mainScrollView.frame = CGRectMake(0, 44+10, [dm getInstance].width, [dm getInstance].height-44-10);
+    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, 1000);
+    [self.mainScrollView addSubview:cell];
+   
+    NSMutableArray *temp = [NSMutableArray array];
+    for (int i=0; i<3; i++) {
+        ButtonViewModel *model = [[ButtonViewModel alloc] init];
+        if(i == 0)
+        {
+            model.mStr_title = @"举报";
+            model.mStr_img = @"buttonView5";
+
+
+        }
+        if(i == 1)
+        {
+            model.mStr_title = [NSString stringWithFormat:@"评论%@",self.questionModel.ViewCount];
+            model.mStr_img = @"buttonView1";
+
+            
+        }
+        if(i == 2)
+        {
+            model.mStr_title = [NSString stringWithFormat:@"反对%@",self.questionModel.answerModel.CaiCount];
+            model.mStr_img = @"buttonView2";
+
+            
+        }
+        [temp addObject:model];
+    }
+    self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, cell.frame.origin.y+cell.frame.size.height, [dm getInstance].width, 50) Array:temp];
+    self.mBtnV_btn.delegate = self;
+    [self.mainScrollView addSubview:self.mBtnV_btn];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]) style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.mainScrollView addSubview:self.tableView];
+    // Do any additional setup after loading the view from its nib.
+}
+
+
+-(float)tableViewCellHeight
+{
+    float h = 0;
+    NSArray *arr = self.AllCommentListModel.mArr_CommentList;
+    for(int i=0;i<arr.count;i++)
+    {
+        commentListModel *model = [arr objectAtIndex:i];
+    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+        float cellHeight = Size.height + 50;
+        h = h + cellHeight;
+    }
+
+
+    return h;
+}
+-(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.AllCommentListModel.mArr_CommentList.count;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *indentifier = @"CommentListTableViewCell";
+    CommentListTableViewCell *cell = (CommentListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+    if (cell == nil) {
+        cell = [[CommentListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentListTableViewCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            cell = (CommentListTableViewCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+        //添加图片点击事件
+        //若是需要重用，需要写上以下两句代码
+        UINib * n= [UINib nibWithNibName:@"CommentListTableViewCell" bundle:[NSBundle mainBundle]];
+        [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
+    }
+    commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:indexPath.row];
+    cell.headImaV.frame = CGRectMake(10, 10, 50, 50);
+    [cell.headImaV sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    cell.UserName.text = model.UserName;
+    cell.UserName.frame = CGRectMake(70, 10, 100, 21);
+    cell.WContent.text = model.WContent;
+
+
+    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+    cell.WContent.frame = CGRectMake(70,10+21+10 , 228, Size.height);
+    cell.RecDate.text = model.RecDate;
+    
+    return cell;
+
+}
+
+-(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
+    NSArray *arr = self.AllCommentListModel.mArr_CommentList;
+    commentListModel *model = [arr objectAtIndex:indexPath.row];
+    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+    float cellHeight = Size.height + 50;
+    return cellHeight;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+-(void)likeAction:(id)sender
+{
+    [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
+
+}
+-(KnowledgeTableViewCell*)getMainView
+{
     KnowledgeTableViewCell *cell = [[KnowledgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"KnowledgeTableViewCell" owner:self options:nil];
     if ([nib count]>0) {
         cell = (KnowledgeTableViewCell *)[nib objectAtIndex:0];
         //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
     }
-    self.mainScrollView.frame = CGRectMake(0, 44+10, [dm getInstance].width, [dm getInstance].height-44-10);
-    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, 1000);
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, self.cellHeight);
-    [self.mainScrollView addSubview:cell];
+    
     cell.model = self.questionModel;
+    [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, cell.mLab_title.frame.size.height);
     cell.mLab_title.text = cell.model.Title;
     //话题
@@ -90,11 +287,11 @@
         //时间
         cell.mLab_RecDate.hidden = NO;
         //评论
-        cell.mLab_commentCount.hidden = NO;
-        cell.mLab_comment.hidden = NO;
+        cell.mLab_commentCount.hidden = YES;
+        cell.mLab_comment.hidden = YES;
         //分割线
         cell.mLab_line.frame = CGRectMake(20, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+5, [dm getInstance].width-20, .5);
-
+        
         //头像
         cell.mImgV_head.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 42);
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,cell.model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
@@ -102,12 +299,15 @@
         cell.mLab_IdFlag.frame = CGRectMake(cell.mImgV_head.frame.size.width+9+5, cell.mLab_line.frame.origin.y+15, 42, cell.mLab_IdFlag.frame.size.height);
         cell.mLab_IdFlag.text = cell.model.answerModel.IdFlag;
         //赞
+        cell.LikeBtn.hidden = NO;
         cell.mLab_LikeCount.frame = CGRectMake([dm getInstance].width-42-5, cell.mLab_line.frame.origin.y+15+5, 42, 22);
         NSString *strLike = cell.model.answerModel.LikeCount;
         if ([cell.model.answerModel.LikeCount integerValue]>0) {
             strLike = @"99+";
         }
-        cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
+        cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@",strLike];
+        cell.mLab_LikeCount.backgroundColor = [UIColor clearColor];
+        cell.mLab_LikeCount.textColor = [UIColor blackColor];
         //回答标题
         NSString *string1 = cell.model.answerModel.ATitle;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -143,7 +343,7 @@
             cell.mCollectionV_pic.frame = cell.mView_background.frame;
         }
         //时间
-        cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
+        cell.mLab_RecDate.frame = CGRectMake([ dm getInstance].width - 70, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
         cell.mLab_RecDate.text = cell.model.answerModel.RecDate;
         //评论
         CGSize commentSize = [[NSString stringWithFormat:@"%@",cell.model.ViewCount] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -180,51 +380,62 @@
         cell.mLab_comment.hidden = YES;
         cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
     }
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, cell.frame.size.height+cell.frame.origin.y-100, [dm  getInstance].width, 500) style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    [self.mainScrollView addSubview:self.tableView];
-    self.tableView.scrollEnabled = NO;
-
-    
-    // Do any additional setup after loading the view from its nib.
-}
-
-
-
--(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.AllCommentListModel.mArr_CommentList.count;
-}
-
--(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *indentifier = @"CommentListTableViewCell";
-    CommentListTableViewCell *cell = (CommentListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    if (cell == nil) {
-        cell = [[CommentListTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CommentListTableViewCell" owner:self options:nil];
-        //这时myCell对象已经通过自定义xib文件生成了
-        if ([nib count]>0) {
-            cell = (CommentListTableViewCell *)[nib objectAtIndex:0];
-            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
-        }
-        //添加图片点击事件
-        //若是需要重用，需要写上以下两句代码
-        UINib * n= [UINib nibWithNibName:@"CommentListTableViewCell" bundle:[NSBundle mainBundle]];
-        [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
-    }
-    
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
+    cell.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
+    [cell addGestureRecognizer:tap];
     return cell;
-
+}
+-(void)tapAction:(id)sender
+{
+    self.mView_text.hidden = YES;
+    [self.mTextF_text resignFirstResponder];
+}
+- (void) keyboardWasShown:(NSNotification *) notif{
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSValue *animationDurationValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mView_text.hidden = NO;
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height-keyboardSize.height-51, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+- (void) keyboardWasHidden:(NSNotification *) notif{
+    self.mView_text.hidden = YES;
+    NSDictionary *userInfo = [notif userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         self.mView_text.frame = CGRectMake(0, [dm getInstance].height, [dm getInstance].width, 51);
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
 }
 
--(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 100;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
 
-
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        //若其有输入内容，则发送
+        if (self.mTextF_text.text.length>0) {
+            [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:self.mTextF_text.text RefID:@""];
+        }
+        return NO;
+    }
+    return YES;
+}
 -(void)myNavigationGoback{
     
     [utils popViewControllerAnimated:YES];

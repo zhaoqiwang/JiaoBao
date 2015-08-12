@@ -11,12 +11,16 @@
 #import "QuestionModel.h"
 #import "UIImageView+WebCache.h"
 #import "KnowledgeHttp.h"
+#import "ButtonView.h"
 
 
-@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
+
+@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property(nonatomic,strong)QuestionModel *questionModel;
 @property (strong, nonatomic)  UITableView *tableView;
 @property(nonatomic,assign)float cellHeight;
-
+@property(nonatomic,strong)ButtonView *mBtnV_btn;
+@property (nonatomic,strong) UITextField *mTextF_text;//输入框
+@property(nonatomic,strong)UIView *mView_text;
 @end
