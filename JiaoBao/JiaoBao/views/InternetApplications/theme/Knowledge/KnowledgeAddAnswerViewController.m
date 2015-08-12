@@ -214,9 +214,11 @@
     }
     if (self.mTextV_answer.text.length==0) {
         [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
+        return;
     }
     if (self.mTextV_content.text.length ==0) {
         [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
+        return;
     }
     NSString *name = @"";
     if (flag ==0) {
