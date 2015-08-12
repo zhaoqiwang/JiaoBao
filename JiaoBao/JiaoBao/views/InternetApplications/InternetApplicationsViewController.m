@@ -346,7 +346,10 @@
               ];
         }else if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
             menuItems =
-            @[
+            @[[KxMenuItem menuItem:@"添加问题"
+                            image:[UIImage imageNamed:@"appNav_dongtai"]
+                            target:self
+                            action:@selector(pushMenuItem9:)],
               [KxMenuItem menuItem:@"新建事务"
                              image:[UIImage imageNamed:@"appNav_work"]
                             target:self

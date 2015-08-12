@@ -159,7 +159,7 @@
     self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, cell.frame.origin.y+cell.frame.size.height, [dm getInstance].width, 50) Array:temp];
     self.mBtnV_btn.delegate = self;
     [self.mainScrollView addSubview:self.mBtnV_btn];
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, 0) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.mainScrollView addSubview:self.tableView];

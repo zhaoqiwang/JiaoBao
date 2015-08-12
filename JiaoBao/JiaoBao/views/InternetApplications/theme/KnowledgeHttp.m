@@ -35,12 +35,18 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSMutableDictionary *jsonDic = [result objectFromJSONString];
-//        NSString *code = [jsonDic objectForKey:@"ResultCode"];
-//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-//        NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetProvice" object:dic];
         D("JSON--------knowledgeHttpGetProvice: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSString *code = @"100";
+        NSString *ResultDesc = @"服务器异常" ;
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetProvice" object:dic];
         D("Error---------knowledgeHttpGetProvice: %@", error);
     }];
 }
@@ -55,12 +61,18 @@ static KnowledgeHttp *knowledgeHttp = nil;
     NSDictionary *parameters = @{@"cityCode": cityCode,@"level": level};
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSMutableDictionary *jsonDic = [result objectFromJSONString];
-//        NSString *code = [jsonDic objectForKey:@"ResultCode"];
-//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-//        NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetCity" object:dic];
         D("JSON--------knowledgeHttpGetCity: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSString *code = @"100";
+        NSString *ResultDesc = @"服务器异常" ;
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetCity" object:dic];
         D("Error---------knowledgeHttpGetCity: %@", error);
     }];
 }
