@@ -10,6 +10,7 @@
 #import "UncaughtExceptionHandler.h"
 #import "Reachability.h"
 #import<AVFoundation/AVFoundation.h>
+#import "IQKeyboardManager.h"
 
 //CLLocationManager *locationManager;
 
@@ -20,6 +21,7 @@
 @implementation AppDelegate
 @synthesize mInternet,mRegister_view,mInt_index;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     //友盟统计
     [MobClick setAppVersion:XcodeAppVersion];//参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
     [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"test"];//channelId默认会被被当作@"App Store"渠道

@@ -9,6 +9,7 @@
 #import "ArthDetailViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "IQKeyboardManager.h"
 
 @interface ArthDetailViewController ()
 
@@ -54,6 +55,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
     //键盘事件
+    [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];

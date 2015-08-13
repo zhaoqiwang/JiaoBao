@@ -18,8 +18,9 @@
 #import "UIImageView+WebCache.h"
 #import "AnswerByIdModel.h"
 #import "MJRefresh.h"//上拉下拉刷新
+#import "KnowledgeAddAnswerViewController.h"
 
-@interface KnowledgeQuestionViewController : UIViewController<MyNavigationDelegate,ButtonViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface KnowledgeQuestionViewController : UIViewController<MyNavigationDelegate,ButtonViewDelegate,UITableViewDataSource,UITableViewDelegate,KnowledgeTableViewCellDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) ButtonView *mBtnV_btn;//三个按钮
@@ -28,7 +29,6 @@
 @property (nonatomic,strong) UITableView *mTableV_answers;//答案列表
 @property (nonatomic,strong) NSMutableArray *mArr_answers;//
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
-
 
 
 @end
