@@ -48,6 +48,7 @@
             //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
         }
     }
+    self.mView_titlecell.delegate = self;
     //设置布局
     [self setTitleCell:self.mModel_question];
     [self.view addSubview:self.mView_titlecell];
@@ -403,10 +404,25 @@
     [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:page QId:self.mModel_question.TabID flag:@"-1"];
 }
 
+//详情按钮
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    [self gotoAddAnswerVC];
+}
+
+//跳转到回答问题界面
+-(void)gotoAddAnswerVC{
+    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+    detail.mModel_question = self.mModel_question;
+    [utils pushViewController:detail animated:YES];
+}
+
 //ButtonView回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
     D("view.tag-=====%ld",(long)view.tag);
-    view.mLab_title.text = @"取消关注";
+//    view.mLab_title.text = @"取消关注";
+    if (view.tag ==100) {
+        [self gotoAddAnswerVC];
+    }
 }
 
 //导航条返回按钮回调
