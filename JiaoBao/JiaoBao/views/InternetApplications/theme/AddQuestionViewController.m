@@ -11,6 +11,7 @@
 #import "TableViewWithBlock.h"
 #import "ProviceModel.h"
 #import "AllCategoryModel.h"
+#import "CategoryViewController.h"
 
 @interface AddQuestionViewController ()
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;
@@ -19,21 +20,10 @@
 @property(nonatomic,assign)BOOL isOpen;
 @property(nonatomic,strong)UITextField *selectedTF;
 @property(nonatomic,strong)ProviceModel *proviceModel;
-@property(nonatomic,strong)NSMutableArray *mArr_AllCategory;
 @end
 
 @implementation AddQuestionViewController
-//获取所有话题
--(void)GetAllCategory:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    NSMutableDictionary *dic = noti.object;
-    NSString *code = [dic objectForKey:@"code"];
-    if ([code integerValue] ==0) {
-        NSMutableArray *array = [dic objectForKey:@"array"];
-        self.mArr_AllCategory = array;
 
-    }
-}
 -(void)knowledgeHttpGetProvice:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -116,10 +106,20 @@
 
 
 }
+-(void)GetAllCategory:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    self.mArr_AllCategory =[dic objectForKey:@"array"] ;
+    CategoryViewController *detailVC = [[CategoryViewController alloc]init];
+    detailVC.mArr_AllCategory = self.mArr_AllCategory;
+    [self.navigationController presentViewController:detailVC animated:NO completion:^{
+        
+    }];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
     self.selectedTF = self.provinceTF;
     if([self.provinceTF.text isEqualToString:@""])
     {
@@ -140,6 +140,8 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAllCategory" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAllCategory:) name:@"GetAllCategory" object:nil];
+    
+
 
 }
 
@@ -224,7 +226,16 @@
 
 - (IBAction)categaryBtnAction:(id)sender {
     [[KnowledgeHttp getInstance]GetAllCategory];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+
+
+}
+
+- (IBAction)addQuestionAction:(id)sender {
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:1];
+    NSString *categoryStr = [model.mArr_Category objectAtIndex:1];
+    NSString *subItemStr = [model.mArr_subItem objectAtIndex:1];
+    [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:@"48" Title:@"李世民和杨贵妃是什么关系" KnContent:@"唐朝历史问题" TagsList:@"" QFlag:@"" AreaCode:@"" atAccIds:@""];
+    
 }
 
 -(void)myNavigationGoback{

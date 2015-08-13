@@ -14,10 +14,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *provinceTF;
 @property (weak, nonatomic) IBOutlet UITextField *regionTF;
 @property (weak, nonatomic) IBOutlet UITextField *countyTF;
+@property(nonatomic,strong)NSMutableArray *mArr_AllCategory;
+
 - (IBAction)provinceBtnAction:(id)sender;
 - (IBAction)regionBtnAction:(id)sender;
 - (IBAction)countyBtnAction:(id)sender;
 - (IBAction)categaryBtnAction:(id)sender;
+- (IBAction)addQuestionAction:(id)sender;
 
 
 @end

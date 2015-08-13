@@ -124,12 +124,14 @@
         for(int i=0;i<arr.count;i++)
         {
             NSDictionary *subDic = [arr objectAtIndex:i];
-            allCategoryModel.subitem.TabID = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"TabID"]];
-            allCategoryModel.subitem.Subject = [subDic objectForKey:@"Subject"];
-            allCategoryModel.subitem.QCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"QCount"]];
-            allCategoryModel.subitem.AttCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"AttCount"]];
-            allCategoryModel.subitem.ParentId = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"ParentId"]];
-            [allCategoryModel.mArr_subItem addObject:allCategoryModel.subitem];
+            ItemModel*  subitem = [[ItemModel alloc]init];
+
+            subitem.TabID = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"TabID"]];
+            subitem.Subject = [subDic objectForKey:@"Subject"];
+            subitem.QCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"QCount"]];
+            subitem.AttCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"AttCount"]];
+            subitem.ParentId = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"ParentId"]];
+            [allCategoryModel.mArr_subItem addObject:subitem];
             
         }
 

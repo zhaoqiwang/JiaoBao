@@ -12,10 +12,10 @@
 #import "UIImageView+WebCache.h"
 #import "KnowledgeHttp.h"
 #import "ButtonView.h"
+#import "KnowledgeTableViewCell.h"
 
 
-
-@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate>
+@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property(nonatomic,strong)QuestionModel *questionModel;
 @property (strong, nonatomic)  UITableView *tableView;

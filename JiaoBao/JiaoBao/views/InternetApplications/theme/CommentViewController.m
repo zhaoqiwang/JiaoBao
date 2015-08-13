@@ -14,6 +14,7 @@
 #import "CommentListTableViewCell.h"
 #import "AllCommentListModel.h"
 #import "ButtonViewCell.h"
+#import "KnowledgeAddAnswerViewController.h"
 
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
@@ -241,11 +242,13 @@
         cell = (KnowledgeTableViewCell *)[nib objectAtIndex:0];
         //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
     }
-    
+    cell.delegate= self;
     cell.model = self.questionModel;
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
-    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, cell.mLab_title.frame.size.height);
+    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
     cell.mLab_title.text = cell.model.Title;
+    //详情
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, cell.mBtn_detail.frame.size.height);
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",cell.model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -333,7 +336,7 @@
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
         //背景色
-        cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-10, cell.mLab_Abstracts.frame.size.height+4);
+        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-9, cell.mLab_Abstracts.frame.size.height+4);
         //图片
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
@@ -385,6 +388,13 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
     [cell addGestureRecognizer:tap];
     return cell;
+}
+
+//cell的点击事件---详情
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+    detail.mModel_question = knowledgeTableViewCell.model;
+    [utils pushViewController:detail animated:YES];
 }
 -(void)tapAction:(id)sender
 {
