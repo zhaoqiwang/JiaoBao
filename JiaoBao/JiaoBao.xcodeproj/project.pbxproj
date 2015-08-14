@@ -926,6 +926,12 @@
 		F7F460B61AE891C70069820F /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B31AE891C70069820F /* triangle.png */; };
 		F7F460B71AE891C70069820F /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B41AE891C70069820F /* triangle@2x.png */; };
 		F7F460B81AE891C70069820F /* triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B51AE891C70069820F /* triangle@3x.png */; };
+		F7F7AD651B7C28F700923B60 /* AllcategoryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7AD631B7C28F700923B60 /* AllcategoryCollectionViewCell.m */; };
+		F7F7AD661B7C28F700923B60 /* AllcategoryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD641B7C28F700923B60 /* AllcategoryCollectionViewCell.xib */; };
+		F7F7AD6F1B7C30EE00923B60 /* CategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7AD6D1B7C30EE00923B60 /* CategoryViewController.m */; };
+		F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD6E1B7C30EE00923B60 /* CategoryViewController.xib */; };
+		F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7AD721B7C348600923B60 /* CategorySection.m */; };
+		F7F7AD751B7C348600923B60 /* CategorySection.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD731B7C348600923B60 /* CategorySection.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2298,6 +2304,15 @@
 		F7F460B31AE891C70069820F /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = Image/InternetApp/share/triangle.png; sourceTree = "<group>"; };
 		F7F460B41AE891C70069820F /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@2x.png"; path = "Image/InternetApp/share/triangle@2x.png"; sourceTree = "<group>"; };
 		F7F460B51AE891C70069820F /* triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@3x.png"; path = "Image/InternetApp/share/triangle@3x.png"; sourceTree = "<group>"; };
+		F7F7AD621B7C28F700923B60 /* AllcategoryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllcategoryCollectionViewCell.h; sourceTree = "<group>"; };
+		F7F7AD631B7C28F700923B60 /* AllcategoryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllcategoryCollectionViewCell.m; sourceTree = "<group>"; };
+		F7F7AD641B7C28F700923B60 /* AllcategoryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllcategoryCollectionViewCell.xib; sourceTree = "<group>"; };
+		F7F7AD6C1B7C30EE00923B60 /* CategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryViewController.h; path = views/InternetApplications/theme/CategoryViewController.h; sourceTree = "<group>"; };
+		F7F7AD6D1B7C30EE00923B60 /* CategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryViewController.m; path = views/InternetApplications/theme/CategoryViewController.m; sourceTree = "<group>"; };
+		F7F7AD6E1B7C30EE00923B60 /* CategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CategoryViewController.xib; path = views/InternetApplications/theme/CategoryViewController.xib; sourceTree = "<group>"; };
+		F7F7AD711B7C348600923B60 /* CategorySection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySection.h; sourceTree = "<group>"; };
+		F7F7AD721B7C348600923B60 /* CategorySection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySection.m; sourceTree = "<group>"; };
+		F7F7AD731B7C348600923B60 /* CategorySection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategorySection.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2425,6 +2440,15 @@
 				F7E981041B79F6FE008B42E9 /* AddQuestionViewController.h */,
 				F7E981051B79F6FE008B42E9 /* AddQuestionViewController.m */,
 				F7E981061B79F6FE008B42E9 /* AddQuestionViewController.xib */,
+				F7F7AD6C1B7C30EE00923B60 /* CategoryViewController.h */,
+				F7F7AD6D1B7C30EE00923B60 /* CategoryViewController.m */,
+				F7F7AD6E1B7C30EE00923B60 /* CategoryViewController.xib */,
+				F7F7AD621B7C28F700923B60 /* AllcategoryCollectionViewCell.h */,
+				F7F7AD631B7C28F700923B60 /* AllcategoryCollectionViewCell.m */,
+				F7F7AD641B7C28F700923B60 /* AllcategoryCollectionViewCell.xib */,
+				F7F7AD711B7C348600923B60 /* CategorySection.h */,
+				F7F7AD721B7C348600923B60 /* CategorySection.m */,
+				F7F7AD731B7C348600923B60 /* CategorySection.xib */,
 				A7357A331A4021F900A195C5 /* ThemeHttp.h */,
 				A7357A341A4021F900A195C5 /* ThemeHttp.m */,
 				A7113F251A41661E00F927DD /* ThemeSpaceViewController.h */,
@@ -4754,6 +4778,7 @@
 				A76D74761A69095A008F5856 /* share_like_1.png in Resources */,
 				A7781F4E1AE8A0F300F03AEB /* NewWorkView_click_2.png in Resources */,
 				A7626FC41B0D7EDB006957F2 /* popupWindow_like_comment.png in Resources */,
+				F7F7AD661B7C28F700923B60 /* AllcategoryCollectionViewCell.xib in Resources */,
 				A74C11991A01D9FC00925230 /* icon.png in Resources */,
 				A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */,
 				A769C6061B749FBC006C6B76 /* rootTable_1.png in Resources */,
@@ -4790,6 +4815,7 @@
 				A7CE67391AA70A250038D0C5 /* showUnit@2x.png in Resources */,
 				F7F460B81AE891C70069820F /* triangle@3x.png in Resources */,
 				F7502A081AEE1E50004F822F /* add.png in Resources */,
+				F7F7AD751B7C348600923B60 /* CategorySection.xib in Resources */,
 				A7AD8C5019F644A2002E65FB /* tabbar_app2.png in Resources */,
 				A769C6021B7464E0006C6B76 /* topBtnSelect1@3x.png in Resources */,
 				A782AEC71AE9D71A00547B0F /* NewWork_SendMsg@3x.png in Resources */,
@@ -4944,6 +4970,7 @@
 				A7781F411AE8A0F300F03AEB /* NewWorkView_0@3x.png in Resources */,
 				A7AAC4D219F75DB200A0ED40 /* appNav_setting@2x.png in Resources */,
 				A749B9D219F89A530036F480 /* root_sendNotice.png in Resources */,
+				F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */,
 				A749B9C919F89A530036F480 /* root_dian@2x.png in Resources */,
 				A77F9F3D1AFCAAC90003E579 /* appNav_dongtai.png in Resources */,
 				A746CB691A4AAD600003657A /* CreatAlbumsViewController.xib in Resources */,
@@ -5121,6 +5148,7 @@
 				A74937E01ACA8A4F00F96741 /* ClassTopViewController.m in Sources */,
 				F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */,
 				A743394F1A452B7700AFC0A5 /* SDWebImageCompat.m in Sources */,
+				F7F7AD6F1B7C30EE00923B60 /* CategoryViewController.m in Sources */,
 				A749B9FA19F8F3E40036F480 /* TreeView_Level2_Model.m in Sources */,
 				A7557BFD19FA31920057835B /* Identity_model.m in Sources */,
 				F79B61391B7202A5005FEA44 /* ItemModel.m in Sources */,
@@ -5254,6 +5282,7 @@
 				A755E70319F278B900BBDF3D /* ASIDataDecompressor.m in Sources */,
 				F76B64351B1EA205008F6961 /* RCLabel.m in Sources */,
 				A7357A3C1A4026CF00A195C5 /* ParserJson_theme.m in Sources */,
+				F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */,
 				A76ED5911AD6189C006F3E0B /* WorkView_new2.m in Sources */,
 				A74339561A452B7700AFC0A5 /* UIImage+GIF.m in Sources */,
 				A755E71719F278B900BBDF3D /* NSObject+SBJSON.m in Sources */,
@@ -5331,6 +5360,7 @@
 				A7804C951B7888DA007C0DC6 /* ButtonView.m in Sources */,
 				A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */,
 				A743394E1A452B7700AFC0A5 /* SDImageCache.m in Sources */,
+				F7F7AD651B7C28F700923B60 /* AllcategoryCollectionViewCell.m in Sources */,
 				A7595E951A5FC2F30027848E /* MWTapDetectingImageView.m in Sources */,
 				A755E70B19F278B900BBDF3D /* ASICloudFilesContainer.m in Sources */,
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,

@@ -315,8 +315,15 @@
         }
     }else{
         if (mInt_userSelectedChannelID == 100) {//求知
+            if (mInt_theme == 0)
+            {
+                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
+                mInt_theme = 1;
+                [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
 
-            [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
+            }
+
+
             
         }else if (mInt_userSelectedChannelID == 101) {//学校圈
             if (mInt_show == 0) {

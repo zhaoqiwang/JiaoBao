@@ -491,11 +491,17 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         AnswerDetailModel *model = [ParserJson_knowledge parserJsonAnswerDetail:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *resultDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"AnswerDetailWithAId" object:resultDic ];
 
         
         D("JSON--------AnswerDetailWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AnswerDetailWithAId: %@", error);
+        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"AnswerDetailWithAId" object:resultDic ];
+
     }];
     
 }
