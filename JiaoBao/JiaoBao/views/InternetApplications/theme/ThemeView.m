@@ -32,6 +32,9 @@
         //取回话题的话题列表
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CategoryIndexQuestion" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CategoryIndexQuestion:) name:@"CategoryIndexQuestion" object:nil];
+        //推荐问题列表
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RecommentIndex" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RecommentIndex:) name:@"RecommentIndex" object:nil];
         
         self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
@@ -48,6 +51,13 @@
         [self addScrollViewBtn:0];
         
         [self addSubview:self.mScrollV_all];
+        //下拉选择按钮
+        self.mBtn_down = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.mBtn_down.frame = CGRectMake([dm getInstance].width-40, 8, 40, 40);
+        [self.mBtn_down setImage:[UIImage imageNamed:@"topBtnDown0"] forState:UIControlStateNormal];
+        [self.mBtn_down addTarget:self action:@selector(clickDownBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.mBtn_down];
+        
         //表格
         self.mTableV_knowledge = [[UITableView alloc] initWithFrame:CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48)];
         self.mTableV_knowledge.delegate = self;
@@ -64,6 +74,12 @@
         self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
     }
     return self;
+}
+
+//下拉选择按钮
+-(void)clickDownBtn:(UIButton *)btn{
+    D("点击下拉选择按钮");
+    
 }
 
 //加载一级话题列表
@@ -119,7 +135,7 @@
     }
     [self.mTableV_knowledge reloadData];
 }
-
+    
 -(void)ProgressViewLoad{
     //检查当前网络是否可用
     if ([self checkNetWork]) {
@@ -144,6 +160,25 @@
 //    [[KnowledgeHttp getInstance] knowledgeHttpGetCity:@"" level:@""];
 //    [MBProgressHUD showMessage:@"加载中..." toView:self];
     
+}
+
+//推荐问题列表
+-(void)RecommentIndex:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
+    [self.mTableV_knowledge headerEndRefreshing];
+    [self.mTableV_knowledge footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue] ==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        if (self.mInt_reloadData ==0) {
+            model.mArr_Category = [NSMutableArray arrayWithArray:array];
+        }else{
+            [model.mArr_Category addObjectsFromArray:array];
+        }
+    }
+    [self.mTableV_knowledge reloadData];
 }
 
 //取回话题的话题列表
@@ -347,9 +382,9 @@
         cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
         cell.mLab_RecDate.text = model.answerModel.RecDate;
         //评论
-        CGSize commentSize = [[NSString stringWithFormat:@"%@",model.ViewCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+        CGSize commentSize = [[NSString stringWithFormat:@"%@",model.answerModel.CCount] sizeWithFont:[UIFont systemFontOfSize:10]];
         cell.mLab_commentCount.frame = CGRectMake([dm getInstance].width-9-commentSize.width, cell.mLab_RecDate.frame.origin.y, commentSize.width, cell.mLab_commentCount.frame.size.height);
-        cell.mLab_commentCount.text = model.ViewCount;
+        cell.mLab_commentCount.text = model.answerModel.CCount;
         cell.mLab_comment.frame = CGRectMake(cell.mLab_commentCount.frame.origin.x-2-cell.mLab_comment.frame.size.width, cell.mLab_RecDate.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_comment.frame.size.height);
         if (model.answerModel.Thumbnail.count>0) {
             cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
@@ -487,7 +522,7 @@
     }else if (self.mInt_index ==1){
         
     }else if (self.mInt_index ==2){
-        
+        [[KnowledgeHttp getInstance] RecommentIndexWithNumPerPage:@"10" pageNum:page RowCount:rowCount];
     }else{
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
         [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:@"-1" uid:model.item.TabID];
@@ -496,7 +531,6 @@
 
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    D("234");
     CommentViewController *commentVC = [[CommentViewController alloc]init];
     commentVC.questionModel = knowledgeTableViewCell.model;
     commentVC.cellHeight = knowledgeTableViewCell.frame.size.height+150;
@@ -508,14 +542,18 @@
     KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
     queston.mModel_question = knowledgeTableViewCell.model;
     [utils pushViewController:queston animated:YES];
-    D("123");
 }
 
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
-    detail.mModel_question = knowledgeTableViewCell.model;
-    [utils pushViewController:detail animated:YES];
+    //判断是否来自推荐
+    if ([knowledgeTableViewCell.model.tabid integerValue]>0) {
+        
+    }else{
+        KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+        detail.mModel_question = knowledgeTableViewCell.model;
+        [utils pushViewController:detail animated:YES];
+    }
 }
 
 @end

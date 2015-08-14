@@ -10,6 +10,7 @@
 #import "AnswerModel.h"
 
 @interface QuestionModel : NSObject
+@property(nonatomic,strong)NSString *tabid;//推荐ID
 @property(nonatomic,strong)NSString *TabID;
 @property(nonatomic,strong)NSString *Title;//标题
 @property(nonatomic,strong)NSString *AnswersCount;//回答数量
@@ -21,6 +22,7 @@
 @property(nonatomic,strong)NSString *AreaCode;//区域代码
 @property(nonatomic,strong)NSString *JiaoBaoHao;//
 @property(nonatomic,strong)NSString *rowCount;//记录数量，用于取第二页记录起给参数赋值
+@property(nonatomic,strong)NSMutableArray *Thumbnail;//图片url,字符串（url)json数组
 @property(nonatomic,strong)AnswerModel *answerModel;//答案model
 
 @end

@@ -58,7 +58,7 @@
 -(void)NewQuestionWithCategoryId:(NSString*)CategoryId Title:(NSString*)Title KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList QFlag:(NSString*)QFlag AreaCode:(NSString*)AreaCode atAccIds:(NSString*)atAccIds;
 
 //问题内容修改 参数描述：加密id - 问题内容 - （关键字，多个以,隔开）
--(void)UpdateQuestionWithTabIDStr:(NSString*)TabIDStr KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList;
+//-(void)UpdateQuestionWithTabIDStr:(NSString*)TabIDStr KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList;
 
 
 //问题列表 参数描述：取回的记录数量 - （第几页，默认为1）- 话题Id
@@ -96,5 +96,11 @@
 
 //话题的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)-(话题Id)
 -(void)CategoryIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid;
+
+//推荐列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)RecommentIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+
+//单个推荐明细  参数描述：（推荐ID）
+-(void)ShowRecommentWithTable:(NSString*)tabid;
 
 @end
