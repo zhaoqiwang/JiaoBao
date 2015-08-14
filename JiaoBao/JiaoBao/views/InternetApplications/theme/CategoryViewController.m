@@ -9,6 +9,7 @@
 #import "CategoryViewController.h"
 #import "AllcategoryCollectionViewCell.h"
 #import "CategorySection.h"
+#import "dm.h"
 
 @interface CategoryViewController ()
 
@@ -67,14 +68,25 @@
 {
     AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     cell.nameLabel.textColor = [UIColor redColor];
+    self.categoryTF.text = cell.nameLabel.text;
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
+    ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
+    [self.categoryId setString:itemModel.TabID];
+
     
     
 }
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.nameLabel.textColor = [UIColor blackColor];
+}
+
 
 
 //每一个cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(70, 30);
+    return CGSizeMake(60, 30);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, 5, 0, 5);
