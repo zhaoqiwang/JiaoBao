@@ -353,9 +353,7 @@
 
     
 }
-
-
-//[{"TabID":84,"Title":"人为什么要吃饭呢？                           ","AnswersCount":1,"AttCount":0,"ViewCount":9,"CategorySuject":"生物","CategoryId":71,"LastUpdate":"2015-08-03T14:32:29","AreaCode":null,"JiaoBaoHao":5232580,"rowCount":8,"answer":{"ATitle":"人是铁，饭是钢，一顿不吃饿的慌。","Abstracts":"","AFlag":0,"TabID":75,"RecDate":"2015-08-03T14:32:29","LikeCount":0,"CaiCount":0,"JiaoBaoHao":5182507,"IdFlag":"mhm","Thumbnail":null}}]
+//{"TabID":133,"Title":"小于９０度的角都是锐角吗？","AnswersCount":1,"AttCount":0,"ViewCount":4,"CategorySuject":"小学数学","CategoryId":16,"LastUpdate":"2015-08-14T08:59:15","AreaCode":null,"JiaoBaoHao":5200750,"rowCount":109,"answer":{"ATitle":"在小学阶段，小于９０度的角都是锐角","Abstracts":"根据课标教材定义：小于９０度的角叫做锐角。答案似乎是肯定的，但由此又产生一个新的问题：０度的角是什么角，也是锐角吗？ 事实是，锐角定义有一个隐含的前提，就是小学数学中所讨论的角都是正角。习惯……","AFlag":0,"TabID":137,"RecDate":"2015-08-13T10:51:50","LikeCount":0,"CaiCount":0,"CCount":1,"JiaoBaoHao":5200750,"IdFlag":"郑召欣","Thumbnail":"[\"file:///C:/Users/ADMINI~1/AppData/Local/Temp/msohtml1/01/clip_image002.jpg\",\"http://www.jiaobao.net/JBApp3/AppFiles/getSectionFile?fn=7lui-ApUpS43Ck4kDlnxWomHYAnfD-AYyhxGY4e3Bcj-Ar82GGYeMuhZB9iO1BYG3FKPnJwGnSpIC0\"]"}},
 //首页问题列表和话题的问题列表
 +(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
 {
@@ -373,7 +371,14 @@
         model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
         model.CategorySuject = [dic objectForKey:@"CategorySuject"];
         model.CategoryId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CategoryId"]];
-        model.LastUpdate = [dic objectForKey:@"LastUpdate"];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str0 = [dic objectForKey:@"LastUpdate"];
+        NSRange range0 = [str0 rangeOfString:str];
+        if (range0.length>0) {
+            model.LastUpdate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.LastUpdate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
         NSString *AreaCode = [dic objectForKey:@"AreaCode"];
         if ([AreaCode isKindOfClass:[NSNull class]]||[AreaCode isEqual:@"null"]) {
             model.AreaCode = @"";
@@ -382,6 +387,8 @@
         }
         
         model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        NSArray *temp0 = [[dic objectForKey:@"Thumbnail"] objectFromJSONString];
+        model.Thumbnail = [NSMutableArray arrayWithArray:temp0];
         model.rowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"rowCount"]];
         
         NSDictionary *answerDic =  [dic objectForKey:@"answer"];
@@ -389,7 +396,7 @@
         model.answerModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
         model.answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
         model.answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
-        NSString *str = [utils getLocalTimeDate];
+        
         NSString *str2 = [answerDic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];
         if (range.length>0) {
@@ -397,11 +404,11 @@
         }else{
             model.answerModel.RecDate = [[[answerDic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
         }
-//        model.answerModel.RecDate = [answerDic objectForKey:@"RecDate"];
         model.answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
         model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
         model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        model.answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
         NSString *Thumbnail = [answerDic objectForKey:@"Thumbnail"];
         if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
             
@@ -415,6 +422,131 @@
     
     return array;
     
+}
+
+//[{"tabid":5,"question":{"TabID":98,"Title":"为什么人有时会出现「更容易向陌生人展示真实想法」的情况","AnswersCount":2,"AttCount":1,"ViewCount":36,"CategorySuject":"艺术","CategoryId":47,"LastUpdate":"2015-08-10T10:35:35","AreaCode":null,"Thumbnail":null,"JiaoBaoHao":5150022},"answer":{"ATitle":"因为熟人间的关系越来越工具化了。","Abstracts":"因为熟人间的关系越来越工具化了。 工具化的意思，就是具有明确的目的，关系为了特定的功能而存在。「他是什么角色？」「我为什么需要发展或维护这段关系？」「跟他交往可能给我带来哪些好处？」我们翻手……","AFlag":0,"TabID":89,"RecDate":"2015-08-10T10:35:35","LikeCount":0,"CaiCount":1,"JiaoBaoHao":5150001,"Thumbnail":null,"CCount":0,"IdFlag":"momo"},"rowCount":3},
+//推荐列表
++(NSMutableArray *)parserJsonRecommentIndex:(NSString *)json{
+    D("sdoighjdofk-====%@",json);
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++){
+        QuestionModel *model = [[QuestionModel alloc ]init];
+        NSDictionary *dic0 = [arrList objectAtIndex:i];
+        model.tabid = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"tabid"]];
+        NSDictionary *dic =  [dic0 objectForKey:@"question"];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.Title = [dic objectForKey:@"Title"];
+        model.AnswersCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AnswersCount"]];
+        model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
+        model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
+        model.CategorySuject = [dic objectForKey:@"CategorySuject"];
+        model.CategoryId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CategoryId"]];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str0 = [dic objectForKey:@"LastUpdate"];
+        NSRange range0 = [str0 rangeOfString:str];
+        if (range0.length>0) {
+            model.LastUpdate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.LastUpdate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+        NSString *AreaCode = [dic objectForKey:@"AreaCode"];
+        if ([AreaCode isKindOfClass:[NSNull class]]||[AreaCode isEqual:@"null"]) {
+            model.AreaCode = @"";
+        }else{
+            model.AreaCode = [dic objectForKey:@"AreaCode"];
+        }
+        
+        model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        NSArray *temp0 = [[dic objectForKey:@"Thumbnail"] objectFromJSONString];
+        model.Thumbnail = [NSMutableArray arrayWithArray:temp0];
+        model.rowCount = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"rowCount"]];
+        
+        NSDictionary *answerDic =  [dic0 objectForKey:@"answer"];
+        model.answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
+        model.answerModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
+        model.answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
+        model.answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
+        
+        NSString *str2 = [answerDic objectForKey:@"RecDate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            model.answerModel.RecDate = [[[answerDic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.answerModel.RecDate = [[[answerDic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+        model.answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
+        model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
+        model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
+        model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        model.answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
+        NSString *Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+        if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
+            
+        }else{
+            NSArray *temp = [Thumbnail objectFromJSONString];
+            model.answerModel.Thumbnail = [NSMutableArray arrayWithArray:temp];
+        }
+        
+        [array addObject:model];
+    }
+    
+    return array;
+    
+}
+
+//推荐明细
++(RecommentAddAnswerModel *)parserJsonShowRecomment:(NSString *)json{
+    RecommentAddAnswerModel *model = [[RecommentAddAnswerModel alloc ]init];
+    NSDictionary *dic0 = [json objectFromJSONString];
+    
+    model.tabid = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"tabid"]];
+    
+    NSDictionary *dic =  [dic0 objectForKey:@"question"];
+    model.questionModel.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+    model.questionModel.Title = [dic objectForKey:@"Title"];
+    model.questionModel.AnswersCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AnswersCount"]];
+    model.questionModel.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+    model.questionModel.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
+    model.questionModel.CategorySuject = [dic objectForKey:@"CategorySuject"];
+    model.questionModel.KnContent = [dic objectForKey:@"KnContent"];
+    model.questionModel.CategoryId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CategoryId"]];
+    NSString *str = [utils getLocalTimeDate];
+    NSString *str0 = [dic objectForKey:@"LastUpdate"];
+    NSRange range0 = [str0 rangeOfString:str];
+    if (range0.length>0) {
+        model.questionModel.LastUpdate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+    }else{
+        model.questionModel.LastUpdate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    }
+    model.questionModel.AreaCode = [dic objectForKey:@"AreaCode"];
+    model.questionModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+    
+    NSMutableArray *mArr_answer = [dic objectForKey:@"answers"];
+    for(int i=0;i<mArr_answer.count;i++)
+    {
+        AnswerModel *answerModel = [[AnswerModel alloc]init];
+        NSDictionary *answerDic =  [mArr_answer objectAtIndex:i];
+        answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
+        answerModel.Abstracts = [answerDic objectForKey:@"AContent"];
+        answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
+        answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
+        
+        NSString *str2 = [answerDic objectForKey:@"RecDate"];
+        NSRange range = [str2 rangeOfString:str];
+        if (range.length>0) {
+            answerModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            answerModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+        answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
+        answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
+        answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
+        answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
+        [model.answerArray addObject:answerModel];
+    }
+    return model;
 }
 
 

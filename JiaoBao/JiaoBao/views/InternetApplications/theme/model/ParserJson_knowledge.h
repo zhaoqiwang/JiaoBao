@@ -14,6 +14,7 @@
 #import "QuestionDetailModel.h"
 #import "AnswerDetailModel.h"
 #import "AllCommentListModel.h"
+#import "RecommentAddAnswerModel.h"
 
 @interface ParserJson_knowledge : NSObject
 
@@ -52,6 +53,12 @@
 
 //评论列表
 +(AllCommentListModel *)parserJsonCommentsList:(NSString*)json;
+
+//推荐列表
++(NSMutableArray *)parserJsonRecommentIndex:(NSString *)json;
+
+//推荐明细
++(RecommentAddAnswerModel *)parserJsonShowRecomment:(NSString *)json;
 
 
 @end

@@ -37,6 +37,7 @@
 //@property (nonatomic,strong) NSMutableArray *mArr_extracurricular;//课外
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 @property (nonatomic,strong) NSMutableArray *mArr_AllCategory;//首页精选等一级主题数组
+@property (nonatomic,strong) UIButton *mBtn_down;//下拉选择按钮
 
 
 - (id)initWithFrame1:(CGRect)frame;
