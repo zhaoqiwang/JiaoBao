@@ -41,8 +41,10 @@
 @property (nonatomic,strong) IBOutlet UICollectionView *mCollectionV_pic;//图片显示
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_detail;//详情按钮
+@property (nonatomic,strong) IBOutlet UIWebView *mWebV_comment;//内容
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
+@property (nonatomic,strong) AnswerModel *RecommentAnswerModel;
 
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;

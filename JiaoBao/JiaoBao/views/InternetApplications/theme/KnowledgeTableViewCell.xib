@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -131,7 +131,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" id="sO8-PT-Jn0">
-                        <rect key="frame" x="76" y="138" width="230" height="87"/>
+                        <rect key="frame" x="76" y="177" width="230" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="6" minimumInteritemSpacing="5" id="phP-BA-Z8m">
@@ -171,6 +171,14 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <webView contentMode="scaleToFill" id="iu1-Sy-7DF">
+                        <rect key="frame" x="71" y="132" width="240" height="29"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="I7l-Yt-oQ4"/>
+                        </connections>
+                    </webView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -195,6 +203,7 @@
                 <outlet property="mLab_line2" destination="DV4-Z5-RcB" id="aTd-NW-b1M"/>
                 <outlet property="mLab_title" destination="Di6-bz-d93" id="Q79-vn-2wp"/>
                 <outlet property="mView_background" destination="5Yh-Zt-ldv" id="i5l-7Z-Vie"/>
+                <outlet property="mWebV_comment" destination="iu1-Sy-7DF" id="L1M-TU-SWf"/>
             </connections>
             <point key="canvasLocation" x="398" y="565.5"/>
         </tableViewCell>

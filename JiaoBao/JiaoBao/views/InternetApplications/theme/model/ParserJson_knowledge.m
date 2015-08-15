@@ -497,7 +497,8 @@
 
 //推荐明细
 +(RecommentAddAnswerModel *)parserJsonShowRecomment:(NSString *)json{
-    RecommentAddAnswerModel *model = [[RecommentAddAnswerModel alloc ]init];
+    RecommentAddAnswerModel *model = [[RecommentAddAnswerModel alloc]init];
+    model.questionModel = [[RecommentQuestionModel alloc] init];
     NSDictionary *dic0 = [json objectFromJSONString];
     
     model.tabid = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"tabid"]];
@@ -521,8 +522,9 @@
     }
     model.questionModel.AreaCode = [dic objectForKey:@"AreaCode"];
     model.questionModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+    D("siudhfsjhf-====%@,%@,%@",model.questionModel.Title,[dic objectForKey:@"Title"],model.questionModel.CategorySuject);
     
-    NSMutableArray *mArr_answer = [dic objectForKey:@"answers"];
+    NSMutableArray *mArr_answer = [dic0 objectForKey:@"answers"];
     for(int i=0;i<mArr_answer.count;i++)
     {
         AnswerModel *answerModel = [[AnswerModel alloc]init];

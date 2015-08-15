@@ -581,7 +581,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSArray *array = [ParserJson_knowledge parserJsonRecommentIndex:[jsonDic objectForKey:@"Data"]];
         
         D("JSON--------RecommentIndex: %@,", result);
-        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
@@ -604,7 +604,6 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-//        NSArray *array = [ParserJson_knowledge parserJsonRecommentIndex:[jsonDic objectForKey:@"Data"]];
         RecommentAddAnswerModel *model = [ParserJson_knowledge parserJsonShowRecomment:[jsonDic objectForKey:@"Data"]];
         
         D("JSON--------RecommentIndex: %@,", result);

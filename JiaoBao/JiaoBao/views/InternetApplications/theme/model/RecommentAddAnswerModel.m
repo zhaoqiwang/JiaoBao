@@ -13,6 +13,18 @@
 -(instancetype)init{
     if (self) {
         self.answerArray = [NSMutableArray array];
+//        self.questionModel = [[RecommentQuestionModel alloc] init];
+    }
+    return self;
+}
+
+@end
+
+@implementation RecommentQuestionModel
+
+-(instancetype)init{
+    if (self) {
+        
     }
     return self;
 }

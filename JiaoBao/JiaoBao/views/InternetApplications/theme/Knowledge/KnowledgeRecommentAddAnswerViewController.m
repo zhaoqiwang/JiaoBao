@@ -17,6 +17,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //推荐问题详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ShowRecomment" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowRecomment:) name:@"ShowRecomment" object:nil];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:[NSString stringWithFormat:@"%@",self.mModel_question.Title]];
     self.mNav_navgationBar.delegate = self;
@@ -46,11 +49,24 @@
     [[KnowledgeHttp getInstance] ShowRecommentWithTable:self.mModel_question.tabid];
 }
 
--(void)addDetailCell:(QuestionDetailModel *)model{
+//推荐问题详情
+-(void)ShowRecomment:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"ResultCode"];
+    if ([code integerValue] ==0) {
+        self.mModel_recomment = [dic objectForKey:@"model"];
+        [self.mTableV_answer reloadData];
+        [self addDetailCell:self.mModel_recomment];
+    }
+}
+
+-(void)addDetailCell:(RecommentAddAnswerModel *)model{
     self.mView_titlecell.hidden = NO;
+
     //标题
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
-    self.mView_titlecell.mLab_title.text = model.Title;
+    self.mView_titlecell.mLab_title.text = model.questionModel.Title;
     self.mView_titlecell.mLab_title.hidden = NO;
     //详情
     self.mView_titlecell.mBtn_detail.hidden = YES;
@@ -62,16 +78,16 @@
     self.mView_titlecell.mLab_Category1.hidden = NO;
     self.mView_titlecell.mLab_Category0.hidden = NO;
     //访问
-    CGSize ViewSize = [[NSString stringWithFormat:@"%@",model.ViewCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+    CGSize ViewSize = [[NSString stringWithFormat:@"%@",model.questionModel.ViewCount] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_ViewCount.frame = CGRectMake([dm getInstance].width-9-ViewSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, ViewSize.width, 21);
-    self.mView_titlecell.mLab_ViewCount.text = model.ViewCount;
+    self.mView_titlecell.mLab_ViewCount.text = model.questionModel.ViewCount;
     self.mView_titlecell.mLab_ViewCount.hidden = NO;
     self.mView_titlecell.mLab_View.frame = CGRectMake(self.mView_titlecell.mLab_ViewCount.frame.origin.x-2-self.mView_titlecell.mLab_View.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_View.frame.size.width, 21);
     self.mView_titlecell.mLab_View.hidden = NO;
     //回答
-    CGSize AnswersSize = [[NSString stringWithFormat:@"%@",model.AnswersCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+    CGSize AnswersSize = [[NSString stringWithFormat:@"%@",model.questionModel.AnswersCount] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_AnswersCount.frame = CGRectMake(self.mView_titlecell.mLab_View.frame.origin.x-5-AnswersSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AnswersSize.width, 21);
-    self.mView_titlecell.mLab_AnswersCount.text = model.AnswersCount;
+    self.mView_titlecell.mLab_AnswersCount.text = model.questionModel.AnswersCount;
     self.mView_titlecell.mLab_AnswersCount.hidden = NO;
     self.mView_titlecell.mLab_Answers.frame = CGRectMake(self.mView_titlecell.mLab_AnswersCount.frame.origin.x-2-self.mView_titlecell.mLab_Answers.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_Answers.frame.size.width, 21);
     self.mView_titlecell.mLab_Answers.hidden = NO;
@@ -95,7 +111,7 @@
     self.mView_titlecell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+self.mView_titlecell.mLab_Category0.frame.size.height+10);
     //回答内容
     self.mView_titlecell.mLab_Abstracts.hidden = NO;
-    NSString *string2 = model.KnContent;
+    NSString *string2 = model.questionModel.KnContent;
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
     NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>详情 : </font> <font>%@</font>", string2];
@@ -109,12 +125,13 @@
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
-    if (model.Thumbnail.count>0) {
-        self.mView_titlecell.mCollectionV_pic.frame = CGRectMake(9, self.mView_titlecell.mLab_Abstracts.frame.origin.y+self.mView_titlecell.mLab_Abstracts.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
-    }else{
+//    if (model.questionModel.Thumbnail.count>0) {
+//        self.mView_titlecell.mCollectionV_pic.frame = CGRectMake(9, self.mView_titlecell.mLab_Abstracts.frame.origin.y+self.mView_titlecell.mLab_Abstracts.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+//    }else{
         self.mView_titlecell.mCollectionV_pic.frame = self.mView_titlecell.mLab_Abstracts.frame;
-    }
+//    }
     //时间
+    
     self.mView_titlecell.mLab_RecDate.hidden = YES;
     //评论
     self.mView_titlecell.mLab_commentCount.hidden = YES;
@@ -125,8 +142,9 @@
     self.mView_titlecell.mLab_line2.hidden = YES;
     self.mView_titlecell.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_line.frame.origin.y+1);
     
+    self.mTableV_answer.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, self.mTableV_answer.contentSize.height);
     
-//    self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mBtn_submit.frame.origin.y+self.mBtn_submit.frame.size.height+20);
+    self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_answer.frame.origin.y+self.mTableV_answer.frame.size.height+20);
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -154,8 +172,9 @@
     [cell addTapClick];
     cell.mInt_flag = 1;
     NSMutableArray *array = self.mModel_recomment.answerArray;
-    AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
-    cell.answerModel = model;
+    AnswerModel *model = [array objectAtIndex:indexPath.row];
+//    AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
+    cell.RecommentAnswerModel = model;
     cell.mLab_title.hidden = YES;
     cell.mBtn_detail.hidden = YES;
     //话题
@@ -222,7 +241,7 @@
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
     NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
     NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, MAXFLOAT)];
     if (size.height>20) {
         size = CGSizeMake(size.width, 32);
     }
@@ -268,7 +287,7 @@
 -(float)cellHeight:(NSIndexPath *)indexPath{
     float tempF = 0.0;
     NSMutableArray *array = self.mModel_recomment.answerArray;
-    AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
+    AnswerModel *model = [array objectAtIndex:indexPath.row];
     //标题
     //    tempF = tempF+10+16;
     //    //话题
@@ -284,7 +303,7 @@
         //回答内容
         NSString *string2 = model.Abstracts;
         NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, MAXFLOAT)];
         if (size.height>20) {
             size = CGSizeMake(size.width, 32);
         }
@@ -319,6 +338,11 @@
     }else{
         return NO;
     }
+}
+
+//导航条返回按钮回调
+-(void)myNavigationGoback{
+    [utils popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

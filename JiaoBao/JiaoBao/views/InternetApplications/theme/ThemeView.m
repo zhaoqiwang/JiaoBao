@@ -168,7 +168,7 @@
     [self.mTableV_knowledge headerEndRefreshing];
     [self.mTableV_knowledge footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
-    NSString *code = [dic objectForKey:@"code"];
+    NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
@@ -281,6 +281,7 @@
     NSMutableArray *array = [self arrayDataSource];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
     cell.model = model;
+    cell.mWebV_comment.hidden = YES;
     //标题
     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
     cell.mLab_title.text = model.Title;
@@ -548,7 +549,9 @@
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     //判断是否来自推荐
     if ([knowledgeTableViewCell.model.tabid integerValue]>0) {
-        
+        KnowledgeRecommentAddAnswerViewController *recomment = [[KnowledgeRecommentAddAnswerViewController alloc] init];
+        recomment.mModel_question = knowledgeTableViewCell.model;
+        [utils pushViewController:recomment animated:YES];
     }else{
         KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
         detail.mModel_question = knowledgeTableViewCell.model;

@@ -18,6 +18,7 @@
 #import "AllCategoryModel.h"
 #import "KnowledgeQuestionViewController.h"
 #import "KnowledgeAddAnswerViewController.h"
+#import "KnowledgeRecommentAddAnswerViewController.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate>{
     

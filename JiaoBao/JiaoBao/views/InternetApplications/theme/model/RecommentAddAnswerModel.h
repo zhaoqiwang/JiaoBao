@@ -7,17 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-@class questionModel;
+@class RecommentQuestionModel;
 
 @interface RecommentAddAnswerModel : NSObject
 
 @property (nonatomic,strong) NSString *tabid;//推荐ID
-@property (nonatomic,strong) questionModel *questionModel;
+@property (nonatomic,strong) RecommentQuestionModel *questionModel;
 @property (nonatomic,strong) NSMutableArray *answerArray;////答案对象数组，如果为null，表示答案已被屏蔽或删除
 
 @end
 
-@interface questionModel : NSObject
+@interface RecommentQuestionModel : NSObject
 
 @property (nonatomic,strong) NSString *TabID;//
 @property (nonatomic,strong) NSString *Title;//标题
