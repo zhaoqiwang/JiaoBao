@@ -24,4 +24,5 @@
 @property(nonatomic,strong)ButtonView *mBtnV_btn;
 @property (nonatomic,strong) UITextField *mTextF_text;//输入框
 @property(nonatomic,strong)UIView *mView_text;
+@property(nonatomic,assign)int btn_tag;
 @end

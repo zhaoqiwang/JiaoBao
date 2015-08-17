@@ -272,6 +272,8 @@
         model.Title = [dic objectForKey:@"Title"];
         model.CCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CCount"]];
         model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
+            model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
+            model.LikeList = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeList"]];
         model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
         model.Abstracts = [dic objectForKey:@"Abstracts"];
     NSString *Thumbnail = [dic objectForKey:@"Thumbnail"];

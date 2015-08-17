@@ -79,7 +79,7 @@
 //举报答案 参数描述:答案id
 -(void)reportanswerWithAId:(NSString*)AId;
 
-//评价答案 参数描述:答案id - (0=反对，1=支持)
+//评价答案 参数描述:答案id - (1=反对，0=支持)
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag;
 
 //答案明细 参数描述:答案id

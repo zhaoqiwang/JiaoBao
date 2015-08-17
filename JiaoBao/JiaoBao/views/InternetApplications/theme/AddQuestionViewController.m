@@ -125,7 +125,12 @@
         
     }];
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -156,6 +161,10 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAllCategory" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAllCategory:) name:@"GetAllCategory" object:nil];
     
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"NewQuestionWithCategoryId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(NewQuestionWithCategoryId:) name:@"NewQuestionWithCategoryId" object:nil];
+    
+    
     self.mTextV_content.layer.borderWidth = .5;
     self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
     //将图层的边框设置为圆脚
@@ -165,7 +174,22 @@
 }
 
 
-
+-(void)NewQuestionWithCategoryId:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        [MBProgressHUD showSuccess:@"发布问题成功"];
+    }
+}
 - (IBAction)provinceBtnAction:(id)sender {
     self.selectedTF = self.provinceTF;
     self.dataArr = self.provinceArr;
@@ -298,8 +322,16 @@
     {
         self.AreaCode = self.proviceModel.CityCode;
     }
-
-    [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.titleTF.text KnContent:self.mTextV_content.text TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:self.atAccIdsTF.text];
+    NSString *content = self.mTextV_content.text;
+    for (int i=0; i<self.mArr_pic.count; i++) {
+        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+        NSString *temp = model.originalName;
+        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+    }
+    content = [NSString stringWithFormat:@"<p>%@</p>",content];
+    D("content--------%@",content);
+    [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.titleTF.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:self.atAccIdsTF.text];
+    [MBProgressHUD showMessage:@""];
     
 }
 
