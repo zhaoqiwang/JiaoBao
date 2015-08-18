@@ -19,7 +19,7 @@
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
-
+@property(nonatomic,strong)KnowledgeTableViewCell*KnowledgeTableViewCell;
 @end
 
 @implementation CommentViewController
@@ -41,6 +41,7 @@
     self.AllCommentListModel = [dic objectForKey:@"model"];
     ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:101];
     btn.mLab_title.text = [NSString stringWithFormat:@"评论%d",self.AllCommentListModel.mArr_CommentList.count];
+    
     self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
     D("tableViewFrame = %@",NSStringFromCGRect(self.tableView.frame));
     self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, self.tableView.frame.origin.y+self.tableView.frame.size.height+10);
@@ -62,8 +63,13 @@
     }
     if(view.tag == 102 )
     {
-        
-        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
+        if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
+        {
+            [MBProgressHUD showText:@"你已经评价过了"];
+            return;
+        }
+        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
+        self.btn_tag = 1;
     }
 }
 -(void)refreshComment:(id)sender
@@ -100,10 +106,10 @@
         else
         {
             self.AnswerDetailModel = [dic objectForKey:@"model"];
-            KnowledgeTableViewCell *cell = [self getMainView];
+            self.KnowledgeTableViewCell = [self getMainView];
             self.mainScrollView.frame = CGRectMake(0, 44+10, [dm getInstance].width, [dm getInstance].height-44-10);
             self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, 1000);
-            [self.mainScrollView addSubview:cell];
+            [self.mainScrollView addSubview:self.KnowledgeTableViewCell];
             
             NSMutableArray *temp = [NSMutableArray array];
             for (int i=0; i<3; i++) {
@@ -124,14 +130,14 @@
                 }
                 if(i == 2)
                 {
-                    model.mStr_title = [NSString stringWithFormat:@"反对%@",self.questionModel.answerModel.CaiCount];
+                    model.mStr_title = [NSString stringWithFormat:@"反对%@",self.AnswerDetailModel.CaiCount];
                     model.mStr_img = @"buttonView2";
                     
                     
                 }
                 [temp addObject:model];
             }
-            self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, cell.frame.origin.y+cell.frame.size.height, [dm getInstance].width, 50) Array:temp];
+            self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, [dm getInstance].width, 50) Array:temp];
             self.mBtnV_btn.delegate = self;
             [self.mainScrollView addSubview:self.mBtnV_btn];
             self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, 0) style:UITableViewStylePlain];
@@ -146,8 +152,43 @@
         }
     }
 }
+-(void)SetYesNoWithAId:(id)sender
+{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!=0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
+    else
+    {
+        self.AnswerDetailModel.LikeList = @"0,";
+        if(self.btn_tag == 1)
+        {
+            ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:102];
+            btn.mLab_title.text = @"反对1";
+        }
+
+        if(self.btn_tag == 0)
+        {
+            self.KnowledgeTableViewCell.mLab_LikeCount.text = @"1";
+
+        }
+
+    }
+
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.btn_tag = -1;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshComment" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshComment:) name:@"refreshComment" object:nil];
 
@@ -161,6 +202,9 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AnswerDetailWithAId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AnswerDetailWithAId:) name:@"AnswerDetailWithAId" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"SetYesNoWithAId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(SetYesNoWithAId:) name:@"SetYesNoWithAId" object:nil];
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"评论"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
@@ -255,7 +299,13 @@
 }
 -(void)likeAction:(id)sender
 {
-    [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
+    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
+    {
+        [MBProgressHUD showText:@"你已经评价过了"];
+        return;
+    }
+    [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
+    self.btn_tag = 0;
 
 }
 -(KnowledgeTableViewCell*)getMainView
@@ -316,6 +366,7 @@
         //评论
         cell.mLab_commentCount.hidden = YES;
         cell.mLab_comment.hidden = YES;
+        cell.mWebV_comment.hidden =YES;
         //分割线
         cell.mLab_line.frame = CGRectMake(20, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+5, [dm getInstance].width-20, .5);
         
@@ -323,23 +374,26 @@
         cell.mImgV_head.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 42);
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,cell.model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //姓名
-        cell.mLab_IdFlag.frame = CGRectMake(cell.mImgV_head.frame.size.width+9+5, cell.mLab_line.frame.origin.y+15, 42, cell.mLab_IdFlag.frame.size.height);
+        cell.mLab_IdFlag.frame = CGRectMake(cell.mImgV_head.frame.size.width+9+5, cell.mLab_line.frame.origin.y+15, 200, cell.mLab_IdFlag.frame.size.height);
         cell.mLab_IdFlag.text = self.AnswerDetailModel.IdFlag;
+        cell.mLab_IdFlag.textAlignment = NSTextAlignmentLeft;
         //赞
         cell.LikeBtn.hidden = NO;
-        cell.mLab_LikeCount.frame = CGRectMake([dm getInstance].width-42-5, cell.mLab_line.frame.origin.y+15+5, 42, 22);
+        cell.mLab_LikeCount.frame = CGRectMake([dm getInstance].width-38, cell.mLab_line.frame.origin.y+15+5, 42, 22);
+
         NSString *strLike = self.AnswerDetailModel.LikeCount;
         if ([self.AnswerDetailModel.LikeCount integerValue]>0) {
-            strLike = @"99+";
+            strLike = [NSString stringWithFormat:@"%@",self.AnswerDetailModel.LikeCount];
         }
         cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@",strLike];
+
         cell.mLab_LikeCount.backgroundColor = [UIColor clearColor];
         cell.mLab_LikeCount.textColor = [UIColor blackColor];
         //回答标题
         NSString *string1 = cell.model.answerModel.ATitle;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
-        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-9-2, cell.mLab_ATitle.frame.size.height);
+        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, cell.mLab_ATitle.frame.size.height);
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
         [row1 setObject:name forKey:@"text"];
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
@@ -350,17 +404,17 @@
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
         NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
         NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
         if (size.height>20) {
-            size = CGSizeMake(size.width, 32);
+            size = CGSizeMake(size.width, size.height);
         }
-        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-9-12, size.height);
+        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, size.height);
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
         [row2 setObject:name2 forKey:@"text"];
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
         //背景色
-        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-9, cell.mLab_Abstracts.frame.size.height+4);
+        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height+4);
         //图片
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
@@ -378,6 +432,7 @@
 //            cell.mCollectionV_pic.frame = CGRectMake(9, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-9-2, ([dm getInstance].width-70-40)/3*cell.model.answerModel.Thumbnail.count);
         }else{
             cell.mCollectionV_pic.frame = cell.mView_background.frame;
+            cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
         }
         //时间
         cell.mLab_RecDate.frame = CGRectMake([ dm getInstance].width - 70, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);

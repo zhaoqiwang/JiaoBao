@@ -220,10 +220,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
         
         D("JSON--------NewQuestionWithCategoryId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
         D("Error---------NewQuestionWithCategoryId: %@", error);
     }];
 
@@ -397,7 +400,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
-//评价答案 参数描述:答案id - (0=反对，1=支持)
+//评价答案 参数描述:答案id - (1=反对，0=支持)
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/SetYesNo",MAINURL];
@@ -411,10 +414,14 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:dic];
         
         D("JSON--------SetYesNoWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:resultDic ];
         D("Error---------SetYesNoWithAId: %@", error);
     }];
     
