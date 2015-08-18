@@ -335,7 +335,8 @@
     cell.mLab_AttCount.text = model.AttCount;
     cell.mLab_Att.frame = CGRectMake(cell.mLab_AttCount.frame.origin.x-2-cell.mLab_Att.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_Att.frame.size.width, cell.mLab_Att.frame.size.height);
     //判断是否有回答
-    if ([model.AnswersCount integerValue]>0) {
+//    if ([model.AnswersCount integerValue]>0) {
+    if ([model.answerModel.TabID integerValue]>0) {
         //分割线
         cell.mLab_line.hidden = NO;
         //赞
@@ -466,7 +467,8 @@
     //话题
     tempF = tempF+5+21;
     //判断是否有回答
-    if ([model.AnswersCount integerValue]>0) {
+//    if ([model.AnswersCount integerValue]>0) {
+    if ([model.answerModel.TabID integerValue]>0) {
         //分割线
         tempF = tempF+5;
         if (model.answerModel.Thumbnail.count>0) {

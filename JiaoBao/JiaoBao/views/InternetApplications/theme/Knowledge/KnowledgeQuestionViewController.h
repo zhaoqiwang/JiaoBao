@@ -19,6 +19,7 @@
 #import "AnswerByIdModel.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "KnowledgeAddAnswerViewController.h"
+#import "CommentViewController.h"
 
 @interface KnowledgeQuestionViewController : UIViewController<MyNavigationDelegate,ButtonViewDelegate,UITableViewDataSource,UITableViewDelegate,KnowledgeTableViewCellDelegate>
 

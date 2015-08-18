@@ -20,7 +20,7 @@
 #import "ShareHttp.h"
 #include<AssetsLibrary/AssetsLibrary.h>
 
-@interface KnowledgeAddAnswerViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate>
+@interface KnowledgeAddAnswerViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIWebViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) KnowledgeTableViewCell *mView_titlecell;//标题等
