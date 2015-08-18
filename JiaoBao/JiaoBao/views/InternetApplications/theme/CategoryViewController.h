@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "AllCategoryModel.h"
+#import "CategorySection.h"
 
-@interface CategoryViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout>
+@interface CategoryViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CategorySectionDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property(nonatomic,strong)UITextField *categoryTF;
 @property(nonatomic,strong)NSMutableString *categoryId;
 @property(nonatomic,strong)NSMutableArray *mArr_AllCategory;
 - (IBAction)backAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *titileLabel;
+@property(nonatomic,strong)NSMutableArray *mArr_selectCategory;
+- (IBAction)selectAction:(id)sender;
 
 @end

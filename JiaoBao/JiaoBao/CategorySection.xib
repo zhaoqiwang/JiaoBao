@@ -17,6 +17,15 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUg-yY-Cjd">
+                    <rect key="frame" x="280" y="0.0" width="40" height="40"/>
+                    <state key="normal" image="add.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="AddBtnAction:" destination="U6b-Vx-4bR" eventType="touchUpInside" id="YJH-Eb-nK3"/>
+                    </connections>
+                </button>
             </subviews>
             <connections>
                 <outlet property="nameLabel" destination="O47-lh-Y76" id="1eT-7X-HYB"/>
@@ -24,4 +33,7 @@
             <point key="canvasLocation" x="327" y="266"/>
         </collectionReusableView>
     </objects>
+    <resources>
+        <image name="add.png" width="12" height="12"/>
+    </resources>
 </document>

@@ -25,6 +25,14 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+
+    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    {
+        self.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+        self.collectionView.allowsMultipleSelection = YES;
+        self.titileLabel.text = @"显示优先显示的话题类别";
+    }
     [self.collectionView registerNib:[UINib nibWithNibName:@"AllcategoryCollectionViewCell" bundle:nil]forCellWithReuseIdentifier:@"Cell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CategorySection" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CategorySection"];
 
@@ -47,11 +55,12 @@
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     
-    CategorySection *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"CategorySection" forIndexPath:indexPath];
+    CategorySection *sectionView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"CategorySection" forIndexPath:indexPath];
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
-    view.nameLabel.text = model.item.Subject;
+    sectionView.nameLabel.text = model.item.Subject;
+    sectionView.delegate = self;
     
-    return view;
+    return sectionView;
 }
 
 //手动设置size
@@ -63,8 +72,19 @@
     AllcategoryCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
-
     cell.nameLabel.text = itemModel.Subject;
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    {
+        if(cell.selected == YES)
+        {
+            cell.nameLabel.textColor = [UIColor redColor];
+        }
+        else
+        {
+            cell.nameLabel.textColor = [UIColor blackColor];
+        }
+    }
     
     
     return cell;
@@ -78,6 +98,18 @@
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
     [self.categoryId setString:itemModel.TabID];
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    {
+        [self.mArr_selectCategory addObject:itemModel];
+
+    }
+    cell.nameLabel.textColor = [UIColor redColor];
+    
+
+    
+    
+    
 
     
     
@@ -85,6 +117,14 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
+    ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    {
+        [self.mArr_selectCategory removeObject:itemModel];
+        
+    }
     cell.nameLabel.textColor = [UIColor blackColor];
 }
 
@@ -106,8 +146,10 @@
     return 5;
 }
 
-
-
+//-(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section
+//{
+//    
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -126,5 +168,9 @@
 
 - (IBAction)backAction:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (IBAction)selectAction:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+
 }
 @end

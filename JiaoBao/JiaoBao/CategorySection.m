@@ -14,4 +14,8 @@
     // Initialization code
 }
 
+- (IBAction)AddBtnAction:(id)sender {
+    UIButton *btn = sender;
+    [self.delegate CategorySectionClickBtnWith:btn section:self];
+}
 @end
