@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "MobClick.h"
 #import "CommentViewController.h"
+#import "CategoryViewController.h"
 
 @implementation ThemeView
 
@@ -36,6 +37,7 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RecommentIndex" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RecommentIndex:) name:@"RecommentIndex" object:nil];
         
+
         self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
         self.mInt_reloadData = 0;
@@ -79,6 +81,9 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
+    [[KnowledgeHttp getInstance] GetAllCategory];
+    [MBProgressHUD showMessage:@"" toView:self];
+    
     
 }
 
@@ -141,7 +146,7 @@
         return;
     }
     //取所有话题
-    [[KnowledgeHttp getInstance] GetAllCategory];
+    //[[KnowledgeHttp getInstance] GetAllCategory];
     [self sendRequest];
 //    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
    // [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" flag:@"-1" uid:@"15"];
@@ -201,16 +206,26 @@
 
 //获取所有话题
 -(void)GetAllCategory:(NSNotification *)noti{
-    NSMutableDictionary *dic = noti.object;
-    NSString *code = [dic objectForKey:@"code"];
-    if ([code integerValue] ==0) {
-        NSMutableArray *array = [dic objectForKey:@"array"];
-        for (int i=0; i<array.count; i++) {
-            AllCategoryModel *model = [array objectAtIndex:i];
-            [self.mArr_AllCategory addObject:model];
+    [MBProgressHUD hideHUDForView:self animated:YES];
+    NSDictionary *dic = [noti object];
+    CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
+    detailVC.modalPresentationStyle = UIModalPresentationCustom;
+    detailVC.mArr_AllCategory = [dic objectForKey:@"array"];
+    detailVC.titileLabel.text = @"选择优先显示的话题类别";
+    for (UIView* next = [self superview]; next; next =
+         next.superview) {
+        UIResponder* nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController
+                                         class]]) {
+            UIViewController *vc = (UIViewController*)nextResponder;
+            [vc.navigationController  presentViewController:detailVC animated:NO completion:^{
+                detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
+                
+                
+            }];
         }
-        [self addScrollViewBtn:(int)array.count];
     }
+
 }
 
 //首页问题列表

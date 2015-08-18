@@ -7,8 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol CategorySectionDelegate;
 
 @interface CategorySection : UICollectionReusableView
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak,nonatomic) id<CategorySectionDelegate> delegate;
+- (IBAction)AddBtnAction:(id)sender;
 
+@end
+@protocol CategorySectionDelegate <NSObject>
+
+//点击按钮
+-(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section;
 @end

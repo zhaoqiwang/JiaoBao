@@ -112,6 +112,7 @@
 }
 -(void)GetAllCategory:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = [sender object];
     self.mArr_AllCategory =[dic objectForKey:@"array"] ;
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
@@ -277,6 +278,7 @@
 
 - (IBAction)categaryBtnAction:(id)sender {
     [[KnowledgeHttp getInstance]GetAllCategory];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 
 
 }
