@@ -194,7 +194,7 @@
         [self.mTableV_answers registerNib:n forCellReuseIdentifier:indentifier];
     }
     //添加点击事件
-//    cell.delegate = self;
+    cell.delegate = self;
     [cell addTapClick];
     cell.mInt_flag = 1;
     NSMutableArray *array = self.mArr_answers;
@@ -416,6 +416,11 @@
     [utils pushViewController:detail animated:YES];
 }
 
+//cell的点击事件---答案
+-(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    
+}
+
 //ButtonView回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
     D("view.tag-=====%ld",(long)view.tag);
@@ -427,6 +432,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
 

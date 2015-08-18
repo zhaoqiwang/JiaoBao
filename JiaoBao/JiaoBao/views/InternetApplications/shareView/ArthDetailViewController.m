@@ -410,15 +410,17 @@
             self.mLab_time.text = self.mModel_notice.Recdate;
             //内容
 //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
+            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-            D("detail.url-====%@",str);
-            [self.mWebV_js loadHTMLString:str baseURL:baseURL];
+            D("detail.url-====%@",tempHtml);
+            [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
         }else{
             self.mModel = [dic objectForKey:@"model"];
             //        NSString *str = self.mModel.Context;
             NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
             for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %d",i] withString:@" "];
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
             }
             str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
@@ -443,11 +445,13 @@
             CGSize timeSize = [self.mModel.RecDate sizeWithFont:[UIFont systemFontOfSize:13]];
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel.RecDate;
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
+            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
             //内容
 //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-            D("url-====%@",str);
-            [self.mWebV_js loadHTMLString:str baseURL:baseURL];
+            D("url-====%@",tempHtml);
+            [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
         }
     }else{
         [MBProgressHUD showError:@"获取文章详情超时" toView:self.view];
@@ -475,6 +479,9 @@
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
+    [webView stringByEvaluatingJavaScriptFromString:meta];
     [MBProgressHUD hideHUDForView:self.view];
     
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
@@ -488,7 +495,7 @@
     if (self.mInt_from == 2) {
         //内容
 //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height);
         self.mLab_click.hidden = YES;
         self.mLab_like.hidden = YES;
@@ -499,7 +506,7 @@
     }else{
         //内容
 //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
         [self setArthInfo];
         //设置布局
         [self setFrame];

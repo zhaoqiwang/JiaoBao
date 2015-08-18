@@ -14,6 +14,13 @@
 
 @implementation KnowledgeRecommentAddAnswerViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -127,7 +134,8 @@
     [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
     self.mView_titlecell.mWebV_comment.tag = -1;
     self.mView_titlecell.mWebV_comment.delegate = self;
-    [self.mView_titlecell.mWebV_comment loadHTMLString:model.questionModel.KnContent baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width-75,model.questionModel.KnContent];
+    [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     
     //加载
     [self webViewLoadFinish:0];
@@ -295,11 +303,12 @@
     if (model.floatH==0&&model.Abstracts.length>0) {
         cell.mWebV_comment.delegate = self;
     }
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width-75,model.Abstracts];
+    NSString *tempHtml = [NSString stringWithFormat:@"<body style=background-color:#EBEBEB ><meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width-75,model.Abstracts];
 //    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%f, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", webView.frame.size.width];
+    [cell.mWebV_comment stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     [cell.mWebV_comment reload];
-    [cell.mWebV_comment stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
+    
     //背景色
     cell.mView_background.frame = CGRectMake(cell.mWebV_comment.frame.origin.x-2, cell.mWebV_comment.frame.origin.y-3, [dm getInstance].width-70, cell.mWebV_comment.frame.size.height+4);
     //图片
@@ -406,6 +415,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
 

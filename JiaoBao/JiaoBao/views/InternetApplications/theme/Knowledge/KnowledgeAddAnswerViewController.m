@@ -161,26 +161,39 @@
     self.mView_titlecell.mView_background.hidden = NO;
     self.mView_titlecell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+self.mView_titlecell.mLab_Category0.frame.size.height+10);
     //回答内容
-    self.mView_titlecell.mLab_Abstracts.hidden = NO;
-    NSString *string2 = model.KnContent;
-    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
-    NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>详情 : </font> <font>%@</font>", string2];
-    NSString *string = [NSString stringWithFormat:@"详情 : %@",string2];
-    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
-    self.mView_titlecell.mLab_Abstracts.frame = CGRectMake(9, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height+10, [dm getInstance].width-18, size.height);
-    NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-    [row2 setObject:name2 forKey:@"text"];
-    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-    self.mView_titlecell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+    self.mView_titlecell.mLab_Abstracts.hidden = YES;
+//    NSString *string2 = model.KnContent;
+//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
+//    NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>详情 : </font> <font>%@</font>", string2];
+//    NSString *string = [NSString stringWithFormat:@"详情 : %@",string2];
+//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
+//    self.mView_titlecell.mLab_Abstracts.frame = CGRectMake(9, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height+10, [dm getInstance].width-18, size.height);
+//    NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
+//    [row2 setObject:name2 forKey:@"text"];
+//    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+//    self.mView_titlecell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+    //webview
+    self.mView_titlecell.mWebV_comment.hidden = NO;
+    [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
+    self.mView_titlecell.mWebV_comment.tag = -1;
+    self.mView_titlecell.mWebV_comment.delegate = self;
+    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width-18,model.KnContent];
+    [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    //加载
+    [self webViewLoadFinish:0];
+}
+
+-(void)webViewLoadFinish:(float)height{
+    self.mView_titlecell.mWebV_comment.frame = CGRectMake(9, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-18, height);
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
-    if (model.Thumbnail.count>0) {
-        self.mView_titlecell.mCollectionV_pic.frame = CGRectMake(9, self.mView_titlecell.mLab_Abstracts.frame.origin.y+self.mView_titlecell.mLab_Abstracts.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
-    }else{
-        self.mView_titlecell.mCollectionV_pic.frame = self.mView_titlecell.mLab_Abstracts.frame;
-    }
+//    if (model.Thumbnail.count>0) {
+//        self.mView_titlecell.mCollectionV_pic.frame = CGRectMake(9, self.mView_titlecell.mLab_Abstracts.frame.origin.y+self.mView_titlecell.mLab_Abstracts.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+//    }else{
+        self.mView_titlecell.mCollectionV_pic.frame = self.mView_titlecell.mWebV_comment.frame;
+//    }
     //时间
     self.mView_titlecell.mLab_RecDate.hidden = YES;
     //评论
@@ -204,6 +217,13 @@
     //提示信息坐标
     [self placeTextFrame];
     self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mBtn_submit.frame.origin.y+self.mBtn_submit.frame.size.height+20);
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-18];
+    [webView stringByEvaluatingJavaScriptFromString:meta];
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
+    [self webViewLoadFinish:webViewHeight+10];
 }
 
 -(void)placeTextFrame{
