@@ -25,6 +25,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mArr_addBtnSel = [[NSMutableArray alloc]init];
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
 
     if([nowViewStr isEqualToString:@"CategoryViewController"])
@@ -42,6 +43,11 @@
 #pragma mark - Collection View Data Source
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
+    NSNumber *num = [NSNumber numberWithInteger:section];
+    if([self.mArr_addBtnSel containsObject:num])
+    {
+        return 0;
+    }
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:section];
 
     return model.mArr_subItem.count;
@@ -59,6 +65,7 @@
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     sectionView.nameLabel.text = model.item.Subject;
     sectionView.delegate = self;
+    sectionView.tag = indexPath.section;
     
     return sectionView;
 }
@@ -76,7 +83,7 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     if([nowViewStr isEqualToString:@"CategoryViewController"])
     {
-        if(cell.selected == YES)
+        if([self.mArr_selectCategory containsObject:itemModel])
         {
             cell.nameLabel.textColor = [UIColor redColor];
         }
@@ -105,13 +112,6 @@
 
     }
     cell.nameLabel.textColor = [UIColor redColor];
-    
-
-    
-    
-    
-
-    
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -146,10 +146,21 @@
     return 5;
 }
 
-//-(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section
-//{
-//    
-//}
+-(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section
+{
+    NSNumber *num = [NSNumber numberWithInteger:section.tag];
+
+    if(![self.mArr_addBtnSel containsObject:num])
+    {
+        [self.mArr_addBtnSel addObject:num];
+    }
+    else
+    {
+        [self.mArr_addBtnSel removeObject:num];
+    }
+    [self.collectionView reloadData];
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -18,6 +18,7 @@
 - (IBAction)backAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *titileLabel;
 @property(nonatomic,strong)NSMutableArray *mArr_selectCategory;
+@property(nonatomic,strong)NSMutableArray *mArr_addBtnSel;
 - (IBAction)selectAction:(id)sender;
 
 @end

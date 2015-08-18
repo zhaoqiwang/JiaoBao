@@ -81,8 +81,29 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
-    [[KnowledgeHttp getInstance] GetAllCategory];
-    [MBProgressHUD showMessage:@"" toView:self];
+//    [[KnowledgeHttp getInstance] GetAllCategory];
+    CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
+    detailVC.modalPresentationStyle = UIModalPresentationCustom;
+    detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=3;i<self.mArr_AllCategory.count;i++)
+    {
+        [detailVC.mArr_AllCategory addObject:[self.mArr_AllCategory objectAtIndex:i]];
+    }
+    
+    detailVC.titileLabel.text = @"选择优先显示的话题类别";
+    for (UIView* next = [self superview]; next; next =
+         next.superview) {
+        UIResponder* nextResponder = [next nextResponder];
+        if ([nextResponder isKindOfClass:[UIViewController
+                                          class]]) {
+            UIViewController *vc = (UIViewController*)nextResponder;
+            [vc.navigationController  presentViewController:detailVC animated:NO completion:^{
+                detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
+                
+                
+            }];
+        }
+    }
     
     
 }
@@ -146,7 +167,7 @@
         return;
     }
     //取所有话题
-    //[[KnowledgeHttp getInstance] GetAllCategory];
+    [[KnowledgeHttp getInstance] GetAllCategory];
     [self sendRequest];
 //    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
    // [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" flag:@"-1" uid:@"15"];
@@ -207,25 +228,17 @@
 //获取所有话题
 -(void)GetAllCategory:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self animated:YES];
-    NSDictionary *dic = [noti object];
-    CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-    detailVC.modalPresentationStyle = UIModalPresentationCustom;
-    detailVC.mArr_AllCategory = [dic objectForKey:@"array"];
-    detailVC.titileLabel.text = @"选择优先显示的话题类别";
-    for (UIView* next = [self superview]; next; next =
-         next.superview) {
-        UIResponder* nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController
-                                         class]]) {
-            UIViewController *vc = (UIViewController*)nextResponder;
-            [vc.navigationController  presentViewController:detailVC animated:NO completion:^{
-                detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
-                
-                
-            }];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue] ==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        for (int i=0; i<array.count; i++) {
+            AllCategoryModel *model = [array objectAtIndex:i];
+            [self.mArr_AllCategory addObject:model];
         }
+        [self addScrollViewBtn:(int)array.count];
     }
-
+   
 }
 
 //首页问题列表
