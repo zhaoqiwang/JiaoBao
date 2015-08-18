@@ -606,13 +606,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         RecommentAddAnswerModel *model = [ParserJson_knowledge parserJsonShowRecomment:[jsonDic objectForKey:@"Data"]];
         
-        D("JSON--------RecommentIndex: %@,", result);
+        D("JSON--------ShowRecomment: %@,", result);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------RecommentIndex: %@", error);
+        D("Error---------ShowRecomment: %@", error);
     }];
 }
 
