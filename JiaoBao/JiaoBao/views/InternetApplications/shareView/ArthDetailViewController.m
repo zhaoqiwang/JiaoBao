@@ -487,7 +487,8 @@
     D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (self.mInt_from == 2) {
         //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+//        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height);
         self.mLab_click.hidden = YES;
         self.mLab_like.hidden = YES;
@@ -497,7 +498,8 @@
         self.mImgV_View.hidden = YES;
     }else{
         //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+//        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight);
         [self setArthInfo];
         //设置布局
         [self setFrame];

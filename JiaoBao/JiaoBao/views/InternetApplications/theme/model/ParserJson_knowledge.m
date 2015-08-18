@@ -524,7 +524,6 @@
     }
     model.questionModel.AreaCode = [dic objectForKey:@"AreaCode"];
     model.questionModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
-    D("siudhfsjhf-====%@,%@,%@",model.questionModel.Title,[dic objectForKey:@"Title"],model.questionModel.CategorySuject);
     
     NSMutableArray *mArr_answer = [dic0 objectForKey:@"answers"];
     for(int i=0;i<mArr_answer.count;i++)

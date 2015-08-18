@@ -95,7 +95,6 @@
     int tempWidth = 50;
     for (int i=0; i<self.mArr_AllCategory.count; i++) {
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:i];
-        D("dlkjglk-===%@",model.item.Subject);
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
         [btn setTag:i];
