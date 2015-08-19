@@ -46,6 +46,12 @@
     if (self.mInt_flag == 1) {
         return self.answerModel.Thumbnail.count;
     }
+    if(self.mInt_flag == 2)
+    {
+        return self.AnswerDetailModel.Thumbnail.count;
+
+        
+    }
     return self.model.answerModel.Thumbnail.count;
 }
 //定义并返回每个cell
@@ -56,6 +62,13 @@
     }
     if (self.mInt_flag == 1) {
         NSString *str = [self.answerModel.Thumbnail objectAtIndex:indexPath.row];
+        cell.mLab_name.hidden = YES;
+        [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+        cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
+    }
+    else if (self.mInt_flag == 2)
+    {
+        NSString *str = [self.AnswerDetailModel.Thumbnail objectAtIndex:indexPath.row];
         cell.mLab_name.hidden = YES;
         [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
@@ -74,12 +87,27 @@
 {
 
     NSMutableArray *photos = [NSMutableArray array];
-    
-    for (int i = 0; i < [self.model.answerModel.Thumbnail count]; i++) {
-        // 替换为中等尺寸图片
-        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.model.answerModel.Thumbnail objectAtIndex:i]];
-        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+    NSInteger num;
+    if(self.mInt_flag == 2)
+    {
+        num = self.AnswerDetailModel.Thumbnail.count;
+        for (int i = 0; i < num; i++) {
+            // 替换为中等尺寸图片
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.answerModel.Thumbnail objectAtIndex:i]];
+            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+        }
     }
+    else
+    {
+        num = self.model.answerModel.Thumbnail.count;
+        for (int i = 0; i < num; i++) {
+            // 替换为中等尺寸图片
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.model.answerModel.Thumbnail objectAtIndex:i]];
+            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+        }
+
+    }
+
     self.photos = photos;
     // Create browser
     MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
@@ -111,6 +139,15 @@
     return CGSizeMake(([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    if(self.mInt_flag == 2)
+    {
+        if(self.AnswerDetailModel.Thumbnail.count>3)
+        {
+            return UIEdgeInsetsMake(0, 0, 0, 10);
+        }
+        return UIEdgeInsetsMake(0, 0, 0, 80);
+
+    }
     return UIEdgeInsetsMake(0, 0, 0, 30);
 }
 //cell的最小行间距

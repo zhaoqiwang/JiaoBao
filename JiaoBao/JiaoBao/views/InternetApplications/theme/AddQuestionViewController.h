@@ -29,6 +29,7 @@
 @property(nonatomic,assign)int imageCount,mInt_index;
 @property(nonatomic,strong)NSMutableArray *mArr_pic;
 @property(nonatomic,assign)int tfContentTag;
+@property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 -(IBAction)mBtn_photo:(id)sender;
 
 

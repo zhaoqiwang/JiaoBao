@@ -26,13 +26,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mArr_addBtnSel = [[NSMutableArray alloc]init];
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    self.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
 
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    if([self.classStr isEqualToString:@"ThemeView"])
     {
-        self.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
         self.collectionView.allowsMultipleSelection = YES;
         self.titileLabel.text = @"显示优先显示的话题类别";
+        [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
+    }
+    else
+    {
+        self.collectionView.allowsMultipleSelection = NO;
+        self.titileLabel.text = @"请选择话题类别";
+        [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
+
+
+
     }
     [self.collectionView registerNib:[UINib nibWithNibName:@"AllcategoryCollectionViewCell" bundle:nil]forCellWithReuseIdentifier:@"Cell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CategorySection" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CategorySection"];
@@ -80,9 +89,6 @@
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
     cell.nameLabel.text = itemModel.Subject;
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
-    {
         if([self.mArr_selectCategory containsObject:itemModel])
         {
             cell.nameLabel.textColor = [UIColor redColor];
@@ -91,7 +97,6 @@
         {
             cell.nameLabel.textColor = [UIColor blackColor];
         }
-    }
     
     
     return cell;
@@ -100,18 +105,38 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.nameLabel.textColor = [UIColor redColor];
+    //cell.nameLabel.textColor = [UIColor redColor];
     self.categoryTF.text = cell.nameLabel.text;
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
-    [self.categoryId setString:itemModel.TabID];
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
+
+    if([self.classStr isEqualToString:@"AddQuestionViewController"])
     {
+        [self.mArr_selectCategory removeAllObjects];
         [self.mArr_selectCategory addObject:itemModel];
+        cell.nameLabel.textColor = [UIColor redColor];
+        [self.collectionView reloadData];
 
     }
-    cell.nameLabel.textColor = [UIColor redColor];
+    else
+    {
+        if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
+        {
+            [self.mArr_selectCategory removeObject:itemModel];
+            cell.nameLabel.textColor = [UIColor blackColor];
+        }
+        else
+        {
+            [self.mArr_selectCategory addObject:itemModel];
+            cell.nameLabel.textColor = [UIColor redColor];
+            
+            
+        }
+        
+    }
+
+    [self.categoryId setString:itemModel.TabID];
+
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -119,13 +144,47 @@
     AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    if([self.classStr isEqualToString:@"AddQuestionViewController"])
+    {if([self.mArr_selectCategory containsObject:itemModel])
     {
         [self.mArr_selectCategory removeObject:itemModel];
+        cell.nameLabel.textColor = [UIColor blackColor];
         
     }
-    cell.nameLabel.textColor = [UIColor blackColor];
+
+    }
+    else
+    {
+        if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
+        {
+            [self.mArr_selectCategory removeObject:itemModel];
+            cell.nameLabel.textColor = [UIColor blackColor];
+        }
+        else
+        {
+            [self.mArr_selectCategory addObject:itemModel];
+            cell.nameLabel.textColor = [UIColor redColor];
+            
+            
+        }
+        
+    }
+
+//    if([self.mArr_selectCategory containsObject:itemModel])
+//    {
+//        [self.mArr_selectCategory removeObject:itemModel];
+//        cell.nameLabel.textColor = [UIColor blackColor];
+//
+//    }
+//    else
+//    {
+//        if([self.classStr isEqualToString:@"ThemeView"])
+//        {
+//            [self.mArr_selectCategory addObject:itemModel];
+//
+//        }
+//    }
+
 }
 
 

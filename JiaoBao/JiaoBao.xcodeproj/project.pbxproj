@@ -923,6 +923,8 @@
 		F7EE1A0B1B78896000B31D79 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EE1A091B78896000B31D79 /* CommentViewController.xib */; };
 		F7EE1A0F1B789CD200B31D79 /* CommentListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EE1A0D1B789CD200B31D79 /* CommentListTableViewCell.m */; };
 		F7EE1A101B789CD200B31D79 /* CommentListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EE1A0E1B789CD200B31D79 /* CommentListTableViewCell.xib */; };
+		F7F415C71B8472A9001B27CE /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F415C61B8472A9001B27CE /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F7F415C91B847302001B27CE /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F415C81B847302001B27CE /* libxml2.dylib */; };
 		F7F460B61AE891C70069820F /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B31AE891C70069820F /* triangle.png */; };
 		F7F460B71AE891C70069820F /* triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B41AE891C70069820F /* triangle@2x.png */; };
 		F7F460B81AE891C70069820F /* triangle@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7F460B51AE891C70069820F /* triangle@3x.png */; };
@@ -2301,6 +2303,9 @@
 		F7EE1A0C1B789CD200B31D79 /* CommentListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentListTableViewCell.h; path = views/InternetApplications/theme/CommentListTableViewCell.h; sourceTree = "<group>"; };
 		F7EE1A0D1B789CD200B31D79 /* CommentListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentListTableViewCell.m; path = views/InternetApplications/theme/CommentListTableViewCell.m; sourceTree = "<group>"; };
 		F7EE1A0E1B789CD200B31D79 /* CommentListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentListTableViewCell.xib; path = views/InternetApplications/theme/CommentListTableViewCell.xib; sourceTree = "<group>"; };
+		F7F415C51B8472A9001B27CE /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		F7F415C61B8472A9001B27CE /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		F7F415C81B847302001B27CE /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		F7F460B31AE891C70069820F /* triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = triangle.png; path = Image/InternetApp/share/triangle.png; sourceTree = "<group>"; };
 		F7F460B41AE891C70069820F /* triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@2x.png"; path = "Image/InternetApp/share/triangle@2x.png"; sourceTree = "<group>"; };
 		F7F460B51AE891C70069820F /* triangle@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "triangle@3x.png"; path = "Image/InternetApp/share/triangle@3x.png"; sourceTree = "<group>"; };
@@ -2320,6 +2325,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7F415C91B847302001B27CE /* libxml2.dylib in Frameworks */,
 				F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */,
 				F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */,
 				F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */,
@@ -2993,6 +2999,7 @@
 		A755E69719F24AC500BBDF3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7F415C81B847302001B27CE /* libxml2.dylib */,
 				F74639961B0EC5DA00365EB7 /* CoreText.framework */,
 				F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */,
 				F74639921B0EC53D00365EB7 /* libicucore.dylib */,
@@ -3055,6 +3062,8 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F7F415C51B8472A9001B27CE /* GDataXMLNode.h */,
+				F7F415C61B8472A9001B27CE /* GDataXMLNode.m */,
 				A784599C1B7B4B4A00EA7D5D /* IQKeyBoardManager */,
 				A75E3F9B1B6F64A300284C3D /* AFNetworking */,
 				A75E3F981B6F646400284C3D /* VlorNetWorkAPI.m */,
@@ -5339,6 +5348,7 @@
 				A73CAD6D1A07755B00D6C5AA /* MJRefreshBaseView.m in Sources */,
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
 				F79D84D61ABD4DC000897477 /* ParserJson_SignIn.m in Sources */,
+				F7F415C71B8472A9001B27CE /* GDataXMLNode.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
 				A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */,
 				A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */,

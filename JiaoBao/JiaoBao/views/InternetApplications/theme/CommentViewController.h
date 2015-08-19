@@ -18,6 +18,8 @@
 @interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property(nonatomic,strong)QuestionModel *questionModel;
+@property (nonatomic,strong) AnswerByIdModel *answerModel;
+
 @property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (strong, nonatomic)  UITableView *tableView;
 @property(nonatomic,assign)float cellHeight;
