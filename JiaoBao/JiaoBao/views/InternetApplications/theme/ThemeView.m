@@ -99,8 +99,7 @@
                                           class]]) {
             UIViewController *vc = (UIViewController*)nextResponder;
             [vc.navigationController  presentViewController:detailVC animated:NO completion:^{
-                detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
-                
+        detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);                
                 
             }];
         }

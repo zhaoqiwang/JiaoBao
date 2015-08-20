@@ -30,6 +30,10 @@
 @property(nonatomic,strong)NSMutableArray *mArr_pic;
 @property(nonatomic,assign)int tfContentTag;
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *ttitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *contentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryLabel;
+
 -(IBAction)mBtn_photo:(id)sender;
 
 

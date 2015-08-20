@@ -86,6 +86,8 @@
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:2];
     [self.mainScrollView addSubview:self.mTableV_name];
+
+    
     
 
 }
@@ -122,7 +124,7 @@
     detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
     detailVC.mArr_AllCategory = self.mArr_AllCategory;
     [self.navigationController presentViewController:detailVC animated:NO completion:^{
-        detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
+        detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
 
         
     }];
@@ -133,6 +135,11 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    self.mainScrollView.contentSize = self.mainScrollView.frame.size;
 }
 
 - (void)viewDidLoad {
@@ -180,6 +187,24 @@
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
+    
+    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"标题" attributes:nil];
+    NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+    textAttach.image = [UIImage imageNamed:@"buttonView3"];
+    textAttach.bounds=CGRectMake(3, 0, 10, 10);
+    NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+    [str insertAttributedString:strA atIndex:2];
+    self.ttitleLabel.attributedText = str;
+    
+    NSMutableAttributedString *str1=[[NSMutableAttributedString alloc] initWithString:@"问题描述" attributes:nil];
+    
+    [str1 insertAttributedString:strA atIndex:4];
+    self.contentLabel.attributedText = str1;
+    
+    NSMutableAttributedString *str2=[[NSMutableAttributedString alloc] initWithString:@"问题分类" attributes:nil];
+    
+    [str2 insertAttributedString:strA atIndex:4];
+    self.categoryLabel.attributedText = str2;
 
 }
 
@@ -208,7 +233,16 @@
     if(self.isOpen == NO)
     {
            [UIView animateWithDuration:0.3 animations:^{
-        self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, 44*self.dataArr.count);
+              int h = self.mainScrollView.frame.size.height-self.provinceTF.frame.size.height-self.provinceTF.frame.origin.y;
+               if(44*self.dataArr.count>h)
+               {
+                           self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, h);
+               }
+               else
+               {
+                    self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, 44*self.dataArr.count);
+               }
+
 
         
     } completion:^(BOOL finished){
@@ -226,7 +260,7 @@
     }
     self.isOpen = !self.isOpen;
 
-
+    //self.mainScrollView.contentSize = self.mainScrollView.frame.size;
     
 }
 
@@ -241,7 +275,12 @@
     if(self.isOpen == NO)
     {
         [UIView animateWithDuration:0.3 animations:^{
-            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
+            int h = self.mainScrollView.frame.size.height-self.selectedTF.frame.size.height-self.selectedTF.frame.origin.y;
+
+                self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
+            
+
+            //self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
             
         }];
         
@@ -268,7 +307,12 @@
     if(self.isOpen == NO)
     {
         [UIView animateWithDuration:0.3 animations:^{
-            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
+            int h = self.mainScrollView.frame.size.height-self.selectedTF.frame.size.height-self.selectedTF.frame.origin.y;
+            D("mainScrollView_height = %f selectedTF_height = %f  selectedTF_y = %f",self.mainScrollView.frame.size.height,self.selectedTF.frame.size.height,self.selectedTF.frame.origin.y);
+
+                self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
+
+           // self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
             
         }];
         
