@@ -62,6 +62,10 @@
     model.NickName = [dic objectForKey:@"NickName"];
     model.UserName = [dic objectForKey:@"UserName"];
     model.IdFlag = [dic objectForKey:@"IdFlag"];
+    if (model.IdFlag.length==0) {
+        model.IdFlag = @"匿名回答";
+        model.JiaoBaoHao = @"";
+    }
     model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
     return model;
 }
@@ -246,6 +250,10 @@
             model.Thumbnail = [NSMutableArray arrayWithArray:temp];
         }
         model.IdFlag = [dic objectForKey:@"IdFlag"];
+        if (model.IdFlag.length==0) {
+            model.IdFlag = @"匿名回答";
+            model.JiaoBaoHao = @"";
+        }
         [array addObject:model];
     }
     return array;
@@ -254,13 +262,13 @@
 //答案明细
 +(AnswerDetailModel*)parserJsonAnswerDetail:(NSString*)json
 {
-
-        AnswerDetailModel *model = [[AnswerDetailModel alloc ]init];
-        NSDictionary *dic = [json objectFromJSONString];
-        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
-        model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
-        model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
-        model.RecDate = [dic objectForKey:@"RecDate"];
+    D("fd;'osgjr;a'sdgj';a-====%@",json);
+    AnswerDetailModel *model = [[AnswerDetailModel alloc ]init];
+    NSDictionary *dic = [json objectFromJSONString];
+    model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+    model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+    model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
+    model.RecDate = [dic objectForKey:@"RecDate"];
     NSString *str = [utils getLocalTimeDate];
     NSString *str2 = [dic objectForKey:@"RecDate"];
     NSRange range = [str2 rangeOfString:str];
@@ -269,13 +277,13 @@
     }else{
         model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
     }
-        model.Title = [dic objectForKey:@"Title"];
-        model.CCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CCount"]];
-        model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
-            model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
-            model.LikeList = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeList"]];
-        model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
-        model.Abstracts = [dic objectForKey:@"Abstracts"];
+    model.Title = [dic objectForKey:@"Title"];
+    model.CCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CCount"]];
+    model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
+    model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
+    model.LikeList = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeList"]];
+    model.Flag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Flag"]];
+    model.Abstracts = [dic objectForKey:@"Abstracts"];
     NSString *Thumbnail = [dic objectForKey:@"Thumbnail"];
     if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
         
@@ -283,8 +291,12 @@
         NSArray *temp = [Thumbnail objectFromJSONString];
         model.Thumbnail = [NSMutableArray arrayWithArray:temp];
     }
-        model.IdFlag = [dic objectForKey:@"IdFlag"];
-        model.AContent = [dic objectForKey:@"AContent"];
+    model.IdFlag = [dic objectForKey:@"IdFlag"];
+    if (model.IdFlag.length==0) {
+        model.IdFlag = @"匿名回答";
+        model.JiaoBaoHao = @"";
+    }
+    model.AContent = [dic objectForKey:@"AContent"];
     return model;
 }
 //评论列表
@@ -410,6 +422,10 @@
         model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
         model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        if (model.answerModel.IdFlag.length==0) {
+             model.answerModel.IdFlag = @"匿名回答";
+            model.answerModel.JiaoBaoHao = @"";
+        }
         model.answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
         NSString *Thumbnail = [answerDic objectForKey:@"Thumbnail"];
         if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
@@ -481,6 +497,10 @@
         model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
         model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        if (model.answerModel.IdFlag.length==0) {
+            model.answerModel.IdFlag = @"匿名回答";
+            model.answerModel.JiaoBaoHao = @"";
+        }
         model.answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
         NSString *Thumbnail = [answerDic objectForKey:@"Thumbnail"];
         if ([Thumbnail isKindOfClass:[NSNull class]]||[Thumbnail isEqual:@"null"]) {
@@ -546,6 +566,10 @@
         answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
         answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+        if (answerModel.IdFlag.length==0) {
+            answerModel.IdFlag = @"匿名回答";
+            answerModel.JiaoBaoHao = @"";
+        }
         answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
         [model.answerArray addObject:answerModel];
     }

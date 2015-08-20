@@ -261,11 +261,11 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextV_answer.text.length==0) {
+    if ([utils isBlankString:self.mTextV_answer.text]) {
         [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
         return;
     }
-    if (self.mTextV_content.text.length ==0) {
+    if ([utils isBlankString:self.mTextV_content.text]) {
         [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
         return;
     }

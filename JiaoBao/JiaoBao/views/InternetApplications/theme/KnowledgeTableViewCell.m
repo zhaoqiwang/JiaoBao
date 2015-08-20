@@ -165,19 +165,27 @@
 }
 
 -(void)knowledgeTableViewCellClickTitle:(UIGestureRecognizer *)gest{
-    [self.delegate KnowledgeTableViewCellTitleBtn:self];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableViewCellTitleBtn:)]) {
+        [self.delegate KnowledgeTableViewCellTitleBtn:self];
+    }
 }
 
 -(void)knowledgeTableViewCellClickLike:(UIGestureRecognizer *)gest{
-    [self.delegate KnowledgeTableVIewCellLike:self];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellLike:)]) {
+        [self.delegate KnowledgeTableVIewCellLike:self];
+    }
 }
 
 -(void)knowledgeTableViewCellClickATitle:(UIGestureRecognizer *)gest{
-    [self.delegate KnowledgeTableViewCellAnswers:self];
+     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableViewCellAnswers:)]) {
+         [self.delegate KnowledgeTableViewCellAnswers:self];
+     }
 }
 
 -(void)detailBtn:(id)sender{
-    [self.delegate KnowledgeTableVIewCellDetailBtn:self];
+     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellDetailBtn:)]) {
+         [self.delegate KnowledgeTableVIewCellDetailBtn:self];
+     }
 }
 
 @end

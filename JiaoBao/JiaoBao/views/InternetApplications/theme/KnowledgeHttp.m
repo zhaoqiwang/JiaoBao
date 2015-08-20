@@ -220,8 +220,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic1];
         
         D("JSON--------NewQuestionWithCategoryId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
