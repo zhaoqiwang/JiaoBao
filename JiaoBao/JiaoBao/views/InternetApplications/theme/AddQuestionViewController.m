@@ -85,7 +85,7 @@
     
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:2];
-    [self.view addSubview:self.mTableV_name];
+    [self.mainScrollView addSubview:self.mTableV_name];
     
 
 }
@@ -119,6 +119,7 @@
     detailVC.modalPresentationStyle = UIModalPresentationCustom;
     detailVC.categoryTF = self.categoryTF;
     detailVC.categoryId = self.categoryId;
+    detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
     detailVC.mArr_AllCategory = self.mArr_AllCategory;
     [self.navigationController presentViewController:detailVC animated:NO completion:^{
         detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
@@ -128,6 +129,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //[IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
@@ -135,6 +137,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
+
     //上传图片
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UploadImg:) name:@"UploadImg" object:nil];

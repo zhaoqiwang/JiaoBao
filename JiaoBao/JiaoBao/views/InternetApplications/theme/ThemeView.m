@@ -85,6 +85,7 @@
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
     detailVC.modalPresentationStyle = UIModalPresentationCustom;
     detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
+    detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
     for(int i=3;i<self.mArr_AllCategory.count;i++)
     {
         [detailVC.mArr_AllCategory addObject:[self.mArr_AllCategory objectAtIndex:i]];

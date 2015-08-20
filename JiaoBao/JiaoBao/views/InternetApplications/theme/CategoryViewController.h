@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titileLabel;
 @property(nonatomic,strong)NSMutableArray *mArr_selectCategory;
 @property(nonatomic,strong)NSMutableArray *mArr_addBtnSel;
+@property(nonatomic,strong)NSString *classStr;
 - (IBAction)selectAction:(id)sender;
 
 @end

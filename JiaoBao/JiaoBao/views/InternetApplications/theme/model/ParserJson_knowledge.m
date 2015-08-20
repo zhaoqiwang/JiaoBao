@@ -277,7 +277,7 @@
     }else{
         model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
     }
-    model.Title = [dic objectForKey:@"Title"];
+    model.ATitle = [dic objectForKey:@"ATitle"];
     model.CCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CCount"]];
     model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
     model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];

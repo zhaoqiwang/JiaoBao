@@ -11,6 +11,7 @@
 #import "QuestionModel.h"
 #import "MWPhotoBrowser.h"
 #import "AnswerByIdModel.h"
+#import "AnswerDetailModel.h"
 
 @protocol KnowledgeTableViewCellDelegate;
 
@@ -47,6 +48,7 @@
 @property (nonatomic,strong) AnswerModel *RecommentAnswerModel;
 
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
+@property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
 @property (nonatomic,assign) int mInt_flag;//
 

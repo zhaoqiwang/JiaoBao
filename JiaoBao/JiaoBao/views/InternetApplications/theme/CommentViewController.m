@@ -15,6 +15,7 @@
 #import "AllCommentListModel.h"
 #import "ButtonViewCell.h"
 #import "KnowledgeAddAnswerViewController.h"
+#import "GDataXMLNode.h"
 
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
@@ -68,7 +69,7 @@
             [MBProgressHUD showText:@"你已经评价过了"];
             return;
         }
-        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
+        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
         self.btn_tag = 1;
     }
 }
@@ -144,6 +145,11 @@
             self.tableView.delegate = self;
             self.tableView.dataSource = self;
             [self.mainScrollView addSubview:self.tableView];
+            if(self.answerModel)
+            {
+                [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
+                return;
+            }
             [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
 
 
@@ -230,6 +236,12 @@
     [self.mView_text setHidden:YES];
 
     [MBProgressHUD showMessage:@"" toView:self.view];
+    if(self.answerModel)
+    {
+        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
+        return;
+
+    }
     [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];
 
         // Do any additional setup after loading the view from its nib.
@@ -304,7 +316,7 @@
         [MBProgressHUD showText:@"你已经评价过了"];
         return;
     }
-    [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
+    [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
     self.btn_tag = 0;
 
 }
@@ -318,6 +330,8 @@
     }
     cell.delegate= self;
     cell.model = self.questionModel;
+    cell.answerModel = self.answerModel;
+    cell.AnswerDetailModel = self.AnswerDetailModel;
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
     cell.mLab_title.text = cell.model.Title;
@@ -372,7 +386,7 @@
         
         //头像
         cell.mImgV_head.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 42);
-        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,cell.model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+        [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,self.AnswerDetailModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //姓名
         cell.mLab_IdFlag.frame = CGRectMake(cell.mImgV_head.frame.size.width+9+5, cell.mLab_line.frame.origin.y+15, 200, cell.mLab_IdFlag.frame.size.height);
         cell.mLab_IdFlag.text = self.AnswerDetailModel.IdFlag;
@@ -390,7 +404,7 @@
         cell.mLab_LikeCount.backgroundColor = [UIColor clearColor];
         cell.mLab_LikeCount.textColor = [UIColor blackColor];
         //回答标题
-        NSString *string1 = cell.model.answerModel.ATitle;
+        NSString *string1 = self.AnswerDetailModel.ATitle;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
         cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, cell.mLab_ATitle.frame.size.height);
@@ -399,7 +413,7 @@
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
         cell.mLab_ATitle.componentsAndPlainText = componentsDS;
         //回答内容
-        NSString *string2 = cell.model.answerModel.Abstracts;
+        NSString *string2 = self.AnswerDetailModel.Abstracts;
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
         NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
@@ -416,6 +430,38 @@
         //背景色
         cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height+4);
         //图片
+        cell.mInt_flag = 2;
+        if(cell.AnswerDetailModel.AContent)
+        {
+            cell.AnswerDetailModel.Thumbnail = [[NSMutableArray alloc]initWithCapacity:0];
+
+            GDataXMLDocument *doc = [[GDataXMLDocument alloc]initWithData:[cell.AnswerDetailModel.AContent dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            GDataXMLElement *rootElement = [doc rootElement];
+            NSArray *levels = [rootElement nodesForXPath:@"//img" error:nil];
+            for (GDataXMLElement *level in levels)
+            {
+                NSString *urlstr = [[level attributeForName:@"src"]stringValue];
+
+                [cell.AnswerDetailModel.Thumbnail addObject:urlstr];
+            }
+//
+//            NSArray *arr = [cell.AnswerDetailModel.AContent componentsSeparatedByString:@"img src="];
+//            if(arr.count>2)
+//            {
+//                for(int i=0;i<arr.count;i++)
+//                {
+//                    NSString *str1 = [arr objectAtIndex:i];
+//                    if(i%2 == 1)
+//                    {
+//                        [cell.AnswerDetailModel.Thumbnail addObject:str1];
+//
+//                    }
+// 
+//
+//                }
+//            }
+        }
+
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
         if (self.AnswerDetailModel.Thumbnail.count>0) {
