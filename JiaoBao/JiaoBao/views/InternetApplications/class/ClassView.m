@@ -314,7 +314,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextF_text.text.length==0) {
+    if ([utils isBlankString:self.mTextF_text.text]) {
         [MBProgressHUD showError:@"请输入内容" toView:self];
         return;
     }
@@ -335,7 +335,7 @@
         
         commentsListModel *tempModel = [[commentsListModel alloc] init];
         tempModel.UserName = [dm getInstance].name;
-        if (self.mTextF_text.text.length==0) {
+        if ([utils isBlankString:self.mTextF_text.text]) {
             tempModel.Commnets = comment;
         }else{
             tempModel.Commnets = self.mTextF_text.text;

@@ -230,14 +230,16 @@
 //        
 //    }
 //    [self.navigationController pushViewController:pass animated:YES];
-    if([self.tel_identi_codeTF.text isEqualToString:@""])
+//    if([self.tel_identi_codeTF.text isEqualToString:@""])
+    if ([utils isBlankString:self.tel_identi_codeTF.text])
     {
         [self progressViewTishi:@"请输入手机号码"];
         return;
 
         
     }
-    if([self.urlNumTF.text isEqualToString:@""])
+//    if([self.urlNumTF.text isEqualToString:@""])
+    if ([utils isBlankString:self.urlNumTF.text])
     {
         [self progressViewTishi:@"请输入图片验证码"];
         return;

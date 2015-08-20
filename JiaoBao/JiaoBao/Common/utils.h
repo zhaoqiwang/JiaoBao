@@ -37,5 +37,8 @@
 //计算文件大小
 +(NSString*) getFileSize:(int) number;
 
+//判断字符串是否为空、是否都是空格
++ (BOOL)isBlankString:(NSString *)string;
+
 
 @end
