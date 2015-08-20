@@ -347,7 +347,7 @@
     if (self.mTextF_title.text.length==0) {
         [MBProgressHUD showError:@"请输入标题" toView:self.view];
         return;
-    }else if (self.mTextV_content.text.length == 0){
+    }else if ([utils isBlankString:self.mTextV_content.text]){
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }

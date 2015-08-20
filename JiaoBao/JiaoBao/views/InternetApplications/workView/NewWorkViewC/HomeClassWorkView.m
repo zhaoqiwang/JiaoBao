@@ -323,7 +323,7 @@
         return;
         
     }
-    if (self.mViewTop.mTextV_input.text.length == 0) {
+    if ([utils isBlankString:self.mViewTop.mTextV_input.text]) {
         [MBProgressHUD showError:@"请输入内容" toView:self];
         return;
     }

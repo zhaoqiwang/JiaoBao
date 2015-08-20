@@ -78,15 +78,15 @@
 
     NSString *string1 = tempModel.UserName;
     NSString *string2 = tempModel.Commnets;
+
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
-    
-
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
-//    CGRect rect=[string boundingRectWithSize:CGSizeMake([dm getInstance].width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
-//                                  attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
+
+    NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
+    [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
+    NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, [dm getInstance].width-65, 100)];
     label.numberOfLines = 0;
@@ -97,7 +97,8 @@
     label.text = string;
     
     CGSize size11 = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
-    
+//    cell.commentLabel.frame = CGRectMake(0, 0, [dm getInstance].width-65, size11.height+5);
+//    cell.commentLabel.attributedText = titleAttriString;
 //    label.frame =CGRectMake(10, 100, 300, size.height);
 
 //    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, size.height+5);
