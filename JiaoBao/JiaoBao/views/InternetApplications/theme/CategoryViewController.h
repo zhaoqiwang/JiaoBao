@@ -22,5 +22,6 @@
 @property(nonatomic,strong)NSMutableArray *mArr_addBtnSel;
 @property(nonatomic,strong)NSString *classStr;
 - (IBAction)selectAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *selBtn;
 
 @end

@@ -86,8 +86,6 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     //NSDictionary *parameters = @{@"cityCode": cityCode,@"level": level};
-    NSArray *parameters = [NSArray arrayWithObjects:@"nickname1",@"nickname2", nil];
-    nickNames = parameters;
     [manager POST:urlString parameters:nickNames success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSMutableDictionary *jsonDic = [result objectFromJSONString];
@@ -95,6 +93,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
                 NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetJiaoBaoHao:[jsonDic objectForKey:@"Data"]];
                 //NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic1];
         D("JSON--------GetAccIdbyNickname: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAccIdbyNickname: %@", error);
