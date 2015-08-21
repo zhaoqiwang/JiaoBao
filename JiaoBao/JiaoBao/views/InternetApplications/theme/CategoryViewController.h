@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AllCategoryModel.h"
 #import "CategorySection.h"
+#import "MBProgressHUD+AD.h"
 
-@interface CategoryViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CategorySectionDelegate>
+@interface CategoryViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,CategorySectionDelegate,MBProgressHUDDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property(nonatomic,strong)UITextField *categoryTF;
 @property(nonatomic,strong)NSMutableString *categoryId;

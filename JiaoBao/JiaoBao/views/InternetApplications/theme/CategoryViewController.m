@@ -11,6 +11,8 @@
 #import "CategorySection.h"
 #import "dm.h"
 #import "define_constant.h"
+#import "MBProgressHUD.h"
+
 
 @interface CategoryViewController ()
 
@@ -240,6 +242,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)selectAction:(id)sender {
+    [MBProgressHUD showSuccess:@"选择成功"];
     [self dismissViewControllerAnimated:YES completion:nil];
 
 }
