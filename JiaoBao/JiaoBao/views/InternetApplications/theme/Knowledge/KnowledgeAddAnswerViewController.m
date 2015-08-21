@@ -265,8 +265,29 @@
         [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
         return;
     }
-    if ([utils isBlankString:self.mTextV_content.text]) {
+    if (self.mTextV_answer.text.length>100) {
+        [MBProgressHUD showError:@"答案标题超出限制" toView:self.view];
+        return;
+    }
+    //计算除去图片后的汉字,计算内容中图片的大小
+    NSString *tempcontent = self.mTextV_content.text;
+    float tempF = 0;
+    for (int i=0; i<self.mArr_pic.count; i++) {
+        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+        NSString *temp = model.originalName;
+        NSRange range = [tempcontent rangeOfString:temp];//判断字符串是否包含
+        if (range.length >0){//包含
+            tempF = tempF+[model.size floatValue];
+        }
+        tempcontent = [tempcontent stringByReplacingOccurrencesOfString:temp withString:@""];
+    }
+    if ([utils isBlankString:tempcontent]) {
         [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
+        return;
+    }
+    //图片总大小，需小于10M
+    if (tempF>=1024*1024*1000) {
+        [MBProgressHUD showError:@"内容或图片输入不得超过10M" toView:self.view];
         return;
     }
     NSString *name = @"";
