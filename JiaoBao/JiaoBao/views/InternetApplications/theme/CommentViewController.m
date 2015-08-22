@@ -441,16 +441,12 @@
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
         NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-        NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
-        if (size.height>20) {
-            size = CGSizeMake(size.width, size.height);
-        }
-        CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
         [row2 setObject:name2 forKey:@"text"];
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+        CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
+
         cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, optimalSize2.height);
 
         //背景色

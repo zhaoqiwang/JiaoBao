@@ -78,22 +78,21 @@
 
     NSString *string1 = tempModel.UserName;
     NSString *string2 = tempModel.Commnets;
-
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-
-    NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
-    [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+    
+
     NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
     [row4 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
     cell.contentLabel.componentsAndPlainText = componentsDS;
+
     CGSize optimalSize2 = [cell.contentLabel optimumSize];
-    cell.contentLabel.frame = CGRectMake(0, 0, [dm getInstance].width-65, optimalSize2.height);
 
 
+
+    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, optimalSize2.height+3);
     
     
     return cell;
@@ -119,7 +118,7 @@
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
     contentLabel.componentsAndPlainText = componentsDS;
     CGSize optimalSize2 = [contentLabel optimumSize];
-
+    
     tempFloat = optimalSize2.height;
     return tempFloat;
 }
