@@ -130,28 +130,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
-            timestampString = "461898388.549711"
+            timestampString = "461899623.416451"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1907"
-            endingLineNumber = "1907"
+            startingLineNumber = "1906"
+            endingLineNumber = "1906"
             landmarkName = "-ClassTableViewCellTapPress1:ImgV:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/InternetAppTopScrollView.m"
-            timestampString = "461465319.221238"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
-            landmarkName = "-sendRequest"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
