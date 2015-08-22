@@ -678,6 +678,7 @@
 		A78459DF1B7B4D1D00EA7D5D /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A78459CE1B7B4D1D00EA7D5D /* IQToolbar.m */; };
 		A78459E01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A78459D01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m */; };
 		A78459E11B7B4D1D00EA7D5D /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A78459D31B7B4D1D00EA7D5D /* IQKeyboardManager.bundle */; };
+		A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */ = {isa = PBXBuildFile; fileRef = A7882E5E1B871C9C007CAA0A /* HtmlString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A78D65D11A89B35500BE6326 /* WorkMsgListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D65CF1A89B35500BE6326 /* WorkMsgListViewController.m */; };
 		A78D65D21A89B35500BE6326 /* WorkMsgListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A78D65D01A89B35500BE6326 /* WorkMsgListViewController.xib */; };
 		A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D65D51A89E41400BE6326 /* WorkMsgListCell.m */; };
@@ -1886,6 +1887,8 @@
 		A78459D01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		A78459D11B7B4D1D00EA7D5D /* KeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardManager.h; path = Common/IQKeyBoardManager/KeyboardManager.h; sourceTree = "<group>"; };
 		A78459D31B7B4D1D00EA7D5D /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		A7882E5D1B871C9C007CAA0A /* HtmlString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HtmlString.h; path = Common/RCLabel/HtmlString.h; sourceTree = "<group>"; };
+		A7882E5E1B871C9C007CAA0A /* HtmlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HtmlString.m; path = Common/RCLabel/HtmlString.m; sourceTree = "<group>"; };
 		A78D65CE1A89B35500BE6326 /* WorkMsgListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkMsgListViewController.h; path = views/InternetApplications/workView/WorkMsgListViewController.h; sourceTree = "<group>"; };
 		A78D65CF1A89B35500BE6326 /* WorkMsgListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkMsgListViewController.m; path = views/InternetApplications/workView/WorkMsgListViewController.m; sourceTree = "<group>"; };
 		A78D65D01A89B35500BE6326 /* WorkMsgListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkMsgListViewController.xib; path = views/InternetApplications/workView/WorkMsgListViewController.xib; sourceTree = "<group>"; };
@@ -4392,6 +4395,8 @@
 		F76B642F1B1E9FEE008F6961 /* RCLabel */ = {
 			isa = PBXGroup;
 			children = (
+				A7882E5D1B871C9C007CAA0A /* HtmlString.h */,
+				A7882E5E1B871C9C007CAA0A /* HtmlString.m */,
 				F76B64651B1EA818008F6961 /* RegexKitLite.h */,
 				F76B64661B1EA818008F6961 /* RegexKitLite.m */,
 				F76B64311B1EA205008F6961 /* RCLabel.h */,
@@ -5373,6 +5378,7 @@
 				F7F7AD651B7C28F700923B60 /* AllcategoryCollectionViewCell.m in Sources */,
 				A7595E951A5FC2F30027848E /* MWTapDetectingImageView.m in Sources */,
 				A755E70B19F278B900BBDF3D /* ASICloudFilesContainer.m in Sources */,
+				A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */,
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,

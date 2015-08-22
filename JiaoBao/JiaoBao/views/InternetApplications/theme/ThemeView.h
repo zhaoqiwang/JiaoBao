@@ -19,6 +19,7 @@
 #import "KnowledgeQuestionViewController.h"
 #import "KnowledgeAddAnswerViewController.h"
 #import "KnowledgeRecommentAddAnswerViewController.h"
+#import "HtmlString.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate>{
     
