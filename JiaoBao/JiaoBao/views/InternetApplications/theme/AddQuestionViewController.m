@@ -26,6 +26,10 @@
 @end
 
 @implementation AddQuestionViewController
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
 
 -(void)knowledgeHttpGetProvice:(id)sender
@@ -144,6 +148,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;//控制整个功能是否启用
@@ -181,6 +187,14 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"NewQuestionWithCategoryId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(NewQuestionWithCategoryId:) name:@"NewQuestionWithCategoryId" object:nil];
     
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAccIdbyNickname:) name:@"GetAccIdbyNickname" object:nil];
+    
+    self.mText_title.layer.borderWidth = .5;
+    self.mText_title.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    //将图层的边框设置为圆脚
+    self.mText_title.layer.cornerRadius = 5;
+    self.mText_title.layer.masksToBounds = YES;
     
     self.mTextV_content.layer.borderWidth = .5;
     self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
@@ -194,6 +208,7 @@
     textAttach.bounds=CGRectMake(3, 0, 10, 10);
     NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
     [str insertAttributedString:strA atIndex:2];
+
     self.ttitleLabel.attributedText = str;
     
     NSMutableAttributedString *str1=[[NSMutableAttributedString alloc] initWithString:@"问题描述" attributes:nil];
@@ -208,7 +223,32 @@
 
 }
 
-
+-(void)GetAccIdbyNickname:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        NSArray *arr = [dic objectForKey:@"array"];
+        NSString *str = [arr componentsJoinedByString:@","];
+        NSString *content = self.mTextV_content.text;
+        for (int i=0; i<self.mArr_pic.count; i++) {
+            UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+            NSString *temp = model.originalName;
+            content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        }
+        content = [NSString stringWithFormat:@"<p>%@</p>",content];
+        [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:str];
+        
+    }
+}
 -(void)NewQuestionWithCategoryId:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -243,8 +283,6 @@
                     self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, 44*self.dataArr.count);
                }
 
-
-        
     } completion:^(BOOL finished){
     }];
 
@@ -354,6 +392,7 @@
 
 
 - (IBAction)addQuestionAction:(id)sender {
+    
     if([self.categoryTF.text isEqualToString: @""])
     {
         [MBProgressHUD showError:@"请添写提问"];
@@ -369,7 +408,7 @@
         [MBProgressHUD showError:@"请选择问题描述"];
         return;
     }
-    if(self.proviceModel)
+    if(self.proviceModel == nil)
     {
         self.AreaCode = @"";
     }
@@ -377,16 +416,21 @@
     {
         self.AreaCode = self.proviceModel.CityCode;
     }
-    NSString *content = self.mTextV_content.text;
-    for (int i=0; i<self.mArr_pic.count; i++) {
-        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-        NSString *temp = model.originalName;
-        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-    }
-    content = [NSString stringWithFormat:@"<p>%@</p>",content];
-    D("content--------%@",content);
-    [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.titleTF.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:self.atAccIdsTF.text];
-    [MBProgressHUD showMessage:@""];
+//    NSString *content = self.mTextV_content.text;
+//    for (int i=0; i<self.mArr_pic.count; i++) {
+//        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+//        NSString *temp = model.originalName;
+//        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+//    }
+//    content = [NSString stringWithFormat:@"<p>%@</p>",content];
+//    D("content--------%@",content);
+    
+    NSArray *arr = [self.atAccIdsTF.text componentsSeparatedByString:@","];
+    
+    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
+    
+
+    //[MBProgressHUD showMessage:@""];
     
 }
 
@@ -488,6 +532,14 @@
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
             for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
             {
+//                NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
+//                NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+//                textAttach.image = [UIImage imageNamed:@"buttonView3"];
+//                textAttach.bounds=CGRectMake(3, 0, 10, 10);
+//                NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+//                [str insertAttributedString:strA atIndex:2];
+//                self.ttitleLabel.attributedText = str;
+
                 UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
                 

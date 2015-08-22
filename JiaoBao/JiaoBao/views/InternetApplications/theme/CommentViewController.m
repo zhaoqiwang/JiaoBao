@@ -16,6 +16,7 @@
 #import "ButtonViewCell.h"
 #import "KnowledgeAddAnswerViewController.h"
 #import "GDataXMLNode.h"
+#import "TFHpple.h"
 
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
@@ -333,10 +334,21 @@
     cell.answerModel = self.answerModel;
     cell.AnswerDetailModel = self.AnswerDetailModel;
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
-    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
-    cell.mLab_title.text = cell.model.Title;
+
     //详情
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, cell.mBtn_detail.frame.size.height);
+    NSString *string_title = cell.model.Title;
+    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
+    if (size_title.height>20) {
+        size_title = CGSizeMake(size_title.width, size_title.height);
+    }
+    cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.mLab_title.font = [UIFont systemFontOfSize:14];
+    cell.mLab_title.numberOfLines =0;
+    cell.mLab_title.text = cell.model.Title;
+    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",cell.model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -393,7 +405,10 @@
         cell.mLab_IdFlag.textAlignment = NSTextAlignmentLeft;
         //赞
         cell.LikeBtn.hidden = NO;
+
+
         cell.mLab_LikeCount.frame = CGRectMake([dm getInstance].width-38, cell.mLab_line.frame.origin.y+15+5, 42, 22);
+        cell.LikeBtn.frame = CGRectMake(cell.mLab_LikeCount.frame.origin.x-20, cell.mLab_LikeCount.frame.origin.y-5, 44, 30);
 
         NSString *strLike = self.AnswerDetailModel.LikeCount;
         if ([self.AnswerDetailModel.LikeCount integerValue]>0) {
@@ -406,12 +421,21 @@
         //回答标题
         NSString *string1 = self.AnswerDetailModel.ATitle;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
-        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, cell.mLab_ATitle.frame.size.height);
+        NSString *str = [NSString stringWithFormat:@"依据 : %@",string1];
+        CGSize size1 = [str sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
+        if (size1.height>20) {
+            size1 = CGSizeMake(size1.width, size1.height);
+        }
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
         [row1 setObject:name forKey:@"text"];
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
         cell.mLab_ATitle.componentsAndPlainText = componentsDS;
+        CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
+
+
+        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize1.height);
+
         //回答内容
         NSString *string2 = self.AnswerDetailModel.Abstracts;
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -422,28 +446,40 @@
         if (size.height>20) {
             size = CGSizeMake(size.width, size.height);
         }
-        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, size.height);
+        CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
         [row2 setObject:name2 forKey:@"text"];
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, optimalSize2.height);
+
         //背景色
-        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height+4);
+        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height);
         //图片
         cell.mInt_flag = 2;
         if(cell.AnswerDetailModel.AContent)
         {
             cell.AnswerDetailModel.Thumbnail = [[NSMutableArray alloc]initWithCapacity:0];
-
-            GDataXMLDocument *doc = [[GDataXMLDocument alloc]initWithData:[cell.AnswerDetailModel.AContent dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-            GDataXMLElement *rootElement = [doc rootElement];
-            NSArray *levels = [rootElement nodesForXPath:@"//img" error:nil];
-            for (GDataXMLElement *level in levels)
-            {
-                NSString *urlstr = [[level attributeForName:@"src"]stringValue];
-
-                [cell.AnswerDetailModel.Thumbnail addObject:urlstr];
+            TFHpple *doc = [[TFHpple alloc]initWithHTMLData:[cell.AnswerDetailModel.AContent dataUsingEncoding:NSUTF8StringEncoding]];
+            NSArray *htmlContent = [doc searchWithXPathQuery:@"//img"];
+            for (TFHppleElement *ele in htmlContent) {
+                NSString *content=[ele.attributes objectForKey:@"src"];
+                if (!content) {
+                    content=@"Null";
+                }
+                [cell.AnswerDetailModel.Thumbnail addObject:content];
             }
+
+            
+//            GDataXMLDocument *doc = [[GDataXMLDocument alloc]initWithData:[cell.AnswerDetailModel.AContent dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+//            GDataXMLElement *rootElement = [doc rootElement];
+//            NSArray *levels = [rootElement nodesForXPath:@"//img" error:nil];
+//            for (GDataXMLElement *level in levels)
+//            {
+//                NSString *urlstr = [[level attributeForName:@"src"]stringValue];
+//
+//                [cell.AnswerDetailModel.Thumbnail addObject:urlstr];
+//            }
 //
 //            NSArray *arr = [cell.AnswerDetailModel.AContent componentsSeparatedByString:@"img src="];
 //            if(arr.count>2)
@@ -465,8 +501,8 @@
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
         if (self.AnswerDetailModel.Thumbnail.count>0) {
-            int a = (int)(self.AnswerDetailModel.Thumbnail.count/3);
-            int b = (self.AnswerDetailModel.Thumbnail.count%3);
+            int a = (int)(self.AnswerDetailModel.Thumbnail.count/4);
+            int b = (self.AnswerDetailModel.Thumbnail.count%4);
             if(b==0)
             {
                  cell.mCollectionV_pic.frame = CGRectMake(9, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-9-2, a*([dm getInstance].width-70-40)/3+10);

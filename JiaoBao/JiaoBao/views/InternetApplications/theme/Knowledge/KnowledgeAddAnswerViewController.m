@@ -253,6 +253,8 @@
     
     sheet.tag = 255;
     [sheet showInView:self.view];
+    self.tfContentTag = self.mArr_pic.count;
+
 }
 
 //提交答案

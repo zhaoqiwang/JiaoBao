@@ -817,6 +817,9 @@
 		F71803431AB3C71A00E6167F /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718033F1AB3C71A00E6167F /* SVIndefiniteAnimatedView.m */; };
 		F71803441AB3C71A00E6167F /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F71803401AB3C71A00E6167F /* SVProgressHUD.bundle */; };
 		F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = F71803421AB3C71A00E6167F /* SVProgressHUD.m */; };
+		F71E9D6A1B86BE4A00D90487 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D651B86BE4A00D90487 /* TFHpple.m */; };
+		F71E9D6B1B86BE4A00D90487 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D671B86BE4A00D90487 /* TFHppleElement.m */; };
+		F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D691B86BE4A00D90487 /* XPathQuery.m */; };
 		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639921B0EC53D00365EB7 /* libicucore.dylib */; };
@@ -2088,6 +2091,12 @@
 		F71803401AB3C71A00E6167F /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = Common/SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
 		F71803411AB3C71A00E6167F /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = Common/SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		F71803421AB3C71A00E6167F /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = Common/SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
+		F71E9D641B86BE4A00D90487 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHpple.h; path = Common/TFHpple.h; sourceTree = "<group>"; };
+		F71E9D651B86BE4A00D90487 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHpple.m; path = Common/TFHpple.m; sourceTree = "<group>"; };
+		F71E9D661B86BE4A00D90487 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TFHppleElement.h; path = Common/TFHppleElement.h; sourceTree = "<group>"; };
+		F71E9D671B86BE4A00D90487 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHppleElement.m; path = Common/TFHppleElement.m; sourceTree = "<group>"; };
+		F71E9D681B86BE4A00D90487 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = Common/XPathQuery.h; sourceTree = "<group>"; };
+		F71E9D691B86BE4A00D90487 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = Common/XPathQuery.m; sourceTree = "<group>"; };
 		F72A726A1B2BBCFC00378C95 /* RightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RightModel.h; path = views/InternetApplications/workView/NewWorkViewC/RightModel.h; sourceTree = "<group>"; };
 		F72A726B1B2BBCFC00378C95 /* RightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightModel.m; path = views/InternetApplications/workView/NewWorkViewC/RightModel.m; sourceTree = "<group>"; };
 		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
@@ -3065,6 +3074,12 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F71E9D641B86BE4A00D90487 /* TFHpple.h */,
+				F71E9D651B86BE4A00D90487 /* TFHpple.m */,
+				F71E9D661B86BE4A00D90487 /* TFHppleElement.h */,
+				F71E9D671B86BE4A00D90487 /* TFHppleElement.m */,
+				F71E9D681B86BE4A00D90487 /* XPathQuery.h */,
+				F71E9D691B86BE4A00D90487 /* XPathQuery.m */,
 				F7F415C51B8472A9001B27CE /* GDataXMLNode.h */,
 				F7F415C61B8472A9001B27CE /* GDataXMLNode.m */,
 				A784599C1B7B4B4A00EA7D5D /* IQKeyBoardManager */,
@@ -5083,6 +5098,7 @@
 			files = (
 				A78459DA1B7B4D1D00EA7D5D /* IQKeyboardReturnKeyHandler.m in Sources */,
 				A77FF02D1A650B3F00DB85E3 /* JSONHTTPClient.m in Sources */,
+				F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */,
 				A755E67619F2492800BBDF3D /* AppDelegate.m in Sources */,
 				A743395B1A452B7700AFC0A5 /* UIView+WebCacheOperation.m in Sources */,
 				F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */,
@@ -5096,6 +5112,7 @@
 				A75A373B1A08BD13009D2464 /* CMRevicerModel.m in Sources */,
 				A7804C981B788B02007C0DC6 /* ButtonViewModel.m in Sources */,
 				A73CAD701A07755B00D6C5AA /* MJRefreshHeaderView.m in Sources */,
+				F71E9D6B1B86BE4A00D90487 /* TFHppleElement.m in Sources */,
 				A7BEEA191A441E10003C9EAD /* UnintAlbumsListViewController.m in Sources */,
 				A73B52B619FB930D00187CB9 /* UnReadMsg_model.m in Sources */,
 				A76829631AC6955F003B31EB /* ClassTableViewCell.m in Sources */,
@@ -5166,6 +5183,7 @@
 				A749B9FA19F8F3E40036F480 /* TreeView_Level2_Model.m in Sources */,
 				A7557BFD19FA31920057835B /* Identity_model.m in Sources */,
 				F79B61391B7202A5005FEA44 /* ItemModel.m in Sources */,
+				F71E9D6A1B86BE4A00D90487 /* TFHpple.m in Sources */,
 				A7595E941A5FC2F30027848E /* MWPhotoBrowser.m in Sources */,
 				A77FF02F1A650B3F00DB85E3 /* JSONKeyMapper.m in Sources */,
 				A7A15CC31AF08DC700843CB3 /* NewWorkTree_model.m in Sources */,

@@ -35,12 +35,14 @@
         self.collectionView.allowsMultipleSelection = YES;
         self.titileLabel.text = @"显示优先显示的话题类别";
         [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
+        self.selBtn.hidden = NO;
     }
     else
     {
         self.collectionView.allowsMultipleSelection = NO;
         self.titileLabel.text = @"请选择话题类别";
         [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
+        self.selBtn.hidden = YES;
 
 
 
@@ -242,7 +244,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)selectAction:(id)sender {
-    [MBProgressHUD showSuccess:@"选择成功"];
+    if(self.mArr_selectCategory.count >0)
+    {
+        [MBProgressHUD showSuccess:@"选择成功"];
+
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 
 }

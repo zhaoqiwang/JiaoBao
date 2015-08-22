@@ -93,7 +93,7 @@
         num = self.AnswerDetailModel.Thumbnail.count;
         for (int i = 0; i < num; i++) {
             // 替换为中等尺寸图片
-            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.answerModel.Thumbnail objectAtIndex:i]];
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.AnswerDetailModel.Thumbnail objectAtIndex:i]];
             [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
         }
     }

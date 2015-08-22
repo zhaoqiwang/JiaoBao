@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CategoryViewController">
             <connections>
                 <outlet property="collectionView" destination="1I5-XW-eTA" id="JgI-Ow-ztq"/>
+                <outlet property="selBtn" destination="89E-Wd-1Og" id="NJy-UG-pNi"/>
                 <outlet property="titileLabel" destination="NUl-hQ-opc" id="IbP-vh-DOV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

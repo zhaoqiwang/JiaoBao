@@ -130,11 +130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
-            timestampString = "461228047.474675"
+            timestampString = "461898388.549711"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1895"
-            endingLineNumber = "1895"
+            startingLineNumber = "1907"
+            endingLineNumber = "1907"
             landmarkName = "-ClassTableViewCellTapPress1:ImgV:"
             landmarkType = "5">
          </BreakpointContent>

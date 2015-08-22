@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *atAccIdsTF;
 @property(nonatomic,strong)NSString *AreaCode;
 @property (nonatomic,weak) IBOutlet UITextView *mTextV_content;//内容
+@property (weak, nonatomic) IBOutlet UITextView *mText_title;
 @property(nonatomic,assign)int imageCount,mInt_index;
 @property(nonatomic,strong)NSMutableArray *mArr_pic;
 @property(nonatomic,assign)int tfContentTag;
