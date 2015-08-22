@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "MobClick.h"
 #import "IQKeyboardManager.h"
+#import "RCLabel.h"
 
 @implementation ClassView
 @synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text,mInt_changeUnit;
@@ -1456,14 +1457,12 @@
             backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
             cell.backImgV.image = backImage;
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+temp+18+5);
-            //            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
+
         }
         else{
             cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, temp);
             cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-10, temp+9);
-            //UIImage *backImage = [UIImage imageNamed:@"bj.png"];
-            // The background should be pinned to the left and not stretch.
-            //backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
+
             [cell.backImgV setImage:[[UIImage imageNamed:@"bj.png"]stretchableImageWithLeftCapWidth:100 topCapHeight:cell.backImgV.frame.size.height-1]];
             //cell.backImgV.image = backImage;
             cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height, [dm getInstance].width-60-10, 30);
@@ -1472,7 +1471,7 @@
     }
 
     cell.tableview.backgroundColor = [UIColor clearColor];
-    //cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5);
+ 
 
     return cell;
 }
@@ -1556,12 +1555,22 @@
         NSString *string2 = tempModel.Commnets;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        
+        RCLabel *contentLabel = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 100)];
+
+        contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        contentLabel.font = [UIFont systemFontOfSize:14];
         NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
+        [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
+        NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+        NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
+        [row4 setObject:name forKey:@"text"];
+        RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
+        contentLabel.componentsAndPlainText = componentsDS;
+        CGSize optimalSize2 = [contentLabel optimumSize];
+
         
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
-        
-        h = h+size.height;
+        h = h+optimalSize2.height;
     }
     
     if(model.mArr_comment.count == 0){

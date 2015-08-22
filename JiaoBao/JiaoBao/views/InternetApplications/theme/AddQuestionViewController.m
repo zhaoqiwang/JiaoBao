@@ -190,6 +190,11 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAccIdbyNickname:) name:@"GetAccIdbyNickname" object:nil];
     
+    self.mText_title.layer.borderWidth = .5;
+    self.mText_title.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    //将图层的边框设置为圆脚
+    self.mText_title.layer.cornerRadius = 5;
+    self.mText_title.layer.masksToBounds = YES;
     
     self.mTextV_content.layer.borderWidth = .5;
     self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
@@ -240,7 +245,7 @@
             content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
         }
         content = [NSString stringWithFormat:@"<p>%@</p>",content];
-        [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.titleTF.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:str];
+        [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:str];
         
     }
 }

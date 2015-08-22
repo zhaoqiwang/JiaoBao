@@ -15,6 +15,7 @@
                 <outlet property="contentLabel" destination="MPU-uF-qla" id="Uxh-eH-Z25"/>
                 <outlet property="countyTF" destination="nxy-fy-vhT" id="YgF-1P-W24"/>
                 <outlet property="mTextV_content" destination="v5K-NC-Ds6" id="UJ1-zV-ouS"/>
+                <outlet property="mText_title" destination="81D-tm-Q38" id="mfi-cR-Q8q"/>
                 <outlet property="mainScrollView" destination="Mz4-t4-Egy" id="Y2i-ej-Re8"/>
                 <outlet property="provinceTF" destination="IeA-9B-ahn" id="jUW-mO-0sf"/>
                 <outlet property="regionTF" destination="jBc-di-pAn" id="IfJ-8D-Bu9"/>
@@ -214,6 +215,12 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="81D-tm-Q38">
+                                    <rect key="frame" x="94" y="21" width="168" height="31"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>

@@ -426,12 +426,16 @@
         if (size1.height>20) {
             size1 = CGSizeMake(size1.width, size1.height);
         }
-        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
-        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, size1.height);
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
         [row1 setObject:name forKey:@"text"];
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
         cell.mLab_ATitle.componentsAndPlainText = componentsDS;
+        CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
+
+
+        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize1.height);
+
         //回答内容
         NSString *string2 = self.AnswerDetailModel.Abstracts;
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -442,13 +446,15 @@
         if (size.height>20) {
             size = CGSizeMake(size.width, size.height);
         }
-        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, size.height);
+        CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
         [row2 setObject:name2 forKey:@"text"];
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, optimalSize2.height);
+
         //背景色
-        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height+4);
+        cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height);
         //图片
         cell.mInt_flag = 2;
         if(cell.AnswerDetailModel.AContent)
