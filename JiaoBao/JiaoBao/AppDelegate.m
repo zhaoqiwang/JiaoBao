@@ -34,7 +34,7 @@
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [mapManager start:@"iqYoKFAodVcfY8oRpi0KtuHs"  generalDelegate:self];
     if (!ret) {
-        NSLog(@"manager start failed!");
+        D("manager start failed!");
     }
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -409,10 +409,10 @@
 - (void)onGetNetworkState:(int)iError
 {
     if (0 == iError) {
-        NSLog(@"联网成功");
+        D("联网成功");
     }
     else{
-        NSLog(@"onGetNetworkState %d",iError);
+        D("onGetNetworkState %d",iError);
     }
     
 }
@@ -420,10 +420,10 @@
 - (void)onGetPermissionState:(int)iError
 {
     if (0 == iError) {
-        NSLog(@"授权成功");
+        D("授权成功");
     }
     else {
-        NSLog(@"onGetPermissionState %d",iError);
+        D("onGetPermissionState %d",iError);
     }
 }
 

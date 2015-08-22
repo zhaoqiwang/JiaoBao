@@ -155,7 +155,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextF_password.text.length==0||self.mTextF_confirmPassword.text.length==0) {
+    if ([utils isBlankString:self.mTextF_password.text]||[utils isBlankString:self.mTextF_confirmPassword.text]) {
         [self progressViewTishi:@"请输入密码"];
         return;
     }

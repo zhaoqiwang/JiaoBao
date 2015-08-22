@@ -205,7 +205,7 @@
         return;
     }
     D("点击登录按钮");
-    if (self.mTextF_passwd.text.length==0||self.mTextF_userName.text.length==0) {
+    if ([utils isBlankString:self.mTextF_passwd.text]||[utils isBlankString:self.mTextF_userName.text]) {
         [MBProgressHUD showError:@"请输入账号或密码" toView:self.view];
         return;
     }

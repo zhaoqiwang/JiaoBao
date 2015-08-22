@@ -154,7 +154,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextF_name.text.length == 0) {
+    if ([utils isBlankString:self.mTextF_name.text]) {
         [MBProgressHUD showError:@"请输入相册名称" toView:self.view];
         return;
     }

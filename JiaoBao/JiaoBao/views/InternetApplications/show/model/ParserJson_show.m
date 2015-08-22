@@ -23,7 +23,6 @@
         model.TabIDStr = [dic objectForKey:@"TabIDStr"];
         model.UnitClassID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitClassID"]];
         NSString *claName = [dic objectForKey:@"ClsName"];
-        NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"ClsName"]);
         if ([claName isEqual:[NSNull null]]||[claName isEqual:@"<null>"]) {
             model.ClsName = @"";
         }else{

@@ -141,10 +141,10 @@
         return;
     }
     if (self.mInt_flag == 1) {
-        if (self.mTextF_nickName.text.length==0) {
+        if ([utils isBlankString:self.mTextF_nickName.text]) {
             [self progressViewTishi:@"请输入昵称"];
             return;
-        }else if (self.mTextF_trueName.text.length==0) {
+        }else if ([utils isBlankString:self.mTextF_trueName.text]) {
             [self progressViewTishi:@"请输入真实姓名"];
             return;
         }else if (self.mTextF_trueName.text.length>20){
@@ -166,7 +166,7 @@
             }
         }
     }else{
-        if (self.mTextF_nickName.text.length==0||self.mTextF_trueName.text.length==0) {
+        if ([utils isBlankString:self.mTextF_nickName.text]||[utils isBlankString:self.mTextF_trueName.text]) {
             [self progressViewTishi:@"请输入密码"];
             return;
         }

@@ -86,7 +86,7 @@ NSString *kCellID0 = @"Forward_cell";
     }
     D("点击发送按钮");
     [self.mTextF_text resignFirstResponder];
-    if (self.mTextF_text.text.length==0) {
+    if ([utils isBlankString:self.mTextF_text.text]) {
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }

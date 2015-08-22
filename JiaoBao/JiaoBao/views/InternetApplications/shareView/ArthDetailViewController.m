@@ -89,7 +89,7 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-//    self.mScrollV_view.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    //    self.mScrollV_view.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
     [self sendRequest];
     
@@ -163,14 +163,14 @@
 
 //点击发送按钮
 -(void)clickSendBtn{
-
+    
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
     }
     
     D("点击发送按钮");
-    if (self.mTextF_text.text.length==0) {
+    if ([utils isBlankString:self.mTextF_text.text]) {
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
@@ -334,7 +334,7 @@
 
 //设置界面布局
 -(void)setFrame{
-//    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, [self tableViewHeight]);
+    //    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, [self tableViewHeight]);
     self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, self.mTableV_detail.contentSize.height);
     int a = (int)self.mModel_commentList.commentsList.count;
     if (a>0&&(a%20)==0) {
@@ -368,22 +368,21 @@
 //        UITableViewCell *cell= [self tableView:self.mTableV_detail cellForRowAtIndexPath:indexPath];
 //        a = a + cell.frame.size.height;
 //    }
-//    
+//
 //    return a;
 //}
 
 //文章详情通知
 -(void)ArthDetai:(NSNotification *)noti{
-//    [MBProgressHUD hideHUDForView:self.view];
+    //    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
         if (self.mInt_from == 2) {
             self.mModel_notice = [dic objectForKey:@"model"];
-//            NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-            NSString *str = @"http://7xkkc0.media1.z0.glb.clouddn.com/1438049114437.mp3";
+            NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
             for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx",i] withString:@" "];
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
             }
             str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
@@ -408,18 +407,18 @@
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel_notice.Recdate;
             //内容
-//            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
+            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-            D("detail.url-====%@",str);
-            [self.mWebV_js loadHTMLString:str baseURL:baseURL];
+            D("detail.url-====%@",tempHtml);
+            [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
         }else{
             self.mModel = [dic objectForKey:@"model"];
             //        NSString *str = self.mModel.Context;
             NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-//            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' controls='controls' width='480px' height='320px' autoplay='autoplay'/>";
-//            NSString *str = @"<video src='http://7xkkc0.media1.z0.glb.clouddn.com/1438067639190.mp4' width='320px' height='320px' autoplay='autoplay'/>";
             for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx",i] withString:@" "];
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
             }
             str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
@@ -444,12 +443,13 @@
             CGSize timeSize = [self.mModel.RecDate sizeWithFont:[UIFont systemFontOfSize:13]];
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel.RecDate;
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
+            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
             //内容
-            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
+            //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-            D("url-====%@",str);
-            [self.mWebV_js loadHTMLString:str baseURL:baseURL];
-            
+            D("url-====%@",tempHtml);
+            [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
         }
     }else{
         [MBProgressHUD showError:@"获取文章详情超时" toView:self.view];
@@ -467,7 +467,7 @@
 //    D("initialScale-===%f,%f,%f",initialScale,pageWidth,webView.frame.size.width);
 //    //将</head>替换为meta+head
 //    NSString *stringForReplace = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\" initial-scale=%f, minimum-scale=0.1, maximum-scale=2.0, user-scalable=yes\"></head>",initialScale];
-//    
+//
 //    NSRange range =  NSMakeRange(0, str.length);
 //    //替换
 //    [str replaceOccurrencesOfString:@"</head>" withString:stringForReplace options:NSLiteralSearch range:range];
@@ -477,6 +477,9 @@
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
+    [webView stringByEvaluatingJavaScriptFromString:meta];
     [MBProgressHUD hideHUDForView:self.view];
     
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
@@ -489,7 +492,8 @@
     D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (self.mInt_from == 2) {
         //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+        //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height);
         self.mLab_click.hidden = YES;
         self.mLab_like.hidden = YES;
@@ -499,7 +503,8 @@
         self.mImgV_View.hidden = YES;
     }else{
         //内容
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+        //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
         [self setArthInfo];
         //设置布局
         [self setFrame];
@@ -570,7 +575,7 @@
     cell.mLab_Number.frame = CGRectMake(10, 10, 50, 15);
     cell.mLab_Number.text = model.Number;
     //头像
-
+    
     [cell.mImg_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //人名、单位名
     NSString *tempName = [NSString stringWithFormat:@"%@@%@",model.UserName,model.UnitShortname];
@@ -755,7 +760,7 @@
     if ([self checkNetWork]) {
         return;
     }
-     [MobClick event:@"ArthDetail_Cell_Cai" label:@""];
+    [MobClick event:@"ArthDetail_Cell_Cai" label:@""];
     commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:airthCommentsListCell.tag];
     [[ShareHttp getInstance] shareHttpAirthAddScore:model.TabIDStr tp:@"0"];
     [self progressViewShow:@"提交中"];
@@ -823,13 +828,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
