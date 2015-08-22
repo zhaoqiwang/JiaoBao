@@ -7,6 +7,7 @@
 //
 
 #import "KnowledgeQuestionViewController.h"
+#import "HtmlString.h"
 
 @interface KnowledgeQuestionViewController ()
 
@@ -255,26 +256,35 @@
     NSString *string1 = model.ATitle;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
-    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, cell.mLab_ATitle.frame.size.height);
-    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-    [row1 setObject:name forKey:@"text"];
-    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    NSString *str = [HtmlString transformString:name];
+    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65,5);
+    [cell.mLab_ATitle setFont:[UIFont fontWithName:str size:14]];
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:str];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
+    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, 23);
+    cell.mLab_ATitle.lineBreakMode =NSLineBreakByCharWrapping;
+    cell.mLab_ATitle.backgroundColor = [UIColor clearColor];
+    cell.mLab_ATitle.textColor = [UIColor colorWithRed:33.0/255 green:33.0/255 blue:33.0/255 alpha:1];
     //回答内容
     NSString *string2 = model.Abstracts;
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
     NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-    NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
-    if (size.height>20) {
-        size = CGSizeMake(size.width, 32);
-    }
-    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, size.height);
-    NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-    [row2 setObject:name2 forKey:@"text"];
-    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+    NSString *str2 = [HtmlString transformString:name2];
+    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, 5);
+    [cell.mLab_Abstracts setFont:[UIFont fontWithName:str2 size:14]];
+    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:str2];
     cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+    CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];//计算图文混排后的高度
+    if (optimalSize2.height==23) {
+        optimalSize2 = CGSizeMake(optimalSize2.width, 25);
+    }else if (optimalSize2.height>20) {
+        optimalSize2 = CGSizeMake(optimalSize2.width, 35);
+    }
+    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, optimalSize2.height);
+    cell.mLab_Abstracts.lineBreakMode =NSLineBreakByCharWrapping;
+    cell.mLab_Abstracts.backgroundColor = [UIColor clearColor];
+    cell.mLab_Abstracts.textColor = [UIColor colorWithRed:33.0/255 green:33.0/255 blue:33.0/255 alpha:1];
     //背景色
     cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-70, cell.mLab_Abstracts.frame.size.height+4);
     //图片
