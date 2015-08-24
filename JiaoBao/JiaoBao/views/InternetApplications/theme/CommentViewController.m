@@ -70,12 +70,20 @@
             [MBProgressHUD showText:@"你已经评价过了"];
             return;
         }
+        if(self.answerModel)
+        {
+            [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"0"];
+            
+            return;
+            
+        }
         [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
         self.btn_tag = 1;
     }
 }
 -(void)refreshComment:(id)sender
-{[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -316,6 +324,13 @@
     {
         [MBProgressHUD showText:@"你已经评价过了"];
         return;
+    }
+    if(self.answerModel)
+    {
+        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"1"];
+
+        return;
+        
     }
     [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
     self.btn_tag = 0;
