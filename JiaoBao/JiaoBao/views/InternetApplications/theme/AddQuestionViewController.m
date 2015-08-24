@@ -31,7 +31,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
-
+//获取省份
 -(void)knowledgeHttpGetProvice:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -95,6 +95,8 @@
     
 
 }
+
+//获取地区或区县
 -(void)knowledgeHttpGetCity:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -116,6 +118,7 @@
 
 
 }
+//获取分类
 -(void)GetAllCategory:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
@@ -169,10 +172,11 @@
         D("provinceTF_text = %@",self.provinceTF.text);
 
     }
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"评论"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"添加问题"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    
     [[KnowledgeHttp getInstance]knowledgeHttpGetProvice];
     [MBProgressHUD showMessage:@"" toView:self.view];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"knowledgeHttpGetProvice" object:nil];
@@ -222,7 +226,7 @@
     self.categoryLabel.attributedText = str2;
 
 }
-
+//通过昵称获取教宝号
 -(void)GetAccIdbyNickname:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -249,6 +253,7 @@
         
     }
 }
+//发布问题回调
 -(void)NewQuestionWithCategoryId:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -265,6 +270,7 @@
         [MBProgressHUD showSuccess:@"发布问题成功"];
     }
 }
+//点击省份
 - (IBAction)provinceBtnAction:(id)sender {
     self.selectedTF = self.provinceTF;
     self.dataArr = self.provinceArr;
@@ -301,7 +307,7 @@
     //self.mainScrollView.contentSize = self.mainScrollView.frame.size;
     
 }
-
+//点击地区
 - (IBAction)regionBtnAction:(id)sender {
     if([self.provinceTF.text isEqualToString:@""])
     {
@@ -334,7 +340,7 @@
     }
     self.isOpen = !self.isOpen;
 }
-
+//点击区县
 - (IBAction)countyBtnAction:(id)sender {
     if([self.provinceTF.text isEqualToString:@""]||[self.regionTF.text isEqualToString:@""])
     {
@@ -366,14 +372,14 @@
     }
     self.isOpen = !self.isOpen;
 }
-
+//点击分类
 - (IBAction)categaryBtnAction:(id)sender {
     [[KnowledgeHttp getInstance]GetAllCategory];
     [MBProgressHUD showMessage:@"" toView:self.view];
 
 
 }
-
+//点击拍照
 -(IBAction)mBtn_photo:(id)sender{
 
     UIActionSheet *sheet;
@@ -390,7 +396,7 @@
     self.tfContentTag = self.mArr_pic.count;
 }
 
-
+//点击发布问题
 - (IBAction)addQuestionAction:(id)sender {
     
     if([self.categoryTF.text isEqualToString: @""])

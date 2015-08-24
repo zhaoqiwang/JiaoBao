@@ -574,7 +574,6 @@
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     CommentViewController *commentVC = [[CommentViewController alloc]init];
     commentVC.questionModel = knowledgeTableViewCell.model;
-    commentVC.cellHeight = knowledgeTableViewCell.frame.size.height+150;
     [utils pushViewController:commentVC animated:YES];
 }
 

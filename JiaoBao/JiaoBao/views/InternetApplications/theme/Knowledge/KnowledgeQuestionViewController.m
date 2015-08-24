@@ -432,7 +432,6 @@
     
     commentVC.questionModel = self.mModel_question;
     commentVC.answerModel = knowledgeTableViewCell.answerModel;
-    commentVC.cellHeight = knowledgeTableViewCell.frame.size.height+150;
     [utils pushViewController:commentVC animated:YES];
 }
 
