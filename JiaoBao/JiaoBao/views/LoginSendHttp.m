@@ -1487,13 +1487,13 @@ static LoginSendHttp *loginSendHttp = nil;
     
     if (flag_request == 1) {//注册获取到时间回调
         
-    }else if (flag_request == 2){//注册回调
+//    }else if (flag_request == 2){//注册回调
+//        
+//    }else if (flag_request == 3){//握手回调
+//        
+//    }else if (flag_request == 4){//登录获取时间回调
         
-    }else if (flag_request == 3){//握手回调
-        
-    }else if (flag_request == 4){//登录获取时间回调
-        
-    }else if (flag_request == 5){//发送登录请求回调
+    }else if (flag_request == 5||flag_request == 2||flag_request == 3||flag_request == 4){//发送登录请求回调
         //通知登录界面，是否记住密码
         [self.delegate LoginSendHttpMember:@"2"];
         //通知界面，是否登录成功
