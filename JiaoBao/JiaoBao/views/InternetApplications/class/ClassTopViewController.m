@@ -9,6 +9,7 @@
 #import "ClassTopViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "RCLabel.h"
 
 @interface ClassTopViewController ()
 
@@ -208,7 +209,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    if ([utils isBlankString:self.mTextF_text.text]) {
+    if (self.mTextF_text.text.length==0) {
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
@@ -229,7 +230,7 @@
         
         commentsListModel *tempModel = [[commentsListModel alloc] init];
         tempModel.UserName = [dm getInstance].name;
-        if ([utils isBlankString:self.mTextF_text.text]) {
+        if (self.mTextF_text.text.length==0) {
             tempModel.Commnets = comment;
         }else{
             tempModel.Commnets = self.mTextF_text.text;
@@ -750,11 +751,22 @@
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         
+        RCLabel *contentLabel = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 100)];
+        
+        contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        contentLabel.font = [UIFont systemFontOfSize:14];
         NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
+        [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
+        NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+        NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
+        [row4 setObject:name forKey:@"text"];
+        RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
+        contentLabel.componentsAndPlainText = componentsDS;
+        CGSize optimalSize2 = [contentLabel optimumSize];
         
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
         
-        h = h+size.height;
+        h = h+optimalSize2.height;
     }
     
     if(model.mArr_comment.count == 0){

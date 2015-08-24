@@ -9,6 +9,7 @@
 #import "ClassView.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "RCLabel.h"
 
 @implementation ClassView
 @synthesize mArr_attention,mView_button,mArr_class,mArr_local,mArr_sum,mArr_unit,mBtn_photo,mTableV_list,mInt_index,mArr_attentionTop,mArr_classTop,mArr_localTop,mArr_sumTop,mArr_unitTop,mInt_flag,mView_popup,mView_text,mBtn_send,mTextF_text,mInt_changeUnit;
@@ -33,9 +34,9 @@
         //做bug服务器显示当前的哪个界面
         NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
         [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-        
+
         self.backgroundColor = [UIColor whiteColor];
-        
+
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshClassView" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshClassView:) name:@"refreshClassView" object:nil];
         //通知学校界面，获取到的单位和个人数据,本单位或本班
@@ -51,8 +52,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AllMyClassArthList" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AllMyClassArthList:) name:@"AllMyClassArthList" object:nil];
         //获取到头像后刷新
-        //        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
-        //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"exchangeGetFaceImg" object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TopArthListIndexImg:) name:@"exchangeGetFaceImg" object:nil];
         //通知学校界面，切换成功身份成功，清空数组
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit:) name:@"changeCurUnit" object:nil];
@@ -89,9 +90,9 @@
         self.mArr_sumTop = [NSMutableArray array];
         self.mInt_index = 0;
         //可滑动界面
-        //        self.mScrollV_sum = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height - 51)];
-        //        [self addSubview:self.mScrollV_sum];
-        //        self.mScrollV_sum.contentSize = CGSizeMake([dm getInstance].width, 488);
+//        self.mScrollV_sum = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height - 51)];
+//        [self addSubview:self.mScrollV_sum];
+//        self.mScrollV_sum.contentSize = CGSizeMake([dm getInstance].width, 488);
         
         //放四个按钮
         self.mView_button = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 42)];
@@ -112,15 +113,15 @@
             [self.mView_button addSubview:tempbtn];
         }
         //列表
-        //        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
+//        self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height) style:UITableViewStyleGrouped];
         self.mTableV_list = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, [dm getInstance].width, self.frame.size.height-44)];
-        //        self.mTableV_list.delegate=self;
-        //        self.mTableV_list.dataSource=self;
+//        self.mTableV_list.delegate=self;
+//        self.mTableV_list.dataSource=self;
         //self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
         UIView *view = [[UIView alloc]init];
         self.mTableV_list.tableFooterView = view;
-        
-        //        self.mTableV_list.scrollEnabled = NO;
+
+//        self.mTableV_list.scrollEnabled = NO;
         [self addSubview:self.mTableV_list];
         [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
         self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
@@ -131,14 +132,14 @@
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         //新建按钮
-        //        self.mBtn_photo = [UIButton buttonWithType:UIButtonTypeCustom];
-        //        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
-        //        [self.mBtn_photo setBackgroundImage:img_btn forState:UIControlStateNormal];
-        //        [self.mBtn_photo addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
-        //        self.mBtn_photo.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
-        //        [self.mBtn_photo setTitle:@"拍照发布" forState:UIControlStateNormal];
-        //        [self.mBtn_photo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        //        [self addSubview:self.mBtn_photo];
+//        self.mBtn_photo = [UIButton buttonWithType:UIButtonTypeCustom];
+//        UIImage *img_btn = [UIImage imageNamed:@"root_addBtn"];
+//        [self.mBtn_photo setBackgroundImage:img_btn forState:UIControlStateNormal];
+//        [self.mBtn_photo addTarget:self action:@selector(clickPosting:) forControlEvents:UIControlEventTouchUpInside];
+//        self.mBtn_photo.frame = CGRectMake(([dm getInstance].width-img_btn.size.width)/2, self.frame.size.height-51+(51-img_btn.size.height)/2, img_btn.size.width, img_btn.size.height);
+//        [self.mBtn_photo setTitle:@"拍照发布" forState:UIControlStateNormal];
+//        [self.mBtn_photo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [self addSubview:self.mBtn_photo];
         
         self.mView_popup = [[PopupWindow alloc] init];
         self.mView_popup.delegate = self;
@@ -163,14 +164,14 @@
         self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
         [self.mView_text addSubview:self.mTextF_text];
         //发送按钮
-        //        self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
-        //        self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
-        //        [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
-        //        [self.mBtn_send setTitle:@"发送" forState:UIControlStateNormal];
-        //        self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:14];
-        //        [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        //        [self.mView_text addSubview:self.mBtn_send];
-        //        [self.mView_text setHidden:YES];
+//        self.mBtn_send = [UIButton buttonWithType:UIButtonTypeCustom];
+//        self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
+//        [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.mBtn_send setTitle:@"发送" forState:UIControlStateNormal];
+//        self.mBtn_send.titleLabel.font = [UIFont systemFontOfSize:14];
+//        [self.mBtn_send setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+//        [self.mView_text addSubview:self.mBtn_send];
+//        [self.mView_text setHidden:YES];
         
     }
     self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
@@ -194,7 +195,7 @@
                 if ([classModel.TabIDStr isEqual:tableID]) {
                     classModel.mArr_comment = [NSMutableArray arrayWithArray:model.commentsList];
                     [self getCommentHeight:classModel];
-                    
+
                     break;
                 }
             }
@@ -296,7 +297,7 @@
                     [self ProgressViewLoad:@"点赞中..."];
                 }
             }else{//已赞
-                //                [self loadNoMore:@"已赞"];
+//                [self loadNoMore:@"已赞"];
             }
         }else{//发送获取当前文章附加信息的请求
             [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID];
@@ -314,7 +315,7 @@
     if ([self checkNetWork]) {
         return;
     }
-    if ([utils isBlankString:self.mTextF_text.text]) {
+    if (self.mTextF_text.text.length==0) {
         [MBProgressHUD showError:@"请输入内容" toView:self];
         return;
     }
@@ -335,7 +336,7 @@
         
         commentsListModel *tempModel = [[commentsListModel alloc] init];
         tempModel.UserName = [dm getInstance].name;
-        if ([utils isBlankString:self.mTextF_text.text]) {
+        if (self.mTextF_text.text.length==0) {
             tempModel.Commnets = comment;
         }else{
             tempModel.Commnets = self.mTextF_text.text;
@@ -605,7 +606,7 @@
     NSDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
-    
+
     for (int i=0; i<array.count; i++) {
         ClassModel *model = [array objectAtIndex:i];
         //获取文章评论
@@ -639,7 +640,7 @@
             [self.mArr_class removeAllObjects];
         }
         [self.mArr_class addObjectsFromArray:array];
-        
+
         if(self.finishSymbol == 2)
         {
             if(self.mTableV_list.delegate == nil)
@@ -656,7 +657,7 @@
             self.finishSymbol = 0;
             
         }
-        
+
     }
     //[self.mTableV_list reloadData];
 }
@@ -664,7 +665,7 @@
 //通知学校界面，获取到的单位和个人数据,本单位或本班
 -(void)UnitArthListIndex:(NSNotification *)noti{
     self.finishSybmol2++;
-    //    [MBProgressHUD hideHUDForView:self];
+//    [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list headerEndRefreshing];
     [self.mTableV_list footerEndRefreshing];
     
@@ -706,10 +707,10 @@
             }
             self.finishSybmol2 = 0;
             [MBProgressHUD hideHUDForView:self];
-            
+
             
         }
-        
+
     }else{
         //如果是刷新，将数据清除
         if (self.mInt_flag == 1) {
@@ -731,12 +732,12 @@
             }
             self.finishSybmol2 = 0;
             [MBProgressHUD hideHUDForView:self];
-            
+
             
         }
     }
-    
-    
+
+
 }
 
 //取单位空间发表的最新或推荐文章,本地和全部
@@ -794,7 +795,7 @@
         return;
         
     }
-    //    NSString *flag = [dic objectForKey:@"flag"];
+//    NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array = [dic objectForKey:@"array"];
     for (int i=0; i<array.count; i++) {
         ClassModel *model = [array objectAtIndex:i];
@@ -803,8 +804,8 @@
     }
     [self.mArr_attention addObjectsFromArray:array];
     [self.mTableV_list reloadData];
-    //    self.mScrollV_sum.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_list.contentSize.height+42);
-    //    self.mTableV_list.frame = CGRectMake(0, 42, [dm getInstance].width, self.mTableV_list.contentSize.height);
+//    self.mScrollV_sum.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_list.contentSize.height+42);
+//    self.mTableV_list.frame = CGRectMake(0, 42, [dm getInstance].width, self.mTableV_list.contentSize.height);
 }
 
 //按钮点击事件
@@ -846,15 +847,15 @@
         }else if (self.mInt_index == 2&&self.mArr_local.count == 0){
             [self tableViewDownReloadData];
             //[self.mTableV_list reloadData];
-            
+
         }else if (self.mInt_index == 3&&self.mArr_attention.count==0){
             [self tableViewDownReloadData];
             //[self.mTableV_list reloadData];
-            
+
         }else if (self.mInt_index == 4&&self.mArr_sum.count==0){
             [self tableViewDownReloadData];
             //[self.mTableV_list reloadData];
-            
+
         }
         if(self.mInt_index == 0)
         {
@@ -876,7 +877,7 @@
         {
             [MobClick event:@"ClassView_btnChange" label:@"全部"];
         }
-        
+
         D("sldjflksgjlk-====%lu",(unsigned long)self.mArr_attention.count);
         
     }
@@ -915,26 +916,26 @@
             
         }
     }else{
-        if (self.mInt_index == 0) {
-            //flag=1个人，=2单位
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
-            [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 1){
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
-            [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 2){
-            [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 3){
-            [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
-            [self ProgressViewLoad:@"加载中..."];
-        }else if (self.mInt_index == 4){
-            [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
-            [self ProgressViewLoad:@"加载中..."];
+            if (self.mInt_index == 0) {
+                //flag=1个人，=2单位
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"1" Flag:@"2" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"2"];
+                [[ClassHttp getInstance] classHttpUnitArthListIndex:@"1" Num:@"5" Flag:@"1" UnitID:[NSString stringWithFormat:@"%d",[dm getInstance].UID] order:@"" title:@"" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 1){
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"1" sectionFlag:@"2" RequestFlag:@"2"];//单位
+                [[ClassHttp getInstance] classHttpAllMyClassArthList:@"1" Num:@"5" sectionFlag:@"1" RequestFlag:@"1"];//个人
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 2){
+                [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"local" RequestFlag:@"1"];
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 3){
+                [[ClassHttp getInstance] classHttpMyAttUnitArthListIndex:@"1" Num:@"5" accid:[dm getInstance].jiaoBaoHao];
+                [self ProgressViewLoad:@"加载中..."];
+            }else if (self.mInt_index == 4){
+                [[ClassHttp getInstance] classHttpShowingUnitArthList:@"1" Num:@"5" topFlags:@"1" flag:@"" RequestFlag:@"2"];
+                [self ProgressViewLoad:@"加载中..."];
+            }
         }
-    }
 }
 
 //表格开始滑动，
@@ -959,7 +960,7 @@
             if(self.mArr_unitTop.count == 0)
             {
                 label.text = @"没有单位动态";
-                
+
             }
         }
         if(section == 1)
@@ -967,7 +968,7 @@
             if(self.mArr_unit.count == 0)
             {
                 label.text = @"没有单位分享";
-                
+
             }
         }
     }
@@ -991,11 +992,11 @@
         }
         
     }
-    return view;
-    
-    
-}
+       return view;
 
+
+}
+    
 
 //每个cell返回的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -1040,7 +1041,7 @@
                 {
                     //self.finishSymbol = 0;
                     return 50;
-                    
+
                     
                 }
             }
@@ -1052,7 +1053,7 @@
                 //if(self.finishSymbol == 2)
                 {
                     //self.finishSymbol = 0;
-                    
+
                     return 50;
                     
                 }
@@ -1076,7 +1077,7 @@
             }
             UIButton *tempBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             tempBtn.frame = CGRectMake([dm getInstance].width-60, 0, 50, 22);
-            //            [tempBtn setBackgroundImage:[UIImage imageNamed:@"classView_more"] forState:UIControlStateNormal];
+//            [tempBtn setBackgroundImage:[UIImage imageNamed:@"classView_more"] forState:UIControlStateNormal];
             [tempBtn setImage:[UIImage imageNamed:@"classView_more"] forState:UIControlStateNormal];
             [tempBtn addTarget:self action:@selector(clickMoreUnit) forControlEvents:UIControlEventTouchUpInside];
             [view addSubview:tempBtn];
@@ -1096,21 +1097,21 @@
 
 //在每个section中，显示多少cell
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
+
     if (section == 0) {
         if (self.mInt_index == 0) {
+
+                [self.label  removeFromSuperview];
             
-            [self.label  removeFromSuperview];
             
-            
-            
+
             return self.mArr_unitTop.count;
         }else if (self.mInt_index == 1){
+
+                [self.label  removeFromSuperview];
             
-            [self.label  removeFromSuperview];
             
-            
-            
+
             return self.mArr_classTop.count;
         }else if (self.mInt_index == 2){
             if(self.mArr_local.count == 0)
@@ -1126,7 +1127,7 @@
             {
                 [self.label  removeFromSuperview];
             }
-            
+
             
             return self.mArr_local.count;
         }else if (self.mInt_index == 3){
@@ -1143,7 +1144,7 @@
             {
                 [self.label  removeFromSuperview];
             }
-            
+
             return self.mArr_attention.count;
         }else if (self.mInt_index == 4){
             if(self.mArr_sum.count == 0)
@@ -1159,15 +1160,15 @@
             {
                 [self.label  removeFromSuperview];
             }
-            
+
             return self.mArr_sum.count;
         }
     }else{
         if (self.mInt_index == 0) {
-            
+
             return self.mArr_unit.count;
         }else if (self.mInt_index == 1){
-            
+   
             return self.mArr_class.count;
         }else if (self.mInt_index == 2){
             if(self.mArr_local.count == 0)
@@ -1183,7 +1184,7 @@
             {
                 [self.label  removeFromSuperview];
             }
-            
+
             return self.mArr_local.count;
         }else if (self.mInt_index == 3){
             if(self.mArr_attention.count == 0)
@@ -1199,7 +1200,7 @@
             {
                 [self.label  removeFromSuperview];
             }
-            
+
             return self.mArr_attention.count;
         }else if (self.mInt_index == 4){
             if(self.mArr_sum.count == 0)
@@ -1215,12 +1216,12 @@
             {
                 [self.label  removeFromSuperview];
             }
-            
+
             return self.mArr_sum.count;
         }
     }
     
-    
+
     return 0;
 }
 //有多少section
@@ -1236,9 +1237,9 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *indentifier = @"ClassTableViewCell";
-    
+
     ClassTableViewCell *cell = (ClassTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    
+
     if (cell == nil) {
         cell = [[ClassTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil];
@@ -1280,7 +1281,7 @@
             array = [NSMutableArray arrayWithArray:self.mArr_sum];
         }
     }
-    
+
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //显示具体界面
     ClassModel *model = [array objectAtIndex:indexPath.row];
@@ -1337,7 +1338,7 @@
     
     //判断是否隐藏
     //标题
-    //    CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
+//    CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
     cell.mLab_assessContent.frame = CGRectMake(62, cell.mLab_name.frame.origin.y+cell.mLab_name.frame.size.height, [dm getInstance].width-72, cell.mLab_assessContent.frame.size.height);
     cell.mLab_assessContent.text = model.Title;
     //文章logo
@@ -1425,7 +1426,7 @@
     cell.mLab_likeCount.frame = CGRectMake(cell.mBtn_comment.frame.origin.x-10-likeSize.width, cell.mLab_time.frame.origin.y, likeSize.width, cell.mLab_likeCount.frame.size.height);
     cell.mLab_likeCount.text = model.LikeCount;
     cell.mLab_like.frame = CGRectMake(cell.mLab_likeCount.frame.origin.x-cell.mLab_like.frame.size.width, cell.mLab_time.frame.origin.y, cell.mLab_like.frame.size.width, cell.mLab_like.frame.size.height);
-    
+
     cell.mLab_assess.hidden = YES;
     cell.mLab_assessCount.hidden = YES;
     //点击量
@@ -1455,24 +1456,22 @@
             backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
             cell.backImgV.image = backImage;
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+temp+18+5);
-            //            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height+5, [dm getInstance].width-65, 30);
+
         }
         else{
             cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, temp);
             cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-10, temp+9);
-            //UIImage *backImage = [UIImage imageNamed:@"bj.png"];
-            // The background should be pinned to the left and not stretch.
-            //backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
+
             [cell.backImgV setImage:[[UIImage imageNamed:@"bj.png"]stretchableImageWithLeftCapWidth:100 topCapHeight:cell.backImgV.frame.size.height-1]];
             //cell.backImgV.image = backImage;
             cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height, [dm getInstance].width-60-10, 30);
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+temp+9+33);
         }
     }
-    
+
     cell.tableview.backgroundColor = [UIColor clearColor];
-    //cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5);
-    
+ 
+
     return cell;
 }
 
@@ -1555,12 +1554,22 @@
         NSString *string2 = tempModel.Commnets;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        
+        RCLabel *contentLabel = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 100)];
+
+        contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        contentLabel.font = [UIFont systemFontOfSize:14];
         NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+        NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
+        [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
+        NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+        NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
+        [row4 setObject:name forKey:@"text"];
+        RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
+        contentLabel.componentsAndPlainText = componentsDS;
+        CGSize optimalSize2 = [contentLabel optimumSize];
+
         
-        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
-        
-        h = h+size.height;
+        h = h+optimalSize2.height;
     }
     
     if(model.mArr_comment.count == 0){
@@ -1591,8 +1600,9 @@
 //点击内容或者标题时触发cell点击事件
 -(void)ClassTableViewCellContentPress:(ClassTableViewCell *)classCell{
     [MobClick event:@"ClassView_didSelectRow" label:@""];
+
     NSString *aid = classCell.mModel_class.TabIDStr;
-    if (self.mInt_index == 0 ){
+    if (self.mInt_index == 2 ){
         for (int i=0; i<self.mArr_unitTop.count; i++) {
             ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:aid]) {
@@ -1607,7 +1617,7 @@
                 break;
             }
         }
-    }else if (self.mInt_index == 1 ){
+    }else if (self.mInt_index == 3 ){
         for (int i=0; i<self.mArr_classTop.count; i++) {
             ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:aid]) {
@@ -1622,7 +1632,7 @@
                 break;
             }
         }
-    }else if (self.mInt_index == 2 ){
+    }else if (self.mInt_index == 1 ){
         for (int i=0; i<self.mArr_local.count; i++) {
             ClassModel *classModel = [self.mArr_local objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:aid]) {
@@ -1630,7 +1640,7 @@
                 break;
             }
         }
-    }else if (self.mInt_index == 3 ){
+    }else if (self.mInt_index == 4 ){
         for (int i=0; i<self.mArr_attention.count; i++) {
             ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:aid]) {
@@ -1638,7 +1648,7 @@
                 break;
             }
         }
-    }else if (self.mInt_index == 4 ){
+    }else if (self.mInt_index == 0 ){
         for (int i=0; i<self.mArr_sum.count; i++) {
             ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:aid]) {
@@ -1648,7 +1658,6 @@
         }
     }
     [self.mTableV_list reloadData];
-
     self.mView_popup.hidden = YES;
     self.mView_text.hidden = YES;
     [self.mTextF_text resignFirstResponder];
@@ -1844,21 +1853,21 @@
 - (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
-    //    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
-    //        // 替换为中等尺寸图片
-    //        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-    //        MJPhoto *photo = [[MJPhoto alloc] init];
-    //        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-    //        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-    //        photo.srcImageView = imageView;
-    //        [photos addObject:photo];
-    //    }
-    //
-    //    // 2.显示相册
-    //    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    //    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
-    //    browser.photos = photos; // 设置所有的图片
-    //    [browser show];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -1892,21 +1901,21 @@
 - (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
-    //    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
-    //        // 替换为中等尺寸图片
-    //        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-    //        MJPhoto *photo = [[MJPhoto alloc] init];
-    //        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-    //        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-    //        photo.srcImageView = imageView;
-    //        [photos addObject:photo];
-    //    }
-    //
-    //    // 2.显示相册
-    //    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    //    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
-    //    browser.photos = photos; // 设置所有的图片
-    //    [browser show];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -1935,30 +1944,30 @@
         
     });
     [utils pushViewController:browser animated:YES];
-    //    self.navigationController.title = @"";
-    //    [self.navigationController pushViewController:browser animated:YES];
+//    self.navigationController.title = @"";
+//    [self.navigationController pushViewController:browser animated:YES];
 }
 
 
 - (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
-    //    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
-    //        // 替换为中等尺寸图片
-    //        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-    //        MJPhoto *photo = [[MJPhoto alloc] init];
-    //        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-    //        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-    //        photo.srcImageView = imageView;
-    //        [photos addObject:photo];
-    //    }
-    //
-    //
-    //    // 2.显示相册
-    //    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    //    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
-    //    browser.photos = photos; // 设置所有的图片
-    //    [browser show];
+//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
+//        // 替换为中等尺寸图片
+//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
+//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
+//        photo.srcImageView = imageView;
+//        [photos addObject:photo];
+//    }
+//    
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -1994,8 +2003,6 @@
         UnitSectionMessageModel *model = [[UnitSectionMessageModel alloc] init];
         model.UnitID = ClassModel.unitId;
         model.UnitID2 = ClassModel.unitId2;
-        model.classID = ClassModel.classID;
-        model.UnitType = ClassModel.UnitType;
         if (ClassModel.className.length>0) {
             model.UnitName = ClassModel.className;
         }else{
@@ -2037,7 +2044,7 @@
 - (void)photoBrowserDidFinishModalPresentation:(MWPhotoBrowser *)photoBrowser {
     // If we subscribe to this method we must dismiss the view controller ourselves
     NSLog(@"Did finish modal presentation");
-    //    [self dismissViewControllerAnimated:YES completion:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
     [utils popViewControllerAnimated:YES];
 }
 
