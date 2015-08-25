@@ -14,7 +14,7 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="教育" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O47-lh-Y76">
                     <rect key="frame" x="8" y="8" width="121" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XUg-yY-Cjd">
@@ -28,6 +28,7 @@
                 </button>
             </subviews>
             <connections>
+                <outlet property="addBtn" destination="XUg-yY-Cjd" id="ndd-7X-pIC"/>
                 <outlet property="nameLabel" destination="O47-lh-Y76" id="1eT-7X-HYB"/>
             </connections>
             <point key="canvasLocation" x="327" y="266"/>

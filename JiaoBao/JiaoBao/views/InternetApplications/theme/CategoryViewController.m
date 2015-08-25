@@ -75,6 +75,19 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     
     CategorySection *sectionView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"CategorySection" forIndexPath:indexPath];
+    NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
+
+    if([self.mArr_addBtnSel containsObject:num])
+    {
+        [sectionView.addBtn setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+
+    }
+    else
+    {
+        [sectionView.addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+
+    }
+
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     sectionView.nameLabel.text = model.item.Subject;
     sectionView.delegate = self;
@@ -216,10 +229,12 @@
     if(![self.mArr_addBtnSel containsObject:num])
     {
         [self.mArr_addBtnSel addObject:num];
+        
     }
     else
     {
         [self.mArr_addBtnSel removeObject:num];
+
     }
     [self.collectionView reloadData];
 

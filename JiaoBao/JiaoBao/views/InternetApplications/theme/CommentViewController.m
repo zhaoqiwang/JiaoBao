@@ -65,6 +65,7 @@
     {
         [self.mView_text setHidden:NO];
         [self.mTextF_text becomeFirstResponder];
+        
     }
     if(view.tag == 102 )
     {
@@ -87,6 +88,7 @@
 //添加评论回调
 -(void)refreshComment:(id)sender
 {
+    self.mTextF_text.text = nil;
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
@@ -191,11 +193,15 @@ if([Data integerValue]==-1)
         {
             ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:102];
             btn.mLab_title.text = @"反对1";
+            [MBProgressHUD showText:@"反对成功"];
+
         }
 
         if(self.btn_tag == 0)
         {
             self.KnowledgeTableViewCell.mLab_LikeCount.text = @"1";
+            [MBProgressHUD showText:@"点赞成功"];
+
 
         }
     }

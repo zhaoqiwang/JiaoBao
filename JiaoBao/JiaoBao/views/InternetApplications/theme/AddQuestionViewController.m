@@ -125,13 +125,13 @@
     NSDictionary *dic = [sender object];
     self.mArr_AllCategory =[dic objectForKey:@"array"] ;
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-    detailVC.modalPresentationStyle = UIModalPresentationCustom;
+    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
     detailVC.categoryTF = self.categoryTF;
     detailVC.categoryId = self.categoryId;
     detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
     detailVC.mArr_AllCategory = self.mArr_AllCategory;
-    [self.navigationController presentViewController:detailVC animated:NO completion:^{
-        detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
+    [self.navigationController presentViewController:detailVC animated:YES completion:^{
+        //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
 
         
     }];
@@ -401,7 +401,7 @@
     
     if([self.categoryTF.text isEqualToString: @""])
     {
-        [MBProgressHUD showError:@"请添写提问"];
+        [MBProgressHUD showError:@"请添写标题"];
         return;
     }
     if([self.knContentTF.text isEqualToString: @""])
