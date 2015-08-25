@@ -419,6 +419,7 @@
             model.answerModel.RecDate = [[[answerDic objectForKey:@"RecDate"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
         }
         model.answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
+        model.answerModel.Flag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"Flag"]];
         model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
         model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];

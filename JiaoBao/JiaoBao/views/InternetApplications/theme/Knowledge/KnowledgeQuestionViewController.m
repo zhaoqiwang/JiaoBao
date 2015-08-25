@@ -117,11 +117,15 @@
     //标题
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 16);
     self.mView_titlecell.mLab_title.text = model.Title;
+    [self.mView_titlecell.mLab_title setNumberOfLines:0];
+    self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
+    CGSize labelsize = [model.Title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2-40,99999) lineBreakMode:NSLineBreakByWordWrapping];
+    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
     //详情
     self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
     //话题
-    self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+16+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
+    self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+self.mView_titlecell.mLab_title.frame.size.height+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_Category1.frame = CGRectMake(30+self.mView_titlecell.mLab_Category0.frame.size.width+2, self.mView_titlecell.mLab_Category0.frame.origin.y, CategorySize.width, 21);
     self.mView_titlecell.mLab_Category1.text = model.CategorySuject;
