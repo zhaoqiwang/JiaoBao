@@ -25,6 +25,8 @@
 @end
 
 @implementation CommentViewController
+
+//评论列表回调
 -(void)CommentsListWithNumPerPage:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -42,7 +44,7 @@
     //[MBProgressHUD showSuccess:ResultDesc toView:self.view];
     self.AllCommentListModel = [dic objectForKey:@"model"];
     ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:101];
-    btn.mLab_title.text = [NSString stringWithFormat:@"评论%d",self.AllCommentListModel.mArr_CommentList.count];
+    btn.mLab_title.text = [NSString stringWithFormat:@"评论%lu",(unsigned long)self.AllCommentListModel.mArr_CommentList.count];
     
     self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
     D("tableViewFrame = %@",NSStringFromCGRect(self.tableView.frame));
@@ -52,6 +54,7 @@
     [self.tableView reloadData];
     
 }
+//举报 评论 反对点击方法
 -(void) ButtonViewTitleBtn:(ButtonViewCell *) view
 {
     if(view.tag == 100)
@@ -65,11 +68,11 @@
     }
     if(view.tag == 102 )
     {
-        if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
-        {
-            [MBProgressHUD showText:@"你已经评价过了"];
-            return;
-        }
+//        if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
+//        {
+//            [MBProgressHUD showText:@"你已经评价过了"];
+//            return;
+//        }
         if(self.answerModel)
         {
             [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"0"];
@@ -81,6 +84,7 @@
         self.btn_tag = 1;
     }
 }
+//添加评论回调
 -(void)refreshComment:(id)sender
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -102,7 +106,7 @@
 
 
 }
-
+//答案详情回调
 -(void)AnswerDetailWithAId:(id)sender
 {
     {[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -161,12 +165,10 @@
             }
             [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
 
-
-
-            
         }
     }
 }
+//举报回调
 -(void)SetYesNoWithAId:(id)sender
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -179,7 +181,12 @@
     }
     else
     {
-        self.AnswerDetailModel.LikeList = @"0,";
+        NSString *Data = [dic objectForKey:@"Data"];
+if([Data integerValue]==-1)
+{
+    [MBProgressHUD showText:@"你已经评价过了"];
+    return;
+}
         if(self.btn_tag == 1)
         {
             ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:102];
@@ -191,9 +198,7 @@
             self.KnowledgeTableViewCell.mLab_LikeCount.text = @"1";
 
         }
-
     }
-
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -204,6 +209,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.btn_tag = -1;
+    
+    //添加评论成功后刷新数据
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshComment" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshComment:) name:@"refreshComment" object:nil];
 
@@ -212,22 +219,26 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
+    //获取评论列表
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CommentsListWithNumPerPage" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CommentsListWithNumPerPage:) name:@"CommentsListWithNumPerPage" object:nil];
-    
+    //获取答案详情
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AnswerDetailWithAId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AnswerDetailWithAId:) name:@"AnswerDetailWithAId" object:nil];
-    
+    //举报
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"SetYesNoWithAId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(SetYesNoWithAId:) name:@"SetYesNoWithAId" object:nil];
+    //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"评论"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    
     //输入View坐标
     self.mView_text = [[UIView alloc] init];
     self.mView_text.frame = CGRectMake(0, 500, [dm getInstance].width, 51);
     self.mView_text.backgroundColor = [UIColor whiteColor];
+    
     //添加边框
     self.mView_text.layer.borderWidth = .5;
     self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
@@ -245,18 +256,19 @@
     [self.mView_text setHidden:YES];
 
     [MBProgressHUD showMessage:@"" toView:self.view];
-    if(self.answerModel)
+    //获取答案详情
+    if(self.answerModel)//答案列表跳转用answerModel
     {
         [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
         return;
 
     }
-    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];
+    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
 
         // Do any additional setup after loading the view from its nib.
 }
 
-
+//获取评论列表cell高度
 -(float)tableViewCellHeight
 {
     float h = 0;
@@ -264,14 +276,14 @@
     for(int i=0;i<arr.count;i++)
     {
         commentListModel *model = [arr objectAtIndex:i];
-    CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
+        CGSize Size = [model.WContent sizeWithFont:[UIFont systemFontOfSize:13] constrainedToSize:CGSizeMake(228, 1000)];
         float cellHeight = Size.height + 50;
         h = h + cellHeight;
     }
-
-
     return h;
 }
+#pragma mark - TableView Data Source
+
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     return self.AllCommentListModel.mArr_CommentList.count;
 }
@@ -318,13 +330,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+//点击点赞按钮
 -(void)likeAction:(id)sender
 {
-    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
-    {
-        [MBProgressHUD showText:@"你已经评价过了"];
-        return;
-    }
+//    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
+//    {
+//        [MBProgressHUD showText:@"你已经评价过了"];
+//        return;
+//    }
     if(self.answerModel)
     {
         [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"1"];
@@ -336,6 +349,7 @@
     self.btn_tag = 0;
 
 }
+//获取上面的cellview
 -(KnowledgeTableViewCell*)getMainView
 {
     KnowledgeTableViewCell *cell = [[KnowledgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
@@ -481,32 +495,7 @@
                 [cell.AnswerDetailModel.Thumbnail addObject:content];
             }
 
-            
-//            GDataXMLDocument *doc = [[GDataXMLDocument alloc]initWithData:[cell.AnswerDetailModel.AContent dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-//            GDataXMLElement *rootElement = [doc rootElement];
-//            NSArray *levels = [rootElement nodesForXPath:@"//img" error:nil];
-//            for (GDataXMLElement *level in levels)
-//            {
-//                NSString *urlstr = [[level attributeForName:@"src"]stringValue];
-//
-//                [cell.AnswerDetailModel.Thumbnail addObject:urlstr];
-//            }
-//
-//            NSArray *arr = [cell.AnswerDetailModel.AContent componentsSeparatedByString:@"img src="];
-//            if(arr.count>2)
-//            {
-//                for(int i=0;i<arr.count;i++)
-//                {
-//                    NSString *str1 = [arr objectAtIndex:i];
-//                    if(i%2 == 1)
-//                    {
-//                        [cell.AnswerDetailModel.Thumbnail addObject:str1];
-//
-//                    }
-// 
-//
-//                }
-//            }
+
         }
 
         [cell.mCollectionV_pic reloadData];
@@ -522,7 +511,7 @@
             {
                 cell.mCollectionV_pic.frame = CGRectMake(9, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-9-2, (a+1)*([dm getInstance].width-70-40)/3+10);
             }
-//            cell.mCollectionV_pic.frame = CGRectMake(9, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-9-2, ([dm getInstance].width-70-40)/3*cell.model.answerModel.Thumbnail.count);
+
         }else{
             cell.mCollectionV_pic.frame = cell.mView_background.frame;
             cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
@@ -578,11 +567,13 @@
     detail.mModel_question = knowledgeTableViewCell.model;
     [utils pushViewController:detail animated:YES];
 }
+
 -(void)tapAction:(id)sender
 {
     self.mView_text.hidden = YES;
     [self.mTextF_text resignFirstResponder];
 }
+
 - (void) keyboardWasShown:(NSNotification *) notif{
     NSDictionary *info = [notif userInfo];
     NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -638,14 +629,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

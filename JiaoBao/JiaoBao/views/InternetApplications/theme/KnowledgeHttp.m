@@ -420,7 +420,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        NSString *dataStr = [jsonDic objectForKey:@"Data"];
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":dataStr};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:dic];
         
         D("JSON--------SetYesNoWithAId: %@,", result);
