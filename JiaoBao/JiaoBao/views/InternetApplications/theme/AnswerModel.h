@@ -21,5 +21,6 @@
 @property(nonatomic,strong)NSString *CCount;//评论数量
 @property(nonatomic,strong)NSMutableArray *Thumbnail;//图片url,字符串（url)json数组
 @property(nonatomic,assign)float floatH;//webview高度
+@property(nonatomic,strong)NSString *Flag;//0无内容，1有内容，2有证据
 
 @end
