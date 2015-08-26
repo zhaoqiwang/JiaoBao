@@ -225,4 +225,21 @@
      }
 }
 
+//全部、有证据、在讨论按钮
+-(IBAction)mBtn_all:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellAllBtn:)]) {
+        [self.delegate KnowledgeTableVIewCellAllBtn:self];
+    }
+}
+-(IBAction)mBtn_evidence:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellEvidenceBtn:)]) {
+        [self.delegate KnowledgeTableVIewCellEvidenceBtn:self];
+    }
+}
+-(IBAction)mBtn_discuss:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellDiscussBtn:)]) {
+        [self.delegate KnowledgeTableVIewCellDiscussBtn:self];
+    }
+}
+
 @end
