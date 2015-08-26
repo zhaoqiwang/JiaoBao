@@ -22,8 +22,10 @@
         //做bug服务器显示当前的哪个界面
         NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
         [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+        //刷新话题分类
         [self setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
-        
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refreshCategory" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshCategory:) name:@"refreshCategory" object:nil];
         //首页问题列表
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UserIndexQuestion" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CategoryIndexQuestion:) name:@"UserIndexQuestion" object:nil];
@@ -84,7 +86,11 @@
     }
     return self;
 }
-
+-(void)refreshCategory:(id)sender
+{
+    ItemModel *itemModel = [sender object];
+    
+}
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
