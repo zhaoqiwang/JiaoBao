@@ -28,7 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mArr_addBtnSel = [[NSMutableArray alloc]init];
-    self.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
 
     if([self.classStr isEqualToString:@"ThemeView"])
     {
@@ -126,6 +125,13 @@
     self.categoryTF.text = cell.nameLabel.text;
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
+    self.ItemModel.TabID = itemModel.TabID;
+    self.ItemModel.Subject = itemModel.Subject;
+    self.ItemModel.QCount = itemModel.QCount;
+    self.ItemModel.AttCount = itemModel.AttCount;
+    self.ItemModel.ParentId = itemModel.ParentId;
+    self.ItemModel.Subject = itemModel.Subject;
+    
 
     if([self.classStr isEqualToString:@"AddQuestionViewController"])
     {

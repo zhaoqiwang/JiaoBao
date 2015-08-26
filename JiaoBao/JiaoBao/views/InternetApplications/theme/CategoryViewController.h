@@ -16,6 +16,8 @@
 @property(nonatomic,strong)UITextField *categoryTF;//分类输入框
 @property(nonatomic,strong)NSMutableString *categoryId;//分类id
 @property(nonatomic,strong)NSMutableArray *mArr_AllCategory;
+@property(nonatomic,strong)ItemModel *ItemModel;//选择的话题model
+
 - (IBAction)backAction:(id)sender;//返回按钮
 @property (weak, nonatomic) IBOutlet UILabel *titileLabel;
 @property(nonatomic,strong)NSMutableArray *mArr_selectCategory;//被选择的分类 数组
