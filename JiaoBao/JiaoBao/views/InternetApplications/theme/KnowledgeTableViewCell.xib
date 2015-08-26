@@ -185,6 +185,9 @@
                         <state key="normal" title="有证据">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="mBtn_evidence:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ubd-cU-3z5"/>
+                        </connections>
                     </button>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="je3-X9-rXF">
                         <rect key="frame" x="213" y="299" width="46" height="30"/>
@@ -192,6 +195,9 @@
                         <state key="normal" title="在讨论">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="mBtn_discuss:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0hq-EB-iFO"/>
+                        </connections>
                     </button>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uXK-7Q-fo3">
                         <rect key="frame" x="44" y="299" width="46" height="30"/>
@@ -199,6 +205,9 @@
                         <state key="normal" title="全部">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="mBtn_all:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="H9f-Rz-Ns1"/>
+                        </connections>
                     </button>
                 </subviews>
             </tableViewCellContentView>

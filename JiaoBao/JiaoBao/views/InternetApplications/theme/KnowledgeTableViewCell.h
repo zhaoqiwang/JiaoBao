@@ -62,6 +62,11 @@
 
 -(IBAction)detailBtn:(id)sender;
 
+//全部、有证据、在讨论按钮
+-(IBAction)mBtn_all:(id)sender;
+-(IBAction)mBtn_evidence:(id)sender;
+-(IBAction)mBtn_discuss:(id)sender;
+
 @end
 
 //向cell中添加点击事件
@@ -80,5 +85,10 @@
 
 //详情按钮
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+
+//全部、有依据、在讨论按钮
+-(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+-(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+-(void)KnowledgeTableVIewCellDiscussBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 
 @end

@@ -96,7 +96,7 @@
     D("点击下拉选择按钮");
 //    [[KnowledgeHttp getInstance] GetAllCategory];
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    detailVC.modalPresentationStyle = UIModalPresentationCustom;
     detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
     detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
     self.mArr_selectCategory = detailVC.mArr_selectCategory;
@@ -113,8 +113,8 @@
         if ([nextResponder isKindOfClass:[UIViewController
                                           class]]) {
             UIViewController *vc = (UIViewController*)nextResponder;
-            [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
-        //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
+            [vc.navigationController  presentViewController:detailVC animated:NO completion:^{
+        detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);                
                 
             }];
         }
@@ -181,7 +181,7 @@
     }
     [self.mTableV_knowledge reloadData];
 }
-    
+
 -(void)ProgressViewLoad{
     //检查当前网络是否可用
     if ([self checkNetWork]) {
@@ -428,10 +428,26 @@
         cell.mBtn_all.hidden = NO;
         cell.mBtn_evidence.hidden = NO;
         cell.mBtn_discuss.hidden = NO;
+        cell.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         cell.mBtn_all.frame = CGRectMake(40, 0, 50, 44);
         cell.mBtn_evidence.frame = CGRectMake(120, 0, 50, 44);
         cell.mBtn_discuss.frame = CGRectMake(200, 0, 50, 44);
+        AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        if ([allModel.flag integerValue]==-1) {
+            [cell.mBtn_all setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [cell.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }else if ([allModel.flag integerValue]==0){
+            [cell.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_discuss setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        }else if ([allModel.flag integerValue]==1){
+            [cell.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_evidence setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [cell.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }
     }else if (model.mInt_btn ==2){//当前的话题id
+        cell.backgroundColor = [UIColor whiteColor];
         cell.LikeBtn.hidden = YES;
         cell.mLab_title.hidden = YES;
         cell.mLab_Category0.hidden = YES;
@@ -470,6 +486,7 @@
         cell.mBtn_evidence.hidden = YES;
         cell.mBtn_discuss.hidden = YES;
     }else{//正常显示内容
+        cell.backgroundColor = [UIColor whiteColor];
         cell.mBtn_all.hidden = YES;
         cell.mBtn_evidence.hidden = YES;
         cell.mBtn_discuss.hidden = YES;
@@ -506,9 +523,10 @@
         CGSize AttSize = [[NSString stringWithFormat:@"%@",model.AttCount] sizeWithFont:[UIFont systemFontOfSize:10]];
         cell.mLab_AttCount.frame = CGRectMake(cell.mLab_Answers.frame.origin.x-5-AttSize.width, cell.mLab_Category0.frame.origin.y, AttSize.width, cell.mLab_Category0.frame.size.height);
         cell.mLab_AttCount.text = model.AttCount;
+        cell.mLab_AttCount.hidden = NO;
         cell.mLab_Att.frame = CGRectMake(cell.mLab_AttCount.frame.origin.x-2-cell.mLab_Att.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_Att.frame.size.width, cell.mLab_Att.frame.size.height);
+        cell.mLab_Att.hidden = NO;
         //判断是否有回答
-        //    if ([model.AnswersCount integerValue]>0) {
         if ([model.answerModel.TabID integerValue]>0) {
             //分割线
             cell.mLab_line.hidden = NO;
@@ -540,9 +558,11 @@
                 strLike = @"99+";
             }
             cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
+            cell.mLab_LikeCount.hidden = NO;
             //头像
             cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
             [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+            cell.mImgV_head.hidden = NO;
             //姓名
             cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
             cell.mLab_IdFlag.text = model.answerModel.IdFlag;
@@ -604,6 +624,7 @@
             }else{
                 cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
             }
+            cell.mLab_line2.hidden = NO;
         }else{
             //分割线
             cell.mLab_line.hidden = YES;
@@ -806,6 +827,44 @@
         detail.mModel_question = knowledgeTableViewCell.model;
         [utils pushViewController:detail animated:YES];
     }
+}
+
+//全部、有依据、在讨论按钮
+-(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    if ([model.flag integerValue]!=-1) {
+        [model.mArr_discuss removeAllObjects];
+        [model.mArr_evidence removeAllObjects];
+        [model.mArr_all removeAllObjects];
+        [model.mArr_top removeAllObjects];
+        model.flag = @"-1";
+        [self sendRequest];
+    }
+    [self.mTableV_knowledge reloadData];
+}
+-(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    if ([model.flag integerValue]!=1) {
+        [model.mArr_discuss removeAllObjects];
+        [model.mArr_evidence removeAllObjects];
+        [model.mArr_all removeAllObjects];
+        [model.mArr_top removeAllObjects];
+        model.flag = @"1";
+        [self sendRequest];
+    }
+    [self.mTableV_knowledge reloadData];
+}
+-(void)KnowledgeTableVIewCellDiscussBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    if ([model.flag integerValue]!=0) {
+        [model.mArr_discuss removeAllObjects];
+        [model.mArr_evidence removeAllObjects];
+        [model.mArr_all removeAllObjects];
+        [model.mArr_top removeAllObjects];
+        model.flag = @"0";
+        [self sendRequest];
+    }
+    [self.mTableV_knowledge reloadData];
 }
 
 @end
