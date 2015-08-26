@@ -103,4 +103,7 @@
 //单个推荐明细  参数描述：（推荐ID）
 -(void)ShowRecommentWithTable:(NSString*)tabid;
 
+//获取话题的置顶问题  参数描述：（话题Id）
+-(void)GetCategoryTopQWithId:(NSString *)categoryid;
+
 @end

@@ -519,9 +519,6 @@ static KnowledgeHttp *knowledgeHttp = nil;
 }
 
 
-
-
-
 //首页问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)
 -(void)UserIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag
 {
@@ -530,6 +527,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    D("srgpjpdsj'-===%@,%@,%@,%@",numPerPage,pageNum,RowCount,flag);
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount,@"flag":flag};
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -543,6 +541,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
+        [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UserIndexQuestionWithNumPerPage: %@", error);
@@ -570,6 +569,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
+        [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CategoryIndexQuestionWith: %@", error);
@@ -625,6 +625,32 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------ShowRecomment: %@", error);
+    }];
+}
+
+//获取话题的置顶问题  参数描述：（话题Id）
+-(void)GetCategoryTopQWithId:(NSString *)categoryid{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetCategoryTopQ",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"categoryid":categoryid};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+//        RecommentAddAnswerModel *model = [ParserJson_knowledge parserJsonShowRecomment:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------GetCategoryTopQWithId: %@,", result);
+//        [tempDic setValue:code forKey:@"code"];
+//        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+//        [tempDic setValue:model forKey:@"model"];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetCategoryTopQWithId: %@", error);
     }];
 }
 

@@ -43,6 +43,10 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_detail;//详情按钮
 @property (nonatomic,strong) IBOutlet UIWebView *mWebV_comment;//内容
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_all;//全部
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_evidence;//有证据
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_discuss;//在讨论
+
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
 @property (nonatomic,strong) AnswerModel *RecommentAnswerModel;
