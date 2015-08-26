@@ -22,6 +22,7 @@
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
 @property(nonatomic,strong)KnowledgeTableViewCell*KnowledgeTableViewCell;
+@property(nonatomic,assign)int mInt_reloadData;
 @end
 
 @implementation CommentViewController
@@ -42,16 +43,29 @@
 
     
     //[MBProgressHUD showSuccess:ResultDesc toView:self.view];
-    self.AllCommentListModel = [dic objectForKey:@"model"];
-    ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:101];
-    btn.mLab_title.text = [NSString stringWithFormat:@"评论%lu",(unsigned long)self.AllCommentListModel.mArr_CommentList.count];
-    
-    self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
-    D("tableViewFrame = %@",NSStringFromCGRect(self.tableView.frame));
-    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, self.tableView.frame.origin.y+self.tableView.frame.size.height+10);
-    D("mainScrollViewFrame = %@",NSStringFromCGRect(self.mainScrollView.frame));
-    self.tableView.scrollEnabled = NO;
+    if (self.mInt_reloadData ==0)
+    {
+        self.AllCommentListModel = [dic objectForKey:@"model"];
+
+    }
+    else
+    {
+        AllCommentListModel *model =[dic objectForKey:@"model"];
+        if(model.mArr_CommentList.count == 0)
+        {
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+
+        }
+        [self.AllCommentListModel.mArr_CommentList addObjectsFromArray:model.mArr_CommentList];
+    }
+
+//    self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
+//    self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, self.tableView.frame.origin.y+self.tableView.frame.size.height+10);
+//    self.tableView.scrollEnabled = NO;
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self.tableView reloadData];
+    
     
 }
 //举报 评论 反对点击方法
@@ -59,7 +73,16 @@
 {
     if(view.tag == 100)
     {
-        [[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
+        if(self.answerModel)
+        {
+            [[KnowledgeHttp getInstance]reportanswerWithAId:self.answerModel.TabID];
+
+        }
+        else
+        {
+            [[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
+
+        }
     }
     if(view.tag == 101)
     {
@@ -69,19 +92,18 @@
     }
     if(view.tag == 102 )
     {
-//        if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
-//        {
-//            [MBProgressHUD showText:@"你已经评价过了"];
-//            return;
-//        }
+
         if(self.answerModel)
         {
             [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"0"];
             
-            return;
             
         }
-        [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
+        else
+        {
+            [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
+
+        }
         self.btn_tag = 1;
     }
 }
@@ -100,8 +122,27 @@
     else
     {
         [MBProgressHUD showSuccess:ResultDesc];
-        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
-//        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];
+        if(self.answerModel)
+        {
+            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
+        }
+        else
+        {
+            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+            
+        }
+        //获取答案详情
+        if(self.answerModel)//答案列表跳转用answerModel
+        {
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
+            
+        }
+        else
+        {
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
+
+            
+        }
         
     }
 
@@ -123,10 +164,8 @@
         {
             self.AnswerDetailModel = [dic objectForKey:@"model"];
             self.KnowledgeTableViewCell = [self getMainView];
-            self.mainScrollView.frame = CGRectMake(0, 44+10, [dm getInstance].width, [dm getInstance].height-44-10);
-            self.mainScrollView.contentSize = CGSizeMake([dm getInstance].width, 1000);
-            [self.mainScrollView addSubview:self.KnowledgeTableViewCell];
-            
+            self.tableHeadView = [[UIView alloc]init];
+            [self.tableHeadView addSubview:self.KnowledgeTableViewCell];
             NSMutableArray *temp = [NSMutableArray array];
             for (int i=0; i<3; i++) {
                 ButtonViewModel *model = [[ButtonViewModel alloc] init];
@@ -155,17 +194,30 @@
             }
             self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, [dm getInstance].width, 50) Array:temp];
             self.mBtnV_btn.delegate = self;
-            [self.mainScrollView addSubview:self.mBtnV_btn];
-            self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, 0) style:UITableViewStylePlain];
+            [self.tableHeadView addSubview:self.mBtnV_btn];
+            self.tableHeadView.frame = CGRectMake(0, 0, [dm getInstance].width, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height);
+
+            self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height) style:UITableViewStylePlain];
+            self.tableView.tableHeaderView = self.tableHeadView;
             self.tableView.delegate = self;
             self.tableView.dataSource = self;
-            [self.mainScrollView addSubview:self.tableView];
-            if(self.answerModel)
-            {
-                [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
-                return;
-            }
-            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+            [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+            self.tableView.headerPullToRefreshText = @"下拉刷新";
+            self.tableView.headerReleaseToRefreshText = @"松开后刷新";
+            self.tableView.headerRefreshingText = @"正在刷新...";
+            [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+            self.tableView.footerPullToRefreshText = @"上拉加载更多";
+            self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
+            self.tableView.footerRefreshingText = @"正在加载...";
+            [self.view addSubview:self.tableView];
+            self.tableView.tableFooterView = [[UIView alloc]init];
+            //self.tableView.footerHidden = YES;
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+
+
+
+
 
         }
     }
@@ -214,6 +266,7 @@ if([Data integerValue]==-1)
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mInt_reloadData = 0;
     self.btn_tag = -1;
     
     //添加评论成功后刷新数据
@@ -266,14 +319,61 @@ if([Data integerValue]==-1)
     if(self.answerModel)//答案列表跳转用answerModel
     {
         [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
-        return;
 
     }
-    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
+    else
+    {
+        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
 
+    }
+    if(self.answerModel)
+    {
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
+    }
+    else
+    {
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+
+        
+    }
         // Do any additional setup after loading the view from its nib.
 }
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_reloadData = 0;
+    [self sendRequest];
+}
 
+- (void)footerRereshing{
+    self.mInt_reloadData = 1;
+    [self sendRequest];
+}
+-(void)sendRequest{
+
+    NSString *page = @"";
+    if (self.mInt_reloadData == 0) {
+        page = @"1";
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    }else{
+
+        NSMutableArray *array = self.AllCommentListModel.mArr_CommentList;
+        if (array.count>=20&&array.count%20==0) {
+
+            page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        } else {
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+            return;
+        }
+    }
+    if(self.answerModel)
+    {
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.answerModel.TabID];
+        return;
+    }
+    [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.questionModel.answerModel.TabID];}
 //获取评论列表cell高度
 -(float)tableViewCellHeight
 {
@@ -371,7 +471,7 @@ if([Data integerValue]==-1)
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
 
     //详情
-    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, cell.mBtn_detail.frame.size.height);
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 0, 40, cell.mBtn_detail.frame.size.height);
     NSString *string_title = cell.model.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
@@ -456,11 +556,12 @@ if([Data integerValue]==-1)
         //回答标题
         NSString *string1 = self.AnswerDetailModel.ATitle;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        NSString *str = [NSString stringWithFormat:@"依据 : %@",string1];
-        CGSize size1 = [str sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
-        if (size1.height>20) {
-            size1 = CGSizeMake(size1.width, size1.height);
-        }
+        
+        //NSString *str = [NSString stringWithFormat:@"依据 : %@",string1];
+//        CGSize size1 = [str sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
+//        if (size1.height>20) {
+//            size1 = CGSizeMake(size1.width, size1.height);
+//        }
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
         NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
         [row1 setObject:name forKey:@"text"];
@@ -475,7 +576,22 @@ if([Data integerValue]==-1)
         NSString *string2 = self.AnswerDetailModel.Abstracts;
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
-        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
+        NSString *name2;
+        if([self.AnswerDetailModel.Flag integerValue]==0)
+        {
+            name2 = [NSString stringWithFormat:@"无内容"];
+
+        }
+        else if([self.AnswerDetailModel.Flag integerValue]==1)
+        {
+            name2 = [NSString stringWithFormat:@"<font size=14 color='red'>内容 : </font> <font>%@</font>", string2];
+
+        }
+        else
+        {
+            name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
+
+        }
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
         [row2 setObject:name2 forKey:@"text"];
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
@@ -500,8 +616,6 @@ if([Data integerValue]==-1)
                 }
                 [cell.AnswerDetailModel.Thumbnail addObject:content];
             }
-
-
         }
 
         [cell.mCollectionV_pic reloadData];
@@ -560,7 +674,7 @@ if([Data integerValue]==-1)
         cell.mLab_comment.hidden = YES;
         cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
     }
-    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
+    cell.frame = CGRectMake(0, 10, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
     cell.userInteractionEnabled = YES;
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
 //    [cell addGestureRecognizer:tap];
@@ -619,7 +733,15 @@ if([Data integerValue]==-1)
         [textField resignFirstResponder];
         //若其有输入内容，则发送
         if (self.mTextF_text.text.length>0) {
-            [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:self.mTextF_text.text RefID:@""];
+            if(self.answerModel)
+            {
+                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:self.mTextF_text.text RefID:@""];
+            }
+            else
+            {
+                [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:self.mTextF_text.text RefID:@""];
+            }
+
         }
         return NO;
     }

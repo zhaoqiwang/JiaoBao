@@ -125,6 +125,8 @@
     NSDictionary *dic = [sender object];
     self.mArr_AllCategory =[dic objectForKey:@"array"] ;
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
+    detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+
     detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
     detailVC.categoryTF = self.categoryTF;
     detailVC.categoryId = self.categoryId;

@@ -13,10 +13,11 @@
 #import "KnowledgeHttp.h"
 #import "ButtonView.h"
 #import "KnowledgeTableViewCell.h"
+#import "MJRefresh.h"//上拉下拉刷新
+
 
 
 @interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate>
-@property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property(nonatomic,strong)QuestionModel *questionModel;//
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
 
@@ -26,4 +27,5 @@
 @property (nonatomic,strong) UITextField *mTextF_text;//输入框
 @property(nonatomic,strong)UIView *mView_text;
 @property(nonatomic,assign)int btn_tag;//区别点击的是赞还是反对
+@property (strong, nonatomic)  UIView *tableHeadView;
 @end

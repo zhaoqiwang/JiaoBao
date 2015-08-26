@@ -80,6 +80,7 @@
         self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
         self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
+
     }
     return self;
 }
@@ -91,13 +92,15 @@
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
     detailVC.modalPresentationStyle = UIModalPresentationCustom;
     detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
+    detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+    self.mArr_selectCategory = detailVC.mArr_selectCategory;
+
     detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
     for(int i=3;i<self.mArr_AllCategory.count;i++)
     {
         [detailVC.mArr_AllCategory addObject:[self.mArr_AllCategory objectAtIndex:i]];
     }
     
-    detailVC.titileLabel.text = @"选择优先显示的话题类别";
     for (UIView* next = [self superview]; next; next =
          next.superview) {
         UIResponder* nextResponder = [next nextResponder];
@@ -664,6 +667,27 @@
     QuestionModel *model = [array objectAtIndex:indexPath.row];
     if (model.mInt_btn==2) {//话题显示行
         AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
+        detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
+        detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+
+        detailVC.classStr = @"AddQuestionViewController";
+        [detailVC.mArr_AllCategory addObject:allModel];
+        detailVC.ItemModel = [[ItemModel alloc]init];
+        self.ItemModel = detailVC.ItemModel;
+        for (UIView* next = [self superview]; next; next =
+             next.superview) {
+            UIResponder* nextResponder = [next nextResponder];
+            if ([nextResponder isKindOfClass:[UIViewController
+                                              class]]) {
+                UIViewController *vc = (UIViewController*)nextResponder;
+                [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
+                    //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
+                    
+                }];
+            }
+        }
         //
     }
 }
