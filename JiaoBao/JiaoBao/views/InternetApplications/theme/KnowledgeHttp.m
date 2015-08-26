@@ -642,15 +642,15 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-//        RecommentAddAnswerModel *model = [ParserJson_knowledge parserJsonShowRecomment:[jsonDic objectForKey:@"Data"]];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
-        D("JSON--------GetCategoryTopQWithId: %@,", result);
-//        [tempDic setValue:code forKey:@"code"];
-//        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
-//        [tempDic setValue:model forKey:@"model"];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
+        D("JSON--------GetCategoryTop: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------GetCategoryTopQWithId: %@", error);
+        D("Error---------GetCategoryTop: %@", error);
     }];
 }
 
