@@ -170,7 +170,7 @@
     }
     
     D("点击发送按钮");
-    if ([utils isBlankString:self.mTextF_text.text]) {
+    if (self.mTextF_text.text.length==0) {
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
@@ -382,7 +382,7 @@
             self.mModel_notice = [dic objectForKey:@"model"];
             NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
             for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
             }
             str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
@@ -393,7 +393,7 @@
             str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
             str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
             str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+            //            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
             //标题
             CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel_notice.Subject] sizeWithFont:[UIFont systemFontOfSize:14]];
             self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
@@ -408,8 +408,10 @@
             self.mLab_time.text = self.mModel_notice.Recdate;
             //内容
             //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
-            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
-            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
+            //            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
+            //            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,str];
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
             D("detail.url-====%@",tempHtml);
             [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
@@ -418,7 +420,7 @@
             //        NSString *str = self.mModel.Context;
             NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
             for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx",i] withString:@" "];
+                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %d",i] withString:@" "];
                 str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
             }
             str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
@@ -429,7 +431,7 @@
             str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
             str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
             str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+            //            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
             
             //标题
             CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -443,8 +445,10 @@
             CGSize timeSize = [self.mModel.RecDate sizeWithFont:[UIFont systemFontOfSize:13]];
             self.mLab_time.frame = CGRectMake(self.mLab_name.frame.size.width+15, self.mLab_name.frame.origin.y, timeSize.width, timeSize.height);
             self.mLab_time.text = self.mModel.RecDate;
-            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
-            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
+            //            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
+            //            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,str];
             //内容
             //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
             NSURL *baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
