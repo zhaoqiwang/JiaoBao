@@ -486,7 +486,7 @@
         model.answerModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
         model.answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
         model.answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
-        
+        model.answerModel.Flag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"Flag"]];
         NSString *str2 = [answerDic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];
         if (range.length>0) {
