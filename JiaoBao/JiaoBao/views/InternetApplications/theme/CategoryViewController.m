@@ -139,8 +139,17 @@
         [self.mArr_selectCategory addObject:itemModel];
         cell.nameLabel.textColor = [UIColor redColor];
         [self.collectionView reloadData];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshCategory" object:itemModel];
+        if(self.categoryTF)
+        {
+
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshCategory" object:itemModel];
+        }
         [self dismissViewControllerAnimated:YES completion:nil];
+
+
 
     }
     else

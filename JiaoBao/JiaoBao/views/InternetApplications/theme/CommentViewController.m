@@ -238,7 +238,9 @@
         NSString *Data = [dic objectForKey:@"Data"];
 if([Data integerValue]==-1)
 {
-    [MBProgressHUD showText:@"你已经评价过了"];
+
+        [MBProgressHUD showText:@"你已经评价过了"];
+
     return;
 }
         if(self.btn_tag == 1)
@@ -448,10 +450,12 @@ if([Data integerValue]==-1)
     {
         [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"1"];
 
-        return;
         
     }
+    else
+    {
     [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
+    }
     self.btn_tag = 0;
 
 }
