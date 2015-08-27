@@ -38,6 +38,10 @@
         //推荐问题列表
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RecommentIndex" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RecommentIndex:) name:@"RecommentIndex" object:nil];
+        //置顶问题
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetCategoryTop" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCategoryTop:) name:@"GetCategoryTop" object:nil];
+        
         
 
         self.mArr_AllCategory = [NSMutableArray array];
@@ -49,12 +53,6 @@
         NSMutableArray *tempArray = [NSMutableArray arrayWithObjects:@"首页",@"精选",@"推荐", nil];
         for (int i=0; i<tempArray.count; i++) {
             AllCategoryModel *model = [[AllCategoryModel alloc] init];
-//            if (i==0) {
-//                //给加上默认的无用数组
-//                QuestionModel *temp = [[QuestionModel alloc] init];
-//                temp.mInt_btn = 1;
-//                [model.mArr_sum addObject:temp];
-//            }
             model.item.Subject = [tempArray objectAtIndex:i];
             [self.mArr_AllCategory addObject:model];
         }
@@ -86,10 +84,20 @@
     }
     return self;
 }
+//选择话题二级列表后的回调
 -(void)refreshCategory:(id)sender
 {
     ItemModel *itemModel = [sender object];
-    
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    if ([itemModel.TabID integerValue]!=[model.item_now.TabID integerValue]) {
+        model.item_now = itemModel;
+        [model.mArr_discuss removeAllObjects];
+        [model.mArr_evidence removeAllObjects];
+        [model.mArr_all removeAllObjects];
+        [model.mArr_top removeAllObjects];
+        [self sendRequest];
+    }
+    [self.mTableV_knowledge reloadData];
 }
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
@@ -190,22 +198,21 @@
     //取所有话题
     [[KnowledgeHttp getInstance] GetAllCategory];
     [self sendRequest];
-//    [[KnowledgeHttp getInstance]GetCategoryWithParentId:@"" subject:@""];
-   // [[KnowledgeHttp getInstance]CategoryIndexQuestionWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" flag:@"-1" uid:@"15"];
-    //[[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:@"85"];
-   // [[KnowledgeHttp getInstance]AddCommentWithAId:@"85" comment:@"very good" RefID:@""];
-    //[[KnowledgeHttp getInstance]AnswerDetailWithAId:@"85"];
-    //[[KnowledgeHttp getInstance]SetYesNoWithAId:@"85" yesNoFlag:@"1"];
-//    [[KnowledgeHttp getInstance]UserIndexQuestionWithNumPerPage:@"10" pageNum:@"1" RowCount:@"0" flag:@"1"];
-    //[[KnowledgeHttp getInstance]reportanswerWithAId:@"85"];//没有成功
-//    [[KnowledgeHttp getInstance]GetAnswerByIdWithNumPerPage:@"20" pageNum:@"1" QId:@"15" flag:@"1"];
-//    [[KnowledgeHttp getInstance]UpdateAnswerWithTabID:@"15" Title:@"" AContent:@"333333"];
-//    [[KnowledgeHttp getInstance]AddAnswerWithQId:@"15" Title:@"" AContent:@"2" UserName:@""];
-//    [[KnowledgeHttp getInstance]QuestionDetailWithQId:@"15"];
-//    [[KnowledgeHttp getInstance] knowledgeHttpGetProvice];
-//    [[KnowledgeHttp getInstance] knowledgeHttpGetCity:@"" level:@""];
-//    [MBProgressHUD showMessage:@"加载中..." toView:self];
-    
+}
+
+//置顶问题
+-(void)GetCategoryTop:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
+    [self.mTableV_knowledge headerEndRefreshing];
+    [self.mTableV_knowledge footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"ResultCode"];
+    if ([code integerValue] ==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        model.mArr_top = array;
+    }
+    [self.mTableV_knowledge reloadData];
 }
 
 //推荐问题列表
@@ -270,10 +277,13 @@
         NSMutableArray *array = [dic objectForKey:@"array"];
         for (int i=0; i<array.count; i++) {
             AllCategoryModel *model = [array objectAtIndex:i];
-            //给加上默认的无用数组
-//            QuestionModel *temp = [[QuestionModel alloc] init];
-//            temp.mInt_btn = 1;
-//            [model.mArr_sum addObject:temp];
+            //给一个默认的话题，暂时为二级话题中的第一个
+            if (model.mArr_subItem.count>0) {
+                model.item_now = [model.mArr_subItem objectAtIndex:0];
+            }else{
+                model.item_now = model.item;
+            }
+            
             [self.mArr_AllCategory addObject:model];
         }
         [self addScrollViewBtn:(int)array.count];
@@ -428,6 +438,8 @@
         cell.mBtn_all.hidden = NO;
         cell.mBtn_evidence.hidden = NO;
         cell.mBtn_discuss.hidden = NO;
+        cell.mLab_selectCategory.hidden = YES;
+        cell.mLab_selectCategory1.hidden = YES;
         cell.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         cell.mBtn_all.frame = CGRectMake(40, 0, 50, 44);
         cell.mBtn_evidence.frame = CGRectMake(120, 0, 50, 44);
@@ -452,18 +464,17 @@
         cell.mLab_title.hidden = YES;
         cell.mLab_Category0.hidden = YES;
         cell.mLab_Category1.hidden = YES;
-        cell.mLab_Att.hidden = NO;
-        cell.mLab_AttCount.hidden = NO;
-        NSString *temp = @"当前的话题为:";
-        cell.mLab_Att.text = temp;
-        cell.mLab_Att.font = [UIFont systemFontOfSize:14];
-        CGSize AttSize = [[NSString stringWithFormat:@"%@",temp] sizeWithFont:[UIFont systemFontOfSize:14]];
-        cell.mLab_Att.frame = CGRectMake(30, 0, AttSize.width, 44);
-        NSString *temp2 = @"不知道";
-        cell.mLab_AttCount.text = temp2;
-        cell.mLab_AttCount.font = [UIFont systemFontOfSize:14];
+        cell.mLab_Att.hidden = YES;
+        cell.mLab_AttCount.hidden = YES;
+        cell.mLab_selectCategory.hidden = NO;
+        cell.mLab_selectCategory1.hidden = NO;
+        cell.mLab_selectCategory.frame = CGRectMake(30, 0, cell.mLab_selectCategory.frame.size.width, 44);
+        AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        NSString *temp2 = allModel.item_now.Subject;
+        cell.mLab_selectCategory1.text = temp2;
+        cell.mLab_selectCategory1.font = [UIFont systemFontOfSize:14];
         CGSize AttSize2 = [[NSString stringWithFormat:@"%@",temp2] sizeWithFont:[UIFont systemFontOfSize:14]];
-        cell.mLab_AttCount.frame = CGRectMake(30+cell.mLab_Att.frame.size.width+5, 0, AttSize2.width, 44);
+        cell.mLab_selectCategory1.frame = CGRectMake(30+cell.mLab_selectCategory.frame.size.width+5, 0, AttSize2.width, 44);
         cell.mLab_Answers.hidden = YES;
         cell.mLab_AnswersCount.hidden = YES;
         cell.mLab_View.hidden = YES;
@@ -491,6 +502,8 @@
         cell.mBtn_evidence.hidden = YES;
         cell.mBtn_discuss.hidden = YES;
         cell.mWebV_comment.hidden = YES;
+        cell.mLab_selectCategory.hidden = YES;
+        cell.mLab_selectCategory1.hidden = YES;
         //标题
         cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
         cell.mLab_title.text = model.Title;
@@ -796,8 +809,8 @@
         [[KnowledgeHttp getInstance] RecommentIndexWithNumPerPage:@"10" pageNum:page RowCount:rowCount];
     }else{
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-        [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:model.flag uid:model.item.TabID];
-        [[KnowledgeHttp getInstance] GetCategoryTopQWithId:model.item.TabID];
+        [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:model.flag uid:model.item_now.TabID];
+        [[KnowledgeHttp getInstance] GetCategoryTopQWithId:model.item_now.TabID];
     }
 }
 

@@ -46,6 +46,8 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_all;//全部
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_evidence;//有证据
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_discuss;//在讨论
+@property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory;//选择话题
+@property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory1;//选择话题
 
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
