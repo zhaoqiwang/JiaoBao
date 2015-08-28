@@ -401,19 +401,19 @@
 //点击发布问题
 - (IBAction)addQuestionAction:(id)sender {
     
-    if([self.categoryTF.text isEqualToString: @""])
+    if([utils isBlankString:self.mText_title.text])
     {
         [MBProgressHUD showError:@"请添写标题"];
         return;
     }
-    if([self.knContentTF.text isEqualToString: @""])
+    if([utils isBlankString:self.mTextV_content.text])
     {
         [MBProgressHUD showError:@"请添写问题描述"];
         return;
     }
-    if([self.knContentTF.text isEqualToString: @""])
+    if([utils isBlankString:self.categoryTF.text])
     {
-        [MBProgressHUD showError:@"请选择问题描述"];
+        [MBProgressHUD showError:@"请选择分类"];
         return;
     }
     if(self.proviceModel == nil)
@@ -443,7 +443,12 @@
 }
 
 -(void)myNavigationGoback{
-    
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 #pragma mark - action sheet delegte
