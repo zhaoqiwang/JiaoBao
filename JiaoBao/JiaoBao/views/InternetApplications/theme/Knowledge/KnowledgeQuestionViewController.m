@@ -259,7 +259,7 @@
     //回答标题
     NSString *string1 = model.ATitle;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
     
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
@@ -273,9 +273,9 @@
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
     NSString *name2 = @"";
     if ([model.Flag integerValue]==0) {//无内容
-        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>无内容</font>"];
+        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
     }else if ([model.Flag integerValue]==1){//有内容
-        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>有内容 : </font> <font>%@</font>", string2];
+        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容 : </font> <font>%@</font>", string2];
     }else if ([model.Flag integerValue]==2){//有证据
         name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
     }

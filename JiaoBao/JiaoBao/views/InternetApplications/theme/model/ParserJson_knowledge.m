@@ -577,5 +577,78 @@
     return model;
 }
 
+//获取一个精选内容集
++(GetPickedByIdModel *)parserJsonGetPickedById:(NSString *)json{
+    D("dgoahdlk-===%@",json);
+    GetPickedByIdModel *model = [[GetPickedByIdModel alloc] init];
+    NSDictionary *dic0 = [json objectFromJSONString];
+    model.TabID = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"TabID"]];
+    model.PTitle = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"PTitle"]];
+    model.PickDescipt = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"PickDescipt"]];
+    model.VedioConntent = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"VedioConntent"]];
+    model.baseImgUrl = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"baseImgUrl"]];
+    model.RecDate = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"RecDate"]];
+    NSString *str = [utils getLocalTimeDate];
+    NSString *str2 = [dic0 objectForKey:@"RecDate"];
+    NSRange range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+    }else{
+        model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    }
+    model.ImgContent = [dic0 objectForKey:@"ImgContent"];
+    NSMutableArray *mArr_answer = [dic0 objectForKey:@"PickContentModel"];
+    for(int i=0;i<mArr_answer.count;i++)
+    {
+        PickContentModel *pickModel = [[PickContentModel alloc]init];
+        NSDictionary *answerDic =  [mArr_answer objectAtIndex:i];
+        pickModel.Title = [answerDic objectForKey:@"Title"];
+        pickModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
+        pickModel.Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+        pickModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
+        [model.PickContent addObject:pickModel];
+    }
+    
+    return model;
+}
+
+//获取一个精选内容明细
++(ShowPickedModel *)parserJsonShowPicked:(NSString *)json{
+    ShowPickedModel *model = [[ShowPickedModel alloc] init];
+    NSDictionary *dic0 = [json objectFromJSONString];
+    model.TabID = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"TabID"]];
+    model.Title = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"Title"]];
+    model.PContent = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"PContent"]];
+    model.QID = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"QID"]];
+    return model;
+}
+
+//获取各期精选列表
++(NSMutableArray *)parserJsonPickedIndex:(NSString *)json{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++){
+        PickedIndexModel *model = [[PickedIndexModel alloc ]init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.PTitle = [dic objectForKey:@"PTitle"];
+        model.baseImgUrl = [NSString stringWithFormat:@"%@",[dic objectForKey:@"baseImgUrl"]];
+        model.RowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"RowCount"]];
+        model.ImgContent = [dic objectForKey:@"ImgContent"];
+        model.PickDescipt = [dic objectForKey:@"PickDescipt"];
+        NSString *str = [utils getLocalTimeDate];
+        NSString *str0 = [dic objectForKey:@"RecDate"];
+        NSRange range0 = [str0 rangeOfString:str];
+        if (range0.length>0) {
+            model.RecDate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+        }else{
+            model.RecDate = [[str0 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        }
+        [array addObject:model];
+    }
+    
+    return array;
+}
+
 
 @end

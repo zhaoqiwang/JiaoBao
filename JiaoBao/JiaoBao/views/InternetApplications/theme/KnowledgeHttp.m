@@ -654,4 +654,82 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
+//获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选
+-(void)GetPickedByIdWithTabID:(NSString *)tabId{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetPickedById",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"tabId":tabId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        GetPickedByIdModel *model = [ParserJson_knowledge parserJsonGetPickedById:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------GetPickedById: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetPickedById: %@", error);
+    }];
+}
+
+//获取一个精选内容明细 参数描述：精选内容ID
+-(void)ShowPickedWithTabID:(NSString *)tabId{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ShowPicked",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"tabId":tabId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        ShowPickedModel *model = [ParserJson_knowledge parserJsonShowPicked:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------ShowPicked: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------ShowPicked: %@", error);
+    }];
+}
+
+//获取各期精选列表  参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- (记录数量)
+-(void)PickedIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/PickedIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonPickedIndex:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------PickedIndex: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------PickedIndex: %@", error);
+    }];
+}
+
 @end

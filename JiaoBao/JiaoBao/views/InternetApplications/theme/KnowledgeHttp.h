@@ -106,4 +106,13 @@
 //获取话题的置顶问题  参数描述：（话题Id）
 -(void)GetCategoryTopQWithId:(NSString *)categoryid;
 
+//获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选
+-(void)GetPickedByIdWithTabID:(NSString *)tabId;
+
+//获取一个精选内容明细 参数描述：精选内容ID
+-(void)ShowPickedWithTabID:(NSString *)tabId;
+
+//获取各期精选列表  参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- (记录数量)
+-(void)PickedIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+
 @end
