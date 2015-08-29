@@ -17,6 +17,7 @@
 #import "KnowledgeAddAnswerViewController.h"
 #import "GDataXMLNode.h"
 #import "TFHpple.h"
+#import "IQKeyboardManager.h"
 
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
@@ -110,7 +111,7 @@
 //添加评论回调
 -(void)refreshComment:(id)sender
 {
-    self.mTextF_text.text = nil;
+    self.mTextF_text.text = @"";
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
@@ -210,6 +211,10 @@
             self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
             self.tableView.footerRefreshingText = @"正在加载...";
             [self.view addSubview:self.tableView];
+            [self.view addSubview:self.mView_text];
+
+            [self.mView_text addSubview:self.mTextF_text];
+
             self.tableView.tableFooterView = [[UIView alloc]init];
             //self.tableView.footerHidden = YES;
             [self.tableView headerEndRefreshing];
@@ -246,14 +251,18 @@ if([Data integerValue]==-1)
         if(self.btn_tag == 1)
         {
             ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:102];
-            btn.mLab_title.text = @"反对1";
+            NSString *str = [btn.mLab_title.text stringByReplacingOccurrencesOfString:@"反对" withString:@""];
+            NSUInteger num = [str integerValue]+1;
+            btn.mLab_title.text = [NSString stringWithFormat:@"反对%ld",num];
             [MBProgressHUD showText:@"反对成功"];
 
         }
 
         if(self.btn_tag == 0)
         {
-            self.KnowledgeTableViewCell.mLab_LikeCount.text = @"1";
+            NSUInteger num = [self.KnowledgeTableViewCell.mLab_LikeCount.text integerValue]+1;
+
+            self.KnowledgeTableViewCell.mLab_LikeCount.text = [NSString stringWithFormat:@"%ld",num];
             [MBProgressHUD showText:@"点赞成功"];
 
 
@@ -265,6 +274,13 @@ if([Data integerValue]==-1)
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -297,13 +313,12 @@ if([Data integerValue]==-1)
     
     //输入View坐标
     self.mView_text = [[UIView alloc] init];
-    self.mView_text.frame = CGRectMake(0, 500, [dm getInstance].width, 51);
+    self.mView_text.frame = CGRectMake(0, 300, [dm getInstance].width, 51);
     self.mView_text.backgroundColor = [UIColor whiteColor];
     
     //添加边框
     self.mView_text.layer.borderWidth = .5;
     self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
-    [self.view addSubview:self.mView_text];
 
     //输入框
     self.mTextF_text = [[UITextField alloc] init];
@@ -313,7 +328,6 @@ if([Data integerValue]==-1)
     self.mTextF_text.font = [UIFont systemFontOfSize:14];
     self.mTextF_text.borderStyle = UITextBorderStyleRoundedRect;
     self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
-    [self.mView_text addSubview:self.mTextF_text];
     [self.mView_text setHidden:YES];
 
     [MBProgressHUD showMessage:@"" toView:self.view];
@@ -735,17 +749,21 @@ if([Data integerValue]==-1)
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([string isEqualToString:@"\n"]) {
         [textField resignFirstResponder];
+
         //若其有输入内容，则发送
-        if (self.mTextF_text.text.length>0) {
+        if (![utils isBlankString:textField.text]) {
             if(self.answerModel)
             {
-                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:self.mTextF_text.text RefID:@""];
+                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:textField.text RefID:@""];
             }
             else
             {
-                [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:self.mTextF_text.text RefID:@""];
+                [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:textField.text RefID:@""];
             }
 
+        }
+        else
+        {
         }
         return NO;
     }

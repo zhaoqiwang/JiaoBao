@@ -107,7 +107,7 @@
     D("点击下拉选择按钮");
 //    [[KnowledgeHttp getInstance] GetAllCategory];
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-    detailVC.modalPresentationStyle = UIModalPresentationCustom;
+    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
     detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
     detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
     self.mArr_selectCategory = detailVC.mArr_selectCategory;
@@ -124,8 +124,8 @@
         if ([nextResponder isKindOfClass:[UIViewController
                                           class]]) {
             UIViewController *vc = (UIViewController*)nextResponder;
-            [vc.navigationController  presentViewController:detailVC animated:NO completion:^{
-        detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);                
+            [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
+        //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
                 
             }];
         }
