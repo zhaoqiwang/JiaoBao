@@ -295,6 +295,10 @@
         [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
         return;
     }
+    if (tempcontent.length<5) {
+        [MBProgressHUD showError:@"内容描述不得少于五个字" toView:self.view];
+        return;
+    }
     //图片总大小，需小于10M
     if (tempF>=1024*1024*1000) {
         [MBProgressHUD showError:@"内容或图片输入不得超过10M" toView:self.view];

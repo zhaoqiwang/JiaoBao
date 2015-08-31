@@ -25,5 +25,6 @@
 @property(nonatomic,strong)NSMutableArray *Thumbnail;//图片url,字符串（url)json数组
 @property(nonatomic,strong)AnswerModel *answerModel;//答案model
 @property(nonatomic,assign)int mInt_btn;//是否显示全部、有证据、在讨论等按钮标识，默认0不显示，1显示，2是当前的话题行
+@property(nonatomic,assign)int mInt_top;//1为置顶数据，0为普通
 
 @end

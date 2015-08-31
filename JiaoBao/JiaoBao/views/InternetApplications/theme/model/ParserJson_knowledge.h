@@ -15,6 +15,10 @@
 #import "AnswerDetailModel.h"
 #import "AllCommentListModel.h"
 #import "RecommentAddAnswerModel.h"
+#import "GetPickedByIdModel.h"
+#import "PickContentModel.h"
+#import "ShowPickedModel.h"
+#import "PickedIndexModel.h"
 
 @interface ParserJson_knowledge : NSObject
 
@@ -59,6 +63,15 @@
 
 //推荐明细
 +(RecommentAddAnswerModel *)parserJsonShowRecomment:(NSString *)json;
+
+//获取一个精选内容集
++(GetPickedByIdModel *)parserJsonGetPickedById:(NSString *)json;
+
+//获取一个精选内容明细
++(ShowPickedModel *)parserJsonShowPicked:(NSString *)json;
+
+//获取各期精选列表
++(NSMutableArray *)parserJsonPickedIndex:(NSString *)json;
 
 
 @end

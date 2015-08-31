@@ -709,6 +709,7 @@
 		A7A74DB71A7638AE0014CCE9 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A74DB41A7638AE0014CCE9 /* ChineseString.m */; };
 		A7A74DB81A7638AE0014CCE9 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = A7A74DB51A7638AE0014CCE9 /* pinyin.c */; };
 		A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A8CDDD1A232CCD00A96453 /* UploadImgModel.m */; };
+		A7AA1C4A1B9145EC0098E101 /* PickedIndexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7AA1C491B9145EC0098E101 /* PickedIndexModel.m */; };
 		A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7AAC4C119F73F1400A0ED40 /* Nav_internetAppView.m */; };
 		A7AAC4CD19F75DB200A0ED40 /* appNav_add.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AAC4C719F75DB200A0ED40 /* appNav_add.png */; };
 		A7AAC4CE19F75DB200A0ED40 /* appNav_add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AAC4C819F75DB200A0ED40 /* appNav_add@2x.png */; };
@@ -799,6 +800,9 @@
 		A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5ED1B2035FE003F85B5 /* PersonalSpaceModel.m */; };
 		A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5FA1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m */; };
 		A7E2E5FD1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5FB1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib */; };
+		A7E93DE21B905EAE00CD7B1C /* GetPickedByIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE11B905EAE00CD7B1C /* GetPickedByIdModel.m */; };
+		A7E93DE51B906DBC00CD7B1C /* PickContentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */; };
+		A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */; };
 		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
@@ -1936,6 +1940,8 @@
 		A7A74DB61A7638AE0014CCE9 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pinyin.h; path = Common/pinyin.h; sourceTree = "<group>"; };
 		A7A8CDDC1A232CCD00A96453 /* UploadImgModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadImgModel.h; path = views/InternetApplications/shareView/model/UploadImgModel.h; sourceTree = "<group>"; };
 		A7A8CDDD1A232CCD00A96453 /* UploadImgModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadImgModel.m; path = views/InternetApplications/shareView/model/UploadImgModel.m; sourceTree = "<group>"; };
+		A7AA1C481B9145EC0098E101 /* PickedIndexModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PickedIndexModel.h; path = views/InternetApplications/theme/model/PickedIndexModel.h; sourceTree = "<group>"; };
+		A7AA1C491B9145EC0098E101 /* PickedIndexModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickedIndexModel.m; path = views/InternetApplications/theme/model/PickedIndexModel.m; sourceTree = "<group>"; };
 		A7AAC4C019F73F1400A0ED40 /* Nav_internetAppView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Nav_internetAppView.h; path = views/InternetApplications/Nav_internetAppView.h; sourceTree = "<group>"; };
 		A7AAC4C119F73F1400A0ED40 /* Nav_internetAppView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Nav_internetAppView.m; path = views/InternetApplications/Nav_internetAppView.m; sourceTree = "<group>"; };
 		A7AAC4C719F75DB200A0ED40 /* appNav_add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appNav_add.png; path = Image/InternetApp/nav/appNav_add.png; sourceTree = "<group>"; };
@@ -2060,6 +2066,12 @@
 		A7E2E5F91B204ED4003F85B5 /* PeopleSpaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceTableViewCell.h; path = views/InternetApplications/personalSpace/PeopleSpaceTableViewCell.h; sourceTree = "<group>"; };
 		A7E2E5FA1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PeopleSpaceTableViewCell.m; path = views/InternetApplications/personalSpace/PeopleSpaceTableViewCell.m; sourceTree = "<group>"; };
 		A7E2E5FB1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PeopleSpaceTableViewCell.xib; path = views/InternetApplications/personalSpace/PeopleSpaceTableViewCell.xib; sourceTree = "<group>"; };
+		A7E93DE01B905EAE00CD7B1C /* GetPickedByIdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetPickedByIdModel.h; path = views/InternetApplications/theme/model/GetPickedByIdModel.h; sourceTree = "<group>"; };
+		A7E93DE11B905EAE00CD7B1C /* GetPickedByIdModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetPickedByIdModel.m; path = views/InternetApplications/theme/model/GetPickedByIdModel.m; sourceTree = "<group>"; };
+		A7E93DE31B906DBC00CD7B1C /* PickContentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PickContentModel.h; path = views/InternetApplications/theme/model/PickContentModel.h; sourceTree = "<group>"; };
+		A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickContentModel.m; path = views/InternetApplications/theme/model/PickContentModel.m; sourceTree = "<group>"; };
+		A7E93DE61B90708A00CD7B1C /* ShowPickedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowPickedModel.h; path = views/InternetApplications/theme/model/ShowPickedModel.h; sourceTree = "<group>"; };
+		A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowPickedModel.m; path = views/InternetApplications/theme/model/ShowPickedModel.m; sourceTree = "<group>"; };
 		F70861791B38EDC90032945D /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
 		F71803091AB3C46300E6167F /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendar.h; path = Common/JTCalendar/JTCalendar.h; sourceTree = "<group>"; };
 		F718030A1AB3C46300E6167F /* JTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCalendar.m; path = Common/JTCalendar/JTCalendar.m; sourceTree = "<group>"; };
@@ -2517,6 +2529,14 @@
 				A7357A381A4025B800A195C5 /* ThemeListModel.m */,
 				A76F21731B7DDC4C00D957E0 /* RecommentAddAnswerModel.h */,
 				A76F21741B7DDC4C00D957E0 /* RecommentAddAnswerModel.m */,
+				A7E93DE01B905EAE00CD7B1C /* GetPickedByIdModel.h */,
+				A7E93DE11B905EAE00CD7B1C /* GetPickedByIdModel.m */,
+				A7E93DE31B906DBC00CD7B1C /* PickContentModel.h */,
+				A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */,
+				A7E93DE61B90708A00CD7B1C /* ShowPickedModel.h */,
+				A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */,
+				A7AA1C481B9145EC0098E101 /* PickedIndexModel.h */,
+				A7AA1C491B9145EC0098E101 /* PickedIndexModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -5178,6 +5198,7 @@
 				A7A74DB71A7638AE0014CCE9 /* ChineseString.m in Sources */,
 				A74937E01ACA8A4F00F96741 /* ClassTopViewController.m in Sources */,
 				F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */,
+				A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */,
 				A743394F1A452B7700AFC0A5 /* SDWebImageCompat.m in Sources */,
 				F7F7AD6F1B7C30EE00923B60 /* CategoryViewController.m in Sources */,
 				A749B9FA19F8F3E40036F480 /* TreeView_Level2_Model.m in Sources */,
@@ -5350,6 +5371,7 @@
 				A73B52B919FB980F00187CB9 /* ParserJson.m in Sources */,
 				A7781F2B1AE88F2200F03AEB /* MoreUnitWorkView.m in Sources */,
 				A75E3FB61B6F64B700284C3D /* AFURLResponseSerialization.m in Sources */,
+				A7AA1C4A1B9145EC0098E101 /* PickedIndexModel.m in Sources */,
 				A755E6A619F24EBD00BBDF3D /* RegisterViewController.m in Sources */,
 				A762FFF81A2828FE00A78B5C /* UnitNoticeModel.m in Sources */,
 				A7B0F94C1A47BC4300C1863A /* MJPhoto.m in Sources */,
@@ -5388,6 +5410,7 @@
 				4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */,
 				A70E3C9E1A1EE2D800E6D0EC /* UserSumClassModel.m in Sources */,
 				A75A37471A08C3F0009D2464 /* groupselit_selitModel.m in Sources */,
+				A7E93DE51B906DBC00CD7B1C /* PickContentModel.m in Sources */,
 				A755E70C19F278B900BBDF3D /* ASICloudFilesContainerRequest.m in Sources */,
 				A7595EA71A5FC2F30027848E /* PSTGridLayoutSection.m in Sources */,
 				A7804C951B7888DA007C0DC6 /* ButtonView.m in Sources */,
@@ -5446,6 +5469,7 @@
 				A755E72A19F27C8E00BBDF3D /* NSData+CommonCrypto.m in Sources */,
 				A755E71219F278B900BBDF3D /* ASIS3BucketObject.m in Sources */,
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
+				A7E93DE21B905EAE00CD7B1C /* GetPickedByIdModel.m in Sources */,
 				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,

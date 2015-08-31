@@ -53,6 +53,9 @@
         NSMutableArray *tempArray = [NSMutableArray arrayWithObjects:@"首页",@"精选",@"推荐", nil];
         for (int i=0; i<tempArray.count; i++) {
             AllCategoryModel *model = [[AllCategoryModel alloc] init];
+            if (i==0) {
+                model.flag = @"1";
+            }
             model.item.Subject = [tempArray objectAtIndex:i];
             [self.mArr_AllCategory addObject:model];
         }
@@ -211,6 +214,9 @@
         NSMutableArray *array = [dic objectForKey:@"array"];
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
         model.mArr_top = array;
+        for (QuestionModel *model1 in model.mArr_top) {
+            model1.mInt_top = 1;
+        }
     }
     [self.mTableV_knowledge reloadData];
 }
@@ -277,6 +283,7 @@
         NSMutableArray *array = [dic objectForKey:@"array"];
         for (int i=0; i<array.count; i++) {
             AllCategoryModel *model = [array objectAtIndex:i];
+            model.flag = @"-1";
             //给一个默认的话题，暂时为二级话题中的第一个
             if (model.mArr_subItem.count>0) {
                 model.item_now = [model.mArr_subItem objectAtIndex:0];
@@ -441,22 +448,52 @@
         cell.mLab_selectCategory.hidden = YES;
         cell.mLab_selectCategory1.hidden = YES;
         cell.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-        cell.mBtn_all.frame = CGRectMake(40, 0, 50, 44);
-        cell.mBtn_evidence.frame = CGRectMake(120, 0, 50, 44);
-        cell.mBtn_discuss.frame = CGRectMake(200, 0, 50, 44);
+        cell.mBtn_all.frame = CGRectMake(30, 10, 50, 44-20);
+        cell.mBtn_evidence.frame = CGRectMake(110, 10, 50, 44-20);
+        cell.mBtn_discuss.frame = CGRectMake(190, 10, 50, 44-20);
         AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
         if ([allModel.flag integerValue]==-1) {
-            [cell.mBtn_all setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [cell.mBtn_all setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+            [cell.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_all.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+            [cell.mBtn_all.layer setBorderWidth:1.0]; //边框宽度
+            CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+            
+            [cell.mBtn_all.layer setBorderColor:colorref];//边框颜色
             [cell.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
             [cell.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
         }else if ([allModel.flag integerValue]==0){
             [cell.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_all.layer setBorderWidth:0]; //边框宽度
             [cell.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [cell.mBtn_discuss setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [cell.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
+            [cell.mBtn_discuss setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+            [cell.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_discuss.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+            [cell.mBtn_discuss.layer setBorderWidth:1.0]; //边框宽度
+            CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+            
+            [cell.mBtn_discuss.layer setBorderColor:colorref];//边框颜色
         }else if ([allModel.flag integerValue]==1){
             [cell.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [cell.mBtn_evidence setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            [cell.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_all.layer setBorderWidth:0]; //边框宽度
+            [cell.mBtn_evidence setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+            [cell.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+            [cell.mBtn_evidence.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+            [cell.mBtn_evidence.layer setBorderWidth:1.0]; //边框宽度
+            CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+            
+            [cell.mBtn_evidence.layer setBorderColor:colorref];//边框颜色
             [cell.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [cell.mBtn_discuss.layer setMasksToBounds:YES];
+            [cell.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
         }
     }else if (model.mInt_btn ==2){//当前的话题id
         cell.backgroundColor = [UIColor whiteColor];
@@ -486,7 +523,7 @@
         cell.mLab_RecDate.hidden = YES;
         cell.mLab_comment.hidden = YES;
         cell.mLab_commentCount.hidden = YES;
-        cell.mLab_line.hidden = YES;
+        cell.mLab_line.hidden = NO;
         cell.mView_background.hidden = YES;
         cell.mImgV_head.hidden = YES;
         cell.mCollectionV_pic.hidden = YES;
@@ -496,6 +533,8 @@
         cell.mBtn_all.hidden = YES;
         cell.mBtn_evidence.hidden = YES;
         cell.mBtn_discuss.hidden = YES;
+        //分割线
+        cell.mLab_line.frame = CGRectMake(0, 43, [dm getInstance].width, .5);
     }else{//正常显示内容
         cell.backgroundColor = [UIColor whiteColor];
         cell.mBtn_all.hidden = YES;
@@ -583,8 +622,7 @@
             NSString *string1 = model.answerModel.ATitle;
             string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-            NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA36'>答 : </font> <font size=14 color=black>%@</font>",string1];
-            
+            NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
             NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
             [row1 setObject:name forKey:@"text"];
             RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
@@ -596,9 +634,9 @@
             string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
             NSString *name2 = @"";
             if ([model.answerModel.Flag integerValue]==0) {//无内容
-                name2 = [NSString stringWithFormat:@"<font size=14 color='red'>无内容</font>"];
+                name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
             }else if ([model.answerModel.Flag integerValue]==1){//有内容
-                name2 = [NSString stringWithFormat:@"<font size=14 color='red'>有内容 : </font> <font>%@</font>", string2];
+                name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容 : </font> <font>%@</font>", string2];
             }else if ([model.answerModel.Flag integerValue]==2){//有证据
                 name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
             }
@@ -632,12 +670,16 @@
             cell.mLab_commentCount.frame = CGRectMake([dm getInstance].width-9-commentSize.width, cell.mLab_RecDate.frame.origin.y, commentSize.width, cell.mLab_commentCount.frame.size.height);
             cell.mLab_commentCount.text = model.answerModel.CCount;
             cell.mLab_comment.frame = CGRectMake(cell.mLab_commentCount.frame.origin.x-2-cell.mLab_comment.frame.size.width, cell.mLab_RecDate.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_comment.frame.size.height);
-            if (model.answerModel.Thumbnail.count>0) {
-                cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
+            if (model.mInt_top ==1) {
+                cell.mLab_line2.hidden = YES;
             }else{
-                cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
+                if (model.answerModel.Thumbnail.count>0) {
+                    cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
+                }else{
+                    cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
+                }
+                cell.mLab_line2.hidden = NO;
             }
-            cell.mLab_line2.hidden = NO;
         }else{
             //分割线
             cell.mLab_line.hidden = YES;
@@ -661,8 +703,12 @@
             //评论
             cell.mLab_commentCount.hidden = YES;
             cell.mLab_comment.hidden = YES;
-            cell.mLab_line2.hidden = NO;
-            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+10, [dm getInstance].width, 10);
+            if (model.mInt_top ==1) {
+                cell.mLab_line2.hidden = YES;
+            }else{
+                cell.mLab_line2.hidden = NO;
+                cell.mLab_line2.frame = CGRectMake(0, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+10, [dm getInstance].width, 10);
+            }
         }
     }
     
@@ -741,7 +787,11 @@
             tempF = tempF+5+([dm getInstance].width-65-30)/3;
             //时间
             tempF = tempF+10+21;
-            tempF = tempF+20;
+            if (model.mInt_top ==1) {
+                
+            }else{
+                tempF = tempF+20;
+            }
         }else{
             //赞
             tempF = tempF+15+22;
@@ -749,10 +799,18 @@
             tempF = tempF+10+42;
             //姓名
             tempF = tempF+10+21;
-            tempF = tempF+20;
+            if (model.mInt_top ==1) {
+                
+            }else{
+                tempF = tempF+20;
+            }
         }
     }else{
-        tempF = tempF+20;
+        if (model.mInt_top ==1) {
+            
+        }else{
+            tempF = tempF+20;
+        }
     }
     return tempF;
 }

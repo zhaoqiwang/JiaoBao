@@ -21,7 +21,6 @@
     self.mArr_discuss = [NSMutableArray array];
     self.mArr_top = [NSMutableArray array];
     self.mArr_sum = [NSMutableArray array];
-    self.flag = @"-1";//默认全部
     return self;
 }
 
