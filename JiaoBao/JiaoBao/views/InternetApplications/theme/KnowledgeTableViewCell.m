@@ -28,6 +28,7 @@
     
     self.model = [[QuestionModel alloc] init];
     self.answerModel = [[AnswerByIdModel alloc] init];
+    self.pickContentModel = [[PickContentModel alloc] init];
     
     //人员列表
     self.mCollectionV_pic.frame = CGRectMake(0,0, 0, 0);

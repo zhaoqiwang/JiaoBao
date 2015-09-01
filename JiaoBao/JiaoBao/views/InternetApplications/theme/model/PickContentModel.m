@@ -10,4 +10,10 @@
 
 @implementation PickContentModel
 
+-(instancetype)init{
+    self = [super init];
+    self.Thumbnail = [NSMutableArray array];
+    return self;
+}
+
 @end

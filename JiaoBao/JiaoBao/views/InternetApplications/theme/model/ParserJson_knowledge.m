@@ -597,14 +597,14 @@
         model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
     }
     model.ImgContent = [dic0 objectForKey:@"ImgContent"];
-    NSMutableArray *mArr_answer = [dic0 objectForKey:@"PickContentModel"];
+    NSMutableArray *mArr_answer = [dic0 objectForKey:@"PickContent"];
     for(int i=0;i<mArr_answer.count;i++)
     {
         PickContentModel *pickModel = [[PickContentModel alloc]init];
         NSDictionary *answerDic =  [mArr_answer objectAtIndex:i];
         pickModel.Title = [answerDic objectForKey:@"Title"];
         pickModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
-        pickModel.Thumbnail = [answerDic objectForKey:@"Thumbnail"];
+        pickModel.Thumbnail = [[answerDic objectForKey:@"Thumbnail"] objectFromJSONString];
         pickModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
         [model.PickContent addObject:pickModel];
     }

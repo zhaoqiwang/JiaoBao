@@ -669,12 +669,11 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         GetPickedByIdModel *model = [ParserJson_knowledge parserJsonGetPickedById:[jsonDic objectForKey:@"Data"]];
-        
         D("JSON--------GetPickedById: %@,", result);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetPickedById: %@", error);
     }];

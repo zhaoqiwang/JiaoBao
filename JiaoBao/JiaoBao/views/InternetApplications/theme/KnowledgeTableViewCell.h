@@ -12,6 +12,7 @@
 #import "MWPhotoBrowser.h"
 #import "AnswerByIdModel.h"
 #import "AnswerDetailModel.h"
+#import "PickContentModel.h"
 
 @protocol KnowledgeTableViewCellDelegate;
 
@@ -48,6 +49,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_discuss;//在讨论
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory;//选择话题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory1;//选择话题
+@property (nonatomic,strong) IBOutlet UIScrollView *mScrollV_pic;//精选图片
 
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
@@ -57,6 +59,7 @@
 @property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
 @property (nonatomic,assign) int mInt_flag;//
+@property (nonatomic,strong) PickContentModel *pickContentModel;//精选
 
 
 //给标题和答案添加点击事件,赞

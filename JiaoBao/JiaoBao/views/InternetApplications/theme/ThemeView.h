@@ -42,6 +42,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_AllCategory;//首页精选等一级主题数组
 @property (nonatomic,strong) UIButton *mBtn_down;//下拉选择按钮
 @property(nonatomic,strong)NSMutableArray *mArr_selectCategory;//被选择的分类 数组
+@property (nonatomic,strong) GetPickedByIdModel *mModel_getPickdById;//精选model
 
 
 
