@@ -17,10 +17,10 @@
 
 
 
-@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate>
+@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate,UIWebViewDelegate>
 @property(nonatomic,strong)QuestionModel *questionModel;//
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
-
+@property(nonatomic,strong) commentListModel *cellmodel;
 @property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (strong, nonatomic)  UITableView *tableView;//评论列表
 @property(nonatomic,strong)ButtonView *mBtnV_btn;//放举报 评论 反对按钮的view

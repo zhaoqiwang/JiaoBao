@@ -252,6 +252,7 @@
         }
         content = [NSString stringWithFormat:@"<p>%@</p>",content];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:str];
+        [MBProgressHUD showMessage:@"" toView:self.view];
         
     }
 }
@@ -270,6 +271,15 @@
     else
     {
         [MBProgressHUD showSuccess:@"发布问题成功"];
+        self.provinceTF.text = @"";
+        self.regionTF.text = @"";
+        self.countyTF.text = @"";
+        self.mTextV_content.text = @"";
+        self.mText_title.text = @"";
+        self.atAccIdsTF.text = @"";
+        self.categoryTF.text = @"";
+
+
     }
 }
 //点击省份

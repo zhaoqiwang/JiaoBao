@@ -302,6 +302,7 @@
 //评论列表
 +(AllCommentListModel *)parserJsonCommentsList:(NSString*)json
 {
+    D("json_____ = %@",json);
     AllCommentListModel *model = [[AllCommentListModel alloc ]init];
     NSDictionary *dic = [json objectFromJSONString];
     
@@ -315,6 +316,7 @@
         subModel.Number = [subDic objectForKey:@"Number"];
         subModel.RefIds = [subDic objectForKey:@"RefIds"];
         subModel.RecDate = [subDic objectForKey:@"RecDate"];
+        subModel.TabIDStr = [subDic objectForKey:@"TabIDStr"];
         NSString *str = [utils getLocalTimeDate];
         NSString *str2 = [subDic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];
@@ -360,6 +362,8 @@
         subModel.LikeCount = [NSString stringWithFormat:@"%@",[subDic objectForKey:@"LikeCount"]];
         subModel.WContent = [subDic objectForKey:@"WContent"];
         subModel.UserName = [subDic objectForKey:@"UserName"];
+        subModel.TabIDStr = [subDic objectForKey:@"TabIDStr"];
+
         [model.mArr_refcomments addObject:subModel];
     }
     return model;
