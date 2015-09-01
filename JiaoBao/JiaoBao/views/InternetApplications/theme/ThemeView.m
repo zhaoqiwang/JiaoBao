@@ -550,6 +550,7 @@
         NSMutableArray *array = [self arrayDataSourceSum];
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         cell.model = model;
+        cell.mInt_flag = 0;
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.LikeBtn.hidden = YES;
