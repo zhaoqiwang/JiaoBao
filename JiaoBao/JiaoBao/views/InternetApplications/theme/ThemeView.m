@@ -403,7 +403,9 @@
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.mInt_index ==2) {//精选
-        return self.mModel_getPickdById.PickContent.count+1;
+        if ([self.mModel_getPickdById.TabID integerValue]>0) {
+            return self.mModel_getPickdById.PickContent.count+1;
+        }
     }else{
         return [self arrayDataSourceSum].count;
     }
@@ -434,7 +436,53 @@
     if (self.mInt_index ==2) {//精选
         cell.backgroundColor = [UIColor whiteColor];
         if (indexPath.row==0) {
-            
+            cell.LikeBtn.hidden = YES;
+            cell.mLab_title.hidden = NO;
+            CGSize titleSize2 = [[NSString stringWithFormat:@"%@",self.mModel_getPickdById.PTitle] sizeWithFont:[UIFont systemFontOfSize:14]];
+            cell.mLab_title.frame = CGRectMake(9, 10, titleSize2.width, cell.mLab_title.frame.size.height);
+            cell.mLab_title.text = self.mModel_getPickdById.PTitle;
+            cell.mLab_Category0.hidden = YES;
+            cell.mLab_Category1.hidden = YES;
+            cell.mLab_Att.hidden = YES;
+            cell.mLab_AttCount.hidden = YES;
+            cell.mLab_Answers.hidden = YES;
+            cell.mLab_AnswersCount.hidden = YES;
+            cell.mLab_View.hidden = YES;
+            cell.mLab_ViewCount.hidden = YES;
+            cell.mLab_LikeCount.hidden = YES;
+            cell.mLab_ATitle.hidden = YES;
+            cell.mLab_Abstracts.hidden = YES;
+            cell.mInt_flag = 3;
+//            cell.pickContentModel = model;
+            cell.mView_background.hidden = YES;
+            cell.mLab_IdFlag.hidden = YES;
+            cell.mLab_RecDate.hidden = NO;
+            cell.mLab_RecDate.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width+5, 10, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
+            cell.mLab_RecDate.text = self.mModel_getPickdById.RecDate;
+            cell.mScrollV_pic.hidden = NO;
+            cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
+            cell.mScrollV_pic.backgroundColor = [UIColor redColor];
+            UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
+            NSString *tempUrl = [NSString stringWithFormat:@"http://www.jsyoa.edu8800.com/JBClient%@%@",self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:0]];
+            D("dghrdk;ljg;dklj-====%@",tempUrl);
+            [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
+            [cell.mScrollV_pic addSubview:temp];
+            cell.mLab_comment.hidden = YES;
+            cell.mLab_commentCount.hidden = YES;
+            cell.mLab_line.hidden = YES;
+            cell.mImgV_head.hidden = YES;
+            cell.mCollectionV_pic.hidden = NO;
+            //图片
+            [cell.mCollectionV_pic reloadData];
+            cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
+            cell.mLab_line2.hidden = YES;
+            cell.mBtn_detail.hidden = YES;
+            cell.mWebV_comment.hidden = YES;
+            cell.mBtn_all.hidden = YES;
+            cell.mBtn_evidence.hidden = YES;
+            cell.mBtn_discuss.hidden = YES;
+            cell.mLab_selectCategory.hidden = YES;
+            cell.mLab_selectCategory1.hidden = YES;
         }else{
             PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
             cell.LikeBtn.hidden = YES;
@@ -495,8 +543,10 @@
             cell.mBtn_discuss.hidden = YES;
             cell.mLab_selectCategory.hidden = YES;
             cell.mLab_selectCategory1.hidden = YES;
+            cell.mScrollV_pic.hidden = YES;
         }
     }else{
+        cell.mScrollV_pic.hidden = YES;
         NSMutableArray *array = [self arrayDataSourceSum];
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         cell.model = model;
@@ -805,7 +855,7 @@
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
         if (indexPath.row==0) {
-            return 0;
+            return 130;
         }else{
             return [self cellHeightPicked:indexPath];
         }
@@ -824,32 +874,37 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSMutableArray *array = [self arrayDataSourceSum];
-    QuestionModel *model = [array objectAtIndex:indexPath.row];
-    if (model.mInt_btn==2) {//话题显示行
-        AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-        CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-        detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
-        detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
-
-        detailVC.classStr = @"AddQuestionViewController";
-        [detailVC.mArr_AllCategory addObject:allModel];
-        detailVC.ItemModel = [[ItemModel alloc]init];
-        self.ItemModel = detailVC.ItemModel;
-        for (UIView* next = [self superview]; next; next =
-             next.superview) {
-            UIResponder* nextResponder = [next nextResponder];
-            if ([nextResponder isKindOfClass:[UIViewController
-                                              class]]) {
-                UIViewController *vc = (UIViewController*)nextResponder;
-                [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
-                    //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
-                    
-                }];
+    if (self.mInt_index ==2) {
+        
+    }else{
+        QuestionModel *model = [array objectAtIndex:indexPath.row];
+        if (model.mInt_btn==2) {//话题显示行
+            AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+            CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
+            detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+            detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
+            detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+            
+            detailVC.classStr = @"AddQuestionViewController";
+            [detailVC.mArr_AllCategory addObject:allModel];
+            detailVC.ItemModel = [[ItemModel alloc]init];
+            self.ItemModel = detailVC.ItemModel;
+            for (UIView* next = [self superview]; next; next =
+                 next.superview) {
+                UIResponder* nextResponder = [next nextResponder];
+                if ([nextResponder isKindOfClass:[UIViewController
+                                                  class]]) {
+                    UIViewController *vc = (UIViewController*)nextResponder;
+                    [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
+                        //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
+                        
+                    }];
+                }
             }
+            //
         }
-        //
     }
+    
 }
 
 -(float)cellHeight:(NSIndexPath *)indexPath{

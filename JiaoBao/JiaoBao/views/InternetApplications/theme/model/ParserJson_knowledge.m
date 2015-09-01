@@ -600,7 +600,7 @@
     }else{
         model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
     }
-    model.ImgContent = [dic0 objectForKey:@"ImgContent"];
+    model.ImgContent = [[dic0 objectForKey:@"ImgContent"] objectFromJSONString];
     NSMutableArray *mArr_answer = [dic0 objectForKey:@"PickContent"];
     for(int i=0;i<mArr_answer.count;i++)
     {
