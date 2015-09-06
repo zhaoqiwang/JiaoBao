@@ -937,9 +937,14 @@ if([Data integerValue]==-1)
 
         //若其有输入内容，则发送
         if (![utils isBlankString:textField.text]) {
+            if(self.cellmodel.TabIDStr == nil)
+            {
+                self.cellmodel = [[commentListModel alloc]init];
+                self.cellmodel.TabID = @"";
+            }
             if(self.answerModel)
             {
-                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabIDStr];
+                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabID];
             }
             else
             {
