@@ -692,6 +692,9 @@
 		A78E4A2D1B0C7FD800969D8F /* PopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A78E4A2C1B0C7FD800969D8F /* PopupWindow.m */; };
 		A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */; };
 		A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */; };
+		A79C0F271B9C297C00F8764B /* classViewTopCell.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F241B9C297C00F8764B /* classViewTopCell.png */; };
+		A79C0F281B9C297C00F8764B /* classViewTopCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */; };
+		A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */; };
 		A79C20791A2DB60A00D0AA27 /* ExchangeHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */; };
 		A79C207D1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207C1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m */; };
 		A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207F1A2DC67500D0AA27 /* ParserJson_exchange.m */; };
@@ -1914,6 +1917,9 @@
 		A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+AD.m"; path = "Common/MBProgressHUD+AD.m"; sourceTree = "<group>"; };
 		A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+HUD.h"; path = "Common/UIViewController+HUD.h"; sourceTree = "<group>"; };
 		A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HUD.m"; path = "Common/UIViewController+HUD.m"; sourceTree = "<group>"; };
+		A79C0F241B9C297C00F8764B /* classViewTopCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classViewTopCell.png; path = Image/InternetApp/class/classViewTopCell.png; sourceTree = "<group>"; };
+		A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@2x.png"; path = "Image/InternetApp/class/classViewTopCell@2x.png"; sourceTree = "<group>"; };
+		A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@3x.png"; path = "Image/InternetApp/class/classViewTopCell@3x.png"; sourceTree = "<group>"; };
 		A79C20771A2DB60A00D0AA27 /* ExchangeHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExchangeHttp.h; path = views/InternetApplications/exchange/ExchangeHttp.h; sourceTree = "<group>"; };
 		A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExchangeHttp.m; path = views/InternetApplications/exchange/ExchangeHttp.m; sourceTree = "<group>"; };
 		A79C207B1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExchangeUnitGroupsModel.h; path = views/InternetApplications/exchange/model/ExchangeUnitGroupsModel.h; sourceTree = "<group>"; };
@@ -3470,6 +3476,9 @@
 		A75E6EAB1ABACD8300B51B18 /* class */ = {
 			isa = PBXGroup;
 			children = (
+				A79C0F241B9C297C00F8764B /* classViewTopCell.png */,
+				A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */,
+				A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */,
 				A76F21611B7D88BB00D957E0 /* topBtnCall.png */,
 				A76F21621B7D88BB00D957E0 /* topBtnCall@2x.png */,
 				A76F21631B7D88BB00D957E0 /* topBtnCall@3x.png */,
@@ -4932,6 +4941,7 @@
 				A757DFE31A80C7B9001172A4 /* appNav_changeUser@2x.png in Resources */,
 				A749B9C319F89A530036F480 /* root_addBtn@2x.png in Resources */,
 				A76F21701B7D88BB00D957E0 /* topBtnDown1.png in Resources */,
+				A79C0F271B9C297C00F8764B /* classViewTopCell.png in Resources */,
 				A75E6EBF1ABACDBD00B51B18 /* classView_2@2x.png in Resources */,
 				A76ED5B51AD67855006F3E0B /* workView_1.png in Resources */,
 				A74821A719FF452200234020 /* msgDetail_textF@2x.png in Resources */,
@@ -4985,6 +4995,7 @@
 				A782AEC31AE9D71A00547B0F /* NewWork_Send@2x.png in Resources */,
 				A7804C9D1B789219007C0DC6 /* KnowledgeQuestionViewController.xib in Resources */,
 				A73D9C141A368EDF004CE4D5 /* RongYun_group.png in Resources */,
+				A79C0F281B9C297C00F8764B /* classViewTopCell@2x.png in Resources */,
 				A73AD8351A20824C00F68C47 /* share_tableV_class@2x.png in Resources */,
 				A7BB17E819F4B22000A81286 /* jsyiamsCA.cer in Resources */,
 				A76ED5C31AD67855006F3E0B /* workView_click_0@3x.png in Resources */,
@@ -5080,6 +5091,7 @@
 				A76F216E1B7D88BB00D957E0 /* topBtnDown0@2x.png in Resources */,
 				F7502A0C1AEE1E50004F822F /* blank@2x.png in Resources */,
 				F7502A141AEE1E50004F822F /* HomeClass_2@2x.png in Resources */,
+				A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */,
 				F79D84DA1ABD4DC000897477 /* RecordViewController.xib in Resources */,
 				A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */,
 				A74D26971B58FAE200E63DFB /* record_animate_09.png in Resources */,

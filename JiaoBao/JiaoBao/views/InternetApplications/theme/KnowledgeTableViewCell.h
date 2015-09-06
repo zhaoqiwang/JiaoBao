@@ -50,6 +50,7 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory;//选择话题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory1;//选择话题
 @property (nonatomic,strong) IBOutlet UIScrollView *mScrollV_pic;//精选图片
+@property (nonatomic,strong) IBOutlet UIImageView *mImgV_top;//是否置顶
 
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;

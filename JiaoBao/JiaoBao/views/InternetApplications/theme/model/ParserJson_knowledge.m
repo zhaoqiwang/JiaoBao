@@ -385,7 +385,7 @@
         model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         model.Title = [dic objectForKey:@"Title"];
         model.AnswersCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AnswersCount"]];
-        model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
         model.ViewCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ViewCount"]];
         model.CategorySuject = [dic objectForKey:@"CategorySuject"];
         model.CategoryId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CategoryId"]];
