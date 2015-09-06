@@ -428,12 +428,11 @@
         UINib * n= [UINib nibWithNibName:@"KnowledgeTableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTableV_knowledge registerNib:n forCellReuseIdentifier:indentifier];
     }
-    //添加点击事件
-    cell.delegate = self;
-    [cell addTapClick];
+    
     
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
+        cell.delegate = nil;
         cell.backgroundColor = [UIColor whiteColor];
         if (indexPath.row==0) {
             cell.LikeBtn.hidden = YES;
@@ -459,6 +458,10 @@
             cell.mLab_RecDate.hidden = NO;
             cell.mLab_RecDate.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width+5, 10, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
             cell.mLab_RecDate.text = self.mModel_getPickdById.RecDate;
+            //按钮
+            cell.mBtn_detail.hidden = NO;
+            [cell.mBtn_detail setTitle:@"往期精选" forState:UIControlStateNormal];
+            cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 56, cell.mBtn_detail.frame.size.height);
             cell.mScrollV_pic.hidden = NO;
             cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
             cell.mScrollV_pic.backgroundColor = [UIColor redColor];
@@ -471,12 +474,11 @@
             cell.mLab_commentCount.hidden = YES;
             cell.mLab_line.hidden = YES;
             cell.mImgV_head.hidden = YES;
-            cell.mCollectionV_pic.hidden = NO;
+            cell.mCollectionV_pic.hidden = YES;
             //图片
             [cell.mCollectionV_pic reloadData];
             cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
             cell.mLab_line2.hidden = YES;
-            cell.mBtn_detail.hidden = YES;
             cell.mWebV_comment.hidden = YES;
             cell.mBtn_all.hidden = YES;
             cell.mBtn_evidence.hidden = YES;
@@ -524,7 +526,7 @@
             cell.mLab_RecDate.hidden = YES;
             cell.mLab_comment.hidden = YES;
             cell.mLab_commentCount.hidden = YES;
-            cell.mLab_line.hidden = YES;
+            cell.mLab_line.hidden = NO;
             cell.mImgV_head.hidden = YES;
             cell.mCollectionV_pic.hidden = NO;
             //图片
@@ -535,6 +537,8 @@
             }else{
                 cell.mCollectionV_pic.frame = cell.mView_background.frame;
             }
+            //分割线
+            cell.mLab_line.frame = CGRectMake(0, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, [dm getInstance].width, .5);
             cell.mLab_line2.hidden = YES;
             cell.mBtn_detail.hidden = YES;
             cell.mWebV_comment.hidden = YES;
@@ -546,11 +550,15 @@
             cell.mScrollV_pic.hidden = YES;
         }
     }else{
+        //添加点击事件
+        cell.delegate = self;
+        [cell addTapClick];
         cell.mScrollV_pic.hidden = YES;
         NSMutableArray *array = [self arrayDataSourceSum];
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         cell.model = model;
         cell.mInt_flag = 0;
+        [cell.mBtn_detail setTitle:@"精选" forState:UIControlStateNormal];
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.LikeBtn.hidden = YES;
@@ -969,13 +977,13 @@
 -(float)cellHeightPicked:(NSIndexPath *)indexPath{
     float tempF = 0.0;
     PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
-    tempF = tempF+21;
+    tempF = tempF+10+16;
     NSString *string2 = model.Abstracts;
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     NSString *name2 = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string2];
     
-    CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+    CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10, 1000)];
     if (size.height>20) {
         size = CGSizeMake(size.width, 32);
     }
@@ -990,7 +998,7 @@
     if (model.Thumbnail.count>0) {
         tempF = tempF+5+([dm getInstance].width-65-30)/3;
     }
-    tempF = tempF +5;
+    tempF = tempF +13;
     return tempF;
 }
 
