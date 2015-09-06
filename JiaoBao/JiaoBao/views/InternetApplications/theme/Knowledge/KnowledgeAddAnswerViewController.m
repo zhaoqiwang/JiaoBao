@@ -359,7 +359,7 @@
                     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
                     imagePickerController.delegate = self;
                     imagePickerController.allowsEditing = NO;
-                    imagePickerController.sourceType = sourceType;
+                    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
                     if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
                         self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
                     }
