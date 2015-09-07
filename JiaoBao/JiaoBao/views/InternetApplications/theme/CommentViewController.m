@@ -960,6 +960,7 @@ if([Data integerValue]==-1)
     return YES;
 }
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     
     [utils popViewControllerAnimated:YES];
 }

@@ -14,6 +14,7 @@
 #import "CategoryViewController.h"
 #import "IQKeyboardManager.h"
 #import "ShareHttp.h"
+#import "NickNameModel.h"
 
 
 @interface AddQuestionViewController ()
@@ -23,6 +24,7 @@
 @property(nonatomic,assign)BOOL isOpen;
 @property(nonatomic,strong)UITextField *selectedTF;
 @property(nonatomic,strong)ProviceModel *proviceModel;
+@property(nonatomic,strong)NSMutableArray *NameModelArr;
 @end
 
 @implementation AddQuestionViewController
@@ -140,10 +142,12 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
     //[IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -243,7 +247,17 @@
     else
     {
         NSArray *arr = [dic objectForKey:@"array"];
-        NSString *str = [arr componentsJoinedByString:@","];
+        self.NameModelArr = [NSMutableArray arrayWithArray:arr];
+        NSMutableArray *jiaobaohaoArr = [[NSMutableArray alloc]initWithCapacity:0];
+
+        for(int i=0;i<arr.count;i++)
+        {
+            NickNameModel *model = [arr objectAtIndex:i];
+            NSString *jiaobaohao = model.JiaoBaoHao;
+            [jiaobaohaoArr addObject:jiaobaohao];
+            
+        }
+        NSString *str = [jiaobaohaoArr componentsJoinedByString:@","];
         NSString *content = self.mTextV_content.text;
         for (int i=0; i<self.mArr_pic.count; i++) {
             UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
@@ -270,7 +284,20 @@
     }
     else
     {
-        [MBProgressHUD showSuccess:@"发布问题成功"];
+        NSMutableArray *nameArr = [[NSMutableArray alloc]initWithCapacity:0];
+        
+        for(int i=0;i<self.NameModelArr.count;i++)
+        {
+            NickNameModel *model = [self.NameModelArr objectAtIndex:i];
+            [nameArr addObject:model.NickName];
+            
+        }
+        NSString *str = [nameArr componentsJoinedByString:@","];
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"邀请%@成功",str] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        
+        [alertView show];
+        //[MBProgressHUD showSuccess:[NSString stringWithFormat:@"发布问题成功,邀请%@成功",str]];
+        //[MBProgressHUD showSuccess:@"发布问题成功"];
         self.provinceTF.text = @"";
         self.regionTF.text = @"";
         self.countyTF.text = @"";
@@ -410,6 +437,8 @@
 
 //点击发布问题
 - (IBAction)addQuestionAction:(id)sender {
+
+
     
     if([utils isBlankString:self.mText_title.text])
     {
@@ -453,6 +482,7 @@
 }
 
 -(void)myNavigationGoback{
+    
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = NO;//控制整个功能是否启用

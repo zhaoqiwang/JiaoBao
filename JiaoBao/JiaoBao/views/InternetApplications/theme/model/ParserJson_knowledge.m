@@ -46,8 +46,8 @@
     {
         NickNameModel *model = [[NickNameModel alloc ]init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.NickName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
-        model.JiaoBaoHao = [dic objectForKey:@"NickName"];
+        model.NickName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"NickName"]];
+        model.JiaoBaoHao = [dic objectForKey:@"JiaoBaoHao"];
         [array addObject:model];
     }
     return array;
