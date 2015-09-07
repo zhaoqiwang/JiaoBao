@@ -59,7 +59,7 @@
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
 @property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
-@property (nonatomic,assign) int mInt_flag;//
+@property (nonatomic,assign) int mInt_flag;//0是首页model、1是回答列表answerModel，3是精选pickContentModel
 @property (nonatomic,strong) PickContentModel *pickContentModel;//精选
 
 

@@ -29,6 +29,9 @@
     //获取问题的答案列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAnswerById" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAnswerById:) name:@"GetAnswerById" object:nil];
+    //通知界面，更新访问量等数据
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
     
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
@@ -94,6 +97,18 @@
     [self.view addSubview:self.mTableV_answers];
 }
 
+//通知界面，更新访问量等数据
+-(void)updataQuestionDetail:(NSNotification *)noti{
+    QuestionDetailModel *model = noti.object;
+    if ([model.TabID intValue]==[self.mModel_question.TabID intValue]) {
+        self.mModel_question.ViewCount = [NSString stringWithFormat:@"%d",[model.ViewCount intValue]+1];
+        self.mModel_question.AnswersCount = model.AnswersCount;
+        self.mModel_question.AttCount = model.AttCount;
+        //设置布局
+        [self setTitleCell:self.mModel_question];
+    }
+}
+
 //获取问题的答案列表
 -(void)GetAnswerById:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
@@ -123,7 +138,7 @@
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
     //详情
-    self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
+    self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
     //话题
     self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+self.mView_titlecell.mLab_title.frame.size.height+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -205,6 +220,7 @@
     NSMutableArray *array = self.mArr_answers;
     AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
     cell.answerModel = model;
+    
     cell.mLab_title.hidden = YES;
     cell.mBtn_detail.hidden = YES;
     //话题

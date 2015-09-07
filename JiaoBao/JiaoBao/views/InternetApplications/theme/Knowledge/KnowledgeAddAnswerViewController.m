@@ -110,6 +110,8 @@
     if ([code integerValue] ==0) {
         self.mModel_questionDetail = [dic objectForKey:@"model"];
         [self addDetailCell:self.mModel_questionDetail];
+        //通知其余界面，更新访问量等数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetail" object:self.mModel_questionDetail];
     }
 }
 
@@ -147,9 +149,9 @@
     self.mView_titlecell.mLab_Answers.frame = CGRectMake(self.mView_titlecell.mLab_AnswersCount.frame.origin.x-2-self.mView_titlecell.mLab_Answers.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_Answers.frame.size.width, 21);
     self.mView_titlecell.mLab_Answers.hidden = NO;
     //关注
-    CGSize AttSize = [[NSString stringWithFormat:@"%@",self.mModel_question.AttCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+    CGSize AttSize = [[NSString stringWithFormat:@"%@",model.AttCount] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_AttCount.frame = CGRectMake(self.mView_titlecell.mLab_Answers.frame.origin.x-5-AttSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AttSize.width, 21);
-    self.mView_titlecell.mLab_AttCount.text = self.mModel_question.AttCount;
+    self.mView_titlecell.mLab_AttCount.text = model.AttCount;
     self.mView_titlecell.mLab_AttCount.hidden = NO;
     self.mView_titlecell.mLab_Att.frame = CGRectMake(self.mView_titlecell.mLab_AttCount.frame.origin.x-2-self.mView_titlecell.mLab_Att.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_Att.frame.size.width, 21);
     self.mView_titlecell.mLab_Att.hidden = NO;
@@ -606,6 +608,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [utils popViewControllerAnimated:YES];
 }

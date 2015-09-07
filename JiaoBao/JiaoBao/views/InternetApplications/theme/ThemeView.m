@@ -44,7 +44,9 @@
         //获取一个精选内容集
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetPickedById" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetPickedById:) name:@"GetPickedById" object:nil];
-        
+        //通知界面，更新访问量等数据
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
 
         self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
@@ -133,8 +135,6 @@
             }];
         }
     }
-    
-    
 }
 
 //加载一级话题列表
@@ -202,6 +202,22 @@
     
     [self sendRequest];
 //    [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:@"0"];
+}
+
+//通知界面，更新访问量等数据
+-(void)updataQuestionDetail:(NSNotification *)noti{
+    QuestionDetailModel *model = noti.object;
+    NSMutableArray *array = [self arrayDataSourceSum];
+    for (int i=0; i<array.count; i++) {
+        QuestionModel *tempModel = [array objectAtIndex:i];
+        if ([tempModel.TabID intValue]==[model.TabID intValue]) {
+            tempModel.ViewCount = [NSString stringWithFormat:@"%d",[model.ViewCount intValue]+1];
+            tempModel.AnswersCount = model.AnswersCount;
+            tempModel.AttCount = model.AttCount;
+            break;
+        }
+    }
+    [self.mTableV_knowledge reloadData];
 }
 
 //置顶问题
@@ -563,6 +579,7 @@
         cell.model = model;
         cell.mInt_flag = 0;
         [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
+        cell.tag = indexPath.row;
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.LikeBtn.hidden = YES;
@@ -712,7 +729,7 @@
             }
             
             //详情
-            cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, cell.mBtn_detail.frame.size.height);
+            cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, cell.mBtn_detail.frame.size.height);
             cell.mBtn_detail.hidden = NO;
             //话题
             cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
@@ -1106,6 +1123,7 @@
         detail.mModel_question = knowledgeTableViewCell.model;
         [utils pushViewController:detail animated:YES];
     }
+    
 }
 
 //全部、有依据、在讨论按钮

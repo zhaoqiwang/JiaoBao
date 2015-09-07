@@ -44,8 +44,10 @@
 #pragma mark - Collection View Data Source
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
-    if (self.mInt_flag == 3) {
+    if (self.mInt_flag == 3) {//精选
         return self.pickContentModel.Thumbnail.count;
+    }else if (self.mInt_flag == 1) {//问题列表
+        return self.answerModel.Thumbnail.count;
     }
 
     return self.model.answerModel.Thumbnail.count;
@@ -61,8 +63,13 @@
         cell.mLab_name.hidden = YES;
         [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
+    }else if (self.mInt_flag == 1) {
+        NSString *str = [self.answerModel.Thumbnail objectAtIndex:indexPath.row];
+        cell.mLab_name.hidden = YES;
+        [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+        cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
     }
-else{
+    else{
         NSString *str = [self.model.answerModel.Thumbnail objectAtIndex:indexPath.row];
         cell.mLab_name.hidden = YES;
         [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
@@ -84,6 +91,14 @@ else{
         for (int i = 0; i < num; i++) {
             // 替换为中等尺寸图片
             NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.pickContentModel.Thumbnail objectAtIndex:i]];
+            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+        }
+    }else if(self.mInt_flag == 1)
+    {
+        num = self.answerModel.Thumbnail.count;
+        for (int i = 0; i < num; i++) {
+            // 替换为中等尺寸图片
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.answerModel.Thumbnail objectAtIndex:i]];
             [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
         }
     }

@@ -180,6 +180,7 @@
     return array;
 }
 
+//{"Tag":0,"NickName":"mo5150022","TabID":342,"JiaoBaoHao":5150022,"Title":"哪些知识、技能、能力是一定要掌握的","KnContent":"<h2 class=\"zm-item-title zm-editable-content\">哪些知识、技能、能力是一定要掌握的</h2><p><br/></p>","QFlag":1,"RecDate":"2015-09-05T21:41:03","CategoryId":15,"TagsList":null,"State":1,"ViewCount":81,"AnswersCount":1,"LastUpdate":"2015-09-07T09:43:59","Abstracts":"哪些知识、技能、能力是一定要掌握的","Thumbnail":null,"AreaCode":"","AtAccIds":"","AttCount":1,"FactSign":1}
 //问题明细
 +(QuestionDetailModel*)parserJsonQuestionDetail:(NSString*)json
 {
@@ -210,6 +211,24 @@
     model.KnContent = [dic objectForKey:@"KnContent"];
     model.AreaCode = [dic objectForKey:@"AreaCode"];
     model.AtAccIds = [dic objectForKey:@"AtAccIds"];
+    
+    model.Tag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Tag"]];
+    model.NickName = [dic objectForKey:@"NickName"];
+    model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+    model.QFlag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QFlag"]];
+    NSString *str3 = [dic objectForKey:@"RecDate"];
+    NSRange range3 = [str3 rangeOfString:str];
+    if (range3.length>0) {
+        model.RecDate = [[str3 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+    }else{
+        model.RecDate = [[str3 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    }
+    model.CategoryId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CategoryId"]];
+    model.TagsList = [[dic objectForKey:@"TagsList"] objectFromJSONString];
+    model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
+    model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
+    model.FactSign = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FactSign"]];
+    
     return model;
 }
 
