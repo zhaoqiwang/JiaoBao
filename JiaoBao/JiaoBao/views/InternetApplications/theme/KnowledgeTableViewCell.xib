@@ -230,6 +230,10 @@
                         <rect key="frame" x="32" y="398" width="240" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </scrollView>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="O3Z-LG-9B1">
+                        <rect key="frame" x="105" y="8" width="36" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -240,6 +244,7 @@
                 <outlet property="mBtn_evidence" destination="8wQ-Mq-7pS" id="udn-We-fYG"/>
                 <outlet property="mCollectionV_pic" destination="sO8-PT-Jn0" id="FeL-iq-2Km"/>
                 <outlet property="mImgV_head" destination="l7y-Ci-9bg" id="XFO-9y-zak"/>
+                <outlet property="mImgV_top" destination="O3Z-LG-9B1" id="Ln6-rc-g78"/>
                 <outlet property="mLab_Answers" destination="VRm-pt-R6C" id="Zel-nL-IVx"/>
                 <outlet property="mLab_AnswersCount" destination="v0D-GF-SWx" id="1VY-UA-QBW"/>
                 <outlet property="mLab_Att" destination="pYR-se-Xfa" id="L45-8J-F0k"/>

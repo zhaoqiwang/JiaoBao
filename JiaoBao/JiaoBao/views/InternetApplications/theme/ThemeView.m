@@ -196,7 +196,10 @@
         return;
     }
     //取所有话题
-    [[KnowledgeHttp getInstance] GetAllCategory];
+    if (self.mArr_AllCategory.count==3) {
+        [[KnowledgeHttp getInstance] GetAllCategory];
+    }
+    
     [self sendRequest];
 //    [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:@"0"];
 }
@@ -434,6 +437,7 @@
     if (self.mInt_index ==2) {//精选
         cell.delegate = nil;
         cell.backgroundColor = [UIColor whiteColor];
+        cell.mImgV_top.hidden = YES;
         if (indexPath.row==0) {
             cell.LikeBtn.hidden = YES;
             cell.mLab_title.hidden = NO;
@@ -461,12 +465,12 @@
             //按钮
             cell.mBtn_detail.hidden = NO;
             [cell.mBtn_detail setTitle:@"往期精选" forState:UIControlStateNormal];
-            cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 56, cell.mBtn_detail.frame.size.height);
+            cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-56-10, 0, 56, cell.mBtn_detail.frame.size.height);
             cell.mScrollV_pic.hidden = NO;
             cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
             cell.mScrollV_pic.backgroundColor = [UIColor redColor];
             UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
-            NSString *tempUrl = [NSString stringWithFormat:@"http://www.jsyoa.edu8800.com/JBClient%@%@",self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:0]];
+            NSString *tempUrl = [NSString stringWithFormat:@"%@%@%@",[dm getInstance].url,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:0]];
             D("dghrdk;ljg;dklj-====%@",tempUrl);
             [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
             [cell.mScrollV_pic addSubview:temp];
@@ -558,7 +562,7 @@
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         cell.model = model;
         cell.mInt_flag = 0;
-        [cell.mBtn_detail setTitle:@"精选" forState:UIControlStateNormal];
+        [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.LikeBtn.hidden = YES;
@@ -590,6 +594,7 @@
             cell.mBtn_discuss.hidden = NO;
             cell.mLab_selectCategory.hidden = YES;
             cell.mLab_selectCategory1.hidden = YES;
+            cell.mImgV_top.hidden = YES;
             cell.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
             cell.mBtn_all.frame = CGRectMake(30, 10, 50, 44-20);
             cell.mBtn_evidence.frame = CGRectMake(110, 10, 50, 44-20);
@@ -676,6 +681,7 @@
             cell.mBtn_all.hidden = YES;
             cell.mBtn_evidence.hidden = YES;
             cell.mBtn_discuss.hidden = YES;
+            cell.mImgV_top.hidden = YES;
             //分割线
             cell.mLab_line.frame = CGRectMake(0, 43, [dm getInstance].width, .5);
         }else{//正常显示内容
@@ -687,9 +693,24 @@
             cell.mLab_selectCategory.hidden = YES;
             cell.mLab_selectCategory1.hidden = YES;
             //标题
-            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
             cell.mLab_title.text = model.Title;
             cell.mLab_title.hidden = NO;
+            //判断是否为置顶数据
+            if (model.mInt_top ==1) {//置顶
+                cell.mImgV_top.hidden = NO;
+                CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
+                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
+                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, cell.mLab_title.frame.size.height);
+                }else{
+                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
+                }
+                cell.mImgV_top.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width, 12, 33, 12);
+                [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
+            }else{
+                cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
+                cell.mImgV_top.hidden = YES;
+            }
+            
             //详情
             cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, cell.mBtn_detail.frame.size.height);
             cell.mBtn_detail.hidden = NO;
