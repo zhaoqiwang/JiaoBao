@@ -657,7 +657,7 @@
         model.PTitle = [dic objectForKey:@"PTitle"];
         model.baseImgUrl = [NSString stringWithFormat:@"%@",[dic objectForKey:@"baseImgUrl"]];
         model.RowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"RowCount"]];
-        model.ImgContent = [dic objectForKey:@"ImgContent"];
+        model.ImgContent = [[dic objectForKey:@"ImgContent"] objectFromJSONString];
         model.PickDescipt = [dic objectForKey:@"PickDescipt"];
         NSString *str = [utils getLocalTimeDate];
         NSString *str0 = [dic objectForKey:@"RecDate"];

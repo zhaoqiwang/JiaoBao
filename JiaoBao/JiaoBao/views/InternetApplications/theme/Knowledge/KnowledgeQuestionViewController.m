@@ -262,7 +262,7 @@
     //赞
     cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 22);
     NSString *strLike = model.LikeCount;
-    if ([model.LikeCount integerValue]>0) {
+    if ([model.LikeCount integerValue]>99) {
         strLike = @"99+";
     }
     cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];

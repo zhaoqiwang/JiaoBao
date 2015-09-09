@@ -88,6 +88,9 @@
         self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
         self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
+        
+//        CustomTextFieldView *temo = [[CustomTextFieldView alloc] initFrame:CGRectMake(0, 120, [dm getInstance].width, 50)];
+//        [self addSubview:temo];
 
     }
     return self;
@@ -451,7 +454,7 @@
     
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
-        cell.delegate = nil;
+        cell.delegate = self;
         cell.backgroundColor = [UIColor whiteColor];
         cell.mImgV_top.hidden = YES;
         if (indexPath.row==0) {
@@ -486,7 +489,10 @@
             cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
             cell.mScrollV_pic.backgroundColor = [UIColor redColor];
             UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
-            NSString *tempUrl = [NSString stringWithFormat:@"%@%@%@",[dm getInstance].url,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:0]];
+            NSString *tempUrl;
+            if (self.mModel_getPickdById.ImgContent.count>0) {
+                tempUrl = [NSString stringWithFormat:@"%@%@%@",[dm getInstance].url,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:0]];
+            }
             D("dghrdk;ljg;dklj-====%@",tempUrl);
             [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
             [cell.mScrollV_pic addSubview:temp];
@@ -787,7 +793,7 @@
                 //赞
                 cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 22);
                 NSString *strLike = model.answerModel.LikeCount;
-                if ([model.answerModel.LikeCount integerValue]>0) {
+                if ([model.answerModel.LikeCount integerValue]>99) {
                     strLike = @"99+";
                 }
                 cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
@@ -1099,31 +1105,43 @@
 
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    CommentViewController *commentVC = [[CommentViewController alloc]init];
-    commentVC.questionModel = knowledgeTableViewCell.model;
-    [utils pushViewController:commentVC animated:YES];
+    if (self.mInt_index ==2) {//精选
+        
+    }else{
+        CommentViewController *commentVC = [[CommentViewController alloc]init];
+        commentVC.questionModel = knowledgeTableViewCell.model;
+        [utils pushViewController:commentVC animated:YES];
+    }
 }
 
 //cell的点击事件---标题
 -(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
-    queston.mModel_question = knowledgeTableViewCell.model;
-    [utils pushViewController:queston animated:YES];
+    if (self.mInt_index ==2) {//精选
+        
+    }else{
+        KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+        queston.mModel_question = knowledgeTableViewCell.model;
+        [utils pushViewController:queston animated:YES];
+    }
 }
 
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    //判断是否来自推荐
-    if ([knowledgeTableViewCell.model.tabid integerValue]>0) {
-        KnowledgeRecommentAddAnswerViewController *recomment = [[KnowledgeRecommentAddAnswerViewController alloc] init];
-        recomment.mModel_question = knowledgeTableViewCell.model;
-        [utils pushViewController:recomment animated:YES];
+    if (self.mInt_index ==2) {//精选
+        OldChoiceViewController *oldView = [[OldChoiceViewController alloc] init];
+        [utils pushViewController:oldView animated:YES];
     }else{
-        KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
-        detail.mModel_question = knowledgeTableViewCell.model;
-        [utils pushViewController:detail animated:YES];
+        //判断是否来自推荐
+        if ([knowledgeTableViewCell.model.tabid integerValue]>0) {
+            KnowledgeRecommentAddAnswerViewController *recomment = [[KnowledgeRecommentAddAnswerViewController alloc] init];
+            recomment.mModel_question = knowledgeTableViewCell.model;
+            [utils pushViewController:recomment animated:YES];
+        }else{
+            KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+            detail.mModel_question = knowledgeTableViewCell.model;
+            [utils pushViewController:detail animated:YES];
+        }
     }
-    
 }
 
 //全部、有依据、在讨论按钮

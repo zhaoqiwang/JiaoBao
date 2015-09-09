@@ -1,7 +1,7 @@
 //
 //  KnowledgeAddAnswerViewController.h
 //  JiaoBao
-//
+//  添加回答
 //  Created by Zqw on 15/8/11.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //

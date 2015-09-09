@@ -38,9 +38,11 @@
 //level,1取地市数据，2取区县数据
 -(void)knowledgeHttpGetCity:(NSString *)cityCode level:(NSString *)level;
 
--(void)GetAccIdbyNickname:(NSArray*)nickNames;//通过昵称取用户教宝号
+//通过昵称取用户教宝号
+-(void)GetAccIdbyNickname:(NSArray*)nickNames;
 
--(void)GetUserInfo;//取用户信息
+//取用户信息
+-(void)GetUserInfo;
 
 //设置用户称号和姓名(暂不用)  参数描述：教宝号——称号——姓名
 -(void)SetIdflagWithAccId:(NSString *)accId idFlag:(NSString*)idFlag userName:(NSString*)userName;

@@ -10,13 +10,13 @@
 
 @interface PickedIndexModel : NSObject
 
-@property (nonatomic,strong) NSString *TabID;
-@property (nonatomic,strong) NSString *PTitle;
-@property (nonatomic,strong) NSString *PickDescipt;
-@property (nonatomic,strong) NSString *RecDate;
-@property (nonatomic,strong) NSMutableArray *ImgContent;
-@property (nonatomic,strong) NSString *baseImgUrl;
-@property (nonatomic,strong) NSString *RowCount;
+@property (nonatomic,strong) NSString *TabID;//精选ID
+@property (nonatomic,strong) NSString *PTitle;//精选标题
+@property (nonatomic,strong) NSString *PickDescipt;//精选说明
+@property (nonatomic,strong) NSString *RecDate;//日期
+@property (nonatomic,strong) NSMutableArray *ImgContent;//字符串数组 轮播图片地址片段（每个地址需要加上baseImgUrl这个字段以得到一个完整的url地址）这个列表应该取第一个图片做为显示用
+@property (nonatomic,strong) NSString *baseImgUrl;//
+@property (nonatomic,strong) NSString *RowCount;//记录数量，用于取第二页记录起给参数赋值和客户端分页用
 
 @end
 

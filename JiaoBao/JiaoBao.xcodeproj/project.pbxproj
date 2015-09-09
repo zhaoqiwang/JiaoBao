@@ -679,6 +679,10 @@
 		A78459E01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A78459D01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m */; };
 		A78459E11B7B4D1D00EA7D5D /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A78459D31B7B4D1D00EA7D5D /* IQKeyboardManager.bundle */; };
 		A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */ = {isa = PBXBuildFile; fileRef = A7882E5E1B871C9C007CAA0A /* HtmlString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A788C9C71B9FC94400E7BBC6 /* OldChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A788C9C51B9FC94400E7BBC6 /* OldChoiceViewController.m */; };
+		A788C9C81B9FC94400E7BBC6 /* OldChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A788C9C61B9FC94400E7BBC6 /* OldChoiceViewController.xib */; };
+		A788C9CC1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A788C9CA1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m */; };
+		A788C9CD1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A788C9CB1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.xib */; };
 		A78D65D11A89B35500BE6326 /* WorkMsgListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D65CF1A89B35500BE6326 /* WorkMsgListViewController.m */; };
 		A78D65D21A89B35500BE6326 /* WorkMsgListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A78D65D01A89B35500BE6326 /* WorkMsgListViewController.xib */; };
 		A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A78D65D51A89E41400BE6326 /* WorkMsgListCell.m */; };
@@ -692,6 +696,7 @@
 		A78E4A2D1B0C7FD800969D8F /* PopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A78E4A2C1B0C7FD800969D8F /* PopupWindow.m */; };
 		A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */; };
 		A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */; };
+		A79A1B0F1B9ED67E00028823 /* CustomTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = A79A1B0E1B9ED67E00028823 /* CustomTextFieldView.m */; };
 		A79C0F271B9C297C00F8764B /* classViewTopCell.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F241B9C297C00F8764B /* classViewTopCell.png */; };
 		A79C0F281B9C297C00F8764B /* classViewTopCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */; };
 		A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */; };
@@ -1899,6 +1904,12 @@
 		A78459D31B7B4D1D00EA7D5D /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
 		A7882E5D1B871C9C007CAA0A /* HtmlString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HtmlString.h; path = Common/RCLabel/HtmlString.h; sourceTree = "<group>"; };
 		A7882E5E1B871C9C007CAA0A /* HtmlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HtmlString.m; path = Common/RCLabel/HtmlString.m; sourceTree = "<group>"; };
+		A788C9C41B9FC94400E7BBC6 /* OldChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OldChoiceViewController.h; path = views/InternetApplications/theme/Knowledge/OldChoiceViewController.h; sourceTree = "<group>"; };
+		A788C9C51B9FC94400E7BBC6 /* OldChoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OldChoiceViewController.m; path = views/InternetApplications/theme/Knowledge/OldChoiceViewController.m; sourceTree = "<group>"; };
+		A788C9C61B9FC94400E7BBC6 /* OldChoiceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OldChoiceViewController.xib; path = views/InternetApplications/theme/Knowledge/OldChoiceViewController.xib; sourceTree = "<group>"; };
+		A788C9C91B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OldChoiceTableViewCell.h; path = views/InternetApplications/theme/Knowledge/OldChoiceTableViewCell.h; sourceTree = "<group>"; };
+		A788C9CA1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OldChoiceTableViewCell.m; path = views/InternetApplications/theme/Knowledge/OldChoiceTableViewCell.m; sourceTree = "<group>"; };
+		A788C9CB1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OldChoiceTableViewCell.xib; path = views/InternetApplications/theme/Knowledge/OldChoiceTableViewCell.xib; sourceTree = "<group>"; };
 		A78D65CE1A89B35500BE6326 /* WorkMsgListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkMsgListViewController.h; path = views/InternetApplications/workView/WorkMsgListViewController.h; sourceTree = "<group>"; };
 		A78D65CF1A89B35500BE6326 /* WorkMsgListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkMsgListViewController.m; path = views/InternetApplications/workView/WorkMsgListViewController.m; sourceTree = "<group>"; };
 		A78D65D01A89B35500BE6326 /* WorkMsgListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WorkMsgListViewController.xib; path = views/InternetApplications/workView/WorkMsgListViewController.xib; sourceTree = "<group>"; };
@@ -1917,6 +1928,8 @@
 		A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+AD.m"; path = "Common/MBProgressHUD+AD.m"; sourceTree = "<group>"; };
 		A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+HUD.h"; path = "Common/UIViewController+HUD.h"; sourceTree = "<group>"; };
 		A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HUD.m"; path = "Common/UIViewController+HUD.m"; sourceTree = "<group>"; };
+		A79A1B0D1B9ED67E00028823 /* CustomTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomTextFieldView.h; path = views/InternetApplications/theme/Knowledge/CustomTextFieldView.h; sourceTree = "<group>"; };
+		A79A1B0E1B9ED67E00028823 /* CustomTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomTextFieldView.m; path = views/InternetApplications/theme/Knowledge/CustomTextFieldView.m; sourceTree = "<group>"; };
 		A79C0F241B9C297C00F8764B /* classViewTopCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classViewTopCell.png; path = Image/InternetApp/class/classViewTopCell.png; sourceTree = "<group>"; };
 		A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@2x.png"; path = "Image/InternetApp/class/classViewTopCell@2x.png"; sourceTree = "<group>"; };
 		A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@3x.png"; path = "Image/InternetApp/class/classViewTopCell@3x.png"; sourceTree = "<group>"; };
@@ -3631,6 +3644,14 @@
 				A76F21761B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.h */,
 				A76F21771B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.m */,
 				A76F21781B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.xib */,
+				A79A1B0D1B9ED67E00028823 /* CustomTextFieldView.h */,
+				A79A1B0E1B9ED67E00028823 /* CustomTextFieldView.m */,
+				A788C9C41B9FC94400E7BBC6 /* OldChoiceViewController.h */,
+				A788C9C51B9FC94400E7BBC6 /* OldChoiceViewController.m */,
+				A788C9C61B9FC94400E7BBC6 /* OldChoiceViewController.xib */,
+				A788C9C91B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.h */,
+				A788C9CA1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m */,
+				A788C9CB1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.xib */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -4824,6 +4845,7 @@
 				A7781F501AE8A0F300F03AEB /* NewWorkView_click_2@3x.png in Resources */,
 				A76ED5BC1AD67855006F3E0B /* workView_3@2x.png in Resources */,
 				A73D9C111A368EDF004CE4D5 /* RongYun_discussion.png in Resources */,
+				A788C9CD1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.xib in Resources */,
 				A74C118E1A01D23F00925230 /* Default.png in Resources */,
 				A701798E1AB91D2100E7093F /* work_photo@2x.png in Resources */,
 				A7781F4B1AE8A0F300F03AEB /* NewWorkView_click_1.png in Resources */,
@@ -4936,6 +4958,7 @@
 				A7626FC51B0D7EDB006957F2 /* popupWindow_like_comment@2x.png in Resources */,
 				A76ED5B61AD67855006F3E0B /* workView_1@2x.png in Resources */,
 				A727C7D81A6F93780019C4CD /* share_likeBig_0@2x.png in Resources */,
+				A788C9C81B9FC94400E7BBC6 /* OldChoiceViewController.xib in Resources */,
 				F7502A0A1AEE1E50004F822F /* add@3x.png in Resources */,
 				A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */,
 				A757DFE31A80C7B9001172A4 /* appNav_changeUser@2x.png in Resources */,
@@ -5256,6 +5279,7 @@
 				A753FAF51A1DED7000AB5F22 /* UserClassModel.m in Sources */,
 				A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */,
 				A7AD8C3F19F63DA5002E65FB /* ApplicationCenterViewController.m in Sources */,
+				A788C9CC1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m in Sources */,
 				A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */,
 				A77FF00C1A65093300DB85E3 /* UnitListJsonModel.m in Sources */,
 				A773FC2E1A4BBD02005F84C2 /* UpLoadPhotoViewController.m in Sources */,
@@ -5492,7 +5516,9 @@
 				A75E3F941B6F63ED00284C3D /* ProviceModel.m in Sources */,
 				A72B58251A3D7D5C004D8920 /* UnitSpaceArthListViewController.m in Sources */,
 				F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */,
+				A788C9C71B9FC94400E7BBC6 /* OldChoiceViewController.m in Sources */,
 				A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */,
+				A79A1B0F1B9ED67E00028823 /* CustomTextFieldView.m in Sources */,
 				A7216E361A3A7B010093876A /* KxMenu.m in Sources */,
 				A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */,
 				A755E71C19F278B900BBDF3D /* SBJsonWriter.m in Sources */,

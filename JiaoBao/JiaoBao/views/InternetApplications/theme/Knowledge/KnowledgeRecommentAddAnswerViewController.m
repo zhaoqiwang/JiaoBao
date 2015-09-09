@@ -54,6 +54,7 @@
     
     //
     [[KnowledgeHttp getInstance] ShowRecommentWithTable:self.mModel_question.tabid];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 
 //推荐问题详情

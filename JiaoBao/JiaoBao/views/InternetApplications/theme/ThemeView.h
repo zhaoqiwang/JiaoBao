@@ -20,6 +20,8 @@
 #import "KnowledgeAddAnswerViewController.h"
 #import "KnowledgeRecommentAddAnswerViewController.h"
 #import "HtmlString.h"
+#import "CustomTextFieldView.h"
+#import "OldChoiceViewController.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate>{
     
