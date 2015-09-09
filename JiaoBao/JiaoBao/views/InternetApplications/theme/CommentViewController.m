@@ -23,7 +23,7 @@
 @interface CommentViewController ()
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
-@property(nonatomic,strong)KnowledgeTableViewCell*KnowledgeTableViewCell;
+@property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
 @property(nonatomic,assign)int mInt_reloadData;
 @end
 
@@ -154,7 +154,9 @@
 //答案详情回调
 -(void)AnswerDetailWithAId:(id)sender
 {
-    {[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
+    {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSDictionary *dic = [sender object];
         NSString *ResultCode = [dic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -234,7 +236,9 @@ if([Data integerValue]==-1)
     [super viewDidLoad];
     self.mInt_reloadData = 0;
     self.btn_tag = -1;
-    
+    //通知界面，更新访问量等数据
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
     //添加评论成功后刷新数据
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshComment" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshComment:) name:@"refreshComment" object:nil];
@@ -883,7 +887,13 @@ if([Data integerValue]==-1)
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     [self webViewLoadFinish:webViewHeight+10];
 }
+-(void)updataQuestionDetail:(NSNotification *)noti{
+    QuestionDetailModel *model = noti.object;
+    self.KnowledgeTableViewCell.mLab_ViewCount.text = [NSString stringWithFormat:@"%d",[model.ViewCount intValue]+1];
+    self.KnowledgeTableViewCell.mLab_AnswersCount.text = model.AnswersCount;
+    self.KnowledgeTableViewCell.mLab_Att.text = model.AttCount;
 
+}
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
