@@ -88,9 +88,6 @@
         self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
         self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
-        
-//        CustomTextFieldView *temo = [[CustomTextFieldView alloc] initFrame:CGRectMake(0, 120, [dm getInstance].width, 50)];
-//        [self addSubview:temo];
 
     }
     return self;

@@ -83,7 +83,7 @@
     [UIView animateWithDuration:animationDuration
                      animations:^{
                          self.hidden = NO;
-                         self.frame = CGRectMake(-1, [dm getInstance].height-keyboardSize.height-51*2-10, [dm getInstance].width+2, self.frame.size.height);
+                         self.frame = CGRectMake(-1, [dm getInstance].height-keyboardSize.height-51*1, [dm getInstance].width+2, self.frame.size.height);
                      }
                      completion:^(BOOL finished){
                          ;
