@@ -8,8 +8,12 @@
 
 #import "KnowledgeQuestionViewController.h"
 #import "HtmlString.h"
+#import "NickNameModel.h"
 
 @interface KnowledgeQuestionViewController ()
+@property(nonatomic,strong)NSMutableArray * nickNameArr;//输入的昵称
+@property(nonatomic,strong)NSMutableArray *NameModelArr;//返回的正确的昵称model数组
+
 
 @end
 
@@ -26,6 +30,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
+    //获取昵称对应的教宝号
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAccIdbyNickname:) name:@"GetAccIdbyNickname" object:nil];
     //获取问题的答案列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAnswerById" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAnswerById:) name:@"GetAnswerById" object:nil];
@@ -65,7 +72,7 @@
             model.mStr_title = @"回答问题";
             model.mStr_img = @"buttonView1";
         }else if (i==1){
-            model.mStr_title = @"邀请问题";
+            model.mStr_title = @"邀请回答";
             model.mStr_img = @"buttonView4";
         }else if (i==2){
             model.mStr_title = @"关注问题";
@@ -95,6 +102,79 @@
     self.mTableV_answers.footerReleaseToRefreshText = @"松开加载更多数据";
     self.mTableV_answers.footerRefreshingText = @"正在加载...";
     [self.view addSubview:self.mTableV_answers];
+    
+    //邀请回答输入框
+    self.mView_input = [[CustomTextFieldView alloc] initFrame:CGRectMake(0, 0, [dm getInstance].width, 50)];
+    self.mView_input.delegate = self;
+    [self.view addSubview:self.mView_input];
+    self.mView_input.hidden = YES;
+}
+//通过昵称获取教宝号
+-(void)GetAccIdbyNickname:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        NSArray *arr = [dic objectForKey:@"array"];
+        self.NameModelArr = [NSMutableArray arrayWithArray:arr];
+        NSMutableArray *jiaobaohaoArr = [[NSMutableArray alloc]initWithCapacity:0];
+        
+        for(int i=0;i<arr.count;i++)
+        {
+            NickNameModel *model = [arr objectAtIndex:i];
+            NSString *jiaobaohao = model.JiaoBaoHao;
+            [jiaobaohaoArr addObject:jiaobaohao];
+            
+        }
+        
+            NSMutableArray *nameArr = [[NSMutableArray alloc]initWithCapacity:0];
+                if(self.NameModelArr.count == 0)
+                {
+                    NSString *nameStr = [self.nickNameArr componentsJoinedByString:@","];
+                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请失败" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertView show];
+                    
+                }
+                else
+                {
+                    for(int i=0;i<self.NameModelArr.count;i++)
+                    {
+                        NickNameModel *model = [self.NameModelArr objectAtIndex:i];
+                        [nameArr addObject:model.NickName];
+                        if ([self.nickNameArr containsObject:model.NickName]) {
+                            [self.nickNameArr removeObject:model.NickName];
+                        }
+                        
+                    }
+                    NSString *str = [nameArr componentsJoinedByString:@","];
+                    NSString *errorStr = [self.nickNameArr componentsJoinedByString:@","];
+                    if(self.nickNameArr.count == 0)
+                    {
+                        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功",str] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                        [alertView show];
+                    }
+                    else
+                    {
+                        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功,不存在邀请人%@",str,errorStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                        [alertView show];
+                        
+                    }
+                    
+                    
+                }
+                
+
+        
+    }
+    self.mView_input.mTextF_input.text = @"";
 }
 
 //通知界面，更新访问量等数据
@@ -462,7 +542,21 @@
 //    view.mLab_title.text = @"取消关注";
     if (view.tag ==100) {
         [self gotoAddAnswerVC];
+    }else if (view.tag == 101){//邀请回答
+        self.mView_input.hidden = NO;
+        [self.mView_input.mTextF_input becomeFirstResponder];
+    }else if (view.tag == 102){
+        
     }
+}
+
+//邀请回答确定按钮
+-(void)CustomTextFieldViewSureBtn:(CustomTextFieldView *)view{
+    D("Guhskjhdlkfgdflk");
+    NSArray *arr = [self.mView_input.mTextF_input.text componentsSeparatedByString:@","];
+    self.nickNameArr = [NSMutableArray arrayWithArray:arr];
+    
+    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
 }
 
 //导航条返回按钮回调
