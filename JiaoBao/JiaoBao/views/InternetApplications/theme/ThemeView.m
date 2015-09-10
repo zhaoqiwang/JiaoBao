@@ -451,6 +451,9 @@
     
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
+        for (UIView *temp in cell.subviews) {
+            temp.hidden = NO;
+        }
         cell.delegate = self;
         cell.backgroundColor = [UIColor whiteColor];
         cell.mImgV_top.hidden = YES;
@@ -576,16 +579,34 @@
             cell.mScrollV_pic.hidden = YES;
         }
     }else{
-        //添加点击事件
-        cell.delegate = self;
-        [cell addTapClick];
-        cell.mScrollV_pic.hidden = YES;
         NSMutableArray *array = [self arrayDataSourceSum];
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         cell.model = model;
         cell.mInt_flag = 0;
         [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
         cell.tag = indexPath.row;
+        //当有的cell中的TableID为null时，显示问题
+        if (model.mInt_btn==1||model.mInt_btn==2) {
+            for (UIView *temp in cell.subviews) {
+                temp.hidden = NO;
+            }
+        }else{
+            if ([model.TabID intValue]>0) {
+                for (UIView *temp in cell.subviews) {
+                    temp.hidden = NO;
+                }
+            }else{
+                for (UIView *temp in cell.subviews) {
+                    temp.hidden = YES;
+                }
+                return cell;
+            }
+        }
+        
+        //添加点击事件
+        cell.delegate = self;
+        [cell addTapClick];
+        cell.mScrollV_pic.hidden = YES;
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.LikeBtn.hidden = YES;
@@ -708,6 +729,7 @@
             //分割线
             cell.mLab_line.frame = CGRectMake(0, 43, [dm getInstance].width, .5);
         }else{//正常显示内容
+            
             cell.backgroundColor = [UIColor whiteColor];
             cell.mBtn_all.hidden = YES;
             cell.mBtn_evidence.hidden = YES;
@@ -966,7 +988,6 @@
     float tempF = 0.0;
     NSMutableArray *array = [self arrayDataSourceSum];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
-    D("dpfoigjdo;igjp-====%@",model.TabID);
     if ([model.TabID intValue]>0) {
         //标题
         tempF = tempF+10+16;
@@ -1020,6 +1041,7 @@
             }
         }
     }else{
+        D("sdofhgjlkdsjgldksjf;");
         return 0;
     }
     return tempF;
