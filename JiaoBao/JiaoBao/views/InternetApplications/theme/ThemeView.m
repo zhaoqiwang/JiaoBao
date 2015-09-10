@@ -537,8 +537,11 @@
             RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
             cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
             CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
+            D("dfgjldkjflk-===%@,%f",model.Abstracts,optimalSize2.height);
             if (optimalSize2.height==23) {
                 optimalSize2 = CGSizeMake(optimalSize2.width, 25);
+            }else if (optimalSize2.height==14) {
+                optimalSize2 = CGSizeMake(optimalSize2.width, 20);
             }else if (optimalSize2.height>20) {
                 optimalSize2 = CGSizeMake(optimalSize2.width, 35);
             }
@@ -924,8 +927,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSMutableArray *array = [self arrayDataSourceSum];
-    if (self.mInt_index ==2) {
-        
+    if (self.mInt_index ==2) {//精选
+        if (indexPath.row>0) {
+            PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
+        }
     }else{
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         if (model.mInt_btn==2) {//话题显示行
@@ -961,44 +966,53 @@
     float tempF = 0.0;
     NSMutableArray *array = [self arrayDataSourceSum];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
-    //标题
-    tempF = tempF+10+16;
-    //话题
-    tempF = tempF+5+21;
-    //判断是否有回答
-//    if ([model.AnswersCount integerValue]>0) {
-    if ([model.answerModel.TabID integerValue]>0) {
-        //分割线
-        tempF = tempF+5;
-        if (model.answerModel.Thumbnail.count>0) {
-            //回答标题
-            tempF = tempF+15+22;
-            //回答内容
-            NSString *string2 = model.answerModel.Abstracts;
-            NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-            CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
-            if (size.height>20) {
-                size = CGSizeMake(size.width, 32);
-            }
-            tempF = tempF+5+size.height;
-            //背景色
-            tempF = tempF+3;
-            //图片
-            tempF = tempF+5+([dm getInstance].width-65-30)/3;
-            //时间
-            tempF = tempF+10+21;
-            if (model.mInt_top ==1) {
-                
+    D("dpfoigjdo;igjp-====%@",model.TabID);
+    if ([model.TabID intValue]>0) {
+        //标题
+        tempF = tempF+10+16;
+        //话题
+        tempF = tempF+5+21;
+        //判断是否有回答
+        //    if ([model.AnswersCount integerValue]>0) {
+        if ([model.answerModel.TabID integerValue]>0) {
+            //分割线
+            tempF = tempF+5;
+            if (model.answerModel.Thumbnail.count>0) {
+                //回答标题
+                tempF = tempF+15+22;
+                //回答内容
+                NSString *string2 = model.answerModel.Abstracts;
+                NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
+                CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+                if (size.height>20) {
+                    size = CGSizeMake(size.width, 32);
+                }
+                tempF = tempF+5+size.height;
+                //背景色
+                tempF = tempF+3;
+                //图片
+                tempF = tempF+5+([dm getInstance].width-65-30)/3;
+                //时间
+                tempF = tempF+10+21;
+                if (model.mInt_top ==1) {
+                    
+                }else{
+                    tempF = tempF+20;
+                }
             }else{
-                tempF = tempF+20;
+                //赞
+                tempF = tempF+15+22;
+                //头像
+                tempF = tempF+10+42;
+                //姓名
+                tempF = tempF+10+21;
+                if (model.mInt_top ==1) {
+                    
+                }else{
+                    tempF = tempF+20;
+                }
             }
         }else{
-            //赞
-            tempF = tempF+15+22;
-            //头像
-            tempF = tempF+10+42;
-            //姓名
-            tempF = tempF+10+21;
             if (model.mInt_top ==1) {
                 
             }else{
@@ -1006,11 +1020,7 @@
             }
         }
     }else{
-        if (model.mInt_top ==1) {
-            
-        }else{
-            tempF = tempF+20;
-        }
+        return 0;
     }
     return tempF;
 }
@@ -1103,7 +1113,7 @@
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-        
+        PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:knowledgeTableViewCell.tag-1];
     }else{
         CommentViewController *commentVC = [[CommentViewController alloc]init];
         commentVC.questionModel = knowledgeTableViewCell.model;
@@ -1114,7 +1124,7 @@
 //cell的点击事件---标题
 -(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-        
+        PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:knowledgeTableViewCell.tag-1];
     }else{
         KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
         queston.mModel_question = knowledgeTableViewCell.model;
