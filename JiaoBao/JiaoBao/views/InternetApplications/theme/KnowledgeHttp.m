@@ -391,7 +391,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
-        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         if([code  integerValue] == 0)
         {
             [MBProgressHUD showSuccess:@"举报成功"];

@@ -583,6 +583,7 @@
     }else{
         NSMutableArray *array = [self arrayDataSourceSum];
         QuestionModel *model = [array objectAtIndex:indexPath.row];
+        D("sdjhfaslkdfhalke;sjfa;lkj;-===%@,%@",model.TabID,model.tabid);
         cell.model = model;
         cell.mInt_flag = 0;
         [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
@@ -1046,7 +1047,6 @@
             }
         }
     }else{
-        D("sdofhgjlkdsjgldksjf;");
         return 0;
     }
     return tempF;
@@ -1155,9 +1155,16 @@
         detail.pickContentModel = knowledgeTableViewCell.pickContentModel;
         [utils pushViewController:detail animated:YES];
     }else{
-        KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
-        queston.mModel_question = knowledgeTableViewCell.model;
-        [utils pushViewController:queston animated:YES];
+        //判断是否来自推荐
+        if ([knowledgeTableViewCell.model.tabid integerValue]>0) {//推荐
+            KnowledgeRecommentAddAnswerViewController *recomment = [[KnowledgeRecommentAddAnswerViewController alloc] init];
+            recomment.mModel_question = knowledgeTableViewCell.model;
+            [utils pushViewController:recomment animated:YES];
+        }else{//普通
+            KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+            queston.mModel_question = knowledgeTableViewCell.model;
+            [utils pushViewController:queston animated:YES];
+        }
     }
 }
 

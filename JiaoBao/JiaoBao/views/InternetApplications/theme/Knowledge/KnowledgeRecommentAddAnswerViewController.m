@@ -154,7 +154,8 @@
 //        [self webViewLoadFinish:webView.scrollView.contentSize.height];
         [self webViewLoadFinish:webViewHeight+10];
     }else{
-        [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
+//        [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
+        [webView setBackgroundColor:[UIColor clearColor]];
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
 //        model.floatH = webView.scrollView.contentSize.height;
         model.floatH = webViewHeight+10;
@@ -217,6 +218,15 @@
     cell.mInt_flag = 1;
     NSMutableArray *array = self.mModel_recomment.answerArray;
     AnswerModel *model = [array objectAtIndex:indexPath.row];
+    if ([model.TabID intValue]>0) {
+        for (UIView *view in cell.subviews) {
+            view.hidden = NO;
+        }
+    }else{
+        for (UIView *view in cell.subviews) {
+            view.hidden = YES;
+        }
+    }
 //    AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
     cell.RecommentAnswerModel = model;
     cell.mLab_title.hidden = YES;
@@ -309,7 +319,9 @@
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,content];
-    [cell.mWebV_comment stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
+    cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
+//    [cell.mWebV_comment stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
+    [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     [cell.mWebV_comment reload];
     
@@ -355,6 +367,11 @@
     float tempF = 0.0;
     NSMutableArray *array = self.mModel_recomment.answerArray;
     AnswerModel *model = [array objectAtIndex:indexPath.row];
+    if ([model.TabID intValue]>0) {
+        
+    }else{
+        return tempF;
+    }
     //标题
     //    tempF = tempF+10+16;
     //    //话题
