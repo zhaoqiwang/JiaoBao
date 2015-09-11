@@ -72,12 +72,16 @@
 -(void)addDetailCell:(RecommentAddAnswerModel *)model{
     self.mView_titlecell.hidden = NO;
 
+    self.mView_titlecell.delegate = self;
     //标题
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
+    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, self.mView_titlecell.mLab_title.frame.size.height);
     self.mView_titlecell.mLab_title.text = model.questionModel.Title;
     self.mView_titlecell.mLab_title.hidden = NO;
     //详情
-    self.mView_titlecell.mBtn_detail.hidden = YES;
+    self.mView_titlecell.mBtn_detail.hidden = NO;
+    [self.mView_titlecell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
+    self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
     //话题
     self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+16+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",self.mModel_question.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -361,6 +365,16 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CommentViewController *commentVC = [[CommentViewController alloc]init];
+//    commentVC.questionModel = knowledgeTableViewCell.model;
+    QuestionModel *model = [[QuestionModel alloc] init];
+    model.TabID = self.mModel_question.TabID;
+    model.ViewCount = self.mModel_question.ViewCount;
+    model.AttCount = self.mModel_question.AttCount;
+    model.AnswersCount = self.mModel_question.AnswersCount;
+    model.Title = self.mModel_question.Title;
+    commentVC.questionModel = model;
+    [utils pushViewController:commentVC animated:YES];
 }
 
 -(float)cellHeight:(NSIndexPath *)indexPath{
@@ -422,6 +436,19 @@
     //        tempF = tempF+20;
     //    }
 //    return tempF;
+}
+
+//详情按钮
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    QuestionModel *model = [[QuestionModel alloc] init];
+    model.TabID = self.mModel_question.TabID;
+    model.ViewCount = self.mModel_question.ViewCount;
+    model.AttCount = self.mModel_question.AttCount;
+    model.AnswersCount = self.mModel_question.AnswersCount;
+    model.Title = self.mModel_question.Title;
+    queston.mModel_question = model;
+    [utils pushViewController:queston animated:YES];
 }
 
 //检查当前网络是否可用
