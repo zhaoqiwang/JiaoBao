@@ -547,6 +547,7 @@
 
 //推荐明细
 +(RecommentAddAnswerModel *)parserJsonShowRecomment:(NSString *)json{
+    D("sorihgsiodghjl;kdsjlk-====%@",json);
     RecommentAddAnswerModel *model = [[RecommentAddAnswerModel alloc]init];
     model.questionModel = [[RecommentQuestionModel alloc] init];
     NSDictionary *dic0 = [json objectFromJSONString];
