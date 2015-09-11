@@ -8,20 +8,41 @@
 
 #import "ChoicenessDetailViewController.h"
 #import "KnowledgeTableViewCell.h"
-#import "PickContentModel.h"
 #import "dm.h"
+#import "KnowledgeHttp.h"
 
 @interface ChoicenessDetailViewController ()<KnowledgeTableViewCellDelegate,UIWebViewDelegate>
-@property(nonatomic,strong)PickContentModel *pickContentModel;
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
+@property(nonatomic,strong)ShowPickedModel *ShowPickedModel;
 
 @end
 
 @implementation ChoicenessDetailViewController
+-(void)dealloc
+{
+    
+}
+-(void)ShowPicked:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    self.ShowPickedModel = [dic objectForKey:@"model"];
+    self.KnowledgeTableViewCell = [self getMainView];
+    [self.scrollview addSubview:self.KnowledgeTableViewCell];
+    
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.KnowledgeTableViewCell = [self getMainView];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"ShowPicked" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(ShowPicked:) name:@"ShowPicked" object:nil];
+    [[KnowledgeHttp getInstance]ShowPickedWithTabID:self.pickContentModel.TabID];
+    //添加导航条
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"回答"];
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar setGoBack];
+    [self.view addSubview:self.mNav_navgationBar];
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -39,27 +60,35 @@
         //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
     }
     cell.delegate= self;
-    cell.pickContentModel = self.pickContentModel;
+    cell.ShowPickedModel = self.ShowPickedModel;
+    NSArray *views = [cell.contentView subviews];
+    for(int i=0;i<views.count;i++)
+    {
+        UIView *subView = [views objectAtIndex:i];
+        subView.hidden = YES;
+    }
+    cell.mWebV_comment.hidden = NO;
+    cell.mLab_title.hidden = NO;
     
 
-    NSString *string_title = cell.pickContentModel.Title;
+    NSString *string_title = cell.ShowPickedModel.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
+    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
     if (size_title.height>20) {
         size_title = CGSizeMake(size_title.width, size_title.height);
     }
     cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
     cell.mLab_title.font = [UIFont systemFontOfSize:14];
     cell.mLab_title.numberOfLines =0;
-    cell.mLab_title.text = cell.pickContentModel.Title;
-    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    cell.mLab_title.text = cell.ShowPickedModel.Title;
+    cell.mLab_title.frame = CGRectMake(9, 0, [dm getInstance].width-18, size_title.height);
     
 
  
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
         cell.mWebV_comment.tag = -1;
         cell.mWebV_comment.delegate = self;
-        NSString *content = cell.pickContentModel.Abstracts;
+        NSString *content = cell.ShowPickedModel.PContent;
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
@@ -69,17 +98,24 @@
         //[self webViewLoadFinish:0];
         
     
-    cell.frame = CGRectMake(0, 10, [dm getInstance].width, cell.mWebV_comment.frame.size.height+cell.mWebV_comment.frame.origin.y+10);
+    cell.frame = CGRectMake(0, 64, [dm getInstance].width, cell.mWebV_comment.frame.size.height+cell.mWebV_comment.frame.origin.y+10);
     cell.userInteractionEnabled = YES;
 
     return cell;
 }
 
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(9, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+3, [dm getInstance].width, height);
+    self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height, [dm getInstance].width, height+160);
     
     
-    self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
+    self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+50);
+    self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height+20);
+    UIButton *detailBtn = [[UIButton alloc]initWithFrame:CGRectMake([dm getInstance].width/2-50, self.KnowledgeTableViewCell.frame.size.height-40, 100, 30)];
+    [self.KnowledgeTableViewCell.contentView addSubview:detailBtn];
+    detailBtn.backgroundColor = [UIColor lightGrayColor];
+    [detailBtn setTitle:@"原文详情" forState:UIControlStateNormal];
+    
 
 
     
@@ -92,15 +128,11 @@
     [self webViewLoadFinish:webViewHeight+10];
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    self.KnowledgeTableViewCell.mWebV_comment.delegate = nil;
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
-*/
 
 @end
