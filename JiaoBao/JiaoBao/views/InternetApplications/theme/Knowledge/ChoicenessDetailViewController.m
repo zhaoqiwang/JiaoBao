@@ -108,17 +108,13 @@
     self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
     self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height, [dm getInstance].width, height+160);
     
-    
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+50);
     self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height+20);
     UIButton *detailBtn = [[UIButton alloc]initWithFrame:CGRectMake([dm getInstance].width/2-50, self.KnowledgeTableViewCell.frame.size.height-40, 100, 30)];
     [self.KnowledgeTableViewCell.contentView addSubview:detailBtn];
     detailBtn.backgroundColor = [UIColor lightGrayColor];
     [detailBtn setTitle:@"原文详情" forState:UIControlStateNormal];
-    
 
-
-    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
@@ -131,7 +127,6 @@
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     self.KnowledgeTableViewCell.mWebV_comment.delegate = nil;
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

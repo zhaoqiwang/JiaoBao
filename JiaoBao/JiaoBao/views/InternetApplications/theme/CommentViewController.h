@@ -28,4 +28,5 @@
 @property(nonatomic,strong)UIView *mView_text;
 @property(nonatomic,assign)int btn_tag;//区别点击的是赞还是反对
 @property (strong, nonatomic)  UIView *tableHeadView;
+@property(nonatomic,assign)NSInteger topButtonTag;//区别是推荐还是精选
 @end
