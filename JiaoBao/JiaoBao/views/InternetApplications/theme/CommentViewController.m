@@ -359,6 +359,10 @@ if([Data integerValue]==-1)
 #pragma mark - TableView Data Source
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
+    if(self.topButtonTag == 1)
+    {
+        return 0;
+    }
     return self.AllCommentListModel.mArr_CommentList.count;
 }
 
@@ -599,7 +603,7 @@ if([Data integerValue]==-1)
 
     //详情
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 0, 40, cell.mBtn_detail.frame.size.height);
-    [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
+    [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
     NSString *string_title = cell.model.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
@@ -826,6 +830,20 @@ if([Data integerValue]==-1)
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
     self.tableHeadView = [[UIView alloc]init];
     [self.tableHeadView addSubview:self.KnowledgeTableViewCell];
+    if(self.topButtonTag == 1)
+    {
+    self.tableHeadView.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+        
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height) style:UITableViewStylePlain];
+        self.tableView.tableHeaderView = self.tableHeadView;
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        self.tableView.tableFooterView = [[UIView alloc]init];
+
+        [self.view addSubview:self.tableView];
+        [self.view addSubview:self.mView_text];
+        return;
+    }
     NSMutableArray *temp = [NSMutableArray array];
     for (int i=0; i<3; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
@@ -861,23 +879,29 @@ if([Data integerValue]==-1)
     self.tableView.tableHeaderView = self.tableHeadView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
-    self.tableView.headerPullToRefreshText = @"下拉刷新";
-    self.tableView.headerReleaseToRefreshText = @"松开后刷新";
-    self.tableView.headerRefreshingText = @"正在刷新...";
-    [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
-    self.tableView.footerPullToRefreshText = @"上拉加载更多";
-    self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
-    self.tableView.footerRefreshingText = @"正在加载...";
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.mView_text];
     
     [self.mView_text addSubview:self.mTextF_text];
     
     self.tableView.tableFooterView = [[UIView alloc]init];
+
+        [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+        self.tableView.headerPullToRefreshText = @"下拉刷新";
+        self.tableView.headerReleaseToRefreshText = @"松开后刷新";
+        self.tableView.headerRefreshingText = @"正在刷新...";
+        [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+        self.tableView.footerPullToRefreshText = @"上拉加载更多";
+        self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
+        self.tableView.footerRefreshingText = @"正在加载...";
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
+
+
+
+
     //self.tableView.footerHidden = YES;
-    [self.tableView headerEndRefreshing];
-    [self.tableView footerEndRefreshing];
+
 
 }
 
