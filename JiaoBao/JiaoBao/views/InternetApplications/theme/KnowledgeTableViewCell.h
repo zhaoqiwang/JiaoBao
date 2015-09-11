@@ -13,6 +13,7 @@
 #import "AnswerByIdModel.h"
 #import "AnswerDetailModel.h"
 #import "PickContentModel.h"
+#import "ShowPickedModel.h"
 
 @protocol KnowledgeTableViewCellDelegate;
 
@@ -61,6 +62,7 @@
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
 @property (nonatomic,assign) int mInt_flag;//0是首页model、1是回答列表answerModel，3是精选pickContentModel
 @property (nonatomic,strong) PickContentModel *pickContentModel;//精选
+@property(nonatomic,strong)ShowPickedModel *ShowPickedModel;
 
 
 //给标题和答案添加点击事件,赞

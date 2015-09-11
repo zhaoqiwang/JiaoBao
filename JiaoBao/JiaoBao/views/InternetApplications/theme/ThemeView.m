@@ -11,6 +11,7 @@
 #import "MobClick.h"
 #import "CommentViewController.h"
 #import "CategoryViewController.h"
+#import "ChoicenessDetailViewController.h"
 
 @implementation ThemeView
 
@@ -530,6 +531,7 @@
             cell.mLab_Abstracts.hidden = NO;
             cell.mInt_flag = 3;
             cell.pickContentModel = model;
+            cell.tag = indexPath.row;
             NSString *string2 = model.Abstracts;
             string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
@@ -953,6 +955,9 @@
     if (self.mInt_index ==2) {//精选
         if (indexPath.row>0) {
             PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
+            ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
+            detail.pickContentModel = model;
+            [utils pushViewController:detail animated:YES];
         }
     }else{
         QuestionModel *model = [array objectAtIndex:indexPath.row];
@@ -1135,7 +1140,7 @@
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-        PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:knowledgeTableViewCell.tag-1];
+        PickContentModel *model = knowledgeTableViewCell.pickContentModel;
     }else{
         CommentViewController *commentVC = [[CommentViewController alloc]init];
         commentVC.questionModel = knowledgeTableViewCell.model;
@@ -1146,7 +1151,9 @@
 //cell的点击事件---标题
 -(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-        PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:knowledgeTableViewCell.tag-1];
+        ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
+        detail.pickContentModel = knowledgeTableViewCell.pickContentModel;
+        [utils pushViewController:detail animated:YES];
     }else{
         //判断是否来自推荐
         if ([knowledgeTableViewCell.model.tabid integerValue]>0) {//推荐
