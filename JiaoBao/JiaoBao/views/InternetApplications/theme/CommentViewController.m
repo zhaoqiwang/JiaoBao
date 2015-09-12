@@ -574,7 +574,6 @@ if([Data integerValue]==-1)
     if(self.answerModel)
     {
         [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"1"];
-
         
     }
     else
@@ -582,9 +581,7 @@ if([Data integerValue]==-1)
     [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"1"];
     }
     self.btn_tag = 0;
-
 }
-
 
 //获取上面的cellview
 -(KnowledgeTableViewCell*)getMainView
@@ -603,7 +600,17 @@ if([Data integerValue]==-1)
 
     //详情
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 0, 40, cell.mBtn_detail.frame.size.height);
-    [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
+    if(self.topButtonTag ==  1)
+    {
+        [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
+
+        
+    }
+    else
+    {
+        [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
+
+    }
     NSString *string_title = cell.model.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
@@ -920,9 +927,15 @@ if([Data integerValue]==-1)
 }
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
-    detail.mModel_question = knowledgeTableViewCell.model;
-    [utils pushViewController:detail animated:YES];
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    QuestionModel *model = [[QuestionModel alloc] init];
+    model.TabID = self.questionModel.TabID;
+    model.ViewCount = self.questionModel.ViewCount;
+    model.AttCount = self.questionModel.AttCount;
+    model.AnswersCount = self.questionModel.AnswersCount;
+    model.Title = self.questionModel.Title;
+    queston.mModel_question = model;
+    [utils pushViewController:queston animated:YES];
 }
 
 -(void)tapAction:(id)sender

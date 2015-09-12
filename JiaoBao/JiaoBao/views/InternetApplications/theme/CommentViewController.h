@@ -14,7 +14,7 @@
 #import "ButtonView.h"
 #import "KnowledgeTableViewCell.h"
 #import "MJRefresh.h"//上拉下拉刷新
-
+#import "KnowledgeQuestionViewController.h"
 
 
 @interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate,UIWebViewDelegate>
