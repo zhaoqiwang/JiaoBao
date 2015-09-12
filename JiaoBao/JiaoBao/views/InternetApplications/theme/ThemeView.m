@@ -1144,6 +1144,7 @@
     }else{
         CommentViewController *commentVC = [[CommentViewController alloc]init];
         commentVC.questionModel = knowledgeTableViewCell.model;
+        commentVC.topButtonTag = self.mInt_index;
         [utils pushViewController:commentVC animated:YES];
     }
 }
