@@ -365,16 +365,15 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CommentViewController *commentVC = [[CommentViewController alloc]init];
-//    commentVC.questionModel = knowledgeTableViewCell.model;
-    QuestionModel *model = [[QuestionModel alloc] init];
-    model.TabID = self.mModel_question.TabID;
-    model.ViewCount = self.mModel_question.ViewCount;
-    model.AttCount = self.mModel_question.AttCount;
-    model.AnswersCount = self.mModel_question.AnswersCount;
-    model.Title = self.mModel_question.Title;
-    commentVC.questionModel = model;
-    [utils pushViewController:commentVC animated:YES];
+//    CommentViewController *commentVC = [[CommentViewController alloc]init];
+//    QuestionModel *model = [[QuestionModel alloc] init];
+//    model.TabID = self.mModel_question.TabID;
+//    model.ViewCount = self.mModel_question.ViewCount;
+//    model.AttCount = self.mModel_question.AttCount;
+//    model.AnswersCount = self.mModel_question.AnswersCount;
+//    model.Title = self.mModel_question.Title;
+//    commentVC.questionModel = model;
+//    [utils pushViewController:commentVC animated:YES];
 }
 
 -(float)cellHeight:(NSIndexPath *)indexPath{
