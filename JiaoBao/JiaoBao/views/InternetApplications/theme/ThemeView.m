@@ -1140,11 +1140,15 @@
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-//        PickContentModel *model = knowledgeTableViewCell.pickContentModel;
+        PickContentModel *model = knowledgeTableViewCell.pickContentModel;
+        ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
+        detail.pickContentModel = model;
+        [utils pushViewController:detail animated:YES];
     }else{
         CommentViewController *commentVC = [[CommentViewController alloc]init];
         commentVC.questionModel = knowledgeTableViewCell.model;
         commentVC.topButtonTag = self.mInt_index;
+        commentVC.flag = YES;
         [utils pushViewController:commentVC animated:YES];
     }
 }

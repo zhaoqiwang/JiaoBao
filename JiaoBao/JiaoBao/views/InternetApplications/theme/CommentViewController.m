@@ -599,7 +599,7 @@ if([Data integerValue]==-1)
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
 
     //详情
-    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 0, 40, cell.mBtn_detail.frame.size.height);
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
     if(self.topButtonTag ==  1)
     {
         [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
@@ -611,6 +611,10 @@ if([Data integerValue]==-1)
         [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
 
     }
+    if(self.flag == NO)
+    {
+        cell.mBtn_detail.hidden = YES;
+    }
     NSString *string_title = cell.model.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
@@ -621,7 +625,7 @@ if([Data integerValue]==-1)
     cell.mLab_title.font = [UIFont systemFontOfSize:14];
     cell.mLab_title.numberOfLines =0;
     cell.mLab_title.text = cell.model.Title;
-    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, size_title.height);
 
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
@@ -934,6 +938,7 @@ if([Data integerValue]==-1)
     model.AttCount = self.questionModel.AttCount;
     model.AnswersCount = self.questionModel.AnswersCount;
     model.Title = self.questionModel.Title;
+    model.CategorySuject = self.questionModel.CategorySuject;
     queston.mModel_question = model;
     [utils pushViewController:queston animated:YES];
 }

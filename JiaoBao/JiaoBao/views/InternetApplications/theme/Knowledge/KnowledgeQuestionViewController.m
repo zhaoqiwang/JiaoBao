@@ -104,7 +104,7 @@
     [self.view addSubview:self.mTableV_answers];
     
     //邀请回答输入框
-    self.mView_input = [[CustomTextFieldView alloc] initFrame:CGRectMake(0, 0, [dm getInstance].width, 50)];
+    self.mView_input = [[CustomTextFieldView alloc] initFrame:CGRectMake(0, 300, [dm getInstance].width, 51)];
     self.mView_input.delegate = self;
     [self.view addSubview:self.mView_input];
     self.mView_input.hidden = YES;
@@ -533,6 +533,7 @@
     
     commentVC.questionModel = self.mModel_question;
     commentVC.answerModel = knowledgeTableViewCell.answerModel;
+    commentVC.flag = NO;
     [utils pushViewController:commentVC animated:YES];
 }
 
@@ -562,6 +563,8 @@
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.mView_input];
+    
     [utils popViewControllerAnimated:YES];
 }
 
