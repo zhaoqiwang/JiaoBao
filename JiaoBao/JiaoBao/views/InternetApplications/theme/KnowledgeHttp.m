@@ -520,7 +520,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"AnswerDetailWithAId" object:resultDic ];
 
         
-        D("JSON--------AnswerDetailWithAId: %@,", result);
+       // D("JSON--------AnswerDetailWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AnswerDetailWithAId: %@", error);
         NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};

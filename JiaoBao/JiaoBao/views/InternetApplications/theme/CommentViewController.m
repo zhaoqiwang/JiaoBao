@@ -113,7 +113,7 @@
 -(void)refreshComment:(id)sender
 {
     self.mTextF_text.text = @"";
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -920,14 +920,19 @@ if([Data integerValue]==-1)
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-18];
-    NSString* js = @"document.getElementById(\"main\") ? document.getElementById(\"main\").offsetHeight : -1";
-    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:js] floatValue];
+//    NSString* js = @"document.getElementById(\"main\") ? document.getElementById(\"main\").offsetHeight : -1";
+//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:js] floatValue];
 
-//    [webView stringByEvaluatingJavaScriptFromString:meta];
-//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
+    [webView stringByEvaluatingJavaScriptFromString:meta];
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     [self webViewLoadFinish:webViewHeight+10];
 
 }
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    
+}
+
 -(void)updataQuestionDetail:(NSNotification *)noti{
     QuestionDetailModel *model = noti.object;
     self.KnowledgeTableViewCell.mLab_ViewCount.text = [NSString stringWithFormat:@"%d",[model.ViewCount intValue]+1];
