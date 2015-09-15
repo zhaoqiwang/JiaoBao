@@ -20,7 +20,6 @@
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -152,6 +151,8 @@
     if ([flag integerValue]==0) {
         GetArthInfoModel *model = [noti.object objectForKey:@"model"];
         self.mModel_arthInfo = model;
+        //通知主页进行修改点击量、点赞数等值
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfoModel" object:model];
         //判断文章是否有评论
         if (self.mModel_arthInfo.FeeBackCount>0) {
             //获取文章评论
@@ -824,6 +825,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }
 
