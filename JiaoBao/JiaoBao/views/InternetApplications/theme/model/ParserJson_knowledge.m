@@ -654,7 +654,7 @@
     model.TabID = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"TabID"]];
     model.Title = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"Title"]];
     model.PContent = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"PContent"]];
-    model.QID = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"QID"]];
+    model.QID = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"QId"]];
     return model;
 }
 
