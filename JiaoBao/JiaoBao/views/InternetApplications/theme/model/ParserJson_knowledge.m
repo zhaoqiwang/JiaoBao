@@ -284,7 +284,7 @@
 //答案明细
 +(AnswerDetailModel*)parserJsonAnswerDetail:(NSString*)json
 {
-    D("fd;'osgjr;a'sdgj';a-====%@",json);
+    //D("fd;'osgjr;a'sdgj';a-====%@",json);
     AnswerDetailModel *model = [[AnswerDetailModel alloc ]init];
     NSDictionary *dic = [json objectFromJSONString];
     model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
@@ -325,7 +325,6 @@
 //评论列表
 +(AllCommentListModel *)parserJsonCommentsList:(NSString*)json
 {
-    D("json_____ = %@",json);
     AllCommentListModel *model = [[AllCommentListModel alloc ]init];
     NSDictionary *dic = [json objectFromJSONString];
     
