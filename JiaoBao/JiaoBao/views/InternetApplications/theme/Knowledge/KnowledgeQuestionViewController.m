@@ -119,6 +119,7 @@
     if([ResultCode integerValue] != 0)
     {
         [MBProgressHUD showError:ResultDesc];
+        self.mView_input.mTextF_input.text = @"";
         return;
     }
     else

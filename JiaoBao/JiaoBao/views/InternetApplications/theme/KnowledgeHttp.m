@@ -413,6 +413,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         D("JSON--------reportanswerWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------reportanswerWithAId: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
 //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
 //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];

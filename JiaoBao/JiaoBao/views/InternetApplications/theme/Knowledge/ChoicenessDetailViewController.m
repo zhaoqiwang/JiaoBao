@@ -25,23 +25,39 @@
 }
 -(void)ShowPicked:(id)sender
 {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
-    self.ShowPickedModel = [dic objectForKey:@"model"];
-    [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.ShowPickedModel.QID];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!=0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
+    else
+    {
+        self.ShowPickedModel = [dic objectForKey:@"model"];
+        [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.ShowPickedModel.QID];
+        
+        self.KnowledgeTableViewCell = [self getMainView];
+        [self.scrollview addSubview:self.KnowledgeTableViewCell];
+    }
 
-    self.KnowledgeTableViewCell = [self getMainView];
-    [self.scrollview addSubview:self.KnowledgeTableViewCell];
     
     
 }
 -(void)QuestionDetail:(id)noti
 {
-    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSMutableDictionary *dic = [noti object];
-    NSString *code = [dic objectForKey:@"code"];
-    if ([code integerValue] ==0) {
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!=0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
+    else
+    {
         self.QuestionDetailModel = [dic objectForKey:@"model"];
-
 
     }
 }
