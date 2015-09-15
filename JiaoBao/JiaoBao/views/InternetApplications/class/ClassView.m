@@ -77,6 +77,10 @@
         //文章评论
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AirthAddComment" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AirthAddComment:) name:@"AirthAddComment" object:nil];
+        //通知主页进行修改点击量、点赞数等值
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetArthInfoModel" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetArthInfoModel:) name:@"GetArthInfoModel" object:nil];
+
         
         self.mArr_unit = [NSMutableArray array];
         self.mArr_class = [NSMutableArray array];
@@ -180,6 +184,90 @@
     //self.label.font = [UIFont systemFontOfSize:15];
     self.label.textAlignment = NSTextAlignmentCenter;
     return self;
+}
+
+//通知主页进行修改点击量、点赞数等值
+-(void)GetArthInfoModel:(NSNotification *)noti{
+    GetArthInfoModel *model = noti.object;
+    NSString *tableID = [NSString stringWithFormat:@"%@",model.TabIDStr];
+    if (self.mInt_index == 0) {
+        for (int i=0; i<self.mArr_unitTop.count; i++) {
+            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_unit.count; i++) {
+            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+    }else if (self.mInt_index == 1){
+        for (int i=0; i<self.mArr_classTop.count; i++) {
+            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+        for (int i=0; i<self.mArr_class.count; i++) {
+            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+    }else if (self.mInt_index == 2){
+        for (int i=0; i<self.mArr_local.count; i++) {
+            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+    }else if (self.mInt_index == 3){
+        for (int i=0; i<self.mArr_attention.count; i++) {
+            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+    }else if (self.mInt_index == 4){
+        for (int i=0; i<self.mArr_sum.count; i++) {
+            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+            if ([classModel.TabIDStr isEqual:tableID]) {
+                classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
+
+                break;
+            }
+        }
+    }
+    
+    [self.mTableV_list reloadData];
 }
 
 //将获取到的评论列表传到界面
@@ -1601,63 +1689,63 @@
 -(void)ClassTableViewCellContentPress:(ClassTableViewCell *)classCell{
     [MobClick event:@"ClassView_didSelectRow" label:@""];
 
-    NSString *aid = classCell.mModel_class.TabIDStr;
-    if (self.mInt_index == 2 ){
-        for (int i=0; i<self.mArr_unitTop.count; i++) {
-            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_unit.count; i++) {
-            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 3 ){
-        for (int i=0; i<self.mArr_classTop.count; i++) {
-            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-        for (int i=0; i<self.mArr_class.count; i++) {
-            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 1 ){
-        for (int i=0; i<self.mArr_local.count; i++) {
-            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 4 ){
-        for (int i=0; i<self.mArr_attention.count; i++) {
-            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-    }else if (self.mInt_index == 0 ){
-        for (int i=0; i<self.mArr_sum.count; i++) {
-            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
-            if ([classModel.TabIDStr isEqual:aid]) {
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
-                break;
-            }
-        }
-    }
-    [self.mTableV_list reloadData];
+//    NSString *aid = classCell.mModel_class.TabIDStr;
+//    if (self.mInt_index == 2 ){
+//        for (int i=0; i<self.mArr_unitTop.count; i++) {
+//            ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//        for (int i=0; i<self.mArr_unit.count; i++) {
+//            ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//    }else if (self.mInt_index == 3 ){
+//        for (int i=0; i<self.mArr_classTop.count; i++) {
+//            ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//        for (int i=0; i<self.mArr_class.count; i++) {
+//            ClassModel *classModel = [self.mArr_class objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//    }else if (self.mInt_index == 1 ){
+//        for (int i=0; i<self.mArr_local.count; i++) {
+//            ClassModel *classModel = [self.mArr_local objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//    }else if (self.mInt_index == 4 ){
+//        for (int i=0; i<self.mArr_attention.count; i++) {
+//            ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//    }else if (self.mInt_index == 0 ){
+//        for (int i=0; i<self.mArr_sum.count; i++) {
+//            ClassModel *classModel = [self.mArr_sum objectAtIndex:i];
+//            if ([classModel.TabIDStr isEqual:aid]) {
+//                classModel.ClickCount = [NSString stringWithFormat:@"%d",[classModel.ClickCount intValue]+1];
+//                break;
+//            }
+//        }
+//    }
+//    [self.mTableV_list reloadData];
     self.mView_popup.hidden = YES;
     self.mView_text.hidden = YES;
     [self.mTextF_text resignFirstResponder];
