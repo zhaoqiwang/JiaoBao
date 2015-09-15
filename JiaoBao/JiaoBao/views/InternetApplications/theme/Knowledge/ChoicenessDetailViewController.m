@@ -193,6 +193,7 @@
     model.ViewCount = self.QuestionDetailModel.ViewCount;
     model.AttCount = self.QuestionDetailModel.AttCount;
     model.AnswersCount = self.QuestionDetailModel.AnswersCount;
+    model.CategorySuject = self.QuestionDetailModel.Category;
     //model.CategorySuject = self.QuestionDetailModel.CategorySuject;
     queston.mModel_question = model;
     [utils pushViewController:queston animated:YES];
