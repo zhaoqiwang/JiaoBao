@@ -46,6 +46,9 @@
     if ([code integerValue] ==0) {
         self.mArr_list = [dic objectForKey:@"array"];
         [self.mTableV_list reloadData];
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
     }
 }
 

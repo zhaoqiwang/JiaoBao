@@ -59,6 +59,7 @@
     UserInformationModel *model = [[UserInformationModel alloc]init];
     NSDictionary *dic = [json objectFromJSONString];
     model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+    model.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
     model.NickName = [dic objectForKey:@"NickName"];
     model.UserName = [dic objectForKey:@"UserName"];
     model.IdFlag = [dic objectForKey:@"IdFlag"];
@@ -228,7 +229,7 @@
     model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
     model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
     model.FactSign = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FactSign"]];
-    
+//    3451    3048    3682
     return model;
 }
 
@@ -244,6 +245,7 @@
         NSDictionary *dic = [arrList objectAtIndex:i];
         model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        model.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
         model.RecDate = [dic objectForKey:@"RecDate"];
         NSString *str = [utils getLocalTimeDate];
@@ -286,6 +288,7 @@
     NSDictionary *dic = [json objectFromJSONString];
     model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
     model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+    model.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
     model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
     model.RecDate = [dic objectForKey:@"RecDate"];
     NSString *str = [utils getLocalTimeDate];
@@ -424,6 +427,7 @@
         }
         
         model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        model.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         NSArray *temp0 = [[dic objectForKey:@"Thumbnail"] objectFromJSONString];
         model.Thumbnail = [NSMutableArray arrayWithArray:temp0];
         model.rowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"rowCount"]];
@@ -523,6 +527,7 @@
             model.answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
             model.answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
             model.answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
+        model.answerModel.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
             model.answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
             if (model.answerModel.IdFlag.length==0) {
                 model.answerModel.IdFlag = @"匿名回答";
@@ -594,6 +599,7 @@
         answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
         answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
         answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
+        answerModel.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
         answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
         if (answerModel.IdFlag.length==0) {
             answerModel.IdFlag = @"匿名回答";
