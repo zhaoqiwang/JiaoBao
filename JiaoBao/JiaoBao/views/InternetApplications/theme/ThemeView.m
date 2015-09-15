@@ -235,6 +235,9 @@
         for (QuestionModel *model1 in model.mArr_top) {
             model1.mInt_top = 1;
         }
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self];
     }
     [self.mTableV_knowledge reloadData];
 }
@@ -248,6 +251,9 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
         self.mModel_getPickdById = [dic objectForKey:@"model"];
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self];
     }
     [self.mTableV_knowledge reloadData];
 }
@@ -267,6 +273,9 @@
         }else{
             [model.mArr_all addObjectsFromArray:array];
         }
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self];
     }
     [self.mTableV_knowledge reloadData];
 }
@@ -301,6 +310,9 @@
                 [model.mArr_evidence addObjectsFromArray:array];
             }
         }
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self];
     }
     [self.mTableV_knowledge reloadData];
 }
@@ -325,8 +337,10 @@
             [self.mArr_AllCategory addObject:model];
         }
         [self addScrollViewBtn:(int)array.count];
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self];
     }
-   
 }
 
 //首页问题列表
@@ -826,6 +840,8 @@
                 //头像
                 cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
                 [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+                D("dsrgijodfpgj'p-=====%@",model.answerModel.JiaoBaoHao);
+                D("dsrgijodfpgj'p-222=====%@",[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao]);
                 cell.mImgV_head.hidden = NO;
                 //姓名
                 cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);

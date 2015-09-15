@@ -10,6 +10,7 @@
 
 @interface UserInformationModel : NSObject
 @property(nonatomic,strong)NSString *JiaoBaoHao;//教宝号
+@property(nonatomic,strong)NSString *JiaoBaoHao2;//教宝号--如果是匿名回答，这里保存真实教宝号
 @property(nonatomic,strong)NSString *NickName;//昵称
 @property(nonatomic,strong)NSString *UserName;//姓名
 @property(nonatomic,strong)NSString *IdFlag;//称号

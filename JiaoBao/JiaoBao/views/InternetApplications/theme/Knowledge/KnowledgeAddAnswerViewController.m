@@ -97,6 +97,8 @@
         self.mTextV_answer.text = @"";
         self.mLab_answer.hidden = NO;
         self.mLab_content.hidden = NO;
+    }else{
+        
     }
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -112,6 +114,9 @@
         [self addDetailCell:self.mModel_questionDetail];
         //通知其余界面，更新访问量等数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetail" object:self.mModel_questionDetail];
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
 }
 

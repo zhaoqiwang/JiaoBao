@@ -66,6 +66,9 @@
         self.mModel_recomment = [dic objectForKey:@"model"];
         [self.mTableV_answer reloadData];
         [self addDetailCell:self.mModel_recomment];
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
     }
 }
 

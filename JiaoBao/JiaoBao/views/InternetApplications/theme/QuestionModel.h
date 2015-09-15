@@ -21,6 +21,7 @@
 @property(nonatomic,strong)NSString *LastUpdate;//动态更新日期
 @property(nonatomic,strong)NSString *AreaCode;//区域代码
 @property(nonatomic,strong)NSString *JiaoBaoHao;//
+@property(nonatomic,strong)NSString *JiaoBaoHao2;//教宝号--如果是匿名回答，这里保存真实教宝号
 @property(nonatomic,strong)NSString *rowCount;//记录数量，用于取第二页记录起给参数赋值
 @property(nonatomic,strong)NSMutableArray *Thumbnail;//图片url,字符串（url)json数组
 @property(nonatomic,strong)AnswerModel *answerModel;//答案model

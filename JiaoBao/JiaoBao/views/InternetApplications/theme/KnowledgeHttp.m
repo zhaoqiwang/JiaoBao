@@ -98,6 +98,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         D("JSON--------GetAccIdbyNickname: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAccIdbyNickname: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic];
     }];
 }
 -(void)GetUserInfo//取用户信息
@@ -203,6 +205,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAllCategory" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAllCategory: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAllCategory" object:dic];
     }];
 }
 
@@ -301,6 +305,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QuestionDetail" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------QuestionDetailWithQId: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"QuestionDetail" object:dic];
     }];
 }
 
@@ -326,6 +332,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddAnswerWithQId: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"AddAnswer" object:dic];
     }];
 }
 //修改答案 参数描述：答案id - 标题 - 回答的内容
@@ -374,6 +382,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAnswerById" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAnswerByIdWithNumPerPage: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAnswerById" object:dic];
     }];
     
 }
@@ -403,6 +413,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         D("JSON--------reportanswerWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------reportanswerWithAId: %@", error);
+//        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
 
@@ -545,6 +557,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UserIndexQuestionWithNumPerPage: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
     }];
 }
 
@@ -573,6 +588,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CategoryIndexQuestionWith: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
     }];
 }
 
@@ -599,6 +617,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------RecommentIndex: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
     }];
 }
 
@@ -625,6 +646,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------ShowRecomment: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     }];
 }
 
@@ -651,6 +675,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetCategoryTop: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
     }];
 }
 
@@ -676,6 +703,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetPickedById: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
     }];
 }
 
@@ -702,6 +732,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------ShowPicked: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
     }];
 }
 
@@ -728,6 +761,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------PickedIndex: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
     }];
 }
 
