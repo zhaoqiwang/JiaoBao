@@ -27,6 +27,8 @@
 {
     NSDictionary *dic = [sender object];
     self.ShowPickedModel = [dic objectForKey:@"model"];
+    [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.ShowPickedModel.QID];
+
     self.KnowledgeTableViewCell = [self getMainView];
     [self.scrollview addSubview:self.KnowledgeTableViewCell];
     
@@ -40,6 +42,7 @@
     if ([code integerValue] ==0) {
         self.QuestionDetailModel = [dic objectForKey:@"model"];
 
+
     }
 }
 
@@ -52,7 +55,6 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
     [[KnowledgeHttp getInstance]ShowPickedWithTabID:self.pickContentModel.TabID];
-    [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.pickContentModel.TabID];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.pickContentModel.Title];
@@ -86,7 +88,14 @@
     }
     cell.mWebV_comment.hidden = NO;
     cell.mLab_title.hidden = NO;
-    
+    cell.mView_background.hidden = NO;
+    cell.mBtn_detail.hidden = NO;
+    //详情
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
+
+        [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
+
+
 
     NSString *string_title = cell.ShowPickedModel.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -98,9 +107,8 @@
     cell.mLab_title.font = [UIFont systemFontOfSize:18];
     cell.mLab_title.numberOfLines =0;
     cell.mLab_title.text = string_title;
-    cell.mLab_title.frame = CGRectMake(9, 0, [dm getInstance].width-18, size_title.height);
-    cell.mLab_title.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
-    
+    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, size_title.height);
 
  
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
@@ -130,19 +138,19 @@
     
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+50);
     self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height+20);
-    UIButton *detailBtn = [[UIButton alloc]initWithFrame:CGRectMake([dm getInstance].width/2-50, self.KnowledgeTableViewCell.frame.size.height-40, 100, 30)];
-    [self.KnowledgeTableViewCell.contentView addSubview:detailBtn];
-    detailBtn.backgroundColor = [UIColor colorWithRed:68/255.0 green:193/255.0 blue:24/255.0 alpha:1];
-    [detailBtn setTitle:@"原文详情" forState:UIControlStateNormal];
-    [detailBtn addTarget:self action:@selector(detailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [MBProgressHUD hideHUDForView:self.view];
+//    UIButton *detailBtn = [[UIButton alloc]initWithFrame:CGRectMake([dm getInstance].width/2-50, self.KnowledgeTableViewCell.frame.size.height-40, 100, 30)];
+//    [self.KnowledgeTableViewCell.contentView addSubview:detailBtn];
+//    detailBtn.backgroundColor = [UIColor colorWithRed:68/255.0 green:193/255.0 blue:24/255.0 alpha:1];
+//    [detailBtn setTitle:@"原文详情" forState:UIControlStateNormal];
+//    [detailBtn addTarget:self action:@selector(detailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [MBProgressHUD hideHUDForView:self.view];
 
 }
 -(void)detailBtnAction:(id)sender
 {
     KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
     QuestionModel *model = [[QuestionModel alloc] init];
-    model.TabID = self.pickContentModel.TabID;
+    model.TabID = self.ShowPickedModel.QID;
     model.Title = self.pickContentModel.Title;
     model.ViewCount = self.QuestionDetailModel.ViewCount;
     model.AttCount = self.QuestionDetailModel.AttCount;
@@ -162,6 +170,16 @@
 
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    QuestionModel *model = [[QuestionModel alloc] init];
+    model.TabID = self.ShowPickedModel.QID;
+    model.Title = self.pickContentModel.Title;
+    model.ViewCount = self.QuestionDetailModel.ViewCount;
+    model.AttCount = self.QuestionDetailModel.AttCount;
+    model.AnswersCount = self.QuestionDetailModel.AnswersCount;
+    //model.CategorySuject = self.QuestionDetailModel.CategorySuject;
+    queston.mModel_question = model;
+    [utils pushViewController:queston animated:YES];
 
 }
 
