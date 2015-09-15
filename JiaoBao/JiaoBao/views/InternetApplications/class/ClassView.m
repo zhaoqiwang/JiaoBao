@@ -195,7 +195,7 @@
             ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
@@ -204,7 +204,7 @@
             ClassModel *classModel = [self.mArr_unit objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
@@ -214,7 +214,7 @@
             ClassModel *classModel = [self.mArr_classTop objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
@@ -223,7 +223,7 @@
             ClassModel *classModel = [self.mArr_class objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
@@ -233,7 +233,7 @@
             ClassModel *classModel = [self.mArr_local objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
@@ -243,7 +243,7 @@
             ClassModel *classModel = [self.mArr_attention objectAtIndex:i];
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
@@ -254,7 +254,7 @@
             D("sdl;fgjad;fgiljsdj-===%@,%@",classModel.TabIDStr,tableID);
             if ([classModel.TabIDStr isEqual:tableID]) {
                 classModel.ViewCount = [NSString stringWithFormat:@"%d",model.ViewCount+1];
-                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount];
+                classModel.ClickCount = [NSString stringWithFormat:@"%d",model.ClickCount+1];
                 classModel.LikeCount = [NSString stringWithFormat:@"%d",model.LikeCount];
                 break;
             }
