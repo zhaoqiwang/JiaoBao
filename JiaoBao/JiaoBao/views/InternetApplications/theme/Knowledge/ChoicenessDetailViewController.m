@@ -10,6 +10,7 @@
 #import "KnowledgeTableViewCell.h"
 #import "dm.h"
 #import "KnowledgeHttp.h"
+#import "KnowledgeQuestionViewController.h"
 
 @interface ChoicenessDetailViewController ()<KnowledgeTableViewCellDelegate,UIWebViewDelegate>
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
@@ -31,14 +32,30 @@
     
     
 }
+-(void)QuestionDetail:(id)noti
+{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = [noti object];
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue] ==0) {
+        self.QuestionDetailModel = [dic objectForKey:@"model"];
+
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"ShowPicked" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(ShowPicked:) name:@"ShowPicked" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"QuestionDetail" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
     [[KnowledgeHttp getInstance]ShowPickedWithTabID:self.pickContentModel.TabID];
+    [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.pickContentModel.TabID];
+    
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"回答"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.pickContentModel.Title];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -73,15 +90,16 @@
 
     NSString *string_title = cell.ShowPickedModel.Title;
     string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
+    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
     if (size_title.height>20) {
         size_title = CGSizeMake(size_title.width, size_title.height);
     }
     cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.mLab_title.font = [UIFont systemFontOfSize:14];
+    cell.mLab_title.font = [UIFont systemFontOfSize:18];
     cell.mLab_title.numberOfLines =0;
-    cell.mLab_title.text = cell.ShowPickedModel.Title;
+    cell.mLab_title.text = string_title;
     cell.mLab_title.frame = CGRectMake(9, 0, [dm getInstance].width-18, size_title.height);
+    cell.mLab_title.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
     
 
  
@@ -92,8 +110,10 @@
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,content];
+        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,content];
         [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+
         //加载
         //[self webViewLoadFinish:0];
         
@@ -106,22 +126,43 @@
 
 -(void)webViewLoadFinish:(float)height{
     self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height, [dm getInstance].width, height+160);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height, [dm getInstance].width, height);
     
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+50);
     self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height+20);
     UIButton *detailBtn = [[UIButton alloc]initWithFrame:CGRectMake([dm getInstance].width/2-50, self.KnowledgeTableViewCell.frame.size.height-40, 100, 30)];
     [self.KnowledgeTableViewCell.contentView addSubview:detailBtn];
-    detailBtn.backgroundColor = [UIColor lightGrayColor];
+    detailBtn.backgroundColor = [UIColor colorWithRed:68/255.0 green:193/255.0 blue:24/255.0 alpha:1];
     [detailBtn setTitle:@"原文详情" forState:UIControlStateNormal];
+    [detailBtn addTarget:self action:@selector(detailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [MBProgressHUD hideHUDForView:self.view];
 
+}
+-(void)detailBtnAction:(id)sender
+{
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    QuestionModel *model = [[QuestionModel alloc] init];
+    model.TabID = self.pickContentModel.TabID;
+    model.Title = self.pickContentModel.Title;
+    model.ViewCount = self.QuestionDetailModel.ViewCount;
+    model.AttCount = self.QuestionDetailModel.AttCount;
+    model.AnswersCount = self.QuestionDetailModel.AnswersCount;
+    //model.CategorySuject = self.QuestionDetailModel.CategorySuject;
+    queston.mModel_question = model;
+    [utils pushViewController:queston animated:YES];
+    
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-18];
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     [self webViewLoadFinish:webViewHeight+10];
+}
+
+//cell的点击事件---详情
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+
 }
 
 -(void)myNavigationGoback{

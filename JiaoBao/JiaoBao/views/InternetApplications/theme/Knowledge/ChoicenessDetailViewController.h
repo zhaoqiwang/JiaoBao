@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "PickContentModel.h"
 #import "MyNavigationBar.h"
+#import "QuestionDetailModel.h"
 
 
 
 @interface ChoicenessDetailViewController : UIViewController<MyNavigationDelegate>
 @property(nonatomic,strong)PickContentModel *pickContentModel;
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
-
+@property(nonatomic,strong)QuestionDetailModel *QuestionDetailModel;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
 
 
