@@ -212,6 +212,8 @@
     model.KnContent = [dic objectForKey:@"KnContent"];
     model.AreaCode = [dic objectForKey:@"AreaCode"];
     model.AtAccIds = [dic objectForKey:@"AtAccIds"];
+    model.Category = [dic objectForKey:@"Category"];
+    model.MyAnswerId = [dic objectForKey:@"MyAnswerId"];
     
     model.Tag = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Tag"]];
     model.NickName = [dic objectForKey:@"NickName"];
@@ -229,7 +231,6 @@
     model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
     model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
     model.FactSign = [NSString stringWithFormat:@"%@",[dic objectForKey:@"FactSign"]];
-//    3451    3048    3682
     return model;
 }
 
