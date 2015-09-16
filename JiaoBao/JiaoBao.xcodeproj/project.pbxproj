@@ -835,6 +835,12 @@
 		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F73DDB931BA9110000DD8228 /* InvitationUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */; };
+		F73DDB971BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB951BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m */; };
+		F73DDB981BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F73DDB961BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib */; };
+		F73DDB9C1BA9600700DD8228 /* KpeopleSpaceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB9A1BA9600700DD8228 /* KpeopleSpaceCell.m */; };
+		F73DDB9D1BA9600700DD8228 /* KpeopleSpaceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F73DDB9B1BA9600700DD8228 /* KpeopleSpaceCell.xib */; };
+		F73DDBA11BA9642D00DD8228 /* HeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB9F1BA9642D00DD8228 /* HeadCell.m */; };
+		F73DDBA21BA9642D00DD8228 /* HeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F73DDBA01BA9642D00DD8228 /* HeadCell.xib */; };
 		F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639921B0EC53D00365EB7 /* libicucore.dylib */; };
 		F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */; };
 		F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639961B0EC5DA00365EB7 /* CoreText.framework */; };
@@ -2137,6 +2143,15 @@
 		F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHImagePickerMutilSelector.m; path = Common/MHImagePick/MHImagePickerMutilSelector.m; sourceTree = "<group>"; };
 		F73DDB911BA9110000DD8228 /* InvitationUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationUserInfo.h; sourceTree = "<group>"; };
 		F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationUserInfo.m; sourceTree = "<group>"; };
+		F73DDB941BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnowledgePeoleSpaceViewController.h; path = views/InternetApplications/personalSpace/KnowledgePeoleSpaceViewController.h; sourceTree = "<group>"; };
+		F73DDB951BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KnowledgePeoleSpaceViewController.m; path = views/InternetApplications/personalSpace/KnowledgePeoleSpaceViewController.m; sourceTree = "<group>"; };
+		F73DDB961BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KnowledgePeoleSpaceViewController.xib; path = views/InternetApplications/personalSpace/KnowledgePeoleSpaceViewController.xib; sourceTree = "<group>"; };
+		F73DDB991BA9600700DD8228 /* KpeopleSpaceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KpeopleSpaceCell.h; path = views/InternetApplications/personalSpace/KpeopleSpaceCell.h; sourceTree = "<group>"; };
+		F73DDB9A1BA9600700DD8228 /* KpeopleSpaceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KpeopleSpaceCell.m; path = views/InternetApplications/personalSpace/KpeopleSpaceCell.m; sourceTree = "<group>"; };
+		F73DDB9B1BA9600700DD8228 /* KpeopleSpaceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KpeopleSpaceCell.xib; path = views/InternetApplications/personalSpace/KpeopleSpaceCell.xib; sourceTree = "<group>"; };
+		F73DDB9E1BA9642D00DD8228 /* HeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadCell.h; sourceTree = "<group>"; };
+		F73DDB9F1BA9642D00DD8228 /* HeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadCell.m; sourceTree = "<group>"; };
+		F73DDBA01BA9642D00DD8228 /* HeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeadCell.xib; sourceTree = "<group>"; };
 		F74639921B0EC53D00365EB7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		F74639961B0EC5DA00365EB7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -4353,6 +4368,15 @@
 				A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */,
 				A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */,
 				A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */,
+				F73DDB941BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.h */,
+				F73DDB951BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m */,
+				F73DDB961BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib */,
+				F73DDB9E1BA9642D00DD8228 /* HeadCell.h */,
+				F73DDB9F1BA9642D00DD8228 /* HeadCell.m */,
+				F73DDBA01BA9642D00DD8228 /* HeadCell.xib */,
+				F73DDB991BA9600700DD8228 /* KpeopleSpaceCell.h */,
+				F73DDB9A1BA9600700DD8228 /* KpeopleSpaceCell.m */,
+				F73DDB9B1BA9600700DD8228 /* KpeopleSpaceCell.xib */,
 				F78D38631B218727005C17F0 /* MobileUnitViewController.h */,
 				F78D38641B218727005C17F0 /* MobileUnitViewController.m */,
 				F78D38651B218727005C17F0 /* MobileUnitViewController.xib */,
@@ -4682,6 +4706,7 @@
 				A7AD8C4E19F644A2002E65FB /* tabbar_app1.png in Resources */,
 				A727C7DE1A6F93780019C4CD /* share_lookBig@2x.png in Resources */,
 				F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */,
+				F73DDB981BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib in Resources */,
 				A77F9F3E1AFCAAC90003E579 /* appNav_dongtai@2x.png in Resources */,
 				A77F9F451AFCAAC90003E579 /* appNav_work@3x.png in Resources */,
 				A73D9C121A368EDF004CE4D5 /* RongYun_discussion@2x.png in Resources */,
@@ -4698,6 +4723,7 @@
 				A70179871AB91D2100E7093F /* work_accessory.png in Resources */,
 				A71D61C51A1C797800B8D33D /* share_look@2x.png in Resources */,
 				A773FC271A4B9869005F84C2 /* SelectionCell.xib in Resources */,
+				F73DDB9D1BA9600700DD8228 /* KpeopleSpaceCell.xib in Resources */,
 				A76D74731A69095A008F5856 /* share_like_0.png in Resources */,
 				F79D84D51ABD4DC000897477 /* DetailSubmitViewController.xib in Resources */,
 				A7BB180719F4F91E00A81286 /* Regiser_passwd_1@2x.png in Resources */,
@@ -4801,6 +4827,7 @@
 				A7AD8C5819F644A2002E65FB /* tabbar_student2.png in Resources */,
 				A753FAED1A1DDC0300AB5F22 /* share_tableV_education.png in Resources */,
 				A74D269A1B58FAE200E63DFB /* record_animate_12.png in Resources */,
+				F73DDBA21BA9642D00DD8228 /* HeadCell.xib in Resources */,
 				F7502A291AEE1E50004F822F /* selected@3x.png in Resources */,
 				A727C7D61A6F93780019C4CD /* share_clickBig@3x.png in Resources */,
 				A77116031A4D11930042CB91 /* noPhoto@2x.png in Resources */,
@@ -5173,6 +5200,7 @@
 				F73DDB931BA9110000DD8228 /* InvitationUserInfo.m in Sources */,
 				F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */,
 				A755E70919F278B900BBDF3D /* ASIWebPageRequest.m in Sources */,
+				F73DDBA11BA9642D00DD8228 /* HeadCell.m in Sources */,
 				A7595E931A5FC2F30027848E /* MWPhoto.m in Sources */,
 				A753E5221A1B2C51005A8EED /* TopArthListCell.m in Sources */,
 				A75046991A0A3BD900C54ECC /* UnitClassRevicerModel.m in Sources */,
@@ -5250,6 +5278,7 @@
 				A74937E01ACA8A4F00F96741 /* ClassTopViewController.m in Sources */,
 				F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */,
 				A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */,
+				F73DDB9C1BA9600700DD8228 /* KpeopleSpaceCell.m in Sources */,
 				A743394F1A452B7700AFC0A5 /* SDWebImageCompat.m in Sources */,
 				F7F7AD6F1B7C30EE00923B60 /* CategoryViewController.m in Sources */,
 				A749B9FA19F8F3E40036F480 /* TreeView_Level2_Model.m in Sources */,
@@ -5536,6 +5565,7 @@
 				A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */,
 				A79A1B0F1B9ED67E00028823 /* CustomTextFieldView.m in Sources */,
 				A7216E361A3A7B010093876A /* KxMenu.m in Sources */,
+				F73DDB971BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m in Sources */,
 				A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */,
 				A755E71C19F278B900BBDF3D /* SBJsonWriter.m in Sources */,
 				A7595EA01A5FC2F30027848E /* PSTCollectionViewFlowLayout.m in Sources */,

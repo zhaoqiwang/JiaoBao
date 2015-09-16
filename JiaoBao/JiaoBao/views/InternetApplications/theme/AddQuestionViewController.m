@@ -257,7 +257,16 @@
             [jiaobaohaoArr addObject:model.JiaoBaoHao];
             
         }
-        NSString *str = [jiaobaohaoArr objectAtIndex:0];
+        NSString *str;
+        if(jiaobaohaoArr.count>0)
+        {
+            str = [jiaobaohaoArr objectAtIndex:0];
+
+        }
+        else
+        {
+            str = @"";
+        }
         NSString *content = self.mTextV_content.text;
         for (int i=0; i<self.mArr_pic.count; i++) {
             UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
