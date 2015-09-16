@@ -116,5 +116,9 @@
 
 //获取各期精选列表  参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- (记录数量)
 -(void)PickedIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+//关注某一个问题 参数描述：问题ID
+-(void)AddMyAttQWithqId:(NSString*)qId;
+//邀请指定的用户回答问题 参数描述：被邀请的用户教宝号 - 问题ID
+-(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId;
 
 @end
