@@ -768,4 +768,45 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
+-(void)AddMyAttQWithqId:(NSString*)qId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddMyAttQ",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"qId":qId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------AddMyAttQWithqId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AddMyAttQWithqId: %@", error);
+
+    }];
+}
+-(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AtMeForAnswer",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"accId":accId,@"qId":qId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------AtMeForAnswerWithAccId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AtMeForAnswerWithAccId: %@", error);
+        
+    }];
+}
+
 @end

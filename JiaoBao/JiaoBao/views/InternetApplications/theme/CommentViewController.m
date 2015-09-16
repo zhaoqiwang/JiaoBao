@@ -234,6 +234,9 @@ if([Data integerValue]==-1)
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //[[KnowledgeHttp getInstance]AddMyAttQWithqId:@"11"];
+    [[KnowledgeHttp getInstance]AtMeForAnswerWithAccId:@"5233355" qId:@"11"];
+
     self.mInt_reloadData = 0;
     self.btn_tag = -1;
     //通知界面，更新访问量等数据

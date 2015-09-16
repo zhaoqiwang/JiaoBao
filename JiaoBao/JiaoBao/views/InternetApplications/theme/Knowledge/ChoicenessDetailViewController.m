@@ -25,7 +25,7 @@
 }
 -(void)ShowPicked:(id)sender
 {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -47,7 +47,7 @@
 }
 -(void)QuestionDetail:(id)noti
 {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSMutableDictionary *dic = [noti object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -71,6 +71,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
     [[KnowledgeHttp getInstance]ShowPickedWithTabID:self.pickContentModel.TabID];
+    [MBProgressHUD showMessage:@"" toView:self.view];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.pickContentModel.Title];
