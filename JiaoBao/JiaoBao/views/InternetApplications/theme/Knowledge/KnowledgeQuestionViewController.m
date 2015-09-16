@@ -85,9 +85,6 @@
     self.mBtnV_btn.delegate = self;
     [self.view addSubview:self.mBtnV_btn];
     
-    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
-    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
-    
     self.mTableV_answers = [[UITableView alloc] init];
     self.mTableV_answers.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-(self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height));
     self.mTableV_answers.delegate = self;
@@ -108,6 +105,8 @@
     self.mView_input.delegate = self;
     [self.view addSubview:self.mView_input];
     self.mView_input.hidden = YES;
+    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 //通过昵称获取教宝号
 -(void)GetAccIdbyNickname:(id)sender
