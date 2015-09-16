@@ -28,4 +28,6 @@
 @property(nonatomic,assign)int mInt_btn;//是否显示全部、有证据、在讨论等按钮标识，默认0不显示，1显示，2是当前的话题行
 @property(nonatomic,assign)int mInt_top;//1为置顶数据，0为普通
 
+@property(nonatomic,strong)NSString *Tag;//我已关注该问题，0未关注,1已关注--自己添加
+
 @end

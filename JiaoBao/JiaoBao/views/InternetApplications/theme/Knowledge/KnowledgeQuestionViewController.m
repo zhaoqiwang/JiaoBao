@@ -39,6 +39,12 @@
     //通知界面，更新访问量等数据
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
+    //是否关注该问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMyAttQWithqId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddMyAttQWithqId:) name:@"AddMyAttQWithqId" object:nil];
+    //邀请指定的用户回答问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
     
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
@@ -108,6 +114,45 @@
     [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
+
+//是否关注该问题
+-(void)AddMyAttQWithqId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_answers headerEndRefreshing];
+    [self.mTableV_answers footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0) {
+        //修改model中的值，和界面显示
+        self.mModel_question.Tag = @"1";
+        for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+            if (view.tag ==102) {
+                view.mLab_title.text = @"已关注";
+            }
+        }
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
+//邀请指定的用户回答问题
+-(void)AtMeForAnswerWithAccId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_answers headerEndRefreshing];
+    [self.mTableV_answers footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0) {
+        
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
 //通过昵称获取教宝号
 -(void)GetAccIdbyNickname:(id)sender
 {
@@ -123,56 +168,54 @@
     }
     else
     {
-        NSArray *arr = [dic objectForKey:@"array"];
-        self.NameModelArr = [NSMutableArray arrayWithArray:arr];
-        NSMutableArray *jiaobaohaoArr = [[NSMutableArray alloc]initWithCapacity:0];
+        NSString *accid = @"5150001";
+        [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         
-        for(int i=0;i<arr.count;i++)
-        {
-            NickNameModel *model = [arr objectAtIndex:i];
-            NSString *jiaobaohao = model.JiaoBaoHao;
-            [jiaobaohaoArr addObject:jiaobaohao];
-            
-        }
-        
-            NSMutableArray *nameArr = [[NSMutableArray alloc]initWithCapacity:0];
-                if(self.NameModelArr.count == 0)
-                {
-                    NSString *nameStr = [self.nickNameArr componentsJoinedByString:@","];
-                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请失败" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertView show];
-                    
-                }
-                else
-                {
-                    for(int i=0;i<self.NameModelArr.count;i++)
-                    {
-                        NickNameModel *model = [self.NameModelArr objectAtIndex:i];
-                        [nameArr addObject:model.NickName];
-                        if ([self.nickNameArr containsObject:model.NickName]) {
-                            [self.nickNameArr removeObject:model.NickName];
-                        }
-                        
-                    }
-                    NSString *str = [nameArr componentsJoinedByString:@","];
-                    NSString *errorStr = [self.nickNameArr componentsJoinedByString:@","];
-                    if(self.nickNameArr.count == 0)
-                    {
-                        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功",str] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                        [alertView show];
-                    }
-                    else
-                    {
-                        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功,不存在邀请人%@",str,errorStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                        [alertView show];
-                        
-                    }
-                    
-                    
-                }
-                
-
-        
+//        NSArray *arr = [dic objectForKey:@"array"];
+//        self.NameModelArr = [NSMutableArray arrayWithArray:arr];
+//        NSMutableArray *jiaobaohaoArr = [[NSMutableArray alloc]initWithCapacity:0];
+//        
+//        for(int i=0;i<arr.count;i++)
+//        {
+//            NickNameModel *model = [arr objectAtIndex:i];
+//            NSString *jiaobaohao = model.JiaoBaoHao;
+//            [jiaobaohaoArr addObject:jiaobaohao];
+//            
+//        }
+//        
+//        NSMutableArray *nameArr = [[NSMutableArray alloc]initWithCapacity:0];
+//        if(self.NameModelArr.count == 0)
+//        {
+//            NSString *nameStr = [self.nickNameArr componentsJoinedByString:@","];
+//            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请失败" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//            [alertView show];
+//            
+//        }
+//        else
+//        {
+//            for(int i=0;i<self.NameModelArr.count;i++)
+//            {
+//                NickNameModel *model = [self.NameModelArr objectAtIndex:i];
+//                [nameArr addObject:model.NickName];
+//                if ([self.nickNameArr containsObject:model.NickName]) {
+//                    [self.nickNameArr removeObject:model.NickName];
+//                }
+//            }
+//            NSString *str = [nameArr componentsJoinedByString:@","];
+//            NSString *errorStr = [self.nickNameArr componentsJoinedByString:@","];
+//            if(self.nickNameArr.count == 0)
+//            {
+//                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功",str] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                [alertView show];
+//            }
+//            else
+//            {
+//                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功,不存在邀请人%@",str,errorStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//                [alertView show];
+//                
+//            }
+//        }
     }
     self.mView_input.mTextF_input.text = @"";
 }
@@ -546,8 +589,13 @@
     }else if (view.tag == 101){//邀请回答
         self.mView_input.hidden = NO;
         [self.mView_input.mTextF_input becomeFirstResponder];
-    }else if (view.tag == 102){
-        
+    }else if (view.tag == 102){//关注问题
+        if ([self.mModel_question.Tag intValue]>0) {
+            [MBProgressHUD showSuccess:@"已关注该问题" toView:self.view];
+        }else{
+            [[KnowledgeHttp getInstance] AddMyAttQWithqId:self.mModel_question.TabID];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        }
     }
 }
 
