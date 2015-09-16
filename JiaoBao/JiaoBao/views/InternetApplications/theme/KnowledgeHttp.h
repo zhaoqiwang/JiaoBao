@@ -118,7 +118,28 @@
 -(void)PickedIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
 //关注某一个问题 参数描述：问题ID
 -(void)AddMyAttQWithqId:(NSString*)qId;
+
 //邀请指定的用户回答问题 参数描述：被邀请的用户教宝号 - 问题ID
 -(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId;
 
+//获取我关注的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)MyAttQIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+
+//邀请我回答的问题 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)AtMeQIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+
+//获取我提出的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)MyQuestionIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+
+//获取我参与回答的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)MyAnswerIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+
+//获取我关注的话题ID数组
+-(void)GetMyattCate;
+
+//更新我关注的话题
+-(void)AddMyattCateWithuid:(NSString*)uid;
+
+//邀请人回答时，获取回答该话题问题最多的用户列表（4个）参数描述：(用户账户) - （邀请人回答的问题的话题ID）
+-(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid;
 @end

@@ -834,6 +834,7 @@
 		F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D691B86BE4A00D90487 /* XPathQuery.m */; };
 		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F73DDB931BA9110000DD8228 /* InvitationUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */; };
 		F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639921B0EC53D00365EB7 /* libicucore.dylib */; };
 		F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */; };
 		F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639961B0EC5DA00365EB7 /* CoreText.framework */; };
@@ -2134,6 +2135,8 @@
 		F72A726B1B2BBCFC00378C95 /* RightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightModel.m; path = views/InternetApplications/workView/NewWorkViewC/RightModel.m; sourceTree = "<group>"; };
 		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
 		F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHImagePickerMutilSelector.m; path = Common/MHImagePick/MHImagePickerMutilSelector.m; sourceTree = "<group>"; };
+		F73DDB911BA9110000DD8228 /* InvitationUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationUserInfo.h; sourceTree = "<group>"; };
+		F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationUserInfo.m; sourceTree = "<group>"; };
 		F74639921B0EC53D00365EB7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		F74639961B0EC5DA00365EB7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -2561,6 +2564,8 @@
 				A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */,
 				A7AA1C481B9145EC0098E101 /* PickedIndexModel.h */,
 				A7AA1C491B9145EC0098E101 /* PickedIndexModel.m */,
+				F73DDB911BA9110000DD8228 /* InvitationUserInfo.h */,
+				F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -5165,6 +5170,7 @@
 				F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */,
 				A755E67619F2492800BBDF3D /* AppDelegate.m in Sources */,
 				A743395B1A452B7700AFC0A5 /* UIView+WebCacheOperation.m in Sources */,
+				F73DDB931BA9110000DD8228 /* InvitationUserInfo.m in Sources */,
 				F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */,
 				A755E70919F278B900BBDF3D /* ASIWebPageRequest.m in Sources */,
 				A7595E931A5FC2F30027848E /* MWPhoto.m in Sources */,

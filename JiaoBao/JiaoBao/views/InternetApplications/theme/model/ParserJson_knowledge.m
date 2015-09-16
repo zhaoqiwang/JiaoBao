@@ -20,6 +20,7 @@
 #import "AnswerDetailModel.h"
 #import "commentListModel.h"
 #import "utils.h"
+#import "InvitationUserInfo.h"
 
 @implementation ParserJson_knowledge
 
@@ -683,6 +684,21 @@
     
     return array;
 }
-
+//邀请人回答时，获取回答该话题问题最多的用户列表（4个）
++(NSMutableArray*)parserJsonInvitationUserInfo:(NSString*)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++){
+        InvitationUserInfo *model = [[InvitationUserInfo alloc ]init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
+        model.NickName = [dic objectForKey:@"NickName"];
+        model.UserPoint = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UserPoint"]];
+        model.UserDesc = [NSString stringWithFormat:@"%@",[dic objectForKey:@"RowCount"]];
+        [array addObject:model];
+    }
+    return array;
+}
 
 @end

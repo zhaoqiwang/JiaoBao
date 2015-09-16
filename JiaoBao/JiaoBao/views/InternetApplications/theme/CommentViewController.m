@@ -235,8 +235,12 @@ if([Data integerValue]==-1)
 - (void)viewDidLoad {
     [super viewDidLoad];
     //[[KnowledgeHttp getInstance]AddMyAttQWithqId:@"11"];
-    [[KnowledgeHttp getInstance]AtMeForAnswerWithAccId:@"5233355" qId:@"11"];
-
+    //[[KnowledgeHttp getInstance]AtMeForAnswerWithAccId:@"5233355" qId:@"11"];
+    //[[KnowledgeHttp getInstance]MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
+    //[[KnowledgeHttp getInstance]MyAnswerIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
+//    [[KnowledgeHttp getInstance]GetMyattCate];
+//    [[KnowledgeHttp getInstance]AddMyattCateWithuid:@"11,15,45"];
+    //[[KnowledgeHttp getInstance]GetAtMeUsersWithuid:@"" catid:@"3"];
     self.mInt_reloadData = 0;
     self.btn_tag = -1;
     //通知界面，更新访问量等数据

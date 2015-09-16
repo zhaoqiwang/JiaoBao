@@ -72,6 +72,8 @@
 
 //获取各期精选列表
 +(NSMutableArray *)parserJsonPickedIndex:(NSString *)json;
+//邀请人回答时，获取回答该话题问题最多的用户列表（4个）
++(NSMutableArray*)parserJsonInvitationUserInfo:(NSString*)json;
 
 
 @end

@@ -254,11 +254,10 @@
         for(int i=0;i<arr.count;i++)
         {
             NickNameModel *model = [arr objectAtIndex:i];
-            NSString *jiaobaohao = model.JiaoBaoHao;
-            [jiaobaohaoArr addObject:jiaobaohao];
+            [jiaobaohaoArr addObject:model.JiaoBaoHao];
             
         }
-        NSString *str = [jiaobaohaoArr componentsJoinedByString:@","];
+        NSString *str = [jiaobaohaoArr objectAtIndex:0];
         NSString *content = self.mTextV_content.text;
         for (int i=0; i<self.mArr_pic.count; i++) {
             UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
@@ -285,7 +284,6 @@
     }
     else
     {
-        NSMutableArray *nameArr = [[NSMutableArray alloc]initWithCapacity:0];
         if(self.nickNameArr == nil)
         {
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -296,44 +294,20 @@
         {
             if(self.NameModelArr.count == 0)
             {
-                NSString *nameStr = [self.nickNameArr componentsJoinedByString:@","];
+                NSString *nameStr = [self.nickNameArr objectAtIndex:0];
                 UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 [alertView show];
                 
             }
             else
             {
-                for(int i=0;i<self.NameModelArr.count;i++)
-                {
-                    NickNameModel *model = [self.NameModelArr objectAtIndex:i];
-                    [nameArr addObject:model.NickName];
-                    if ([self.nickNameArr containsObject:model.NickName]) {
-                        [self.nickNameArr removeObject:model.NickName];
-                    }
-                    
-                }
-                NSString *str = [nameArr componentsJoinedByString:@","];
-                NSString *errorStr = [self.nickNameArr componentsJoinedByString:@","];
-                if(self.nickNameArr.count == 0)
-                {
-                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"邀请%@成功",str] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertView show];
-                }
-                else
-                {
-                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"邀请%@成功,不存在邀请人%@",str,errorStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertView show];
-                    
-                }
+                NSString *nameStr = [self.nickNameArr objectAtIndex:0];
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"邀请%@成功",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [alertView show];
 
-                
             }
 
-
-            
         }
-
-
 
         self.provinceTF.text = @"";
         self.regionTF.text = @"";
@@ -509,10 +483,11 @@
 //    content = [NSString stringWithFormat:@"<p>%@</p>",content];
 //    D("content--------%@",content);
     
-    NSArray *arr = [self.atAccIdsTF.text componentsSeparatedByString:@","];
-    self.nickNameArr = [NSMutableArray arrayWithArray:arr];
+//    NSArray *arr = [self.atAccIdsTF.text componentsSeparatedByString:@","];
+//    self.nickNameArr = [NSMutableArray arrayWithArray:arr];
+    self.nickNameArr = [NSMutableArray arrayWithObject:self.atAccIdsTF.text];
     
-    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
+    [[KnowledgeHttp getInstance]GetAccIdbyNickname:self.nickNameArr];
     
 
     //[MBProgressHUD showMessage:@""];

@@ -131,46 +131,10 @@
         for(int i=0;i<arr.count;i++)
         {
             NickNameModel *model = [arr objectAtIndex:i];
-            NSString *jiaobaohao = model.JiaoBaoHao;
-            [jiaobaohaoArr addObject:jiaobaohao];
+            [jiaobaohaoArr addObject:model.JiaoBaoHao];
             
         }
-        
-            NSMutableArray *nameArr = [[NSMutableArray alloc]initWithCapacity:0];
-                if(self.NameModelArr.count == 0)
-                {
-                    NSString *nameStr = [self.nickNameArr componentsJoinedByString:@","];
-                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请失败" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                    [alertView show];
-                    
-                }
-                else
-                {
-                    for(int i=0;i<self.NameModelArr.count;i++)
-                    {
-                        NickNameModel *model = [self.NameModelArr objectAtIndex:i];
-                        [nameArr addObject:model.NickName];
-                        if ([self.nickNameArr containsObject:model.NickName]) {
-                            [self.nickNameArr removeObject:model.NickName];
-                        }
-                        
-                    }
-                    NSString *str = [nameArr componentsJoinedByString:@","];
-                    NSString *errorStr = [self.nickNameArr componentsJoinedByString:@","];
-                    if(self.nickNameArr.count == 0)
-                    {
-                        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功",str] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                        [alertView show];
-                    }
-                    else
-                    {
-                        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"邀请成功" message:[NSString stringWithFormat:@"邀请%@成功,不存在邀请人%@",str,errorStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                        [alertView show];
-                        
-                    }
-                    
-                    
-                }
+        NSString *jiaobaohao = [jiaobaohaoArr objectAtIndex:0];
                 
 
         
