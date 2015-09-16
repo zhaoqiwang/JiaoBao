@@ -39,6 +39,12 @@
     //通知界面，更新访问量等数据
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
+    //是否关注该问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMyAttQWithqId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddMyAttQWithqId:) name:@"AddMyAttQWithqId" object:nil];
+    //邀请指定的用户回答问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
     
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
@@ -85,9 +91,6 @@
     self.mBtnV_btn.delegate = self;
     [self.view addSubview:self.mBtnV_btn];
     
-    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
-    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
-    
     self.mTableV_answers = [[UITableView alloc] init];
     self.mTableV_answers.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-(self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height));
     self.mTableV_answers.delegate = self;
@@ -108,7 +111,48 @@
     self.mView_input.delegate = self;
     [self.view addSubview:self.mView_input];
     self.mView_input.hidden = YES;
+    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
+
+//是否关注该问题
+-(void)AddMyAttQWithqId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_answers headerEndRefreshing];
+    [self.mTableV_answers footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0) {
+        //修改model中的值，和界面显示
+        self.mModel_question.Tag = @"1";
+        for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+            if (view.tag ==102) {
+                view.mLab_title.text = @"已关注";
+            }
+        }
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
+//邀请指定的用户回答问题
+-(void)AtMeForAnswerWithAccId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_answers headerEndRefreshing];
+    [self.mTableV_answers footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0) {
+        
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
 //通过昵称获取教宝号
 -(void)GetAccIdbyNickname:(id)sender
 {
@@ -134,9 +178,10 @@
             [jiaobaohaoArr addObject:model.JiaoBaoHao];
             
         }
-        NSString *jiaobaohao = [jiaobaohaoArr objectAtIndex:0];
-                
-
+        NSString *accid = [jiaobaohaoArr objectAtIndex:0];
+        
+        [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         
     }
     self.mView_input.mTextF_input.text = @"";
@@ -511,8 +556,13 @@
     }else if (view.tag == 101){//邀请回答
         self.mView_input.hidden = NO;
         [self.mView_input.mTextF_input becomeFirstResponder];
-    }else if (view.tag == 102){
-        
+    }else if (view.tag == 102){//关注问题
+        if ([self.mModel_question.Tag intValue]>0) {
+            [MBProgressHUD showSuccess:@"已关注该问题" toView:self.view];
+        }else{
+            [[KnowledgeHttp getInstance] AddMyAttQWithqId:self.mModel_question.TabID];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        }
     }
 }
 

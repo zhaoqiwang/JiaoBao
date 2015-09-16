@@ -767,6 +767,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
     }];
 }
+
 //关注某一个问题 参数描述：问题ID
 -(void)AddMyAttQWithqId:(NSString*)qId
 {
@@ -783,11 +784,17 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------AddMyAttQWithqId: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddMyAttQWithqId: %@", error);
-
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
     }];
 }
+
 //邀请指定的用户回答问题 参数描述：被邀请的用户教宝号 - 问题ID
 -(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId
 {
@@ -804,9 +811,14 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------AtMeForAnswerWithAccId: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeForAnswerWithAccId" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AtMeForAnswerWithAccId: %@", error);
-        
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeForAnswerWithAccId" object:tempDic];
     }];
 }
 //获取我关注的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)

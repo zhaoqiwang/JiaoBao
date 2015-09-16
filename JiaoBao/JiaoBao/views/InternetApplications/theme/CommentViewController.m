@@ -926,6 +926,7 @@ if([Data integerValue]==-1)
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-18];
 //    NSString* js = @"document.getElementById(\"main\") ? document.getElementById(\"main\").offsetHeight : -1";
 //    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:js] floatValue];
@@ -933,7 +934,7 @@ if([Data integerValue]==-1)
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     [self webViewLoadFinish:webViewHeight+10];
-
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
 }
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
