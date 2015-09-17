@@ -20,7 +20,10 @@
 #import "RegisterHttp.h"
 #import "KnowledgeHttp.h"
 #import "AttentionCategoryVCViewController.h"
-
+#import "AtMeQIndexViewController.h"
+#import "MyQuestionViewController.h"
+#import "MyAnswerViewController.h"
+#import "MyAttQViewController.h"
 
 @interface KnowledgePeoleSpaceViewController ()<MyNavigationDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)NSArray *questionArr;
@@ -72,7 +75,7 @@
         self.categoryArr = arr;
         if(arr.count>0)
         {
-            self.HeadCell.mLab_categoryCount.text = [NSString stringWithFormat:@"%d",arr.count];
+            self.HeadCell.mLab_categoryCount.text = [NSString stringWithFormat:@"%lu",(unsigned long)arr.count];
 
         }
         else
@@ -106,7 +109,7 @@
     [self.view addSubview:self.mNav_navgationBar];
 //    self.questionArr = [NSArray arrayWithObjects:@"我答过得问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
 //    self.categoryArr = [NSArray arrayWithObjects:@"", nil];
-    self.datasource = [NSArray arrayWithObjects:@"我答过得问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
+    self.datasource = [NSArray arrayWithObjects:@"我答过的问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
     self.HeadCell = [[HeadCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HeadCell"];
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeadCell" owner:self options:nil];
     if ([nib count]>0) {
@@ -250,9 +253,20 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-
-
+//    @"我答过得问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题"
+    if (indexPath.row==0) {
+        MyAnswerViewController *view = [[MyAnswerViewController alloc] init];
+        [utils pushViewController:view animated:YES];
+    }else if (indexPath.row==1){
+        MyQuestionViewController *view = [[MyQuestionViewController alloc] init];
+        [utils pushViewController:view animated:YES];
+    }else if (indexPath.row==2){
+        AtMeQIndexViewController *view = [[AtMeQIndexViewController alloc] init];
+        [utils pushViewController:view animated:YES];
+    }else if (indexPath.row==3){
+        MyAttQViewController *view = [[MyAttQViewController alloc] init];
+        [utils pushViewController:view animated:YES];
+    }
 }
 
 //导航条返回按钮回调

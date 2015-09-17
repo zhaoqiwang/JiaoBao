@@ -178,11 +178,14 @@
             [jiaobaohaoArr addObject:model.JiaoBaoHao];
             
         }
-        NSString *accid = [jiaobaohaoArr objectAtIndex:0];
-        
-        [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
-        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
-        
+        if (jiaobaohaoArr.count>0) {
+            NSString *accid = [jiaobaohaoArr objectAtIndex:0];
+            
+            [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        }else{
+            [MBProgressHUD showSuccess:@"此邀请人不存在" toView:self.view];
+        }
     }
     self.mView_input.mTextF_input.text = @"";
 }
