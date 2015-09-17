@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AttentionCategoryVCViewController : UIViewController
-//@property(nonatomic,strong)
+@property(nonatomic,strong)NSArray *categoryArr;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

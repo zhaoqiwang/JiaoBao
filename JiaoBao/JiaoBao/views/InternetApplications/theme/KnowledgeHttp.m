@@ -176,9 +176,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         CategoryModel *model = [ParserJson_knowledge parserJsonGetCategoryById:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic1];
         D("JSON--------GetCategoryById: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetCategoryById: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic];
     }];
 }
 
@@ -954,7 +958,11 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *Data = [jsonDic objectForKey:@"Data"];
-        NSArray *cateArr = [Data componentsSeparatedByString:@","];
+        NSString *dataStr = [Data stringByReplacingOccurrencesOfString:@"[" withString:@""];
+        NSString *dataStr2 = [dataStr stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        NSString *dataStr3 = [dataStr2 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+
+        NSArray *cateArr = [dataStr3 componentsSeparatedByString:@","];
 
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
