@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
+
 
 @interface KnowledgePeoleSpaceViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

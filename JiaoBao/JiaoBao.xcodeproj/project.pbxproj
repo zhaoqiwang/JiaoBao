@@ -902,6 +902,10 @@
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
 		F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFF81B70560800E8A31B /* CategoryModel.m */; };
 		F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFFB1B70566400E8A31B /* UserInformationModel.m */; };
+		F788EA6B1BAA57120015965E /* AttentionCategoryVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F788EA691BAA57120015965E /* AttentionCategoryVCViewController.m */; };
+		F788EA6C1BAA57120015965E /* AttentionCategoryVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F788EA6A1BAA57120015965E /* AttentionCategoryVCViewController.xib */; };
+		F788EA701BAA589D0015965E /* categoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F788EA6E1BAA589D0015965E /* categoryCell.m */; };
+		F788EA711BAA589D0015965E /* categoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F788EA6F1BAA589D0015965E /* categoryCell.xib */; };
 		F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F78D38641B218727005C17F0 /* MobileUnitViewController.m */; };
 		F78D38671B218727005C17F0 /* MobileUnitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78D38651B218727005C17F0 /* MobileUnitViewController.xib */; };
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
@@ -2229,6 +2233,12 @@
 		F787CFF81B70560800E8A31B /* CategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryModel.m; path = views/InternetApplications/theme/model/CategoryModel.m; sourceTree = "<group>"; };
 		F787CFFA1B70566400E8A31B /* UserInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInformationModel.h; path = views/InternetApplications/theme/model/UserInformationModel.h; sourceTree = "<group>"; };
 		F787CFFB1B70566400E8A31B /* UserInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInformationModel.m; path = views/InternetApplications/theme/model/UserInformationModel.m; sourceTree = "<group>"; };
+		F788EA681BAA57120015965E /* AttentionCategoryVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttentionCategoryVCViewController.h; path = views/InternetApplications/personalSpace/AttentionCategoryVCViewController.h; sourceTree = "<group>"; };
+		F788EA691BAA57120015965E /* AttentionCategoryVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttentionCategoryVCViewController.m; path = views/InternetApplications/personalSpace/AttentionCategoryVCViewController.m; sourceTree = "<group>"; };
+		F788EA6A1BAA57120015965E /* AttentionCategoryVCViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AttentionCategoryVCViewController.xib; path = views/InternetApplications/personalSpace/AttentionCategoryVCViewController.xib; sourceTree = "<group>"; };
+		F788EA6D1BAA589D0015965E /* categoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = categoryCell.h; sourceTree = "<group>"; };
+		F788EA6E1BAA589D0015965E /* categoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = categoryCell.m; sourceTree = "<group>"; };
+		F788EA6F1BAA589D0015965E /* categoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = categoryCell.xib; sourceTree = "<group>"; };
 		F78D38631B218727005C17F0 /* MobileUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileUnitViewController.h; sourceTree = "<group>"; };
 		F78D38641B218727005C17F0 /* MobileUnitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileUnitViewController.m; sourceTree = "<group>"; };
 		F78D38651B218727005C17F0 /* MobileUnitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MobileUnitViewController.xib; sourceTree = "<group>"; };
@@ -4371,6 +4381,12 @@
 				F73DDB941BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.h */,
 				F73DDB951BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m */,
 				F73DDB961BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib */,
+				F788EA681BAA57120015965E /* AttentionCategoryVCViewController.h */,
+				F788EA691BAA57120015965E /* AttentionCategoryVCViewController.m */,
+				F788EA6A1BAA57120015965E /* AttentionCategoryVCViewController.xib */,
+				F788EA6D1BAA589D0015965E /* categoryCell.h */,
+				F788EA6E1BAA589D0015965E /* categoryCell.m */,
+				F788EA6F1BAA589D0015965E /* categoryCell.xib */,
 				F73DDB9E1BA9642D00DD8228 /* HeadCell.h */,
 				F73DDB9F1BA9642D00DD8228 /* HeadCell.m */,
 				F73DDBA01BA9642D00DD8228 /* HeadCell.xib */,
@@ -4836,6 +4852,7 @@
 				A75046951A0A14BC00C54ECC /* forward_sendMsg2.png in Resources */,
 				A7E2E5FD1B204ED4003F85B5 /* PeopleSpaceTableViewCell.xib in Resources */,
 				A7AAC4CD19F75DB200A0ED40 /* appNav_add.png in Resources */,
+				F788EA6C1BAA57120015965E /* AttentionCategoryVCViewController.xib in Resources */,
 				A727C7D91A6F93780019C4CD /* share_likeBig_0@3x.png in Resources */,
 				A76ED5C91AD67855006F3E0B /* workView_click_2@3x.png in Resources */,
 				F7F460B71AE891C70069820F /* triangle@2x.png in Resources */,
@@ -5158,6 +5175,7 @@
 				A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */,
 				F79D84DA1ABD4DC000897477 /* RecordViewController.xib in Resources */,
 				A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */,
+				F788EA711BAA589D0015965E /* categoryCell.xib in Resources */,
 				A74D26971B58FAE200E63DFB /* record_animate_09.png in Resources */,
 				A757DFE01A80C7B9001172A4 /* appNav_changeUnit@2x.png in Resources */,
 				A757DFE21A80C7B9001172A4 /* appNav_changeUser.png in Resources */,
@@ -5201,6 +5219,7 @@
 				F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */,
 				A755E70919F278B900BBDF3D /* ASIWebPageRequest.m in Sources */,
 				F73DDBA11BA9642D00DD8228 /* HeadCell.m in Sources */,
+				F788EA701BAA589D0015965E /* categoryCell.m in Sources */,
 				A7595E931A5FC2F30027848E /* MWPhoto.m in Sources */,
 				A753E5221A1B2C51005A8EED /* TopArthListCell.m in Sources */,
 				A75046991A0A3BD900C54ECC /* UnitClassRevicerModel.m in Sources */,
@@ -5218,6 +5237,7 @@
 				A7595E9B1A5FC2F30027848E /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */,
 				F76B64441B1EA440008F6961 /* CharacterView.m in Sources */,
+				F788EA6B1BAA57120015965E /* AttentionCategoryVCViewController.m in Sources */,
 				A7700A941A26D3F6003B532A /* ShowView.m in Sources */,
 				A7595E901A5FC2F30027848E /* MWCaptionView.m in Sources */,
 				F75757431BA16B7700AA4267 /* ChoicenessDetailViewController.m in Sources */,
