@@ -954,14 +954,18 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *Data = [jsonDic objectForKey:@"Data"];
-        D("JSON--------GetMyattCate: %@,", result);
         NSArray *cateArr = [Data componentsSeparatedByString:@","];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
+
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:cateArr forKey:@"array"];
+        D("JSON--------GetMyattCate: %@,", result);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyattCate: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
     }];
 }
 //更新我关注的话题

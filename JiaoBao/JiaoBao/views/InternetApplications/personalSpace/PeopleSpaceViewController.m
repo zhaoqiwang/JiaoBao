@@ -12,6 +12,7 @@
 #import "MobClick.h"
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
+#import "KnowledgePeoleSpaceViewController.h"
 
 
 @interface PeopleSpaceViewController ()
@@ -51,6 +52,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
 
@@ -179,7 +181,7 @@
 
     
     //表格
-    self.mTableV_personalS.frame = CGRectMake(0, 0, [dm getInstance].width, 70+2*44);
+    self.mTableV_personalS.frame = CGRectMake(0, 0, [dm getInstance].width, 70+3*44);
     
     self.unitTabelView.frame = CGRectMake(0, self.mTableV_personalS.frame.size.height+self.mTableV_personalS.frame.origin.y, [dm getInstance].width, 30*self.unitArr.count+40);
     self.tableVIewBtn.frame = self.unitTabelView.frame;
@@ -205,9 +207,9 @@
     NSString *nickName = [dm getInstance].NickName;
 //    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"账号信息",@"手机",@"邮箱",@"密码",@"所在单位", nil];
 //    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"修改密码",@"加入单位", nil];
-    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"教宝号",@"修改密码",@"所在单位", nil];
-    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"", nil];
-    for (int i=0; i<4; i++) {
+    NSMutableArray *tempArr0 = [NSMutableArray arrayWithObjects:nickName,@"教宝号",@"修改密码",@"求知个人中心",@"求知个人中心", nil];
+    NSMutableArray *tempArr1 = [NSMutableArray arrayWithObjects:trueName,[dm getInstance].jiaoBaoHao,@"",@"",@"", nil];
+    for (int i=0; i<5; i++) {
         PersonalSpaceModel *model = [[PersonalSpaceModel alloc] init];
         model.mStr_nickName = [NSString stringWithFormat:@"%@",[tempArr0 objectAtIndex:i]];
         model.mStr_trueName = [NSString stringWithFormat:@"%@",[tempArr1 objectAtIndex:i]];
@@ -344,7 +346,7 @@
         cell.mLab_line.frame = CGRectMake(0, 69, [dm getInstance].width, .5);
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }else{
-        if (indexPath.row ==2) {
+        if (indexPath.row ==2||indexPath.row == 3) {
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }
         cell.mImgV_head.hidden = YES;
@@ -373,8 +375,18 @@
     }
     if(indexPath.row == 3)
     {
-        MobileUnitViewController *detail = [[MobileUnitViewController alloc]init];
-        [utils pushViewController:detail animated:YES];
+        if([tableView isEqual:self.unitTabelView])
+        {
+            MobileUnitViewController *detail = [[MobileUnitViewController alloc]init];
+            [utils pushViewController:detail animated:YES];
+            
+        }
+        else
+        {
+            KnowledgePeoleSpaceViewController *space = [[KnowledgePeoleSpaceViewController alloc]init];
+            [utils pushViewController:space animated:YES];
+        }
+
         
     }
 }
