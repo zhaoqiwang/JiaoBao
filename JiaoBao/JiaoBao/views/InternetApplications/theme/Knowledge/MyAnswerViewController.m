@@ -7,6 +7,7 @@
 //
 
 #import "MyAnswerViewController.h"
+#import "KnowledgeQuestionViewController.h"
 
 @interface MyAnswerViewController ()
 
@@ -38,7 +39,7 @@
     
     //
     self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
-//    self.mTalbeV_liset.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mTalbeV_liset.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.mTalbeV_liset addHeaderWithTarget:self action:@selector(headerRereshing)];
     self.mTalbeV_liset.headerPullToRefreshText = @"下拉刷新";
     self.mTalbeV_liset.headerReleaseToRefreshText = @"松开后刷新";
@@ -133,18 +134,21 @@
     //关注、答案个数
     //关注
     NSString *attStr = [NSString stringWithFormat:@"%@人关注",model.AttCount];
-    CGSize AttSize = [attStr sizeWithFont:[UIFont systemFontOfSize:10]];
+    CGSize AttSize = [attStr sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mLab_Att.text = attStr;
-    cell.mLab_Att.frame = CGRectMake(15, cell.mLab_ATitle.frame.origin.y+23+5, AttSize.width, cell.mLab_Att.frame.size.height);
+    cell.mLab_Att.font = [UIFont systemFontOfSize:12];
+    cell.mLab_Att.frame = CGRectMake(17, cell.mLab_ATitle.frame.origin.y+23, AttSize.width, cell.mLab_Att.frame.size.height);
     cell.mLab_Att.hidden = NO;
     //回答
     NSString *answerStr = [NSString stringWithFormat:@"%@人回答",model.AnswersCount];
-    CGSize AnswersSize = [answerStr sizeWithFont:[UIFont systemFontOfSize:10]];
+    CGSize AnswersSize = [answerStr sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mLab_Answers.text = answerStr;
+    cell.mLab_Answers.font = [UIFont systemFontOfSize:12];
     cell.mLab_Answers.frame = CGRectMake(cell.mLab_Att.frame.origin.x+cell.mLab_Att.frame.size.width+20, cell.mLab_Att.frame.origin.y, AnswersSize.width, cell.mLab_Answers.frame.size.height);
     cell.mLab_Answers.hidden = NO;
-    //分割线
-    cell.mLab_line.hidden = YES;
+    //
+    cell.mLab_line.hidden = NO;
+    cell.mLab_line.frame = CGRectMake(0, 59, [dm getInstance].width, .5);
 //    cell.mLab_line.frame = CGRectMake(20, cell.mLab_ATitle.frame.origin.x+cell.mLab_ATitle.frame.size.height+5, [dm getInstance].width-20, .5);
 //    //喜欢个数
 //    cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+10, 42, 22);
@@ -191,10 +195,14 @@
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
 //    return 150;
-    return 65;
+    return 60;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    queston.mModel_question = model;
+    [utils pushViewController:queston animated:YES];
 }
 
 #pragma mark 开始进入刷新状态
