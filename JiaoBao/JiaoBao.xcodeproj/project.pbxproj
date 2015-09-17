@@ -703,6 +703,8 @@
 		A79AD7811BAA4C2200F2CE77 /* MyAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79AD77F1BAA4C2200F2CE77 /* MyAnswerViewController.xib */; };
 		A79AD7851BAA5A1000F2CE77 /* AtMeQIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A79AD7831BAA5A1000F2CE77 /* AtMeQIndexViewController.m */; };
 		A79AD7861BAA5A1000F2CE77 /* AtMeQIndexViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79AD7841BAA5A1000F2CE77 /* AtMeQIndexViewController.xib */; };
+		A79AD78A1BAA5FE800F2CE77 /* MyAttQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A79AD7881BAA5FE800F2CE77 /* MyAttQViewController.m */; };
+		A79AD78B1BAA5FE800F2CE77 /* MyAttQViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79AD7891BAA5FE800F2CE77 /* MyAttQViewController.xib */; };
 		A79C0F271B9C297C00F8764B /* classViewTopCell.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F241B9C297C00F8764B /* classViewTopCell.png */; };
 		A79C0F281B9C297C00F8764B /* classViewTopCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */; };
 		A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */; };
@@ -1958,6 +1960,9 @@
 		A79AD7821BAA5A1000F2CE77 /* AtMeQIndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtMeQIndexViewController.h; path = views/InternetApplications/theme/Knowledge/AtMeQIndexViewController.h; sourceTree = "<group>"; };
 		A79AD7831BAA5A1000F2CE77 /* AtMeQIndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtMeQIndexViewController.m; path = views/InternetApplications/theme/Knowledge/AtMeQIndexViewController.m; sourceTree = "<group>"; };
 		A79AD7841BAA5A1000F2CE77 /* AtMeQIndexViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AtMeQIndexViewController.xib; path = views/InternetApplications/theme/Knowledge/AtMeQIndexViewController.xib; sourceTree = "<group>"; };
+		A79AD7871BAA5FE800F2CE77 /* MyAttQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAttQViewController.h; path = views/InternetApplications/theme/Knowledge/MyAttQViewController.h; sourceTree = "<group>"; };
+		A79AD7881BAA5FE800F2CE77 /* MyAttQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAttQViewController.m; path = views/InternetApplications/theme/Knowledge/MyAttQViewController.m; sourceTree = "<group>"; };
+		A79AD7891BAA5FE800F2CE77 /* MyAttQViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyAttQViewController.xib; path = views/InternetApplications/theme/Knowledge/MyAttQViewController.xib; sourceTree = "<group>"; };
 		A79C0F241B9C297C00F8764B /* classViewTopCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classViewTopCell.png; path = Image/InternetApp/class/classViewTopCell.png; sourceTree = "<group>"; };
 		A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@2x.png"; path = "Image/InternetApp/class/classViewTopCell@2x.png"; sourceTree = "<group>"; };
 		A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@3x.png"; path = "Image/InternetApp/class/classViewTopCell@3x.png"; sourceTree = "<group>"; };
@@ -3714,6 +3719,9 @@
 				A79AD7821BAA5A1000F2CE77 /* AtMeQIndexViewController.h */,
 				A79AD7831BAA5A1000F2CE77 /* AtMeQIndexViewController.m */,
 				A79AD7841BAA5A1000F2CE77 /* AtMeQIndexViewController.xib */,
+				A79AD7871BAA5FE800F2CE77 /* MyAttQViewController.h */,
+				A79AD7881BAA5FE800F2CE77 /* MyAttQViewController.m */,
+				A79AD7891BAA5FE800F2CE77 /* MyAttQViewController.xib */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -5172,6 +5180,7 @@
 				A757DFD81A80BDEF001172A4 /* appNav_groupChat@3x.png in Resources */,
 				A77F9F401AFCAAC90003E579 /* appNav_share.png in Resources */,
 				A761D3EC1A7F697900DCAEB9 /* rootTable_0.png in Resources */,
+				A79AD78B1BAA5FE800F2CE77 /* MyAttQViewController.xib in Resources */,
 				A76F216B1B7D88BB00D957E0 /* topBtnCall@2x.png in Resources */,
 				A757DFD31A80BDEF001172A4 /* appNav_contact.png in Resources */,
 				A78D65DF1A8A04E800BE6326 /* workDetail.png in Resources */,
@@ -5358,6 +5367,7 @@
 				A7AD8C3919F63D58002E65FB /* StudentFileViewController.m in Sources */,
 				F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */,
 				A7595EA41A5FC2F30027848E /* PSTGridLayoutInfo.m in Sources */,
+				A79AD78A1BAA5FE800F2CE77 /* MyAttQViewController.m in Sources */,
 				A78D65D11A89B35500BE6326 /* WorkMsgListViewController.m in Sources */,
 				A755E72B19F27C8E00BBDF3D /* NSString+Base64.m in Sources */,
 				F71803231AB3C46300E6167F /* JTCalendarMenuView.m in Sources */,

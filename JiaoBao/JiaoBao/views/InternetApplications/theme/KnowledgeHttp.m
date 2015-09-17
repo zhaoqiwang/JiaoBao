@@ -842,12 +842,12 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------MyAttQIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
     }];
 }
 //邀请我回答的问题 参数描述：（取回的记录数量）-（第几页）-(记录数量)
