@@ -509,6 +509,8 @@
 		A76D747C1A691292008F5856 /* AirthCommentsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A76D747A1A691292008F5856 /* AirthCommentsListCell.m */; };
 		A76D747D1A691292008F5856 /* AirthCommentsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76D747B1A691292008F5856 /* AirthCommentsListCell.xib */; };
 		A76E432A1A61085F00699F92 /* CommMsgRevicerUnitListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A76E43291A61085F00699F92 /* CommMsgRevicerUnitListModel.m */; };
+		A76E67801BA9599F00CCC79C /* MyQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A76E677E1BA9599F00CCC79C /* MyQuestionViewController.m */; };
+		A76E67811BA9599F00CCC79C /* MyQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76E677F1BA9599F00CCC79C /* MyQuestionViewController.xib */; };
 		A76ED5911AD6189C006F3E0B /* WorkView_new2.m in Sources */ = {isa = PBXBuildFile; fileRef = A76ED5901AD6189C006F3E0B /* WorkView_new2.m */; };
 		A76ED5B21AD67855006F3E0B /* workView_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A76ED5941AD67855006F3E0B /* workView_0.png */; };
 		A76ED5B31AD67855006F3E0B /* workView_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A76ED5951AD67855006F3E0B /* workView_0@2x.png */; };
@@ -697,6 +699,10 @@
 		A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */; };
 		A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */; };
 		A79A1B0F1B9ED67E00028823 /* CustomTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = A79A1B0E1B9ED67E00028823 /* CustomTextFieldView.m */; };
+		A79AD7801BAA4C2200F2CE77 /* MyAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A79AD77E1BAA4C2200F2CE77 /* MyAnswerViewController.m */; };
+		A79AD7811BAA4C2200F2CE77 /* MyAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79AD77F1BAA4C2200F2CE77 /* MyAnswerViewController.xib */; };
+		A79AD7851BAA5A1000F2CE77 /* AtMeQIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A79AD7831BAA5A1000F2CE77 /* AtMeQIndexViewController.m */; };
+		A79AD7861BAA5A1000F2CE77 /* AtMeQIndexViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79AD7841BAA5A1000F2CE77 /* AtMeQIndexViewController.xib */; };
 		A79C0F271B9C297C00F8764B /* classViewTopCell.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F241B9C297C00F8764B /* classViewTopCell.png */; };
 		A79C0F281B9C297C00F8764B /* classViewTopCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */; };
 		A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */; };
@@ -1676,6 +1682,9 @@
 		A76D747B1A691292008F5856 /* AirthCommentsListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AirthCommentsListCell.xib; path = views/InternetApplications/shareView/cell/AirthCommentsListCell.xib; sourceTree = "<group>"; };
 		A76E43281A61085F00699F92 /* CommMsgRevicerUnitListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommMsgRevicerUnitListModel.h; path = views/InternetApplications/workView/model/CommMsgRevicerUnitListModel.h; sourceTree = "<group>"; };
 		A76E43291A61085F00699F92 /* CommMsgRevicerUnitListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommMsgRevicerUnitListModel.m; path = views/InternetApplications/workView/model/CommMsgRevicerUnitListModel.m; sourceTree = "<group>"; };
+		A76E677D1BA9599F00CCC79C /* MyQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyQuestionViewController.h; path = views/InternetApplications/theme/Knowledge/MyQuestionViewController.h; sourceTree = "<group>"; };
+		A76E677E1BA9599F00CCC79C /* MyQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyQuestionViewController.m; path = views/InternetApplications/theme/Knowledge/MyQuestionViewController.m; sourceTree = "<group>"; };
+		A76E677F1BA9599F00CCC79C /* MyQuestionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyQuestionViewController.xib; path = views/InternetApplications/theme/Knowledge/MyQuestionViewController.xib; sourceTree = "<group>"; };
 		A76ED58F1AD6189C006F3E0B /* WorkView_new2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WorkView_new2.h; path = views/InternetApplications/workView/WorkView_new2.h; sourceTree = "<group>"; };
 		A76ED5901AD6189C006F3E0B /* WorkView_new2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WorkView_new2.m; path = views/InternetApplications/workView/WorkView_new2.m; sourceTree = "<group>"; };
 		A76ED5941AD67855006F3E0B /* workView_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = workView_0.png; path = Image/InternetApp/workView/newWork/workView_0.png; sourceTree = "<group>"; };
@@ -1933,6 +1942,12 @@
 		A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HUD.m"; path = "Common/UIViewController+HUD.m"; sourceTree = "<group>"; };
 		A79A1B0D1B9ED67E00028823 /* CustomTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomTextFieldView.h; path = views/InternetApplications/theme/Knowledge/CustomTextFieldView.h; sourceTree = "<group>"; };
 		A79A1B0E1B9ED67E00028823 /* CustomTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomTextFieldView.m; path = views/InternetApplications/theme/Knowledge/CustomTextFieldView.m; sourceTree = "<group>"; };
+		A79AD77D1BAA4C2200F2CE77 /* MyAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAnswerViewController.h; path = views/InternetApplications/theme/Knowledge/MyAnswerViewController.h; sourceTree = "<group>"; };
+		A79AD77E1BAA4C2200F2CE77 /* MyAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAnswerViewController.m; path = views/InternetApplications/theme/Knowledge/MyAnswerViewController.m; sourceTree = "<group>"; };
+		A79AD77F1BAA4C2200F2CE77 /* MyAnswerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyAnswerViewController.xib; path = views/InternetApplications/theme/Knowledge/MyAnswerViewController.xib; sourceTree = "<group>"; };
+		A79AD7821BAA5A1000F2CE77 /* AtMeQIndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AtMeQIndexViewController.h; path = views/InternetApplications/theme/Knowledge/AtMeQIndexViewController.h; sourceTree = "<group>"; };
+		A79AD7831BAA5A1000F2CE77 /* AtMeQIndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtMeQIndexViewController.m; path = views/InternetApplications/theme/Knowledge/AtMeQIndexViewController.m; sourceTree = "<group>"; };
+		A79AD7841BAA5A1000F2CE77 /* AtMeQIndexViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AtMeQIndexViewController.xib; path = views/InternetApplications/theme/Knowledge/AtMeQIndexViewController.xib; sourceTree = "<group>"; };
 		A79C0F241B9C297C00F8764B /* classViewTopCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classViewTopCell.png; path = Image/InternetApp/class/classViewTopCell.png; sourceTree = "<group>"; };
 		A79C0F251B9C297C00F8764B /* classViewTopCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@2x.png"; path = "Image/InternetApp/class/classViewTopCell@2x.png"; sourceTree = "<group>"; };
 		A79C0F261B9C297C00F8764B /* classViewTopCell@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classViewTopCell@3x.png"; path = "Image/InternetApp/class/classViewTopCell@3x.png"; sourceTree = "<group>"; };
@@ -3665,6 +3680,15 @@
 				F75757401BA16B7700AA4267 /* ChoicenessDetailViewController.h */,
 				F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */,
 				F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */,
+				A76E677D1BA9599F00CCC79C /* MyQuestionViewController.h */,
+				A76E677E1BA9599F00CCC79C /* MyQuestionViewController.m */,
+				A76E677F1BA9599F00CCC79C /* MyQuestionViewController.xib */,
+				A79AD77D1BAA4C2200F2CE77 /* MyAnswerViewController.h */,
+				A79AD77E1BAA4C2200F2CE77 /* MyAnswerViewController.m */,
+				A79AD77F1BAA4C2200F2CE77 /* MyAnswerViewController.xib */,
+				A79AD7821BAA5A1000F2CE77 /* AtMeQIndexViewController.h */,
+				A79AD7831BAA5A1000F2CE77 /* AtMeQIndexViewController.m */,
+				A79AD7841BAA5A1000F2CE77 /* AtMeQIndexViewController.xib */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -4664,6 +4688,7 @@
 				A75E6EC11ABACDBD00B51B18 /* classView_3.png in Resources */,
 				A761D3F41A7F697900DCAEB9 /* rootTable_2@3x.png in Resources */,
 				F7502A1C1AEE1E50004F822F /* HomeClass_Click_2@2x.png in Resources */,
+				A79AD7861BAA5A1000F2CE77 /* AtMeQIndexViewController.xib in Resources */,
 				A71EC8B91A11A61500422BB0 /* root_img.png in Resources */,
 				A76B6A731AB2D09900B6ED12 /* AccessoryTableViewCell.xib in Resources */,
 				F79D84D31ABD4DC000897477 /* DetailQueryViewController.xib in Resources */,
@@ -4774,6 +4799,7 @@
 				A73CAD6C1A07755B00D6C5AA /* MJRefresh.bundle in Resources */,
 				F7502A151AEE1E50004F822F /* HomeClass_3.png in Resources */,
 				A76ED5C81AD67855006F3E0B /* workView_click_2@2x.png in Resources */,
+				A76E67811BA9599F00CCC79C /* MyQuestionViewController.xib in Resources */,
 				A768298A1AC69B21003B31EB /* classView_click_2@3x.png in Resources */,
 				A749B9CB19F89A530036F480 /* root_forwardNotice@2x.png in Resources */,
 				A75046941A0A14BC00C54ECC /* forward_sendMsg1@2x.png in Resources */,
@@ -4898,6 +4924,7 @@
 				A74D268F1B58FAE200E63DFB /* record_animate_01.png in Resources */,
 				A749B9D019F89A530036F480 /* root_sendMsg.png in Resources */,
 				A73AD8311A2076A500F68C47 /* SubUnitInfoViewController.xib in Resources */,
+				A79AD7811BAA4C2200F2CE77 /* MyAnswerViewController.xib in Resources */,
 				A72B58261A3D7D5C004D8920 /* UnitSpaceArthListViewController.xib in Resources */,
 				A782AEC11AE9D71A00547B0F /* NewWork_photo@3x.png in Resources */,
 				A7375F461A0B235B00B31926 /* Forward_cell.xib in Resources */,
@@ -5212,6 +5239,7 @@
 				F79D84D91ABD4DC000897477 /* RecordViewController.m in Sources */,
 				A74821B219FF747F00234020 /* MsgDetail_FeebackList.m in Sources */,
 				A7595E9E1A5FC2F30027848E /* PSTCollectionViewController.m in Sources */,
+				A79AD7851BAA5A1000F2CE77 /* AtMeQIndexViewController.m in Sources */,
 				A76B6A721AB2D09900B6ED12 /* AccessoryTableViewCell.m in Sources */,
 				F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */,
 				A755E70719F278B900BBDF3D /* ASIInputStream.m in Sources */,
@@ -5309,6 +5337,7 @@
 				A7AD8C2B19F60CAC002E65FB /* TabbarView.m in Sources */,
 				A773FC2A1A4B9869005F84C2 /* UITableView+DelegateBlocks.m in Sources */,
 				A78459DD1B7B4D1D00EA7D5D /* IQBarButtonItem.m in Sources */,
+				A79AD7801BAA4C2200F2CE77 /* MyAnswerViewController.m in Sources */,
 				A755E70619F278B900BBDF3D /* ASIHTTPRequest.m in Sources */,
 				A74339541A452B7700AFC0A5 /* SDWebImagePrefetcher.m in Sources */,
 				A773FC4D1A4C0563005F84C2 /* ELCImagePickerController.m in Sources */,
@@ -5540,6 +5569,7 @@
 				A755E71C19F278B900BBDF3D /* SBJsonWriter.m in Sources */,
 				A7595EA01A5FC2F30027848E /* PSTCollectionViewFlowLayout.m in Sources */,
 				A7B0A6B01A1205CA002D770A /* selitadminModel.m in Sources */,
+				A76E67801BA9599F00CCC79C /* MyQuestionViewController.m in Sources */,
 				A7804C9C1B789219007C0DC6 /* KnowledgeQuestionViewController.m in Sources */,
 				A73CAD6E1A07755B00D6C5AA /* MJRefreshConst.m in Sources */,
 				A75A37441A08C2EA009D2464 /* UserListModel.m in Sources */,
