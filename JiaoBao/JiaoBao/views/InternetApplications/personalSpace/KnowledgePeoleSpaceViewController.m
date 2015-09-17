@@ -135,6 +135,7 @@
 -(void)categoryBtnAction:(id)sender
 {
     AttentionCategoryVCViewController *detail = [[AttentionCategoryVCViewController alloc]init];
+    detail.categoryArr = self.categoryArr;
     [self.navigationController pushViewController:detail animated:YES];
 }
 
@@ -226,7 +227,7 @@
 
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 44;
+    return 54;
     
 }
 
@@ -240,6 +241,8 @@
     }
 
     cell.textLabel.text = [self.datasource objectAtIndex:indexPath.row];
+    cell.textLabel.textColor = [UIColor colorWithRed:40/255.0 green:40/255.0 blue:40/255.0 alpha:1];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     
     return cell;
     
