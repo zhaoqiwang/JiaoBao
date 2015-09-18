@@ -116,8 +116,7 @@
     CategoryModel *model = [self.datasource objectAtIndex:indexPath.row];
     cell.titleLabel.text = model.Subject;
     cell.contentLabel.text = model.Description;
-    [[SDImageCache sharedImageCache] removeImageForKey:model.LogoPath];
-    [cell.imageView sd_setImageWithURL:(NSURL *)(model.LogoPath) placeholderImage:[UIImage  imageNamed:@"root_img"]];
+
 //    cell.titleLabel.text = [self.datasource objectAtIndex:indexPath.row];
 //    cell.contentLabel.text = self
     

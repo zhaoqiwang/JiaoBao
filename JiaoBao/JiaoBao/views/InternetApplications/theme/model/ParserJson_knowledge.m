@@ -106,12 +106,16 @@
     model.Description = [dic objectForKey:@"Description"];
     model.QCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QCount"]];
     model.AttCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AttCount"]];
+    model.DefaultImg = [dic objectForKey:@"DefaultImg"];
+    
+
     return model;
 }
 
 //取所有话题
 +(NSMutableArray*)parserJsonGetAllCategory:(NSString*)json
 {
+    
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
     for(int i=0;i<arrList.count;i++)
