@@ -766,10 +766,10 @@
             //标题
             cell.mLab_title.text = model.Title;
             cell.mLab_title.hidden = NO;
+            CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
-                CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
                 if (titleSize.width>[dm getInstance].width-9*2-40-33) {
                     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, cell.mLab_title.frame.size.height);
                 }else{
@@ -778,7 +778,11 @@
                 cell.mImgV_top.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width, 12, 33, 12);
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
-                cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
+                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
+                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
+                }else{
+                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
+                }
                 cell.mImgV_top.hidden = YES;
             }
             
@@ -1165,10 +1169,12 @@
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-        PickContentModel *model = knowledgeTableViewCell.pickContentModel;
-        ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
-        detail.pickContentModel = model;
-        [utils pushViewController:detail animated:YES];
+        if ([knowledgeTableViewCell.pickContentModel.TabID intValue]>0) {
+            PickContentModel *model = knowledgeTableViewCell.pickContentModel;
+            ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
+            detail.pickContentModel = model;
+            [utils pushViewController:detail animated:YES];
+        }
     }else{
         CommentViewController *commentVC = [[CommentViewController alloc]init];
         commentVC.questionModel = knowledgeTableViewCell.model;
@@ -1181,9 +1187,11 @@
 //cell的点击事件---标题
 -(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if (self.mInt_index ==2) {//精选
-        ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
-        detail.pickContentModel = knowledgeTableViewCell.pickContentModel;
-        [utils pushViewController:detail animated:YES];
+        if ([knowledgeTableViewCell.pickContentModel.TabID intValue]>0) {
+            ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
+            detail.pickContentModel = knowledgeTableViewCell.pickContentModel;
+            [utils pushViewController:detail animated:YES];
+        }
     }else{
         //判断是否来自推荐
         if ([knowledgeTableViewCell.model.tabid integerValue]>0) {//推荐
