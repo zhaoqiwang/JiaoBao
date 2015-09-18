@@ -38,6 +38,7 @@
 @property (nonatomic,assign) int mInt_index;//记录添加了多少图片
 @property (nonatomic,strong) NSMutableArray *mArr_pic;//添加的图片数组
 @property(nonatomic,assign)int tfContentTag;
+@property (nonatomic,strong) NSString *mStr_MyAnswerId;//判断是修改答案>0还是添加回答0
 
 -(IBAction)mBtn_submit:(id)sender;
 -(IBAction)mBtn_anSubmit:(id)sender;

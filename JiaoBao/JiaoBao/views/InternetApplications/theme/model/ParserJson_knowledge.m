@@ -96,6 +96,7 @@
 //获取单一话题
 +(CategoryModel*)parserJsonGetCategoryById:(NSString*)json
 {
+    D("dhilsfgoisdjfgo;-====%@",json);
     NSDictionary *dic = [json objectFromJSONString];
     CategoryModel *model = [[CategoryModel alloc ]init];
     model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];

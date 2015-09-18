@@ -35,6 +35,12 @@
     //上传图片
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UploadImg:) name:@"UploadImg" object:nil];
+    //获取答案详情
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AnswerDetailWithAId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AnswerDetailWithAId:) name:@"AnswerDetailWithAId" object:nil];
+    //修改答案
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateAnswer" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddAnswer:) name:@"UpdateAnswer" object:nil];
     
     self.mArr_pic = [NSMutableArray array];
     //输入框弹出键盘问题
@@ -82,9 +88,32 @@
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
-    
+    //问题明细
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
+    //如果已经回答过，取自己回答的答案明细
+    if ([self.mStr_MyAnswerId intValue]>0) {
+        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mStr_MyAnswerId];
+    }
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+}
+
+//答案详情回调
+-(void)AnswerDetailWithAId:(id)sender{
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!=0){
+        [MBProgressHUD showError:ResultDesc];
+    }else{
+        AnswerDetailModel *model = [dic objectForKey:@"model"];
+        self.mTextV_answer.text = model.ATitle;
+        NSString *content = model.AContent;
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+        self.mTextV_content.text = content;
+        self.mLab_answer.hidden = YES;
+        self.mLab_content.hidden = YES;
+    }
 }
 
 //提交答案
@@ -322,7 +351,12 @@
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
-    [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name];
+    //如果已经回答过
+    if ([self.mStr_MyAnswerId intValue]>0) {
+        [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content];
+    }else{
+        [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name];
+    }
     [MBProgressHUD showMessage:@"提交中..." toView:self.view];
 }
 

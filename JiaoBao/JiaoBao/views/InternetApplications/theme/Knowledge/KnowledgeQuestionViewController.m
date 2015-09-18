@@ -45,6 +45,9 @@
     //邀请指定的用户回答问题
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
+    //问题详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
     
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
@@ -111,8 +114,31 @@
     self.mView_input.delegate = self;
     [self.view addSubview:self.mView_input];
     self.mView_input.hidden = YES;
+    //获取问题的答案列表
     [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
+    //答案明细
+    [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+}
+
+//问题详情
+-(void)QuestionDetail:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"code"];
+    if ([code integerValue] ==0) {
+        QuestionDetailModel *model = [dic objectForKey:@"model"];
+        if ([model.TabID intValue]==[self.mModel_question.TabID intValue]) {
+            self.mModel_questionDetail = model;
+            if ([self.mModel_questionDetail.MyAnswerId intValue]>0) {
+                for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+                    if (view.tag ==100) {
+                        view.mLab_title.text = @"修改答案";
+                    }
+                }
+            }
+        }
+    }
 }
 
 //是否关注该问题
@@ -537,6 +563,7 @@
 -(void)gotoAddAnswerVC{
     KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
     detail.mModel_question = self.mModel_question;
+    detail.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
     [utils pushViewController:detail animated:YES];
 }
 

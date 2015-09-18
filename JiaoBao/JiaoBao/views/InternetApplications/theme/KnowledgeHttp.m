@@ -348,6 +348,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -355,10 +356,14 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        
         D("JSON--------UpdateAnswerWithTabID: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateAnswerWithTabID: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"UpdateAnswer" object:dic];
     }];
 }
 

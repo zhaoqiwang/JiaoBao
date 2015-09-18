@@ -56,15 +56,7 @@
         //首页精选等
         self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 0, [dm getInstance].width-20-40, 48)];
         
-        NSMutableArray *tempArray = [NSMutableArray arrayWithObjects:@"首页",@"推荐",@"精选", nil];
-        for (int i=0; i<tempArray.count; i++) {
-            AllCategoryModel *model = [[AllCategoryModel alloc] init];
-            if (i==0) {
-                model.flag = @"1";
-            }
-            model.item.Subject = [tempArray objectAtIndex:i];
-            [self.mArr_AllCategory addObject:model];
-        }
+        [self init_mArr_AllCategory];
         [self addScrollViewBtn:0];
         
         [self addSubview:self.mScrollV_all];
@@ -93,6 +85,20 @@
     }
     return self;
 }
+
+//初始化话题数组
+-(void)init_mArr_AllCategory{
+    NSMutableArray *tempArray = [NSMutableArray arrayWithObjects:@"首页",@"推荐",@"精选", nil];
+    for (int i=0; i<tempArray.count; i++) {
+        AllCategoryModel *model = [[AllCategoryModel alloc] init];
+        if (i==0) {
+            model.flag = @"1";
+        }
+        model.item.Subject = [tempArray objectAtIndex:i];
+        [self.mArr_AllCategory addObject:model];
+    }
+}
+
 //选择话题二级列表后的回调
 -(void)refreshCategory:(id)sender
 {
@@ -323,6 +329,9 @@
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue] ==0) {
+        //先移除，然后添加默认
+        [self.mArr_AllCategory removeAllObjects];
+        [self init_mArr_AllCategory];
         NSMutableArray *array = [dic objectForKey:@"array"];
         for (int i=0; i<array.count; i++) {
             AllCategoryModel *model = [array objectAtIndex:i];

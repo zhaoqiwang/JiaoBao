@@ -32,6 +32,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_answers;//
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 @property (nonatomic,strong) CustomTextFieldView *mView_input;//邀请回答
+@property (nonatomic,strong) QuestionDetailModel *mModel_questionDetail;
 
 
 @end
