@@ -96,6 +96,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic1];
         D("JSON--------GetAccIdbyNickname: %@,", result);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAccIdbyNickname: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
