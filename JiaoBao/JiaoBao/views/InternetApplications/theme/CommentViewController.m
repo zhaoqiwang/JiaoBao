@@ -290,6 +290,7 @@ if([Data integerValue]==-1)
     [self.mView_text setHidden:YES];
 
     [MBProgressHUD showMessage:@"" toView:self.view];
+    D("dspfgijagopfjdp-====%@",self.answerModel.TabID);
     //获取答案详情
     if(self.answerModel)//答案列表跳转用answerModel
     {
