@@ -78,12 +78,12 @@
 
     if([self.mArr_addBtnSel containsObject:num])
     {
-        [sectionView.addBtn setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+        [sectionView.addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
 
     }
     else
     {
-        [sectionView.addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+        [sectionView.addBtn setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
 
     }
 
