@@ -31,7 +31,6 @@
         [[LoginSendHttp getInstance] getUnreadMessages1];
         [[LoginSendHttp getInstance] getUnreadMessages2];
     }
-
     //添加通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getIdentity" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getIdentity:) name:@"getIdentity" object:nil];
