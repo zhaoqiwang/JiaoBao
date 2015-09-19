@@ -7,6 +7,7 @@
 //
 
 #import "OldChoiceViewController.h"
+#import "GetPickedViewController.h"
 
 @interface OldChoiceViewController ()
 
@@ -101,6 +102,10 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PickedIndexModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    GetPickedViewController *view = [[GetPickedViewController alloc] init];
+    view.mModel_first = model;
+    [utils pushViewController:view animated:YES];
 }
 
 //导航条返回按钮回调

@@ -388,6 +388,8 @@
 		A75A37441A08C2EA009D2464 /* UserListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A37431A08C2EA009D2464 /* UserListModel.m */; };
 		A75A37471A08C3F0009D2464 /* groupselit_selitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A37461A08C3F0009D2464 /* groupselit_selitModel.m */; };
 		A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75A77951B03368800E06440 /* GetmyUserClassModel.m */; };
+		A75C7F121BAC06B900B1EBBA /* GetPickedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75C7F101BAC06B900B1EBBA /* GetPickedViewController.m */; };
+		A75C7F131BAC06B900B1EBBA /* GetPickedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A75C7F111BAC06B900B1EBBA /* GetPickedViewController.xib */; };
 		A75E3F931B6F63ED00284C3D /* ParserJson_knowledge.m in Sources */ = {isa = PBXBuildFile; fileRef = A75E3F901B6F63ED00284C3D /* ParserJson_knowledge.m */; };
 		A75E3F941B6F63ED00284C3D /* ProviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A75E3F921B6F63ED00284C3D /* ProviceModel.m */; };
 		A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A75E3F961B6F63FF00284C3D /* KnowledgeHttp.m */; };
@@ -1538,6 +1540,9 @@
 		A75A37461A08C3F0009D2464 /* groupselit_selitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = groupselit_selitModel.m; path = views/InternetApplications/workView/model/groupselit_selitModel.m; sourceTree = "<group>"; };
 		A75A77941B03368800E06440 /* GetmyUserClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetmyUserClassModel.h; path = views/InternetApplications/workView/model/GetmyUserClassModel.h; sourceTree = "<group>"; };
 		A75A77951B03368800E06440 /* GetmyUserClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetmyUserClassModel.m; path = views/InternetApplications/workView/model/GetmyUserClassModel.m; sourceTree = "<group>"; };
+		A75C7F0F1BAC06B900B1EBBA /* GetPickedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetPickedViewController.h; path = views/InternetApplications/theme/Knowledge/GetPickedViewController.h; sourceTree = "<group>"; };
+		A75C7F101BAC06B900B1EBBA /* GetPickedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetPickedViewController.m; path = views/InternetApplications/theme/Knowledge/GetPickedViewController.m; sourceTree = "<group>"; };
+		A75C7F111BAC06B900B1EBBA /* GetPickedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GetPickedViewController.xib; path = views/InternetApplications/theme/Knowledge/GetPickedViewController.xib; sourceTree = "<group>"; };
 		A75E3F8F1B6F63ED00284C3D /* ParserJson_knowledge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserJson_knowledge.h; path = views/InternetApplications/theme/model/ParserJson_knowledge.h; sourceTree = "<group>"; };
 		A75E3F901B6F63ED00284C3D /* ParserJson_knowledge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserJson_knowledge.m; path = views/InternetApplications/theme/model/ParserJson_knowledge.m; sourceTree = "<group>"; };
 		A75E3F911B6F63ED00284C3D /* ProviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProviceModel.h; path = views/InternetApplications/theme/model/ProviceModel.h; sourceTree = "<group>"; };
@@ -3722,6 +3727,9 @@
 				A79AD7871BAA5FE800F2CE77 /* MyAttQViewController.h */,
 				A79AD7881BAA5FE800F2CE77 /* MyAttQViewController.m */,
 				A79AD7891BAA5FE800F2CE77 /* MyAttQViewController.xib */,
+				A75C7F0F1BAC06B900B1EBBA /* GetPickedViewController.h */,
+				A75C7F101BAC06B900B1EBBA /* GetPickedViewController.m */,
+				A75C7F111BAC06B900B1EBBA /* GetPickedViewController.xib */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -5014,6 +5022,7 @@
 				F7502A1D1AEE1E50004F822F /* HomeClass_Click_3.png in Resources */,
 				A753E52D1A1B3D8C005A8EED /* share_look.png in Resources */,
 				A71D61EE1A1C96A400B8D33D /* share_school0@2x.png in Resources */,
+				A75C7F131BAC06B900B1EBBA /* GetPickedViewController.xib in Resources */,
 				A7804CA31B789516007C0DC6 /* buttonView1@2x.png in Resources */,
 				F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */,
 				A761D4001A7F697900DCAEB9 /* rootTableSelect_1@3x.png in Resources */,
@@ -5305,6 +5314,7 @@
 				A755E71419F278B900BBDF3D /* ASIS3ObjectRequest.m in Sources */,
 				A75E3FB71B6F64B700284C3D /* AFURLSessionManager.m in Sources */,
 				F79D84D41ABD4DC000897477 /* DetailSubmitViewController.m in Sources */,
+				A75C7F121BAC06B900B1EBBA /* GetPickedViewController.m in Sources */,
 				A74339551A452B7700AFC0A5 /* UIButton+WebCache.m in Sources */,
 				A755E71919F278B900BBDF3D /* SBJSON.m in Sources */,
 				F71803261AB3C46300E6167F /* JTCalendarWeekView.m in Sources */,
