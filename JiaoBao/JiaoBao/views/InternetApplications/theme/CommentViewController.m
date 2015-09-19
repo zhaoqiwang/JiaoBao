@@ -349,7 +349,8 @@ if([Data integerValue]==-1)
         [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.answerModel.TabID];
         return;
     }
-    [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.questionModel.answerModel.TabID];}
+    [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.questionModel.answerModel.TabID];
+}
 //获取评论列表cell高度
 -(float)tableViewCellHeight
 {
@@ -420,6 +421,8 @@ if([Data integerValue]==-1)
     }
     if (refArr.count>0) {
         cell.mView_RefID.hidden = NO;
+        cell.mView_RefID.backgroundColor = [UIColor redColor];
+
         int m=0;
         for (int i=0; i<refArr.count; i++) {
             NSString *tempTab = [refArr objectAtIndex:i];
@@ -482,6 +485,7 @@ if([Data integerValue]==-1)
         }
     }else{
         cell.mView_RefID.hidden = YES;
+        cell.mView_RefID.backgroundColor = [UIColor redColor];
         cell.mView_RefID.frame = cell.mLab_time.frame;
     }
     
