@@ -296,9 +296,19 @@
         {
             if(self.NameModelArr.count == 0)
             {
-                NSString *nameStr = [self.nickNameArr componentsJoinedByString:@"@"];
-                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-                [alertView show];
+                if([self.atAccIdsTF.text isEqualToString: @""])
+                {
+                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertView show];
+                }
+                else
+                {
+                    NSString *nameStr = [self.nickNameArr componentsJoinedByString:@"@"];
+                    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:[NSString stringWithFormat:@"不存在邀请人%@",nameStr] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alertView show];
+                    
+                }
+
                 
             }
             else
@@ -457,7 +467,8 @@
 }
 //点击拍照
 -(IBAction)mBtn_photo:(id)sender{
-
+    
+    [self.mTextV_content resignFirstResponder];
     UIActionSheet *sheet;
     
     // 判断是否支持相机

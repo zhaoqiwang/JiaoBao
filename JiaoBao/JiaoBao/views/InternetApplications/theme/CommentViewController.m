@@ -177,7 +177,7 @@
         }
     }
 }
-//举报回调
+//反对称赞回调
 -(void)SetYesNoWithAId:(id)sender
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -654,8 +654,7 @@ if([Data integerValue]==-1)
     cell.mLab_AttCount.frame = CGRectMake(cell.mLab_Answers.frame.origin.x-5-AttSize.width, cell.mLab_Category0.frame.origin.y, AttSize.width, cell.mLab_Category0.frame.size.height);
     cell.mLab_AttCount.text = cell.model.AttCount;
     cell.mLab_Att.frame = CGRectMake(cell.mLab_AttCount.frame.origin.x-2-cell.mLab_Att.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_Att.frame.size.width, cell.mLab_Att.frame.size.height);
-    //判断是否有回答
-    if ([cell.model.AnswersCount integerValue]>0) {
+    
         //分割线
         cell.mLab_line.hidden = NO;
         //赞
@@ -810,31 +809,6 @@ if([Data integerValue]==-1)
         }else{
             cell.mLab_line2.frame = CGRectMake(0, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+5, [dm getInstance].width, 1);
         }
-    }else{
-        //分割线
-        cell.mLab_line.hidden = YES;
-        //赞
-        cell.mLab_LikeCount.hidden = YES;
-        //头像
-        cell.mImgV_head.hidden = YES;
-        //姓名
-        cell.mLab_IdFlag.hidden = YES;
-        //回答标题
-        cell.mLab_ATitle.hidden = YES;
-        //回答内容
-        cell.mLab_Abstracts.hidden = YES;
-        //背景色
-        cell.mView_background.hidden = YES;
-        //图片
-        [cell.mCollectionV_pic reloadData];
-        cell.mCollectionV_pic.hidden = YES;
-        //时间
-        cell.mLab_RecDate.hidden = YES;
-        //评论
-        cell.mLab_commentCount.hidden = YES;
-        cell.mLab_comment.hidden = YES;
-        cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 10);
-    }
     cell.frame = CGRectMake(0, 10, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
     cell.userInteractionEnabled = YES;
 //    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
