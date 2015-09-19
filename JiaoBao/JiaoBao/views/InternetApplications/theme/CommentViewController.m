@@ -842,34 +842,49 @@ if([Data integerValue]==-1)
         return;
     }
     NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<3; i++) {
-        ButtonViewModel *model = [[ButtonViewModel alloc] init];
-        if(i == 0)
-        {
-            model.mStr_title = @"举报";
-            model.mStr_img = @"buttonView5";
-            
-            
+    if(!self.mBtnV_btn)
+    {
+        for (int i=0; i<3; i++) {
+            ButtonViewModel *model = [[ButtonViewModel alloc] init];
+            if(i == 0)
+            {
+                model.mStr_title = @"举报";
+                model.mStr_img = @"buttonView5";
+                
+                
+            }
+            if(i == 1)
+            {
+                model.mStr_title = [NSString stringWithFormat:@"评论%@",self.AnswerDetailModel.CCount];
+                model.mStr_img = @"buttonView1";
+                
+                
+            }
+            if(i == 2)
+            {
+                model.mStr_title = [NSString stringWithFormat:@"反对%@",self.AnswerDetailModel.CaiCount];
+                model.mStr_img = @"buttonView2";
+                
+                
+            }
+            [temp addObject:model];
         }
-        if(i == 1)
-        {
-            model.mStr_title = [NSString stringWithFormat:@"评论%@",self.AnswerDetailModel.CCount];
-            model.mStr_img = @"buttonView1";
-            
-            
-        }
-        if(i == 2)
-        {
-            model.mStr_title = [NSString stringWithFormat:@"反对%@",self.AnswerDetailModel.CaiCount];
-            model.mStr_img = @"buttonView2";
-            
-            
-        }
-        [temp addObject:model];
+        
+        self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, [dm getInstance].width, 50) Array:temp];
+        
+        self.mBtnV_btn.delegate = self;
     }
-    self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, [dm getInstance].width, 50) Array:temp];
-    self.mBtnV_btn.delegate = self;
+    else
+    {
+        ButtonViewCell *btnView101 = (ButtonViewCell*)[self.view viewWithTag:101];
+        ButtonViewCell *btnView102 = (ButtonViewCell*)[self.view viewWithTag:102];
+        btnView101.mLab_title.text = [NSString stringWithFormat:@"评论%@",self.AnswerDetailModel.CCount];
+        btnView102.mLab_title.text = [NSString stringWithFormat:@"反对%@",self.AnswerDetailModel.CaiCount];
+        
+    }
     [self.tableHeadView addSubview:self.mBtnV_btn];
+
+
     self.tableHeadView.frame = CGRectMake(0, 0, [dm getInstance].width, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height);
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height) style:UITableViewStylePlain];

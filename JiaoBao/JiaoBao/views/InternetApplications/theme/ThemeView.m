@@ -335,6 +335,8 @@
 
 //获取所有话题
 -(void)GetAllCategory:(NSNotification *)noti{
+    if([dm getInstance].addQuestionNoti == NO)
+    {
     [MBProgressHUD hideHUDForView:self animated:YES];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
@@ -359,6 +361,7 @@
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showError:ResultDesc toView:self];
+    }
     }
 }
 

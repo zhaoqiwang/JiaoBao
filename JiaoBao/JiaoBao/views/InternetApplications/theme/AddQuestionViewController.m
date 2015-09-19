@@ -158,6 +158,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [dm getInstance].addQuestionNoti = YES;
     
 
     //输入框弹出键盘问题
@@ -532,6 +533,7 @@
 
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [dm getInstance].addQuestionNoti = NO;
     
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];

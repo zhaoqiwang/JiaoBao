@@ -39,6 +39,7 @@
     NSString *uuid;//启动时设置，注册成功后，添加到key中
     BOOL tableSymbol;//
     
+    
 //    NSString *MainUrl;//主url----url
     NSString *RiCUrl;//日程url
     NSString *KaoQUrl;//考勤url
@@ -81,6 +82,7 @@
 @property(nonatomic,strong)NSArray *scrollArr;
 @property(nonatomic,strong)NSString *classStr;
 @property(nonatomic,strong)NSString * onlyGetInfo;
+@property(nonatomic,assign)BOOL addQuestionNoti;
 + (dm*) getInstance;
 
 
