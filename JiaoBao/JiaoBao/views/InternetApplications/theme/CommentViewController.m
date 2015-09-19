@@ -246,6 +246,9 @@ if([Data integerValue]==-1)
     //通知界面，更新访问量等数据
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
+    //通知界面，更新答案数据
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetailModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetailModel:) name:@"updataQuestionDetailModel" object:nil];
     //添加评论成功后刷新数据
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"refreshComment" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshComment:) name:@"refreshComment" object:nil];
@@ -934,6 +937,12 @@ if([Data integerValue]==-1)
 {
     
 }
+
+//通知界面，更新答案数据
+-(void)updataQuestionDetailModel:(NSNotification *)noti{
+    
+}
+
 
 -(void)updataQuestionDetail:(NSNotification *)noti{
     QuestionDetailModel *model = noti.object;

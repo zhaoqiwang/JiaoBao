@@ -39,6 +39,8 @@
 @property (nonatomic,strong) NSMutableArray *mArr_pic;//添加的图片数组
 @property(nonatomic,assign)int tfContentTag;
 @property (nonatomic,strong) NSString *mStr_MyAnswerId;//判断是修改答案>0还是添加回答0
+@property (nonatomic,assign) int mInt_flag;//判断是第一次进入页面获取详情0还是提交答案后1
+
 
 -(IBAction)mBtn_submit:(id)sender;
 -(IBAction)mBtn_anSubmit:(id)sender;

@@ -48,6 +48,12 @@
         //通知界面，更新访问量等数据
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
+        //通知界面，更新答案数据
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetailModel" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetailModel:) name:@"updataQuestionDetailModel" object:nil];
+        //切换账号时，更新数据
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RegisterView" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RegisterView:) name:@"RegisterView" object:nil];
 
         self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
@@ -202,10 +208,14 @@
     if ([self checkNetWork]) {
         return;
     }
+    if (self.mArr_AllCategory.count<3) {
+        [self init_mArr_AllCategory];
+    }
     //取所有话题
     if (self.mArr_AllCategory.count==3) {
         [[KnowledgeHttp getInstance] GetAllCategory];
     }
+    
     
     [self sendRequest];
 //    [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:@"0"];
@@ -389,38 +399,48 @@
     [MBProgressHUD hideHUDForView:self];
     [dm getInstance].mImt_showUnRead = 0;
     [dm getInstance].mImt_shareUnRead = 0;
+    self.mInt_index = 0;
+//    self.ItemModel = nil;
+    self.mInt_reloadData = 0;
+    [self.mArr_AllCategory removeAllObjects];
+    [self.mArr_selectCategory removeAllObjects];
+//    self.mModel_getPickdById = nil;
+    [self.mTableV_knowledge reloadData];
 }
 
 //显示用的所有数组
 -(NSMutableArray *)arrayDataSourceSum{
-    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-    
-    if (self.mInt_index ==0) {//首页
-        [model.mArr_sum removeAllObjects];
-        QuestionModel *temp = [[QuestionModel alloc] init];
-        temp.mInt_btn = 1;
-        [model.mArr_sum addObject:temp];
-        [model.mArr_sum addObjectsFromArray:[self arrayDataSourceTemp:model]];
-    }else if (self.mInt_index ==1){//推荐
-        return model.mArr_all;
-    }else if (self.mInt_index ==2){//精选
+    if (self.mArr_AllCategory.count>self.mInt_index) {
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
         
-    }else{//从服务器获取到的
-        [model.mArr_sum removeAllObjects];
-        QuestionModel *temp = [[QuestionModel alloc] init];
-        temp.mInt_btn = 1;
-        [model.mArr_sum addObject:temp];
-        if (model.mArr_top.count>0) {
-            NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[model.mArr_sum count])];
-            [model.mArr_sum insertObjects:model.mArr_top atIndexes:indexes];
+        if (self.mInt_index ==0) {//首页
+            [model.mArr_sum removeAllObjects];
+            QuestionModel *temp = [[QuestionModel alloc] init];
+            temp.mInt_btn = 1;
+            [model.mArr_sum addObject:temp];
+            [model.mArr_sum addObjectsFromArray:[self arrayDataSourceTemp:model]];
+        }else if (self.mInt_index ==1){//推荐
+            return model.mArr_all;
+        }else if (self.mInt_index ==2){//精选
+            
+        }else{//从服务器获取到的
+            [model.mArr_sum removeAllObjects];
+            QuestionModel *temp = [[QuestionModel alloc] init];
+            temp.mInt_btn = 1;
+            [model.mArr_sum addObject:temp];
+            if (model.mArr_top.count>0) {
+                NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[model.mArr_sum count])];
+                [model.mArr_sum insertObjects:model.mArr_top atIndexes:indexes];
+            }
+            [model.mArr_sum addObjectsFromArray:[self arrayDataSourceTemp:model]];
+            //话题显示行
+            QuestionModel *temp1 = [[QuestionModel alloc] init];
+            temp1.mInt_btn = 2;
+            [model.mArr_sum insertObject:temp1 atIndex:0];
         }
-        [model.mArr_sum addObjectsFromArray:[self arrayDataSourceTemp:model]];
-        //话题显示行
-        QuestionModel *temp1 = [[QuestionModel alloc] init];
-        temp1.mInt_btn = 2;
-        [model.mArr_sum insertObject:temp1 atIndex:0];
+        return model.mArr_sum;
     }
-    return model.mArr_sum;
+    return 0;
 }
 
 //申请数据时用到的当前数组
@@ -608,6 +628,7 @@
         }
     }else{
         NSMutableArray *array = [self arrayDataSourceSum];
+        D("iahrgiuaehli-===%lu,%ld",(unsigned long)array.count,(long)indexPath.row);
         QuestionModel *model = [array objectAtIndex:indexPath.row];
         D("sdjhfaslkdfhalke;sjfa;lkj;-===%@,%@",model.TabID,model.tabid);
         cell.model = model;
@@ -1141,6 +1162,9 @@
             }
             page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
             [MBProgressHUD showMessage:@"加载中..." toView:self];
+        }else if(array.count==0){
+            page = @"1";
+            [MBProgressHUD showMessage:@"加载中..." toView:self];
         } else {
             [self.mTableV_knowledge headerEndRefreshing];
             [self.mTableV_knowledge footerEndRefreshing];
@@ -1167,6 +1191,11 @@
         [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:model.flag uid:model.item_now.TabID];
         [[KnowledgeHttp getInstance] GetCategoryTopQWithId:model.item_now.TabID];
     }
+}
+
+//通知界面，更新答案数据
+-(void)updataQuestionDetailModel:(NSNotification *)noti{
+    [self headerRereshing];
 }
 
 //cell的点击事件---答案

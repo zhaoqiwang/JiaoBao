@@ -39,6 +39,9 @@
     //通知界面，更新访问量等数据
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
+    //通知界面，更新答案数据
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetailModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetailModel:) name:@"updataQuestionDetailModel" object:nil];
     //是否关注该问题
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMyAttQWithqId" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddMyAttQWithqId:) name:@"AddMyAttQWithqId" object:nil];
@@ -119,6 +122,12 @@
     //答案明细
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+}
+
+//通知界面，更新答案数据
+-(void)updataQuestionDetailModel:(NSNotification *)noti{
+    //获取问题的答案列表
+    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
 }
 
 //问题详情
@@ -225,6 +234,8 @@
         self.mModel_question.AttCount = model.AttCount;
         //设置布局
         [self setTitleCell:self.mModel_question];
+        //获取问题的答案列表
+        [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
     }
 }
 
