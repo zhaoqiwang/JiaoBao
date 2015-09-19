@@ -143,6 +143,14 @@
         [self addDetailCell:self.mModel_questionDetail];
         //通知其余界面，更新访问量等数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetail" object:self.mModel_questionDetail];
+        //判断是否发送自己的答案详情协议
+        if ([self.mStr_MyAnswerId intValue]>0) {
+            
+        }else{
+            if ([self.mModel_questionDetail.MyAnswerId intValue]>0) {
+                [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];
+            }
+        }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
