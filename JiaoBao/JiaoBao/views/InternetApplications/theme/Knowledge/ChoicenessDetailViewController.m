@@ -137,7 +137,7 @@
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
         NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,content];
         [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+        //[MBProgressHUD showMessage:@"" toView:self.view];
 
         //加载
         //[self webViewLoadFinish:0];
@@ -160,7 +160,7 @@
 //    detailBtn.backgroundColor = [UIColor colorWithRed:68/255.0 green:193/255.0 blue:24/255.0 alpha:1];
 //    [detailBtn setTitle:@"原文详情" forState:UIControlStateNormal];
 //    [detailBtn addTarget:self action:@selector(detailBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 
 }
 -(void)detailBtnAction:(id)sender
