@@ -88,6 +88,8 @@
     }
     if(view.tag == 101)
     {
+        self.cellmodel.TabID = @"";
+        self.mInt_reloadData = 0;
         [self.mView_text setHidden:NO];
         [self.mTextF_text becomeFirstResponder];
         
