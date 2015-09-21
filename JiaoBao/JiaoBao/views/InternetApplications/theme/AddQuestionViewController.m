@@ -94,9 +94,6 @@
     [self.mTableV_name.layer setBorderWidth:2];
     [self.mainScrollView addSubview:self.mTableV_name];
 
-    
-    
-
 }
 
 //获取地区或区县
@@ -158,6 +155,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.selectBtn setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
     [dm getInstance].addQuestionNoti = YES;
     
 
@@ -467,6 +465,19 @@
 
 }
 //点击拍照
+- (IBAction)selectBtnAction:(id)sender {
+    UIButton *btn = sender;
+    if([[btn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"selected"]])
+    {
+        [btn setImage:[UIImage imageNamed:@"blank"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [btn setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+    }
+    
+}
+
 -(IBAction)mBtn_photo:(id)sender{
     
     [self.mTextV_content resignFirstResponder];
