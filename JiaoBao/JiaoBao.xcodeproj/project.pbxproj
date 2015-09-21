@@ -416,6 +416,7 @@
 		A75E6EC11ABACDBD00B51B18 /* classView_3.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EB51ABACDBD00B51B18 /* classView_3.png */; };
 		A75E6EC21ABACDBD00B51B18 /* classView_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EB61ABACDBD00B51B18 /* classView_3@2x.png */; };
 		A75E6EC31ABACDBD00B51B18 /* classView_3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EB71ABACDBD00B51B18 /* classView_3@3x.png */; };
+		A76038FC1BAF96E800FDCBDF /* SigleBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = A76038FB1BAF96E800FDCBDF /* SigleBtnView.m */; };
 		A761D3EC1A7F697900DCAEB9 /* rootTable_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3CE1A7F697900DCAEB9 /* rootTable_0.png */; };
 		A761D3ED1A7F697900DCAEB9 /* rootTable_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3CF1A7F697900DCAEB9 /* rootTable_0@2x.png */; };
 		A761D3EE1A7F697900DCAEB9 /* rootTable_0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3D01A7F697900DCAEB9 /* rootTable_0@3x.png */; };
@@ -1584,6 +1585,8 @@
 		A75E6EB51ABACDBD00B51B18 /* classView_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classView_3.png; path = Image/InternetApp/class/classView_3.png; sourceTree = "<group>"; };
 		A75E6EB61ABACDBD00B51B18 /* classView_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_3@2x.png"; path = "Image/InternetApp/class/classView_3@2x.png"; sourceTree = "<group>"; };
 		A75E6EB71ABACDBD00B51B18 /* classView_3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_3@3x.png"; path = "Image/InternetApp/class/classView_3@3x.png"; sourceTree = "<group>"; };
+		A76038FA1BAF96E800FDCBDF /* SigleBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SigleBtnView.h; path = views/InternetApplications/theme/Knowledge/SigleBtnView.h; sourceTree = "<group>"; };
+		A76038FB1BAF96E800FDCBDF /* SigleBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SigleBtnView.m; path = views/InternetApplications/theme/Knowledge/SigleBtnView.m; sourceTree = "<group>"; };
 		A761D3CE1A7F697900DCAEB9 /* rootTable_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rootTable_0.png; path = Image/root/rootTable_0.png; sourceTree = "<group>"; };
 		A761D3CF1A7F697900DCAEB9 /* rootTable_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rootTable_0@2x.png"; path = "Image/root/rootTable_0@2x.png"; sourceTree = "<group>"; };
 		A761D3D01A7F697900DCAEB9 /* rootTable_0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rootTable_0@3x.png"; path = "Image/root/rootTable_0@3x.png"; sourceTree = "<group>"; };
@@ -3730,6 +3733,8 @@
 				A75C7F0F1BAC06B900B1EBBA /* GetPickedViewController.h */,
 				A75C7F101BAC06B900B1EBBA /* GetPickedViewController.m */,
 				A75C7F111BAC06B900B1EBBA /* GetPickedViewController.xib */,
+				A76038FA1BAF96E800FDCBDF /* SigleBtnView.h */,
+				A76038FB1BAF96E800FDCBDF /* SigleBtnView.m */,
 			);
 			name = Knowledge;
 			sourceTree = "<group>";
@@ -5469,6 +5474,7 @@
 				F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */,
 				A7595E981A5FC2F30027848E /* DACircularProgressView.m in Sources */,
 				A73AD82C1A20721E00F68C47 /* UnitInfoModel.m in Sources */,
+				A76038FC1BAF96E800FDCBDF /* SigleBtnView.m in Sources */,
 				A73AD8301A2076A500F68C47 /* SubUnitInfoViewController.m in Sources */,
 				A755E72919F27C8E00BBDF3D /* NSData+Base64.m in Sources */,
 				A78E4A2D1B0C7FD800969D8F /* PopupWindow.m in Sources */,

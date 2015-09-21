@@ -89,6 +89,10 @@
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
+    //依据审核
+    self.mSigleBtn = [[SigleBtnView alloc] initWidth:0 height:40 title:@"依据审核"];
+    [self.mScrollV_view addSubview:self.mSigleBtn];
+    self.mSigleBtn.hidden = YES;
     //问题明细
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
     //如果已经回答过，取自己回答的答案明细
@@ -272,8 +276,11 @@
     self.mTextV_content.frame = CGRectMake(9, self.mTextV_answer.frame.origin.y+self.mTextV_answer.frame.size.height+10, [dm getInstance].width-27-40, 60);
     //照片按钮
     self.mBtn_photo.frame = CGRectMake([dm getInstance].width-49, self.mTextV_content.frame.origin.y, 40, 40);
+    //依据审核
+    self.mSigleBtn.hidden = NO;
+    self.mSigleBtn.frame = CGRectMake(([dm getInstance].width-70*2-30*2-self.mSigleBtn.frame.size.width)/2, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mSigleBtn.frame.size.width, self.mSigleBtn.frame.size.height);
     //提交按钮
-    self.mBtn_submit.frame = CGRectMake(([dm getInstance].width-70*2-30)/2, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, 70, self.mBtn_submit.frame.size.height);
+    self.mBtn_submit.frame = CGRectMake(self.mSigleBtn.frame.origin.x+self.mSigleBtn.frame.size.width+30, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, 70, self.mBtn_submit.frame.size.height);
     self.mBtn_anSubmit.frame = CGRectMake(self.mBtn_submit.frame.origin.x+100, self.mBtn_submit.frame.origin.y, 70, self.mBtn_submit.frame.size.height);
     //提示信息坐标
     [self placeTextFrame];
