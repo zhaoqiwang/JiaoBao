@@ -170,11 +170,6 @@
         {
             self.AnswerDetailModel = [dic objectForKey:@"model"];
             self.KnowledgeTableViewCell = [self getMainView];
-            
-
-
-
-
 
         }
     }
@@ -727,9 +722,11 @@ if([Data integerValue]==-1)
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
         cell.mLab_ATitle.componentsAndPlainText = componentsDS;
         CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
-
-
         cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize1.height);
+    
+
+    
+    //加载webview
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
         cell.mWebV_comment.tag = -1;
         cell.mWebV_comment.delegate = self;
@@ -769,7 +766,12 @@ if([Data integerValue]==-1)
         CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
 
         cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, optimalSize2.height);
-
+    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
+    contentLabel.text = @"内容:";
+    contentLabel.font = [UIFont systemFontOfSize:13];
+    contentLabel.textColor = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:3/255.0 alpha:1];
+    [cell.contentView addSubview:contentLabel];
+    contentLabel.textAlignment = NSTextAlignmentLeft;
         //背景色
         cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height+4);
         //图片
@@ -826,7 +828,7 @@ if([Data integerValue]==-1)
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(9, self.KnowledgeTableViewCell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(9, self.KnowledgeTableViewCell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-18, height);
    
 
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
