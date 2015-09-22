@@ -128,11 +128,12 @@
         [MBProgressHUD showSuccess:ResultDesc];
         if(self.answerModel)
         {
-            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
+            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" AId:self.answerModel.TabID];
+            //[[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
         }
         else
         {
-            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.questionModel.answerModel.TabID];
             
         }
         //获取答案详情
@@ -304,11 +305,11 @@ if([Data integerValue]==-1)
     }
     if(self.answerModel)
     {
-        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.answerModel.TabID];
     }
     else
     {
-        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.questionModel.answerModel.TabID];
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.questionModel.answerModel.TabID];
 
         
     }
@@ -346,10 +347,10 @@ if([Data integerValue]==-1)
     }
     if(self.answerModel)
     {
-        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.answerModel.TabID];
+        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page RowCount:self.AllCommentListModel.RowCount AId:self.answerModel.TabID];
         return;
     }
-    [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page AId:self.questionModel.answerModel.TabID];
+    [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page RowCount:self.AllCommentListModel.RowCount AId:self.questionModel.answerModel.TabID];
 }
 //获取评论列表cell高度
 -(float)tableViewCellHeight

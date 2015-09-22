@@ -226,13 +226,15 @@ static KnowledgeHttp *knowledgeHttp = nil;
     NSDictionary *dic = @{@"CategoryId":CategoryId,@"Title":Title,@"KnContent":KnContent,@"TagsList":TagsList,@"QFlag":QFlag,@"AreaCode":AreaCode,@"atAccIds":atAccIds};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------NewQuestionWithCategoryId: %@,", result);
+
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        NSString *Data = [jsonDic objectForKey:@"Data"];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":Data};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic1];
         
-        D("JSON--------NewQuestionWithCategoryId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
@@ -484,14 +486,14 @@ static KnowledgeHttp *knowledgeHttp = nil;
 }
 
 //评论列表 参数描述：(取回的记录数量，默认20) - (第几页，默认为1) - 答案Id
--(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum AId:(NSString*)AId
+-(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount AId:(NSString*)AId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CommentsList",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId};
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId,@"RowCount":RowCount};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];

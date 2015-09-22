@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *ttitleLabel;//标题
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;//描述
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;//分类
+@property (weak, nonatomic) IBOutlet UIButton *selectBtn;
+- (IBAction)selectBtnAction:(id)sender;
 
 -(IBAction)mBtn_photo:(id)sender;
 

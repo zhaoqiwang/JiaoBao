@@ -336,6 +336,7 @@
     NSDictionary *dic = [json objectFromJSONString];
     
     NSMutableArray *mArr_commentsList = [dic objectForKey:@"commentsList"];
+    model.RowCount = [dic objectForKey:@"RowCount"];
     for(int i=0;i<mArr_commentsList.count;i++)
     {
         commentListModel*subModel = [[commentListModel alloc]init];
