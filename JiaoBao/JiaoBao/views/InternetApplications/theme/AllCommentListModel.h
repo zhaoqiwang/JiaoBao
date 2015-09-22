@@ -12,5 +12,6 @@
 @interface AllCommentListModel : NSObject
 @property(nonatomic,strong)NSMutableArray *mArr_CommentList;
 @property(nonatomic,strong)NSMutableArray *mArr_refcomments;
+@property(nonatomic,strong)NSString *RowCount;
 
 @end

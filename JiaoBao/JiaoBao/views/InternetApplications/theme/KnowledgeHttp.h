@@ -91,7 +91,7 @@
 -(void)AddCommentWithAId:(NSString*)AId comment:(NSString*)comment RefID:(NSString*)RefID;
 
 //评论列表 参数描述：(取回的记录数量，默认20) - (第几页，默认为1) - 答案Id
--(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum AId:(NSString*)AId;
+-(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount AId:(NSString*)AId;
 
 //首页问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)
 -(void)UserIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag;
