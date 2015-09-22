@@ -118,6 +118,9 @@
         self.mTextV_content.text = content;
         self.mLab_answer.hidden = YES;
         self.mLab_content.hidden = YES;
+        //切换按钮显示标题
+        [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
+        [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
     }
 }
 
@@ -131,6 +134,11 @@
         self.mTextV_answer.text = @"";
         self.mLab_answer.hidden = NO;
         self.mLab_content.hidden = NO;
+        //切换按钮显示标题
+//        [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
+//        [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
+        self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
+//        self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         if (self.mInt_flag==1) {
             //问题明细
             [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
@@ -198,7 +206,7 @@
     self.mView_titlecell.mLab_View.hidden = NO;
     //回答
     CGSize AnswersSize = [[NSString stringWithFormat:@"%@",model.AnswersCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    self.mView_titlecell.mLab_AnswersCount.frame = CGRectMake(self.mView_titlecell.mLab_View.frame.origin.x-5-AnswersSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AnswersSize.width, 21);
+    self.mView_titlecell.mLab_AnswersCount.frame = CGRectMake(self.mView_titlecell.mLab_View.frame.origin.x-5-AnswersSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AnswersSize.width+10, 21);
     self.mView_titlecell.mLab_AnswersCount.text = model.AnswersCount;
     self.mView_titlecell.mLab_AnswersCount.hidden = NO;
     self.mView_titlecell.mLab_Answers.frame = CGRectMake(self.mView_titlecell.mLab_AnswersCount.frame.origin.x-2-self.mView_titlecell.mLab_Answers.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_Answers.frame.size.width, 21);
@@ -271,7 +279,7 @@
     self.mView_titlecell.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_line.frame.origin.y+1);
     
     //回答
-    self.mTextV_answer.frame = CGRectMake(9, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height+10, [dm getInstance].width-18, 60);
+    self.mTextV_answer.frame = CGRectMake(9, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height+10, [dm getInstance].width-18, 30);
     //内容描述
     self.mTextV_content.frame = CGRectMake(9, self.mTextV_answer.frame.origin.y+self.mTextV_answer.frame.size.height+10, [dm getInstance].width-27-40, 60);
     //照片按钮

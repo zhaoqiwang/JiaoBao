@@ -334,6 +334,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         D("JSON--------AddAnswerWithQId: %@,", result);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:[jsonDic objectForKey:@"Data"] forKey:@"Data"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddAnswerWithQId: %@", error);
@@ -368,7 +369,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
-//获取问题的答案列表
+//获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志（1，求真回答，0普通回答，-1取全部）
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetAnswerById",MAINURL];

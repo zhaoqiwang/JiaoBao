@@ -33,6 +33,7 @@
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 @property (nonatomic,strong) CustomTextFieldView *mView_input;//邀请回答
 @property (nonatomic,strong) QuestionDetailModel *mModel_questionDetail;
-
+@property (nonatomic,strong) UIView *mView_tableHead;//表格的头
+//@property (nonatomic,strong)
 
 @end

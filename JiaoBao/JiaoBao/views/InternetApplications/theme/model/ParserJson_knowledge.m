@@ -331,6 +331,7 @@
 //评论列表
 +(AllCommentListModel *)parserJsonCommentsList:(NSString*)json
 {
+    D("psdifgjdopj-===%@",json);
     AllCommentListModel *model = [[AllCommentListModel alloc ]init];
     NSDictionary *dic = [json objectFromJSONString];
     
