@@ -12,9 +12,10 @@
 #import "dm.h"
 #import "define_constant.h"
 #import "MBProgressHUD.h"
-
+#import "KnowledgeHttp.h"
 
 @interface CategoryViewController ()
+@property(nonatomic,strong)NSArray *myAttCateArr;
 
 @end
 
@@ -25,16 +26,104 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
+-(void)GetMyattCate:(id)sender
+{
+    NSNotification *note = sender;
+    
+    NSString *code = [note.object objectForKey:@"ResultCode"];
+    if([code integerValue]==0)
+    {
+        NSArray *arr = [note.object objectForKey:@"array"];
+        if(arr.count>0)
+        {
+            for(int i=0;i<arr.count;i++)
+            {
+                if([[arr objectAtIndex:i] isEqualToString:@""])
+                {
+                    
+                }
+                else
+                {
+                    self.myAttCateArr = arr;
+                    [[KnowledgeHttp getInstance]GetCategoryById:[arr objectAtIndex:i]];
+                    
+                }
+                
+            }
+        }
+
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+        NSString *ResultDesc = [note.object objectForKey:@"ResultDesc"];
+        
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+        
+    }
+    
+}
+-(void)GetCategoryById:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSNotification *note = sender;
+    
+    NSString *code = [note.object objectForKey:@"ResultCode"];
+    if([code integerValue]==0)
+    {
+        CategoryModel *categoryModel = [note.object objectForKey:@"model"];
+        for(int i=0;i<self.mArr_AllCategory.count;i++)
+        {
+            AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:i];
+            for(int j=0;j<model.mArr_subItem.count;j++)
+            {
+                ItemModel *itemModel = [model.mArr_subItem objectAtIndex:j];
+                if([categoryModel.TabID isEqualToString:itemModel.TabID])
+                {
+                    [self.mArr_selectCategory addObject:itemModel];
+
+                }
+
+            }
+
+        }
+
+        
+        if(self.myAttCateArr.count == self.mArr_selectCategory.count)
+        {
+            [self.collectionView reloadData];
+        }
+
+        
+        
+        
+    }
+    else
+    {
+        NSString *ResultDesc = [note.object objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+        
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mArr_addBtnSel = [[NSMutableArray alloc]init];
 
     if([self.classStr isEqualToString:@"ThemeView"])
     {
+        [[KnowledgeHttp getInstance]GetMyattCate];
+
         self.collectionView.allowsMultipleSelection = YES;
         self.titileLabel.text = @"显示优先显示的话题类别";
         [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
         self.selBtn.hidden = NO;
+        //获取我关注的话题数组
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyattCate" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyattCate:) name:@"GetMyattCate" object:nil];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetCategoryById" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetCategoryById:) name:@"GetCategoryById" object:nil];
     }
     else
     {
@@ -274,12 +363,28 @@
 */
 
 - (IBAction)backAction:(id)sender {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)selectAction:(id)sender {
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     if(self.mArr_selectCategory.count >0)
     {
-        [MBProgressHUD showSuccess:@"选择成功"];
+        for(int i =0;i<self.mArr_selectCategory.count;i++)
+        {
+            ItemModel *model = [self.mArr_selectCategory objectAtIndex:i];
+            [mArr addObject:model.TabID];
+
+        }
+        NSString *tabIdsStr = [mArr componentsJoinedByString:@","];
+        [[KnowledgeHttp getInstance]AddMyattCateWithuid:tabIdsStr];
+
+        //[MBProgressHUD showSuccess:@"关注话题成功"];
+
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter]removeObserver:self];
 
     }
     [self dismissViewControllerAnimated:YES completion:nil];
