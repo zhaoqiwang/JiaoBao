@@ -54,6 +54,7 @@
     
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
+    self.mView_tableHead = [[UIView alloc] init];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:[NSString stringWithFormat:@"%@",self.mModel_question.Title]];
     self.mNav_navgationBar.delegate = self;
@@ -74,7 +75,7 @@
     self.mView_titlecell.delegate = self;
     //设置布局
     [self setTitleCell:self.mModel_question];
-    [self.view addSubview:self.mView_titlecell];
+    [self.mView_tableHead addSubview:self.mView_titlecell];
     
     //
     NSMutableArray *temp = [NSMutableArray array];
@@ -95,10 +96,11 @@
     }
     self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, 50) Array:temp];
     self.mBtnV_btn.delegate = self;
-    [self.view addSubview:self.mBtnV_btn];
+    [self.mView_tableHead addSubview:self.mBtnV_btn];
+    self.mView_tableHead.frame = CGRectMake(0, 0, [dm getInstance].width, self.mBtnV_btn.frame.origin.y+50);
     
     self.mTableV_answers = [[UITableView alloc] init];
-    self.mTableV_answers.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height+10, [dm getInstance].width, [dm getInstance].height-(self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height));
+    self.mTableV_answers.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
     self.mTableV_answers.delegate = self;
     self.mTableV_answers.dataSource = self;
     self.mTableV_answers.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -110,6 +112,7 @@
     self.mTableV_answers.footerPullToRefreshText = @"上拉加载更多";
     self.mTableV_answers.footerReleaseToRefreshText = @"松开加载更多数据";
     self.mTableV_answers.footerRefreshingText = @"正在加载...";
+    self.mTableV_answers.tableHeaderView = self.mView_tableHead;
     [self.view addSubview:self.mTableV_answers];
     
     //邀请回答输入框
@@ -320,7 +323,10 @@
     self.mView_titlecell.mLab_commentCount.hidden = YES;
     self.mView_titlecell.mLab_comment.hidden = YES;
     self.mView_titlecell.mLab_line2.hidden = YES;
-    self.mView_titlecell.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+21);
+    self.mView_titlecell.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+21);
+    self.mBtnV_btn.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, 50);
+    
+//    [self.mTableV_answers reloadData];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -610,7 +616,7 @@
 //邀请回答确定按钮
 -(void)CustomTextFieldViewSureBtn:(CustomTextFieldView *)view{
     D("Guhskjhdlkfgdflk");
-    NSArray *arr = [self.mView_input.mTextF_input.text componentsSeparatedByString:@","];
+    NSArray *arr = [self.mView_input.mTextF_input.text componentsSeparatedByString:@"@"];
     self.nickNameArr = [NSMutableArray arrayWithArray:arr];
     
     [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];

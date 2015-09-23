@@ -1061,8 +1061,17 @@
                 tempF = tempF+15+22;
                 //回答内容
                 NSString *string2 = model.answerModel.Abstracts;
-                NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-                CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
+                string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+                NSString *name2 = @"";
+                if ([model.answerModel.Flag integerValue]==0) {//无内容
+                    name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
+                }else if ([model.answerModel.Flag integerValue]==1){//有内容
+                    name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容 : </font> <font>%@</font>", string2];
+                }else if ([model.answerModel.Flag integerValue]==2){//有证据
+                    name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
+                }
+                CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
                 if (size.height>20) {
                     size = CGSizeMake(size.width, 32);
                 }
