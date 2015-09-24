@@ -66,7 +66,15 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetCategoryById:) name:@"GetCategoryById" object:nil];
     for(int i=0;i<self.categoryArr.count;i++)
     {
-        [[KnowledgeHttp getInstance]GetCategoryById:[self.categoryArr objectAtIndex:i]];
+        if([[self.categoryArr objectAtIndex:i] isEqualToString:@""])
+        {
+            [MBProgressHUD showError:@"没有我关注的话题"];
+        }
+        else
+        {
+            [[KnowledgeHttp getInstance]GetCategoryById:[self.categoryArr objectAtIndex:i]];
+
+        }
 
     }
     //添加导航条

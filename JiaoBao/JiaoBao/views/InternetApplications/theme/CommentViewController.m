@@ -388,9 +388,9 @@ if([Data integerValue]==-1)
             //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
         }
         
-        //若是需要重用，需要写上以下两句代码
-        UINib * n= [UINib nibWithNibName:@"AirthCommentsListCell" bundle:[NSBundle mainBundle]];
-        [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
+//        //若是需要重用，需要写上以下两句代码
+//        UINib * n= [UINib nibWithNibName:@"AirthCommentsListCell" bundle:[NSBundle mainBundle]];
+//        [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
         
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -422,7 +422,6 @@ if([Data integerValue]==-1)
     }
     if (refArr.count>0) {
         cell.mView_RefID.hidden = NO;
-        cell.mView_RefID.backgroundColor = [UIColor redColor];
 
         int m=0;
         for (int i=0; i<refArr.count; i++) {
@@ -450,7 +449,7 @@ if([Data integerValue]==-1)
                     tempBtnCai.titleLabel.font = [UIFont systemFontOfSize:12];
                     [tempBtnCai setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     tempBtnCai.restorationIdentifier = refModel.TabIDStr;
-                    tempBtnCai.hidden = YES;
+                    //tempBtnCai.hidden = YES;
                     //边框
                     [tempBtnCai.layer setMasksToBounds:YES];
                     [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -467,7 +466,7 @@ if([Data integerValue]==-1)
                     tempBtnLike.titleLabel.font = [UIFont systemFontOfSize:12];
                     [tempBtnLike setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     tempBtnLike.restorationIdentifier = refModel.TabIDStr;
-                    tempBtnLike.hidden = YES;
+                    //tempBtnLike.hidden = YES;
                     //边框
                     [tempBtnLike.layer setMasksToBounds:YES];
                     [tempBtnLike.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -486,7 +485,6 @@ if([Data integerValue]==-1)
         }
     }else{
         cell.mView_RefID.hidden = YES;
-        cell.mView_RefID.backgroundColor = [UIColor redColor];
         cell.mView_RefID.frame = cell.mLab_time.frame;
     }
     

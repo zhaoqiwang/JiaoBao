@@ -802,7 +802,6 @@
             //分割线
             cell.mLab_line.frame = CGRectMake(0, 43, [dm getInstance].width, .5);
         }else{//正常显示内容
-            
             cell.backgroundColor = [UIColor whiteColor];
             cell.mBtn_all.hidden = YES;
             cell.mBtn_evidence.hidden = YES;

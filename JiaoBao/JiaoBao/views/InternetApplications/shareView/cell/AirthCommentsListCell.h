@@ -23,6 +23,8 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_CaiCount;
 @property (nonatomic,strong) IBOutlet UIView *mView_RefID;
 @property (weak,nonatomic) id<AirthCommentsListCellDelegate> delegate;
+
+
 //@property (weak,nonatomic) id<AirthCommentsListCellHeadDelegate> headDelegate;
 
 -(IBAction)mBtn_reply:(UIButton *)sender;

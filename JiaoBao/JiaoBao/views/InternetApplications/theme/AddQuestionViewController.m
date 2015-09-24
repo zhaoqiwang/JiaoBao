@@ -286,6 +286,13 @@
             NSString *message = [NSString stringWithFormat:@"邀请%@成功",self.nickNameModel.NickName];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
+            self.provinceTF.text = @"";
+            self.regionTF.text = @"";
+            self.countyTF.text = @"";
+            self.mTextV_content.text = @"";
+            self.mText_title.text = @"";
+            self.atAccIdsTF.text = @"";
+            self.categoryTF.text = @"";
         }
         else
         {
@@ -458,7 +465,7 @@
 }
 //点击拍照
 - (IBAction)selectBtnAction:(id)sender {
-    UIButton *btn = sender;
+    UIButton *btn = self.selectBtn;
     if([[btn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"selected"]])
     {
         [btn setImage:[UIImage imageNamed:@"blank"] forState:UIControlStateNormal];

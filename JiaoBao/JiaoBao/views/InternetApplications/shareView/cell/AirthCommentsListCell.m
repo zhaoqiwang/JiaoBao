@@ -27,7 +27,13 @@
     [self.mBtn_CaiCount.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
     [self.mBtn_CaiCount.layer setBorderWidth:1.0]; //边框宽度
     [self.mBtn_CaiCount.layer setBorderColor:colorref];//边框颜色
+
+
+
+
 }
+
+
 
 //给头像添加点击事件
 -(void)headImgClick{

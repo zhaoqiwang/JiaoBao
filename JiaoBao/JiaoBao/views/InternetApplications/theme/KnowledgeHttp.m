@@ -1026,9 +1026,17 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        
         D("JSON--------AddMyattCateWithuid: %@,", result);
+        if([code integerValue]==0)
+        {
+            [MBProgressHUD showSuccess:@"关注话题成功"];
 
+        }
+        else
+        {
+            [MBProgressHUD showSuccess:@"关注话题失败"];
+
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddMyattCateWithuid: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
