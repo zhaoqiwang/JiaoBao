@@ -130,15 +130,15 @@
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue]==0) {
-        self.mTextV_content.text = @"";
-        self.mTextV_answer.text = @"";
-        self.mLab_answer.hidden = NO;
-        self.mLab_content.hidden = NO;
+//        self.mTextV_content.text = @"";
+//        self.mTextV_answer.text = @"";
+//        self.mLab_answer.hidden = NO;
+//        self.mLab_content.hidden = NO;
         //切换按钮显示标题
-//        [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
-//        [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
+        [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
+        [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
         self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
-//        self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
+        self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         if (self.mInt_flag==1) {
             //问题明细
             [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
@@ -168,7 +168,9 @@
                 
             }else{
                 if ([self.mModel_questionDetail.MyAnswerId intValue]>0) {
-                    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];
+                    self.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
+                    self.mBtn_anSubmit.hidden = YES;
+                    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];//答案明细
                 }
             }
         }
@@ -388,7 +390,7 @@
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
     //如果已经回答过
     if ([self.mStr_MyAnswerId intValue]>0) {
-        [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content];
+        [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name];
     }else{
         [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name];
     }

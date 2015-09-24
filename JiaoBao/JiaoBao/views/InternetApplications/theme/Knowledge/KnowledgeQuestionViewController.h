@@ -35,6 +35,6 @@
 @property (nonatomic,strong) QuestionDetailModel *mModel_questionDetail;
 @property (nonatomic,strong) UIView *mView_tableHead;//表格的头
 @property (nonatomic,strong) KnowledgeTableViewCell *mView_btn;//筛选按钮
-@property (nonatomic,strong) NSString *mStr_flag;// 1，求真回答，0普通回答，-1取全部
+@property (nonatomic,strong) NSString *mStr_flag;//-1全部，0无内容，2有内容，1有证据的回答
 
 @end

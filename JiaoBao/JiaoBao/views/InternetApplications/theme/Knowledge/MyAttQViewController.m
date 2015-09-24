@@ -30,6 +30,9 @@
     //获取我关注的问题列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MyAttQIndexWithnumPerPage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MyAttQIndexWithnumPerPage:) name:@"MyAttQIndexWithnumPerPage" object:nil];
+    //取消关注该问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveMyAttQWithqId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RemoveMyAttQWithqId:) name:@"RemoveMyAttQWithqId" object:nil];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"我关注的问题"];
@@ -95,6 +98,8 @@
         UINib * n= [UINib nibWithNibName:@"KnowledgeTableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTalbeV_liset registerNib:n forCellReuseIdentifier:indentifier];
     }
+    cell.delegate = self;
+    cell.tag = indexPath.row;
     QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
     cell.LikeBtn.hidden = YES;
     cell.mLab_title.hidden = YES;
@@ -115,7 +120,7 @@
     cell.mImgV_head.hidden = YES;
     cell.mCollectionV_pic.hidden = YES;
     cell.mLab_line2.hidden = YES;
-    cell.mBtn_detail.hidden = YES;
+    cell.mBtn_detail.hidden = NO;
     cell.mWebV_comment.hidden = YES;
     cell.mBtn_all.hidden = YES;
     cell.mBtn_evidence.hidden = YES;
@@ -132,8 +137,11 @@
     [row1 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
+    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18-40, 23);
     cell.mLab_ATitle.hidden = NO;
+    //取消关注
+    [cell.mBtn_detail setTitle:@"取消" forState:UIControlStateNormal];
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, 60);
     //关注、答案个数
     //关注
     NSString *attStr = [NSString stringWithFormat:@"%@人关注",model.AttCount];
@@ -165,6 +173,38 @@
     KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
     queston.mModel_question = model;
     [utils pushViewController:queston animated:YES];
+}
+
+//取消关注
+-(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    QuestionModel *model = [self.mArr_list objectAtIndex:knowledgeTableViewCell.tag];
+    [[KnowledgeHttp getInstance] RemoveMyAttQWithqId:model.TabID];
+    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+}
+
+//取消关注该问题
+-(void)RemoveMyAttQWithqId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    [self.mTalbeV_liset headerEndRefreshing];
+    [self.mTalbeV_liset footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0) {
+        //修改model中的值，和界面显示
+        //重新获取
+        [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        //关注问题，只增不减，----
+        //        self.mModel_question.AttCount = [NSString stringWithFormat:@"%d",[self.mModel_question.AttCount intValue]-1];
+        //        //设置布局
+        //        [self setTitleCell:self.mModel_question];
+        //        //通知主页修改关注数量
+        //        [[NSNotificationCenter defaultCenter]postNotificationName:@"updataAddMyAttQ" object:self.mModel_question];
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
+//
 }
 
 #pragma mark 开始进入刷新状态

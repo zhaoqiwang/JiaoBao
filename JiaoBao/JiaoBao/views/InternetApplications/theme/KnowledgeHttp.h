@@ -72,8 +72,8 @@
 //回答问题 参数描述：问题id - 标题 - 回答的问题 - （用户昵称，若是匿名回答，为空字串符）
 -(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName;
 
-//修改答案 参数描述：答案id - 标题 - 回答的内容
--(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent;
+//修改答案 参数描述：答案id - 标题 - 回答的内容- （用户昵称，若是匿名回答，为空字串符）
+-(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName;
 
 //获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag;
@@ -119,6 +119,9 @@
 
 //关注某一个问题 参数描述：问题ID
 -(void)AddMyAttQWithqId:(NSString*)qId;
+
+//取消关注问题 参数描述：问题ID
+-(void)RemoveMyAttQWithqId:(NSString *)qId;
 
 //邀请指定的用户回答问题 参数描述：被邀请的用户教宝号 - 问题ID
 -(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId;
