@@ -70,10 +70,10 @@
 -(void)QuestionDetailWithQId:(NSString*)QId;
 
 //回答问题 参数描述：问题id - 标题 - 回答的问题 - （用户昵称，若是匿名回答，为空字串符）
--(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName;
+-(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag;
 
 //修改答案 参数描述：答案id - 标题 - 回答的内容- （用户昵称，若是匿名回答，为空字串符）
--(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName;
+-(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag;
 
 //获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag;

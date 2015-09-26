@@ -866,7 +866,6 @@
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.mView_input];
-    
     [utils popViewControllerAnimated:YES];
 }
 

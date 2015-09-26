@@ -392,9 +392,9 @@
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
     //如果已经回答过
     if ([self.mStr_MyAnswerId intValue]>0) {
-        [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name];
+        [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
     }else{
-        [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name];
+        [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
     }
     [MBProgressHUD showMessage:@"提交中..." toView:self.view];
 }

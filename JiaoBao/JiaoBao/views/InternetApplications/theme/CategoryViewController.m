@@ -200,7 +200,7 @@
         }
         else
         {
-            cell.nameLabel.textColor = [UIColor blackColor];
+            cell.nameLabel.textColor = [UIColor darkGrayColor];
         }
     
     
@@ -246,7 +246,7 @@
         if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
         {
             [self.mArr_selectCategory removeObject:itemModel];
-            cell.nameLabel.textColor = [UIColor blackColor];
+            cell.nameLabel.textColor = [UIColor darkGrayColor];
         }
         else
         {
@@ -272,7 +272,7 @@
     {if([self.mArr_selectCategory containsObject:itemModel])
     {
         [self.mArr_selectCategory removeObject:itemModel];
-        cell.nameLabel.textColor = [UIColor blackColor];
+        cell.nameLabel.textColor = [UIColor darkGrayColor];
         
     }
 
@@ -282,7 +282,7 @@
         if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
         {
             [self.mArr_selectCategory removeObject:itemModel];
-            cell.nameLabel.textColor = [UIColor blackColor];
+            cell.nameLabel.textColor = [UIColor darkGrayColor];
         }
         else
         {
