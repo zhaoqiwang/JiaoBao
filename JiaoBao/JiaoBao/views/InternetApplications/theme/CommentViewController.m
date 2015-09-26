@@ -449,7 +449,7 @@ if([Data integerValue]==-1)
                     tempBtnCai.titleLabel.font = [UIFont systemFontOfSize:12];
                     [tempBtnCai setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     tempBtnCai.restorationIdentifier = refModel.TabIDStr;
-                    //tempBtnCai.hidden = YES;
+                    tempBtnCai.hidden = YES;
                     //边框
                     [tempBtnCai.layer setMasksToBounds:YES];
                     [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -466,7 +466,7 @@ if([Data integerValue]==-1)
                     tempBtnLike.titleLabel.font = [UIFont systemFontOfSize:12];
                     [tempBtnLike setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     tempBtnLike.restorationIdentifier = refModel.TabIDStr;
-                    //tempBtnLike.hidden = YES;
+                    tempBtnLike.hidden = YES;
                     //边框
                     [tempBtnLike.layer setMasksToBounds:YES];
                     [tempBtnLike.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -496,16 +496,19 @@ if([Data integerValue]==-1)
     //回复按钮
     CGSize sizeReply = [@"回复" sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mBtn_reply.frame = CGRectMake([dm getInstance].width-30-sizeReply.width, cell.mLab_Commnets.frame.origin.y+cell.mLab_Commnets.frame.size.height+10, sizeReply.width+20, 30);
+    cell.mBtn_reply.hidden = YES;
     //踩按钮
     NSString *tempCai = [NSString stringWithFormat:@"踩(%@)",model.CaiCount];
     CGSize sizeCai = [tempCai sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mBtn_CaiCount.frame = CGRectMake(cell.mBtn_reply.frame.origin.x-30-sizeCai.width, cell.mBtn_reply.frame.origin.y, sizeCai.width+20, 30);
     [cell.mBtn_CaiCount setTitle:tempCai forState:UIControlStateNormal];
+    cell.mBtn_CaiCount.hidden = YES;
     //顶按钮
     NSString *tempLike = [NSString stringWithFormat:@"顶(%@)",model.LikeCount];
     CGSize sizeLike = [tempLike sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mBtn_LikeCount.frame = CGRectMake(cell.mBtn_CaiCount.frame.origin.x-30-sizeLike.width, cell.mBtn_CaiCount.frame.origin.y, sizeLike.width+20, 30);
     [cell.mBtn_LikeCount setTitle:tempLike forState:UIControlStateNormal];
+    cell.mBtn_LikeCount.hidden = YES;
     
     
     //给头像添加点击事件
