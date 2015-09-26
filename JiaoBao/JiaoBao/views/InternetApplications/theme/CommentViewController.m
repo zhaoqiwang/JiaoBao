@@ -674,7 +674,7 @@ if([Data integerValue]==-1)
         //背景色
         cell.mView_background.hidden = YES;
         //图片
-        cell.mCollectionV_pic.hidden = NO;
+        cell.mCollectionV_pic.hidden = YES;
         //时间
         cell.mLab_RecDate.hidden = NO;
         //评论
