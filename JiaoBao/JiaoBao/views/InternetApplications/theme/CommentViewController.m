@@ -738,37 +738,23 @@ if([Data integerValue]==-1)
         //加载
         //[self webViewLoadFinish:0];
 
-        //回答内容
-        NSString *string2 = self.AnswerDetailModel.AContent;
-        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
-        NSString *name2;
-        if([self.AnswerDetailModel.Flag integerValue]==0)
-        {
-            name2 = [NSString stringWithFormat:@"无内容"];
 
-        }
-        else if([self.AnswerDetailModel.Flag integerValue]==1)
-        {
-            name2 = [NSString stringWithFormat:@"<font size=14 color='red'>内容 : </font> <font>%@</font>", string2];
 
-        }
-        else
-        {
-            name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-
-        }
-        NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-        [row2 setObject:name2 forKey:@"text"];
-        RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-        cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
-        CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
-
-        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, optimalSize2.height);
+        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, 50);
     UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
-    contentLabel.text = @"内容:";
+    if([self.AnswerDetailModel.Flag integerValue]==1)
+    {
+        contentLabel.text = @"内容:";
+        contentLabel.textColor = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:3/255.0 alpha:1];
+
+
+    }
+    else
+    {
+        contentLabel.text = @"依据:";
+        contentLabel.textColor = [UIColor redColor];
+    }
     contentLabel.font = [UIFont systemFontOfSize:13];
-    contentLabel.textColor = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:3/255.0 alpha:1];
     [cell.contentView addSubview:contentLabel];
     contentLabel.textAlignment = NSTextAlignmentLeft;
         //背景色
@@ -822,8 +808,7 @@ if([Data integerValue]==-1)
         }
     cell.frame = CGRectMake(0, 10, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
     cell.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction:)];
-//    [cell addGestureRecognizer:tap];
+
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{

@@ -290,7 +290,7 @@
 //答案明细
 +(AnswerDetailModel*)parserJsonAnswerDetail:(NSString*)json
 {
-    D("fd;'osgjr;a'sdgj';a-====%@",json);
+    //D("fd;'osgjr;a'sdgj';a-====%@",json);
     AnswerDetailModel *model = [[AnswerDetailModel alloc ]init];
     NSDictionary *dic = [json objectFromJSONString];
     model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
