@@ -353,7 +353,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent};
+    NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent,@"UserName":UserName};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];

@@ -405,7 +405,7 @@
 //首页问题列表和话题的问题列表
 +(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
 {
-    D("sdoighjdofk-====%@",json);
+    D("sdoighjdofk-=222222===%@",json);
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
     for(int i=0;i<arrList.count;i++)

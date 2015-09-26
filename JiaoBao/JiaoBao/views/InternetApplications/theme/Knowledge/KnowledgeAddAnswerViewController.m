@@ -138,7 +138,11 @@
         [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
         self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
-        self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
+        if ([self.mStr_MyAnswerId intValue]>0) {
+            
+        }else{
+            self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
+        }
         if (self.mInt_flag==1) {
             //问题明细
             [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
@@ -169,7 +173,7 @@
             }else{
                 if ([self.mModel_questionDetail.MyAnswerId intValue]>0) {
                     self.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
-                    self.mBtn_anSubmit.hidden = YES;
+//                    self.mBtn_anSubmit.hidden = YES;
                     [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];//答案明细
                 }
             }
