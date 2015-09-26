@@ -184,10 +184,12 @@
     self.mView_titlecell.hidden = NO;
     //标题
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
-    self.mView_titlecell.mLab_title.text = model.Title;
+    NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    self.mView_titlecell.mLab_title.text = title1;
     [self.mView_titlecell.mLab_title setNumberOfLines:0];
     self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
-    CGSize labelsize = [model.Title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2,99999) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize labelsize = [title1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2,99999) lineBreakMode:NSLineBreakByWordWrapping];
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
     //详情

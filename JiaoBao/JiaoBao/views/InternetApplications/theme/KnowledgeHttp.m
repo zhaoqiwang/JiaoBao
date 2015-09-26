@@ -696,7 +696,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
 }
 
 //获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选
--(void)GetPickedByIdWithTabID:(NSString *)tabId{
+-(void)GetPickedByIdWithTabID:(NSString *)tabId flag:(NSString *)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetPickedById",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
@@ -714,12 +714,20 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        if ([flag intValue]==0) {//主页
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        }else{//单个精选
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SingleGetPickedById" object:tempDic];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetPickedById: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        if ([flag intValue]==0) {//主页
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        }else{//单个精选
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SingleGetPickedById" object:tempDic];
+        }
     }];
 }
 
