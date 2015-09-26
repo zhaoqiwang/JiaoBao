@@ -47,7 +47,8 @@
 @property (nonatomic,strong) IBOutlet UIWebView *mWebV_comment;//内容
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_all;//全部
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_evidence;//有证据
-@property (nonatomic,strong) IBOutlet UIButton *mBtn_discuss;//在讨论
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_discuss;//在讨论--有内容
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_nodiscuss;//在讨论--无内容
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory;//选择话题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory1;//选择话题
 @property (nonatomic,strong) IBOutlet UIScrollView *mScrollV_pic;//精选图片
@@ -74,6 +75,7 @@
 -(IBAction)mBtn_all:(id)sender;
 -(IBAction)mBtn_evidence:(id)sender;
 -(IBAction)mBtn_discuss:(id)sender;
+-(IBAction)mBtn_nodiscuss:(id)sender;
 
 @end
 
@@ -98,5 +100,6 @@
 -(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 -(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 -(void)KnowledgeTableVIewCellDiscussBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+-(void)KnowledgeTableVIewCellNoDiscuss:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 
 @end

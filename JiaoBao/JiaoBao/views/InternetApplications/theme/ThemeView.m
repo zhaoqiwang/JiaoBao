@@ -54,6 +54,9 @@
         //切换账号时，更新数据
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RegisterView" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RegisterView:) name:@"RegisterView" object:nil];
+        //通知主页修改关注数量
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataAddMyAttQ" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataAddMyAttQ:) name:@"updataAddMyAttQ" object:nil];
 
         self.mArr_AllCategory = [NSMutableArray array];
         self.mInt_index = 0;
@@ -237,6 +240,20 @@
     [self.mTableV_knowledge reloadData];
 }
 
+//通知主页修改关注数量
+-(void)updataAddMyAttQ:(NSNotification *)noti{
+    QuestionModel *model = noti.object;
+    NSMutableArray *array = [self arrayDataSourceSum];
+    for (int i=0; i<array.count; i++) {
+        QuestionModel *tempModel = [array objectAtIndex:i];
+        if ([tempModel.TabID intValue]==[model.TabID intValue]) {
+            tempModel.AttCount = model.AttCount;
+            break;
+        }
+    }
+    [self.mTableV_knowledge reloadData];
+}
+
 //置顶问题
 -(void)GetCategoryTop:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
@@ -337,31 +354,37 @@
 -(void)GetAllCategory:(NSNotification *)noti{
     if([dm getInstance].addQuestionNoti == NO)
     {
-    [MBProgressHUD hideHUDForView:self animated:YES];
-    NSMutableDictionary *dic = noti.object;
-    NSString *code = [dic objectForKey:@"code"];
-    if ([code integerValue] ==0) {
-        //先移除，然后添加默认
-        [self.mArr_AllCategory removeAllObjects];
-        [self init_mArr_AllCategory];
-        NSMutableArray *array = [dic objectForKey:@"array"];
-        for (int i=0; i<array.count; i++) {
-            AllCategoryModel *model = [array objectAtIndex:i];
-            model.flag = @"-1";
-            //给一个默认的话题，暂时为二级话题中的第一个
-            if (model.mArr_subItem.count>0) {
-                model.item_now = [model.mArr_subItem objectAtIndex:0];
-            }else{
-                model.item_now = model.item;
+        [MBProgressHUD hideHUDForView:self animated:YES];
+        NSMutableDictionary *dic = noti.object;
+        NSString *code = [dic objectForKey:@"code"];
+        if ([code integerValue] ==0) {
+            //先移除，然后添加默认
+//            [self.mArr_AllCategory removeAllObjects];
+//            [self init_mArr_AllCategory];
+            //有可能在获取到话题时，首页中的数据已经获得，所以不能清空
+            if (self.mArr_AllCategory.count>3) {
+                for (int i=3; i<self.mArr_AllCategory.count; i++) {
+                    [self.mArr_AllCategory removeObjectAtIndex:i];
+                }
             }
-            
-            [self.mArr_AllCategory addObject:model];
+            NSMutableArray *array = [dic objectForKey:@"array"];
+            for (int i=0; i<array.count; i++) {
+                AllCategoryModel *model = [array objectAtIndex:i];
+                model.flag = @"-1";
+                //给一个默认的话题，暂时为二级话题中的第一个
+                if (model.mArr_subItem.count>0) {
+                    model.item_now = [model.mArr_subItem objectAtIndex:0];
+                }else{
+                    model.item_now = model.item;
+                }
+                
+                [self.mArr_AllCategory addObject:model];
+            }
+            [self addScrollViewBtn:(int)array.count];
+        }else{
+            NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+            [MBProgressHUD showError:ResultDesc toView:self];
         }
-        [self addScrollViewBtn:(int)array.count];
-    }else{
-        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-        [MBProgressHUD showError:ResultDesc toView:self];
-    }
     }
 }
 
@@ -464,7 +487,7 @@
     }else if ([model.flag integerValue]==1){
         return model.mArr_evidence;
     }
-    return model.mArr_sum;
+    return model.mArr_all;
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -628,9 +651,9 @@
         }
     }else{
         NSMutableArray *array = [self arrayDataSourceSum];
-        D("iahrgiuaehli-===%lu,%ld",(unsigned long)array.count,(long)indexPath.row);
+//        D("iahrgiuaehli-===%lu,%ld",(unsigned long)array.count,(long)indexPath.row);
         QuestionModel *model = [array objectAtIndex:indexPath.row];
-        D("sdjhfaslkdfhalke;sjfa;lkj;-===%@,%@",model.TabID,model.tabid);
+//        D("sdjhfaslkdfhalke;sjfa;lkj;-===%@,%@",model.TabID,model.tabid);
         cell.model = model;
         cell.mInt_flag = 0;
         [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
@@ -876,8 +899,8 @@
                 //头像
                 cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
                 [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
-                D("dsrgijodfpgj'p-=====%@",model.answerModel.JiaoBaoHao);
-                D("dsrgijodfpgj'p-222=====%@",[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao]);
+//                D("dsrgijodfpgj'p-=====%@",model.answerModel.JiaoBaoHao);
+//                D("dsrgijodfpgj'p-222=====%@",[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao]);
                 cell.mImgV_head.hidden = NO;
                 //姓名
                 cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
@@ -995,7 +1018,22 @@
         if (model.mInt_btn==1||model.mInt_btn==2) {//三个按钮,话题显示行
             return 44;
         }else{//正常显示内容
-            return [self cellHeight:indexPath];
+            static NSString *indentifier = @"KnowledgeTableViewCell";
+            KnowledgeTableViewCell *cell = (KnowledgeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+            if (cell == nil) {
+                cell = [[KnowledgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"KnowledgeTableViewCell" owner:self options:nil];
+                //这时myCell对象已经通过自定义xib文件生成了
+                if ([nib count]>0) {
+                    cell = (KnowledgeTableViewCell *)[nib objectAtIndex:0];
+                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                }
+                //添加图片点击事件
+                //若是需要重用，需要写上以下两句代码
+                UINib * n= [UINib nibWithNibName:@"KnowledgeTableViewCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_knowledge registerNib:n forCellReuseIdentifier:indentifier];
+            }
+            return [self cellHeight:indexPath cell:cell];
         }
     }
     
@@ -1042,23 +1080,23 @@
     
 }
 
--(float)cellHeight:(NSIndexPath *)indexPath{
+-(float)cellHeight:(NSIndexPath *)indexPath cell:(KnowledgeTableViewCell *)cell{
     float tempF = 0.0;
     NSMutableArray *array = [self arrayDataSourceSum];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
     if ([model.TabID intValue]>0) {
-        //标题
+        //判断是否为置顶数据
         tempF = tempF+10+16;
         //话题
         tempF = tempF+5+21;
         //判断是否有回答
-        //    if ([model.AnswersCount integerValue]>0) {
         if ([model.answerModel.TabID integerValue]>0) {
-            //分割线
-            tempF = tempF+5;
+            //图片
             if (model.answerModel.Thumbnail.count>0) {
+                //分割线
+                tempF=tempF+5+1;
                 //回答标题
-                tempF = tempF+15+22;
+                tempF=tempF+15+3+23;
                 //回答内容
                 NSString *string2 = model.answerModel.Abstracts;
                 string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
@@ -1071,34 +1109,36 @@
                 }else if ([model.answerModel.Flag integerValue]==2){//有证据
                     name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
                 }
-                CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
-                if (size.height>20) {
-                    size = CGSizeMake(size.width, 32);
+                
+                NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
+                [row2 setObject:name2 forKey:@"text"];
+                RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+                cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+                CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
+                if (optimalSize2.height==23) {
+                    optimalSize2 = CGSizeMake(optimalSize2.width, 25);
+                }else if (optimalSize2.height>20) {
+                    optimalSize2 = CGSizeMake(optimalSize2.width, 35);
                 }
-                tempF = tempF+5+size.height;
+                tempF = tempF+5+optimalSize2.height;
                 //背景色
-                tempF = tempF+3;
-                //图片
-                tempF = tempF+5+([dm getInstance].width-65-30)/3;
+                tempF=tempF+3;
+                tempF=tempF+5+([dm getInstance].width-65-30)/3;
                 //时间
-                tempF = tempF+10+21;
-                if (model.mInt_top ==1) {
-                    
-                }else{
-                    tempF = tempF+20;
-                }
+                tempF=tempF+5+21;
+                //分割线
+                tempF=tempF+20;
             }else{
+                //分割线
+                tempF=tempF+5+1;
                 //赞
-                tempF = tempF+15+22;
+                tempF=tempF+15+22;
                 //头像
-                tempF = tempF+10+42;
+                tempF=tempF+10+42;
                 //姓名
-                tempF = tempF+10+21;
-                if (model.mInt_top ==1) {
-                    
-                }else{
-                    tempF = tempF+20;
-                }
+                tempF=tempF+10+21;
+                //分割线
+                tempF=tempF+20;
             }
         }else{
             if (model.mInt_top ==1) {

@@ -344,8 +344,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"AddAnswer" object:dic];
     }];
 }
-//修改答案 参数描述：答案id - 标题 - 回答的内容
--(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent
+//修改答案 参数描述：答案id - 标题 - 回答的内容- （用户昵称，若是匿名回答，为空字串符）
+-(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UpdateAnswer",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -371,7 +371,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 
-//获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志（1，求真回答，0普通回答，-1取全部）
+//获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志（-1全部，0无内容，2有内容，1有证据的回答）
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetAnswerById",MAINURL];
@@ -805,6 +805,32 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
+    }];
+}
+
+//取消关注问题 参数描述：问题ID
+-(void)RemoveMyAttQWithqId:(NSString *)qId{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/RemoveMyAttQ",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"qId":qId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------RemoveMyAttQWithqId: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMyAttQWithqId" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------RemoveMyAttQWithqId: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMyAttQWithqId" object:tempDic];
     }];
 }
 

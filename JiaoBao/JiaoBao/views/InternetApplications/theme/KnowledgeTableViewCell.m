@@ -238,5 +238,11 @@
         [self.delegate KnowledgeTableVIewCellDiscussBtn:self];
     }
 }
+//无内容
+-(IBAction)mBtn_nodiscuss:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellNoDiscuss:)]) {
+        [self.delegate KnowledgeTableVIewCellNoDiscuss:self];
+    }
+}
 
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -172,7 +172,7 @@
                         </connections>
                     </webView>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8wQ-Mq-7pS">
-                        <rect key="frame" x="124" y="299" width="46" height="30"/>
+                        <rect key="frame" x="95" y="299" width="46" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="有证据">
@@ -182,19 +182,8 @@
                             <action selector="mBtn_evidence:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ubd-cU-3z5"/>
                         </connections>
                     </button>
-                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="je3-X9-rXF">
-                        <rect key="frame" x="213" y="299" width="46" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <state key="normal" title="在讨论">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="mBtn_discuss:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0hq-EB-iFO"/>
-                        </connections>
-                    </button>
                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uXK-7Q-fo3">
-                        <rect key="frame" x="44" y="299" width="46" height="30"/>
+                        <rect key="frame" x="32" y="299" width="46" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="全部">
@@ -234,6 +223,28 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nMJ-oI-0AR">
+                        <rect key="frame" x="217" y="299" width="46" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="无内容">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="mBtn_nodiscuss:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wFr-zo-Rxs"/>
+                        </connections>
+                    </button>
+                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="je3-X9-rXF">
+                        <rect key="frame" x="163" y="299" width="46" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="在讨论">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="mBtn_discuss:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0hq-EB-iFO"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -242,6 +253,7 @@
                 <outlet property="mBtn_detail" destination="49E-wJ-i3G" id="DQ4-4u-3qv"/>
                 <outlet property="mBtn_discuss" destination="je3-X9-rXF" id="3PC-RU-Dti"/>
                 <outlet property="mBtn_evidence" destination="8wQ-Mq-7pS" id="udn-We-fYG"/>
+                <outlet property="mBtn_nodiscuss" destination="nMJ-oI-0AR" id="lCq-Ut-CjU"/>
                 <outlet property="mCollectionV_pic" destination="sO8-PT-Jn0" id="FeL-iq-2Km"/>
                 <outlet property="mImgV_head" destination="l7y-Ci-9bg" id="XFO-9y-zak"/>
                 <outlet property="mImgV_top" destination="O3Z-LG-9B1" id="Ln6-rc-g78"/>
@@ -273,4 +285,9 @@
     <resources>
         <image name="buttonView7.png" width="14" height="14"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>

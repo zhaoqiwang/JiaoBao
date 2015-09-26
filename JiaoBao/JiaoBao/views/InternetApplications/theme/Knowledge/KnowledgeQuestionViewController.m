@@ -45,6 +45,9 @@
     //是否关注该问题
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMyAttQWithqId" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddMyAttQWithqId:) name:@"AddMyAttQWithqId" object:nil];
+    //取消关注该问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveMyAttQWithqId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(RemoveMyAttQWithqId:) name:@"RemoveMyAttQWithqId" object:nil];
     //邀请指定的用户回答问题
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
@@ -55,6 +58,7 @@
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
     self.mView_tableHead = [[UIView alloc] init];
+    self.mStr_flag = @"-1";
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:[NSString stringWithFormat:@"%@",self.mModel_question.Title]];
     self.mNav_navgationBar.delegate = self;
@@ -98,7 +102,22 @@
     self.mBtnV_btn.delegate = self;
     [self.mView_tableHead addSubview:self.mBtnV_btn];
     self.mView_tableHead.frame = CGRectMake(0, 0, [dm getInstance].width, self.mBtnV_btn.frame.origin.y+50);
-    
+    //筛选按钮
+    if (self.mView_btn == nil) {
+        self.mView_btn = [[KnowledgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"KnowledgeTableViewCell" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            self.mView_btn = (KnowledgeTableViewCell *)[nib objectAtIndex:0];
+            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        }
+    }
+    self.mView_btn.delegate = self;
+    //设置布局
+    [self setBtnCell:self.mModel_question];
+    [self.mView_tableHead addSubview:self.mView_btn];
+    self.mView_tableHead.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_btn.frame.origin.y+44);
+    //
     self.mTableV_answers = [[UITableView alloc] init];
     self.mTableV_answers.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
     self.mTableV_answers.delegate = self;
@@ -121,7 +140,7 @@
     [self.view addSubview:self.mView_input];
     self.mView_input.hidden = YES;
     //获取问题的答案列表
-    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
+    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:self.mStr_flag];
     //答案明细
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
@@ -130,7 +149,7 @@
 //通知界面，更新答案数据
 -(void)updataQuestionDetailModel:(NSNotification *)noti{
     //获取问题的答案列表
-    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
+    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:self.mStr_flag];
 }
 
 //问题详情
@@ -150,6 +169,24 @@
                 }
             }
         }
+        //是否关注该问题
+        if ([model.Tag intValue]==0) {//没有
+            //修改model中的值，和界面显示
+            self.mModel_question.Tag = @"0";
+            for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+                if (view.tag ==102) {
+                    view.mLab_title.text = @"关注问题";
+                }
+            }
+        }else{//关注
+            //修改model中的值，和界面显示
+            self.mModel_question.Tag = @"1";
+            for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+                if (view.tag ==102) {
+                    view.mLab_title.text = @"取消关注";
+                }
+            }
+        }
     }
 }
 
@@ -166,9 +203,44 @@
         self.mModel_question.Tag = @"1";
         for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
             if (view.tag ==102) {
-                view.mLab_title.text = @"已关注";
+//                view.mLab_title.text = @"已关注";
+                view.mLab_title.text = @"取消关注";
             }
         }
+        self.mModel_question.AttCount = [NSString stringWithFormat:@"%d",[self.mModel_question.AttCount intValue]+1];
+        //设置布局
+        [self setTitleCell:self.mModel_question];
+        //通知主页修改关注数量
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updataAddMyAttQ" object:self.mModel_question];
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
+//取消关注该问题
+-(void)RemoveMyAttQWithqId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_answers headerEndRefreshing];
+    [self.mTableV_answers footerEndRefreshing];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0) {
+        //修改model中的值，和界面显示
+        self.mModel_question.Tag = @"0";
+        for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+            if (view.tag ==102) {
+                //                view.mLab_title.text = @"已关注";
+                view.mLab_title.text = @"关注问题";
+            }
+        }
+        //关注问题，只增不减，----
+//        self.mModel_question.AttCount = [NSString stringWithFormat:@"%d",[self.mModel_question.AttCount intValue]-1];
+//        //设置布局
+//        [self setTitleCell:self.mModel_question];
+//        //通知主页修改关注数量
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"updataAddMyAttQ" object:self.mModel_question];
     }else{
         
     }
@@ -238,7 +310,7 @@
         //设置布局
         [self setTitleCell:self.mModel_question];
         //获取问题的答案列表
-        [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:@"-1"];
+        [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:self.mStr_flag];
     }
 }
 
@@ -258,6 +330,115 @@
         }
     }
     [self.mTableV_answers reloadData];
+}
+
+//设置筛选按钮布局
+-(void)setBtnCell:(QuestionModel *)model{
+    self.mView_btn.mScrollV_pic.hidden = YES;
+    //判断显示内容
+    self.mView_btn.LikeBtn.hidden = YES;
+    self.mView_btn.mLab_title.hidden = YES;
+    self.mView_btn.mLab_Category0.hidden = YES;
+    self.mView_btn.mLab_Category1.hidden = YES;
+    self.mView_btn.mLab_Att.hidden = YES;
+    self.mView_btn.mLab_AttCount.hidden = YES;
+    self.mView_btn.mLab_Answers.hidden = YES;
+    self.mView_btn.mLab_AnswersCount.hidden = YES;
+    self.mView_btn.mLab_View.hidden = YES;
+    self.mView_btn.mLab_ViewCount.hidden = YES;
+    self.mView_btn.mLab_LikeCount.hidden = YES;
+    self.mView_btn.mLab_ATitle.hidden = YES;
+    self.mView_btn.mLab_Abstracts.hidden = YES;
+    self.mView_btn.mLab_IdFlag.hidden = YES;
+    self.mView_btn.mLab_RecDate.hidden = YES;
+    self.mView_btn.mLab_comment.hidden = YES;
+    self.mView_btn.mLab_commentCount.hidden = YES;
+    self.mView_btn.mLab_line.hidden = YES;
+    self.mView_btn.mView_background.hidden = YES;
+    self.mView_btn.mImgV_head.hidden = YES;
+    self.mView_btn.mCollectionV_pic.hidden = YES;
+    self.mView_btn.mLab_line2.hidden = YES;
+    self.mView_btn.mBtn_detail.hidden = YES;
+    self.mView_btn.mWebV_comment.hidden = YES;
+    self.mView_btn.mBtn_all.hidden = NO;
+    self.mView_btn.mBtn_evidence.hidden = NO;
+    self.mView_btn.mBtn_discuss.hidden = NO;
+    [self.mView_btn.mBtn_discuss setTitle:@"有内容" forState:UIControlStateNormal];
+    self.mView_btn.mBtn_nodiscuss.hidden = NO;
+    self.mView_btn.mLab_selectCategory.hidden = YES;
+    self.mView_btn.mLab_selectCategory1.hidden = YES;
+    self.mView_btn.mImgV_top.hidden = YES;
+    self.mView_btn.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    self.mView_btn.mBtn_all.frame = CGRectMake(([dm getInstance].width-50*4)/5, 10, 50, 44-20);
+    self.mView_btn.mBtn_evidence.frame = CGRectMake(self.mView_btn.mBtn_all.frame.origin.x+50+([dm getInstance].width-50*4)/5, 10, 50, 44-20);
+    self.mView_btn.mBtn_discuss.frame = CGRectMake(self.mView_btn.mBtn_evidence.frame.origin.x+50+([dm getInstance].width-50*4)/5, 10, 50, 44-20);
+    self.mView_btn.mBtn_nodiscuss.frame = CGRectMake(self.mView_btn.mBtn_discuss.frame.origin.x+50+([dm getInstance].width-50*4)/5, 10, 50, 44-20);
+    if ([self.mStr_flag integerValue]==-1) {//-1全部，0无内容，2有内容，1有证据的回答
+        [self.mView_btn.mBtn_all setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_all.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+        [self.mView_btn.mBtn_all.layer setBorderWidth:1.0]; //边框宽度
+        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+        [self.mView_btn.mBtn_all.layer setBorderColor:colorref];//边框颜色
+        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:0]; //边框宽度
+    }else if ([self.mStr_flag integerValue]==0){//无内容
+        [self.mView_btn.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_all.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_nodiscuss.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:1.0]; //边框宽度
+        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+        [self.mView_btn.mBtn_nodiscuss.layer setBorderColor:colorref];//边框颜色
+        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
+    }else if ([self.mStr_flag integerValue]==1){//有证据
+        [self.mView_btn.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_all.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_evidence.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+        [self.mView_btn.mBtn_evidence.layer setBorderWidth:1.0]; //边框宽度
+        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+        [self.mView_btn.mBtn_evidence.layer setBorderColor:colorref];//边框颜色
+        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];
+        [self.mView_btn.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:0]; //边框宽度
+    }else if ([self.mStr_flag integerValue]==2){//有内容
+        [self.mView_btn.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_all.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_discuss.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+        [self.mView_btn.mBtn_discuss.layer setBorderWidth:1.0]; //边框宽度
+        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+        [self.mView_btn.mBtn_discuss.layer setBorderColor:colorref];//边框颜色
+        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];
+        [self.mView_btn.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
+        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:0]; //边框宽度
+    }
+    self.mView_btn.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+50, [dm getInstance].width, 44);
 }
 
 //设置标题栏布局
@@ -568,7 +749,7 @@
             return;
         }
     }
-    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:page QId:self.mModel_question.TabID flag:@"-1"];
+    [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:page QId:self.mModel_question.TabID flag:self.mStr_flag];
 }
 
 //详情按钮
@@ -594,6 +775,44 @@
     [utils pushViewController:commentVC animated:YES];
 }
 
+//全部、有依据、在讨论按钮
+-(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{//全部
+    if ([self.mStr_flag integerValue]!=-1) {
+        [self.mArr_answers removeAllObjects];
+        self.mStr_flag = @"-1";
+        [self setBtnCell:nil];
+        [self sendRequest];
+    }
+    [self.mTableV_answers reloadData];
+}
+-(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{//有依据
+    if ([self.mStr_flag integerValue]!=1) {
+        [self.mArr_answers removeAllObjects];
+        self.mStr_flag = @"1";
+        [self setBtnCell:nil];
+        [self sendRequest];
+    }
+    [self.mTableV_answers reloadData];
+}
+-(void)KnowledgeTableVIewCellDiscussBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{//有内容
+    if ([self.mStr_flag integerValue]!=2) {
+        [self.mArr_answers removeAllObjects];
+        self.mStr_flag = @"2";
+        [self setBtnCell:nil];
+        [self sendRequest];
+    }
+    [self.mTableV_answers reloadData];
+}
+-(void)KnowledgeTableVIewCellNoDiscuss:(KnowledgeTableViewCell *)knowledgeTableViewCell{//无内容
+    if ([self.mStr_flag integerValue]!=0) {
+        [self.mArr_answers removeAllObjects];
+        self.mStr_flag = @"0";
+        [self setBtnCell:nil];
+        [self sendRequest];
+    }
+    [self.mTableV_answers reloadData];
+}
+
 //ButtonView回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
     D("view.tag-=====%ld",(long)view.tag);
@@ -605,7 +824,9 @@
         [self.mView_input.mTextF_input becomeFirstResponder];
     }else if (view.tag == 102){//关注问题
         if ([self.mModel_question.Tag intValue]>0) {
-            [MBProgressHUD showSuccess:@"已关注该问题" toView:self.view];
+//            [MBProgressHUD showSuccess:@"已关注该问题" toView:self.view];
+            [[KnowledgeHttp getInstance] RemoveMyAttQWithqId:self.mModel_question.TabID];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }else{
             [[KnowledgeHttp getInstance] AddMyAttQWithqId:self.mModel_question.TabID];
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
