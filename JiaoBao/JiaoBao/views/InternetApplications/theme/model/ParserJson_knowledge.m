@@ -596,7 +596,7 @@
         answerModel.Abstracts = [answerDic objectForKey:@"AContent"];
         answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
         answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
-        
+        answerModel.Flag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"Flag"]];
         NSString *str2 = [answerDic objectForKey:@"RecDate"];
         NSRange range = [str2 rangeOfString:str];
         if (range.length>0) {
@@ -613,6 +613,7 @@
             answerModel.IdFlag = @"匿名回答";
             answerModel.JiaoBaoHao = @"";
         }
+        answerModel.floatH = 0;
         answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
         [model.answerArray addObject:answerModel];
     }

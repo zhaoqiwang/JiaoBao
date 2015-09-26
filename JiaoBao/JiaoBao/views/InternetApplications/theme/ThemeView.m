@@ -221,7 +221,6 @@
     
     
     [self sendRequest];
-//    [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:@"0"];
 }
 
 //通知界面，更新访问量等数据
@@ -810,9 +809,11 @@
             cell.mLab_selectCategory.hidden = YES;
             cell.mLab_selectCategory1.hidden = YES;
             //标题
-            cell.mLab_title.text = model.Title;
+            NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            cell.mLab_title.text = title1;
             cell.mLab_title.hidden = NO;
-            CGSize titleSize = [[NSString stringWithFormat:@"%@",model.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
+            CGSize titleSize = [[NSString stringWithFormat:@"%@",title1] sizeWithFont:[UIFont systemFontOfSize:14]];
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
@@ -1233,7 +1234,7 @@
     }else if (self.mInt_index ==1){//推荐
         [[KnowledgeHttp getInstance] RecommentIndexWithNumPerPage:@"10" pageNum:page RowCount:rowCount];
     }else if (self.mInt_index ==2){//精选
-        [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:@"0"];
+        [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:@"0" flag:@"0"];
     }else{//从服务器获取到的
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
         [[KnowledgeHttp getInstance] CategoryIndexQuestionWithNumPerPage:@"10" pageNum:page RowCount:rowCount flag:model.flag uid:model.item_now.TabID];

@@ -26,8 +26,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //获取一个精选内容集
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetPickedById" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetPickedById:) name:@"GetPickedById" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SingleGetPickedById" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetPickedById:) name:@"SingleGetPickedById" object:nil];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mModel_first.PTitle];
@@ -48,7 +48,7 @@
 //    self.mTalbeV_liset.footerRefreshingText = @"正在加载...";
     
     //发送请求
-    [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:self.mModel_first.TabID];
+    [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:self.mModel_first.TabID flag:@"1"];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 

@@ -108,8 +108,8 @@
 //获取话题的置顶问题  参数描述：（话题Id）
 -(void)GetCategoryTopQWithId:(NSString *)categoryid;
 
-//获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选
--(void)GetPickedByIdWithTabID:(NSString *)tabId;
+//获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选   标识区分，0主页，1单个精选
+-(void)GetPickedByIdWithTabID:(NSString *)tabId flag:(NSString *)flag;
 
 //获取一个精选内容明细 参数描述：精选内容ID
 -(void)ShowPickedWithTabID:(NSString *)tabId;
