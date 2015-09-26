@@ -318,7 +318,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
 }
 
 //回答问题
--(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName
+-(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddAnswer",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -326,7 +326,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    NSDictionary *dic = @{@"QId":QId,@"Title":Title,@"AContent":AContent,@"UserName":UserName};
+    NSDictionary *dic = @{@"QId":QId,@"Title":Title,@"AContent":AContent,@"UserName":UserName,@"Flag":Flag};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
@@ -345,7 +345,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     }];
 }
 //修改答案 参数描述：答案id - 标题 - 回答的内容- （用户昵称，若是匿名回答，为空字串符）
--(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName
+-(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UpdateAnswer",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -353,7 +353,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent,@"UserName":UserName};
+    NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent ,@"UserName":UserName,@"Flag":Flag};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];

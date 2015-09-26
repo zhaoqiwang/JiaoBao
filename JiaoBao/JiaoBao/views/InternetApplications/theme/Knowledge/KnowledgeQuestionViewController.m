@@ -9,10 +9,10 @@
 #import "KnowledgeQuestionViewController.h"
 #import "HtmlString.h"
 #import "NickNameModel.h"
+#import "InvitationUserInfo.h"
 
 @interface KnowledgeQuestionViewController ()
-@property(nonatomic,strong)NSMutableArray * nickNameArr;//输入的昵称
-@property(nonatomic,strong)NSMutableArray *NameModelArr;//返回的正确的昵称model数组
+@property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;//返回的正确的昵称model数组
 
 
 @end
@@ -30,6 +30,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
+    //获取邀请人
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAtMeUsersWithuid:) name:@"GetAtMeUsersWithuid" object:nil];
     //获取昵称对应的教宝号
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAccIdbyNickname:) name:@"GetAccIdbyNickname" object:nil];
@@ -256,49 +259,17 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode integerValue] ==0) {
+        [MBProgressHUD showSuccess:[NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName]];
+        
         
     }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+
         
     }
-    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 }
 
-//通过昵称获取教宝号
--(void)GetAccIdbyNickname:(id)sender
-{
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    NSDictionary *dic = [sender object];
-    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if([ResultCode integerValue] != 0)
-    {
-        [MBProgressHUD showError:ResultDesc];
-        self.mView_input.mTextF_input.text = @"";
-        return;
-    }
-    else
-    {
-        NSArray *arr = [dic objectForKey:@"array"];
-        self.NameModelArr = [NSMutableArray arrayWithArray:arr];
-        NSMutableArray *jiaobaohaoArr = [[NSMutableArray alloc]initWithCapacity:0];
-        
-        for(int i=0;i<arr.count;i++)
-        {
-            NickNameModel *model = [arr objectAtIndex:i];
-            [jiaobaohaoArr addObject:model.JiaoBaoHao];
-            
-        }
-        if (jiaobaohaoArr.count>0) {
-            NSString *accid = [jiaobaohaoArr objectAtIndex:0];
-            
-            [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
-            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
-        }else{
-            [MBProgressHUD showSuccess:@"此邀请人不存在" toView:self.view];
-        }
-    }
-    self.mView_input.mTextF_input.text = @"";
-}
+
 
 //通知界面，更新访问量等数据
 -(void)updataQuestionDetail:(NSNotification *)noti{
@@ -839,17 +810,62 @@
 //邀请回答确定按钮
 -(void)CustomTextFieldViewSureBtn:(CustomTextFieldView *)view{
     D("Guhskjhdlkfgdflk");
-    NSArray *arr = [self.mView_input.mTextF_input.text componentsSeparatedByString:@"@"];
-    self.nickNameArr = [NSMutableArray arrayWithArray:arr];
-    
-    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
+//    NSArray *arr = [self.mView_input.mTextF_input.text componentsSeparatedByString:@"@"];
+//    self.nickNameArr = [NSMutableArray arrayWithArray:arr];
+//    
+//    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
+    [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.mView_input.mTextF_input.text catid:self.mModel_question.CategoryId];
+    [MBProgressHUD showMessage:@"" toView:self.view];
+}
+//邀请人回调
+-(void)GetAtMeUsersWithuid:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        NSArray *arr = [dic objectForKey:@"array"];
+        if(arr.count>0)
+        {
+            self.invitationUserInfo = [arr objectAtIndex:0];
+            NSString *accid = self.invitationUserInfo.JiaoBaoHao;
+            [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
+            self.mView_input.mTextF_input.text = @"";
+
+        }
+        else
+        {
+            if(self.invitationUserInfo)
+            {
+                NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.invitationUserInfo.NickName];
+                [MBProgressHUD showError:str];
+            }
+            else
+            {
+                NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.mView_input.mTextF_input.text];
+                [MBProgressHUD showError:str];
+            }
+
+            [MBProgressHUD hideHUDForView:self.view];
+            self.invitationUserInfo = nil;
+            self.mView_input.mTextF_input.text = @"";
+
+        }
+        
+    }
+
 }
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.mView_input];
-    
     [utils popViewControllerAnimated:YES];
 }
 
