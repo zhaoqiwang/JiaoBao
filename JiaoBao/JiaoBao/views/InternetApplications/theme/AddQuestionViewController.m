@@ -15,6 +15,7 @@
 #import "IQKeyboardManager.h"
 #import "ShareHttp.h"
 #import "NickNameModel.h"
+#import "InvitationUserInfo.h"
 
 
 @interface AddQuestionViewController ()
@@ -27,6 +28,7 @@
 @property(nonatomic,assign)BOOL QFlag;
 @property(nonatomic,assign)NSString *QId;
 @property(nonatomic,strong)NickNameModel *nickNameModel;
+@property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;
 @end
 
 @implementation AddQuestionViewController
@@ -136,6 +138,46 @@
         //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
     }];
 }
+-(void)GetAtMeUsersWithuid:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        NSArray *arr = [dic objectForKey:@"array"];
+        if(arr.count>0)
+        {
+            //self.nickNameModel = [arr objectAtIndex:0];
+            self.invitationUserInfo = [arr objectAtIndex:0];
+            NSString *content = self.mTextV_content.text;
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                NSString *temp = model.originalName;
+                content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+            }
+            content = [NSString stringWithFormat:@"<p>%@</p>",content];
+            
+            NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+            [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
+        }
+        else
+        {
+            NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.invitationUserInfo.NickName];
+            [MBProgressHUD showError:str];
+            [MBProgressHUD hideHUDForView:self.view];
+            //self.nickNameModel = nil;
+            self.invitationUserInfo = nil;
+        }
+        
+        
+    }
+}
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     
@@ -154,6 +196,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //邀请指定的用户回答问题
+    //获取邀请人
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAtMeUsersWithuid:) name:@"GetAtMeUsersWithuid" object:nil];
+    //邀请回答
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
     [self.selectBtn setImage:[UIImage imageNamed:@"blank"] forState:UIControlStateNormal];
@@ -281,9 +327,9 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode integerValue] ==0)
     {
-        if(self.nickNameModel)
+        if(self.invitationUserInfo)
         {
-            NSString *message = [NSString stringWithFormat:@"邀请%@成功",self.nickNameModel.NickName];
+            NSString *message = [NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             self.provinceTF.text = @"";
@@ -342,14 +388,11 @@
         }
         else
         {
-            [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:self.nickNameModel.JiaoBaoHao qId:self.QId];
+            [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:self.invitationUserInfo.JiaoBaoHao qId:self.QId];
             
         }
 
-        
 
-
-        
     }
 
 
@@ -533,11 +576,13 @@
         content = [NSString stringWithFormat:@"<p>%@</p>",content];
         
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+        self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
     else
     {
-        [[KnowledgeHttp getInstance]GetAccIdbyNickname:[NSArray arrayWithObject:self.atAccIdsTF.text]];
+        //[[KnowledgeHttp getInstance]GetAccIdbyNickname:[NSArray arrayWithObject:self.atAccIdsTF.text]];
+        [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.atAccIdsTF.text catid:self.categoryId];
         [MBProgressHUD showMessage:@"" toView:self.view];
         
     }

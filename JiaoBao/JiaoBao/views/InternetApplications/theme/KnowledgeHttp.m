@@ -1035,13 +1035,16 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonInvitationUserInfo:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *tempDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
+
         D("JSON--------GetAtMeUsersWithuid: %@,", result);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAtMeUsersWithuid: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
     }];
 }
 

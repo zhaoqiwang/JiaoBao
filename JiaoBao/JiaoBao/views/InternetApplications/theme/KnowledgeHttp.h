@@ -142,5 +142,5 @@
 -(void)AddMyattCateWithuid:(NSString*)uid;
 
 //邀请人回答时，获取回答该话题问题最多的用户列表（4个）参数描述：(用户账户) - （邀请人回答的问题的话题ID）
-//-(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid;
+-(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid;
 @end
