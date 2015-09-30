@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak,nonatomic) id<CategorySectionDelegate> delegate;
 - (IBAction)AddBtnAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *addBtn;
 
 @end
 @protocol CategorySectionDelegate <NSObject>

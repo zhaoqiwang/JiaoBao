@@ -11,6 +11,7 @@
 @interface AnswerByIdModel : NSObject
 @property(nonatomic,strong)NSString *TabID;//答案ID
 @property(nonatomic,strong)NSString *JiaoBaoHao;//教宝号
+@property(nonatomic,strong)NSString *JiaoBaoHao2;//教宝号--如果是匿名回答，这里保存真实教宝号
 @property(nonatomic,strong)NSString *QId;//问题ID
 @property(nonatomic,strong)NSString *RecDate;//回答时间
 @property(nonatomic,strong)NSString *ATitle;//答案标题

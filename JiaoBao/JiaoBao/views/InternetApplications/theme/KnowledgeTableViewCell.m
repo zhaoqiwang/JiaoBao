@@ -28,6 +28,7 @@
     
     self.model = [[QuestionModel alloc] init];
     self.answerModel = [[AnswerByIdModel alloc] init];
+    self.pickContentModel = [[PickContentModel alloc] init];
     
     //人员列表
     self.mCollectionV_pic.frame = CGRectMake(0,0, 0, 0);
@@ -43,9 +44,12 @@
 #pragma mark - Collection View Data Source
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
-    if (self.mInt_flag == 1) {
+    if (self.mInt_flag == 3) {//精选
+        return self.pickContentModel.Thumbnail.count;
+    }else if (self.mInt_flag == 1) {//问题列表
         return self.answerModel.Thumbnail.count;
     }
+
     return self.model.answerModel.Thumbnail.count;
 }
 //定义并返回每个cell
@@ -54,12 +58,18 @@
     if (!cell) {
         
     }
-    if (self.mInt_flag == 1) {
+    if (self.mInt_flag == 3) {
+        NSString *str = [self.pickContentModel.Thumbnail objectAtIndex:indexPath.row];
+        cell.mLab_name.hidden = YES;
+        [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+        cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
+    }else if (self.mInt_flag == 1) {
         NSString *str = [self.answerModel.Thumbnail objectAtIndex:indexPath.row];
         cell.mLab_name.hidden = YES;
         [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
-    }else{
+    }
+    else{
         NSString *str = [self.model.answerModel.Thumbnail objectAtIndex:indexPath.row];
         cell.mLab_name.hidden = YES;
         [cell.mImgV_select sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@",str] placeholderImage:[UIImage  imageNamed:@"root_img"]];
@@ -74,12 +84,35 @@
 {
 
     NSMutableArray *photos = [NSMutableArray array];
-    
-    for (int i = 0; i < [self.model.answerModel.Thumbnail count]; i++) {
-        // 替换为中等尺寸图片
-        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.model.answerModel.Thumbnail objectAtIndex:i]];
-        [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+    NSInteger num;
+    if(self.mInt_flag == 3)
+    {
+        num = self.pickContentModel.Thumbnail.count;
+        for (int i = 0; i < num; i++) {
+            // 替换为中等尺寸图片
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.pickContentModel.Thumbnail objectAtIndex:i]];
+            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+        }
+    }else if(self.mInt_flag == 1)
+    {
+        num = self.answerModel.Thumbnail.count;
+        for (int i = 0; i < num; i++) {
+            // 替换为中等尺寸图片
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.answerModel.Thumbnail objectAtIndex:i]];
+            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+        }
     }
+    else
+    {
+        num = self.model.answerModel.Thumbnail.count;
+        for (int i = 0; i < num; i++) {
+            // 替换为中等尺寸图片
+            NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [self.model.answerModel.Thumbnail objectAtIndex:i]];
+            [photos addObject:[MWPhoto photoWithURL:[NSURL URLWithString:getImageStrUrl]]];
+        }
+
+    }
+
     self.photos = photos;
     // Create browser
     MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
@@ -111,6 +144,7 @@
     return CGSizeMake(([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+
     return UIEdgeInsetsMake(0, 0, 0, 30);
 }
 //cell的最小行间距
@@ -165,19 +199,50 @@
 }
 
 -(void)knowledgeTableViewCellClickTitle:(UIGestureRecognizer *)gest{
-    [self.delegate KnowledgeTableViewCellTitleBtn:self];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableViewCellTitleBtn:)]) {
+        [self.delegate KnowledgeTableViewCellTitleBtn:self];
+    }
 }
 
 -(void)knowledgeTableViewCellClickLike:(UIGestureRecognizer *)gest{
-    [self.delegate KnowledgeTableVIewCellLike:self];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellLike:)]) {
+        [self.delegate KnowledgeTableVIewCellLike:self];
+    }
 }
 
 -(void)knowledgeTableViewCellClickATitle:(UIGestureRecognizer *)gest{
-    [self.delegate KnowledgeTableViewCellAnswers:self];
+     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableViewCellAnswers:)]) {
+         [self.delegate KnowledgeTableViewCellAnswers:self];
+     }
 }
 
 -(void)detailBtn:(id)sender{
-    [self.delegate KnowledgeTableVIewCellDetailBtn:self];
+     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellDetailBtn:)]) {
+         [self.delegate KnowledgeTableVIewCellDetailBtn:self];
+     }
+}
+
+//全部、有证据、在讨论按钮
+-(IBAction)mBtn_all:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellAllBtn:)]) {
+        [self.delegate KnowledgeTableVIewCellAllBtn:self];
+    }
+}
+-(IBAction)mBtn_evidence:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellEvidenceBtn:)]) {
+        [self.delegate KnowledgeTableVIewCellEvidenceBtn:self];
+    }
+}
+-(IBAction)mBtn_discuss:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellDiscussBtn:)]) {
+        [self.delegate KnowledgeTableVIewCellDiscussBtn:self];
+    }
+}
+//无内容
+-(IBAction)mBtn_nodiscuss:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(KnowledgeTableVIewCellNoDiscuss:)]) {
+        [self.delegate KnowledgeTableVIewCellNoDiscuss:self];
+    }
 }
 
 @end

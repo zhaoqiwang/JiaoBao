@@ -19,6 +19,9 @@
 #import "KnowledgeQuestionViewController.h"
 #import "KnowledgeAddAnswerViewController.h"
 #import "KnowledgeRecommentAddAnswerViewController.h"
+#import "HtmlString.h"
+#import "CustomTextFieldView.h"
+#import "OldChoiceViewController.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate>{
     
@@ -27,6 +30,7 @@
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//首页精选等
 @property (nonatomic,strong) UITableView *mTableV_knowledge;//
 @property (nonatomic,assign) int mInt_index;//首页等选择的索引
+@property(nonatomic,strong)ItemModel *ItemModel;//选择的话题model
 //@property (nonatomic,strong) NSMutableArray *mArr_first;//首页
 //@property (nonatomic,strong) NSMutableArray *mArr_choice;//精选
 //@property (nonatomic,strong) NSMutableArray *mArr_recommend;//推荐
@@ -39,6 +43,9 @@
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 @property (nonatomic,strong) NSMutableArray *mArr_AllCategory;//首页精选等一级主题数组
 @property (nonatomic,strong) UIButton *mBtn_down;//下拉选择按钮
+@property(nonatomic,strong)NSMutableArray *mArr_selectCategory;//被选择的分类 数组
+@property (nonatomic,strong) GetPickedByIdModel *mModel_getPickdById;//精选model
+
 
 
 - (id)initWithFrame1:(CGRect)frame;

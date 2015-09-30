@@ -301,7 +301,7 @@
         //[SVProgressHUD showInfoWithStatus:@"请输入手机号"];
         return;
     }
-    if([self.urlNumTF.text isEqualToString:@""])
+    if([utils isBlankString:self.urlNumTF.text ])
     {
         [self progressViewTishi:@"请输入验证码"];
 

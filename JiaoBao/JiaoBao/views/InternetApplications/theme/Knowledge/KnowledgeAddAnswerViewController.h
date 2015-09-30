@@ -1,7 +1,7 @@
 //
 //  KnowledgeAddAnswerViewController.h
 //  JiaoBao
-//
+//  添加回答
 //  Created by Zqw on 15/8/11.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
@@ -19,6 +19,7 @@
 #import "ELCImagePickerController.h"
 #import "ShareHttp.h"
 #include<AssetsLibrary/AssetsLibrary.h>
+#import "SigleBtnView.h"
 
 @interface KnowledgeAddAnswerViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIWebViewDelegate>
 
@@ -38,6 +39,10 @@
 @property (nonatomic,assign) int mInt_index;//记录添加了多少图片
 @property (nonatomic,strong) NSMutableArray *mArr_pic;//添加的图片数组
 @property(nonatomic,assign)int tfContentTag;
+@property (nonatomic,strong) NSString *mStr_MyAnswerId;//判断是修改答案>0还是添加回答0
+@property (nonatomic,assign) int mInt_flag;//判断是第一次进入页面获取详情0还是提交答案后1
+@property (nonatomic,strong) SigleBtnView *mSigleBtn;//
+
 
 -(IBAction)mBtn_submit:(id)sender;
 -(IBAction)mBtn_anSubmit:(id)sender;

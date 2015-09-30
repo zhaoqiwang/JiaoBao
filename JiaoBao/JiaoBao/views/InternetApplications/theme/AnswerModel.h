@@ -17,9 +17,11 @@
 @property(nonatomic,strong)NSString *LikeCount;//支持数量
 @property(nonatomic,strong)NSString *CaiCount;//反对数量
 @property(nonatomic,strong)NSString *JiaoBaoHao;//JiaoBaoHao
+@property(nonatomic,strong)NSString *JiaoBaoHao2;//教宝号--如果是匿名回答，这里保存真实教宝号
 @property(nonatomic,strong)NSString *IdFlag;//用户昵称或姓名，匿名为空字符串
 @property(nonatomic,strong)NSString *CCount;//评论数量
 @property(nonatomic,strong)NSMutableArray *Thumbnail;//图片url,字符串（url)json数组
 @property(nonatomic,assign)float floatH;//webview高度
+@property(nonatomic,strong)NSString *Flag;//0无内容，1有内容，2有证据
 
 @end

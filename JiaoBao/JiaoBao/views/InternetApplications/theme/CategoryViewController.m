@@ -11,8 +11,11 @@
 #import "CategorySection.h"
 #import "dm.h"
 #import "define_constant.h"
+#import "MBProgressHUD.h"
+#import "KnowledgeHttp.h"
 
 @interface CategoryViewController ()
+@property(nonatomic,strong)NSArray *myAttCateArr;
 
 @end
 
@@ -23,15 +26,114 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
+-(void)GetMyattCate:(id)sender
+{
+    NSNotification *note = sender;
+    
+    NSString *code = [note.object objectForKey:@"ResultCode"];
+    if([code integerValue]==0)
+    {
+        NSArray *arr = [note.object objectForKey:@"array"];
+        if(arr.count>0)
+        {
+            for(int i=0;i<arr.count;i++)
+            {
+                if([[arr objectAtIndex:i] isEqualToString:@""])
+                {
+                    
+                }
+                else
+                {
+                    self.myAttCateArr = arr;
+                    [[KnowledgeHttp getInstance]GetCategoryById:[arr objectAtIndex:i]];
+                    
+                }
+                
+            }
+        }
+
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+        NSString *ResultDesc = [note.object objectForKey:@"ResultDesc"];
+        
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+        
+    }
+    
+}
+-(void)GetCategoryById:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSNotification *note = sender;
+    
+    NSString *code = [note.object objectForKey:@"ResultCode"];
+    if([code integerValue]==0)
+    {
+        CategoryModel *categoryModel = [note.object objectForKey:@"model"];
+        for(int i=0;i<self.mArr_AllCategory.count;i++)
+        {
+            AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:i];
+            for(int j=0;j<model.mArr_subItem.count;j++)
+            {
+                ItemModel *itemModel = [model.mArr_subItem objectAtIndex:j];
+                if([categoryModel.TabID isEqualToString:itemModel.TabID])
+                {
+                    [self.mArr_selectCategory addObject:itemModel];
+
+                }
+
+            }
+
+        }
+
+        
+        if(self.myAttCateArr.count == self.mArr_selectCategory.count)
+        {
+            [self.collectionView reloadData];
+        }
+
+        
+        
+        
+    }
+    else
+    {
+        NSString *ResultDesc = [note.object objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+        
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    self.mArr_addBtnSel = [[NSMutableArray alloc]init];
 
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    if([self.classStr isEqualToString:@"ThemeView"])
     {
-        self.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+        [[KnowledgeHttp getInstance]GetMyattCate];
+
         self.collectionView.allowsMultipleSelection = YES;
         self.titileLabel.text = @"显示优先显示的话题类别";
+        [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
+        self.selBtn.hidden = NO;
+        //获取我关注的话题数组
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyattCate" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyattCate:) name:@"GetMyattCate" object:nil];
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetCategoryById" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetCategoryById:) name:@"GetCategoryById" object:nil];
+    }
+    else
+    {
+        self.collectionView.allowsMultipleSelection = NO;
+        self.titileLabel.text = @"请选择话题类别";
+        [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
+        self.selBtn.hidden = YES;
+
+
+
     }
     [self.collectionView registerNib:[UINib nibWithNibName:@"AllcategoryCollectionViewCell" bundle:nil]forCellWithReuseIdentifier:@"Cell"];
     [self.collectionView registerNib:[UINib nibWithNibName:@"CategorySection" bundle:nil] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"CategorySection"];
@@ -42,6 +144,11 @@
 #pragma mark - Collection View Data Source
 //每一组有多少个cell
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section{
+    NSNumber *num = [NSNumber numberWithInteger:section];
+    if([self.mArr_addBtnSel containsObject:num])
+    {
+        return 0;
+    }
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:section];
 
     return model.mArr_subItem.count;
@@ -56,9 +163,23 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     
     CategorySection *sectionView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"CategorySection" forIndexPath:indexPath];
+    NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
+
+    if([self.mArr_addBtnSel containsObject:num])
+    {
+        [sectionView.addBtn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+
+    }
+    else
+    {
+        [sectionView.addBtn setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+
+    }
+
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     sectionView.nameLabel.text = model.item.Subject;
     sectionView.delegate = self;
+    sectionView.tag = indexPath.section;
     
     return sectionView;
 }
@@ -73,18 +194,14 @@
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
     cell.nameLabel.text = itemModel.Subject;
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
-    {
-        if(cell.selected == YES)
+        if([self.mArr_selectCategory containsObject:itemModel])
         {
             cell.nameLabel.textColor = [UIColor redColor];
         }
         else
         {
-            cell.nameLabel.textColor = [UIColor blackColor];
+            cell.nameLabel.textColor = [UIColor darkGrayColor];
         }
-    }
     
     
     return cell;
@@ -93,25 +210,57 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    cell.nameLabel.textColor = [UIColor redColor];
+    //cell.nameLabel.textColor = [UIColor redColor];
     self.categoryTF.text = cell.nameLabel.text;
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
-    [self.categoryId setString:itemModel.TabID];
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    self.ItemModel.TabID = itemModel.TabID;
+    self.ItemModel.Subject = itemModel.Subject;
+    self.ItemModel.QCount = itemModel.QCount;
+    self.ItemModel.AttCount = itemModel.AttCount;
+    self.ItemModel.ParentId = itemModel.ParentId;
+    self.ItemModel.Subject = itemModel.Subject;
+    
+
+    if([self.classStr isEqualToString:@"AddQuestionViewController"])
     {
+        [self.mArr_selectCategory removeAllObjects];
         [self.mArr_selectCategory addObject:itemModel];
+        cell.nameLabel.textColor = [UIColor redColor];
+        [self.collectionView reloadData];
+        if(self.categoryTF)
+        {
+
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshCategory" object:itemModel];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+
+
 
     }
-    cell.nameLabel.textColor = [UIColor redColor];
-    
+    else
+    {
+        if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
+        {
+            [self.mArr_selectCategory removeObject:itemModel];
+            cell.nameLabel.textColor = [UIColor darkGrayColor];
+        }
+        else
+        {
+            [self.mArr_selectCategory addObject:itemModel];
+            cell.nameLabel.textColor = [UIColor redColor];
+            
+            
+        }
+        
+    }
 
-    
-    
-    
+    [self.categoryId setString:itemModel.TabID];
 
-    
+
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -119,13 +268,47 @@
     AllcategoryCollectionViewCell *cell = (AllcategoryCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
     ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
-    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    if([nowViewStr isEqualToString:@"CategoryViewController"])
+    if([self.classStr isEqualToString:@"AddQuestionViewController"])
+    {if([self.mArr_selectCategory containsObject:itemModel])
     {
         [self.mArr_selectCategory removeObject:itemModel];
+        cell.nameLabel.textColor = [UIColor darkGrayColor];
         
     }
-    cell.nameLabel.textColor = [UIColor blackColor];
+
+    }
+    else
+    {
+        if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
+        {
+            [self.mArr_selectCategory removeObject:itemModel];
+            cell.nameLabel.textColor = [UIColor darkGrayColor];
+        }
+        else
+        {
+            [self.mArr_selectCategory addObject:itemModel];
+            cell.nameLabel.textColor = [UIColor redColor];
+            
+            
+        }
+        
+    }
+
+//    if([self.mArr_selectCategory containsObject:itemModel])
+//    {
+//        [self.mArr_selectCategory removeObject:itemModel];
+//        cell.nameLabel.textColor = [UIColor blackColor];
+//
+//    }
+//    else
+//    {
+//        if([self.classStr isEqualToString:@"ThemeView"])
+//        {
+//            [self.mArr_selectCategory addObject:itemModel];
+//
+//        }
+//    }
+
 }
 
 
@@ -146,10 +329,23 @@
     return 5;
 }
 
-//-(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section
-//{
-//    
-//}
+-(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section
+{
+    NSNumber *num = [NSNumber numberWithInteger:section.tag];
+
+    if(![self.mArr_addBtnSel containsObject:num])
+    {
+        [self.mArr_addBtnSel addObject:num];
+        
+    }
+    else
+    {
+        [self.mArr_addBtnSel removeObject:num];
+
+    }
+    [self.collectionView reloadData];
+
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -167,9 +363,30 @@
 */
 
 - (IBAction)backAction:(id)sender {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)selectAction:(id)sender {
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    if(self.mArr_selectCategory.count >0)
+    {
+        for(int i =0;i<self.mArr_selectCategory.count;i++)
+        {
+            ItemModel *model = [self.mArr_selectCategory objectAtIndex:i];
+            [mArr addObject:model.TabID];
+
+        }
+        NSString *tabIdsStr = [mArr componentsJoinedByString:@","];
+        [[KnowledgeHttp getInstance]AddMyattCateWithuid:tabIdsStr];
+
+        //[MBProgressHUD showSuccess:@"关注话题成功"];
+
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter]removeObserver:self];
+
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 
 }

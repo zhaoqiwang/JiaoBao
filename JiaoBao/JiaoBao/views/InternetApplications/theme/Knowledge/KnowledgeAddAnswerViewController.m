@@ -35,8 +35,15 @@
     //上传图片
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UploadImg:) name:@"UploadImg" object:nil];
+    //获取答案详情
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AnswerDetailWithAId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AnswerDetailWithAId:) name:@"AnswerDetailWithAId" object:nil];
+    //修改答案
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateAnswer" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddAnswer:) name:@"UpdateAnswer" object:nil];
     
     self.mArr_pic = [NSMutableArray array];
+    self.mInt_flag = 0;
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;//控制整个功能是否启用
@@ -82,9 +89,39 @@
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
-    
+    //依据审核
+    self.mSigleBtn = [[SigleBtnView alloc] initWidth:0 height:40 title:@"依据审核"];
+    [self.mScrollV_view addSubview:self.mSigleBtn];
+    self.mSigleBtn.hidden = YES;
+    //问题明细
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
+    //如果已经回答过，取自己回答的答案明细
+    if ([self.mStr_MyAnswerId intValue]>0) {
+        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mStr_MyAnswerId];
+    }
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+}
+
+//答案详情回调
+-(void)AnswerDetailWithAId:(id)sender{
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]!=0){
+        [MBProgressHUD showError:ResultDesc];
+    }else{
+        AnswerDetailModel *model = [dic objectForKey:@"model"];
+        self.mTextV_answer.text = model.ATitle;
+        NSString *content = model.AContent;
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+        self.mTextV_content.text = content;
+        self.mLab_answer.hidden = YES;
+        self.mLab_content.hidden = YES;
+        //切换按钮显示标题
+        [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
+        [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
+    }
 }
 
 //提交答案
@@ -93,10 +130,27 @@
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue]==0) {
-        self.mTextV_content.text = @"";
-        self.mTextV_answer.text = @"";
-        self.mLab_answer.hidden = NO;
-        self.mLab_content.hidden = NO;
+//        self.mTextV_content.text = @"";
+//        self.mTextV_answer.text = @"";
+//        self.mLab_answer.hidden = NO;
+//        self.mLab_content.hidden = NO;
+        //切换按钮显示标题
+        [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
+        [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
+        self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
+        if ([self.mStr_MyAnswerId intValue]>0) {
+            
+        }else{
+            self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
+        }
+        if (self.mInt_flag==1) {
+            //问题明细
+            [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
+        }
+        //通知其余界面，更新答案数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetailModel" object:self.mModel_questionDetail];
+    }else{
+        
     }
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -109,7 +163,24 @@
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue] ==0) {
         self.mModel_questionDetail = [dic objectForKey:@"model"];
-        [self addDetailCell:self.mModel_questionDetail];
+        //通知其余界面，更新访问量等数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetail" object:self.mModel_questionDetail];
+        if (self.mInt_flag ==0) {
+            [self addDetailCell:self.mModel_questionDetail];
+            //判断是否发送自己的答案详情协议
+            if ([self.mStr_MyAnswerId intValue]>0) {
+                
+            }else{
+                if ([self.mModel_questionDetail.MyAnswerId intValue]>0) {
+                    self.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
+//                    self.mBtn_anSubmit.hidden = YES;
+                    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];//答案明细
+                }
+            }
+        }
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
 }
 
@@ -117,12 +188,18 @@
     self.mView_titlecell.hidden = NO;
     //标题
     self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
-    self.mView_titlecell.mLab_title.text = model.Title;
+    NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    self.mView_titlecell.mLab_title.text = title1;
+    [self.mView_titlecell.mLab_title setNumberOfLines:0];
+    self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
+    CGSize labelsize = [title1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2,99999) lineBreakMode:NSLineBreakByWordWrapping];
+    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
     //详情
     self.mView_titlecell.mBtn_detail.hidden = YES;
     //话题
-    self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+16+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
+    self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+self.mView_titlecell.mLab_title.frame.size.height+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",self.mModel_question.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_Category1.frame = CGRectMake(30+self.mView_titlecell.mLab_Category0.frame.size.width+2, self.mView_titlecell.mLab_Category0.frame.origin.y, CategorySize.width, 21);
     self.mView_titlecell.mLab_Category1.text = self.mModel_question.CategorySuject;
@@ -137,15 +214,15 @@
     self.mView_titlecell.mLab_View.hidden = NO;
     //回答
     CGSize AnswersSize = [[NSString stringWithFormat:@"%@",model.AnswersCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    self.mView_titlecell.mLab_AnswersCount.frame = CGRectMake(self.mView_titlecell.mLab_View.frame.origin.x-5-AnswersSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AnswersSize.width, 21);
+    self.mView_titlecell.mLab_AnswersCount.frame = CGRectMake(self.mView_titlecell.mLab_View.frame.origin.x-5-AnswersSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AnswersSize.width+10, 21);
     self.mView_titlecell.mLab_AnswersCount.text = model.AnswersCount;
     self.mView_titlecell.mLab_AnswersCount.hidden = NO;
     self.mView_titlecell.mLab_Answers.frame = CGRectMake(self.mView_titlecell.mLab_AnswersCount.frame.origin.x-2-self.mView_titlecell.mLab_Answers.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_Answers.frame.size.width, 21);
     self.mView_titlecell.mLab_Answers.hidden = NO;
     //关注
-    CGSize AttSize = [[NSString stringWithFormat:@"%@",self.mModel_question.AttCount] sizeWithFont:[UIFont systemFontOfSize:10]];
+    CGSize AttSize = [[NSString stringWithFormat:@"%@",model.AttCount] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_AttCount.frame = CGRectMake(self.mView_titlecell.mLab_Answers.frame.origin.x-5-AttSize.width, self.mView_titlecell.mLab_Category0.frame.origin.y, AttSize.width, 21);
-    self.mView_titlecell.mLab_AttCount.text = self.mModel_question.AttCount;
+    self.mView_titlecell.mLab_AttCount.text = model.AttCount;
     self.mView_titlecell.mLab_AttCount.hidden = NO;
     self.mView_titlecell.mLab_Att.frame = CGRectMake(self.mView_titlecell.mLab_AttCount.frame.origin.x-2-self.mView_titlecell.mLab_Att.frame.size.width, self.mView_titlecell.mLab_Category0.frame.origin.y, self.mView_titlecell.mLab_Att.frame.size.width, 21);
     self.mView_titlecell.mLab_Att.hidden = NO;
@@ -178,7 +255,11 @@
     [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
     self.mView_titlecell.mWebV_comment.tag = -1;
     self.mView_titlecell.mWebV_comment.delegate = self;
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width-18,model.KnContent];
+    NSString *content = model.KnContent;
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
+    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,content];
     [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     //加载
     [self webViewLoadFinish:0];
@@ -206,13 +287,16 @@
     self.mView_titlecell.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_line.frame.origin.y+1);
     
     //回答
-    self.mTextV_answer.frame = CGRectMake(9, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height+10, [dm getInstance].width-18, 60);
+    self.mTextV_answer.frame = CGRectMake(9, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height+10, [dm getInstance].width-18, 30);
     //内容描述
     self.mTextV_content.frame = CGRectMake(9, self.mTextV_answer.frame.origin.y+self.mTextV_answer.frame.size.height+10, [dm getInstance].width-27-40, 60);
     //照片按钮
     self.mBtn_photo.frame = CGRectMake([dm getInstance].width-49, self.mTextV_content.frame.origin.y, 40, 40);
+    //依据审核
+    self.mSigleBtn.hidden = NO;
+    self.mSigleBtn.frame = CGRectMake(([dm getInstance].width-70*2-30*2-self.mSigleBtn.frame.size.width)/2, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, self.mSigleBtn.frame.size.width, self.mSigleBtn.frame.size.height);
     //提交按钮
-    self.mBtn_submit.frame = CGRectMake(([dm getInstance].width-70*2-30)/2, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, 70, self.mBtn_submit.frame.size.height);
+    self.mBtn_submit.frame = CGRectMake(self.mSigleBtn.frame.origin.x+self.mSigleBtn.frame.size.width+30, self.mTextV_content.frame.origin.y+self.mTextV_content.frame.size.height+10, 70, self.mBtn_submit.frame.size.height);
     self.mBtn_anSubmit.frame = CGRectMake(self.mBtn_submit.frame.origin.x+100, self.mBtn_submit.frame.origin.y, 70, self.mBtn_submit.frame.size.height);
     //提示信息坐标
     [self placeTextFrame];
@@ -238,6 +322,8 @@
     [self submitAnswer:1];
 }
 -(IBAction)mBtn_photo:(id)sender{
+    [self.mTextV_content resignFirstResponder];
+    [self.mTextV_answer resignFirstResponder];
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -253,6 +339,8 @@
     
     sheet.tag = 255;
     [sheet showInView:self.view];
+    self.tfContentTag = self.mArr_pic.count;
+
 }
 
 //提交答案
@@ -261,12 +349,38 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextV_answer.text.length==0) {
+    self.mInt_flag = 1;
+    if ([utils isBlankString:self.mTextV_answer.text]) {
         [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
         return;
     }
-    if (self.mTextV_content.text.length ==0) {
+    if (self.mTextV_answer.text.length>100) {
+        [MBProgressHUD showError:@"答案标题超出限制" toView:self.view];
+        return;
+    }
+    //计算除去图片后的汉字,计算内容中图片的大小
+    NSString *tempcontent = self.mTextV_content.text;
+    float tempF = 0;
+    for (int i=0; i<self.mArr_pic.count; i++) {
+        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+        NSString *temp = model.originalName;
+        NSRange range = [tempcontent rangeOfString:temp];//判断字符串是否包含
+        if (range.length >0){//包含
+            tempF = tempF+[model.size floatValue];
+        }
+        tempcontent = [tempcontent stringByReplacingOccurrencesOfString:temp withString:@""];
+    }
+    if ([utils isBlankString:tempcontent]) {
         [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
+        return;
+    }
+    if (tempcontent.length<5) {
+        [MBProgressHUD showError:@"内容描述不得少于五个字" toView:self.view];
+        return;
+    }
+    //图片总大小，需小于10M
+    if (tempF>=1024*1024*1000) {
+        [MBProgressHUD showError:@"内容或图片输入不得超过10M" toView:self.view];
         return;
     }
     NSString *name = @"";
@@ -280,7 +394,12 @@
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
-    [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name];
+    //如果已经回答过
+    if ([self.mStr_MyAnswerId intValue]>0) {
+        [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
+    }else{
+        [[KnowledgeHttp getInstance] AddAnswerWithQId:self.mModel_question.TabID Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
+    }
     [MBProgressHUD showMessage:@"提交中..." toView:self.view];
 }
 
@@ -324,7 +443,7 @@
                     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
                     imagePickerController.delegate = self;
                     imagePickerController.allowsEditing = NO;
-                    imagePickerController.sourceType = sourceType;
+                    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
                     if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
                         self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
                     }
@@ -571,6 +690,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [utils popViewControllerAnimated:YES];
 }

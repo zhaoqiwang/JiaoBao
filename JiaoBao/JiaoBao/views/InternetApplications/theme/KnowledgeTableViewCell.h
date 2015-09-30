@@ -11,6 +11,9 @@
 #import "QuestionModel.h"
 #import "MWPhotoBrowser.h"
 #import "AnswerByIdModel.h"
+#import "AnswerDetailModel.h"
+#import "PickContentModel.h"
+#import "ShowPickedModel.h"
 
 @protocol KnowledgeTableViewCellDelegate;
 
@@ -42,19 +45,37 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line2;//区分线
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_detail;//详情按钮
 @property (nonatomic,strong) IBOutlet UIWebView *mWebV_comment;//内容
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_all;//全部
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_evidence;//有证据
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_discuss;//在讨论--有内容
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_nodiscuss;//在讨论--无内容
+@property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory;//选择话题
+@property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory1;//选择话题
+@property (nonatomic,strong) IBOutlet UIScrollView *mScrollV_pic;//精选图片
+@property (nonatomic,strong) IBOutlet UIImageView *mImgV_top;//是否置顶
+
 @property (nonatomic,strong) QuestionModel *model;
 @property(nonatomic,strong)NSMutableArray *photos;
 @property (nonatomic,strong) AnswerModel *RecommentAnswerModel;
 
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
+@property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (weak,nonatomic) id<KnowledgeTableViewCellDelegate> delegate;
-@property (nonatomic,assign) int mInt_flag;//
+@property (nonatomic,assign) int mInt_flag;//0是首页model、1是回答列表answerModel，3是精选pickContentModel
+@property (nonatomic,strong) PickContentModel *pickContentModel;//精选
+@property(nonatomic,strong)ShowPickedModel *ShowPickedModel;
 
 
 //给标题和答案添加点击事件,赞
 -(void)addTapClick;
 
 -(IBAction)detailBtn:(id)sender;
+
+//全部、有证据、在讨论按钮
+-(IBAction)mBtn_all:(id)sender;
+-(IBAction)mBtn_evidence:(id)sender;
+-(IBAction)mBtn_discuss:(id)sender;
+-(IBAction)mBtn_nodiscuss:(id)sender;
 
 @end
 
@@ -74,5 +95,11 @@
 
 //详情按钮
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+
+//全部、有依据、在讨论按钮
+-(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+-(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+-(void)KnowledgeTableVIewCellDiscussBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell;
+-(void)KnowledgeTableVIewCellNoDiscuss:(KnowledgeTableViewCell *) knowledgeTableViewCell;
 
 @end

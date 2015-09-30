@@ -83,43 +83,16 @@
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
     
 
-    NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
-//    CGRect rect=[string boundingRectWithSize:CGSizeMake([dm getInstance].width-65, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
-//                                  attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil]  context:nil];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, [dm getInstance].width-65, 100)];
-    label.numberOfLines = 0;
-    label.backgroundColor = [UIColor redColor];
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.font = [UIFont systemFontOfSize:14];
-    
-    label.text = string;
-    
-    CGSize size11 = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
-    
-//    label.frame =CGRectMake(10, 100, 300, size.height);
-
-//    cell.contentLabel.frame = CGRectMake(0, cell.contentLabel.frame.origin.y, [dm getInstance].width-65, size.height+5);
-    cell.contentLabel.frame = CGRectMake(0, 0, [dm getInstance].width-65, size11.height+5);
     NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
     [row4 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
     cell.contentLabel.componentsAndPlainText = componentsDS;
-//    if(self.mModel_class.mArr_comment.count<indexPath.row)
-//    {
-//        
-//    }
-//    else
-//    {
-//    NSArray *arr = [ self.mModel_class.mArr_comment objectAtIndex:indexPath.row];
-//    }
 
-    //cell.contentLabel.text = string;
+    CGSize optimalSize2 = [cell.contentLabel optimumSize];
 
 
 
-    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, size11.height+3);
+    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, optimalSize2.height+3);
     
     
     return cell;
@@ -132,20 +105,21 @@
     NSString *string2 = tempModel.Commnets;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    RCLabel *contentLabel = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 100)];
     
-    
+    contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    contentLabel.font = [UIFont systemFontOfSize:14];
     NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, 1000)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 50, [dm getInstance].width-65, 100)];
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.font = [UIFont systemFontOfSize:14];
+    NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
+    [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
+    NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
+    NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
+    [row4 setObject:name forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
+    contentLabel.componentsAndPlainText = componentsDS;
+    CGSize optimalSize2 = [contentLabel optimumSize];
     
-    label.text = string;
-    
-    CGSize size11 = [label sizeThatFits:CGSizeMake(label.frame.size.width, MAXFLOAT)];
-//    tempFloat = size.height+3;
-    tempFloat = size11.height+3;
+    tempFloat = optimalSize2.height;
     return tempFloat;
 }
 

@@ -17,4 +17,11 @@
 @property(nonatomic,strong)NSString *QCount;//问题数量
 @property(nonatomic,strong)NSString *AttCount;//关注人数
 
+@property(nonatomic,strong)NSString *DefaultImg;//默认图片
+@property(nonatomic,strong)NSString *Tag;
+@property(nonatomic,strong)NSString *ActiveList;
+@property(nonatomic,strong)NSString *LikeList;
+@property(nonatomic,strong)NSString *State;
+@property(nonatomic,strong)NSString *TopQIds;
+
 @end

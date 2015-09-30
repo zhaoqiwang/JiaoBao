@@ -15,17 +15,17 @@
     if (self) {
         self.frame = frame;
         
-        NSString *str = [NSString stringWithFormat:@"     %@",model.mStr_title];
+        NSString *str = [NSString stringWithFormat:@"%@",model.mStr_title];
         CGSize titleSize = [str sizeWithFont:[UIFont systemFontOfSize:12]];
-        self.mLab_title = [[UILabel alloc] initWithFrame:CGRectMake((frame.size.width-titleSize.width)/2, (frame.size.height-titleSize.height)/2, titleSize.width, titleSize.height)];
+        self.mLab_title = [[UILabel alloc] initWithFrame:CGRectMake((frame.size.width-titleSize.width-15)/2+17, (frame.size.height-titleSize.height)/2, frame.size.width-(frame.size.width-titleSize.width-15)/2-17, titleSize.height)];
         self.mLab_title.font = [UIFont systemFontOfSize:12];
         self.mLab_title.backgroundColor = [UIColor clearColor];
-        self.mLab_title.textAlignment = NSTextAlignmentRight;
+        self.mLab_title.textAlignment = NSTextAlignmentLeft;
         self.mLab_title.textColor = [UIColor grayColor];
         self.mLab_title.text = str;
         [self addSubview:self.mLab_title];
         
-        self.mImgV_pic = [[UIImageView alloc] initWithFrame:CGRectMake(self.mLab_title.frame.origin.x, self.mLab_title.frame.origin.y, 15, 15)];
+        self.mImgV_pic = [[UIImageView alloc] initWithFrame:CGRectMake((frame.size.width-titleSize.width-15)/2, self.mLab_title.frame.origin.y, 15, 15)];
         [self.mImgV_pic setImage:[UIImage imageNamed:model.mStr_img]];
         [self addSubview:self.mImgV_pic];
         

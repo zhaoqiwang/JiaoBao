@@ -86,8 +86,6 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     //NSDictionary *parameters = @{@"cityCode": cityCode,@"level": level};
-    NSArray *parameters = [NSArray arrayWithObjects:@"nickname1",@"nickname2", nil];
-    nickNames = parameters;
     [manager POST:urlString parameters:nickNames success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
                 NSMutableDictionary *jsonDic = [result objectFromJSONString];
@@ -95,9 +93,14 @@ static KnowledgeHttp *knowledgeHttp = nil;
                 NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetJiaoBaoHao:[jsonDic objectForKey:@"Data"]];
                 //NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic1];
         D("JSON--------GetAccIdbyNickname: %@,", result);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAccIdbyNickname: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic];
     }];
 }
 -(void)GetUserInfo//取用户信息
@@ -174,9 +177,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         CategoryModel *model = [ParserJson_knowledge parserJsonGetCategoryById:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic1];
         D("JSON--------GetCategoryById: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetCategoryById: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic];
     }];
 }
 
@@ -203,6 +210,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAllCategory" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAllCategory: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAllCategory" object:dic];
     }];
 }
 
@@ -217,13 +226,15 @@ static KnowledgeHttp *knowledgeHttp = nil;
     NSDictionary *dic = @{@"CategoryId":CategoryId,@"Title":Title,@"KnContent":KnContent,@"TagsList":TagsList,@"QFlag":QFlag,@"AreaCode":AreaCode,@"atAccIds":atAccIds};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------NewQuestionWithCategoryId: %@,", result);
+
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
+        NSString *Data = [jsonDic objectForKey:@"Data"];
+        NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":Data};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic1];
         
-        D("JSON--------NewQuestionWithCategoryId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
@@ -301,11 +312,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QuestionDetail" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------QuestionDetailWithQId: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"QuestionDetail" object:dic];
     }];
 }
 
 //回答问题
--(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName
+-(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddAnswer",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -313,7 +326,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    NSDictionary *dic = @{@"QId":QId,@"Title":Title,@"AContent":AContent,@"UserName":UserName};
+    NSDictionary *dic = @{@"QId":QId,@"Title":Title,@"AContent":AContent,@"UserName":UserName,@"Flag":Flag};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
@@ -323,34 +336,42 @@ static KnowledgeHttp *knowledgeHttp = nil;
         D("JSON--------AddAnswerWithQId: %@,", result);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:[jsonDic objectForKey:@"Data"] forKey:@"Data"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddAnswerWithQId: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"AddAnswer" object:dic];
     }];
 }
-//修改答案 参数描述：答案id - 标题 - 回答的内容
--(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent
+//修改答案 参数描述：答案id - 标题 - 回答的内容- （用户昵称，若是匿名回答，为空字串符）
+-(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UpdateAnswer",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent};
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent ,@"UserName":UserName,@"Flag":Flag};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        
         D("JSON--------UpdateAnswerWithTabID: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateAnswerWithTabID: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"UpdateAnswer" object:dic];
     }];
 }
 
-//获取问题的答案列表
+//获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志（-1全部，0无内容，2有内容，1有证据的回答）
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetAnswerById",MAINURL];
@@ -374,6 +395,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAnswerById" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAnswerByIdWithNumPerPage: %@", error);
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAnswerById" object:dic];
     }];
     
 }
@@ -381,26 +404,35 @@ static KnowledgeHttp *knowledgeHttp = nil;
 //举报答案 参数描述:答案id
 -(void)reportanswerWithAId:(NSString*)AId
 {
-    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/reportanswer",MAINURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ReportAns",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *dic = @{@"AId":AId};
+    NSDictionary *dic = @{@"ansId":AId};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
-        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        
-        
+//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        if([code  integerValue] == 0)
+        {
+            [MBProgressHUD showSuccess:@"举报成功"];
+        }
+        else
+        {
+            [MBProgressHUD showError:@"举报失败"];
+        }
         D("JSON--------reportanswerWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------reportanswerWithAId: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
+//        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
 
-//评价答案 参数描述:答案id - (1=反对，0=支持)
+//评价答案 参数描述:答案id - (0=反对，1=支持)
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/SetYesNo",MAINURL];
@@ -414,7 +446,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
+        NSString *dataStr = [jsonDic objectForKey:@"Data"];
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":dataStr};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:dic];
         
         D("JSON--------SetYesNoWithAId: %@,", result);
@@ -453,14 +486,14 @@ static KnowledgeHttp *knowledgeHttp = nil;
 }
 
 //评论列表 参数描述：(取回的记录数量，默认20) - (第几页，默认为1) - 答案Id
--(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum AId:(NSString*)AId
+-(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount AId:(NSString*)AId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CommentsList",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId};
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId,@"RowCount":RowCount};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
@@ -470,8 +503,6 @@ static KnowledgeHttp *knowledgeHttp = nil;
         AllCommentListModel *model = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
         NSDictionary *resultDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:resultDic ];
-
-
         
         D("JSON--------CommentsListWithNumPerPage: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -502,7 +533,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"AnswerDetailWithAId" object:resultDic ];
 
         
-        D("JSON--------AnswerDetailWithAId: %@,", result);
+       // D("JSON--------AnswerDetailWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AnswerDetailWithAId: %@", error);
         NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
@@ -514,9 +545,6 @@ static KnowledgeHttp *knowledgeHttp = nil;
 }
 
 
-
-
-
 //首页问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)-(回答标志)
 -(void)UserIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag
 {
@@ -525,6 +553,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    D("srgpjpdsj'-===%@,%@,%@,%@",numPerPage,pageNum,RowCount,flag);
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount,@"flag":flag};
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -538,9 +567,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
+        [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UserIndexQuestionWithNumPerPage: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
     }];
 }
 
@@ -565,9 +598,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
+        [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CategoryIndexQuestionWith: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
     }];
 }
 
@@ -594,6 +631,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------RecommentIndex: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
     }];
 }
 
@@ -620,7 +660,427 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------ShowRecomment: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     }];
 }
+
+//获取话题的置顶问题  参数描述：（话题Id）
+-(void)GetCategoryTopQWithId:(NSString *)categoryid{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetCategoryTopQ",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"categoryid":categoryid};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------GetCategoryTop: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetCategoryTop: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
+    }];
+}
+
+//获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选
+-(void)GetPickedByIdWithTabID:(NSString *)tabId flag:(NSString *)flag{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetPickedById",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"tabId":tabId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        GetPickedByIdModel *model = [ParserJson_knowledge parserJsonGetPickedById:[jsonDic objectForKey:@"Data"]];
+        D("JSON--------GetPickedById: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+        if ([flag intValue]==0) {//主页
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        }else{//单个精选
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SingleGetPickedById" object:tempDic];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetPickedById: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        if ([flag intValue]==0) {//主页
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
+        }else{//单个精选
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"SingleGetPickedById" object:tempDic];
+        }
+    }];
+}
+
+//获取一个精选内容明细 参数描述：精选内容ID
+-(void)ShowPickedWithTabID:(NSString *)tabId{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ShowPicked",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"tabId":tabId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        ShowPickedModel *model = [ParserJson_knowledge parserJsonShowPicked:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------ShowPicked: %@,", result);
+        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------ShowPicked: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
+    }];
+}
+
+//获取各期精选列表  参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- (记录数量)
+-(void)PickedIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/PickedIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonPickedIndex:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------PickedIndex: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------PickedIndex: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
+    }];
+}
+
+//关注某一个问题 参数描述：问题ID
+-(void)AddMyAttQWithqId:(NSString*)qId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddMyAttQ",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"qId":qId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------AddMyAttQWithqId: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AddMyAttQWithqId: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
+    }];
+}
+
+//取消关注问题 参数描述：问题ID
+-(void)RemoveMyAttQWithqId:(NSString *)qId{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/RemoveMyAttQ",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"qId":qId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------RemoveMyAttQWithqId: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMyAttQWithqId" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------RemoveMyAttQWithqId: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMyAttQWithqId" object:tempDic];
+    }];
+}
+
+//邀请指定的用户回答问题 参数描述：被邀请的用户教宝号 - 问题ID
+-(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AtMeForAnswer",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"accId":accId,@"qId":qId};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------AtMeForAnswerWithAccId: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeForAnswerWithAccId" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AtMeForAnswerWithAccId: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeForAnswerWithAccId" object:tempDic];
+    }];
+}
+//获取我关注的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)MyAttQIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/MyAttQIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------MyAttQIndexWithnumPerPage: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------MyAttQIndexWithnumPerPage: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
+    }];
+}
+//邀请我回答的问题 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)AtMeQIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AtMeQIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------AtMeQIndexWithnumPerPage: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeQIndexWithnumPerPage" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AtMeQIndexWithnumPerPage: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeQIndexWithnumPerPage" object:tempDic];
+    }];
+}
+//获取我提出的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)MyQuestionIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/MyQuestionIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------MyQuestionIndexWithnumPerPage: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyQuestionIndexWithnumPerPage" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------MyQuestionIndexWithnumPerPage: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyQuestionIndexWithnumPerPage" object:tempDic];
+    }];
+}
+//获取我参与回答的问题列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
+-(void)MyAnswerIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/MyAnswerIndex",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
+        
+        D("JSON--------MyAnswerIndexWithnumPerPage: %@,", result);
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:array forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAnswerIndexWithnumPerPage" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------MyAnswerIndexWithnumPerPage: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAnswerIndexWithnumPerPage" object:tempDic];
+    }];
+    
+}
+
+//获取我关注的话题ID数组
+-(void)GetMyattCate
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/GetMyattCate",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSString *Data = [jsonDic objectForKey:@"Data"];
+        NSString *dataStr = [Data stringByReplacingOccurrencesOfString:@"[" withString:@""];
+        NSString *dataStr2 = [dataStr stringByReplacingOccurrencesOfString:@"]" withString:@""];
+        NSString *dataStr3 = [dataStr2 stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+
+        NSArray *cateArr = [dataStr3 componentsSeparatedByString:@","];
+
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:cateArr forKey:@"array"];
+        D("JSON--------GetMyattCate: %@,", result);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetMyattCate: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
+    }];
+}
+//更新我关注的话题
+-(void)AddMyattCateWithuid:(NSString*)uid
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AddMyattCate",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"uid":uid};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        D("JSON--------AddMyattCateWithuid: %@,", result);
+        if([code integerValue]==0)
+        {
+            [MBProgressHUD showSuccess:@"关注话题成功"];
+
+        }
+        else
+        {
+            [MBProgressHUD showSuccess:@"关注话题失败"];
+
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AddMyattCateWithuid: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyattCateWithuid" object:tempDic];
+    }];
+}
+
+//邀请人回答时，获取回答该话题问题最多的用户列表（4个）参数描述：(用户账户) - （邀请人回答的问题的话题ID）
+-(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/GetAtMeUsers",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    NSDictionary *dic = @{@"uid":uid,@"catid":catid};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSArray *array = [ParserJson_knowledge parserJsonInvitationUserInfo:[jsonDic objectForKey:@"Data"]];
+        NSDictionary *tempDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
+
+        D("JSON--------GetAtMeUsersWithuid: %@,", result);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetAtMeUsersWithuid: %@", error);
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
+    }];
+}
+
 
 @end

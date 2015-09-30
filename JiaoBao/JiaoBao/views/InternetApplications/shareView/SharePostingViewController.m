@@ -347,7 +347,7 @@
     if (self.mTextF_title.text.length==0) {
         [MBProgressHUD showError:@"请输入标题" toView:self.view];
         return;
-    }else if (self.mTextV_content.text.length == 0){
+    }else if ([utils isBlankString:self.mTextV_content.text]){
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
@@ -370,94 +370,9 @@
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
-//-(void)timerAction:(id)sender
-//{
-//    [MBProgressHUD showError:@"加载超时" toView:self.view];
-//}
-
-//点击选择图片按钮
--(void)clickSelectPic:(UIButton *)btn{
-    //检查当前网络是否可用
-    if ([self checkNetWork]) {
-        return;
-    }
-    UIActionSheet *sheet;
-    
-    // 判断是否支持相机
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-        sheet  = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"拍照", @"从相册选择", nil];
-    }else {
-        sheet = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil];
-    }
-    
-    sheet.tag = 255;
-    [sheet showInView:self.view];
-}
-#pragma mark - action sheet delegte
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (actionSheet.tag == 255) {
-        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        // 判断是否支持相机
-        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            switch (buttonIndex) {
-                case 0:
-                    return;
-                case 1: //相机
-                {
-                    sourceType = UIImagePickerControllerSourceTypeCamera;
-                    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-                    imagePickerController.delegate = self;
-                    imagePickerController.allowsEditing = NO;
-                    imagePickerController.sourceType = sourceType;
-                    if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
-                        self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
-                    }
-
-                    [self presentViewController:imagePickerController animated:YES completion:^{}];
-                }
-                    break;
-                case 2: //相册
-                {
-                    //sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-                    
-                    elcPicker.maximumImagesCount = 10; //Set the maximum number of images to select to 10
-                    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
-                    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
-                    elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
-                    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
-                    
-                    elcPicker.imagePickerDelegate = self;
-                    
-                    [self presentViewController:elcPicker animated:YES completion:nil];
-                }
-                    break;
-            }
-        }
-        else {
-            if (buttonIndex == 0) {
-                return;
-            } else {
-                //sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-                ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-                
-                elcPicker.maximumImagesCount = 10; //Set the maximum number of images to select to 10
-                elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
-                elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
-                elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
-                elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //Supports image and movie types
-                
-                elcPicker.imagePickerDelegate = self;
-                
-                [self presentViewController:elcPicker animated:YES completion:nil];
-            }
-
-        }
 
 
-    }
-}
+
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     self.imageCount = 1;

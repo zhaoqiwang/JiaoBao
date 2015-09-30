@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ClassModel.h"
 #import "CommentsListObjModel.h"
+#import "HtmlString.h"
 
 
 @protocol ClassTableViewCellDelegate;

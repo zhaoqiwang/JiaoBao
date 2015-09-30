@@ -14,6 +14,8 @@
 #import "CategoryViewController.h"
 #import "IQKeyboardManager.h"
 #import "ShareHttp.h"
+#import "NickNameModel.h"
+#import "InvitationUserInfo.h"
 
 
 @interface AddQuestionViewController ()
@@ -23,11 +25,19 @@
 @property(nonatomic,assign)BOOL isOpen;
 @property(nonatomic,strong)UITextField *selectedTF;
 @property(nonatomic,strong)ProviceModel *proviceModel;
+@property(nonatomic,assign)BOOL QFlag;
+@property(nonatomic,assign)NSString *QId;
+@property(nonatomic,strong)NickNameModel *nickNameModel;
+@property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;
 @end
 
 @implementation AddQuestionViewController
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 
-
+//获取省份
 -(void)knowledgeHttpGetProvice:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -85,10 +95,11 @@
     
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:2];
-    [self.view addSubview:self.mTableV_name];
-    
+    [self.mainScrollView addSubview:self.mTableV_name];
 
 }
+
+//获取地区或区县
 -(void)knowledgeHttpGetCity:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -108,38 +119,105 @@
     }
     [self.mTableV_name reloadData];
 
-
 }
+//获取分类
 -(void)GetAllCategory:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view];
     NSDictionary *dic = [sender object];
     self.mArr_AllCategory =[dic objectForKey:@"array"] ;
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-    detailVC.modalPresentationStyle = UIModalPresentationCustom;
+    detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+
+    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
     detailVC.categoryTF = self.categoryTF;
     detailVC.categoryId = self.categoryId;
+    detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
     detailVC.mArr_AllCategory = self.mArr_AllCategory;
-    [self.navigationController presentViewController:detailVC animated:NO completion:^{
-        detailVC.view.superview.frame = CGRectMake(10, 44+30, 300, 450);
-
-        
+    [self.navigationController presentViewController:detailVC animated:YES completion:^{
+        //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
     }];
+}
+-(void)GetAtMeUsersWithuid:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        NSArray *arr = [dic objectForKey:@"array"];
+        if(arr.count>0)
+        {
+            //self.nickNameModel = [arr objectAtIndex:0];
+            self.invitationUserInfo = [arr objectAtIndex:0];
+            NSString *content = self.mTextV_content.text;
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                NSString *temp = model.originalName;
+                content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+            }
+            content = [NSString stringWithFormat:@"<p>%@</p>",content];
+            
+            NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+            [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
+        }
+        else
+        {
+            NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.invitationUserInfo.NickName];
+            [MBProgressHUD showError:str];
+            [MBProgressHUD hideHUDForView:self.view];
+            //self.nickNameModel = nil;
+            self.invitationUserInfo = nil;
+        }
+        
+        
+    }
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
+    //[IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:YES];
+    self.mainScrollView.contentSize = self.mainScrollView.frame.size;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //邀请指定的用户回答问题
+    //获取邀请人
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAtMeUsersWithuid:) name:@"GetAtMeUsersWithuid" object:nil];
+    //邀请回答
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
+    [self.selectBtn setImage:[UIImage imageNamed:@"blank"] forState:UIControlStateNormal];
+    self.QFlag = 0;
+    [dm getInstance].addQuestionNoti = YES;
+    
+
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
+
     //上传图片
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UploadImg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UploadImg:) name:@"UploadImg" object:nil];
     self.mArr_pic = [NSMutableArray array];
-
     self.selectedTF = self.provinceTF;
     self.categoryId = [NSMutableString stringWithString:@"1"];
     if([self.provinceTF.text isEqualToString:@""])
@@ -147,10 +225,11 @@
         D("provinceTF_text = %@",self.provinceTF.text);
 
     }
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"评论"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"添加问题"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    
     [[KnowledgeHttp getInstance]knowledgeHttpGetProvice];
     [MBProgressHUD showMessage:@"" toView:self.view];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"knowledgeHttpGetProvice" object:nil];
@@ -165,19 +244,44 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"NewQuestionWithCategoryId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(NewQuestionWithCategoryId:) name:@"NewQuestionWithCategoryId" object:nil];
     
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAccIdbyNickname:) name:@"GetAccIdbyNickname" object:nil];
+    
+    self.mText_title.layer.borderWidth = .5;
+    self.mText_title.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    //将图层的边框设置为圆脚
+    self.mText_title.layer.cornerRadius = 5;
+    self.mText_title.layer.masksToBounds = YES;
     
     self.mTextV_content.layer.borderWidth = .5;
     self.mTextV_content.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
     //将图层的边框设置为圆脚
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
+    
+    NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"标题" attributes:nil];
+    NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+    textAttach.image = [UIImage imageNamed:@"buttonView3"];
+    textAttach.bounds=CGRectMake(3, 0, 10, 10);
+    NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+    [str insertAttributedString:strA atIndex:2];
+
+    self.ttitleLabel.attributedText = str;
+    
+    NSMutableAttributedString *str1=[[NSMutableAttributedString alloc] initWithString:@"问题描述" attributes:nil];
+    
+    [str1 insertAttributedString:strA atIndex:4];
+    self.contentLabel.attributedText = str1;
+    
+    NSMutableAttributedString *str2=[[NSMutableAttributedString alloc] initWithString:@"问题分类" attributes:nil];
+    
+    [str2 insertAttributedString:strA atIndex:4];
+    self.categoryLabel.attributedText = str2;
 
 }
-
-
--(void)NewQuestionWithCategoryId:(id)sender
+//通过昵称获取教宝号
+-(void)GetAccIdbyNickname:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -188,9 +292,112 @@
     }
     else
     {
-        [MBProgressHUD showSuccess:@"发布问题成功"];
+        NSArray *arr = [dic objectForKey:@"array"];
+        if(arr.count>0)
+        {
+            self.nickNameModel = [arr objectAtIndex:0];
+            NSString *content = self.mTextV_content.text;
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                NSString *temp = model.originalName;
+                content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+            }
+            content = [NSString stringWithFormat:@"<p>%@</p>",content];
+            
+            NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+            [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
+        }
+        else
+        {
+            NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.atAccIdsTF.text];
+            [MBProgressHUD showError:str];
+            [MBProgressHUD hideHUDForView:self.view];
+            self.nickNameModel = nil;
+        }
+
+
     }
 }
+
+//邀请指定的用户回答问题
+-(void)AtMeForAnswerWithAccId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode integerValue] ==0)
+    {
+        if(self.invitationUserInfo)
+        {
+            NSString *message = [NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            self.provinceTF.text = @"";
+            self.regionTF.text = @"";
+            self.countyTF.text = @"";
+            self.mTextV_content.text = @"";
+            self.mText_title.text = @"";
+            self.atAccIdsTF.text = @"";
+            self.categoryTF.text = @"";
+        }
+        else
+        {
+            self.provinceTF.text = @"";
+            self.regionTF.text = @"";
+            self.countyTF.text = @"";
+            self.mTextV_content.text = @"";
+            self.mText_title.text = @"";
+            self.atAccIdsTF.text = @"";
+            self.categoryTF.text = @"";
+            [MBProgressHUD showError:@"发布问题成功"];
+
+        }
+        
+        
+    }else
+    {
+        [MBProgressHUD showError:ResultDesc] ;
+
+    }
+}
+//发布问题回调
+-(void)NewQuestionWithCategoryId:(id)sender
+{
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue] != 0)
+    {
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
+    else
+    {
+        self.QId = [dic objectForKey:@"Data"];
+        if([self.atAccIdsTF.text isEqualToString:@""])
+        {
+            self.provinceTF.text = @"";
+            self.regionTF.text = @"";
+            self.countyTF.text = @"";
+            self.mTextV_content.text = @"";
+            self.mText_title.text = @"";
+            self.atAccIdsTF.text = @"";
+            self.categoryTF.text = @"";
+            [MBProgressHUD showSuccess:@"发布问题成功"];
+            
+        }
+        else
+        {
+            [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:self.invitationUserInfo.JiaoBaoHao qId:self.QId];
+            
+        }
+
+
+    }
+
+
+}
+//点击省份
 - (IBAction)provinceBtnAction:(id)sender {
     self.selectedTF = self.provinceTF;
     self.dataArr = self.provinceArr;
@@ -199,9 +406,16 @@
     if(self.isOpen == NO)
     {
            [UIView animateWithDuration:0.3 animations:^{
-        self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, 44*self.dataArr.count);
+              int h = self.mainScrollView.frame.size.height-self.provinceTF.frame.size.height-self.provinceTF.frame.origin.y;
+               if(44*self.dataArr.count>h)
+               {
+                           self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, h);
+               }
+               else
+               {
+                    self.mTableV_name.frame =  CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, 44*self.dataArr.count);
+               }
 
-        
     } completion:^(BOOL finished){
     }];
 
@@ -217,10 +431,10 @@
     }
     self.isOpen = !self.isOpen;
 
-
+    //self.mainScrollView.contentSize = self.mainScrollView.frame.size;
     
 }
-
+//点击地区
 - (IBAction)regionBtnAction:(id)sender {
     if([self.provinceTF.text isEqualToString:@""])
     {
@@ -232,7 +446,12 @@
     if(self.isOpen == NO)
     {
         [UIView animateWithDuration:0.3 animations:^{
-            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
+            int h = self.mainScrollView.frame.size.height-self.selectedTF.frame.size.height-self.selectedTF.frame.origin.y;
+
+                self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
+            
+
+            //self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
             
         }];
         
@@ -248,7 +467,7 @@
     }
     self.isOpen = !self.isOpen;
 }
-
+//点击区县
 - (IBAction)countyBtnAction:(id)sender {
     if([self.provinceTF.text isEqualToString:@""]||[self.regionTF.text isEqualToString:@""])
     {
@@ -259,7 +478,12 @@
     if(self.isOpen == NO)
     {
         [UIView animateWithDuration:0.3 animations:^{
-            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
+            int h = self.mainScrollView.frame.size.height-self.selectedTF.frame.size.height-self.selectedTF.frame.origin.y;
+            D("mainScrollView_height = %f selectedTF_height = %f  selectedTF_y = %f",self.mainScrollView.frame.size.height,self.selectedTF.frame.size.height,self.selectedTF.frame.origin.y);
+
+                self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
+
+           // self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
             
         }];
         
@@ -275,16 +499,32 @@
     }
     self.isOpen = !self.isOpen;
 }
-
+//点击分类
 - (IBAction)categaryBtnAction:(id)sender {
     [[KnowledgeHttp getInstance]GetAllCategory];
     [MBProgressHUD showMessage:@"" toView:self.view];
 
 
 }
+//点击拍照
+- (IBAction)selectBtnAction:(id)sender {
+    UIButton *btn = self.selectBtn;
+    if([[btn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"selected"]])
+    {
+        [btn setImage:[UIImage imageNamed:@"blank"] forState:UIControlStateNormal];
+        self.QFlag = 0;
+    }
+    else
+    {
+        [btn setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+        self.QFlag = 1;
+    }
+    
+}
 
 -(IBAction)mBtn_photo:(id)sender{
-
+    
+    [self.mTextV_content resignFirstResponder];
     UIActionSheet *sheet;
     
     // 判断是否支持相机
@@ -299,24 +539,25 @@
     self.tfContentTag = self.mArr_pic.count;
 }
 
-
+//点击发布问题
 - (IBAction)addQuestionAction:(id)sender {
-    if([self.categoryTF.text isEqualToString: @""])
+
+    if([utils isBlankString:self.mText_title.text])
     {
-        [MBProgressHUD showError:@"请添写提问"];
+        [MBProgressHUD showError:@"请添写标题"];
         return;
     }
-    if([self.knContentTF.text isEqualToString: @""])
+    if([utils isBlankString:self.mTextV_content.text])
     {
         [MBProgressHUD showError:@"请添写问题描述"];
         return;
     }
-    if([self.knContentTF.text isEqualToString: @""])
+    if([utils isBlankString:self.categoryTF.text])
     {
-        [MBProgressHUD showError:@"请选择问题描述"];
+        [MBProgressHUD showError:@"请选择分类"];
         return;
     }
-    if(self.proviceModel)
+    if(self.proviceModel == nil)
     {
         self.AreaCode = @"";
     }
@@ -324,21 +565,44 @@
     {
         self.AreaCode = self.proviceModel.CityCode;
     }
-    NSString *content = self.mTextV_content.text;
-    for (int i=0; i<self.mArr_pic.count; i++) {
-        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-        NSString *temp = model.originalName;
-        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+    if([self.atAccIdsTF.text isEqualToString: @""])
+    {
+        NSString *content = self.mTextV_content.text;
+        for (int i=0; i<self.mArr_pic.count; i++) {
+            UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+            NSString *temp = model.originalName;
+            content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        }
+        content = [NSString stringWithFormat:@"<p>%@</p>",content];
+        
+        NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+        self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
+        [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
-    content = [NSString stringWithFormat:@"<p>%@</p>",content];
-    D("content--------%@",content);
-    [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.titleTF.text KnContent:content TagsList:@"" QFlag:@"" AreaCode:self.AreaCode atAccIds:self.atAccIdsTF.text];
-    [MBProgressHUD showMessage:@""];
-    
+    else
+    {
+        //[[KnowledgeHttp getInstance]GetAccIdbyNickname:[NSArray arrayWithObject:self.atAccIdsTF.text]];
+        [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.atAccIdsTF.text catid:self.categoryId];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        
+    }
+
+
+
+
+
 }
 
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [dm getInstance].addQuestionNoti = NO;
     
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 #pragma mark - action sheet delegte
@@ -435,6 +699,14 @@
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
             for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
             {
+//                NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
+//                NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+//                textAttach.image = [UIImage imageNamed:@"buttonView3"];
+//                textAttach.bounds=CGRectMake(3, 0, 10, 10);
+//                NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+//                [str insertAttributedString:strA atIndex:2];
+//                self.ttitleLabel.attributedText = str;
+
                 UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
                 self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
                 

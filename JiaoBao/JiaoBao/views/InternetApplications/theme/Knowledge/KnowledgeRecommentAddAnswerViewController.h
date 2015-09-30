@@ -19,8 +19,9 @@
 #import "ELCImagePickerController.h"
 #import "ShareHttp.h"
 #include<AssetsLibrary/AssetsLibrary.h>
+#import "KnowledgeQuestionViewController.h"
 
-@interface KnowledgeRecommentAddAnswerViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
+@interface KnowledgeRecommentAddAnswerViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate,KnowledgeTableViewCellDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) KnowledgeTableViewCell *mView_titlecell;//标题等

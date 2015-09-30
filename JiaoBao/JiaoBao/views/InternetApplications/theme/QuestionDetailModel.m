@@ -13,6 +13,7 @@
 {
     self = [super init];
     self.Thumbnail = [[NSMutableArray alloc]initWithCapacity:0];
+    self.TagsList = [NSMutableArray array];
     return self;
 }
 
