@@ -13,6 +13,7 @@
 -(instancetype)init{
     self = [super init];
     self.answerModel = [[AnswerModel alloc]init];
+    self.hiddenid = [[NSMutableArray alloc]init];
     return self;
 }
 

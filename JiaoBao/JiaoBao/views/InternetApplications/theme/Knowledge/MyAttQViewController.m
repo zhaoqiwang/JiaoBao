@@ -135,9 +135,10 @@
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
+    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18-40, 23);
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18-40, 23);
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     cell.mLab_ATitle.hidden = NO;
     //取消关注
     [cell.mBtn_detail setTitle:@"取消" forState:UIControlStateNormal];
@@ -193,6 +194,7 @@
     if ([ResultCode integerValue] ==0) {
         //修改model中的值，和界面显示
         //重新获取
+        self.mInt_reloadData = 0;
         [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         //关注问题，只增不减，----

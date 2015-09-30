@@ -10,7 +10,7 @@
 
 @interface ButtonViewModel : NSObject
 
-@property (nonatomic,strong) NSString *mStr_img;//图片
-@property (nonatomic,strong) NSString *mStr_title;//标题
+@property (nonatomic,copy) NSString *mStr_img;//图片
+@property (nonatomic,copy) NSString *mStr_title;//标题
 
 @end

@@ -127,9 +127,10 @@
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
+    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     cell.mLab_ATitle.hidden = NO;
     //关注、答案个数
     //关注

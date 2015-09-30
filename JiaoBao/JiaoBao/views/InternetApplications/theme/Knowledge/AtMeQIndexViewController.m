@@ -133,6 +133,7 @@
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
     cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     cell.mLab_ATitle.hidden = NO;
     //关注、答案个数
     //关注

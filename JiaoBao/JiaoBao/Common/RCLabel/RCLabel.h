@@ -51,6 +51,7 @@ typedef enum
 	RTTextLineBreakModeWordWrapping = kCTLineBreakByWordWrapping,
 	RTTextLineBreakModeCharWrapping = kCTLineBreakByCharWrapping,
 	RTTextLineBreakModeClip = kCTLineBreakByClipping,
+    RTTextLineBreakModeTruncatingTail = kCTLineBreakByTruncatingTail,
 }RTTextLineBreakMode;
 
 

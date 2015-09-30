@@ -471,6 +471,8 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    self.mView_titlecell = nil;
+    self.mTableV_answer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [utils popViewControllerAnimated:YES];
 }

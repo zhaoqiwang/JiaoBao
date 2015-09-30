@@ -690,6 +690,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    self.mView_titlecell = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [utils popViewControllerAnimated:YES];
