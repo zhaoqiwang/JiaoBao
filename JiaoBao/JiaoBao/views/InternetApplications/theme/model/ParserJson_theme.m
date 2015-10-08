@@ -40,7 +40,12 @@
             model.UpdateTime = [[[dic objectForKey:@"UpdateTime"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
         }
         model.ArtUpdate = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ArtUpdate"]];
-        [array addObject:model];
+        //歌词版权问题，先屏蔽
+        if ([model.TabID intValue]==57197) {
+            
+        }else{
+            [array addObject:model];
+        }
     }
     return array;
 }

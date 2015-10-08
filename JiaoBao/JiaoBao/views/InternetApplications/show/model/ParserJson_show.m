@@ -49,7 +49,13 @@
             model.unitType = [dic objectForKey:@"UnitType"];;
         }
         model.ClassIDStr = [dic objectForKey:@"ClassIDStr"];
-        [array addObject:model];
+//        NjBFMEQyRkE5QzE5N0Q1OQ,歌词版权问题，屏蔽
+        if ([model.TabIDStr isEqual:@"NjBFMEQyRkE5QzE5N0Q1OQ"]) {
+            
+        }else{
+            [array addObject:model];
+        }
+        
     }
     return array;
 }
