@@ -86,7 +86,7 @@
     
     //
     NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<4; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
         if (i==0) {
             model.mStr_title = @"回答问题";
@@ -97,6 +97,9 @@
         }else if (i==2){
             model.mStr_title = @"关注问题";
             model.mStr_img = @"buttonView3";
+        }else if (i==3){
+            model.mStr_title = @"举报";
+            model.mStr_img = @"buttonView5";
         }
         
         [temp addObject:model];
@@ -804,6 +807,8 @@
             [[KnowledgeHttp getInstance] AddMyAttQWithqId:self.mModel_question.TabID];
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
+    }else if (view.tag == 103){//举报
+        
     }
 }
 
