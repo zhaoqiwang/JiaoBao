@@ -20,7 +20,7 @@
 #import "IQKeyboardManager.h"
 #import "AirthCommentsListCell.h"
 
-@interface CommentViewController ()
+@interface CommentViewController ()<UIActionSheetDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
@@ -572,11 +572,37 @@
 //}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.mView_text setHidden:NO];
-    [self.mTextF_text becomeFirstResponder];
+    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",@"赞",nil];
+    action.tag = 1;
+    [action showInView:self.view];
+//    [self.mView_text setHidden:NO];
+//    [self.mTextF_text becomeFirstResponder];
     self.cellmodel = [self.AllCommentListModel.mArr_CommentList objectAtIndex:indexPath.row];
     
 }
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (actionSheet.tag == 1) {
+        if (buttonIndex == 0){
+            [self.mView_text setHidden:NO];
+            [self.mTextF_text becomeFirstResponder];
+
+        }else if (buttonIndex == 1){
+            if(self.answerModel)
+            {
+                [[KnowledgeHttp getInstance]ReportAnsWithAId:self.answerModel.TabID repType:@"2"];
+                
+            }
+            else
+            {
+                [[KnowledgeHttp getInstance]ReportAnsWithAId:self.questionModel.answerModel.TabID repType:@"2"];
+                
+                
+            }
+            
+        }
+    }
+}
+
 //点击点赞按钮
 -(void)likeAction:(id)sender
 {
