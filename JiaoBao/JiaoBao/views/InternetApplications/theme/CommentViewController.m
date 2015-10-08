@@ -77,12 +77,15 @@
     {
         if(self.answerModel)
         {
-            [[KnowledgeHttp getInstance]reportanswerWithAId:self.answerModel.TabID];
+            //[[KnowledgeHttp getInstance]reportanswerWithAId:self.answerModel.TabID];
+            [[KnowledgeHttp getInstance]ReportAnsWithAId:self.answerModel.TabID repType:@"0"];
 
         }
         else
         {
-            [[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
+            //[[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
+            [[KnowledgeHttp getInstance]ReportAnsWithAId:self.questionModel.answerModel.TabID repType:@"0"];
+
 
         }
     }
@@ -189,13 +192,12 @@
     else
     {
         NSString *Data = [dic objectForKey:@"Data"];
-if([Data integerValue]==-1)
-{
-
-        [MBProgressHUD showText:@"你已经评价过了"];
-
-    return;
-}
+        if([Data integerValue]==-1)
+        {
+            
+            [MBProgressHUD showText:@"你已经评价过了"];
+            return;
+        }
         if(self.btn_tag == 1)
         {
             ButtonViewCell *btn = (ButtonViewCell*)[self.view viewWithTag:102];
@@ -209,7 +211,6 @@ if([Data integerValue]==-1)
         if(self.btn_tag == 0)
         {
             NSUInteger num = [self.KnowledgeTableViewCell.mLab_LikeCount.text integerValue]+1;
-
             self.KnowledgeTableViewCell.mLab_LikeCount.text = [NSString stringWithFormat:@"%ld",num];
             [MBProgressHUD showText:@"点赞成功"];
 
@@ -326,7 +327,6 @@ if([Data integerValue]==-1)
     [self sendRequest];
 }
 -(void)sendRequest{
-
     NSString *page = @"";
     if (self.mInt_reloadData == 0) {
         page = @"1";

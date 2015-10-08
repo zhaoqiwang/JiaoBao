@@ -146,4 +146,7 @@
 
 //邀请人回答时，获取回答该话题问题最多的用户列表（4个）参数描述：(用户账户) - （邀请人回答的问题的话题ID）
 -(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid;
+//举报 参数描述：答案ID - (举报类型,0=答案，1=问题， 2=评论)
+-(void)ReportAnsWithAId:(NSString*)AId repType:(NSString*)repType;
+
 @end

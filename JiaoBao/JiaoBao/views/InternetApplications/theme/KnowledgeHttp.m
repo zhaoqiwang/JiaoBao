@@ -1081,6 +1081,36 @@ static KnowledgeHttp *knowledgeHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
     }];
 }
+//举报 参数描述：答案ID - (举报类型,0=答案，1=问题， 2=评论)
+-(void)ReportAnsWithAId:(NSString*)AId repType:(NSString*)repType
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ReportAns",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"ansId":AId,@"repType":repType};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        if([code  integerValue] == 0)
+        {
+            [MBProgressHUD showSuccess:@"举报成功"];
+        }
+        else
+        {
+            [MBProgressHUD showError:@"举报失败"];
+        }
+        D("JSON--------reportanswerWithAId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------reportanswerWithAId: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
+    }];
+}
 
 
 @end
