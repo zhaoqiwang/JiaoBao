@@ -263,10 +263,12 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode integerValue] ==0) {
         [MBProgressHUD showSuccess:[NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName]];
+        self.invitationUserInfo = nil;
         
         
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+        self.invitationUserInfo = nil;
 
         
     }
@@ -820,11 +822,13 @@
 //    
 //    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
     [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.mView_input.mTextF_input.text catid:self.mModel_question.CategoryId];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    //[MBProgressHUD showMessage:@"" toView:self.view];
 }
 //邀请人回调
 -(void)GetAtMeUsersWithuid:(id)sender
 {
+    //[MBProgressHUD hideHUDForView:self.view];
+
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -846,18 +850,10 @@
         }
         else
         {
-            if(self.invitationUserInfo)
-            {
-                NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.invitationUserInfo.NickName];
-                [MBProgressHUD showError:str];
-            }
-            else
-            {
-                NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.mView_input.mTextF_input.text];
-                [MBProgressHUD showError:str];
-            }
 
-            [MBProgressHUD hideHUDForView:self.view];
+                NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.mView_input.mTextF_input.text];
+                [MBProgressHUD showError:str toView:self.view];
+
             self.invitationUserInfo = nil;
             self.mView_input.mTextF_input.text = @"";
 

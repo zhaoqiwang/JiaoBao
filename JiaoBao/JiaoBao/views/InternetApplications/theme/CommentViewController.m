@@ -67,6 +67,7 @@
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
     [self.tableView reloadData];
+
     
     
 }
@@ -173,7 +174,16 @@
         else
         {
             self.AnswerDetailModel = [dic objectForKey:@"model"];
-            self.KnowledgeTableViewCell = [self getMainView];
+            if(self.KnowledgeTableViewCell == nil)
+            {
+                self.KnowledgeTableViewCell = [self getMainView];
+
+            }
+            else
+            {
+            ButtonViewCell *btnView101 = (ButtonViewCell*)[self.view viewWithTag:101];
+            btnView101.mLab_title.text = [NSString stringWithFormat:@"评论%@",self.AnswerDetailModel.CCount];
+            }
 
         }
     }
@@ -757,6 +767,7 @@
     //加载webview
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
         cell.mWebV_comment.tag = -1;
+    cell.mWebV_comment.scalesPageToFit = YES;
         cell.mWebV_comment.delegate = self;
         NSString *content = self.AnswerDetailModel.AContent;
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
