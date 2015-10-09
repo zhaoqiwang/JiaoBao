@@ -19,13 +19,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="反反复复" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Di6-bz-d93">
-                        <rect key="frame" x="23" y="8" width="74" height="16"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="话题:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dDh-A0-EaE">
                         <rect key="frame" x="16" y="32" width="24" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -274,7 +267,6 @@
                 <outlet property="mLab_line2" destination="DV4-Z5-RcB" id="aTd-NW-b1M"/>
                 <outlet property="mLab_selectCategory" destination="JRS-Ls-U1h" id="wuM-du-yN7"/>
                 <outlet property="mLab_selectCategory1" destination="0lh-AT-vIj" id="8cd-T6-gDc"/>
-                <outlet property="mLab_title" destination="Di6-bz-d93" id="Q79-vn-2wp"/>
                 <outlet property="mScrollV_pic" destination="T3l-Th-wqS" id="1zc-dj-KZ6"/>
                 <outlet property="mView_background" destination="5Yh-Zt-ldv" id="i5l-7Z-Vie"/>
                 <outlet property="mWebV_comment" destination="iu1-Sy-7DF" id="L1M-TU-SWf"/>

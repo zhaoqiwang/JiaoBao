@@ -114,18 +114,29 @@
 
 
 
-    NSString *string_title = cell.ShowPickedModel.Title;
-    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
-    if (size_title.height>20) {
-        size_title = CGSizeMake(size_title.width, size_title.height);
-    }
-    cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.mLab_title.font = [UIFont systemFontOfSize:18];
-    cell.mLab_title.numberOfLines =0;
-    cell.mLab_title.text = string_title;
-    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
-    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, size_title.height);
+//    NSString *string_title = cell.ShowPickedModel.Title;
+//    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+//    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:18] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
+//    if (size_title.height>20) {
+//        size_title = CGSizeMake(size_title.width, size_title.height);
+//    }
+//    cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
+//    cell.mLab_title.font = [UIFont systemFontOfSize:18];
+//    cell.mLab_title.numberOfLines =0;
+//    cell.mLab_title.text = string_title;
+//    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    NSString *string1 = cell.ShowPickedModel.Title;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    cell.mLab_title.componentsAndPlainText = componentsDS;
+//    CGSize titleSize = [cell.mLab_title optimumSize];
+    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
+    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, 23);
 
  
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
