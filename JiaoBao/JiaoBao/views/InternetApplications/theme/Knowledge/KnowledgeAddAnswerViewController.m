@@ -137,10 +137,11 @@
         //切换按钮显示标题
         [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
-        self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
+        
         if ([self.mStr_MyAnswerId intValue]>0) {
             
         }else{
+            self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
             self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         }
         if (self.mInt_flag==1) {

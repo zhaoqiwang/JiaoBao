@@ -1101,7 +1101,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         }
         else
         {
-            [MBProgressHUD showError:@"举报失败"];
+            NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+            [MBProgressHUD showError:ResultDesc];
         }
         D("JSON--------reportanswerWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

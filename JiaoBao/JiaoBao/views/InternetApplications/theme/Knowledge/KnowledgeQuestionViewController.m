@@ -808,7 +808,7 @@
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
     }else if (view.tag == 103){//举报
-        
+        [[KnowledgeHttp getInstance]ReportAnsWithAId:self.mModel_question.TabID repType:@"1"];
     }
 }
 
