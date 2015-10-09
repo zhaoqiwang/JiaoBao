@@ -12,7 +12,7 @@
 #import "KnowledgeHttp.h"
 #import "KnowledgeQuestionViewController.h"
 
-@interface ChoicenessDetailViewController ()<KnowledgeTableViewCellDelegate,UIWebViewDelegate>
+@interface ChoicenessDetailViewController ()<KnowledgeTableViewCellDelegate,UIWebViewDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
 @property(nonatomic,strong)ShowPickedModel *ShowPickedModel;
 
@@ -23,6 +23,16 @@
 {
     
 }
+//-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if([scrollView isEqual:self.KnowledgeTableViewCell.mWebV_comment])
+//    {
+//    CGPoint point = scrollView.contentOffset;
+//    if (point.x > 0) {
+//        scrollView.contentOffset = CGPointMake(0, point.y);//这里不要设置为CGPointMake(0, point.y)，这样我们在文章下面左右滑动的时候，就跳到文章的起始位置，不科学
+//    }
+//    }
+//}
 -(void)ShowPicked:(id)sender
 {
     //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -128,9 +138,12 @@
     cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, size_title.height);
 
  
-        [cell.mWebV_comment.scrollView setScrollEnabled:NO];
+        [cell.mWebV_comment.scrollView setScrollEnabled:YES];
         cell.mWebV_comment.tag = -1;
         cell.mWebV_comment.delegate = self;
+    //cell.mWebV_comment.scrollView.bounces = NO;
+    cell.mWebV_comment.scrollView.showsHorizontalScrollIndicator = NO;
+    cell.mWebV_comment.scrollView.showsVerticalScrollIndicator = NO;
         NSString *content = cell.ShowPickedModel.PContent;
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
@@ -149,9 +162,11 @@
     return cell;
 }
 
--(void)webViewLoadFinish:(float)height{
+-(void)webViewLoadFinish:(float)height Width:(float)width{
     self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
     self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height, [dm getInstance].width, height);
+    
+//    self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake([dm getInstance].width,[dm getInstance].height-self.mNav_navgationBar.frame.size.height);
     
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+50);
     self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height+20);
@@ -182,23 +197,28 @@
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
-    [self webViewLoadFinish:webViewHeight+10];
+    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
+
+    [self webViewLoadFinish:webViewHeight Width:webViewWidth];
 }
 
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
-    QuestionModel *model = [[QuestionModel alloc] init];
-    model.TabID = self.ShowPickedModel.QID;
-    model.Title = self.pickContentModel.Title;
-    model.ViewCount = self.QuestionDetailModel.ViewCount;
-    model.AttCount = self.QuestionDetailModel.AttCount;
-    model.AnswersCount = self.QuestionDetailModel.AnswersCount;
-    model.CategorySuject = self.QuestionDetailModel.Category;
-    //model.CategorySuject = self.QuestionDetailModel.CategorySuject;
-    queston.mModel_question = model;
-    [utils pushViewController:queston animated:YES];
-
+    if([self.QuestionDetailModel.TabID intValue]>0){
+        KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+        QuestionModel *model = [[QuestionModel alloc] init];
+        model.TabID = self.ShowPickedModel.QID;
+        model.Title = self.pickContentModel.Title;
+        model.ViewCount = self.QuestionDetailModel.ViewCount;
+        model.AttCount = self.QuestionDetailModel.AttCount;
+        model.AnswersCount = self.QuestionDetailModel.AnswersCount;
+        model.CategorySuject = self.QuestionDetailModel.Category;
+        //model.CategorySuject = self.QuestionDetailModel.CategorySuject;
+        queston.mModel_question = model;
+        [utils pushViewController:queston animated:YES];
+    }else{
+        [MBProgressHUD showError:@"找不到记录"];
+    }
 }
 
 -(void)myNavigationGoback{
