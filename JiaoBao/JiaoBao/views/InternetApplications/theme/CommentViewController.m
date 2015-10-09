@@ -665,17 +665,28 @@
     {
         cell.mBtn_detail.hidden = YES;
     }
-    NSString *string_title = cell.model.Title;
-    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
-    if (size_title.height>20) {
-        size_title = CGSizeMake(size_title.width, size_title.height);
-    }
-    cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.mLab_title.font = [UIFont systemFontOfSize:14];
-    cell.mLab_title.numberOfLines =0;
-    cell.mLab_title.text = cell.model.Title;
-    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+//    NSString *string_title = cell.model.Title;
+//    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+//    CGSize size_title = [string_title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(cell.mBtn_detail.frame.origin.x-5, 1000)];
+//    if (size_title.height>20) {
+//        size_title = CGSizeMake(size_title.width, size_title.height);
+//    }
+//    cell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
+//    cell.mLab_title.font = [UIFont systemFontOfSize:14];
+//    cell.mLab_title.numberOfLines =0;
+//    cell.mLab_title.text = cell.model.Title;
+//    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    NSString *string1 = cell.model.Title;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    cell.mLab_title.componentsAndPlainText = componentsDS;
+    //    CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
+    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
 
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
@@ -746,22 +757,21 @@
         cell.mLab_LikeCount.backgroundColor = [UIColor clearColor];
         cell.mLab_LikeCount.textColor = [UIColor blackColor];
         //回答标题
-        NSString *string1 = self.AnswerDetailModel.ATitle;
-        string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+        NSString *string2 = self.AnswerDetailModel.ATitle;
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
         
         //NSString *str = [NSString stringWithFormat:@"依据 : %@",string1];
 //        CGSize size1 = [str sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
 //        if (size1.height>20) {
 //            size1 = CGSizeMake(size1.width, size1.height);
 //        }
-        NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-        NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
-        [row1 setObject:name forKey:@"text"];
-        RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
-        cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-        CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
-        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize1.height);
-    
+        NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
+        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string2];
+        [row2 setObject:name2 forKey:@"text"];
+        RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+        cell.mLab_ATitle.componentsAndPlainText = componentsDS2;
+        CGSize optimalSize2 = [cell.mLab_ATitle optimumSize];
+        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize2.height);
 
     
     //加载webview

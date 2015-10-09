@@ -529,9 +529,19 @@
         if (indexPath.row==0) {
             cell.LikeBtn.hidden = YES;
             cell.mLab_title.hidden = NO;
-            CGSize titleSize2 = [[NSString stringWithFormat:@"%@",self.mModel_getPickdById.PTitle] sizeWithFont:[UIFont systemFontOfSize:14]];
-            cell.mLab_title.frame = CGRectMake(9, 10, titleSize2.width, cell.mLab_title.frame.size.height);
-            cell.mLab_title.text = self.mModel_getPickdById.PTitle;
+            NSString *string1 = self.mModel_getPickdById.PTitle;
+            string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+            NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+            [row1 setObject:name forKey:@"text"];
+            cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+            RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+            cell.mLab_title.componentsAndPlainText = componentsDS;
+            CGSize optimalSize2 = [cell.mLab_title optimumSize];
+            cell.mLab_title.frame = CGRectMake(9, 10, optimalSize2.width, 23);
+//            cell.mLab_title.frame = CGRectMake(9, 10, titleSize2.width, cell.mLab_title.frame.size.height);
+//            cell.mLab_title.text = self.mModel_getPickdById.PTitle;
             cell.mLab_Category0.hidden = YES;
             cell.mLab_Category1.hidden = YES;
             cell.mLab_Att.hidden = YES;
@@ -584,8 +594,18 @@
             PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
             cell.LikeBtn.hidden = YES;
             cell.mLab_title.hidden = NO;
-            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
-            cell.mLab_title.text = model.Title;
+//            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
+//            cell.mLab_title.text = model.Title;
+            NSString *string1 = model.Title;
+            string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+            NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+            [row1 setObject:name forKey:@"text"];
+            cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+            RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+            cell.mLab_title.componentsAndPlainText = componentsDS;
+            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
             cell.mLab_Category0.hidden = YES;
             cell.mLab_Category1.hidden = YES;
             cell.mLab_Att.hidden = YES;
@@ -809,27 +829,38 @@
             cell.mLab_selectCategory.hidden = YES;
             cell.mLab_selectCategory1.hidden = YES;
             //标题
-            NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-            title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-            cell.mLab_title.text = title1;
+//            NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//            title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//            cell.mLab_title.text = title1;
             cell.mLab_title.hidden = NO;
-            CGSize titleSize = [[NSString stringWithFormat:@"%@",title1] sizeWithFont:[UIFont systemFontOfSize:14]];
+//            CGSize titleSize = [[NSString stringWithFormat:@"%@",title1] sizeWithFont:[UIFont systemFontOfSize:14]];
+            NSString *string1 = model.Title;
+            string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+            NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+            [row1 setObject:name forKey:@"text"];
+            cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+            RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+            cell.mLab_title.componentsAndPlainText = componentsDS;
+//            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
+//            CGSize titleSize = [cell.mLab_title optimumSize];
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
-                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
+//                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
                     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, cell.mLab_title.frame.size.height);
-                }else{
-                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
-                }
+//                }else{
+//                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
+//                }
                 cell.mImgV_top.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width, 12, 33, 12);
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
-                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
+//                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
                     cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
-                }else{
-                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
-                }
+//                }else{
+//                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
+//                }
                 cell.mImgV_top.hidden = YES;
             }
             

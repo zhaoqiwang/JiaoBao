@@ -137,10 +137,11 @@
         //切换按钮显示标题
         [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
-        self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
+        
         if ([self.mStr_MyAnswerId intValue]>0) {
             
         }else{
+            self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
             self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         }
         if (self.mInt_flag==1) {
@@ -187,15 +188,26 @@
 -(void)addDetailCell:(QuestionDetailModel *)model{
     self.mView_titlecell.hidden = NO;
     //标题
-    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
-    NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    self.mView_titlecell.mLab_title.text = title1;
-    [self.mView_titlecell.mLab_title setNumberOfLines:0];
-    self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
-    CGSize labelsize = [title1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2,99999) lineBreakMode:NSLineBreakByWordWrapping];
-    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, labelsize.height);
+//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
+//    NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//    title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//    self.mView_titlecell.mLab_title.text = title1;
+//    [self.mView_titlecell.mLab_title setNumberOfLines:0];
+//    self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
+//    CGSize labelsize = [title1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2,99999) lineBreakMode:NSLineBreakByWordWrapping];
+//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
+    NSString *string1 = model.Title;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
+    CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
+    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, titleSize.height);
     //详情
     self.mView_titlecell.mBtn_detail.hidden = YES;
     //话题

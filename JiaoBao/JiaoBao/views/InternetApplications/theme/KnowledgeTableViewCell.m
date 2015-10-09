@@ -16,6 +16,11 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.mLab_title = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 16)];
+    self.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;
+    self.mLab_title.font = [UIFont systemFontOfSize:14];
+    [self.contentView addSubview:self.mLab_title];
+    
     self.mLab_ATitle = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 16)];
     self.mLab_ATitle.lineBreakMode = NSLineBreakByWordWrapping;
     self.mLab_ATitle.font = [UIFont systemFontOfSize:14];

@@ -77,10 +77,21 @@
 
     self.mView_titlecell.delegate = self;
     //标题
-    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
-    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, self.mView_titlecell.mLab_title.frame.size.height);
-    self.mView_titlecell.mLab_title.text = model.questionModel.Title;
+//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
+//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, self.mView_titlecell.mLab_title.frame.size.height);
+//    self.mView_titlecell.mLab_title.text = model.questionModel.Title;
     self.mView_titlecell.mLab_title.hidden = NO;
+    NSString *string1 = model.questionModel.Title;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
+//    CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
+    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
     //详情
     self.mView_titlecell.mBtn_detail.hidden = NO;
     [self.mView_titlecell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
