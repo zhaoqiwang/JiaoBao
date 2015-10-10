@@ -1046,6 +1046,11 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([string isEqualToString:@"\n"]) {
         [textField resignFirstResponder];
+        if(textField.text.length>1000)
+        {
+            [MBProgressHUD showError:@"评论字数不能大于1000" toView:self.view];
+            return YES;
+        }
 
         //若其有输入内容，则发送
         if (![utils isBlankString:textField.text]) {
