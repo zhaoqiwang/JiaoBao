@@ -384,6 +384,7 @@
     }
     else
     {
+        [[KnowledgeHttp getInstance]AddMyattCateWithuid:@""];
         [[NSNotificationCenter defaultCenter]removeObserver:self];
 
     }
