@@ -164,6 +164,11 @@
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue] ==0) {
         self.mModel_questionDetail = [dic objectForKey:@"model"];
+        if ([self.mModel_questionDetail.QFlag intValue] == 1) {
+            self.mLab_content.text = @"答案内容(可选)回答该问题最好提供依据";
+        }else{
+            self.mLab_content.text = @"内容描述，不少于5个字";
+        }
         //通知其余界面，更新访问量等数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetail" object:self.mModel_questionDetail];
         if (self.mInt_flag ==0) {
@@ -274,11 +279,12 @@
     NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,content];
     [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     //加载
-    [self webViewLoadFinish:0];
+    [self webViewLoadFinish:0 Width:0];
 }
 
--(void)webViewLoadFinish:(float)height{
+-(void)webViewLoadFinish:(float)height Width:(float)width{
     self.mView_titlecell.mWebV_comment.frame = CGRectMake(9, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-18, height);
+    self.mView_titlecell.mWebV_comment.scrollView.contentSize = CGSizeMake(width, height);
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
@@ -319,7 +325,8 @@
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-18];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
-    [self webViewLoadFinish:webViewHeight+10];
+    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollWidth"]floatValue];
+    [self webViewLoadFinish:webViewHeight+10 Width:webViewWidth];
 }
 
 -(void)placeTextFrame{

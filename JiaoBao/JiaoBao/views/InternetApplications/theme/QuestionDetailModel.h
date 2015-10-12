@@ -23,7 +23,7 @@
 @property(nonatomic,strong)NSString *Tag;//我已关注该问题，0未关注,1已关注
 @property(nonatomic,strong)NSString *NickName;
 @property(nonatomic,strong)NSString *JiaoBaoHao;
-@property(nonatomic,strong)NSString *QFlag;
+@property(nonatomic,strong)NSString *QFlag;//0=对回答无特殊要求，1=要求有证据的回答
 @property(nonatomic,strong)NSString *RecDate;
 @property(nonatomic,strong)NSString *CategoryId;
 @property(nonatomic,strong)NSMutableArray *TagsList;
