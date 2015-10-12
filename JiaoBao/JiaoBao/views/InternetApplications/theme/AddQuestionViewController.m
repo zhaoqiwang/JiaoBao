@@ -202,8 +202,8 @@
     //邀请回答
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
-    [self.selectBtn setImage:[UIImage imageNamed:@"blank"] forState:UIControlStateNormal];
-    self.QFlag = 0;
+    [self.selectBtn setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
+    self.QFlag = 1;
     [dm getInstance].addQuestionNoti = YES;
     
 

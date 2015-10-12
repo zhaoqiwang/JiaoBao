@@ -853,7 +853,7 @@
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
-                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, cell.mLab_title.frame.size.height);
+                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, 23);
 //                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
@@ -861,7 +861,7 @@
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
-                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
+                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
 //                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
