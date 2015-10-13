@@ -468,6 +468,10 @@
 //申请数据时用到的当前数组
 -(NSMutableArray *)arrayDataSourceRequest{
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+    if (self.mInt_index == 1) {
+        return model.mArr_all;
+    }
+//    回答标志,1求真回答，0普通回答，-1取全部
     if ([model.flag integerValue]==-1) {
         return model.mArr_all;
     }else if ([model.flag intValue]==0){
