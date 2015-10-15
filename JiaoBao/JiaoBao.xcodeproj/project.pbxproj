@@ -573,6 +573,12 @@
 		A7724D5F1B5DF94C0095850A /* VideoSwitch.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D561B5DF94C0095850A /* VideoSwitch.png */; };
 		A7724D601B5DF94C0095850A /* VideoSwitch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D571B5DF94C0095850A /* VideoSwitch@2x.png */; };
 		A7724D611B5DF94C0095850A /* VideoSwitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D581B5DF94C0095850A /* VideoSwitch@3x.png */; };
+		A7736DB71BCDEC9300CC39A0 /* MakeJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DB51BCDEC9300CC39A0 /* MakeJobViewController.m */; };
+		A7736DB81BCDEC9300CC39A0 /* MakeJobViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7736DB61BCDEC9300CC39A0 /* MakeJobViewController.xib */; };
+		A7736DBD1BCE00FF00CC39A0 /* TreeJob_node.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DBC1BCE00FF00CC39A0 /* TreeJob_node.m */; };
+		A7736DC01BCE04EE00CC39A0 /* TreeJob_level0_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DBF1BCE04EE00CC39A0 /* TreeJob_level0_model.m */; };
+		A7736DC51BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */; };
+		A7736DC61BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */; };
 		A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A773FC1E1A4B9869005F84C2 /* SelectionCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A773FC271A4B9869005F84C2 /* SelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A773FC1F1A4B9869005F84C2 /* SelectionCell.xib */; };
 		A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A773FC211A4B9869005F84C2 /* TableViewWithBlock.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -1769,6 +1775,16 @@
 		A7724D561B5DF94C0095850A /* VideoSwitch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = VideoSwitch.png; path = Image/InternetApp/workView/NewWorkView/Recorder/VideoSwitch.png; sourceTree = "<group>"; };
 		A7724D571B5DF94C0095850A /* VideoSwitch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoSwitch@2x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoSwitch@2x.png"; sourceTree = "<group>"; };
 		A7724D581B5DF94C0095850A /* VideoSwitch@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "VideoSwitch@3x.png"; path = "Image/InternetApp/workView/NewWorkView/Recorder/VideoSwitch@3x.png"; sourceTree = "<group>"; };
+		A7736DB41BCDEC9300CC39A0 /* MakeJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MakeJobViewController.h; path = views/InternetApplications/onlineJob/MakeJobViewController.h; sourceTree = "<group>"; };
+		A7736DB51BCDEC9300CC39A0 /* MakeJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MakeJobViewController.m; path = views/InternetApplications/onlineJob/MakeJobViewController.m; sourceTree = "<group>"; };
+		A7736DB61BCDEC9300CC39A0 /* MakeJobViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MakeJobViewController.xib; path = views/InternetApplications/onlineJob/MakeJobViewController.xib; sourceTree = "<group>"; };
+		A7736DBB1BCE00FF00CC39A0 /* TreeJob_node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_node.h; sourceTree = "<group>"; };
+		A7736DBC1BCE00FF00CC39A0 /* TreeJob_node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_node.m; sourceTree = "<group>"; };
+		A7736DBE1BCE04EE00CC39A0 /* TreeJob_level0_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_level0_model.h; sourceTree = "<group>"; };
+		A7736DBF1BCE04EE00CC39A0 /* TreeJob_level0_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_level0_model.m; sourceTree = "<group>"; };
+		A7736DC21BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_default_TableViewCell.h; sourceTree = "<group>"; };
+		A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_default_TableViewCell.m; sourceTree = "<group>"; };
+		A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TreeJob_default_TableViewCell.xib; sourceTree = "<group>"; };
 		A773FC1D1A4B9869005F84C2 /* SelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectionCell.h; path = Common/dropView/SelectionCell.h; sourceTree = "<group>"; };
 		A773FC1E1A4B9869005F84C2 /* SelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectionCell.m; path = Common/dropView/SelectionCell.m; sourceTree = "<group>"; };
 		A773FC1F1A4B9869005F84C2 /* SelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectionCell.xib; path = Common/dropView/SelectionCell.xib; sourceTree = "<group>"; };
@@ -3861,6 +3877,41 @@
 			name = show;
 			sourceTree = "<group>";
 		};
+		A7736DB31BCDEBB600CC39A0 /* onlineJob */ = {
+			isa = PBXGroup;
+			children = (
+				A7736DC11BCE098B00CC39A0 /* cell */,
+				A7736DBA1BCE00E400CC39A0 /* model */,
+				A7736DB41BCDEC9300CC39A0 /* MakeJobViewController.h */,
+				A7736DB51BCDEC9300CC39A0 /* MakeJobViewController.m */,
+				A7736DB61BCDEC9300CC39A0 /* MakeJobViewController.xib */,
+			);
+			name = onlineJob;
+			sourceTree = "<group>";
+		};
+		A7736DBA1BCE00E400CC39A0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A7736DBB1BCE00FF00CC39A0 /* TreeJob_node.h */,
+				A7736DBC1BCE00FF00CC39A0 /* TreeJob_node.m */,
+				A7736DBE1BCE04EE00CC39A0 /* TreeJob_level0_model.h */,
+				A7736DBF1BCE04EE00CC39A0 /* TreeJob_level0_model.m */,
+			);
+			name = model;
+			path = views/InternetApplications/onlineJob/model;
+			sourceTree = "<group>";
+		};
+		A7736DC11BCE098B00CC39A0 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				A7736DC21BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.h */,
+				A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */,
+				A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */,
+			);
+			name = cell;
+			path = views/InternetApplications/onlineJob/cell;
+			sourceTree = "<group>";
+		};
 		A773FC1C1A4B9853005F84C2 /* dropView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4299,6 +4350,7 @@
 		A7AD8C2F19F63C8F002E65FB /* InternetApplications */ = {
 			isa = PBXGroup;
 			children = (
+				A7736DB31BCDEBB600CC39A0 /* onlineJob */,
 				A7E2E5E51B20312B003F85B5 /* personalSpace */,
 				A796B32D1B1D98FB00FA1735 /* register */,
 				A749B9DA19F89F050036F480 /* workView */,
@@ -4799,6 +4851,7 @@
 				A76F216C1B7D88BB00D957E0 /* topBtnCall@3x.png in Resources */,
 				A76255DC1B5CD1E900AD8089 /* NewWork_photo1@2x.png in Resources */,
 				A74D26961B58FAE200E63DFB /* record_animate_08.png in Resources */,
+				A7736DC61BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib in Resources */,
 				A7357A1C1A3FE1E000A195C5 /* MyFriendsViewController.xib in Resources */,
 				A75E6EBC1ABACDBD00B51B18 /* classView_1@2x.png in Resources */,
 				A7AAC4D119F75DB200A0ED40 /* appNav_setting.png in Resources */,
@@ -4905,6 +4958,7 @@
 				F7F460B71AE891C70069820F /* triangle@2x.png in Resources */,
 				A761D3EE1A7F697900DCAEB9 /* rootTable_0@3x.png in Resources */,
 				A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */,
+				A7736DB81BCDEC9300CC39A0 /* MakeJobViewController.xib in Resources */,
 				A76255DB1B5CD1E900AD8089 /* NewWork_photo1.png in Resources */,
 				A71D61E41A1C96A400B8D33D /* share_new1@2x.png in Resources */,
 				A782AEC01AE9D71A00547B0F /* NewWork_photo@2x.png in Resources */,
@@ -5295,6 +5349,7 @@
 				A7AAC4D819F7896900A0ED40 /* InternetAppRootScrollView.m in Sources */,
 				A73CAD6F1A07755B00D6C5AA /* MJRefreshFooterView.m in Sources */,
 				F78EF1821B215681003B6603 /* unitModel.m in Sources */,
+				A7736DC51BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m in Sources */,
 				A76C69951A8895F80069BA63 /* WorkView_new.m in Sources */,
 				A75E3FB11B6F64B700284C3D /* AFHTTPSessionManager.m in Sources */,
 				A749B9DD19F89F9C0036F480 /* WorkView.m in Sources */,
@@ -5432,6 +5487,7 @@
 				A743395A1A452B7700AFC0A5 /* UIImageView+WebCache.m in Sources */,
 				A72B58191A3D3E14004D8920 /* RelatedUnitViewController.m in Sources */,
 				A755E71019F278B900BBDF3D /* ASICloudFilesRequest.m in Sources */,
+				A7736DB71BCDEC9300CC39A0 /* MakeJobViewController.m in Sources */,
 				F79B61411B72068A005FEA44 /* QuestionIndexModel.m in Sources */,
 				A76F21791B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.m in Sources */,
 				A77FF02A1A650B3F00DB85E3 /* JSONModelError.m in Sources */,
@@ -5439,6 +5495,7 @@
 				A7A379001B06E75F000C9DC5 /* OpenFileViewController.m in Sources */,
 				A755E6BA19F2728F00BBDF3D /* utils.m in Sources */,
 				F7C8AB721B73407100E829A4 /* AllCommentListModel.m in Sources */,
+				A7736DBD1BCE00FF00CC39A0 /* TreeJob_node.m in Sources */,
 				A773FC481A4C0563005F84C2 /* ELCAlbumPickerController.m in Sources */,
 				A7595E9A1A5FC2F30027848E /* README.mdown in Sources */,
 				A74339501A452B7700AFC0A5 /* SDWebImageDecoder.m in Sources */,
@@ -5629,6 +5686,7 @@
 				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
+				A7736DC01BCE04EE00CC39A0 /* TreeJob_level0_model.m in Sources */,
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,
 				A725E4331A53F40900957EAE /* MyFriendsGroupsModel.m in Sources */,
 				F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */,
