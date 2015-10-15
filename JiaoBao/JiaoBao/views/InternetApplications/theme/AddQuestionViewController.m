@@ -557,6 +557,8 @@
         [MBProgressHUD showError:@"请选择分类"];
         return;
     }
+    self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
+
     if(self.proviceModel == nil)
     {
         self.AreaCode = @"";
@@ -576,7 +578,6 @@
         content = [NSString stringWithFormat:@"<p>%@</p>",content];
         
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
-        self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
     else
@@ -586,10 +587,6 @@
         [MBProgressHUD showMessage:@"" toView:self.view];
         
     }
-
-
-
-
 
 }
 
