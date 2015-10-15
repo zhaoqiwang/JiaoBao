@@ -14,6 +14,8 @@
 #import "TreeJob_node.h"
 #import "TreeJob_level0_model.h"
 #import "TreeJob_default_TableViewCell.h"
+#import "TreeJob_class_model.h"
+#import "TreeJob_class_TableViewCell.h"
 
 @interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate>
 

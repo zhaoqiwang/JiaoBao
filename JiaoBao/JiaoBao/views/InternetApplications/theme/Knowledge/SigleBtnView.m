@@ -10,15 +10,20 @@
 
 @implementation SigleBtnView
 
-//          此按钮宽度，可传0   按钮高度                按钮标题
--(id)initWidth:(float)width height:(float)height title:(NSString *)title{
+//          此按钮宽度，可传0   按钮高度                按钮标题                 是否选中，是1否0
+-(id)initWidth:(float)width height:(float)height title:(NSString *)title select:(int)flag sigle:(int)sigle{
     self = [super init];
     if (self) {
-        self.mInt_flag = 1;
+        self.mInt_flag = flag;
+        self.mInt_sigle = sigle;
         
         self.mImg_head = [[UIImageView alloc] init];
         self.mImg_head.frame = CGRectMake(0, (height-14)/2, 14, 14);
-        [self.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+        if (self.mInt_flag ==1) {
+            [self.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+        }else{
+            [self.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+        }
         [self addSubview:self.mImg_head];
         
         //
@@ -38,12 +43,18 @@
 }
 
 -(void)buttonViewClick:(UIGestureRecognizer *)gest{
-    if (self.mInt_flag ==1) {
-        self.mInt_flag =0;
-        [self.mImg_head setImage:[UIImage imageNamed:@"blank"]];
-    }else{
-        self.mInt_flag = 1;
-        [self.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+    if (self.mInt_sigle==0) {
+        if (self.mInt_flag ==1) {
+            self.mInt_flag =0;
+            [self.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+        }else{
+            self.mInt_flag = 1;
+            [self.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+        }
+    }else if (self.mInt_sigle == 1){
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SigleBtnViewClick:)]) {
+            [self.delegate SigleBtnViewClick:self];
+        }
     }
 }
 

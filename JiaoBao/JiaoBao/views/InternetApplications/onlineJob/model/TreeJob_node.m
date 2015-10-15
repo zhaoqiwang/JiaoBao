@@ -10,4 +10,12 @@
 
 @implementation TreeJob_node
 
+-(instancetype)init
+{
+    self = [super init];
+    self.sonNodes = [NSMutableArray array];
+    self.flag = -1;
+    return self;
+}
+
 @end

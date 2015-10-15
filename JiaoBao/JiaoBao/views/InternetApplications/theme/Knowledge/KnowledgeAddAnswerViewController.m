@@ -90,7 +90,7 @@
     self.mTextV_content.layer.cornerRadius = 5;
     self.mTextV_content.layer.masksToBounds = YES;
     //依据审核
-    self.mSigleBtn = [[SigleBtnView alloc] initWidth:0 height:40 title:@"依据审核"];
+    self.mSigleBtn = [[SigleBtnView alloc] initWidth:0 height:40 title:@"依据审核" select:1 sigle:0];
     [self.mScrollV_view addSubview:self.mSigleBtn];
     self.mSigleBtn.hidden = YES;
     //问题明细
