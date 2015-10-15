@@ -29,7 +29,8 @@
         if (SHOWRONGYUN == 1) {
             self.contentSize = CGSizeMake([dm getInstance].width*5, [dm getInstance].height-43-[dm getInstance].statusBar-48);
         }else{
-            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-48);
+//            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-48);
+            self.contentSize = CGSizeMake([dm getInstance].width*2, [dm getInstance].height-43-[dm getInstance].statusBar-48);
         }
         
         self.pagingEnabled = YES;
@@ -73,8 +74,8 @@
 //            [self addSubview:self.showView];
             
             //主题
-            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-            [self addSubview:self.themeView];
+//            self.themeView = [[ThemeView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+//            [self addSubview:self.themeView];
         }
     }
     return self;
