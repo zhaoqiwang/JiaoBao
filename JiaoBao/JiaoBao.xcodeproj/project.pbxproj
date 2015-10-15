@@ -984,6 +984,10 @@
 		F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD6E1B7C30EE00923B60 /* CategoryViewController.xib */; };
 		F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7AD721B7C348600923B60 /* CategorySection.m */; };
 		F7F7AD751B7C348600923B60 /* CategorySection.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD731B7C348600923B60 /* CategorySection.xib */; };
+		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; settings = {ASSET_TAGS = (); }; };
+		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; settings = {ASSET_TAGS = (); }; };
+		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; settings = {ASSET_TAGS = (); }; };
+		F7FFD9DF1BCF564B004A691A /* MessageSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2449,6 +2453,12 @@
 		F7F7AD711B7C348600923B60 /* CategorySection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySection.h; sourceTree = "<group>"; };
 		F7F7AD721B7C348600923B60 /* CategorySection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySection.m; sourceTree = "<group>"; };
 		F7F7AD731B7C348600923B60 /* CategorySection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategorySection.xib; sourceTree = "<group>"; };
+		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
+		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
+		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
+		F7FFD9DB1BCF564B004A691A /* MessageSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageSelectionCell.h; sourceTree = "<group>"; };
+		F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageSelectionCell.m; sourceTree = "<group>"; };
+		F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageSelectionCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3925,6 +3935,15 @@
 				A79C31101BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib */,
 				A79C31161BCF8D47003DF7B2 /* SigleNameImgBtnView.h */,
 				A79C31171BCF8D47003DF7B2 /* SigleNameImgBtnView.m */,
+				A7736DC21BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.h */,
+				A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */,
+				A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */,
+				F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */,
+				F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */,
+				F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */,
+				F7FFD9DB1BCF564B004A691A /* MessageSelectionCell.h */,
+				F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */,
+				F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */,
 			);
 			name = cell;
 			path = views/InternetApplications/onlineJob/cell;
@@ -5193,6 +5212,7 @@
 				A7626FC91B0D7EDB006957F2 /* popupWindow_like@3x.png in Resources */,
 				A784599B1B7B369D00EA7D5D /* buttonView7@3x.png in Resources */,
 				A75E6EBD1ABACDBD00B51B18 /* classView_1@3x.png in Resources */,
+				F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */,
 				A701797C1AB914D900E7093F /* work_deleteAccessory@3x.png in Resources */,
 				A782AEC51AE9D71A00547B0F /* NewWork_SendMsg.png in Resources */,
 				A782AEC31AE9D71A00547B0F /* NewWork_Send@2x.png in Resources */,
@@ -5321,6 +5341,7 @@
 				A74D269B1B58FAE200E63DFB /* record_animate_13.png in Resources */,
 				A76829821AC69B21003B31EB /* classView_click_0.png in Resources */,
 				A749B9F719F8F2060036F480 /* TreeView_Level1_Cell.xib in Resources */,
+				F7FFD9DF1BCF564B004A691A /* MessageSelectionCell.xib in Resources */,
 				A761D4011A7F697900DCAEB9 /* rootTableSelect_2.png in Resources */,
 				A76F21711B7D88BB00D957E0 /* topBtnDown1@2x.png in Resources */,
 			);
@@ -5631,6 +5652,7 @@
 				F7F415C71B8472A9001B27CE /* GDataXMLNode.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
 				A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */,
+				F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */,
 				A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */,
 				F76B64551B1EA597008F6961 /* TopView.m in Sources */,
 				F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */,
@@ -5702,6 +5724,7 @@
 				A76C698F1A8854CB0069BA63 /* SendToMeUserListModel.m in Sources */,
 				A773FC4A1A4C0563005F84C2 /* ELCAssetCell.m in Sources */,
 				A755E72A19F27C8E00BBDF3D /* NSData+CommonCrypto.m in Sources */,
+				F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */,
 				A755E71219F278B900BBDF3D /* ASIS3BucketObject.m in Sources */,
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
 				A7E93DE21B905EAE00CD7B1C /* GetPickedByIdModel.m in Sources */,

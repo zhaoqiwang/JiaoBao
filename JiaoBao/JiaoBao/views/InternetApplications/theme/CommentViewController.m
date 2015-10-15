@@ -416,9 +416,9 @@
     
     [cell.mImg_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //人名、单位名
-    NSString *tempName = [NSString stringWithFormat:@"%@@%@",model.JiaoBaoHao,model.UserName];
+    NSString *tempName = [NSString stringWithFormat:@"%@",model.UserName];
     CGSize sizeName = [tempName sizeWithFont:[UIFont systemFontOfSize:12]];
-    cell.mLab_UnitShortname.frame = CGRectMake(70, 10, sizeName.width, 15);
+    cell.mLab_UnitShortname.frame = CGRectMake(70, 10, 180, 15);
     cell.mLab_UnitShortname.text = tempName;
     //时间
     CGSize sizeTime = [model.RecDate sizeWithFont:[UIFont systemFontOfSize:12]];

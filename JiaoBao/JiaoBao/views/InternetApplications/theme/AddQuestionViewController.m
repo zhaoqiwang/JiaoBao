@@ -18,7 +18,7 @@
 #import "InvitationUserInfo.h"
 
 
-@interface AddQuestionViewController ()
+@interface AddQuestionViewController ()<UITextViewDelegate>
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;
 @property(nonatomic,strong)NSArray *dataArr;
 @property(nonatomic,strong)NSArray *provinceArr;
@@ -460,8 +460,6 @@
     {
         [UIView animateWithDuration:0.3 animations:^{
             self.mTableV_name.frame =  CGRectMake(self.regionTF.frame.origin.x, self.regionTF.frame.origin.y+30, 166, 0);
-            
-            
         } completion:^(BOOL finished){
         }];
     }
@@ -547,6 +545,10 @@
         [MBProgressHUD showError:@"请添写标题"];
         return;
     }
+    if(self.mText_title.text.length>100)
+    {
+        [MBProgressHUD showError:@"标题不能超过100字"];
+    }
     if([utils isBlankString:self.mTextV_content.text])
     {
         [MBProgressHUD showError:@"请添写问题描述"];
@@ -589,6 +591,8 @@
     }
 
 }
+
+
 
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
