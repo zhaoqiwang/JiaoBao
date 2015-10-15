@@ -38,7 +38,9 @@
 - (IBAction)selectBtnAction:(id)sender;
 
 -(IBAction)mBtn_photo:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *placehold_title;
 
+@property (weak, nonatomic) IBOutlet UILabel *placehold_content;
 
 
 - (IBAction)provinceBtnAction:(id)sender;
