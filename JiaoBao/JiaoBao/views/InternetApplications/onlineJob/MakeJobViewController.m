@@ -50,6 +50,10 @@
     //第0根节点
     NSMutableArray *tempArr = [NSMutableArray arrayWithObjects:@"模式选择",@"班级选择",@"年级选择",@"科目选择",@"章节选择",@"其他项目",@"短信勾选", nil];
     for (int i=0; i<tempArr.count; i++) {
+        if(i==0)
+        {
+            
+        }
         TreeJob_node *node0 = [[TreeJob_node alloc]init];
         node0.nodeLevel = 0;//节点所处层次
         node0.type = 0;//节点类型
@@ -139,6 +143,15 @@
         cell0.mLab_title.text = nodeData.mStr_name;
         cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
     }
+}
+-(void)modeSelectionActionWithButtonTag:(NSUInteger)tag//0个性 1统一 2自定义
+{
+    
+}
+
+-(void)MessageSelectionActionWithButtonTag0:(NSUInteger)tag0 tag1:(NSUInteger)tag1//tag0家长通知 tag1反馈（0是没选中 1是选中）
+{
+    
 }
 
 //导航条返回按钮回调
