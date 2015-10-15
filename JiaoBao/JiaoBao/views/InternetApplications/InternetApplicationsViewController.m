@@ -13,6 +13,7 @@
 #import "MBProgressHUD+AD.h"
 #import "MobClick.h"
 #import "AddQuestionViewController.h"
+#import "MakeJobViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -540,6 +541,10 @@
                      image:[UIImage imageNamed:@"appNav_contact"]
                     target:self
                     action:@selector(pushMenuItemSchedule:)],
+      [KxMenuItem menuItem:@"作业布置"
+                     image:[UIImage imageNamed:@"appNav_contact"]
+                    target:self
+                    action:@selector(makeJob:)],
       
       ];
     
@@ -565,6 +570,12 @@
 
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
+}
+
+//作业布置
+-(void)makeJob:(id)sender{
+    MakeJobViewController *makeJob = [[MakeJobViewController alloc] init];
+    [utils pushViewController:makeJob animated:YES];
 }
 
 //附件
