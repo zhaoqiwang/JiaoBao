@@ -15,7 +15,7 @@
 
 @interface TreeJob_class_TableViewCell : UITableViewCell<SigleBtnViewDelegate,SigleNameImgBtnViewDelegate>
 
-@property (nonatomic,strong) SigleNameImgBtnView *sigleClassBtn;//班级选择
+@property (nonatomic,strong) SigleBtnView *sigleClassBtn;//班级选择
 @property (nonatomic,strong) IBOutlet UILabel *mLab_nanDu;//难度
 @property (nonatomic,strong) SigleBtnView *sigleBtn1;//难度1
 @property (nonatomic,strong) SigleBtnView *sigleBtn2;//难度2

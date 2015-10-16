@@ -34,36 +34,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[OnlineJobHttp getInstance]GetGradeList];
-    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
-    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5150001"];
-    NSError* error;
-    //添加 删除 获取数据库的标志
-    //从appdelegate获取数据数据库上下文
-    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    //通过查询语句获取数据列表
-    
-        NSFetchRequest* request=[[NSFetchRequest alloc] init];
-        NSEntityDescription* GradeDataList=[NSEntityDescription entityForName:@"Grade" inManagedObjectContext:self.appDelegate.managedObjectContext];
-        [request setEntity:GradeDataList];
-        NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    Grade *grade0 = [mutableFetchResult objectAtIndex:0];
-    NSLog(@"fdijenfne = %@",grade0.gradeName);
-    
-    //数据库添加数据
-        self.GradeModel = (Grade*)[NSEntityDescription insertNewObjectForEntityForName:@"Grade" inManagedObjectContext:self.appDelegate.managedObjectContext];
-
-    self.GradeModel.gradeName = @"一年级";
-    self.GradeModel.gradeCode = @"1";
-        
-        //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
-        BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
-        if (!isSaveSuccess)
-        {
-            NSLog(@"Error:%@",error);
-        }else{
-            NSLog(@"Save successful!");
-        }
+//    [[OnlineJobHttp getInstance]GetGradeList];
+//    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
+//    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5150001"];
+//    NSError* error;
+//    //添加 删除 获取数据库的标志
+//    //从appdelegate获取数据数据库上下文
+//    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+//    //通过查询语句获取数据列表
+//    
+//        NSFetchRequest* request=[[NSFetchRequest alloc] init];
+//        NSEntityDescription* GradeDataList=[NSEntityDescription entityForName:@"Grade" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//        [request setEntity:GradeDataList];
+//        NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+//    Grade *grade0 = [mutableFetchResult objectAtIndex:0];
+//    NSLog(@"fdijenfne = %@",grade0.gradeName);
+//    
+//    //数据库添加数据
+//        self.GradeModel = (Grade*)[NSEntityDescription insertNewObjectForEntityForName:@"Grade" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//
+//    self.GradeModel.gradeName = @"一年级";
+//    self.GradeModel.gradeCode = @"1";
+//        
+//        //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
+//        BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
+//        if (!isSaveSuccess)
+//        {
+//            NSLog(@"Error:%@",error);
+//        }else{
+//            NSLog(@"Save successful!");
+//        }
     
     // Do any additional setup after loading the view from its nib.
     self.mArr_sumData = [NSMutableArray array];
@@ -152,7 +152,7 @@
                 node1.mInt_index = self.mInt_index;//全局索引标识
                 self.mInt_index++;
                 TreeJob_class_model *temp1 =[[TreeJob_class_model alloc]init];
-                temp1.mStr_className = @"一年级2班";
+                temp1.mStr_className = @"一年级356435463452班";
                 temp1.mInt_difficulty = 1;
                 temp1.mInt_class = 0;
                 node1.nodeData = temp1;
@@ -235,7 +235,7 @@
                 UINib * n= [UINib nibWithNibName:@"Mode_Selection_Cell" bundle:[NSBundle mainBundle]];
                 [self.mTableV_work registerNib:n forCellReuseIdentifier:ModeSelectionIndentifier];
             }
-            
+            cell.delegate = self;
             [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
             [cell setNeedsDisplay]; //重新描绘cell
             
@@ -256,7 +256,7 @@
                 UINib * n= [UINib nibWithNibName:@"MessageSelectionCell" bundle:[NSBundle mainBundle]];
                 [self.mTableV_work registerNib:n forCellReuseIdentifier:MessageSelectionIndentifier];
             }
-            
+            cell.delegate = self;
             [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
             [cell setNeedsDisplay]; //重新描绘cell
             
@@ -364,7 +364,9 @@
                 return 44;
             }
         }else if (node.flag == 9999){//
-            D("sldhgldsjg");
+            if (self.mInt_modeSelect == 1) {//统一作业
+                return 44;
+            }
             return 0;
         }
     }
@@ -385,20 +387,15 @@
  --------------------------------------- */
 -(void) loadDataForTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node{
     if(node.type == 0){
-        if(node.flag == 0)
-        {
+        if(node.flag == 0){
             
-        }
-        else if (node.flag == 7)
-        {
+        }else if (node.flag == 7){
             
-        }
-        else
-        {
-//            TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
-//            TreeJob_level0_model *nodeData = node.nodeData;
-//            cell0.mLab_title.text = nodeData.mStr_name;
-//            cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
+        }else{
+            TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
+            TreeJob_level0_model *nodeData = node.nodeData;
+            cell0.mLab_title.text = nodeData.mStr_name;
+            cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
         }
 
     }else if (node.type == 1){
@@ -453,11 +450,11 @@
             cell0.sigleBtn5.hidden = NO;
             //难度
             cell0.mLab_nanDu.frame = CGRectMake(20, 10, cell0.mLab_nanDu.frame.size.width, 21);
-            cell0.sigleBtn1.frame = CGRectMake(20+cell0.mLab_nanDu.frame.size.width, 35, cell0.sigleBtn1.frame.size.width, 21);
-            cell0.sigleBtn2.frame = CGRectMake(cell0.sigleBtn1.frame.origin.x+cell0.sigleBtn2.frame.size.width+20, 35, cell0.sigleBtn2.frame.size.width, 21);
-            cell0.sigleBtn3.frame = CGRectMake(cell0.sigleBtn2.frame.origin.x+cell0.sigleBtn3.frame.size.width+20, 35, cell0.sigleBtn3.frame.size.width, 21);
-            cell0.sigleBtn4.frame = CGRectMake(cell0.sigleBtn3.frame.origin.x+cell0.sigleBtn4.frame.size.width+20, 35, cell0.sigleBtn4.frame.size.width, 21);
-            cell0.sigleBtn5.frame = CGRectMake(cell0.sigleBtn4.frame.origin.x+cell0.sigleBtn5.frame.size.width+20, 35, cell0.sigleBtn5.frame.size.width, 21);
+            cell0.sigleBtn1.frame = CGRectMake(20+cell0.mLab_nanDu.frame.size.width, 10, cell0.sigleBtn1.frame.size.width, 21);
+            cell0.sigleBtn2.frame = CGRectMake(cell0.sigleBtn1.frame.origin.x+cell0.sigleBtn2.frame.size.width+20, 10, cell0.sigleBtn2.frame.size.width, 21);
+            cell0.sigleBtn3.frame = CGRectMake(cell0.sigleBtn2.frame.origin.x+cell0.sigleBtn3.frame.size.width+20, 10, cell0.sigleBtn3.frame.size.width, 21);
+            cell0.sigleBtn4.frame = CGRectMake(cell0.sigleBtn3.frame.origin.x+cell0.sigleBtn4.frame.size.width+20, 10, cell0.sigleBtn4.frame.size.width, 21);
+            cell0.sigleBtn5.frame = CGRectMake(cell0.sigleBtn4.frame.origin.x+cell0.sigleBtn5.frame.size.width+20, 10, cell0.sigleBtn5.frame.size.width, 21);
         }else{//光班级行
             cell0.sigleClassBtn.hidden = NO;
             cell0.mLab_nanDu.hidden = YES;
@@ -469,14 +466,24 @@
             cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.frame.size.width, 21);
         }
     }else{//自定义作业
-        cell0.sigleClassBtn.hidden = NO;
-        cell0.mLab_nanDu.hidden = YES;
-        cell0.sigleBtn1.hidden = YES;
-        cell0.sigleBtn2.hidden = YES;
-        cell0.sigleBtn3.hidden = YES;
-        cell0.sigleBtn4.hidden = YES;
-        cell0.sigleBtn5.hidden = YES;
-        cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.frame.size.width, 21);
+        if (node.flag == 9999) {//专门的难度行
+            cell0.sigleClassBtn.hidden = YES;
+            cell0.mLab_nanDu.hidden = YES;
+            cell0.sigleBtn1.hidden = YES;
+            cell0.sigleBtn2.hidden = YES;
+            cell0.sigleBtn3.hidden = YES;
+            cell0.sigleBtn4.hidden = YES;
+            cell0.sigleBtn5.hidden = YES;
+        }else{//光班级行
+            cell0.sigleClassBtn.hidden = NO;
+            cell0.mLab_nanDu.hidden = YES;
+            cell0.sigleBtn1.hidden = YES;
+            cell0.sigleBtn2.hidden = YES;
+            cell0.sigleBtn3.hidden = YES;
+            cell0.sigleBtn4.hidden = YES;
+            cell0.sigleBtn5.hidden = YES;
+            cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.frame.size.width, 21);
+        }
     }
     //班级
     if (cell0.sigleClassBtn.mInt_flag ==1) {
@@ -484,10 +491,16 @@
     }else{
         [cell0.sigleClassBtn.mImg_head setImage:[UIImage imageNamed:@"blank"]];
     }
+    CGSize titleSize = [nodeData.mStr_className sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell0.sigleClassBtn.mLab_title.frame = CGRectMake(16, 0, titleSize.width, cell0.sigleClassBtn.mLab_title.frame.size.height);
+    
+    cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleClassBtn.frame.size.height);
     //难度
     for (SigleBtnView *view in cell0.subviews) {
         if ([view.class isSubclassOfClass:SigleBtnView.class]) {
-            if (view.tag == cell0.mInt_diff) {
+            if (view.tag == 0) {
+                
+            }else if (view.tag == cell0.mInt_diff) {
                 [view.mImg_head setImage:[UIImage imageNamed:@"selected"]];
             }else{
                 [view.mImg_head setImage:[UIImage imageNamed:@"blank"]];
@@ -515,6 +528,7 @@
 -(void)modeSelectionActionWithButtonTag:(NSUInteger)tag//0个性 1统一 2自定义
 {
     self.mInt_modeSelect = (int)tag;
+    [self reloadDataForDisplayArray];
 }
 
 -(void)MessageSelectionActionWithButtonTag0:(NSUInteger)tag0 tag1:(NSUInteger)tag1//tag0家长通知 tag1反馈（0是没选中 1是选中）
@@ -532,6 +546,7 @@
                 if (node1.mInt_index == treeJob_class_TableViewCell.node.mInt_index) {
                     TreeJob_class_model *nodeData = node1.nodeData;
                     nodeData.mInt_class = treeJob_class_TableViewCell.sigleClassBtn.mInt_flag;
+                    D("sdghkjkj0-====%d",nodeData.mInt_class);
                     nodeData.mInt_difficulty = treeJob_class_TableViewCell.mInt_diff;
                 }
             }
