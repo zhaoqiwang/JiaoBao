@@ -51,6 +51,9 @@
             self.mInt_flag = 1;
             [self.mImg_head setImage:[UIImage imageNamed:@"selected"]];
         }
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SigleBtnViewClick:)]) {
+            [self.delegate SigleBtnViewClick:self];
+        }
     }else if (self.mInt_sigle == 1){
         if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SigleBtnViewClick:)]) {
             [self.delegate SigleBtnViewClick:self];
