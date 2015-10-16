@@ -964,6 +964,10 @@
 		F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71A1BD08F5F008B8924 /* Grade.m */; settings = {ASSET_TAGS = (); }; };
 		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7251BD0E52D008B8924 /* VersionModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D7291BD0E557008B8924 /* ChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7281BD0E557008B8924 /* ChapterModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D72C1BD0E9FC008B8924 /* ParserJson_OnlineJob.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D72B1BD0E9FC008B8924 /* ParserJson_OnlineJob.m */; settings = {ASSET_TAGS = (); }; };
 		F7C8AB631B72EF4200E829A4 /* QuestionDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */; };
 		F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB681B72FD5900E829A4 /* AnswerByIdModel.m */; };
 		F7C8AB6C1B73102400E829A4 /* AnswerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB6B1B73102400E829A4 /* AnswerDetailModel.m */; };
@@ -2427,6 +2431,14 @@
 		F7C4D71A1BD08F5F008B8924 /* Grade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grade.m; sourceTree = "<group>"; };
 		F7C4D71E1BD0E176008B8924 /* GradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeModel.h; sourceTree = "<group>"; };
 		F7C4D71F1BD0E176008B8924 /* GradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeModel.m; sourceTree = "<group>"; };
+		F7C4D7211BD0E382008B8924 /* SubjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModel.h; sourceTree = "<group>"; };
+		F7C4D7221BD0E382008B8924 /* SubjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubjectModel.m; sourceTree = "<group>"; };
+		F7C4D7241BD0E52D008B8924 /* VersionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VersionModel.h; sourceTree = "<group>"; };
+		F7C4D7251BD0E52D008B8924 /* VersionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VersionModel.m; sourceTree = "<group>"; };
+		F7C4D7271BD0E557008B8924 /* ChapterModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChapterModel.h; sourceTree = "<group>"; };
+		F7C4D7281BD0E557008B8924 /* ChapterModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChapterModel.m; sourceTree = "<group>"; };
+		F7C4D72A1BD0E9FC008B8924 /* ParserJson_OnlineJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserJson_OnlineJob.h; path = views/InternetApplications/onlineJob/ParserJson_OnlineJob.h; sourceTree = "<group>"; };
+		F7C4D72B1BD0E9FC008B8924 /* ParserJson_OnlineJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserJson_OnlineJob.m; path = views/InternetApplications/onlineJob/ParserJson_OnlineJob.m; sourceTree = "<group>"; };
 		F7C8AB611B72EF4200E829A4 /* QuestionDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionDetailModel.h; path = views/InternetApplications/theme/QuestionDetailModel.h; sourceTree = "<group>"; };
 		F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionDetailModel.m; path = views/InternetApplications/theme/QuestionDetailModel.m; sourceTree = "<group>"; };
 		F7C8AB671B72FD5900E829A4 /* AnswerByIdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerByIdModel.h; path = views/InternetApplications/theme/AnswerByIdModel.h; sourceTree = "<group>"; };
@@ -3941,6 +3953,12 @@
 				A79C31141BCF8898003DF7B2 /* TreeJob_class_model.m */,
 				F7C4D71E1BD0E176008B8924 /* GradeModel.h */,
 				F7C4D71F1BD0E176008B8924 /* GradeModel.m */,
+				F7C4D7211BD0E382008B8924 /* SubjectModel.h */,
+				F7C4D7221BD0E382008B8924 /* SubjectModel.m */,
+				F7C4D7241BD0E52D008B8924 /* VersionModel.h */,
+				F7C4D7251BD0E52D008B8924 /* VersionModel.m */,
+				F7C4D7271BD0E557008B8924 /* ChapterModel.h */,
+				F7C4D7281BD0E557008B8924 /* ChapterModel.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -4772,6 +4790,8 @@
 			children = (
 				F7FFD9ED1BCFA32B004A691A /* OnlineJobHttp.h */,
 				F7FFD9EE1BCFA32B004A691A /* OnlineJobHttp.m */,
+				F7C4D72A1BD0E9FC008B8924 /* ParserJson_OnlineJob.h */,
+				F7C4D72B1BD0E9FC008B8924 /* ParserJson_OnlineJob.m */,
 			);
 			name = OnlineJobHttp;
 			sourceTree = "<group>";
@@ -5417,6 +5437,7 @@
 				A7BEEA191A441E10003C9EAD /* UnintAlbumsListViewController.m in Sources */,
 				A73B52B619FB930D00187CB9 /* UnReadMsg_model.m in Sources */,
 				A76829631AC6955F003B31EB /* ClassTableViewCell.m in Sources */,
+				F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */,
 				A70E3CA61A1EEFA600E6D0EC /* ArthDetailModel.m in Sources */,
 				A7595E9B1A5FC2F30027848E /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */,
@@ -5444,6 +5465,7 @@
 				A75E3FB21B6F64B700284C3D /* AFNetworkReachabilityManager.m in Sources */,
 				F79D84D91ABD4DC000897477 /* RecordViewController.m in Sources */,
 				A74821B219FF747F00234020 /* MsgDetail_FeebackList.m in Sources */,
+				F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */,
 				A7595E9E1A5FC2F30027848E /* PSTCollectionViewController.m in Sources */,
 				A79AD7851BAA5A1000F2CE77 /* AtMeQIndexViewController.m in Sources */,
 				A76B6A721AB2D09900B6ED12 /* AccessoryTableViewCell.m in Sources */,
@@ -5691,6 +5713,7 @@
 				F76B64461B1EA440008F6961 /* PatriarchView.m in Sources */,
 				A73CAD6D1A07755B00D6C5AA /* MJRefreshBaseView.m in Sources */,
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
+				F7C4D7291BD0E557008B8924 /* ChapterModel.m in Sources */,
 				F79D84D61ABD4DC000897477 /* ParserJson_SignIn.m in Sources */,
 				F7F415C71B8472A9001B27CE /* GDataXMLNode.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
@@ -5780,6 +5803,7 @@
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,
 				A725E4331A53F40900957EAE /* MyFriendsGroupsModel.m in Sources */,
 				F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */,
+				F7C4D72C1BD0E9FC008B8924 /* ParserJson_OnlineJob.m in Sources */,
 				A755E6B319F25B9000BBDF3D /* dm.m in Sources */,
 				A75E3F941B6F63ED00284C3D /* ProviceModel.m in Sources */,
 				A72B58251A3D7D5C004D8920 /* UnitSpaceArthListViewController.m in Sources */,
