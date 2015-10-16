@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
+    <entity name="Grade" representedClassName="Grade" syncable="YES">
+        <attribute name="gradeCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gradeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isEnable" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="orderby" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tabID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tabIDStr" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Grade" positionX="-63" positionY="-18" width="128" height="133"/>
+    </elements>
+</model>
