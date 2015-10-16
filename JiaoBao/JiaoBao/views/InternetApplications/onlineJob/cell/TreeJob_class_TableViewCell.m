@@ -12,8 +12,10 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
     self.sigleClassBtn = [[SigleNameImgBtnView alloc] initWidth:0 height:21 title:@"一年级一班" select:0];
     self.sigleClassBtn.frame = CGRectMake(20, 10, self.sigleClassBtn.frame.size.width, 21);
+    self.sigleClassBtn.delegate = self;
     [self addSubview:self.sigleClassBtn];
     
     //难度
@@ -53,7 +55,7 @@
 //难度的回调
 -(void)SigleBtnViewClick:(SigleBtnView *)sigleBtnView{
     for (SigleBtnView *view in self.subviews) {
-        if ([view.class isSubclassOfClass:sigleBtnView.class]) {
+        if ([view.class isSubclassOfClass:SigleBtnView.class]) {
             if (view.tag == sigleBtnView.tag) {
                 view.mInt_flag = 1;
                 [view.mImg_head setImage:[UIImage imageNamed:@"selected"]];
@@ -62,6 +64,20 @@
                 [view.mImg_head setImage:[UIImage imageNamed:@"blank"]];
             }
         }
+    }
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(TreeJob_class_TableViewCellClick:)]) {
+        self.mInt_flag = 1;
+        self.mInt_diff = (int)sigleBtnView.tag;
+        [self.delegate TreeJob_class_TableViewCellClick:self];
+    }
+}
+
+//班级的回调
+-(void)SigleNameImgBtnViewClick:(SigleNameImgBtnView *)sigleNameImgBtnView{
+//    self.mInt_diff = self.sigleClassBtn.mInt_flag;
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(TreeJob_class_TableViewCellClick:)]) {
+        self.mInt_flag = 0;
+        [self.delegate TreeJob_class_TableViewCellClick:self];
     }
 }
 

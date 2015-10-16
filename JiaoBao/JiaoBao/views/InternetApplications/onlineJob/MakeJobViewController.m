@@ -68,6 +68,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mArr_sumData = [NSMutableArray array];
     self.mArr_display = [NSMutableArray array];
+    self.mInt_index = 0;
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"布置作业"];
@@ -76,6 +77,9 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     self.mTableV_work.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    
+    //统一作业，插入单独的难度行
+    [self sigleDifficulty];
     
     //添加默认数据
     [self addDefaultData];
@@ -95,6 +99,8 @@
         node0.nodeLevel = 0;//节点所处层次
         node0.type = 0;//节点类型
         node0.flag = i;//标注当前是哪个节点
+        node0.mInt_index = self.mInt_index;//全局索引标识
+        self.mInt_index++;
         node0.isExpanded = FALSE;//节点是否展开
         TreeJob_level0_model *temp0 =[[TreeJob_level0_model alloc]init];
         temp0.mStr_name = [tempArr objectAtIndex:i];
@@ -116,7 +122,10 @@
                 TreeJob_node *node1 = [[TreeJob_node alloc]init];
                 node1.nodeLevel = 1;//节点所处层次
                 node1.type = 1;//节点类型
+                node1.faType = node0.flag;//父节点
                 node1.isExpanded = FALSE;//节点是否展开
+                node1.mInt_index = self.mInt_index;//全局索引标识
+                self.mInt_index++;
                 TreeJob_level0_model *temp1 =[[TreeJob_level0_model alloc]init];
                 temp1.mStr_name = @"年级1111";
                 node1.nodeData = temp1;
@@ -138,16 +147,40 @@
                 node1.nodeLevel = 1;//节点所处层次
                 node1.type = 1;//节点类型
                 node1.flag = 11;//标注当前是哪个节点
+                node1.faType = node0.flag;//父节点
                 node1.isExpanded = FALSE;//节点是否展开
+                node1.mInt_index = self.mInt_index;//全局索引标识
+                self.mInt_index++;
                 TreeJob_class_model *temp1 =[[TreeJob_class_model alloc]init];
                 temp1.mStr_className = @"一年级2班";
                 temp1.mInt_difficulty = 1;
+                temp1.mInt_class = 0;
                 node1.nodeData = temp1;
                 //插入数据
                 [node0.sonNodes addObject:node1];
             }
+            //统一作业，插入单独的难度行
+            [node0.sonNodes addObject:self.sigleClassNode];
         }
     }
+}
+
+//统一作业，插入单独的难度行
+-(void)sigleDifficulty{
+    //第1根节点
+    self.sigleClassNode = [[TreeJob_node alloc]init];
+    self.sigleClassNode.nodeLevel = 1;//节点所处层次
+    self.sigleClassNode.type = 1;//节点类型
+    self.sigleClassNode.flag = 9999;//标注当前是哪个节点
+    self.sigleClassNode.faType = 1;//父节点
+    self.sigleClassNode.isExpanded = FALSE;//节点是否展开
+    self.sigleClassNode.mInt_index = self.mInt_index;//全局索引标识
+    self.mInt_index++;
+    TreeJob_class_model *temp1 =[[TreeJob_class_model alloc]init];
+    temp1.mStr_className = @"一年级2班";
+    temp1.mInt_difficulty = 1;
+    temp1.mInt_class = 0;
+    self.sigleClassNode.nodeData = temp1;
 }
 
 //初始化将要显示的数据
@@ -272,7 +305,7 @@
             return cell;
         }
     }else if(node.type == 1){//类型为1的cell,2级列表
-        if (node.flag == 11) {//班级选择cell
+        if (node.flag == 11||node.flag ==9999) {//班级选择cell
             TreeJob_class_TableViewCell *cell = (TreeJob_class_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier2];
             if (cell == nil) {
                 cell = [[TreeJob_class_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier2];
@@ -288,7 +321,8 @@
                 UINib * n= [UINib nibWithNibName:@"TreeJob_class_TableViewCell" bundle:[NSBundle mainBundle]];
                 [self.mTableV_work registerNib:n forCellReuseIdentifier:indentifier2];
             }
-            
+            cell.delegate = self;
+            cell.node = node;
             [self loadDataForClassTreeViewCell:cell with:node];//重新给cell装载数据
             [cell setNeedsDisplay]; //重新描绘cell
             
@@ -324,7 +358,14 @@
         return 44;
     }else if (node.type == 1){
         if (node.flag == 11) {
-            return 60;
+            if (self.mInt_modeSelect == 0) {//个性作业
+                return 60;
+            }else{//统一作业、自定义作业
+                return 44;
+            }
+        }else if (node.flag == 9999){//
+            D("sldhgldsjg");
+            return 0;
         }
     }
     return 44;
@@ -372,9 +413,87 @@
     TreeJob_class_TableViewCell *cell0 = (TreeJob_class_TableViewCell*)cell;
     TreeJob_class_model *nodeData = node.nodeData;
     cell0.sigleClassBtn.mLab_title.text = nodeData.mStr_className;
-//    if (nodeData.mInt_class) {
-//        <#statements#>
-//    }
+    cell0.sigleClassBtn.mInt_flag = nodeData.mInt_class;//班级是否选择
+    cell0.mInt_diff = nodeData.mInt_difficulty;//难度
+    if (self.mInt_modeSelect == 0) {//个性作业
+        if (node.flag == 9999) {//专门的难度行
+            cell0.sigleClassBtn.hidden = YES;
+            cell0.mLab_nanDu.hidden = YES;
+            cell0.sigleBtn1.hidden = YES;
+            cell0.sigleBtn2.hidden = YES;
+            cell0.sigleBtn3.hidden = YES;
+            cell0.sigleBtn4.hidden = YES;
+            cell0.sigleBtn5.hidden = YES;
+        }else{//所有显示
+            cell0.sigleClassBtn.hidden = NO;
+            cell0.mLab_nanDu.hidden = NO;
+            cell0.sigleBtn1.hidden = NO;
+            cell0.sigleBtn2.hidden = NO;
+            cell0.sigleBtn3.hidden = NO;
+            cell0.sigleBtn4.hidden = NO;
+            cell0.sigleBtn5.hidden = NO;
+            
+            cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.frame.size.width, 21);
+            //难度
+            cell0.mLab_nanDu.frame = CGRectMake(20, 35, cell0.mLab_nanDu.frame.size.width, 21);
+            cell0.sigleBtn1.frame = CGRectMake(20+cell0.mLab_nanDu.frame.size.width, 35, cell0.sigleBtn1.frame.size.width, 21);
+            cell0.sigleBtn2.frame = CGRectMake(cell0.sigleBtn1.frame.origin.x+cell0.sigleBtn2.frame.size.width+20, 35, cell0.sigleBtn2.frame.size.width, 21);
+            cell0.sigleBtn3.frame = CGRectMake(cell0.sigleBtn2.frame.origin.x+cell0.sigleBtn3.frame.size.width+20, 35, cell0.sigleBtn3.frame.size.width, 21);
+            cell0.sigleBtn4.frame = CGRectMake(cell0.sigleBtn3.frame.origin.x+cell0.sigleBtn4.frame.size.width+20, 35, cell0.sigleBtn4.frame.size.width, 21);
+            cell0.sigleBtn5.frame = CGRectMake(cell0.sigleBtn4.frame.origin.x+cell0.sigleBtn5.frame.size.width+20, 35, cell0.sigleBtn5.frame.size.width, 21);
+        }
+    }else if (self.mInt_modeSelect == 1) {//统一作业
+        if (node.flag == 9999) {//专门的难度行
+            cell0.sigleClassBtn.hidden = YES;
+            cell0.mLab_nanDu.hidden = NO;
+            cell0.sigleBtn1.hidden = NO;
+            cell0.sigleBtn2.hidden = NO;
+            cell0.sigleBtn3.hidden = NO;
+            cell0.sigleBtn4.hidden = NO;
+            cell0.sigleBtn5.hidden = NO;
+            //难度
+            cell0.mLab_nanDu.frame = CGRectMake(20, 10, cell0.mLab_nanDu.frame.size.width, 21);
+            cell0.sigleBtn1.frame = CGRectMake(20+cell0.mLab_nanDu.frame.size.width, 35, cell0.sigleBtn1.frame.size.width, 21);
+            cell0.sigleBtn2.frame = CGRectMake(cell0.sigleBtn1.frame.origin.x+cell0.sigleBtn2.frame.size.width+20, 35, cell0.sigleBtn2.frame.size.width, 21);
+            cell0.sigleBtn3.frame = CGRectMake(cell0.sigleBtn2.frame.origin.x+cell0.sigleBtn3.frame.size.width+20, 35, cell0.sigleBtn3.frame.size.width, 21);
+            cell0.sigleBtn4.frame = CGRectMake(cell0.sigleBtn3.frame.origin.x+cell0.sigleBtn4.frame.size.width+20, 35, cell0.sigleBtn4.frame.size.width, 21);
+            cell0.sigleBtn5.frame = CGRectMake(cell0.sigleBtn4.frame.origin.x+cell0.sigleBtn5.frame.size.width+20, 35, cell0.sigleBtn5.frame.size.width, 21);
+        }else{//光班级行
+            cell0.sigleClassBtn.hidden = NO;
+            cell0.mLab_nanDu.hidden = YES;
+            cell0.sigleBtn1.hidden = YES;
+            cell0.sigleBtn2.hidden = YES;
+            cell0.sigleBtn3.hidden = YES;
+            cell0.sigleBtn4.hidden = YES;
+            cell0.sigleBtn5.hidden = YES;
+            cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.frame.size.width, 21);
+        }
+    }else{//自定义作业
+        cell0.sigleClassBtn.hidden = NO;
+        cell0.mLab_nanDu.hidden = YES;
+        cell0.sigleBtn1.hidden = YES;
+        cell0.sigleBtn2.hidden = YES;
+        cell0.sigleBtn3.hidden = YES;
+        cell0.sigleBtn4.hidden = YES;
+        cell0.sigleBtn5.hidden = YES;
+        cell0.sigleClassBtn.frame = CGRectMake(20, 10, cell0.sigleClassBtn.frame.size.width, 21);
+    }
+    //班级
+    if (cell0.sigleClassBtn.mInt_flag ==1) {
+        [cell0.sigleClassBtn.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+    }else{
+        [cell0.sigleClassBtn.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+    }
+    //难度
+    for (SigleBtnView *view in cell0.subviews) {
+        if ([view.class isSubclassOfClass:SigleBtnView.class]) {
+            if (view.tag == cell0.mInt_diff) {
+                [view.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+            }else{
+                [view.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+            }
+        }
+    }
 }
 
 /*---------------------------------------
@@ -395,12 +514,30 @@
 }
 -(void)modeSelectionActionWithButtonTag:(NSUInteger)tag//0个性 1统一 2自定义
 {
-    
+    self.mInt_modeSelect = (int)tag;
 }
 
 -(void)MessageSelectionActionWithButtonTag0:(NSUInteger)tag0 tag1:(NSUInteger)tag1//tag0家长通知 tag1反馈（0是没选中 1是选中）
 {
-    
+    self.mInt_parent = (int)tag0;
+    self.mInt_feedback = (int)tag1;
+}
+
+//班级cell的回调
+-(void)TreeJob_class_TableViewCellClick:(TreeJob_class_TableViewCell *)treeJob_class_TableViewCell{
+    for (int i=0; i<self.mArr_sumData.count; i++) {
+        TreeJob_node *node = [self.mArr_sumData objectAtIndex:i];
+        if (node.flag == 1) {
+            for (TreeJob_node *node1 in node.sonNodes) {
+                if (node1.mInt_index == treeJob_class_TableViewCell.node.mInt_index) {
+                    TreeJob_class_model *nodeData = node1.nodeData;
+                    nodeData.mInt_class = treeJob_class_TableViewCell.sigleClassBtn.mInt_flag;
+                    nodeData.mInt_difficulty = treeJob_class_TableViewCell.mInt_diff;
+                }
+            }
+        }
+    }
+    [self reloadDataForDisplayArray];
 }
 
 //导航条返回按钮回调

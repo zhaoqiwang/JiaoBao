@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "SigleBtnView.h"
 #import "SigleNameImgBtnView.h"
+#import "TreeJob_node.h"
 
-@interface TreeJob_class_TableViewCell : UITableViewCell<SigleBtnViewDelegate>
+@protocol TreeJob_class_TableViewCellDelegate;
+
+@interface TreeJob_class_TableViewCell : UITableViewCell<SigleBtnViewDelegate,SigleNameImgBtnViewDelegate>
 
 @property (nonatomic,strong) SigleNameImgBtnView *sigleClassBtn;//班级选择
 @property (nonatomic,strong) IBOutlet UILabel *mLab_nanDu;//难度
@@ -19,5 +22,20 @@
 @property (nonatomic,strong) SigleBtnView *sigleBtn3;//难度3
 @property (nonatomic,strong) SigleBtnView *sigleBtn4;//难度4
 @property (nonatomic,strong) SigleBtnView *sigleBtn5;//难度5
+@property (nonatomic,assign) int mInt_diff;//难度
+@property (weak,nonatomic) id<TreeJob_class_TableViewCellDelegate> delegate;
+@property (nonatomic,assign) int mInt_flag;//判断是点击班级0，难度1，回调里用
+@property (nonatomic,strong) TreeJob_node *node;
+
+
+@end
+
+//向cell中添加点击事件
+@protocol TreeJob_class_TableViewCellDelegate <NSObject>
+
+@optional
+
+//点击
+-(void)TreeJob_class_TableViewCellClick:(TreeJob_class_TableViewCell *) treeJob_class_TableViewCell;
 
 @end
