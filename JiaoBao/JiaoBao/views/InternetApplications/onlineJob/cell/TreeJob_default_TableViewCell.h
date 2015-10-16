@@ -1,7 +1,7 @@
 //
 //  TreeJob_default_TableViewCell.h
 //  JiaoBao
-//
+//  布置作业的普通类型cell
 //  Created by Zqw on 15/10/14.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //

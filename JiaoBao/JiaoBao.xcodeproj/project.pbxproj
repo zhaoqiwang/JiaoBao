@@ -575,10 +575,6 @@
 		A7724D611B5DF94C0095850A /* VideoSwitch@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7724D581B5DF94C0095850A /* VideoSwitch@3x.png */; };
 		A7736DB71BCDEC9300CC39A0 /* MakeJobViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DB51BCDEC9300CC39A0 /* MakeJobViewController.m */; };
 		A7736DB81BCDEC9300CC39A0 /* MakeJobViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7736DB61BCDEC9300CC39A0 /* MakeJobViewController.xib */; };
-		A7736DBD1BCE00FF00CC39A0 /* TreeJob_node.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DBC1BCE00FF00CC39A0 /* TreeJob_node.m */; };
-		A7736DC01BCE04EE00CC39A0 /* TreeJob_level0_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DBF1BCE04EE00CC39A0 /* TreeJob_level0_model.m */; };
-		A7736DC51BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */; };
-		A7736DC61BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */; };
 		A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A773FC1E1A4B9869005F84C2 /* SelectionCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A773FC271A4B9869005F84C2 /* SelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A773FC1F1A4B9869005F84C2 /* SelectionCell.xib */; };
 		A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A773FC211A4B9869005F84C2 /* TableViewWithBlock.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -720,6 +716,14 @@
 		A79C20791A2DB60A00D0AA27 /* ExchangeHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */; };
 		A79C207D1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207C1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m */; };
 		A79C20801A2DC67500D0AA27 /* ParserJson_exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C207F1A2DC67500D0AA27 /* ParserJson_exchange.m */; };
+		A79C31061BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C31041BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.m */; };
+		A79C31071BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79C31051BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.xib */; };
+		A79C310C1BCF44EC003DF7B2 /* TreeJob_level0_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C31091BCF44EC003DF7B2 /* TreeJob_level0_model.m */; };
+		A79C310D1BCF44EC003DF7B2 /* TreeJob_node.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C310B1BCF44EC003DF7B2 /* TreeJob_node.m */; };
+		A79C31111BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C310F1BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.m */; };
+		A79C31121BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79C31101BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib */; };
+		A79C31151BCF8898003DF7B2 /* TreeJob_class_model.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C31141BCF8898003DF7B2 /* TreeJob_class_model.m */; };
+		A79C31181BCF8D47003DF7B2 /* SigleNameImgBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = A79C31171BCF8D47003DF7B2 /* SigleNameImgBtnView.m */; };
 		A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7ADD1AF22ACB00E9D30A /* newWork_allSelect.png */; };
 		A79C7AE41AF22ACB00E9D30A /* newWork_allSelect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7ADE1AF22ACB00E9D30A /* newWork_allSelect@2x.png */; };
 		A79C7AE51AF22ACB00E9D30A /* newWork_allSelect@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A79C7ADF1AF22ACB00E9D30A /* newWork_allSelect@3x.png */; };
@@ -1783,13 +1787,6 @@
 		A7736DB41BCDEC9300CC39A0 /* MakeJobViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MakeJobViewController.h; path = views/InternetApplications/onlineJob/MakeJobViewController.h; sourceTree = "<group>"; };
 		A7736DB51BCDEC9300CC39A0 /* MakeJobViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MakeJobViewController.m; path = views/InternetApplications/onlineJob/MakeJobViewController.m; sourceTree = "<group>"; };
 		A7736DB61BCDEC9300CC39A0 /* MakeJobViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MakeJobViewController.xib; path = views/InternetApplications/onlineJob/MakeJobViewController.xib; sourceTree = "<group>"; };
-		A7736DBB1BCE00FF00CC39A0 /* TreeJob_node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_node.h; sourceTree = "<group>"; };
-		A7736DBC1BCE00FF00CC39A0 /* TreeJob_node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_node.m; sourceTree = "<group>"; };
-		A7736DBE1BCE04EE00CC39A0 /* TreeJob_level0_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_level0_model.h; sourceTree = "<group>"; };
-		A7736DBF1BCE04EE00CC39A0 /* TreeJob_level0_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_level0_model.m; sourceTree = "<group>"; };
-		A7736DC21BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_default_TableViewCell.h; sourceTree = "<group>"; };
-		A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_default_TableViewCell.m; sourceTree = "<group>"; };
-		A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TreeJob_default_TableViewCell.xib; sourceTree = "<group>"; };
 		A773FC1D1A4B9869005F84C2 /* SelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectionCell.h; path = Common/dropView/SelectionCell.h; sourceTree = "<group>"; };
 		A773FC1E1A4B9869005F84C2 /* SelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectionCell.m; path = Common/dropView/SelectionCell.m; sourceTree = "<group>"; };
 		A773FC1F1A4B9869005F84C2 /* SelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectionCell.xib; path = Common/dropView/SelectionCell.xib; sourceTree = "<group>"; };
@@ -2001,6 +1998,20 @@
 		A79C207C1A2DC56300D0AA27 /* ExchangeUnitGroupsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExchangeUnitGroupsModel.m; path = views/InternetApplications/exchange/model/ExchangeUnitGroupsModel.m; sourceTree = "<group>"; };
 		A79C207E1A2DC67500D0AA27 /* ParserJson_exchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParserJson_exchange.h; path = views/InternetApplications/exchange/model/ParserJson_exchange.h; sourceTree = "<group>"; };
 		A79C207F1A2DC67500D0AA27 /* ParserJson_exchange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ParserJson_exchange.m; path = views/InternetApplications/exchange/model/ParserJson_exchange.m; sourceTree = "<group>"; };
+		A79C31031BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_default_TableViewCell.h; sourceTree = "<group>"; };
+		A79C31041BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_default_TableViewCell.m; sourceTree = "<group>"; };
+		A79C31051BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TreeJob_default_TableViewCell.xib; sourceTree = "<group>"; };
+		A79C31081BCF44EC003DF7B2 /* TreeJob_level0_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_level0_model.h; sourceTree = "<group>"; };
+		A79C31091BCF44EC003DF7B2 /* TreeJob_level0_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_level0_model.m; sourceTree = "<group>"; };
+		A79C310A1BCF44EC003DF7B2 /* TreeJob_node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_node.h; sourceTree = "<group>"; };
+		A79C310B1BCF44EC003DF7B2 /* TreeJob_node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_node.m; sourceTree = "<group>"; };
+		A79C310E1BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_class_TableViewCell.h; sourceTree = "<group>"; };
+		A79C310F1BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_class_TableViewCell.m; sourceTree = "<group>"; };
+		A79C31101BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TreeJob_class_TableViewCell.xib; sourceTree = "<group>"; };
+		A79C31131BCF8898003DF7B2 /* TreeJob_class_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_class_model.h; sourceTree = "<group>"; };
+		A79C31141BCF8898003DF7B2 /* TreeJob_class_model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_class_model.m; sourceTree = "<group>"; };
+		A79C31161BCF8D47003DF7B2 /* SigleNameImgBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SigleNameImgBtnView.h; sourceTree = "<group>"; };
+		A79C31171BCF8D47003DF7B2 /* SigleNameImgBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SigleNameImgBtnView.m; sourceTree = "<group>"; };
 		A79C7ADD1AF22ACB00E9D30A /* newWork_allSelect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = newWork_allSelect.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_allSelect.png; sourceTree = "<group>"; };
 		A79C7ADE1AF22ACB00E9D30A /* newWork_allSelect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_allSelect@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_allSelect@2x.png"; sourceTree = "<group>"; };
 		A79C7ADF1AF22ACB00E9D30A /* newWork_allSelect@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newWork_allSelect@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/newWork_allSelect@3x.png"; sourceTree = "<group>"; };
@@ -3906,10 +3917,12 @@
 		A7736DBA1BCE00E400CC39A0 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				A7736DBB1BCE00FF00CC39A0 /* TreeJob_node.h */,
-				A7736DBC1BCE00FF00CC39A0 /* TreeJob_node.m */,
-				A7736DBE1BCE04EE00CC39A0 /* TreeJob_level0_model.h */,
-				A7736DBF1BCE04EE00CC39A0 /* TreeJob_level0_model.m */,
+				A79C31081BCF44EC003DF7B2 /* TreeJob_level0_model.h */,
+				A79C31091BCF44EC003DF7B2 /* TreeJob_level0_model.m */,
+				A79C310A1BCF44EC003DF7B2 /* TreeJob_node.h */,
+				A79C310B1BCF44EC003DF7B2 /* TreeJob_node.m */,
+				A79C31131BCF8898003DF7B2 /* TreeJob_class_model.h */,
+				A79C31141BCF8898003DF7B2 /* TreeJob_class_model.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -3918,6 +3931,14 @@
 		A7736DC11BCE098B00CC39A0 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				A79C31031BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.h */,
+				A79C31041BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.m */,
+				A79C31051BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.xib */,
+				A79C310E1BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.h */,
+				A79C310F1BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.m */,
+				A79C31101BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib */,
+				A79C31161BCF8D47003DF7B2 /* SigleNameImgBtnView.h */,
+				A79C31171BCF8D47003DF7B2 /* SigleNameImgBtnView.m */,
 				A7736DC21BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.h */,
 				A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */,
 				A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */,
@@ -4880,7 +4901,7 @@
 				A76F216C1B7D88BB00D957E0 /* topBtnCall@3x.png in Resources */,
 				A76255DC1B5CD1E900AD8089 /* NewWork_photo1@2x.png in Resources */,
 				A74D26961B58FAE200E63DFB /* record_animate_08.png in Resources */,
-				A7736DC61BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib in Resources */,
+				A79C31071BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.xib in Resources */,
 				A7357A1C1A3FE1E000A195C5 /* MyFriendsViewController.xib in Resources */,
 				A75E6EBC1ABACDBD00B51B18 /* classView_1@2x.png in Resources */,
 				A7AAC4D119F75DB200A0ED40 /* appNav_setting.png in Resources */,
@@ -5052,6 +5073,7 @@
 				A71D61E01A1C96A400B8D33D /* share_education1@2x.png in Resources */,
 				A749B9CF19F89A530036F480 /* root_processed@2x.png in Resources */,
 				A75046961A0A14BC00C54ECC /* forward_sendMsg2@2x.png in Resources */,
+				A79C31121BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib in Resources */,
 				A77F9F441AFCAAC90003E579 /* appNav_work@2x.png in Resources */,
 				A77608FA1B09844000A25DC3 /* appNav_access@3x.png in Resources */,
 				A750468F1A0A14BC00C54ECC /* forward_select1.png in Resources */,
@@ -5380,7 +5402,7 @@
 				A7AAC4D819F7896900A0ED40 /* InternetAppRootScrollView.m in Sources */,
 				A73CAD6F1A07755B00D6C5AA /* MJRefreshFooterView.m in Sources */,
 				F78EF1821B215681003B6603 /* unitModel.m in Sources */,
-				A7736DC51BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m in Sources */,
+				A79C31061BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.m in Sources */,
 				A76C69951A8895F80069BA63 /* WorkView_new.m in Sources */,
 				A75E3FB11B6F64B700284C3D /* AFHTTPSessionManager.m in Sources */,
 				A749B9DD19F89F9C0036F480 /* WorkView.m in Sources */,
@@ -5411,6 +5433,7 @@
 				F71803261AB3C46300E6167F /* JTCalendarWeekView.m in Sources */,
 				A748219C19FF304F00234020 /* MyNavigationBar.m in Sources */,
 				A755E67319F2492700BBDF3D /* main.m in Sources */,
+				A79C31151BCF8898003DF7B2 /* TreeJob_class_model.m in Sources */,
 				A748219719FF2AE500234020 /* MsgDetailViewController.m in Sources */,
 				F71803241AB3C46300E6167F /* JTCalendarMonthView.m in Sources */,
 				F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */,
@@ -5426,6 +5449,7 @@
 				A7BB17EB19F4B33100A81286 /* DESTool.m in Sources */,
 				A73AD8281A20271600F68C47 /* ArthLIstViewController.m in Sources */,
 				A74D128A1A3C510300A93CAC /* UpdateUnitListModel.m in Sources */,
+				A79C310D1BCF44EC003DF7B2 /* TreeJob_node.m in Sources */,
 				A755E70419F278B900BBDF3D /* ASIDownloadCache.m in Sources */,
 				F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */,
 				A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */,
@@ -5508,6 +5532,7 @@
 				A74C119E1A02180E00925230 /* MBProgressHUD.m in Sources */,
 				A746CB681A4AAD600003657A /* CreatAlbumsViewController.m in Sources */,
 				A7595E9C1A5FC2F30027848E /* PSTCollectionView.m in Sources */,
+				A79C31181BCF8D47003DF7B2 /* SigleNameImgBtnView.m in Sources */,
 				A749B9E519F8A0310036F480 /* TreeView_Level0_Cell.m in Sources */,
 				A77FF0331A6510F500DB85E3 /* UnitParentsModel.m in Sources */,
 				A743394C1A452B7700AFC0A5 /* MKAnnotationView+WebCache.m in Sources */,
@@ -5527,7 +5552,6 @@
 				A7A379001B06E75F000C9DC5 /* OpenFileViewController.m in Sources */,
 				A755E6BA19F2728F00BBDF3D /* utils.m in Sources */,
 				F7C8AB721B73407100E829A4 /* AllCommentListModel.m in Sources */,
-				A7736DBD1BCE00FF00CC39A0 /* TreeJob_node.m in Sources */,
 				A773FC481A4C0563005F84C2 /* ELCAlbumPickerController.m in Sources */,
 				A7595E9A1A5FC2F30027848E /* README.mdown in Sources */,
 				A74339501A452B7700AFC0A5 /* SDWebImageDecoder.m in Sources */,
@@ -5584,6 +5608,7 @@
 				A76ED5911AD6189C006F3E0B /* WorkView_new2.m in Sources */,
 				A74339561A452B7700AFC0A5 /* UIImage+GIF.m in Sources */,
 				A755E71719F278B900BBDF3D /* NSObject+SBJSON.m in Sources */,
+				A79C31111BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.m in Sources */,
 				A78459D81B7B4D1D00EA7D5D /* IQUIWindow+Hierarchy.m in Sources */,
 				F79D84DE1ABD4DC000897477 /* SignInViewController.m in Sources */,
 				F71803211AB3C46300E6167F /* JTCalendarDayView.m in Sources */,
@@ -5720,7 +5745,7 @@
 				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
-				A7736DC01BCE04EE00CC39A0 /* TreeJob_level0_model.m in Sources */,
+				A79C310C1BCF44EC003DF7B2 /* TreeJob_level0_model.m in Sources */,
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,
 				A725E4331A53F40900957EAE /* MyFriendsGroupsModel.m in Sources */,
 				F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */,
