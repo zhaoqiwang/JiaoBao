@@ -12,9 +12,11 @@
 
 @property (nonatomic) int nodeLevel; //节点所处层次
 @property (nonatomic) int type; //节点类型
+@property (nonatomic) int faType; //父节点
 @property (nonatomic) id nodeData;//当前节点数据
 @property (nonatomic) BOOL isExpanded;//节点是否展开
 @property (strong,nonatomic) NSMutableArray *sonNodes;//子节点
+@property (nonatomic,assign) int mInt_index;//每个节点在全局中的索引
 //@property (nonatomic) int readflag;//阅读标记
 //@property (nonatomic,strong) NSString *UID;//交流时，单位ID
 //@property (nonatomic,assign) int mInt_select;//是否被选中，默认0，选中为1
