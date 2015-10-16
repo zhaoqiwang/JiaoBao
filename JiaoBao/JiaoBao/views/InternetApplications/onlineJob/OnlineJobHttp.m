@@ -7,6 +7,7 @@
 //
 
 #import "OnlineJobHttp.h"
+#import "ParserJson_OnlineJob.h"
 static OnlineJobHttp *onlineJobHttp = nil;
 
 @implementation OnlineJobHttp
@@ -33,11 +34,9 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSMutableArray *mArr = [result objectFromJSONString];
 
-//        NSArray *array = [ParserJson_knowledge parserJsonInvitationUserInfo:[jsonDic objectForKey:@"Data"]];
-//        NSDictionary *tempDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
+        NSArray *array = [ParserJson_OnlineJob parserJsonGradeList:result];
+
         
         D("JSON--------GetGradeList: %@,", result);
         
@@ -54,13 +53,34 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
-//[manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSDictionary *parameters = @{@"gCode": gCode,@"subCode": subCode,@"uId":uId,@"flag":flag};
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
- 
+        NSDictionary *dic = [result objectFromJSONString];
+        NSString *statusCode = [dic objectForKey:@"statusCode"];
+        if( [statusCode integerValue] == 200)
+        {
+            if([flag integerValue]== 0)//获取科目列表
+            {
+                NSArray *array = [ParserJson_OnlineJob parserJsonSubjectList:[dic objectForKey:@"args1"]];
+                NSLog(@"%@",array);
+                
+            }
+            else if ([flag integerValue]== 1)//获取教版列表
+            {
+                NSArray *array = [ParserJson_OnlineJob parserJsonVersionList:[dic objectForKey:@"args2"]];
+                
+            }
+            else if ([flag integerValue]== 2)//获取章节列表
+            {
+                NSArray *array = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"]];
+                
+            }
+            
+        }
+
         D("JSON--------GetUnionChaterListWithgCode: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
