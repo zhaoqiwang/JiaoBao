@@ -984,6 +984,7 @@
 		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; settings = {ASSET_TAGS = (); }; };
 		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; settings = {ASSET_TAGS = (); }; };
 		F7FFD9DF1BCF564B004A691A /* MessageSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */; settings = {ASSET_TAGS = (); }; };
+		F7FFD9EF1BCFA32B004A691A /* OnlineJobHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9EE1BCFA32B004A691A /* OnlineJobHttp.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2448,6 +2449,8 @@
 		F7FFD9DB1BCF564B004A691A /* MessageSelectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageSelectionCell.h; sourceTree = "<group>"; };
 		F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageSelectionCell.m; sourceTree = "<group>"; };
 		F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageSelectionCell.xib; sourceTree = "<group>"; };
+		F7FFD9ED1BCFA32B004A691A /* OnlineJobHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OnlineJobHttp.h; path = views/InternetApplications/onlineJob/OnlineJobHttp.h; sourceTree = "<group>"; };
+		F7FFD9EE1BCFA32B004A691A /* OnlineJobHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OnlineJobHttp.m; path = views/InternetApplications/onlineJob/OnlineJobHttp.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3890,6 +3893,7 @@
 		A7736DB31BCDEBB600CC39A0 /* onlineJob */ = {
 			isa = PBXGroup;
 			children = (
+				F7FFD9EC1BCFA2C0004A691A /* OnlineJobHttp */,
 				A7736DC11BCE098B00CC39A0 /* cell */,
 				A7736DBA1BCE00E400CC39A0 /* model */,
 				A7736DB41BCDEC9300CC39A0 /* MakeJobViewController.h */,
@@ -4715,6 +4719,15 @@
 			path = Common/BaiduSDk/inc;
 			sourceTree = "<group>";
 		};
+		F7FFD9EC1BCFA2C0004A691A /* OnlineJobHttp */ = {
+			isa = PBXGroup;
+			children = (
+				F7FFD9ED1BCFA32B004A691A /* OnlineJobHttp.h */,
+				F7FFD9EE1BCFA32B004A691A /* OnlineJobHttp.m */,
+			);
+			name = OnlineJobHttp;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -5502,6 +5515,7 @@
 				A7595E971A5FC2F30027848E /* MWZoomingScrollView.m in Sources */,
 				A7BB17E019F49E9300A81286 /* Reachability.m in Sources */,
 				A755E71819F278B900BBDF3D /* NSString+SBJSON.m in Sources */,
+				F7FFD9EF1BCFA32B004A691A /* OnlineJobHttp.m in Sources */,
 				A743395A1A452B7700AFC0A5 /* UIImageView+WebCache.m in Sources */,
 				A72B58191A3D3E14004D8920 /* RelatedUnitViewController.m in Sources */,
 				A755E71019F278B900BBDF3D /* ASICloudFilesRequest.m in Sources */,
