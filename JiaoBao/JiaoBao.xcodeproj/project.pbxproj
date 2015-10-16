@@ -959,6 +959,11 @@
 		F7B271991B6F151F00DA3FE4 /* PhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */; };
 		F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */; };
 		F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */; };
+		F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C4D7121BD08CB3008B8924 /* CoreData.framework */; };
+		F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
+		F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71A1BD08F5F008B8924 /* Grade.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; settings = {ASSET_TAGS = (); }; };
 		F7C8AB631B72EF4200E829A4 /* QuestionDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */; };
 		F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB681B72FD5900E829A4 /* AnswerByIdModel.m */; };
 		F7C8AB6C1B73102400E829A4 /* AnswerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB6B1B73102400E829A4 /* AnswerDetailModel.m */; };
@@ -2414,6 +2419,14 @@
 		F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionCell.m; path = views/InternetApplications/show/PhotoCollectionCell.m; sourceTree = "<group>"; };
 		F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionCell.xib; path = views/InternetApplications/show/PhotoCollectionCell.xib; sourceTree = "<group>"; };
 		F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "删除键@2x.png"; path = "Image/InternetApp/删除键@2x.png"; sourceTree = "<group>"; };
+		F7C4D7121BD08CB3008B8924 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		F7C4D7171BD08F5F008B8924 /* Grade+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Grade+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Grade+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F7C4D7191BD08F5F008B8924 /* Grade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grade.h; sourceTree = "<group>"; };
+		F7C4D71A1BD08F5F008B8924 /* Grade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grade.m; sourceTree = "<group>"; };
+		F7C4D71E1BD0E176008B8924 /* GradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeModel.h; sourceTree = "<group>"; };
+		F7C4D71F1BD0E176008B8924 /* GradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeModel.m; sourceTree = "<group>"; };
 		F7C8AB611B72EF4200E829A4 /* QuestionDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionDetailModel.h; path = views/InternetApplications/theme/QuestionDetailModel.h; sourceTree = "<group>"; };
 		F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionDetailModel.m; path = views/InternetApplications/theme/QuestionDetailModel.m; sourceTree = "<group>"; };
 		F7C8AB671B72FD5900E829A4 /* AnswerByIdModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerByIdModel.h; path = views/InternetApplications/theme/AnswerByIdModel.h; sourceTree = "<group>"; };
@@ -2469,6 +2482,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */,
 				F7F415C91B847302001B27CE /* libxml2.dylib in Frameworks */,
 				F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */,
 				F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */,
@@ -3153,6 +3167,7 @@
 		A755E69719F24AC500BBDF3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F7C4D7121BD08CB3008B8924 /* CoreData.framework */,
 				F7F415C81B847302001B27CE /* libxml2.dylib */,
 				F74639961B0EC5DA00365EB7 /* CoreText.framework */,
 				F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */,
@@ -3917,12 +3932,15 @@
 		A7736DBA1BCE00E400CC39A0 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				F7C4D71D1BD0E12F008B8924 /* CoreData */,
 				A79C31081BCF44EC003DF7B2 /* TreeJob_level0_model.h */,
 				A79C31091BCF44EC003DF7B2 /* TreeJob_level0_model.m */,
 				A79C310A1BCF44EC003DF7B2 /* TreeJob_node.h */,
 				A79C310B1BCF44EC003DF7B2 /* TreeJob_node.m */,
 				A79C31131BCF8898003DF7B2 /* TreeJob_class_model.h */,
 				A79C31141BCF8898003DF7B2 /* TreeJob_class_model.m */,
+				F7C4D71E1BD0E176008B8924 /* GradeModel.h */,
+				F7C4D71F1BD0E176008B8924 /* GradeModel.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -3939,9 +3957,6 @@
 				A79C31101BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib */,
 				A79C31161BCF8D47003DF7B2 /* SigleNameImgBtnView.h */,
 				A79C31171BCF8D47003DF7B2 /* SigleNameImgBtnView.m */,
-				A7736DC21BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.h */,
-				A7736DC31BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.m */,
-				A7736DC41BCE0A6700CC39A0 /* TreeJob_default_TableViewCell.xib */,
 				F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */,
 				F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */,
 				F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */,
@@ -4740,6 +4755,18 @@
 			path = Common/BaiduSDk/inc;
 			sourceTree = "<group>";
 		};
+		F7C4D71D1BD0E12F008B8924 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */,
+				F7C4D7171BD08F5F008B8924 /* Grade+CoreDataProperties.h */,
+				F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */,
+				F7C4D7191BD08F5F008B8924 /* Grade.h */,
+				F7C4D71A1BD08F5F008B8924 /* Grade.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		F7FFD9EC1BCFA2C0004A691A /* OnlineJobHttp */ = {
 			isa = PBXGroup;
 			children = (
@@ -5483,6 +5510,7 @@
 				A755E72219F27B9E00BBDF3D /* RSATool.m in Sources */,
 				A75E3F931B6F63ED00284C3D /* ParserJson_knowledge.m in Sources */,
 				A76B6A761AB2D1BC00B6ED12 /* AccessoryModel.m in Sources */,
+				F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */,
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,
 				A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */,
 				A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */,
@@ -5621,6 +5649,7 @@
 				A755E71A19F278B900BBDF3D /* SBJsonBase.m in Sources */,
 				A7781F221AE889E100F03AEB /* NewWorkRootScrollView.m in Sources */,
 				A73789291A2F177900DF8882 /* RongYunTokenModel.m in Sources */,
+				F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */,
 				A7B0F94F1A47BC4300C1863A /* MJPhotoLoadingView.m in Sources */,
 				A72B582F1A3D8EEE004D8920 /* UnitPeopleViewController.m in Sources */,
 				A755E70F19F278B900BBDF3D /* ASICloudFilesObjectRequest.m in Sources */,
@@ -5693,6 +5722,7 @@
 				A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */,
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
+				F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,
@@ -5714,6 +5744,7 @@
 				A74339581A452B7700AFC0A5 /* UIImage+WebP.m in Sources */,
 				A78459DC1B7B4D1D00EA7D5D /* IQTextView.m in Sources */,
 				A7595EA11A5FC2F30027848E /* PSTCollectionViewItemKey.m in Sources */,
+				F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */,
 				A753E51D1A1AF611005A8EED /* TopArthListModel.m in Sources */,
 				A74339571A452B7700AFC0A5 /* UIImage+MultiFormat.m in Sources */,
 				F71803221AB3C46300E6167F /* JTCalendarMenuMonthView.m in Sources */,
@@ -5942,6 +5973,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */,
+			);
+			currentVersion = F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */;
+			name = Model.xcdatamodeld;
+			path = ../Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A755E66519F2492700BBDF3D /* Project object */;
 }

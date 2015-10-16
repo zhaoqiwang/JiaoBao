@@ -15,6 +15,8 @@
 //#import "BMapKit.h"
 #import <BaiduMapAPI/BMapKit.h>
 #import "MobClick.h"
+#import<CoreData/CoreData.h>
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{
 //    RootViewController *mRoot_view;
@@ -30,6 +32,13 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (retain,nonatomic) UINavigationController *navigationController;
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
 
 
 @end

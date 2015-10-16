@@ -11,8 +11,14 @@
 #import "Reachability.h"
 #import "MobClick.h"
 #import "define_constant.h"
+#import "OnlineJobHttp.h"
+#import "AppDelegate.h"
+#import "Grade+CoreDataProperties.h"
 
 @interface MakeJobViewController ()
+
+@property(nonatomic,strong)Grade *GradeModel;
+@property(nonatomic,strong)AppDelegate *appDelegate;//用于获取数据库
 
 @end
 
@@ -28,6 +34,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[OnlineJobHttp getInstance]GetGradeList];
+    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
+    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5150001"];
+    NSError* error;
+    //添加 删除 获取数据库的标志
+    //从appdelegate获取数据数据库上下文
+    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    //通过查询语句获取数据列表
+    
+        NSFetchRequest* request=[[NSFetchRequest alloc] init];
+        NSEntityDescription* GradeDataList=[NSEntityDescription entityForName:@"Grade" inManagedObjectContext:self.appDelegate.managedObjectContext];
+        [request setEntity:GradeDataList];
+        NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    Grade *grade0 = [mutableFetchResult objectAtIndex:0];
+    NSLog(@"fdijenfne = %@",grade0.gradeName);
+    
+    //数据库添加数据
+        self.GradeModel = (Grade*)[NSEntityDescription insertNewObjectForEntityForName:@"Grade" inManagedObjectContext:self.appDelegate.managedObjectContext];
+
+    self.GradeModel.gradeName = @"一年级";
+    self.GradeModel.gradeCode = @"1";
+        
+        //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
+        BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
+        if (!isSaveSuccess)
+        {
+            NSLog(@"Error:%@",error);
+        }else{
+            NSLog(@"Save successful!");
+        }
+    
     // Do any additional setup after loading the view from its nib.
     self.mArr_sumData = [NSMutableArray array];
     self.mArr_display = [NSMutableArray array];
@@ -141,25 +178,29 @@
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *indentifier = @"TreeJob_default_TableViewCell";
     static NSString *indentifier2 = @"TreeJob_class_TableViewCell";
+    static NSString *ModeSelectionIndentifier = @"ModeSelectionIndentifier";//模式选择cell重用标志
+    static NSString *MessageSelectionIndentifier = @"MessageSelectionIndentifier";//短信勾选cell重用标志
+
+    
 //    static NSString *indentifier1 = @"TreeView_Level1_Cell";
 //    static NSString *indentifier2 = @"TreeView_Level2_Cell";
     TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
     if(node.type == 0){//类型为0的cell,一级列表
         if (node.flag == 0) {//模式选择
-            TreeJob_default_TableViewCell *cell = (TreeJob_default_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+            Mode_Selection_Cell *cell = (Mode_Selection_Cell *)[tableView dequeueReusableCellWithIdentifier:ModeSelectionIndentifier];
             if (cell == nil) {
-                cell = [[TreeJob_default_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeJob_default_TableViewCell" owner:self options:nil];
+                cell = [[Mode_Selection_Cell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ModeSelectionIndentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"Mode_Selection_Cell" owner:self options:nil];
                 //这时myCell对象已经通过自定义xib文件生成了
                 if ([nib count]>0) {
-                    cell = (TreeJob_default_TableViewCell *)[nib objectAtIndex:0];
+                    cell = (Mode_Selection_Cell *)[nib objectAtIndex:0];
                     //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
                 }
                 
                 //添加图片点击事件
                 //若是需要重用，需要写上以下两句代码
-                UINib * n= [UINib nibWithNibName:@"TreeJob_default_TableViewCell" bundle:[NSBundle mainBundle]];
-                [self.mTableV_work registerNib:n forCellReuseIdentifier:indentifier];
+                UINib * n= [UINib nibWithNibName:@"Mode_Selection_Cell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:ModeSelectionIndentifier];
             }
             
             [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -167,20 +208,20 @@
             
             return cell;
         }else if (node.flag == 7){//短信勾选
-            TreeJob_default_TableViewCell *cell = (TreeJob_default_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+            MessageSelectionCell *cell = (MessageSelectionCell *)[tableView dequeueReusableCellWithIdentifier:MessageSelectionIndentifier];
             if (cell == nil) {
-                cell = [[TreeJob_default_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeJob_default_TableViewCell" owner:self options:nil];
+                cell = [[MessageSelectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MessageSelectionIndentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MessageSelectionCell" owner:self options:nil];
                 //这时myCell对象已经通过自定义xib文件生成了
                 if ([nib count]>0) {
-                    cell = (TreeJob_default_TableViewCell *)[nib objectAtIndex:0];
+                    cell = (MessageSelectionCell *)[nib objectAtIndex:0];
                     //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
                 }
                 
                 //添加图片点击事件
                 //若是需要重用，需要写上以下两句代码
-                UINib * n= [UINib nibWithNibName:@"TreeJob_default_TableViewCell" bundle:[NSBundle mainBundle]];
-                [self.mTableV_work registerNib:n forCellReuseIdentifier:indentifier];
+                UINib * n= [UINib nibWithNibName:@"MessageSelectionCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:MessageSelectionIndentifier];
             }
             
             [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -303,10 +344,22 @@
  --------------------------------------- */
 -(void) loadDataForTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node{
     if(node.type == 0){
-        TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
-        TreeJob_level0_model *nodeData = node.nodeData;
-        cell0.mLab_title.text = nodeData.mStr_name;
-        cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
+        if(node.flag == 0)
+        {
+            
+        }
+        else if (node.flag == 7)
+        {
+            
+        }
+        else
+        {
+//            TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
+//            TreeJob_level0_model *nodeData = node.nodeData;
+//            cell0.mLab_title.text = nodeData.mStr_name;
+//            cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
+        }
+
     }else if (node.type == 1){
         TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
         TreeJob_level0_model *nodeData = node.nodeData;
