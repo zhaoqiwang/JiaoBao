@@ -24,7 +24,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }
     return self;
 }
-//获取年纪列表
+//获取年级列表
 -(void)GetGradeList
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/GetGradeList",ONLINEJOBURL];

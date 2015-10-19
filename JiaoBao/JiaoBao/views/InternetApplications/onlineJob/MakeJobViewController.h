@@ -24,7 +24,7 @@
 #import "ChapterModel.h"
 #import "TreeJob_sigleSelect_TableViewCell.h"
 
-@interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,ModelSelectionCellDelegate,MessageSelectionCellDelegate,TreeJob_class_TableViewCellDelegate,TreeJob_sigleSelect_TableViewCellDelegate>
+@interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,ModelSelectionCellDelegate,MessageSelectionCellDelegate,TreeJob_class_TableViewCellDelegate,TreeJob_sigleSelect_TableViewCellDelegate,UITextFieldDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (strong,nonatomic) IBOutlet UITableView *mTableV_work;
@@ -36,5 +36,9 @@
 @property (nonatomic,assign) int mInt_parent;//是否通知家长，0是没选中 1是选中
 @property (nonatomic,assign) int mInt_feedback;//是否通知反馈，0是没选中 1是选中
 @property (nonatomic,strong) TreeJob_node *sigleClassNode;//统一作业中，单独的难度node
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+- (IBAction)cancelBtnAction:(id)sender;
+- (IBAction)doneBtnAction:(id)sender;
 
 @end

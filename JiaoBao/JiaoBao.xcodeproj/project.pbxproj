@@ -923,6 +923,7 @@
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
 		F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77118D61B70476100CA8FAC /* NickNameModel.m */; };
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
+		F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42671BD47A17006CF240 /* OtherItemsModel.m */; settings = {ASSET_TAGS = (); }; };
 		F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFF81B70560800E8A31B /* CategoryModel.m */; };
 		F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFFB1B70566400E8A31B /* UserInformationModel.m */; };
 		F788EA6B1BAA57120015965E /* AttentionCategoryVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F788EA691BAA57120015965E /* AttentionCategoryVCViewController.m */; };
@@ -975,6 +976,8 @@
 		F7C8AB6C1B73102400E829A4 /* AnswerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB6B1B73102400E829A4 /* AnswerDetailModel.m */; };
 		F7C8AB721B73407100E829A4 /* AllCommentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB711B73407100E829A4 /* AllCommentListModel.m */; };
 		F7C8AB751B73451700E829A4 /* commentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB741B73451700E829A4 /* commentListModel.m */; };
+		F7D20E911BD1DD0900E77B00 /* OtherItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D20E8F1BD1DD0900E77B00 /* OtherItemsCell.m */; settings = {ASSET_TAGS = (); }; };
+		F7D20E921BD1DD0900E77B00 /* OtherItemsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D20E901BD1DD0900E77B00 /* OtherItemsCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
 		F7E981071B79F6FE008B42E9 /* AddQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E981051B79F6FE008B42E9 /* AddQuestionViewController.m */; };
 		F7E981081B79F6FE008B42E9 /* AddQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E981061B79F6FE008B42E9 /* AddQuestionViewController.xib */; };
@@ -2303,6 +2306,8 @@
 		F77118D51B70476100CA8FAC /* NickNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickNameModel.h; path = views/InternetApplications/theme/model/NickNameModel.h; sourceTree = "<group>"; };
 		F77118D61B70476100CA8FAC /* NickNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NickNameModel.m; path = views/InternetApplications/theme/model/NickNameModel.m; sourceTree = "<group>"; };
 		F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailQueryCell.xib; sourceTree = "<group>"; };
+		F77B42661BD47A17006CF240 /* OtherItemsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherItemsModel.h; sourceTree = "<group>"; };
+		F77B42671BD47A17006CF240 /* OtherItemsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherItemsModel.m; sourceTree = "<group>"; };
 		F787CFF71B70560800E8A31B /* CategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryModel.h; path = views/InternetApplications/theme/model/CategoryModel.h; sourceTree = "<group>"; };
 		F787CFF81B70560800E8A31B /* CategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryModel.m; path = views/InternetApplications/theme/model/CategoryModel.m; sourceTree = "<group>"; };
 		F787CFFA1B70566400E8A31B /* UserInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInformationModel.h; path = views/InternetApplications/theme/model/UserInformationModel.h; sourceTree = "<group>"; };
@@ -2454,6 +2459,9 @@
 		F7C8AB711B73407100E829A4 /* AllCommentListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllCommentListModel.m; path = views/InternetApplications/theme/AllCommentListModel.m; sourceTree = "<group>"; };
 		F7C8AB731B73451700E829A4 /* commentListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = commentListModel.h; path = views/InternetApplications/theme/commentListModel.h; sourceTree = "<group>"; };
 		F7C8AB741B73451700E829A4 /* commentListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = commentListModel.m; path = views/InternetApplications/theme/commentListModel.m; sourceTree = "<group>"; };
+		F7D20E8E1BD1DD0900E77B00 /* OtherItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherItemsCell.h; sourceTree = "<group>"; };
+		F7D20E8F1BD1DD0900E77B00 /* OtherItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherItemsCell.m; sourceTree = "<group>"; };
+		F7D20E901BD1DD0900E77B00 /* OtherItemsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherItemsCell.xib; sourceTree = "<group>"; };
 		F7DBA8AC1B1016A100C865D5 /* bj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bj.png; sourceTree = "<group>"; };
 		F7DC76401AC697C400D6B0CE /* ClassHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassHttp.h; path = views/InternetApplications/class/ClassHttp.h; sourceTree = "<group>"; };
 		F7DC76411AC697C400D6B0CE /* ClassHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassHttp.m; path = views/InternetApplications/class/ClassHttp.m; sourceTree = "<group>"; };
@@ -3989,6 +3997,11 @@
 				A785F7191BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.h */,
 				A785F71A1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m */,
 				A785F71B1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.xib */,
+				F7D20E8E1BD1DD0900E77B00 /* OtherItemsCell.h */,
+				F7D20E8F1BD1DD0900E77B00 /* OtherItemsCell.m */,
+				F7D20E901BD1DD0900E77B00 /* OtherItemsCell.xib */,
+				F77B42661BD47A17006CF240 /* OtherItemsModel.h */,
+				F77B42671BD47A17006CF240 /* OtherItemsModel.m */,
 			);
 			name = cell;
 			path = views/InternetApplications/onlineJob/cell;
@@ -4899,6 +4912,7 @@
 				A72B56511A81CC27005EEA9C /* forward_select1@3x.png in Resources */,
 				A76829851AC69B21003B31EB /* classView_click_1.png in Resources */,
 				A71D61EA1A1C96A400B8D33D /* share_recommend0@2x.png in Resources */,
+				F7D20E921BD1DD0900E77B00 /* OtherItemsCell.xib in Resources */,
 				A782AEC91AE9D71A00547B0F /* NewWork_unSendMsg@2x.png in Resources */,
 				A76ED5C51AD67855006F3E0B /* workView_click_1@2x.png in Resources */,
 				A75082731B7998E60031E7C9 /* buttonView2@3x.png in Resources */,
@@ -5499,6 +5513,7 @@
 				A77FF02B1A650B3F00DB85E3 /* NSArray+JSONModel.m in Sources */,
 				A73191F81A135036008CFD53 /* SMSTreeArrayModel.m in Sources */,
 				A7595EA21A5FC2F30027848E /* PSTCollectionViewLayout.m in Sources */,
+				F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */,
 				A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */,
 				A762FFFB1A282A6000A78B5C /* NoticeInfoModel.m in Sources */,
 				A72B581E1A3D70B8004D8920 /* UnitSpaceViewController.m in Sources */,
@@ -5542,6 +5557,7 @@
 				A75E3F931B6F63ED00284C3D /* ParserJson_knowledge.m in Sources */,
 				A76B6A761AB2D1BC00B6ED12 /* AccessoryModel.m in Sources */,
 				F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */,
+				F7D20E911BD1DD0900E77B00 /* OtherItemsCell.m in Sources */,
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,
 				A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */,
 				A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */,
