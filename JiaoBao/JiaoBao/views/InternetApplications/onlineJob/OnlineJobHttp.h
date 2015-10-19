@@ -27,7 +27,7 @@
 +(OnlineJobHttp *)getInstance;
 //获取年纪列表
 -(void)GetGradeList;
-//获取联动列表
+//获取联动列表 //（年级代码）- （科目代码）- （教版联动代码）- （0： 根据年级获取科目，1：根据科目获取教版，2： 根据所有获取UID）
 -(void)GetUnionChapterListWithgCode:(NSString*)gCode subCode:(NSString*)subCode uId:(NSString*)uId flag:(NSString*)flag;
 //获取自定义作业列表
 -(void)GetDesHWListWithChapterID:(NSString*)ChapterID teacherJiaobaohao:(NSString*)teacherJiaobaohao;

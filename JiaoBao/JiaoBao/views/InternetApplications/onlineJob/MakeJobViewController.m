@@ -14,11 +14,17 @@
 #import "OnlineJobHttp.h"
 #import "AppDelegate.h"
 #import "Grade+CoreDataProperties.h"
+#import "OtherItemsCell.h"
+#import "OtherItemsModel.h"
+#import "IQKeyboardManager.h"
+
 
 @interface MakeJobViewController ()
 
 @property(nonatomic,strong)Grade *GradeModel;
 @property(nonatomic,strong)AppDelegate *appDelegate;//用于获取数据库
+@property(nonatomic,strong)UITextField *dateTF;//截止日期输入框
+@property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
 
 @end
 
@@ -35,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    [[OnlineJobHttp getInstance]GetGradeList];
-//    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
+    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
 //    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5150001"];
 //    NSError* error;
 //    //添加 删除 获取数据库的标志
@@ -76,6 +82,13 @@
     self.mNav_navgationBar.delegate = self;
     [self.view addSubview:self.mNav_navgationBar];
     
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
+    
     self.mTableV_work.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
     //统一作业，插入单独的难度行
@@ -110,8 +123,36 @@
     }
     [self insertGrade];
     [self insertClass];
+    [self insertOtherItems];
 }
-
+//插入其他项目
+-(void)insertOtherItems
+{
+    if(self.mArr_sumData.count>5)
+    {
+        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:6];
+        if (node0.flag == 6) {
+            for (int m=0; m<3; m++) {
+                //第1根节点
+                TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                node1.nodeLevel = 1;//节点所处层次
+                node1.type = 1;//节点类型
+                node1.flag = (m+1)*100;
+                node1.faType = node0.flag;//父节点
+                node1.isExpanded = FALSE;//节点是否展开
+                node1.mInt_index = self.mInt_index;//全局索引标识
+                self.mInt_index++;
+//                OtherItemsModel *temp1 =[[OtherItemsModel alloc]init];
+//                temp1.title = [NSString stringWithFormat:@"标题更改"];
+//                temp1.tf_content = @"";
+//                node1.nodeData = temp1;
+                //塞入数据
+                [node0.sonNodes addObject:node1];
+            }
+        }
+        
+    }
+}
 //在年级选择中，插入数据
 -(void)insertGrade{
     for (int i=0; i<self.mArr_sumData.count; i++) {
@@ -213,6 +254,7 @@
     static NSString *indentifier2 = @"TreeJob_class_TableViewCell";
     static NSString *ModeSelectionIndentifier = @"ModeSelectionIndentifier";//模式选择cell重用标志
     static NSString *MessageSelectionIndentifier = @"MessageSelectionIndentifier";//短信勾选cell重用标志
+    static NSString *OtherItemIdentifer = @"OtherItemIdentifer";//其他项目cell重用标志
 
     
 //    static NSString *indentifier1 = @"TreeView_Level1_Cell";
@@ -328,6 +370,34 @@
             
             return cell;
         }
+        else if(node.flag ==100||node.flag == 200)
+        {
+            OtherItemsCell *cell = (OtherItemsCell *)[tableView dequeueReusableCellWithIdentifier:OtherItemIdentifer];
+            if (cell == nil) {
+                cell = [[OtherItemsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:OtherItemIdentifer];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"OtherItemsCell" owner:self options:nil];
+                //这时myCell对象已经通过自定义xib文件生成了
+                if ([nib count]>0) {
+                    cell = (OtherItemsCell *)[nib objectAtIndex:0];
+                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                }
+                
+                //添加图片点击事件
+                //若是需要重用，需要写上以下两句代码
+                UINib * n= [UINib nibWithNibName:@"OtherItemsCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:OtherItemIdentifer];
+            }
+            
+            [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
+            [cell setNeedsDisplay]; //重新描绘cell
+            
+            return cell;
+            
+        }
+        else if (node.flag == 300)
+        {
+            
+        }
         TreeJob_default_TableViewCell *cell = (TreeJob_default_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         if (cell == nil) {
             cell = [[TreeJob_default_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
@@ -399,10 +469,37 @@
         }
 
     }else if (node.type == 1){
-        TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
-        TreeJob_level0_model *nodeData = node.nodeData;
-        cell0.mLab_title.text = nodeData.mStr_name;
-        cell0.mLab_title.frame = CGRectMake(20, (44-21)/2, 80, 21);
+        if(node.flag ==100)
+        {
+            OtherItemsCell *cell0 = (OtherItemsCell*)cell;
+            cell0.titleLabel.text = @"标题更改";
+            cell0.textField.text = @"如何学习正确的学习方法";
+            self.titleTF.text = cell0.textField.text;
+            cell0.dateButton.hidden = YES;
+            
+        }
+        else if (node.flag == 200)
+        {
+            OtherItemsCell *cell0 = (OtherItemsCell*)cell;
+            cell0.dateButton.hidden = YES;
+            cell0.titleLabel.text = @"截止时间";
+            cell0.textField.text = @"2015-10-19";
+            cell0.textField.inputView = self.datePicker;
+            self.dateTF = cell0.textField;
+            cell0.textField.inputAccessoryView = self.toolBar;
+        }
+        else if(node.flag == 300)
+        {
+            
+        }
+        else
+        {
+            TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
+            TreeJob_level0_model *nodeData = node.nodeData;
+            cell0.mLab_title.text = nodeData.mStr_name;
+            cell0.mLab_title.frame = CGRectMake(20, (44-21)/2, 80, 21);
+        }
+
     }
 }
 
@@ -557,6 +654,12 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 
@@ -565,14 +668,33 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)textFieldDidBeginEditing:(UITextField *)textField           // became first responder
+{
+    if([textField isEqual:self.dateTF])
+    {
+        textField.inputAccessoryView = self.toolBar;
+        textField.inputView = self.datePicker;
+    }
+    else
+    {
+        textField.inputView = nil;
+        textField.inputAccessoryView = nil;
+    }
 }
-*/
 
+
+- (IBAction)cancelBtnAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+
+    
+}
+
+- (IBAction)doneBtnAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
+    self.dateTF.text = dateStr;
+    
+}
 @end
