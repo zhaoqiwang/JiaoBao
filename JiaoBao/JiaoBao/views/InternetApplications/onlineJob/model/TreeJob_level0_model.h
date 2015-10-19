@@ -12,5 +12,6 @@
 
 @property (strong,nonatomic) NSString *mStr_name;//名称
 @property (strong,nonatomic) NSString *mStr_title;//选择后的显示数据
+@property (strong,nonatomic) NSString *mStr_id;//选择的id号
 
 @end

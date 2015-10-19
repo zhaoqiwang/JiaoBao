@@ -15,5 +15,6 @@
 @property(nonatomic,strong)NSString *GradeName;//
 @property(nonatomic,strong)NSString *isEnable;//
 @property(nonatomic,strong)NSString *orderby;//
+@property (nonatomic,assign) int mInt_select;//是否选择1，否0
 
 @end

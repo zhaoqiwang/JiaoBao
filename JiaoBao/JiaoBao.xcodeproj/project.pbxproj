@@ -685,6 +685,8 @@
 		A78459DF1B7B4D1D00EA7D5D /* IQToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A78459CE1B7B4D1D00EA7D5D /* IQToolbar.m */; };
 		A78459E01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A78459D01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m */; };
 		A78459E11B7B4D1D00EA7D5D /* IQKeyboardManager.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A78459D31B7B4D1D00EA7D5D /* IQKeyboardManager.bundle */; };
+		A785F71C1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A785F71A1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m */; };
+		A785F71D1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A785F71B1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.xib */; };
 		A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */ = {isa = PBXBuildFile; fileRef = A7882E5E1B871C9C007CAA0A /* HtmlString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A788C9C71B9FC94400E7BBC6 /* OldChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A788C9C51B9FC94400E7BBC6 /* OldChoiceViewController.m */; };
 		A788C9C81B9FC94400E7BBC6 /* OldChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A788C9C61B9FC94400E7BBC6 /* OldChoiceViewController.xib */; };
@@ -960,14 +962,14 @@
 		F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */; };
 		F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */; };
 		F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C4D7121BD08CB3008B8924 /* CoreData.framework */; };
-		F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
-		F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71A1BD08F5F008B8924 /* Grade.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7251BD0E52D008B8924 /* VersionModel.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D7291BD0E557008B8924 /* ChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7281BD0E557008B8924 /* ChapterModel.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D72C1BD0E9FC008B8924 /* ParserJson_OnlineJob.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D72B1BD0E9FC008B8924 /* ParserJson_OnlineJob.m */; settings = {ASSET_TAGS = (); }; };
+		F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */; };
+		F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */; };
+		F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71A1BD08F5F008B8924 /* Grade.m */; };
+		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; };
+		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; };
+		F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7251BD0E52D008B8924 /* VersionModel.m */; };
+		F7C4D7291BD0E557008B8924 /* ChapterModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7281BD0E557008B8924 /* ChapterModel.m */; };
+		F7C4D72C1BD0E9FC008B8924 /* ParserJson_OnlineJob.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D72B1BD0E9FC008B8924 /* ParserJson_OnlineJob.m */; };
 		F7C8AB631B72EF4200E829A4 /* QuestionDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB621B72EF4200E829A4 /* QuestionDetailModel.m */; };
 		F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB681B72FD5900E829A4 /* AnswerByIdModel.m */; };
 		F7C8AB6C1B73102400E829A4 /* AnswerDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB6B1B73102400E829A4 /* AnswerDetailModel.m */; };
@@ -993,11 +995,11 @@
 		F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD6E1B7C30EE00923B60 /* CategoryViewController.xib */; };
 		F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7AD721B7C348600923B60 /* CategorySection.m */; };
 		F7F7AD751B7C348600923B60 /* CategorySection.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD731B7C348600923B60 /* CategorySection.xib */; };
-		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; settings = {ASSET_TAGS = (); }; };
-		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; settings = {ASSET_TAGS = (); }; };
-		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; settings = {ASSET_TAGS = (); }; };
-		F7FFD9DF1BCF564B004A691A /* MessageSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */; settings = {ASSET_TAGS = (); }; };
-		F7FFD9EF1BCFA32B004A691A /* OnlineJobHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9EE1BCFA32B004A691A /* OnlineJobHttp.m */; settings = {ASSET_TAGS = (); }; };
+		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; };
+		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; };
+		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; };
+		F7FFD9DF1BCF564B004A691A /* MessageSelectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */; };
+		F7FFD9EF1BCFA32B004A691A /* OnlineJobHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9EE1BCFA32B004A691A /* OnlineJobHttp.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1961,6 +1963,9 @@
 		A78459D01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIView+IQKeyboardToolbar.m"; sourceTree = "<group>"; };
 		A78459D11B7B4D1D00EA7D5D /* KeyboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyboardManager.h; path = Common/IQKeyBoardManager/KeyboardManager.h; sourceTree = "<group>"; };
 		A78459D31B7B4D1D00EA7D5D /* IQKeyboardManager.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = IQKeyboardManager.bundle; sourceTree = "<group>"; };
+		A785F7191BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TreeJob_sigleSelect_TableViewCell.h; sourceTree = "<group>"; };
+		A785F71A1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TreeJob_sigleSelect_TableViewCell.m; sourceTree = "<group>"; };
+		A785F71B1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TreeJob_sigleSelect_TableViewCell.xib; sourceTree = "<group>"; };
 		A7882E5D1B871C9C007CAA0A /* HtmlString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HtmlString.h; path = Common/RCLabel/HtmlString.h; sourceTree = "<group>"; };
 		A7882E5E1B871C9C007CAA0A /* HtmlString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HtmlString.m; path = Common/RCLabel/HtmlString.m; sourceTree = "<group>"; };
 		A788C9C41B9FC94400E7BBC6 /* OldChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OldChoiceViewController.h; path = views/InternetApplications/theme/Knowledge/OldChoiceViewController.h; sourceTree = "<group>"; };
@@ -3981,6 +3986,9 @@
 				F7FFD9DB1BCF564B004A691A /* MessageSelectionCell.h */,
 				F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */,
 				F7FFD9DD1BCF564B004A691A /* MessageSelectionCell.xib */,
+				A785F7191BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.h */,
+				A785F71A1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m */,
+				A785F71B1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.xib */,
 			);
 			name = cell;
 			path = views/InternetApplications/onlineJob/cell;
@@ -5039,6 +5047,7 @@
 				A77608F81B09844000A25DC3 /* appNav_access.png in Resources */,
 				A7AD8C5819F644A2002E65FB /* tabbar_student2.png in Resources */,
 				A753FAED1A1DDC0300AB5F22 /* share_tableV_education.png in Resources */,
+				A785F71D1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.xib in Resources */,
 				A74D269A1B58FAE200E63DFB /* record_animate_12.png in Resources */,
 				F73DDBA21BA9642D00DD8228 /* HeadCell.xib in Resources */,
 				F7502A291AEE1E50004F822F /* selected@3x.png in Resources */,
@@ -5748,6 +5757,7 @@
 				F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
+				A785F71C1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m in Sources */,
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				F76B64631B1EA6DB008F6961 /* FirstRegViewController.m in Sources */,

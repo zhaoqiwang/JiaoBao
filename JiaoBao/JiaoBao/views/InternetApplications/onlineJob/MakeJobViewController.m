@@ -34,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [[OnlineJobHttp getInstance]GetGradeList];
+    
 //    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
 //    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5150001"];
 //    NSError* error;
@@ -65,6 +65,13 @@
 //            NSLog(@"Save successful!");
 //        }
     
+    //获取年级列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetGradeList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetGradeList:) name:@"GetGradeList" object:nil];
+    //获取联动列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnionChapterList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnionChapterList:) name:@"GetUnionChapterList" object:nil];
+    
     // Do any additional setup after loading the view from its nib.
     self.mArr_sumData = [NSMutableArray array];
     self.mArr_display = [NSMutableArray array];
@@ -84,6 +91,8 @@
     //添加默认数据
     [self addDefaultData];
     [self reloadDataForDisplayArray];//初始化将要显示的数据
+    
+    [[OnlineJobHttp getInstance]GetGradeList];
 }
 
 //添加默认数据
@@ -91,10 +100,6 @@
     //第0根节点
     NSMutableArray *tempArr = [NSMutableArray arrayWithObjects:@"模式选择",@"班级选择",@"年级选择",@"科目选择",@"教版选择",@"章节选择",@"其他项目",@"短信勾选",@"作业发布", nil];
     for (int i=0; i<tempArr.count; i++) {
-        if(i==0)
-        {
-            
-        }
         TreeJob_node *node0 = [[TreeJob_node alloc]init];
         node0.nodeLevel = 0;//节点所处层次
         node0.type = 0;//节点类型
@@ -108,32 +113,220 @@
         
         [self.mArr_sumData addObject:node0];
     }
-    [self insertGrade];
     [self insertClass];
 }
 
-//在年级选择中，插入数据
--(void)insertGrade{
+//获取年级列表
+-(void)GetGradeList:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableArray *array = noti.object;
     for (int i=0; i<self.mArr_sumData.count; i++) {
         TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
         if (node0.flag == 2) {
-            for (int m=0; m<5; m++) {
+            for (int m=0; m<array.count; m++) {
                 //第1根节点
                 TreeJob_node *node1 = [[TreeJob_node alloc]init];
                 node1.nodeLevel = 1;//节点所处层次
                 node1.type = 1;//节点类型
+                node1.flag = 21;//标注当前是哪个节点
                 node1.faType = node0.flag;//父节点
                 node1.isExpanded = FALSE;//节点是否展开
                 node1.mInt_index = self.mInt_index;//全局索引标识
                 self.mInt_index++;
-                TreeJob_level0_model *temp1 =[[TreeJob_level0_model alloc]init];
-                temp1.mStr_name = @"年级1111";
+                GradeModel *temp1 =[array objectAtIndex:m];
+                if (m==0) {
+                    TreeJob_level0_model *nodeData = node0.nodeData;
+                    nodeData.mStr_title = temp1.GradeName;
+                    nodeData.mStr_id = temp1.GradeCode;
+                    temp1.mInt_select = 1;
+                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                }else{
+                    temp1.mInt_select = 0;
+                }
                 node1.nodeData = temp1;
                 //塞入数据
                 [node0.sonNodes addObject:node1];
             }
         }
     }
+    [self reloadDataForDisplayArray];
+}
+
+//获取联动列表
+-(void)GetUnionChapterList:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    NSMutableArray *array1 = [dic objectForKey:@"args1"];//科目列表
+    NSMutableArray *array2 = [dic objectForKey:@"args2"];//教版
+    NSMutableArray *array3 = [dic objectForKey:@"args3"];//章节
+    if ([flag intValue]==0) {//
+        for (int i=0; i<self.mArr_sumData.count; i++) {
+            TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+            if (node0.flag == 3) {//往科目选择中插入
+                [node0.sonNodes removeAllObjects];
+                for (int m=0; m<array1.count; m++) {
+                    //第1根节点
+                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                    node1.nodeLevel = 1;//节点所处层次
+                    node1.type = 1;//节点类型
+                    node1.flag = 31;//标注当前是哪个节点
+                    node1.faType = node0.flag;//父节点
+                    node1.isExpanded = FALSE;//节点是否展开
+                    node1.mInt_index = self.mInt_index;//全局索引标识
+                    self.mInt_index++;
+                    SubjectModel *temp1 =[array1 objectAtIndex:m];
+                    if (m==0) {
+                        TreeJob_level0_model *nodeData = node0.nodeData;
+                        nodeData.mStr_title = temp1.subjectName;
+                        nodeData.mStr_id = temp1.subjectCode;
+                        temp1.mInt_select = 1;
+                    }else{
+                        temp1.mInt_select = 0;
+                    }
+                    node1.nodeData = temp1;
+                    //塞入数据
+                    [node0.sonNodes addObject:node1];
+                }
+            }else if (node0.flag == 4) {//往教版选择中插入
+                [node0.sonNodes removeAllObjects];
+                for (int m=0; m<array2.count; m++) {
+                    //第1根节点
+                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                    node1.nodeLevel = 1;//节点所处层次
+                    node1.type = 1;//节点类型
+                    node1.flag = 41;//标注当前是哪个节点
+                    node1.faType = node0.flag;//父节点
+                    node1.isExpanded = FALSE;//节点是否展开
+                    node1.mInt_index = self.mInt_index;//全局索引标识
+                    self.mInt_index++;
+                    VersionModel *temp1 =[array2 objectAtIndex:m];
+                    if (m==0) {
+                        TreeJob_level0_model *nodeData = node0.nodeData;
+                        nodeData.mStr_title = temp1.VersionName;
+                        nodeData.mStr_id = temp1.VersionCode;
+                        temp1.mInt_select = 1;
+                    }else{
+                        temp1.mInt_select = 0;
+                    }
+                    node1.nodeData = temp1;
+                    //塞入数据
+                    [node0.sonNodes addObject:node1];
+                }
+            }else if (node0.flag == 5) {//往章节选择中插入
+                [node0.sonNodes removeAllObjects];
+                for (int m=0; m<array3.count; m++) {
+                    //第1根节点
+                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                    node1.nodeLevel = 1;//节点所处层次
+                    node1.type = 1;//节点类型
+                    node1.flag = 51;//标注当前是哪个节点
+                    node1.faType = node0.flag;//父节点
+                    node1.isExpanded = FALSE;//节点是否展开
+                    node1.mInt_index = self.mInt_index;//全局索引标识
+                    self.mInt_index++;
+                    ChapterModel *temp1 =[array3 objectAtIndex:m];
+                    if (m==0) {
+                        TreeJob_level0_model *nodeData = node0.nodeData;
+                        nodeData.mStr_title = temp1.chapterName;
+                        nodeData.mStr_id = temp1.chapterCode;
+                        temp1.mInt_select = 1;
+                    }else{
+                        temp1.mInt_select = 0;
+                    }
+                    node1.nodeData = temp1;
+                    //塞入数据
+                    [node0.sonNodes addObject:node1];
+                }
+            }
+        }
+    }else if ([flag intValue]==1){//
+        for (int i=0; i<self.mArr_sumData.count; i++) {
+            TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+            if (node0.flag == 4) {//往教版选择中插入
+                [node0.sonNodes removeAllObjects];
+                for (int m=0; m<array2.count; m++) {
+                    //第1根节点
+                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                    node1.nodeLevel = 1;//节点所处层次
+                    node1.type = 1;//节点类型
+                    node1.flag = 41;//标注当前是哪个节点
+                    node1.faType = node0.flag;//父节点
+                    node1.isExpanded = FALSE;//节点是否展开
+                    node1.mInt_index = self.mInt_index;//全局索引标识
+                    self.mInt_index++;
+                    VersionModel *temp1 =[array2 objectAtIndex:m];
+                    if (m==0) {
+                        TreeJob_level0_model *nodeData = node0.nodeData;
+                        nodeData.mStr_title = temp1.VersionName;
+                        nodeData.mStr_id = temp1.VersionCode;
+                        temp1.mInt_select = 1;
+                    }else{
+                        temp1.mInt_select = 0;
+                    }
+                    node1.nodeData = temp1;
+                    //塞入数据
+                    [node0.sonNodes addObject:node1];
+                }
+            }else if (node0.flag == 5) {//往章节选择中插入
+                [node0.sonNodes removeAllObjects];
+                for (int m=0; m<array3.count; m++) {
+                    //第1根节点
+                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                    node1.nodeLevel = 1;//节点所处层次
+                    node1.type = 1;//节点类型
+                    node1.flag = 51;//标注当前是哪个节点
+                    node1.faType = node0.flag;//父节点
+                    node1.isExpanded = FALSE;//节点是否展开
+                    node1.mInt_index = self.mInt_index;//全局索引标识
+                    self.mInt_index++;
+                    ChapterModel *temp1 =[array3 objectAtIndex:m];
+                    if (m==0) {
+                        TreeJob_level0_model *nodeData = node0.nodeData;
+                        nodeData.mStr_title = temp1.chapterName;
+                        nodeData.mStr_id = temp1.chapterCode;
+                        temp1.mInt_select = 1;
+                    }else{
+                        temp1.mInt_select = 0;
+                    }
+                    node1.nodeData = temp1;
+                    //塞入数据
+                    [node0.sonNodes addObject:node1];
+                }
+            }
+        }
+    }else if ([flag intValue]==2){//
+        for (int i=0; i<self.mArr_sumData.count; i++) {
+            TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+            if (node0.flag == 5) {//往章节选择中插入
+                [node0.sonNodes removeAllObjects];
+                for (int m=0; m<array3.count; m++) {
+                    //第1根节点
+                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
+                    node1.nodeLevel = 1;//节点所处层次
+                    node1.type = 1;//节点类型
+                    node1.flag = 51;//标注当前是哪个节点
+                    node1.faType = node0.flag;//父节点
+                    node1.isExpanded = FALSE;//节点是否展开
+                    node1.mInt_index = self.mInt_index;//全局索引标识
+                    self.mInt_index++;
+                    ChapterModel *temp1 =[array3 objectAtIndex:m];
+                    if (m==0) {
+                        TreeJob_level0_model *nodeData = node0.nodeData;
+                        nodeData.mStr_title = temp1.chapterName;
+                        nodeData.mStr_id = temp1.chapterCode;
+                        temp1.mInt_select = 1;
+                    }else{
+                        temp1.mInt_select = 0;
+                    }
+                    node1.nodeData = temp1;
+                    //塞入数据
+                    [node0.sonNodes addObject:node1];
+                }
+            }
+        }
+    }
+    [self reloadDataForDisplayArray];
 }
 
 //在班级选择中，插入数据
@@ -213,6 +406,7 @@
     static NSString *indentifier2 = @"TreeJob_class_TableViewCell";
     static NSString *ModeSelectionIndentifier = @"ModeSelectionIndentifier";//模式选择cell重用标志
     static NSString *MessageSelectionIndentifier = @"MessageSelectionIndentifier";//短信勾选cell重用标志
+    static NSString *TreeJob_sigleSelect_indentifier = @"TreeJob_sigleSelect_TableViewCell";//年级、科目、教版、章节的单选cell
 
     
 //    static NSString *indentifier1 = @"TreeView_Level1_Cell";
@@ -327,6 +521,28 @@
             [cell setNeedsDisplay]; //重新描绘cell
             
             return cell;
+        }else if (node.flag == 21||node.flag == 31||node.flag == 41||node.flag == 51) {//年级、科目、教版、章节的单选cell
+            TreeJob_sigleSelect_TableViewCell *cell = (TreeJob_sigleSelect_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:TreeJob_sigleSelect_indentifier];
+            if (cell == nil) {
+                cell = [[TreeJob_sigleSelect_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TreeJob_sigleSelect_indentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeJob_sigleSelect_TableViewCell" owner:self options:nil];
+                //这时myCell对象已经通过自定义xib文件生成了
+                if ([nib count]>0) {
+                    cell = (TreeJob_sigleSelect_TableViewCell *)[nib objectAtIndex:0];
+                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                }
+                
+                //添加图片点击事件
+                //若是需要重用，需要写上以下两句代码
+                UINib * n= [UINib nibWithNibName:@"TreeJob_sigleSelect_TableViewCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:TreeJob_sigleSelect_indentifier];
+            }
+            cell.delegate = self;
+            cell.model = node;
+            [self loadDataForSigleSelectTreeViewCell:cell with:node flag:node.flag];//重新给cell装载数据
+            [cell setNeedsDisplay]; //重新描绘cell
+            
+            return cell;
         }
         TreeJob_default_TableViewCell *cell = (TreeJob_default_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         if (cell == nil) {
@@ -396,14 +612,50 @@
             TreeJob_level0_model *nodeData = node.nodeData;
             cell0.mLab_title.text = nodeData.mStr_name;
             cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
+            cell0.mLab_select.text = nodeData.mStr_title;
+            cell0.mLab_select.frame = CGRectMake(10+90, (44-21)/2, [dm getInstance].width-100, 21);
         }
-
     }else if (node.type == 1){
         TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
         TreeJob_level0_model *nodeData = node.nodeData;
         cell0.mLab_title.text = nodeData.mStr_name;
         cell0.mLab_title.frame = CGRectMake(20, (44-21)/2, 80, 21);
     }
+}
+
+-(void)loadDataForSigleSelectTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
+    TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
+    NSString *name = @"";
+    if (flag==21) {//年级
+        GradeModel *model = node.nodeData;
+        cell0.sigleBtn.mLab_title.text = model.GradeName;
+        cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
+        name = model.GradeName;
+    }else if (flag==31){//科目
+        SubjectModel *model = node.nodeData;
+        cell0.sigleBtn.mLab_title.text = model.subjectName;
+        cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
+        name = model.subjectName;
+    }else if (flag==41){//教版
+        VersionModel *model = node.nodeData;
+        cell0.sigleBtn.mLab_title.text = model.VersionName;
+        cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
+        name = model.VersionName;
+    }else if (flag==51){//章节
+        ChapterModel *model = node.nodeData;
+        cell0.sigleBtn.mLab_title.text = model.chapterName;
+        cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
+        name = model.chapterName;
+    }
+    
+    if (cell0.sigleBtn.mInt_flag ==1) {
+        [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+    }else{
+        [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+    }
+    CGSize titleSize = [name sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell0.sigleBtn.mLab_title.frame = CGRectMake(16, 0, titleSize.width, cell0.sigleBtn.mLab_title.frame.size.height);
+    cell0.sigleBtn.frame = CGRectMake(20, 10, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
 }
 
 -(void) loadDataForClassTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node{
@@ -546,8 +798,110 @@
                 if (node1.mInt_index == treeJob_class_TableViewCell.node.mInt_index) {
                     TreeJob_class_model *nodeData = node1.nodeData;
                     nodeData.mInt_class = treeJob_class_TableViewCell.sigleClassBtn.mInt_flag;
-                    D("sdghkjkj0-====%d",nodeData.mInt_class);
                     nodeData.mInt_difficulty = treeJob_class_TableViewCell.mInt_diff;
+                }
+            }
+        }
+    }
+    [self reloadDataForDisplayArray];
+}
+
+//年级、科目、教版、章节的单选cell回调
+-(void)TreeJob_sigleSelect_TableViewCellClick:(TreeJob_sigleSelect_TableViewCell *)treeJob_sigleSelect_TableViewCell{
+    TreeJob_node *tempNode = treeJob_sigleSelect_TableViewCell.model;
+    for (TreeJob_node *node in self.mArr_sumData) {
+        if (node.flag == tempNode.faType&&node.flag==2) {//年级
+            for (TreeView_node *node1 in node.sonNodes) {
+                GradeModel *model = node1.nodeData;
+                GradeModel *model1 = tempNode.nodeData;
+                if ([model.GradeCode intValue]==[model1.GradeCode intValue]) {
+                    model.mInt_select = 1;
+                    TreeJob_level0_model *nodeData = node.nodeData;
+                    nodeData.mStr_title = model1.GradeName;
+                    nodeData.mStr_id = model1.GradeCode;
+                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                    //给默认空值
+                    TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
+                    TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+                    tempModel1.mStr_title = @"没有科目";
+                    tempModel1.mStr_id = 0;
+                    TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
+                    TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
+                    tempModel2.mStr_title = @"没有教版";
+                    tempModel2.mStr_id = 0;
+                    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
+                    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+                    tempModel3.mStr_title = @"没有章节";
+                    tempModel3.mStr_id = 0;
+                }else{
+                    model.mInt_select = 0;
+                }
+            }
+        }else if (node.flag == tempNode.faType&&node.flag==3) {//科目
+            for (TreeView_node *node1 in node.sonNodes) {
+                SubjectModel *model = node1.nodeData;
+                SubjectModel *model1 = tempNode.nodeData;
+                if ([model.subjectCode intValue]==[model1.subjectCode intValue]) {
+                    model.mInt_select = 1;
+                    TreeJob_level0_model *nodeData = node.nodeData;
+                    nodeData.mStr_title = model1.subjectName;
+                    nodeData.mStr_id = model1.subjectCode;
+                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                    
+                    TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
+                    TreeJob_level0_model *tempModel = tempNode.nodeData;
+                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
+                    //给默认空值
+                    TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
+                    TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
+                    tempModel2.mStr_title = @"没有教版";
+                    tempModel2.mStr_id = 0;
+                    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
+                    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+                    tempModel3.mStr_title = @"没有章节";
+                    tempModel3.mStr_id = 0;
+                }else{
+                    model.mInt_select = 0;
+                }
+            }
+        }else if (node.flag == tempNode.faType&&node.flag==4) {//教版
+            for (TreeView_node *node1 in node.sonNodes) {
+                VersionModel *model = node1.nodeData;
+                VersionModel *model1 = tempNode.nodeData;
+                if ([model.TabID intValue]==[model1.TabID intValue]) {
+                    model.mInt_select = 1;
+                    TreeJob_level0_model *nodeData = node.nodeData;
+                    nodeData.mStr_title = model1.VersionName;
+                    nodeData.mStr_id = model1.TabID;
+                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                    
+                    TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
+                    TreeJob_level0_model *tempModel = tempNode.nodeData;
+                    TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
+                    TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
+                    //给默认空值
+                    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
+                    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+                    tempModel3.mStr_title = @"没有章节";
+                    tempModel3.mStr_id = 0;
+                }else{
+                    model.mInt_select = 0;
+                }
+            }
+        }else if (node.flag == tempNode.faType&&node.flag==5) {//章节
+            for (TreeView_node *node1 in node.sonNodes) {
+                ChapterModel *model = node1.nodeData;
+                ChapterModel *model1 = tempNode.nodeData;
+                if ([model.TabID intValue]==[model1.TabID intValue]) {
+                    model.mInt_select = 1;
+                    TreeJob_level0_model *nodeData = node.nodeData;
+                    nodeData.mStr_title = model1.chapterName;
+                    nodeData.mStr_id = model1.TabID;
+                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                }else{
+                    model.mInt_select = 0;
                 }
             }
         }

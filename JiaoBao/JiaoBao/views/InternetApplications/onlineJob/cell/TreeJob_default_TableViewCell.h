@@ -11,5 +11,6 @@
 @interface TreeJob_default_TableViewCell : UITableViewCell
 
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
+@property (nonatomic,strong) IBOutlet UILabel *mLab_select;//选择显示
 
 @end

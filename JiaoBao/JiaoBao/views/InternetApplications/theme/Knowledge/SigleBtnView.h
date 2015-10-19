@@ -14,7 +14,7 @@
 @property (nonatomic,strong) UIImageView *mImg_head;//图片
 @property (nonatomic,strong) UILabel *mLab_title;//标题
 @property (nonatomic,assign) int mInt_flag;//是1否0勾选
-@property (nonatomic,assign) int mInt_sigle;//只有一个0，还是多个是一个整体1
+@property (nonatomic,assign) int mInt_sigle;//只有一个，需要反选0，还是多个是一个整体1，只有一个，点击即选中2
 @property (nonatomic,assign) int mInt_tag;//区分
 @property (weak,nonatomic) id<SigleBtnViewDelegate> delegate;
 

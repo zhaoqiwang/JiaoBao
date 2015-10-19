@@ -43,7 +43,7 @@
 }
 
 -(void)buttonViewClick:(UIGestureRecognizer *)gest{
-    if (self.mInt_sigle==0) {
+    if (self.mInt_sigle==0) {//只有一个，需要反选0
         if (self.mInt_flag ==1) {
             self.mInt_flag =0;
             [self.mImg_head setImage:[UIImage imageNamed:@"blank"]];
@@ -54,7 +54,16 @@
         if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SigleBtnViewClick:)]) {
             [self.delegate SigleBtnViewClick:self];
         }
-    }else if (self.mInt_sigle == 1){
+    }else if (self.mInt_sigle == 1){//多个是一个整体1
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SigleBtnViewClick:)]) {
+            [self.delegate SigleBtnViewClick:self];
+        }
+    }else if (self.mInt_sigle == 2){//只有一个，点击即选中2
+        if (self.mInt_flag ==1) {
+            [self.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+        }else{
+            [self.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+        }
         if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SigleBtnViewClick:)]) {
             [self.delegate SigleBtnViewClick:self];
         }
