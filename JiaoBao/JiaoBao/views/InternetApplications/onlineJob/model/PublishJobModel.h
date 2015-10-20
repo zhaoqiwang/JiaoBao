@@ -21,10 +21,8 @@
 @property(nonatomic,strong)NSString *classID;// 班级ID
 @property(nonatomic,strong)NSString *className;//班级名称
 @property(nonatomic,strong)NSMutableArray *classIDArr;// 班级ID数组
-@property(nonatomic,strong)NSMutableArray *classNameArr;//班级名称数组
 @property(nonatomic,strong)NSString *chapterID;//章节ID
 @property(nonatomic,strong)NSString *DoLv;//难度等级
-@property(nonatomic,strong)NSMutableArray *DoLvArr;//难度等级数组
 
 @property(nonatomic,strong)NSString *AllNum;//总题量
 @property(nonatomic,strong)NSString *SelNum;//选择题量

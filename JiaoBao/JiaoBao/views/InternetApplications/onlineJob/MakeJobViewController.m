@@ -20,6 +20,7 @@
 #import "LoginSendHttp.h"
 #import "PublishJobModel.h"
 #import "utils.h"
+#import "PublishJobCellTableViewCell.h"
 
 
 @interface MakeJobViewController ()
@@ -64,31 +65,7 @@
 }
 -(PublishJobModel*)getPublishJobModel
 {
-    if(self.publishJobModel.classIDArr.count == 0)
-    {
-        [MBProgressHUD showError:@"请选择班级"];
-        return 0;
-    }
-    if(self.publishJobModel.chapterID)
-    {
-        [MBProgressHUD showError:@"请选择章节"];
-        return 0;
-    }
-    if(self.publishJobModel.DesId)
-    {
-        [MBProgressHUD showError:@"请选择自定义作业"];
-        return 0;
-    }
-    if([utils isBlankString:self.publishJobModel.homeworkName])
-    {
-        [MBProgressHUD showError:@"请输入作业标题"];
-        return 0;
-    }
-    if(self.publishJobModel.ExpTime)
-    {
-        [MBProgressHUD showError:@"请选择截止日期"];
-        return 0;
-    }
+
     PublishJobModel *publishModel = [[PublishJobModel alloc]init];
     publishModel.teacherJiaobaohao = @"5236705";
     publishModel.classID =@"72202";
@@ -554,6 +531,7 @@
     static NSString *indentifier2 = @"TreeJob_class_TableViewCell";
     static NSString *ModeSelectionIndentifier = @"ModeSelectionIndentifier";//模式选择cell重用标志
     static NSString *MessageSelectionIndentifier = @"MessageSelectionIndentifier";//短信勾选cell重用标志
+    static NSString *PublishJobIdentifier = @"PublishJobIdentifier";//作业发布cell
     static NSString *TreeJob_sigleSelect_indentifier = @"TreeJob_sigleSelect_TableViewCell";//年级、科目、教版、章节的单选cell
     static NSString *OtherItemIdentifer = @"OtherItemIdentifer";//其他项目cell重用标志
     static NSString *TreeJob_questionCount_TableViewCellIdentifer = @"TreeJob_questionCount_TableViewCell";//其他项目cell重用标志
@@ -627,22 +605,22 @@
             
             return cell;
         }else if (node.flag == 11){//作业发布
-            TreeJob_default_TableViewCell *cell = (TreeJob_default_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+            PublishJobCellTableViewCell *cell = (PublishJobCellTableViewCell *)[tableView dequeueReusableCellWithIdentifier:PublishJobIdentifier];
             if (cell == nil) {
-                cell = [[TreeJob_default_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeJob_default_TableViewCell" owner:self options:nil];
+                cell = [[PublishJobCellTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:PublishJobIdentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PublishJobCellTableViewCell" owner:self options:nil];
                 //这时myCell对象已经通过自定义xib文件生成了
                 if ([nib count]>0) {
-                    cell = (TreeJob_default_TableViewCell *)[nib objectAtIndex:0];
+                    cell = (PublishJobCellTableViewCell *)[nib objectAtIndex:0];
                     //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
                 }
                 
                 //添加图片点击事件
                 //若是需要重用，需要写上以下两句代码
-                UINib * n= [UINib nibWithNibName:@"TreeJob_default_TableViewCell" bundle:[NSBundle mainBundle]];
-                [self.mTableV_work registerNib:n forCellReuseIdentifier:indentifier];
+                UINib * n= [UINib nibWithNibName:@"PublishJobCellTableViewCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:PublishJobIdentifier];
             }
-            
+            //cell.delegate = self;
             [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
             [cell setNeedsDisplay]; //重新描绘cell
             
@@ -774,6 +752,10 @@
             if (node.flag==8) {//自定义作业
                 return 0;
             }
+            else if (node.flag == 11)
+            {
+                return 70;
+            }
         }else if (self.mInt_modeSelect==2){//自定义作业
             if (node.flag==6||node.flag==7) {
                 return 0;
@@ -817,7 +799,11 @@
             
         }else if (node.flag == 10){
             
-        }else if (node.flag == 8&&(self.mInt_modeSelect==0||self.mInt_modeSelect==1)){//自定义作业//个性、统一
+        }else if (node.flag == 11)
+        {
+            
+        }
+        else if (node.flag == 8&&(self.mInt_modeSelect==0||self.mInt_modeSelect==1)){//自定义作业//个性、统一
             cell0.mLab_title.hidden = YES;
             cell0.mLab_select.hidden = YES;
         }else{
@@ -1046,9 +1032,27 @@
     }
     [self reloadDataForDisplayArray];
 }
--(void)modeSelectionActionWithButtonTag:(NSUInteger)tag//0个性 1统一 2自定义
+-(void)modeSelectionActionWithButtonTag:(NSUInteger)tag//0个性 1统一 2AB卷 3自定义
 {
     self.mInt_modeSelect = (int)tag;
+    if(tag == 0)
+    {
+        self.publishJobModel.HwType = @"1";
+
+    }
+    else if (tag == 1)
+    {
+        self.publishJobModel.HwType = @"4";
+    }
+    else if (tag == 2)
+    {
+        self.publishJobModel.HwType = @"2";
+    }
+    else if (tag == 3)
+    {
+        self.publishJobModel.HwType = @"3";
+    }
+    
     [self reloadDataForDisplayArray];
 }
 
@@ -1241,6 +1245,38 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
     self.dateTF.text = dateStr;
+    
+}
+
+- (IBAction)publishJobAction:(id)sender {
+    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:[self getPublishJobModel]];
+    return;
+    if(self.publishJobModel.classIDArr.count == 0)
+    {
+        [MBProgressHUD showError:@"请选择班级"];
+        return ;
+    }
+    if(self.publishJobModel.chapterID)
+    {
+        [MBProgressHUD showError:@"请选择章节"];
+        return ;
+    }
+    if(self.publishJobModel.DesId)
+    {
+        [MBProgressHUD showError:@"请选择自定义作业"];
+        return ;
+    }
+    if([utils isBlankString:self.publishJobModel.homeworkName])
+    {
+        [MBProgressHUD showError:@"请输入作业标题"];
+        return ;
+    }
+    if(self.publishJobModel.ExpTime)
+    {
+        [MBProgressHUD showError:@"请选择截止日期"];
+        return ;
+    }
+    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
     
 }
 @end

@@ -41,5 +41,6 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 - (IBAction)cancelBtnAction:(id)sender;
 - (IBAction)doneBtnAction:(id)sender;
+- (IBAction)publishJobAction:(id)sender;
 
 @end

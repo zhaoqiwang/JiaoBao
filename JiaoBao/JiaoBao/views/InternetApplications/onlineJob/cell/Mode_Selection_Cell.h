@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *customButton;
 @property(weak,nonatomic)id<ModelSelectionCellDelegate>delegate;
 - (IBAction)modeSelectionAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *abButton;
 
 @end
 @protocol ModelSelectionCellDelegate <NSObject>

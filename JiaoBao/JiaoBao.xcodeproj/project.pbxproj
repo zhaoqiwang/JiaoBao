@@ -926,7 +926,6 @@
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
 		F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77118D61B70476100CA8FAC /* NickNameModel.m */; };
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
-		F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42671BD47A17006CF240 /* OtherItemsModel.m */; };
 		F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42671BD47A17006CF240 /* OtherItemsModel.m */; settings = {ASSET_TAGS = (); }; };
 		F77B42761BD497A2006CF240 /* JobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42731BD497A2006CF240 /* JobModel.m */; settings = {ASSET_TAGS = (); }; };
 		F77B42771BD497A2006CF240 /* JobModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
@@ -1002,6 +1001,8 @@
 		F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD6E1B7C30EE00923B60 /* CategoryViewController.xib */; };
 		F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7AD721B7C348600923B60 /* CategorySection.m */; };
 		F7F7AD751B7C348600923B60 /* CategorySection.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD731B7C348600923B60 /* CategorySection.xib */; };
+		F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; };
 		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; };
 		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; };
@@ -2501,6 +2502,9 @@
 		F7F7AD711B7C348600923B60 /* CategorySection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorySection.h; sourceTree = "<group>"; };
 		F7F7AD721B7C348600923B60 /* CategorySection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorySection.m; sourceTree = "<group>"; };
 		F7F7AD731B7C348600923B60 /* CategorySection.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategorySection.xib; sourceTree = "<group>"; };
+		F7F7D7231BD622B900D8B856 /* PublishJobCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishJobCellTableViewCell.h; sourceTree = "<group>"; };
+		F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishJobCellTableViewCell.m; sourceTree = "<group>"; };
+		F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishJobCellTableViewCell.xib; sourceTree = "<group>"; };
 		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
 		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
 		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
@@ -4013,6 +4017,9 @@
 				F7D20E901BD1DD0900E77B00 /* OtherItemsCell.xib */,
 				F77B42661BD47A17006CF240 /* OtherItemsModel.h */,
 				F77B42671BD47A17006CF240 /* OtherItemsModel.m */,
+				F7F7D7231BD622B900D8B856 /* PublishJobCellTableViewCell.h */,
+				F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */,
+				F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */,
 				A763B3311BD5DC9F0020A7C9 /* TreeJob_questionCount_TableViewCell.h */,
 				A763B3321BD5DC9F0020A7C9 /* TreeJob_questionCount_TableViewCell.m */,
 				A763B3331BD5DC9F0020A7C9 /* TreeJob_questionCount_TableViewCell.xib */,
@@ -5434,6 +5441,7 @@
 				A76ED5BB1AD67855006F3E0B /* workView_3.png in Resources */,
 				A761D3FE1A7F697900DCAEB9 /* rootTableSelect_1.png in Resources */,
 				A761D3FC1A7F697900DCAEB9 /* rootTableSelect_0@2x.png in Resources */,
+				F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */,
 				A76ED5C41AD67855006F3E0B /* workView_click_1.png in Resources */,
 				F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */,
 				A74D269B1B58FAE200E63DFB /* record_animate_13.png in Resources */,
@@ -5754,6 +5762,7 @@
 				A755E70819F278B900BBDF3D /* ASINetworkQueue.m in Sources */,
 				A755E70D19F278B900BBDF3D /* ASICloudFilesContainerXMLParserDelegate.m in Sources */,
 				F76B64461B1EA440008F6961 /* PatriarchView.m in Sources */,
+				F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */,
 				A73CAD6D1A07755B00D6C5AA /* MJRefreshBaseView.m in Sources */,
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
 				F7C4D7291BD0E557008B8924 /* ChapterModel.m in Sources */,
