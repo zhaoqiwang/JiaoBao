@@ -113,7 +113,7 @@
 //添加默认数据
 -(void)addDefaultData{
     //第0根节点
-    NSMutableArray *tempArr = [NSMutableArray arrayWithObjects:@"模式选择",@"班级选择",@"年级选择",@"科目选择",@"教版选择",@"章节选择",@"其他项目",@"短信勾选",@"作业发布", nil];
+    NSMutableArray *tempArr = [NSMutableArray arrayWithObjects:@"模式选择",@"班级选择",@"年级选择",@"科目选择",@"教版选择",@"章节选择",@"选择题",@"填空题",@"自定义",@"其他项目",@"短信勾选",@"作业发布", nil];
     for (int i=0; i<tempArr.count; i++) {
         TreeJob_node *node0 = [[TreeJob_node alloc]init];
         node0.nodeLevel = 0;//节点所处层次
@@ -124,6 +124,11 @@
         node0.isExpanded = FALSE;//节点是否展开
         TreeJob_level0_model *temp0 =[[TreeJob_level0_model alloc]init];
         temp0.mStr_name = [tempArr objectAtIndex:i];
+        if (i==8) {//自定义
+            temp0.mStr_title = @"请选择自定义作业";
+        }else if (i==6||i==7){
+            temp0.mStr_title = @"5";
+        }
         node0.nodeData = temp0;//当前节点数据
         
         [self.mArr_sumData addObject:node0];
@@ -136,8 +141,8 @@
 {
     if(self.mArr_sumData.count>5)
     {
-        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:6];
-        if (node0.flag == 6) {
+        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:9];
+        if (node0.flag == 9) {
             for (int m=0; m<3; m++) {
                 //第1根节点
                 TreeJob_node *node1 = [[TreeJob_node alloc]init];
@@ -156,7 +161,7 @@
                 [node0.sonNodes addObject:node1];
             }
         }
-        
+
     }
 }
 
@@ -172,7 +177,7 @@
                 TreeJob_node *node1 = [[TreeJob_node alloc]init];
                 node1.nodeLevel = 1;//节点所处层次
                 node1.type = 1;//节点类型
-                node1.flag = 21;//标注当前是哪个节点
+                node1.flag = 201;//标注当前是哪个节点
                 node1.faType = node0.flag;//父节点
                 node1.isExpanded = FALSE;//节点是否展开
                 node1.mInt_index = self.mInt_index;//全局索引标识
@@ -214,7 +219,7 @@
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
                     node1.nodeLevel = 1;//节点所处层次
                     node1.type = 1;//节点类型
-                    node1.flag = 31;//标注当前是哪个节点
+                    node1.flag = 301;//标注当前是哪个节点
                     node1.faType = node0.flag;//父节点
                     node1.isExpanded = FALSE;//节点是否展开
                     node1.mInt_index = self.mInt_index;//全局索引标识
@@ -239,7 +244,7 @@
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
                     node1.nodeLevel = 1;//节点所处层次
                     node1.type = 1;//节点类型
-                    node1.flag = 41;//标注当前是哪个节点
+                    node1.flag = 401;//标注当前是哪个节点
                     node1.faType = node0.flag;//父节点
                     node1.isExpanded = FALSE;//节点是否展开
                     node1.mInt_index = self.mInt_index;//全局索引标识
@@ -264,7 +269,7 @@
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
                     node1.nodeLevel = 1;//节点所处层次
                     node1.type = 1;//节点类型
-                    node1.flag = 51;//标注当前是哪个节点
+                    node1.flag = 501;//标注当前是哪个节点
                     node1.faType = node0.flag;//父节点
                     node1.isExpanded = FALSE;//节点是否展开
                     node1.mInt_index = self.mInt_index;//全局索引标识
@@ -294,7 +299,7 @@
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
                     node1.nodeLevel = 1;//节点所处层次
                     node1.type = 1;//节点类型
-                    node1.flag = 41;//标注当前是哪个节点
+                    node1.flag = 401;//标注当前是哪个节点
                     node1.faType = node0.flag;//父节点
                     node1.isExpanded = FALSE;//节点是否展开
                     node1.mInt_index = self.mInt_index;//全局索引标识
@@ -319,7 +324,7 @@
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
                     node1.nodeLevel = 1;//节点所处层次
                     node1.type = 1;//节点类型
-                    node1.flag = 51;//标注当前是哪个节点
+                    node1.flag = 501;//标注当前是哪个节点
                     node1.faType = node0.flag;//父节点
                     node1.isExpanded = FALSE;//节点是否展开
                     node1.mInt_index = self.mInt_index;//全局索引标识
@@ -349,7 +354,7 @@
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
                     node1.nodeLevel = 1;//节点所处层次
                     node1.type = 1;//节点类型
-                    node1.flag = 51;//标注当前是哪个节点
+                    node1.flag = 501;//标注当前是哪个节点
                     node1.faType = node0.flag;//父节点
                     node1.isExpanded = FALSE;//节点是否展开
                     node1.mInt_index = self.mInt_index;//全局索引标识
@@ -371,6 +376,10 @@
         }
     }
     [self reloadDataForDisplayArray];
+    //获取自定义作业
+    if (self.mInt_modeSelect ==2) {
+        [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5150001"];
+    }
 }
 
 //在班级选择中，插入数据
@@ -383,7 +392,7 @@
                 TreeJob_node *node1 = [[TreeJob_node alloc]init];
                 node1.nodeLevel = 1;//节点所处层次
                 node1.type = 1;//节点类型
-                node1.flag = 11;//标注当前是哪个节点
+                node1.flag = 101;//标注当前是哪个节点
                 node1.faType = node0.flag;//父节点
                 node1.isExpanded = FALSE;//节点是否展开
                 node1.mInt_index = self.mInt_index;//全局索引标识
@@ -452,7 +461,7 @@
     static NSString *MessageSelectionIndentifier = @"MessageSelectionIndentifier";//短信勾选cell重用标志
     static NSString *TreeJob_sigleSelect_indentifier = @"TreeJob_sigleSelect_TableViewCell";//年级、科目、教版、章节的单选cell
     static NSString *OtherItemIdentifer = @"OtherItemIdentifer";//其他项目cell重用标志
-
+    static NSString *TreeJob_questionCount_TableViewCellIdentifer = @"TreeJob_questionCount_TableViewCell";//其他项目cell重用标志
     
 //    static NSString *indentifier1 = @"TreeView_Level1_Cell";
 //    static NSString *indentifier2 = @"TreeView_Level2_Cell";
@@ -479,7 +488,29 @@
             [cell setNeedsDisplay]; //重新描绘cell
             
             return cell;
-        }else if (node.flag == 7){//短信勾选
+        }else if (node.flag == 6||node.flag==7){//选择题、填空题
+            TreeJob_questionCount_TableViewCell *cell = (TreeJob_questionCount_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:TreeJob_questionCount_TableViewCellIdentifer];
+            if (cell == nil) {
+                cell = [[TreeJob_questionCount_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TreeJob_questionCount_TableViewCellIdentifer];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeJob_questionCount_TableViewCell" owner:self options:nil];
+                //这时myCell对象已经通过自定义xib文件生成了
+                if ([nib count]>0) {
+                    cell = (TreeJob_questionCount_TableViewCell *)[nib objectAtIndex:0];
+                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                }
+                
+                //添加图片点击事件
+                //若是需要重用，需要写上以下两句代码
+                UINib * n= [UINib nibWithNibName:@"TreeJob_questionCount_TableViewCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:TreeJob_questionCount_TableViewCellIdentifer];
+            }
+            cell.node = node;
+            cell.delegate = self;
+            [self loadDataForQuestionCountTreeViewCell:cell with:node flag:node.flag];//重新给cell装载数据
+            [cell setNeedsDisplay]; //重新描绘cell
+            
+            return cell;
+        }else if (node.flag == 10){//短信勾选
             MessageSelectionCell *cell = (MessageSelectionCell *)[tableView dequeueReusableCellWithIdentifier:MessageSelectionIndentifier];
             if (cell == nil) {
                 cell = [[MessageSelectionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MessageSelectionIndentifier];
@@ -500,7 +531,7 @@
             [cell setNeedsDisplay]; //重新描绘cell
             
             return cell;
-        }else if (node.flag == 8){//作业发布
+        }else if (node.flag == 11){//作业发布
             TreeJob_default_TableViewCell *cell = (TreeJob_default_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
             if (cell == nil) {
                 cell = [[TreeJob_default_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
@@ -544,7 +575,7 @@
             return cell;
         }
     }else if(node.type == 1){//类型为1的cell,2级列表
-        if (node.flag == 11||node.flag ==9999) {//班级选择cell
+        if (node.flag == 101||node.flag ==9999) {//班级选择cell
             TreeJob_class_TableViewCell *cell = (TreeJob_class_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier2];
             if (cell == nil) {
                 cell = [[TreeJob_class_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier2];
@@ -566,7 +597,7 @@
             [cell setNeedsDisplay]; //重新描绘cell
             
             return cell;
-        }else if (node.flag == 21||node.flag == 31||node.flag == 41||node.flag == 51) {//年级、科目、教版、章节的单选cell
+        }else if (node.flag == 201||node.flag == 301||node.flag == 401||node.flag == 501) {//年级、科目、教版、章节的单选cell
             TreeJob_sigleSelect_TableViewCell *cell = (TreeJob_sigleSelect_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:TreeJob_sigleSelect_indentifier];
             if (cell == nil) {
                 cell = [[TreeJob_sigleSelect_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TreeJob_sigleSelect_indentifier];
@@ -644,9 +675,18 @@
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
     if (node.type == 0) {
+        if (self.mInt_modeSelect==0||self.mInt_modeSelect==1) {//个性作业,//统一作业
+            if (node.flag==8) {//自定义作业
+                return 0;
+            }
+        }else if (self.mInt_modeSelect==2){//自定义作业
+            if (node.flag==6||node.flag==7) {
+                return 0;
+            }
+        }
         return 44;
     }else if (node.type == 1){
-        if (node.flag == 11) {
+        if (node.flag == 101) {
             if (self.mInt_modeSelect == 0) {//个性作业
                 return 60;
             }else{//统一作业、自定义作业
@@ -676,12 +716,18 @@
  --------------------------------------- */
 -(void) loadDataForTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node{
     if(node.type == 0){
+        TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
+        
         if(node.flag == 0){
             
-        }else if (node.flag == 7){
+        }else if (node.flag == 10){
             
+        }else if (node.flag == 8&&(self.mInt_modeSelect==0||self.mInt_modeSelect==1)){//自定义作业//个性、统一
+            cell0.mLab_title.hidden = YES;
+            cell0.mLab_select.hidden = YES;
         }else{
-            TreeJob_default_TableViewCell *cell0 = (TreeJob_default_TableViewCell*)cell;
+            cell0.mLab_title.hidden = NO;
+            cell0.mLab_select.hidden = NO;
             TreeJob_level0_model *nodeData = node.nodeData;
             cell0.mLab_title.text = nodeData.mStr_name;
             cell0.mLab_title.frame = CGRectMake(10, (44-21)/2, 80, 21);
@@ -723,25 +769,55 @@
     }
 }
 
+//选择题、填空题
+-(void)loadDataForQuestionCountTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
+    TreeJob_questionCount_TableViewCell *cell0 = (TreeJob_questionCount_TableViewCell*)cell;
+    TreeJob_level0_model *model = node.nodeData;
+    if (self.mInt_modeSelect==0||self.mInt_modeSelect==1) {//个性、统一
+        cell0.mLab_title.hidden = NO;
+        cell0.sigleBtn1.hidden = NO;
+        cell0.sigleBtn2.hidden = NO;
+        cell0.sigleBtn3.hidden = NO;
+        cell0.sigleBtn4.hidden = NO;
+    }else{//自定义
+        cell0.mLab_title.hidden = YES;
+        cell0.sigleBtn1.hidden = YES;
+        cell0.sigleBtn2.hidden = YES;
+        cell0.sigleBtn3.hidden = YES;
+        cell0.sigleBtn4.hidden = YES;
+    }
+    cell0.mLab_title.text = model.mStr_name;
+    cell0.mInt_count = [model.mStr_title intValue];
+    for (SigleBtnView *view in cell0.subviews) {
+        if ([view.class isSubclassOfClass:SigleBtnView.class]) {
+           if (view.tag == cell0.mInt_count) {
+                [view.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+            }else{
+                [view.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+            }
+        }
+    }
+}
+
 -(void)loadDataForSigleSelectTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
-    if (flag==21) {//年级
+    if (flag==201) {//年级
         GradeModel *model = node.nodeData;
         cell0.sigleBtn.mLab_title.text = model.GradeName;
         cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
         name = model.GradeName;
-    }else if (flag==31){//科目
+    }else if (flag==301){//科目
         SubjectModel *model = node.nodeData;
         cell0.sigleBtn.mLab_title.text = model.subjectName;
         cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
         name = model.subjectName;
-    }else if (flag==41){//教版
+    }else if (flag==401){//教版
         VersionModel *model = node.nodeData;
         cell0.sigleBtn.mLab_title.text = model.VersionName;
         cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
         name = model.VersionName;
-    }else if (flag==51){//章节
+    }else if (flag==501){//章节
         ChapterModel *model = node.nodeData;
         cell0.sigleBtn.mLab_title.text = model.chapterName;
         cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
@@ -904,6 +980,18 @@
         }
     }
     [self reloadDataForDisplayArray];
+}
+
+//选择题、填空题的回调
+-(void)TreeJob_questionCount_TableViewCellClick:(TreeJob_questionCount_TableViewCell *)treeJob_questionCount_TableViewCell{
+    for (int i=0; i<self.mArr_sumData.count; i++) {
+        TreeJob_node *node = [self.mArr_sumData objectAtIndex:i];
+        TreeJob_node *tempNode = treeJob_questionCount_TableViewCell.node;
+        if (node.flag == tempNode.flag) {
+            TreeJob_level0_model *model = node.nodeData;
+            model.mStr_title = [NSString stringWithFormat:@"%d",treeJob_questionCount_TableViewCell.mInt_count];
+        }
+    }
 }
 
 //年级、科目、教版、章节的单选cell回调
