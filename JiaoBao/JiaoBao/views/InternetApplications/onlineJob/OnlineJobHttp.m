@@ -45,7 +45,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
     }];
 }
-//获取联动列表
+//获取联动列表 //（年级代码）- （科目代码）- （教版联动代码）- （0： 根据年级获取科目，1：根据科目获取教版，2： 根据教版获取章节）
 -(void)GetUnionChapterListWithgCode:(NSString*)gCode subCode:(NSString*)subCode uId:(NSString*)uId flag:(NSString*)flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/GetUnionChapterList",ONLINEJOBURL];
@@ -88,7 +88,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
     
 }
-//获取自定义作业列表
+//获取老师的自定义作业列表
 -(void)GetDesHWListWithChapterID:(NSString*)ChapterID teacherJiaobaohao:(NSString*)teacherJiaobaohao
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetDesHWList",ONLINEJOBURL];
@@ -96,13 +96,12 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
-    //[manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSDictionary *parameters = @{@"ChapterID": ChapterID,@"teacherJiaobaohao": teacherJiaobaohao};
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
+        NSArray *array = [ParserJson_OnlineJob parserJsonChapterList:result];
         D("JSON--------GetDestHWListWithChapterID: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -110,14 +109,29 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
     
 }
-//
--(void)GetStuHWListWithStuId:(NSString*)StuId
+
+//老师发布作业接口
+//发布作业的参数在PublishJobModel里
+-(void)TecMakeHWWithPublishJobModel:(PublishJobModel*)publishJobModel
 {
-    
-}
-//获取单题，作业名称作业题量，作业开始时间，作业时长，作业上交时间
--(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId
-{
+    NSString *urlString = [NSString stringWithFormat:@"%@TecMakeHW",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSDictionary *parameters = [publishJobModel properties_aps];
+    {
+        NSLog(@"parameters = %@",[parameters objectForKey:@"className"]);
+    }
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------TecMakeHWWithPublishJobModel: %@", error);
+    }];
     
 }
 

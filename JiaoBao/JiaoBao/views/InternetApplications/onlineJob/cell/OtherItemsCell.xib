@@ -16,28 +16,18 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="标题更改:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jp0-s0-SX4">
                         <rect key="frame" x="10" y="11" width="77" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qd3-qy-biu">
-                        <rect key="frame" x="95" y="5" width="217" height="30"/>
+                        <rect key="frame" x="95" y="6" width="217" height="30"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
-                        <connections>
-                            <outlet property="delegate" destination="-1" id="Sb6-J6-FlH"/>
-                        </connections>
                     </textField>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hkA-u6-mjc">
-                        <rect key="frame" x="95" y="7" width="217" height="30"/>
-                        <connections>
-                            <action selector="dateBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Mwi-Rd-Kyv"/>
-                        </connections>
-                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="dateButton" destination="hkA-u6-mjc" id="k0e-Q1-fph"/>
                 <outlet property="textField" destination="qd3-qy-biu" id="8zi-MG-4Se"/>
                 <outlet property="titleLabel" destination="Jp0-s0-SX4" id="3Zh-eS-QBl"/>
             </connections>

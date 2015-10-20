@@ -1,8 +1,8 @@
 //
-//  Grade.h
+//  PublishJobModel.h
 //  JiaoBao
 //
-//  Created by songyanming on 15/10/16.
+//  Created by songyanming on 15/10/20.
 //  Copyright © 2015年 JSY. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface Grade : NSManagedObject
+@interface PublishJobModel : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -19,4 +19,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "Grade+CoreDataProperties.h"
+#import "PublishJobModel+CoreDataProperties.h"

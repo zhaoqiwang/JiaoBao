@@ -901,6 +901,7 @@
 		F7502A291AEE1E50004F822F /* selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A071AEE1E50004F822F /* selected@3x.png */; };
 		F75757431BA16B7700AA4267 /* ChoicenessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */; };
 		F75757441BA16B7700AA4267 /* ChoicenessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */; };
+		F764F48B1BD4D1070077F55A /* PublishJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F764F48A1BD4D1070077F55A /* PublishJobModel.m */; settings = {ASSET_TAGS = (); }; };
 		F76B64351B1EA205008F6961 /* RCLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64321B1EA205008F6961 /* RCLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F76B643A1B1EA3F5008F6961 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64381B1EA3F5008F6961 /* CommentCell.m */; };
 		F76B643B1B1EA3F5008F6961 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76B64391B1EA3F5008F6961 /* CommentCell.xib */; };
@@ -922,6 +923,8 @@
 		F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77118D61B70476100CA8FAC /* NickNameModel.m */; };
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
 		F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42671BD47A17006CF240 /* OtherItemsModel.m */; settings = {ASSET_TAGS = (); }; };
+		F77B42761BD497A2006CF240 /* JobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42731BD497A2006CF240 /* JobModel.m */; settings = {ASSET_TAGS = (); }; };
+		F77B42771BD497A2006CF240 /* JobModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFF81B70560800E8A31B /* CategoryModel.m */; };
 		F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFFB1B70566400E8A31B /* UserInformationModel.m */; };
 		F788EA6B1BAA57120015965E /* AttentionCategoryVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F788EA691BAA57120015965E /* AttentionCategoryVCViewController.m */; };
@@ -957,13 +960,13 @@
 		F79D84DF1ABD4DC000897477 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84D01ABD4DC000897477 /* SignInViewController.xib */; };
 		F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F79D84E11ABD4E1100897477 /* CheckingInViewController.mm */; };
 		F79D84E41ABD4E1100897477 /* CheckingInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */; };
+		F7A91DD81BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A91DD51BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		F7A91DD91BD5D00600D538D5 /* PublishJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A91DD71BD5D00600D538D5 /* PublishJobModel.m */; settings = {ASSET_TAGS = (); }; };
 		F7B271991B6F151F00DA3FE4 /* PhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */; };
 		F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */; };
 		F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */; };
 		F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C4D7121BD08CB3008B8924 /* CoreData.framework */; };
 		F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
-		F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
-		F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71A1BD08F5F008B8924 /* Grade.m */; settings = {ASSET_TAGS = (); }; };
 		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; settings = {ASSET_TAGS = (); }; };
 		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; settings = {ASSET_TAGS = (); }; };
 		F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7251BD0E52D008B8924 /* VersionModel.m */; settings = {ASSET_TAGS = (); }; };
@@ -2268,6 +2271,8 @@
 		F75757401BA16B7700AA4267 /* ChoicenessDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChoicenessDetailViewController.h; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.h; sourceTree = "<group>"; };
 		F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChoicenessDetailViewController.m; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.m; sourceTree = "<group>"; };
 		F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChoicenessDetailViewController.xib; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.xib; sourceTree = "<group>"; };
+		F764F4891BD4D1070077F55A /* PublishJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishJobModel.h; sourceTree = "<group>"; };
+		F764F48A1BD4D1070077F55A /* PublishJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishJobModel.m; sourceTree = "<group>"; };
 		F76B64311B1EA205008F6961 /* RCLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCLabel.h; path = Common/RCLabel/RCLabel.h; sourceTree = "<group>"; };
 		F76B64321B1EA205008F6961 /* RCLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCLabel.m; path = Common/RCLabel/RCLabel.m; sourceTree = "<group>"; };
 		F76B64371B1EA3F5008F6961 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = views/InternetApplications/class/CommentCell.h; sourceTree = "<group>"; };
@@ -2303,6 +2308,10 @@
 		F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailQueryCell.xib; sourceTree = "<group>"; };
 		F77B42661BD47A17006CF240 /* OtherItemsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherItemsModel.h; sourceTree = "<group>"; };
 		F77B42671BD47A17006CF240 /* OtherItemsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherItemsModel.m; sourceTree = "<group>"; };
+		F77B42721BD497A2006CF240 /* JobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JobModel.h; path = CoreData/JobModel.h; sourceTree = "<group>"; };
+		F77B42731BD497A2006CF240 /* JobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobModel.m; path = CoreData/JobModel.m; sourceTree = "<group>"; };
+		F77B42741BD497A2006CF240 /* JobModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JobModel+CoreDataProperties.h"; path = "CoreData/JobModel+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "JobModel+CoreDataProperties.m"; path = "CoreData/JobModel+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F787CFF71B70560800E8A31B /* CategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryModel.h; path = views/InternetApplications/theme/model/CategoryModel.h; sourceTree = "<group>"; };
 		F787CFF81B70560800E8A31B /* CategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryModel.m; path = views/InternetApplications/theme/model/CategoryModel.m; sourceTree = "<group>"; };
 		F787CFFA1B70566400E8A31B /* UserInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInformationModel.h; path = views/InternetApplications/theme/model/UserInformationModel.h; sourceTree = "<group>"; };
@@ -2424,16 +2433,16 @@
 		F79D84E01ABD4E1100897477 /* CheckingInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckingInViewController.h; path = views/InternetApplications/exchange/CheckingInViewController.h; sourceTree = "<group>"; };
 		F79D84E11ABD4E1100897477 /* CheckingInViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CheckingInViewController.mm; path = views/InternetApplications/exchange/CheckingInViewController.mm; sourceTree = "<group>"; };
 		F79D84E21ABD4E1100897477 /* CheckingInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckingInViewController.xib; path = views/InternetApplications/exchange/CheckingInViewController.xib; sourceTree = "<group>"; };
+		F7A91DD41BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PublishJobModel+CoreDataProperties.h"; path = "CoreData/PublishJobModel+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F7A91DD51BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PublishJobModel+CoreDataProperties.m"; path = "CoreData/PublishJobModel+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F7A91DD61BD5D00600D538D5 /* PublishJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublishJobModel.h; path = CoreData/PublishJobModel.h; sourceTree = "<group>"; };
+		F7A91DD71BD5D00600D538D5 /* PublishJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublishJobModel.m; path = CoreData/PublishJobModel.m; sourceTree = "<group>"; };
 		F7B271961B6F151F00DA3FE4 /* PhotoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCollectionCell.h; path = views/InternetApplications/show/PhotoCollectionCell.h; sourceTree = "<group>"; };
 		F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionCell.m; path = views/InternetApplications/show/PhotoCollectionCell.m; sourceTree = "<group>"; };
 		F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionCell.xib; path = views/InternetApplications/show/PhotoCollectionCell.xib; sourceTree = "<group>"; };
 		F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "删除键@2x.png"; path = "Image/InternetApp/删除键@2x.png"; sourceTree = "<group>"; };
 		F7C4D7121BD08CB3008B8924 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		F7C4D7171BD08F5F008B8924 /* Grade+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Grade+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Grade+CoreDataProperties.m"; sourceTree = "<group>"; };
-		F7C4D7191BD08F5F008B8924 /* Grade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grade.h; sourceTree = "<group>"; };
-		F7C4D71A1BD08F5F008B8924 /* Grade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Grade.m; sourceTree = "<group>"; };
 		F7C4D71E1BD0E176008B8924 /* GradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeModel.h; sourceTree = "<group>"; };
 		F7C4D71F1BD0E176008B8924 /* GradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeModel.m; sourceTree = "<group>"; };
 		F7C4D7211BD0E382008B8924 /* SubjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModel.h; sourceTree = "<group>"; };
@@ -3967,6 +3976,8 @@
 				F7C4D7251BD0E52D008B8924 /* VersionModel.m */,
 				F7C4D7271BD0E557008B8924 /* ChapterModel.h */,
 				F7C4D7281BD0E557008B8924 /* ChapterModel.m */,
+				F764F4891BD4D1070077F55A /* PublishJobModel.h */,
+				F764F48A1BD4D1070077F55A /* PublishJobModel.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -4789,11 +4800,15 @@
 		F7C4D71D1BD0E12F008B8924 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				F7A91DD61BD5D00600D538D5 /* PublishJobModel.h */,
+				F7A91DD71BD5D00600D538D5 /* PublishJobModel.m */,
+				F7A91DD41BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.h */,
+				F7A91DD51BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.m */,
+				F77B42721BD497A2006CF240 /* JobModel.h */,
+				F77B42731BD497A2006CF240 /* JobModel.m */,
+				F77B42741BD497A2006CF240 /* JobModel+CoreDataProperties.h */,
+				F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */,
 				F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */,
-				F7C4D7171BD08F5F008B8924 /* Grade+CoreDataProperties.h */,
-				F7C4D7181BD08F5F008B8924 /* Grade+CoreDataProperties.m */,
-				F7C4D7191BD08F5F008B8924 /* Grade.h */,
-				F7C4D71A1BD08F5F008B8924 /* Grade.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -5489,6 +5504,7 @@
 				A7D829A91B61D0D400812340 /* UIImage+Resize.m in Sources */,
 				A755E71419F278B900BBDF3D /* ASIS3ObjectRequest.m in Sources */,
 				A75E3FB71B6F64B700284C3D /* AFURLSessionManager.m in Sources */,
+				F764F48B1BD4D1070077F55A /* PublishJobModel.m in Sources */,
 				F79D84D41ABD4DC000897477 /* DetailSubmitViewController.m in Sources */,
 				A75C7F121BAC06B900B1EBBA /* GetPickedViewController.m in Sources */,
 				A74339551A452B7700AFC0A5 /* UIButton+WebCache.m in Sources */,
@@ -5498,6 +5514,7 @@
 				A755E67319F2492700BBDF3D /* main.m in Sources */,
 				A79C31151BCF8898003DF7B2 /* TreeJob_class_model.m in Sources */,
 				A748219719FF2AE500234020 /* MsgDetailViewController.m in Sources */,
+				F7A91DD91BD5D00600D538D5 /* PublishJobModel.m in Sources */,
 				F71803241AB3C46300E6167F /* JTCalendarMonthView.m in Sources */,
 				F71803451AB3C71A00E6167F /* SVProgressHUD.m in Sources */,
 				A78459DF1B7B4D1D00EA7D5D /* IQToolbar.m in Sources */,
@@ -5573,6 +5590,7 @@
 				A753FAF51A1DED7000AB5F22 /* UserClassModel.m in Sources */,
 				A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */,
 				A7AD8C3F19F63DA5002E65FB /* ApplicationCenterViewController.m in Sources */,
+				F77B42771BD497A2006CF240 /* JobModel+CoreDataProperties.m in Sources */,
 				A788C9CC1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m in Sources */,
 				A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */,
 				A77FF00C1A65093300DB85E3 /* UnitListJsonModel.m in Sources */,
@@ -5670,6 +5688,7 @@
 				A755E70319F278B900BBDF3D /* ASIDataDecompressor.m in Sources */,
 				F76B64351B1EA205008F6961 /* RCLabel.m in Sources */,
 				A7357A3C1A4026CF00A195C5 /* ParserJson_theme.m in Sources */,
+				F7A91DD81BD5D00600D538D5 /* PublishJobModel+CoreDataProperties.m in Sources */,
 				F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */,
 				A76ED5911AD6189C006F3E0B /* WorkView_new2.m in Sources */,
 				A74339561A452B7700AFC0A5 /* UIImage+GIF.m in Sources */,
@@ -5687,13 +5706,13 @@
 				A755E71A19F278B900BBDF3D /* SBJsonBase.m in Sources */,
 				A7781F221AE889E100F03AEB /* NewWorkRootScrollView.m in Sources */,
 				A73789291A2F177900DF8882 /* RongYunTokenModel.m in Sources */,
-				F7C4D71B1BD08F5F008B8924 /* Grade+CoreDataProperties.m in Sources */,
 				A7B0F94F1A47BC4300C1863A /* MJPhotoLoadingView.m in Sources */,
 				A72B582F1A3D8EEE004D8920 /* UnitPeopleViewController.m in Sources */,
 				A755E70F19F278B900BBDF3D /* ASICloudFilesObjectRequest.m in Sources */,
 				A749B9E119F89FF40036F480 /* TreeView_Level0_Model.m in Sources */,
 				A7595E911A5FC2F30027848E /* MWGridCell.m in Sources */,
 				A7557BFA19FA30480057835B /* Identity_UserClasses_model.m in Sources */,
+				F77B42761BD497A2006CF240 /* JobModel.m in Sources */,
 				A768296A1AC69575003B31EB /* ParserJson_class.m in Sources */,
 				A78459DE1B7B4D1D00EA7D5D /* IQTitleBarButtonItem.m in Sources */,
 				A75A37371A087C76009D2464 /* ForwardViewController.m in Sources */,
@@ -5761,7 +5780,6 @@
 				A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */,
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
-				F7C4D71C1BD08F5F008B8924 /* Grade.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,

@@ -20,6 +20,5 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)dateBtnAction:(id)sender {
-}
+
 @end
