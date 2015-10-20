@@ -18,8 +18,13 @@
 #import "TreeJob_class_TableViewCell.h"
 #import "Mode_Selection_Cell.h"
 #import "MessageSelectionCell.h"
+#import "GradeModel.h"
+#import "SubjectModel.h"
+#import "VersionModel.h"
+#import "ChapterModel.h"
+#import "TreeJob_sigleSelect_TableViewCell.h"
 
-@interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,ModelSelectionCellDelegate,MessageSelectionCellDelegate,TreeJob_class_TableViewCellDelegate,UITextFieldDelegate>
+@interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,ModelSelectionCellDelegate,MessageSelectionCellDelegate,TreeJob_class_TableViewCellDelegate,TreeJob_sigleSelect_TableViewCellDelegate,UITextFieldDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (strong,nonatomic) IBOutlet UITableView *mTableV_work;

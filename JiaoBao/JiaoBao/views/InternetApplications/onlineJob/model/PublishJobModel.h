@@ -31,5 +31,5 @@
 @property(nonatomic,assign)BOOL IsRep;//是否发送 老师反馈 短信
 @property(nonatomic,strong)NSString *TecName;//老师的名称
 @property(nonatomic,strong)NSString *DesId;//自定义作业ID，如果是自定义作业则加上自定义的ID
-- (NSDictionary *)properties_aps;
+- (NSDictionary *)propertiesDic;
 @end

@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 @implementation PublishJobModel
 /* 获取对象的所有属性 以及属性值 */
-- (NSDictionary *)properties_aps
+- (NSDictionary *)propertiesDic
 {
     NSMutableDictionary *props = [NSMutableDictionary dictionary];
     unsigned int outCount, i;

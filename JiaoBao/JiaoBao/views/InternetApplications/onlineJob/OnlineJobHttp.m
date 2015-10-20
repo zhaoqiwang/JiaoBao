@@ -36,10 +36,9 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 
         NSArray *array = [ParserJson_OnlineJob parserJsonGradeList:result];
-
         
         D("JSON--------GetGradeList: %@,", result);
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:array];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetGradeList: %@", error);
 
@@ -62,23 +61,28 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *statusCode = [dic objectForKey:@"statusCode"];
         if( [statusCode integerValue] == 200)
         {
-            if([flag integerValue]== 0)//获取科目列表
-            {
-                NSArray *array = [ParserJson_OnlineJob parserJsonSubjectList:[dic objectForKey:@"args1"]];
-                NSLog(@"%@",array);
+//            if([flag integerValue]== 0)//获取科目列表
+//            {
+                NSArray *array1 = [ParserJson_OnlineJob parserJsonSubjectList:[dic objectForKey:@"args1"]];
+                NSLog(@"diofgoidshgoi-===000=%@",array1);
                 
-            }
-            else if ([flag integerValue]== 1)//获取教版列表
-            {
-                NSArray *array = [ParserJson_OnlineJob parserJsonVersionList:[dic objectForKey:@"args2"]];
-                
-            }
-            else if ([flag integerValue]== 2)//获取章节列表
-            {
-                NSArray *array = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"]];
-                
-            }
-            
+//            }
+//            else if ([flag integerValue]== 1)//获取教版列表
+//            {
+                NSArray *array2 = [ParserJson_OnlineJob parserJsonVersionList:[dic objectForKey:@"args2"]];
+                NSLog(@"diofgoidshgoi-===111=%@",array2);
+//            }
+//            else if ([flag integerValue]== 2)//获取章节列表
+//            {
+                NSArray *array3 = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"]];
+                NSLog(@"diofgoidshgoi-===222=%@",array3);
+//            }
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            [dic setValue:flag forKey:@"flag"];
+            [dic setValue:array1 forKey:@"args1"];
+            [dic setValue:array2 forKey:@"args2"];
+            [dic setValue:array3 forKey:@"args3"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnionChapterList" object:dic];
         }
 
         D("JSON--------GetUnionChaterListWithgCode: %@,", result);
@@ -121,11 +125,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    NSDictionary *parameters = [publishJobModel properties_aps];
-    {
-        NSLog(@"parameters = %@",[parameters objectForKey:@"className"]);
-    }
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    //NSDictionary *parameters = [publishJobModel pro];
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
