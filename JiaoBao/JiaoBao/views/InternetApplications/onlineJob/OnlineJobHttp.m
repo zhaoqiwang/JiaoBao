@@ -108,7 +108,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSArray *array = [ParserJson_OnlineJob parserJsonChapterList:result];
         D("JSON--------GetDestHWListWithChapterID: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         D("Error---------GetDestHWListWithChapterID: %@", error);
     }];
     
@@ -125,8 +124,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    //NSDictionary *parameters = [publishJobModel pro];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSDictionary *parameters = [publishJobModel propertiesDic];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
