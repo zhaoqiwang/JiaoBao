@@ -1,14 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
-    <entity name="Grade" representedClassName="Grade" syncable="YES">
+    <entity name="JobModel" representedClassName="JobModel" syncable="YES">
+        <attribute name="chapterSelection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="classSelection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deadline" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="difficultySelection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gradeSelection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jobDuration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modeSelection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subjectSelection" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="versionSection" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PublishJobModel" representedClassName="PublishJobModel" syncable="YES">
+        <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="additionalDes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="allNum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chapterID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chapterName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="classID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="classNam" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="distribution" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="doLv" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="expTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gradeCode" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gradeName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isEnable" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="orderby" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tabID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tabIDStr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="homeworkName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hwType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inpNum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAnSms" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="isQsSms" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRep" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="longTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="modeSlection" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="schoolName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selNum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subjectID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subjectName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teacherJiaobaohao" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tecName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="versionID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="versionName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Grade" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="JobModel" positionX="-63" positionY="-27" width="128" height="193"/>
+        <element name="PublishJobModel" positionX="-63" positionY="45" width="128" height="480"/>
     </elements>
 </model>

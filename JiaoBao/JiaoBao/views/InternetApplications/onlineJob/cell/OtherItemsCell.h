@@ -11,7 +11,5 @@
 @interface OtherItemsCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
-@property (weak, nonatomic) IBOutlet UIButton *dateButton;
-- (IBAction)dateBtnAction:(id)sender;
 
 @end
