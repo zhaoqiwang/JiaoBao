@@ -19,7 +19,7 @@
 #import "JobModel+CoreDataProperties.h"
 #import "LoginSendHttp.h"
 #import "PublishJobModel.h"
-
+#import "utils.h"
 
 
 @interface MakeJobViewController ()
@@ -29,6 +29,7 @@
 @property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
 @property(nonatomic,strong)JobModel *JobModelList;
 @property(nonatomic,strong)CommMsgRevicerUnitListModel *mModel_unitList;
+@property(nonatomic,strong)PublishJobModel *publishJobModel;
 
 @end
 
@@ -63,6 +64,31 @@
 }
 -(PublishJobModel*)getPublishJobModel
 {
+    if(self.publishJobModel.classIDArr.count == 0)
+    {
+        [MBProgressHUD showError:@"请选择班级"];
+        return 0;
+    }
+    if(self.publishJobModel.chapterID)
+    {
+        [MBProgressHUD showError:@"请选择章节"];
+        return 0;
+    }
+    if(self.publishJobModel.DesId)
+    {
+        [MBProgressHUD showError:@"请选择自定义作业"];
+        return 0;
+    }
+    if([utils isBlankString:self.publishJobModel.homeworkName])
+    {
+        [MBProgressHUD showError:@"请输入作业标题"];
+        return 0;
+    }
+    if(self.publishJobModel.ExpTime)
+    {
+        [MBProgressHUD showError:@"请选择截止日期"];
+        return 0;
+    }
     PublishJobModel *publishModel = [[PublishJobModel alloc]init];
     publishModel.teacherJiaobaohao = @"5236705";
     publishModel.classID =@"72202";
@@ -93,11 +119,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.publishJobModel.HwType = @"4";
     //获取执教班级
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     
-    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:[self getPublishJobModel]];
+//    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:[self getPublishJobModel]];
 //    [[LoginSendHttp getInstance]login_CommMsgRevicerUnitList];
 //    [[OnlineJobHttp getInstance]GetGradeList];
 //    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
@@ -236,6 +263,8 @@
                     TreeJob_level0_model *nodeData = node0.nodeData;
                     nodeData.mStr_title = temp1.GradeName;
                     nodeData.mStr_id = temp1.GradeCode;
+                    self.publishJobModel.GradeCode = temp1.GradeCode;
+                    self.publishJobModel.GradeName = temp1.GradeName;
                     temp1.mInt_select = 1;
                     [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
                 }else{
@@ -278,6 +307,8 @@
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.subjectName;
                         nodeData.mStr_id = temp1.subjectCode;
+                        self.publishJobModel.subjectName = temp1.subjectName;
+                        self.publishJobModel.subjectCode = temp1.subjectCode;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -303,6 +334,8 @@
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.VersionName;
                         nodeData.mStr_id = temp1.VersionCode;
+                        self.publishJobModel.VersionName = temp1.VersionName;
+                        self.publishJobModel.VersionCode = temp1.VersionCode;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -328,6 +361,8 @@
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.chapterName;
                         nodeData.mStr_id = temp1.chapterCode;
+                        self.publishJobModel.chapterName = temp1.chapterName;
+                        self.publishJobModel.chapterID = temp1.chapterCode;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -358,6 +393,8 @@
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.VersionName;
                         nodeData.mStr_id = temp1.VersionCode;
+                        self.publishJobModel.VersionCode = temp1.VersionCode;
+                        self.publishJobModel.VersionName = temp1.VersionName;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -383,6 +420,8 @@
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.chapterName;
                         nodeData.mStr_id = temp1.chapterCode;
+                        self.publishJobModel.chapterName = temp1.chapterName;
+                        self.publishJobModel.chapterID = temp1.chapterCode;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -413,6 +452,8 @@
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.chapterName;
                         nodeData.mStr_id = temp1.chapterCode;
+                        self.publishJobModel.chapterName = temp1.chapterName;
+                        self.publishJobModel.chapterID = temp1.chapterCode;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -971,6 +1012,8 @@
                     TreeJob_level0_model *nodeData = node.nodeData;
                     nodeData.mStr_title = model1.GradeName;
                     nodeData.mStr_id = model1.GradeCode;
+                    self.publishJobModel.GradeCode = model1.GradeCode;
+                    self.publishJobModel.GradeName = model1.GradeName;
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                     [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
                     //给默认空值
@@ -997,6 +1040,8 @@
                 if ([model.subjectCode intValue]==[model1.subjectCode intValue]) {
                     model.mInt_select = 1;
                     TreeJob_level0_model *nodeData = node.nodeData;
+                    nodeData.mStr_title = model1.subjectName;
+                    nodeData.mStr_id = model1.subjectCode;
                     nodeData.mStr_title = model1.subjectName;
                     nodeData.mStr_id = model1.subjectCode;
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
@@ -1026,6 +1071,8 @@
                     TreeJob_level0_model *nodeData = node.nodeData;
                     nodeData.mStr_title = model1.VersionName;
                     nodeData.mStr_id = model1.TabID;
+                    self.publishJobModel.VersionName = model1.VersionName;
+                    self.publishJobModel.VersionCode = model1.TabID;
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                     
                     TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
@@ -1051,6 +1098,8 @@
                     TreeJob_level0_model *nodeData = node.nodeData;
                     nodeData.mStr_title = model1.chapterName;
                     nodeData.mStr_id = model1.TabID;
+                    self.publishJobModel.chapterName = model1.chapterName;
+                    self.publishJobModel.chapterID = model1.TabID;
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                 }else{
                     model.mInt_select = 0;

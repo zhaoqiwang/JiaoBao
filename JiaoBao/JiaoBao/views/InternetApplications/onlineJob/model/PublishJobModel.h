@@ -9,12 +9,23 @@
 #import <Foundation/Foundation.h>
 
 @interface PublishJobModel : NSObject
+@property(nonatomic,strong)NSString *GradeName;//年级名称
+@property(nonatomic,strong)NSString *GradeCode;//年级代码
+@property(nonatomic,strong)NSString *subjectName;//科目名称
+@property(nonatomic,strong)NSString *subjectCode;//科目代码
+@property(nonatomic,strong)NSString *VersionName;//教版名称
+@property(nonatomic,strong)NSString *VersionCode;//教版代码
+@property(nonatomic,strong)NSString *chapterName;//章节名称
 
 @property(nonatomic,strong)NSString *teacherJiaobaohao;// 老师教宝号
 @property(nonatomic,strong)NSString *classID;// 班级ID
 @property(nonatomic,strong)NSString *className;//班级名称
+@property(nonatomic,strong)NSMutableArray *classIDArr;// 班级ID数组
+@property(nonatomic,strong)NSMutableArray *classNameArr;//班级名称数组
 @property(nonatomic,strong)NSString *chapterID;//章节ID
 @property(nonatomic,strong)NSString *DoLv;//难度等级
+@property(nonatomic,strong)NSMutableArray *DoLvArr;//难度等级数组
+
 @property(nonatomic,strong)NSString *AllNum;//总题量
 @property(nonatomic,strong)NSString *SelNum;//选择题量
 @property(nonatomic,strong)NSString *InpNum;//填空题
