@@ -1003,6 +1003,7 @@
 		F7F7AD751B7C348600923B60 /* CategorySection.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7AD731B7C348600923B60 /* CategorySection.xib */; };
 		F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		F7F7D72A1BD6433800D8B856 /* HomeworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7291BD6433700D8B856 /* HomeworkModel.m */; settings = {ASSET_TAGS = (); }; };
 		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; };
 		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; };
 		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; };
@@ -2505,6 +2506,8 @@
 		F7F7D7231BD622B900D8B856 /* PublishJobCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishJobCellTableViewCell.h; sourceTree = "<group>"; };
 		F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishJobCellTableViewCell.m; sourceTree = "<group>"; };
 		F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishJobCellTableViewCell.xib; sourceTree = "<group>"; };
+		F7F7D7281BD6433700D8B856 /* HomeworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeworkModel.h; sourceTree = "<group>"; };
+		F7F7D7291BD6433700D8B856 /* HomeworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkModel.m; sourceTree = "<group>"; };
 		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
 		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
 		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
@@ -3985,6 +3988,8 @@
 				F7C4D7251BD0E52D008B8924 /* VersionModel.m */,
 				F7C4D7271BD0E557008B8924 /* ChapterModel.h */,
 				F7C4D7281BD0E557008B8924 /* ChapterModel.m */,
+				F7F7D7281BD6433700D8B856 /* HomeworkModel.h */,
+				F7F7D7291BD6433700D8B856 /* HomeworkModel.m */,
 				F764F4891BD4D1070077F55A /* PublishJobModel.h */,
 				F764F48A1BD4D1070077F55A /* PublishJobModel.m */,
 			);
@@ -5647,6 +5652,7 @@
 				A755E71019F278B900BBDF3D /* ASICloudFilesRequest.m in Sources */,
 				A7736DB71BCDEC9300CC39A0 /* MakeJobViewController.m in Sources */,
 				F79B61411B72068A005FEA44 /* QuestionIndexModel.m in Sources */,
+				F7F7D72A1BD6433800D8B856 /* HomeworkModel.m in Sources */,
 				A76F21791B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.m in Sources */,
 				A77FF02A1A650B3F00DB85E3 /* JSONModelError.m in Sources */,
 				A7AD8C2819F6002A002E65FB /* JSONKit.m in Sources */,

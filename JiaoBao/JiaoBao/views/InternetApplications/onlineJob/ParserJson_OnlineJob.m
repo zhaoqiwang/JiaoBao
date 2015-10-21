@@ -11,6 +11,7 @@
 #import "SubjectModel.h"
 #import "VersionModel.h"
 #import "ChapterModel.h"
+#import "HomeworkModel.h"
 
 @implementation ParserJson_OnlineJob
 +(NSMutableArray *)parserJsonGradeList:(NSString *)json
@@ -67,6 +68,7 @@
     return array;
     
 }
+//解析自定义作业
 +(NSMutableArray *)parserJsonChapterList:(NSString *)json
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -91,6 +93,33 @@
     }
     return array;
     
+}
+//解析自定义作业
++(NSMutableArray *)parserJsonHomeworkList:(NSString *)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for (int i=0; i<arrList.count; i++) {
+        HomeworkModel *model = [[HomeworkModel alloc] init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
+        model.TabID = [dic objectForKey:@"TabID"];
+        model.AccountID = [dic objectForKey:@"AccountID"];
+        model.jiaobaohao = [dic objectForKey:@"jiaobaohao"];
+        model.SubjectID = [dic objectForKey:@"SubjectID"];
+        model.GradeID = [dic objectForKey:@"GradeID"];
+        model.chapterID = [dic objectForKey:@"chapterID"];
+        model.VersionID = [dic objectForKey:@"VersionID"];
+        model.itemNumber = [dic objectForKey:@"itemNumber"];
+        model.homeworkName = [dic objectForKey:@"homeworkName"];
+        model.questionList = [dic objectForKey:@"questionList"];
+        model.CreateTime = [dic objectForKey:@"CreateTime"];
+                model.itemSelect = [dic objectForKey:@"itemSelect"];
+        model.itemInput = [dic objectForKey:@"itemInput"];
+        
+        [array addObject:model];
+    }
+    return array;
 }
 
 @end

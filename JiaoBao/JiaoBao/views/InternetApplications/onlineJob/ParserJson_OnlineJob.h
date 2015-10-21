@@ -15,6 +15,7 @@
 +(NSMutableArray *)parserJsonSubjectList:(NSString *)json;
 +(NSMutableArray *)parserJsonVersionList:(NSString *)json;
 +(NSMutableArray *)parserJsonChapterList:(NSString *)json;
++(NSMutableArray *)parserJsonHomeworkList:(NSString *)json;//解析自定义作业
 
 
 @end

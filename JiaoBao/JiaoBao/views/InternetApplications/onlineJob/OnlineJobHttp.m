@@ -105,7 +105,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     NSDictionary *parameters = @{@"ChapterID": ChapterID,@"teacherJiaobaohao": teacherJiaobaohao};
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSArray *array = [ParserJson_OnlineJob parserJsonChapterList:result];
+        NSArray *array = [ParserJson_OnlineJob parserJsonHomeworkList:result];
         D("JSON--------GetDestHWListWithChapterID: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetDestHWListWithChapterID: %@", error);
@@ -125,6 +125,26 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSDictionary *parameters = [publishJobModel propertiesDic];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------TecMakeHWWithPublishJobModel: %@", error);
+    }];
+    
+}
+
+//学生获取当前作业列表 参数：学生ID
+-(void)GetStuHWListWithStuId:(NSString*)StuId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWList",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"StuId":StuId};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);

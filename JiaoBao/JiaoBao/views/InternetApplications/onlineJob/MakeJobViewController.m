@@ -96,16 +96,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.publishJobModel.HwType = @"4";
+    //[OnlineJobHttp getInstance]GetStuHWListWithStuId:<#(NSString *)#>
     //获取执教班级
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
     
 //    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:[self getPublishJobModel]];
-//    [[LoginSendHttp getInstance]login_CommMsgRevicerUnitList];
+    [[LoginSendHttp getInstance]login_CommMsgRevicerUnitList];
 //    [[OnlineJobHttp getInstance]GetGradeList];
 //    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
-//    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5236705"];
+    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5236705"];
 
 //    NSError* error;
 //    //添加 删除 获取数据库的标志
