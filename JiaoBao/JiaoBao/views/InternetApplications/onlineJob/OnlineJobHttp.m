@@ -106,6 +106,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *array = [ParserJson_OnlineJob parserJsonChapterList:result];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetDesHWList" object:array];
         D("JSON--------GetDestHWListWithChapterID: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetDestHWListWithChapterID: %@", error);
