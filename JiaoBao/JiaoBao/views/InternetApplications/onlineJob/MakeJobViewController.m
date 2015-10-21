@@ -96,7 +96,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //[OnlineJobHttp getInstance]GetStuHWListWithStuId:<#(NSString *)#>
+    [[OnlineJobHttp getInstance]GetStuHWListWithStuId:@"5236709"];
     //获取执教班级
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
@@ -1249,8 +1249,8 @@
 }
 
 - (IBAction)publishJobAction:(id)sender {
-    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:[self getPublishJobModel]];
-    return;
+    self.publishJobModel.homeworkName = self.titleTF.text;
+    self.publishJobModel.ExpTime = self.dateTF.text;
     if(self.publishJobModel.classIDArr.count == 0)
     {
         [MBProgressHUD showError:@"请选择班级"];
@@ -1263,15 +1263,20 @@
     }
     if(self.publishJobModel.DesId)
     {
-        [MBProgressHUD showError:@"请选择自定义作业"];
-        return ;
+        if([self.publishJobModel.HwType isEqualToString:@"3"])
+        {
+            [MBProgressHUD showError:@"请选择自定义作业"];
+            return ;
+
+        }
+        
     }
     if([utils isBlankString:self.publishJobModel.homeworkName])
     {
         [MBProgressHUD showError:@"请输入作业标题"];
         return ;
     }
-    if(self.publishJobModel.ExpTime)
+    if([utils isBlankString:self.publishJobModel.ExpTime])
     {
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
