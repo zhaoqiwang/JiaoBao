@@ -925,10 +925,12 @@
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
 		F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77118D61B70476100CA8FAC /* NickNameModel.m */; };
+		F772BACB1BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F772BAC81BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		F772BACC1BD76EFF00B1602D /* SaveJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F772BACA1BD76EFF00B1602D /* SaveJobModel.m */; settings = {ASSET_TAGS = (); }; };
+		F772BAD31BD77A8100B1602D /* SaveClassModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F772BACE1BD77A8100B1602D /* SaveClassModel+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		F772BAD41BD77A8100B1602D /* SaveClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F772BAD01BD77A8100B1602D /* SaveClassModel.m */; settings = {ASSET_TAGS = (); }; };
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
 		F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42671BD47A17006CF240 /* OtherItemsModel.m */; settings = {ASSET_TAGS = (); }; };
-		F77B42761BD497A2006CF240 /* JobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42731BD497A2006CF240 /* JobModel.m */; settings = {ASSET_TAGS = (); }; };
-		F77B42771BD497A2006CF240 /* JobModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
 		F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFF81B70560800E8A31B /* CategoryModel.m */; };
 		F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F787CFFB1B70566400E8A31B /* UserInformationModel.m */; };
 		F788EA6B1BAA57120015965E /* AttentionCategoryVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F788EA691BAA57120015965E /* AttentionCategoryVCViewController.m */; };
@@ -2316,13 +2318,17 @@
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
 		F77118D51B70476100CA8FAC /* NickNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickNameModel.h; path = views/InternetApplications/theme/model/NickNameModel.h; sourceTree = "<group>"; };
 		F77118D61B70476100CA8FAC /* NickNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NickNameModel.m; path = views/InternetApplications/theme/model/NickNameModel.m; sourceTree = "<group>"; };
+		F772BAC71BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveJobModel+CoreDataProperties.h"; path = "CoreData/SaveJobModel+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F772BAC81BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveJobModel+CoreDataProperties.m"; path = "CoreData/SaveJobModel+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F772BAC91BD76EFF00B1602D /* SaveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveJobModel.h; path = CoreData/SaveJobModel.h; sourceTree = "<group>"; };
+		F772BACA1BD76EFF00B1602D /* SaveJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveJobModel.m; path = CoreData/SaveJobModel.m; sourceTree = "<group>"; };
+		F772BACD1BD77A8100B1602D /* SaveClassModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveClassModel+CoreDataProperties.h"; path = "CoreData/SaveClassModel+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F772BACE1BD77A8100B1602D /* SaveClassModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveClassModel+CoreDataProperties.m"; path = "CoreData/SaveClassModel+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F772BACF1BD77A8100B1602D /* SaveClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveClassModel.h; path = CoreData/SaveClassModel.h; sourceTree = "<group>"; };
+		F772BAD01BD77A8100B1602D /* SaveClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveClassModel.m; path = CoreData/SaveClassModel.m; sourceTree = "<group>"; };
 		F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailQueryCell.xib; sourceTree = "<group>"; };
 		F77B42661BD47A17006CF240 /* OtherItemsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherItemsModel.h; sourceTree = "<group>"; };
 		F77B42671BD47A17006CF240 /* OtherItemsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherItemsModel.m; sourceTree = "<group>"; };
-		F77B42721BD497A2006CF240 /* JobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JobModel.h; path = CoreData/JobModel.h; sourceTree = "<group>"; };
-		F77B42731BD497A2006CF240 /* JobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JobModel.m; path = CoreData/JobModel.m; sourceTree = "<group>"; };
-		F77B42741BD497A2006CF240 /* JobModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JobModel+CoreDataProperties.h"; path = "CoreData/JobModel+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "JobModel+CoreDataProperties.m"; path = "CoreData/JobModel+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F787CFF71B70560800E8A31B /* CategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CategoryModel.h; path = views/InternetApplications/theme/model/CategoryModel.h; sourceTree = "<group>"; };
 		F787CFF81B70560800E8A31B /* CategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CategoryModel.m; path = views/InternetApplications/theme/model/CategoryModel.m; sourceTree = "<group>"; };
 		F787CFFA1B70566400E8A31B /* UserInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInformationModel.h; path = views/InternetApplications/theme/model/UserInformationModel.h; sourceTree = "<group>"; };
@@ -4823,10 +4829,14 @@
 		F7C4D71D1BD0E12F008B8924 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				F77B42721BD497A2006CF240 /* JobModel.h */,
-				F77B42731BD497A2006CF240 /* JobModel.m */,
-				F77B42741BD497A2006CF240 /* JobModel+CoreDataProperties.h */,
-				F77B42751BD497A2006CF240 /* JobModel+CoreDataProperties.m */,
+				F772BACD1BD77A8100B1602D /* SaveClassModel+CoreDataProperties.h */,
+				F772BACE1BD77A8100B1602D /* SaveClassModel+CoreDataProperties.m */,
+				F772BACF1BD77A8100B1602D /* SaveClassModel.h */,
+				F772BAD01BD77A8100B1602D /* SaveClassModel.m */,
+				F772BAC71BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.h */,
+				F772BAC81BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.m */,
+				F772BAC91BD76EFF00B1602D /* SaveJobModel.h */,
+				F772BACA1BD76EFF00B1602D /* SaveJobModel.m */,
 				F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */,
 			);
 			name = CoreData;
@@ -5502,6 +5512,7 @@
 				A7AAC4D819F7896900A0ED40 /* InternetAppRootScrollView.m in Sources */,
 				A73CAD6F1A07755B00D6C5AA /* MJRefreshFooterView.m in Sources */,
 				F78EF1821B215681003B6603 /* unitModel.m in Sources */,
+				F772BACB1BD76EFF00B1602D /* SaveJobModel+CoreDataProperties.m in Sources */,
 				A79C31061BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.m in Sources */,
 				A76C69951A8895F80069BA63 /* WorkView_new.m in Sources */,
 				A75E3FB11B6F64B700284C3D /* AFHTTPSessionManager.m in Sources */,
@@ -5612,7 +5623,6 @@
 				A753FAF51A1DED7000AB5F22 /* UserClassModel.m in Sources */,
 				A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */,
 				A7AD8C3F19F63DA5002E65FB /* ApplicationCenterViewController.m in Sources */,
-				F77B42771BD497A2006CF240 /* JobModel+CoreDataProperties.m in Sources */,
 				A788C9CC1B9FCB0F00E7BBC6 /* OldChoiceTableViewCell.m in Sources */,
 				A78D65D71A89E41400BE6326 /* WorkMsgListCell.m in Sources */,
 				A77FF00C1A65093300DB85E3 /* UnitListJsonModel.m in Sources */,
@@ -5722,6 +5732,7 @@
 				A763A5401A49663C008365B5 /* PersonPhotoModel.m in Sources */,
 				A749B9FE19F8F4060036F480 /* TreeView_Level2_Cell.m in Sources */,
 				A7AAC4D519F7893A00A0ED40 /* InternetAppTopScrollView.m in Sources */,
+				F772BAD41BD77A8100B1602D /* SaveClassModel.m in Sources */,
 				A753E5271A1B2C79005A8EED /* ShareCollectionViewCell.m in Sources */,
 				A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */,
 				F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */,
@@ -5734,7 +5745,6 @@
 				A749B9E119F89FF40036F480 /* TreeView_Level0_Model.m in Sources */,
 				A7595E911A5FC2F30027848E /* MWGridCell.m in Sources */,
 				A7557BFA19FA30480057835B /* Identity_UserClasses_model.m in Sources */,
-				F77B42761BD497A2006CF240 /* JobModel.m in Sources */,
 				A768296A1AC69575003B31EB /* ParserJson_class.m in Sources */,
 				A78459DE1B7B4D1D00EA7D5D /* IQTitleBarButtonItem.m in Sources */,
 				A75A37371A087C76009D2464 /* ForwardViewController.m in Sources */,
@@ -5850,6 +5860,7 @@
 				A76C698F1A8854CB0069BA63 /* SendToMeUserListModel.m in Sources */,
 				A773FC4A1A4C0563005F84C2 /* ELCAssetCell.m in Sources */,
 				A755E72A19F27C8E00BBDF3D /* NSData+CommonCrypto.m in Sources */,
+				F772BACC1BD76EFF00B1602D /* SaveJobModel.m in Sources */,
 				F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */,
 				A755E71219F278B900BBDF3D /* ASIS3BucketObject.m in Sources */,
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
@@ -5869,6 +5880,7 @@
 				A788C9C71B9FC94400E7BBC6 /* OldChoiceViewController.m in Sources */,
 				A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */,
 				A79A1B0F1B9ED67E00028823 /* CustomTextFieldView.m in Sources */,
+				F772BAD31BD77A8100B1602D /* SaveClassModel+CoreDataProperties.m in Sources */,
 				A7216E361A3A7B010093876A /* KxMenu.m in Sources */,
 				F73DDB971BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m in Sources */,
 				A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */,

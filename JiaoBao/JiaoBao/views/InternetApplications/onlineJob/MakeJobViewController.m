@@ -16,11 +16,12 @@
 #import "OtherItemsCell.h"
 #import "OtherItemsModel.h"
 #import "IQKeyboardManager.h"
-#import "JobModel+CoreDataProperties.h"
 #import "LoginSendHttp.h"
 #import "PublishJobModel.h"
 #import "utils.h"
 #import "PublishJobCellTableViewCell.h"
+#import "SaveJobModel+CoreDataProperties.h"
+#import "SaveClassModel.h"
 
 
 @interface MakeJobViewController ()
@@ -28,9 +29,9 @@
 @property(nonatomic,strong)AppDelegate *appDelegate;//用于获取数据库
 @property(nonatomic,strong)UITextField *dateTF;//截止日期输入框
 @property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
-@property(nonatomic,strong)JobModel *JobModelList;
 @property(nonatomic,strong)CommMsgRevicerUnitListModel *mModel_unitList;
 @property(nonatomic,strong)PublishJobModel *publishJobModel;
+@property(nonatomic,strong)SaveJobModel *saveJobModel;
 
 @end
 
@@ -93,43 +94,62 @@
     publishModel.DesId = @"";
     return publishModel;
 }
+-(void)TecMakeHWWithPublishJobModel:(id)sender
+{
+        NSError* error;
+        //从appdelegate获取数据数据库上下文
+        self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    
+        //数据库添加数据
+           self.saveJobModel = (SaveJobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+           self.saveJobModel.gradeName = @"一年级";
+    SaveClassModel *saveClassModel = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    saveClassModel.classNam = @"一班";
+    SaveClassModel *saveClassModel2 = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    saveClassModel2.classNam = @"二班";
+    [self.saveJobModel addSaveClassObject:saveClassModel];
+    [self.saveJobModel addSaveClassObject:saveClassModel2];
+    
+            //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
+            BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
+            if (!isSaveSuccess)
+            {
+                NSLog(@"Error:%@",error);
+            }else{
+                NSLog(@"Save successful!");
+            }
+    //通过查询语句获取数据列表
+    
+                NSFetchRequest* request=[[NSFetchRequest alloc] init];
+                NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+                [request setEntity:JobModelList];
+                NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if(mutableFetchResult.count>0)
+    {
+        SaveJobModel *model = [mutableFetchResult objectAtIndex:0];
+        NSLog(@"%@",model.saveClass);
+
+    }
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[OnlineJobHttp getInstance]GetStuHWListWithStuId:@"5236709"];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
+    
     //获取执教班级
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CommMsgRevicerUnitList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CommMsgRevicerUnitList:) name:@"CommMsgRevicerUnitList" object:nil];
-    
+//    [[OnlineJobHttp getInstance]GetStuHWListWithStuId:@""];
 //    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:[self getPublishJobModel]];
-    [[LoginSendHttp getInstance]login_CommMsgRevicerUnitList];
+//    [[LoginSendHttp getInstance]login_CommMsgRevicerUnitList];
 //    [[OnlineJobHttp getInstance]GetGradeList];
 //    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:@"1" subCode:@"1" uId:@"418" flag:@"2"];
-    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5236705"];
+//    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:@"1" teacherJiaobaohao:@"5236705"];
 
-//    NSError* error;
-//    //添加 删除 获取数据库的标志
-//    //从appdelegate获取数据数据库上下文
-//    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-//    //通过查询语句获取数据列表
-//    
-//        NSFetchRequest* request=[[NSFetchRequest alloc] init];
-//        NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"JobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-//        [request setEntity:JobModelList];
-//        NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-//    
-//    //数据库添加数据
-//       self.JobModelList = (JobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"JobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-//
-//    
-//        //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
-//        BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
-//        if (!isSaveSuccess)
-//        {
-//            NSLog(@"Error:%@",error);
-//        }else{
-//            NSLog(@"Save successful!");
-//        }
+
     
     //获取年级列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetGradeList" object:nil];
@@ -707,8 +727,8 @@
                 
                 //添加图片点击事件
                 //若是需要重用，需要写上以下两句代码
-                UINib * n= [UINib nibWithNibName:@"OtherItemsCell" bundle:[NSBundle mainBundle]];
-                [self.mTableV_work registerNib:n forCellReuseIdentifier:OtherItemIdentifer];
+//                UINib * n= [UINib nibWithNibName:@"OtherItemsCell" bundle:[NSBundle mainBundle]];
+//                [self.mTableV_work registerNib:n forCellReuseIdentifier:OtherItemIdentifer];
             }
             
             [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
@@ -820,7 +840,10 @@
         {
             OtherItemsCell *cell0 = (OtherItemsCell*)cell;
             cell0.titleLabel.text = @"标题更改:";
-            cell0.textField.text = @"如何学习正确的学习方法";
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+            NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];;
+            cell0.textField.text = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
             self.titleTF.text = cell0.textField.text;
             
         }
@@ -828,7 +851,10 @@
         {
             OtherItemsCell *cell0 = (OtherItemsCell*)cell;
             cell0.titleLabel.text = @"截止时间:";
-            cell0.textField.text = @"2015-10-19";
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+            NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+            cell0.textField.text = dateStr;
             cell0.textField.inputView = self.datePicker;
             self.dateTF = cell0.textField;
             cell0.textField.inputAccessoryView = self.toolBar;
@@ -1060,6 +1086,8 @@
 {
     self.mInt_parent = (int)tag0;
     self.mInt_feedback = (int)tag1;
+    self.publishJobModel.IsQsSms = tag0;
+    self.publishJobModel.IsRep = tag1;
 }
 
 //班级cell的回调
@@ -1242,7 +1270,7 @@
 - (IBAction)doneBtnAction:(id)sender {
     [self.dateTF resignFirstResponder];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
     NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
     self.dateTF.text = dateStr;
     
@@ -1251,6 +1279,13 @@
 - (IBAction)publishJobAction:(id)sender {
     self.publishJobModel.homeworkName = self.titleTF.text;
     self.publishJobModel.ExpTime = self.dateTF.text;
+    self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
+    int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
+    self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
+    self.publishJobModel.Additional = @"";
+    self.publishJobModel.AdditionalDes = @"";
+//    self.publishJobModel.schoolName = [dm getInstance].mStr_unit;
+//    self.publishJobModel.TecName = [dm getInstance].name;
     if(self.publishJobModel.classIDArr.count == 0)
     {
         [MBProgressHUD showError:@"请选择班级"];
@@ -1281,7 +1316,15 @@
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
     }
-    [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
+    for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
+    {
+        TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
+        //self.publishJobModel.classID =
+        self.publishJobModel.className = model.mStr_className;
+        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+        [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
+
+    }
     
 }
 @end
