@@ -432,7 +432,7 @@
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             return idenModel.UserUnits.count;
-        }else if ([idenModel.RoleIdentity intValue]==3) {
+        }else if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
             return idenModel.UserClasses.count;
         }
     }
@@ -473,7 +473,7 @@
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:row];
             cell.textLabel.text = userUnitsModel.UnitName;
-        }else if ([idenModel.RoleIdentity intValue]==3) {
+        }else if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
             Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:row];
             cell.textLabel.text = userUnitsModel.ClassName;
         }
@@ -510,7 +510,7 @@
             [dm getInstance].UID = [userUnitsModel.UnitID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.UnitName;
             [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
-        }else if ([idenModel.RoleIdentity intValue]==3) {
+        }else if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
             Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:indexPath.row];
             [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.ClassName;

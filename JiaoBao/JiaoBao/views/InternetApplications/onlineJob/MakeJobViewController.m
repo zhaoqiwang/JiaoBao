@@ -20,7 +20,7 @@
 #import "PublishJobModel.h"
 #import "utils.h"
 #import "PublishJobCellTableViewCell.h"
-#import "SaveJobModel+CoreDataProperties.h"
+#import "SaveJobModel.h"
 #import "SaveClassModel.h"
 
 
@@ -71,16 +71,26 @@
                         self.mInt_index++;
                         UserClassModel *model = [array objectAtIndex:m];
                         TreeJob_class_model *temp1 =[[TreeJob_class_model alloc]init];
-                        temp1.mStr_className = model.ClassName;
+                        
+                        for (int i=0; i<[dm getInstance].identity.count; i++) {
+                            Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
+                            if ([idenModel.RoleIdentity intValue]==2) {
+                                for (int m=0; m<idenModel.UserUnits.count; m++) {
+                                    Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:m];
+                                    if ([userUnitsModel.UnitID intValue] ==[model.SchoolID intValue]) {
+                                        temp1.mStr_className = [NSString stringWithFormat:@"%@[%@]",model.ClassName,userUnitsModel.UnitName];
+                                    }
+                                }
+                            }
+                        }
                         temp1.mInt_difficulty = 1;//难度
                         temp1.mInt_class = 0;//是否选中
                         temp1.mStr_tableId = model.ClassID;
                         node1.nodeData = temp1;
                         //插入数据
-                        [node0.sonNodes addObject:node1];
+//                        [node0.sonNodes addObject:node1];
+                        [node0.sonNodes insertObject:node1 atIndex:0];
                     }
-                    //统一作业，插入单独的难度行
-                    [node0.sonNodes addObject:self.sigleClassNode];
                 }
             }
         }
@@ -200,16 +210,32 @@
     
     self.mTableV_work.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
-    //统一作业，插入单独的难度行
-    [self sigleDifficulty];
-    
     //添加默认数据
     [self addDefaultData];
+    //统一作业，插入单独的难度行
+    [self sigleDifficulty];
+    //插入数据
+    for (int i=0; i<self.mArr_sumData.count; i++) {
+        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+        if (node0.flag == 1) {
+            //统一作业，插入单独的难度行
+            [node0.sonNodes addObject:self.sigleClassNode];
+        }
+    }
     [self reloadDataForDisplayArray];//初始化将要显示的数据
     //获取年级列表
     [[OnlineJobHttp getInstance]GetGradeList];
     //关联班级
-    [[ShareHttp getInstance] shareHttpGetMyUserClassWith:[dm getInstance].jiaoBaoHao UID:@"0" Section:@"4"];
+    for (int i=0; i<[dm getInstance].identity.count; i++) {
+        Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
+        if ([idenModel.RoleIdentity intValue]==2) {
+            for (int m=0; m<idenModel.UserUnits.count; m++) {
+                Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:m];
+                D("douifghdoj-====%@",userUnitsModel.UnitID);
+                [[ShareHttp getInstance] shareHttpGetMyUserClassWith:[dm getInstance].jiaoBaoHao UID:userUnitsModel.UnitID Section:@"4"];
+            }
+        }
+    }
 }
 
 //添加默认数据
