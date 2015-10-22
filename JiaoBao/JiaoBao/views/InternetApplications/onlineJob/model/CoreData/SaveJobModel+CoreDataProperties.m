@@ -42,14 +42,14 @@
 @dynamic tecName;
 @dynamic versionID;
 @dynamic versionName;
-//@dynamic saveClass;
-//-(void)addSaveClassObject:(SaveClassModel *)value
-//{
-//    NSMutableOrderedSet *saveClass = [self.saveClass mutableCopy];
-//    [saveClass addObject:value];
-//    self.saveClass = [saveClass copy];
-//
-//    
-//}
+@dynamic saveClass;
+-(void)addSaveClassObject:(SaveClassModel *)value
+{
+    NSMutableOrderedSet *saveClass = [self.saveClass mutableCopy];
+    [saveClass addObject:value];
+    self.saveClass = [saveClass copy];
+
+    
+}
 
 @end

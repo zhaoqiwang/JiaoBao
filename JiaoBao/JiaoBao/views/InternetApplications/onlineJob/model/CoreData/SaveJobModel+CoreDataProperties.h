@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *tecName;
 @property (nullable, nonatomic, retain) NSString *versionID;
 @property (nullable, nonatomic, retain) NSString *versionName;
-//@property (nullable, nonatomic, retain) NSSet<SaveClassModel *> *saveClass;
+@property (nullable, nonatomic, retain) NSSet<SaveClassModel *> *saveClass;
 
 @end
 
@@ -53,8 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addSaveClassObject:(SaveClassModel *)value;
 - (void)removeSaveClassObject:(SaveClassModel *)value;
-//- (void)addSaveClass:(NSSet<SaveClassModel *> *)values;
-//- (void)removeSaveClass:(NSSet<SaveClassModel *> *)values;
+- (void)addSaveClass:(NSSet<SaveClassModel *> *)values;
+- (void)removeSaveClass:(NSSet<SaveClassModel *> *)values;
 
 @end
 
