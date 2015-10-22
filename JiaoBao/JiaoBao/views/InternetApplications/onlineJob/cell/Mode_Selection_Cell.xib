@@ -20,21 +20,9 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KD4-Dc-0H0">
-                        <rect key="frame" x="93" y="10" width="58" height="22"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                        <state key="normal" title="个性" image="blank.png">
-                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <state key="selected" image="selected.png"/>
-                        <connections>
-                            <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wr5-EJ-hAh"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pe2-fT-Imh">
-                        <rect key="frame" x="159" y="11" width="65" height="22"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="148" y="11" width="49" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                         <state key="normal" title="统一" image="blank.png">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,9 +32,21 @@
                             <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="S2V-hR-7tv"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAO-SF-Xvj">
+                        <rect key="frame" x="196" y="11" width="53" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
+                        <state key="normal" title="AB卷" image="blank.png">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" image="selected.png"/>
+                        <connections>
+                            <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FeO-Jk-9PV"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ci2-MP-Vyj">
-                        <rect key="frame" x="227" y="11" width="85" height="22"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="252" y="11" width="60" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                         <state key="normal" title="自定义" image="blank.png">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -56,9 +56,22 @@
                             <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GFY-Tk-yem"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KD4-Dc-0H0">
+                        <rect key="frame" x="93" y="11" width="47" height="22"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
+                        <state key="normal" title="个性" image="blank.png">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" image="selected.png"/>
+                        <connections>
+                            <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wr5-EJ-hAh"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="abButton" destination="fAO-SF-Xvj" id="KJX-OE-hcp"/>
                 <outlet property="characterButton" destination="KD4-Dc-0H0" id="kUC-hG-P8Z"/>
                 <outlet property="customButton" destination="Ci2-MP-Vyj" id="mVB-rE-7tB"/>
                 <outlet property="sameButton" destination="Pe2-fT-Imh" id="vIe-aP-0T5"/>

@@ -16,7 +16,8 @@
     self.customButton.selected = NO;
     self.characterButton.tag = 0;
     self.sameButton.tag = 1;
-    self.customButton.tag = 2;
+    self.abButton.tag = 2;
+    self.customButton.tag = 3;
     // Initialization code
 }
 
@@ -33,6 +34,7 @@
         btn.selected = YES;
         self.sameButton.selected = NO;
         self.customButton.selected = NO;
+        self.abButton.selected = NO;
 
 
     }
@@ -41,13 +43,26 @@
         btn.selected = YES;
         self.characterButton.selected = NO;
         self.customButton.selected = NO;
+        self.abButton.selected = NO;
+
     }
     if([btn isEqual:self.customButton])
     {
         btn.selected = YES;
         self.sameButton.selected = NO;
         self.characterButton.selected = NO;
+        self.abButton.selected = NO;
+
+    }
+    if([btn isEqual:self.abButton])
+    {
+        btn.selected = YES;
+        self.sameButton.selected = NO;
+        self.characterButton.selected = NO;
+        self.customButton.selected = NO;
     }
     [self.delegate modeSelectionActionWithButtonTag:btn.tag];
+}
+- (IBAction)abBtnAction:(id)sender {
 }
 @end
