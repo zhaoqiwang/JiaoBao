@@ -774,7 +774,7 @@
             }
             else if (node.flag == 11)
             {
-                return 70;
+                return 150;
             }
         }else if (self.mInt_modeSelect==2){//自定义作业
             if (node.flag==6||node.flag==7) {
