@@ -9,6 +9,12 @@
 #import "PublishJobModel.h"
 #import <objc/runtime.h>
 @implementation PublishJobModel
+-(instancetype)init
+{
+    self = [super init];
+    self.classIDArr = [[NSMutableArray alloc]initWithCapacity:0];
+    return self;
+}
 /* 获取对象的所有属性 以及属性值 */
 - (NSDictionary *)propertiesDic
 {

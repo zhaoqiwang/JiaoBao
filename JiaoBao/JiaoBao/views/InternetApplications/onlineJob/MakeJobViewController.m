@@ -121,46 +121,45 @@
 }
 -(void)TecMakeHWWithPublishJobModel:(id)sender
 {
-        NSError* error;
-        //从appdelegate获取数据数据库上下文
-        self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    
-        //数据库添加数据
-           self.saveJobModel = (SaveJobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-           self.saveJobModel.gradeName = @"一年级";
-    SaveClassModel *saveClassModel = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-    saveClassModel.classNam = @"一班";
-    SaveClassModel *saveClassModel2 = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-    saveClassModel2.classNam = @"二班";
-    [self.saveJobModel addSaveClassObject:saveClassModel];
-    [self.saveJobModel addSaveClassObject:saveClassModel2];
-    
-            //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
-            BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
-            if (!isSaveSuccess)
-            {
-                NSLog(@"Error:%@",error);
-            }else{
-                NSLog(@"Save successful!");
-            }
-    //通过查询语句获取数据列表
-    
-                NSFetchRequest* request=[[NSFetchRequest alloc] init];
-                NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-                [request setEntity:JobModelList];
-                NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    if(mutableFetchResult.count>0)
-    {
-        SaveJobModel *model = [mutableFetchResult objectAtIndex:0];
-//        NSLog(@"%@",model.saveClass);
-
-    }
+//        NSError* error;
+//        //从appdelegate获取数据数据库上下文
+//        self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+//    
+//        //数据库添加数据
+//           self.saveJobModel = (SaveJobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//           self.saveJobModel.gradeName = @"一年级";
+//    SaveClassModel *saveClassModel = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//    saveClassModel.classNam = @"一班";
+//    SaveClassModel *saveClassModel2 = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//    saveClassModel2.classNam = @"二班";
+//    [self.saveJobModel addSaveClassObject:saveClassModel];
+//    [self.saveJobModel addSaveClassObject:saveClassModel2];
+//    
+//            //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
+//            BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
+//            if (!isSaveSuccess)
+//            {
+//                NSLog(@"Error:%@",error);
+//            }else{
+//                NSLog(@"Save successful!");
+//            }
+//    //通过查询语句获取数据列表
+//    
+//                NSFetchRequest* request=[[NSFetchRequest alloc] init];
+//                NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+//                [request setEntity:JobModelList];
+//                NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+//    if(mutableFetchResult.count>0)
+//    {
+//        SaveJobModel *model = [mutableFetchResult objectAtIndex:0];
+////        NSLog(@"%@",model.saveClass);
+//
+//    }
     
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
     
@@ -184,6 +183,20 @@
     self.mArr_display = [NSMutableArray array];
     self.mInt_index = 0;
     self.publishJobModel = [[PublishJobModel alloc] init];
+    self.publishJobModel.HwType = @"1";
+    self.publishJobModel.Additional = @"";
+    self.publishJobModel.AdditionalDes = @"";
+    self.publishJobModel.schoolName = [dm getInstance].mStr_unit;
+    self.publishJobModel.TecName = [dm getInstance].TrueName;
+    self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
+    self.publishJobModel.homeworkName = @"";
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    self.publishJobModel.ExpTime = dateStr;
+    self.publishJobModel.DesId = @"";
+    self.publishJobModel.Distribution = @"";
+    self.publishJobModel.LongTime = @"";
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"布置作业"];
@@ -544,6 +557,10 @@
             }
         }
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
     [self reloadDataForDisplayArray];
     //获取自定义作业
     if (self.mInt_modeSelect ==3) {
@@ -552,6 +569,7 @@
             [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
         }
     }
+    
 }
 
 //统一作业，插入单独的难度行
@@ -832,6 +850,10 @@
             if (node.flag==6||node.flag==7) {
                 return 0;
             }
+            else if (node.flag == 11)
+            {
+                return 150;
+            }
         }
         return 44;
     }else if (node.type == 1){
@@ -900,21 +922,22 @@
         {
             OtherItemsCell *cell0 = (OtherItemsCell*)cell;
             cell0.titleLabel.text = @"标题更改:";
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-            NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];;
-            cell0.textField.text = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
-            self.titleTF.text = cell0.textField.text;
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+//            [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//            NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];;
+//            cell0.textField.text = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
+            cell0.textField.text = self.publishJobModel.homeworkName;
+            self.titleTF = cell0.textField;
             
         }
         else if (node.flag == 200)
         {
             OtherItemsCell *cell0 = (OtherItemsCell*)cell;
             cell0.titleLabel.text = @"截止时间:";
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-            [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
-            NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
-            cell0.textField.text = dateStr;
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+//            [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+//            NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+            cell0.textField.text = self.publishJobModel.ExpTime;
             cell0.textField.inputView = self.datePicker;
             self.dateTF = cell0.textField;
             cell0.textField.inputAccessoryView = self.toolBar;
@@ -1374,6 +1397,10 @@
             }
         }
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
     [self reloadDataForDisplayArray];
     if (tempNode.faType==8) {//点击了自定义作业
         
@@ -1412,15 +1439,27 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField           // became first responder
 {
+//    if([textField isEqual:self.dateTF])
+//    {
+//        textField.inputAccessoryView = self.toolBar;
+//        textField.inputView = self.datePicker;
+//    }
+//    else
+//    {
+//        textField.inputView = nil;
+//        textField.inputAccessoryView = nil;
+//    }
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
     if([textField isEqual:self.dateTF])
     {
-        textField.inputAccessoryView = self.toolBar;
-        textField.inputView = self.datePicker;
+        //self.publishJobModel.ExpTime = textField.text;
     }
     else
     {
-        textField.inputView = nil;
-        textField.inputAccessoryView = nil;
+        self.publishJobModel.homeworkName = textField.text;
+
     }
 }
 
@@ -1437,38 +1476,33 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
     NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
     self.dateTF.text = dateStr;
+    self.publishJobModel.ExpTime = dateStr;
     
 }
 
 - (IBAction)publishJobAction:(id)sender {
     self.publishJobModel.homeworkName = self.titleTF.text;
-    self.publishJobModel.ExpTime = self.dateTF.text;
-    self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
-    self.publishJobModel.Additional = @"";
-    self.publishJobModel.AdditionalDes = @"";
-//    self.publishJobModel.schoolName = [dm getInstance].mStr_unit;
-//    self.publishJobModel.TecName = [dm getInstance].name;
+
     if(self.publishJobModel.classIDArr.count == 0)
     {
         [MBProgressHUD showError:@"请选择班级"];
         return ;
     }
-    if(self.publishJobModel.chapterID)
+    if(!self.publishJobModel.chapterID)
     {
         [MBProgressHUD showError:@"请选择章节"];
         return ;
     }
-    if(self.publishJobModel.DesId)
+    if([self.publishJobModel.HwType isEqualToString:@"3"])
     {
-        if([self.publishJobModel.HwType isEqualToString:@"3"])
-        {
-            [MBProgressHUD showError:@"请选择自定义作业"];
-            return ;
-
+        if([self.publishJobModel.DesId isEqualToString:@""])
+       {
+        [MBProgressHUD showError:@"请选择自定义作业"];
+        return ;
         }
-        
+ 
     }
     if([utils isBlankString:self.publishJobModel.homeworkName])
     {
@@ -1483,12 +1517,21 @@
     for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
     {
         TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
-        //self.publishJobModel.classID =
+        self.publishJobModel.classID = model.mStr_tableId;
         self.publishJobModel.className = model.mStr_className;
         self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+        
         [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
 
     }
+//    self.publishJobModel.ExpTime = @"2015-10-21 09:32:10";
+//    self.publishJobModel.classID =@"72202";
+//    self.publishJobModel.className = @"班级测试001";
+//    self.publishJobModel.DoLv = @"1";
+
+
+   // [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
+
     
 }
 @end
