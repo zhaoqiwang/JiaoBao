@@ -64,18 +64,15 @@ static OnlineJobHttp *onlineJobHttp = nil;
 //            if([flag integerValue]== 0)//获取科目列表
 //            {
                 NSArray *array1 = [ParserJson_OnlineJob parserJsonSubjectList:[dic objectForKey:@"args1"]];
-                NSLog(@"diofgoidshgoi-===000=%@",array1);
                 
 //            }
 //            else if ([flag integerValue]== 1)//获取教版列表
 //            {
                 NSArray *array2 = [ParserJson_OnlineJob parserJsonVersionList:[dic objectForKey:@"args2"]];
-                NSLog(@"diofgoidshgoi-===111=%@",array2);
 //            }
 //            else if ([flag integerValue]== 2)//获取章节列表
 //            {
                 NSArray *array3 = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"]];
-                NSLog(@"diofgoidshgoi-===222=%@",array3);
 //            }
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setValue:flag forKey:@"flag"];
@@ -106,6 +103,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *array = [ParserJson_OnlineJob parserJsonHomeworkList:result];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetDesHWList" object:array];
         D("JSON--------GetDestHWListWithChapterID: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetDestHWListWithChapterID: %@", error);

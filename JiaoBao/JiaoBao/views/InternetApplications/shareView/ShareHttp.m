@@ -506,6 +506,8 @@ static ShareHttp *shareHttp = nil;
             [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClassShow" object:dic];
         }else if ([flag isEqual:@"3"]) {//内务
             [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClassNotice" object:dic];
+        }else if ([flag isEqual:@"4"]) {//布置作业
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitClassNoticeMakeJob" object:dic];
         }
     }else if (_request.tag == 2) {//获取所有班级
         NSString *time = [jsonDic objectForKey:@"Data"];

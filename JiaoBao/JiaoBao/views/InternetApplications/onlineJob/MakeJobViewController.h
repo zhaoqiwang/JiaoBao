@@ -24,8 +24,10 @@
 #import "ChapterModel.h"
 #import "TreeJob_sigleSelect_TableViewCell.h"
 #import "TreeJob_questionCount_TableViewCell.h"
+#import "HomeworkModel.h"
+#import "TreeJob_workTime_TableViewCell.h"
 
-@interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,ModelSelectionCellDelegate,MessageSelectionCellDelegate,TreeJob_class_TableViewCellDelegate,TreeJob_sigleSelect_TableViewCellDelegate,UITextFieldDelegate,TreeJob_questionCount_TableViewCellDelegate>
+@interface MakeJobViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,ModelSelectionCellDelegate,MessageSelectionCellDelegate,TreeJob_class_TableViewCellDelegate,TreeJob_sigleSelect_TableViewCellDelegate,UITextFieldDelegate,TreeJob_questionCount_TableViewCellDelegate,TreeJob_workTime_TableViewCellDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (strong,nonatomic) IBOutlet UITableView *mTableV_work;

@@ -67,10 +67,10 @@
                     
                 }else if (view.tag == sigleBtnView.tag) {
                     view.mInt_flag = 1;
-                    [view.mImg_head setImage:[UIImage imageNamed:@"selected"]];
+                    [view.mImg_head setImage:[UIImage imageNamed:@"sigleSelect1"]];
                 }else{
                     view.mInt_flag = 0;
-                    [view.mImg_head setImage:[UIImage imageNamed:@"blank"]];
+                    [view.mImg_head setImage:[UIImage imageNamed:@"sigleSelect0"]];
                 }
             }
         }

@@ -23,6 +23,7 @@
 @property (nonatomic,strong) SigleBtnView *sigleBtn4;//难度4
 @property (nonatomic,strong) SigleBtnView *sigleBtn5;//难度5
 @property (nonatomic,assign) int mInt_diff;//难度
+@property (nonatomic,strong) NSString *mStr_tableId;//班级id
 @property (weak,nonatomic) id<TreeJob_class_TableViewCellDelegate> delegate;
 @property (nonatomic,assign) int mInt_flag;//判断是点击班级0，难度1，回调里用
 @property (nonatomic,strong) TreeJob_node *node;
