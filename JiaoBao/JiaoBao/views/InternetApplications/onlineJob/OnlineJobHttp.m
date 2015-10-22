@@ -126,6 +126,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
@@ -145,10 +146,10 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
+        D("JSON--------GetStuHWListWithStuId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        D("Error---------TecMakeHWWithPublishJobModel: %@", error);
+        D("Error---------GetStuHWListWithStuId: %@", error);
     }];
     
 }

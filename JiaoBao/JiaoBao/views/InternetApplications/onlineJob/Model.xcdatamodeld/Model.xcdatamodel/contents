@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
-    <entity name="JobModel" representedClassName="JobModel" syncable="YES">
-        <attribute name="chapterSelection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="classSelection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="deadline" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="difficultySelection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="gradeSelection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="jobDuration" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="modeSelection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subjectSelection" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="versionSection" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="SaveClassModel" representedClassName="SaveClassModel" syncable="YES">
+        <attribute name="classID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="classNam" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="doLv" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SaveJobModel" inverseName="saveClass" inverseEntity="SaveJobModel" syncable="YES"/>
     </entity>
-    <entity name="PublishJobModel" representedClassName="PublishJobModel" syncable="YES">
+    <entity name="SaveJobModel" representedClassName="SaveJobModel" syncable="YES">
         <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="additionalDes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="allNum" optional="YES" attributeType="String" syncable="YES"/>
@@ -42,9 +36,10 @@
         <attribute name="tecName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="versionID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="versionName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="saveClass" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SaveClassModel" inverseName="owner" inverseEntity="SaveClassModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="JobModel" positionX="-63" positionY="-27" width="128" height="193"/>
-        <element name="PublishJobModel" positionX="-63" positionY="45" width="128" height="480"/>
+        <element name="SaveJobModel" positionX="-333" positionY="198" width="128" height="493"/>
+        <element name="SaveClassModel" positionX="-54" positionY="360" width="128" height="103"/>
     </elements>
 </model>

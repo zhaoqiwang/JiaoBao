@@ -1,17 +1,19 @@
 //
-//  JobModel.h
+//  SaveClassModel.h
 //  JiaoBao
 //
-//  Created by songyanming on 15/10/19.
+//  Created by songyanming on 15/10/21.
 //  Copyright © 2015年 JSY. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class SaveJobModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JobModel : NSManagedObject
+@interface SaveClassModel : NSManagedObject
 
 // Insert code here to declare functionality of your managed object subclass
 
@@ -19,4 +21,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 NS_ASSUME_NONNULL_END
 
-#import "JobModel+CoreDataProperties.h"
+#import "SaveClassModel+CoreDataProperties.h"

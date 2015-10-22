@@ -1,14 +1,15 @@
 //
-//  JobModel.m
+//  SaveClassModel.m
 //  JiaoBao
 //
-//  Created by songyanming on 15/10/19.
+//  Created by songyanming on 15/10/21.
 //  Copyright © 2015年 JSY. All rights reserved.
 //
 
-#import "JobModel.h"
+#import "SaveClassModel.h"
+#import "SaveJobModel.h"
 
-@implementation JobModel
+@implementation SaveClassModel
 
 // Insert code here to add functionality to your managed object subclass
 
