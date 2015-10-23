@@ -950,6 +950,10 @@
 		F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */; };
 		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
 		F7935A5D1BD9CBB90021A048 /* StuInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7935A601BDA0A6E0021A048 /* GenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A5F1BDA0A6E0021A048 /* GenInfo.m */; settings = {ASSET_TAGS = (); }; };
+		F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A621BDA0EE00021A048 /* StuHWModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7935A661BDA136C0021A048 /* StuHomeWorkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A651BDA136C0021A048 /* StuHomeWorkModel.m */; settings = {ASSET_TAGS = (); }; };
+		F7935A691BDA1BEF0021A048 /* StuHWQsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A681BDA1BEF0021A048 /* StuHWQsModel.m */; settings = {ASSET_TAGS = (); }; };
 		F79B61371B7202A5005FEA44 /* AllCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B612E1B7202A5005FEA44 /* AllCategoryModel.m */; };
 		F79B61381B7202A5005FEA44 /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61301B7202A5005FEA44 /* AnswerModel.m */; };
 		F79B61391B7202A5005FEA44 /* ItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61321B7202A5005FEA44 /* ItemModel.m */; };
@@ -2364,6 +2368,14 @@
 		F78EF1811B215681003B6603 /* unitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unitModel.m; path = views/InternetApplications/personalSpace/unitModel.m; sourceTree = "<group>"; };
 		F7935A5B1BD9CBB90021A048 /* StuInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuInfoModel.h; sourceTree = "<group>"; };
 		F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuInfoModel.m; sourceTree = "<group>"; };
+		F7935A5E1BDA0A6D0021A048 /* GenInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenInfo.h; sourceTree = "<group>"; };
+		F7935A5F1BDA0A6E0021A048 /* GenInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenInfo.m; sourceTree = "<group>"; };
+		F7935A611BDA0EE00021A048 /* StuHWModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuHWModel.h; sourceTree = "<group>"; };
+		F7935A621BDA0EE00021A048 /* StuHWModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuHWModel.m; sourceTree = "<group>"; };
+		F7935A641BDA136C0021A048 /* StuHomeWorkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuHomeWorkModel.h; sourceTree = "<group>"; };
+		F7935A651BDA136C0021A048 /* StuHomeWorkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuHomeWorkModel.m; sourceTree = "<group>"; };
+		F7935A671BDA1BEF0021A048 /* StuHWQsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuHWQsModel.h; sourceTree = "<group>"; };
+		F7935A681BDA1BEF0021A048 /* StuHWQsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuHWQsModel.m; sourceTree = "<group>"; };
 		F79897B11B1571C500A4277F /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj@2x.png"; sourceTree = "<group>"; };
 		F79897B41B1571CD00A4277F /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj@3x.png"; sourceTree = "<group>"; };
 		F79B612D1B7202A5005FEA44 /* AllCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllCategoryModel.h; path = views/InternetApplications/theme/AllCategoryModel.h; sourceTree = "<group>"; };
@@ -4019,6 +4031,14 @@
 				F764F48A1BD4D1070077F55A /* PublishJobModel.m */,
 				F7935A5B1BD9CBB90021A048 /* StuInfoModel.h */,
 				F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */,
+				F7935A5E1BDA0A6D0021A048 /* GenInfo.h */,
+				F7935A5F1BDA0A6E0021A048 /* GenInfo.m */,
+				F7935A611BDA0EE00021A048 /* StuHWModel.h */,
+				F7935A621BDA0EE00021A048 /* StuHWModel.m */,
+				F7935A671BDA1BEF0021A048 /* StuHWQsModel.h */,
+				F7935A681BDA1BEF0021A048 /* StuHWQsModel.m */,
+				F7935A641BDA136C0021A048 /* StuHomeWorkModel.h */,
+				F7935A651BDA136C0021A048 /* StuHomeWorkModel.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -5669,6 +5689,7 @@
 				A75E3FB41B6F64B700284C3D /* AFURLConnectionOperation.m in Sources */,
 				A7AD8C2B19F60CAC002E65FB /* TabbarView.m in Sources */,
 				A773FC2A1A4B9869005F84C2 /* UITableView+DelegateBlocks.m in Sources */,
+				F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */,
 				A78459DD1B7B4D1D00EA7D5D /* IQBarButtonItem.m in Sources */,
 				A79AD7801BAA4C2200F2CE77 /* MyAnswerViewController.m in Sources */,
 				A755E70619F278B900BBDF3D /* ASIHTTPRequest.m in Sources */,
@@ -5742,6 +5763,7 @@
 				A73AD8301A2076A500F68C47 /* SubUnitInfoViewController.m in Sources */,
 				A755E72919F27C8E00BBDF3D /* NSData+Base64.m in Sources */,
 				A78E4A2D1B0C7FD800969D8F /* PopupWindow.m in Sources */,
+				F7935A601BDA0A6E0021A048 /* GenInfo.m in Sources */,
 				A773FC291A4B9869005F84C2 /* UITableView+DataSourceBlocks.m in Sources */,
 				A7781F251AE88EDB00F03AEB /* InsideWorkView.m in Sources */,
 				A77FF02C1A650B3F00DB85E3 /* JSONAPI.m in Sources */,
@@ -5812,6 +5834,7 @@
 				A755E70819F278B900BBDF3D /* ASINetworkQueue.m in Sources */,
 				A755E70D19F278B900BBDF3D /* ASICloudFilesContainerXMLParserDelegate.m in Sources */,
 				F76B64461B1EA440008F6961 /* PatriarchView.m in Sources */,
+				F7935A691BDA1BEF0021A048 /* StuHWQsModel.m in Sources */,
 				F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */,
 				A73CAD6D1A07755B00D6C5AA /* MJRefreshBaseView.m in Sources */,
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
@@ -5848,6 +5871,7 @@
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
+				F7935A661BDA136C0021A048 /* StuHomeWorkModel.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
 				A785F71C1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m in Sources */,
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,

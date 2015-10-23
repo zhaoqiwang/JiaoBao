@@ -56,4 +56,6 @@
 //学生递交作业 参数：作业ID - 试题ID - 学生作答该题的答案
 -(void)StuSubQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId Answer:(NSString*)Answer;
 
+
+
 @end
