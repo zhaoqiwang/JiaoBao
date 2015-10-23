@@ -136,7 +136,60 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
     
 }
-
+//学生个人信息数据接口 参数：用户账号ID - 班级ID
+-(void)getStuInfoWithAccID:(NSString*)AccID UID:(NSString*)UID
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Account/getStuInfo",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"AccID":AccID,@"UID":UID};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------getStuInfoWithAccID: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        NSDictionary *dic = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
+        NSLog(@"dic = %@",dic);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------getStuInfoWithAccID: %@", error);
+    }];
+    
+}
+//家长数据接口 参数：用户账号ID - 班级ID
+-(void)getGenInfoWithAccID:(NSString*)AccID UID:(NSString*)UID
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Account/getGenInfo",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"AccID":AccID,@"UID":UID};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------getGenInfoWithAccID: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        NSDictionary *dic = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
+        NSLog(@"dic = %@",dic);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------getGenInfoWithAccID: %@", error);
+    }];
+    
+}
 //学生获取当前作业列表 参数：学生ID
 -(void)GetStuHWListWithStuId:(NSString*)StuId
 {
@@ -156,6 +209,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
     
 }
+
 //获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID
 -(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId
 {

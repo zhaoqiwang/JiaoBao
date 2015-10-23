@@ -19,6 +19,7 @@
 #import "TFHpple.h"
 #import "IQKeyboardManager.h"
 #import "AirthCommentsListCell.h"
+#import "OnlineJobHttp.h"
 
 @interface CommentViewController ()<UIActionSheetDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;

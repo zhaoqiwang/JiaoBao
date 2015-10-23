@@ -12,8 +12,10 @@
 #import "VersionModel.h"
 #import "ChapterModel.h"
 #import "HomeworkModel.h"
+#import "StuInfoModel.h"
 
 @implementation ParserJson_OnlineJob
+//解析年级
 +(NSMutableArray *)parserJsonGradeList:(NSString *)json
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -31,6 +33,7 @@
     }
     return array;
 }
+//解析科目
 +(NSMutableArray *)parserJsonSubjectList:(NSString *)json
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -49,6 +52,7 @@
     }
     return array;
 }
+//解析教版
 +(NSMutableArray *)parserJsonVersionList:(NSString *)json
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -68,7 +72,7 @@
     return array;
     
 }
-//解析自定义作业
+//解析章节
 +(NSMutableArray *)parserJsonChapterList:(NSString *)json
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -120,6 +124,25 @@
         [array addObject:model];
     }
     return array;
+}
+
++(NSDictionary *)parserJsonStuInfo:(NSString*)json//解析学生信息
+{
+        NSDictionary *dic = [json objectFromJSONString];
+        StuInfoModel *model = [[StuInfoModel alloc] init];
+        model.StudentID = [dic objectForKey:@"StudentID"];
+        model.StdName = [dic objectForKey:@"StdName"];
+        model.Sex = [dic objectForKey:@"Sex"];
+        model.SchoolType = [dic objectForKey:@"SchoolType"];
+        model.GradeYear = [dic objectForKey:@"GradeYear"];
+        model.GradeName = [dic objectForKey:@"GradeName"];
+        model.ClassNo = [dic objectForKey:@"ClassNo"];
+        model.UnitClassID = [dic objectForKey:@"UnitClassID"];
+        model.SchoolID = [dic objectForKey:@"SchoolID"];
+
+        
+    return dic;
+    
 }
 
 @end
