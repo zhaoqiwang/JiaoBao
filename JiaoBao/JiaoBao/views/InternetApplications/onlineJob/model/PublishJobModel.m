@@ -9,10 +9,15 @@
 #import "PublishJobModel.h"
 #import <objc/runtime.h>
 @implementation PublishJobModel
-/* 获取对象的所有属性 以及属性值 */
-- (NSDictionary *)propertiesDic
+-(instancetype)init
 {
-    self.classIDArr = [NSMutableArray array];
+    self = [super init];
+    self.classIDArr = [[NSMutableArray alloc]initWithCapacity:0];
+    return self;
+}
+/* 获取对象的所有属性 以及属性值 */
+- (NSMutableDictionary *)propertiesDic
+{
     NSMutableDictionary *props = [NSMutableDictionary dictionary];
     unsigned int outCount, i;
     objc_property_t *properties = class_copyPropertyList([self class], &outCount);

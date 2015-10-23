@@ -24,10 +24,10 @@
                         <rect key="frame" x="148" y="11" width="49" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                        <state key="normal" title="统一" image="blank.png">
+                        <state key="normal" title="统一" image="sigleSelect0.png">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" image="selected.png"/>
+                        <state key="selected" image="sigleSelect1.png"/>
                         <connections>
                             <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="S2V-hR-7tv"/>
                         </connections>
@@ -36,10 +36,10 @@
                         <rect key="frame" x="196" y="11" width="53" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                        <state key="normal" title="AB卷" image="blank.png">
+                        <state key="normal" title="AB卷" image="sigleSelect0.png">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" image="selected.png"/>
+                        <state key="selected" image="sigleSelect1.png"/>
                         <connections>
                             <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="FeO-Jk-9PV"/>
                         </connections>
@@ -48,10 +48,10 @@
                         <rect key="frame" x="252" y="11" width="60" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                        <state key="normal" title="自定义" image="blank.png">
+                        <state key="normal" title="自定义" image="sigleSelect0.png">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" image="selected.png"/>
+                        <state key="selected" image="sigleSelect1.png"/>
                         <connections>
                             <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="GFY-Tk-yem"/>
                         </connections>
@@ -60,10 +60,10 @@
                         <rect key="frame" x="93" y="11" width="47" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                        <state key="normal" title="个性" image="blank.png">
+                        <state key="normal" title="个性" image="sigleSelect0.png">
                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" image="selected.png"/>
+                        <state key="selected" image="sigleSelect1.png"/>
                         <connections>
                             <action selector="modeSelectionAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wr5-EJ-hAh"/>
                         </connections>
@@ -80,7 +80,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="blank.png" width="14" height="14"/>
-        <image name="selected.png" width="14" height="14"/>
+        <image name="sigleSelect0.png" width="14" height="14"/>
+        <image name="sigleSelect1.png" width="14" height="14"/>
     </resources>
 </document>
