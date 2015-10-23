@@ -122,14 +122,17 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    NSDictionary *parameters = [publishJobModel propertiesDic];
+    NSMutableDictionary *parameters = [publishJobModel propertiesDic];
+    [parameters removeObjectForKey:@"classIDArr"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
+        [MBProgressHUD showSuccess:@"发布成功"];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
+        [MBProgressHUD showError:@"发布失败"];
     }];
     
 }
@@ -153,6 +156,60 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
     
 }
+//获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID
+-(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@HwInfoId",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"HwInfoId":HwInfoId};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuHWListWithStuId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetStuHWListWithStuId: %@", error);
+    }];
+    
+}
 
-
+//获取某作业下某题的作业题及答案 参数：作业ID - 试题ID
+-(void)GetStuHWQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWQs",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"HwInfoId":HwInfoId,@"QsId":QsId};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuHWListWithStuId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetStuHWListWithStuId: %@", error);
+    }];
+}
+//学生递交作业 参数：作业ID - 试题ID - 学生作答该题的答案
+-(void)StuSubQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId Answer:(NSString*)Answer
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@StuSubQs",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"HwInfoId":HwInfoId,@"QsId":QsId,@"Answer":Answer};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuHWListWithStuId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetStuHWListWithStuId: %@", error);
+    }];
+}
 @end

@@ -199,7 +199,6 @@
     self.publishJobModel.schoolName = [dm getInstance].mStr_unit;
     self.publishJobModel.TecName = [dm getInstance].TrueName;
     self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
-    self.publishJobModel.homeworkName = @"";
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
     NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
@@ -1507,7 +1506,6 @@
 }
 
 - (IBAction)publishJobAction:(id)sender {
-    self.publishJobModel.homeworkName = self.titleTF.text;
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
 

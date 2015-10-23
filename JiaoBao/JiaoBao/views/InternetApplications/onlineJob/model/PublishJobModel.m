@@ -16,9 +16,8 @@
     return self;
 }
 /* 获取对象的所有属性 以及属性值 */
-- (NSDictionary *)propertiesDic
+- (NSMutableDictionary *)propertiesDic
 {
-    self.classIDArr = [NSMutableArray array];
     NSMutableDictionary *props = [NSMutableDictionary dictionary];
     unsigned int outCount, i;
     objc_property_t *properties = class_copyPropertyList([self class], &outCount);

@@ -33,13 +33,22 @@
 //获取老师的自定义作业列表
 -(void)GetDesHWListWithChapterID:(NSString*)ChapterID teacherJiaobaohao:(NSString*)teacherJiaobaohao;
 
-
-
 //老师发布作业接口
 //发布作业的参数在PublishJobModel里
 -(void)TecMakeHWWithPublishJobModel:(PublishJobModel*)publishJobModel;
 
+/*学生接口*/
+
 //学生获取当前作业列表 参数：学生ID
 -(void)GetStuHWListWithStuId:(NSString*)StuId;
+
+//获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID
+-(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId;
+
+//获取某作业下某题的作业题及答案 参数：作业ID - 试题ID
+-(void)GetStuHWQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId;
+
+//学生递交作业 参数：作业ID - 试题ID - 学生作答该题的答案
+-(void)StuSubQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId Answer:(NSString*)Answer;
 
 @end
