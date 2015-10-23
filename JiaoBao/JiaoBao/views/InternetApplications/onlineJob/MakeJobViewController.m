@@ -79,6 +79,7 @@
                                     Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:m];
                                     if ([userUnitsModel.UnitID intValue] ==[model.SchoolID intValue]) {
                                         temp1.mStr_className = [NSString stringWithFormat:@"%@[%@]",model.ClassName,userUnitsModel.UnitName];
+                                        temp1.mStr_schoolName = userUnitsModel.UnitName;
                                     }
                                 }
                             }
@@ -1189,7 +1190,12 @@
     {
         self.publishJobModel.HwType = @"3";
     }
-    
+    //获取自定义作业
+    if (self.mInt_modeSelect ==3) {
+        if ([self.publishJobModel.chapterID intValue]>0) {
+            [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+        }
+    }
     [self reloadDataForDisplayArray];
 }
 
@@ -1422,6 +1428,7 @@
 
 //导航条返回按钮回调
 -(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = NO;//控制整个功能是否启用
