@@ -13,6 +13,8 @@
 #import "define_constant.h"
 #import "MBProgressHUD.h"
 #import "KnowledgeHttp.h"
+#import "dm.h"
+#import "OnlineJobHttp.h"
 
 @interface CategoryViewController ()
 @property(nonatomic,strong)NSArray *myAttCateArr;
@@ -109,6 +111,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [[OnlineJobHttp getInstance]getStuInfoWithAccID:@"723609" UID:@"72202"];
+//    [[OnlineJobHttp getInstance]getGenInfoWithAccID:@"5236710" UID:@"72202"];
+
     self.mArr_addBtnSel = [[NSMutableArray alloc]init];
 
     if([self.classStr isEqualToString:@"ThemeView"])

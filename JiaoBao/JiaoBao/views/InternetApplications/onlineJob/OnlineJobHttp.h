@@ -38,6 +38,11 @@
 -(void)TecMakeHWWithPublishJobModel:(PublishJobModel*)publishJobModel;
 
 /*学生接口*/
+//学生个人信息数据接口 参数：用户账号ID - 班级ID
+-(void)getStuInfoWithAccID:(NSString*)AccID UID:(NSString*)UID;
+
+//家长数据接口 参数：用户账号ID - 班级ID
+-(void)getGenInfoWithAccID:(NSString*)AccID UID:(NSString*)UID;
 
 //学生获取当前作业列表 参数：学生ID
 -(void)GetStuHWListWithStuId:(NSString*)StuId;
@@ -50,5 +55,7 @@
 
 //学生递交作业 参数：作业ID - 试题ID - 学生作答该题的答案
 -(void)StuSubQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId Answer:(NSString*)Answer;
+
+
 
 @end
