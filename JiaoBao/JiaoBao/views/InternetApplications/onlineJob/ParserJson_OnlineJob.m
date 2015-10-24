@@ -206,7 +206,7 @@
     
 }
 
-+(NSDictionary *)parserJsonStuHW:(NSString*)json//解析当前作业详细信息
++(StuHomeWorkModel *)parserJsonStuHW:(NSString*)json//解析当前作业详细信息
 {
     NSDictionary *dic = [json objectFromJSONString];
     StuHomeWorkModel *model = [[StuHomeWorkModel alloc] init];
@@ -229,9 +229,9 @@
     model.QsIdQId = [dic objectForKey:@"QsIdQId"];
     
     
-    return dic;
+    return model;
 }
-+(NSDictionary *)parserJsonStuHWQs:(NSString*)json//解析某作业下某题的作业题及答案
++(StuHWQsModel *)parserJsonStuHWQs:(NSString*)json//解析某作业下某题的作业题及答案
 {
     NSDictionary *dic = [json objectFromJSONString];
     StuHWQsModel *model = [[StuHWQsModel alloc] init];
@@ -244,7 +244,7 @@
     model.QsId = [numberFormatter stringFromNumber:[dic objectForKey:@"QsId"]];
     model.QId = [numberFormatter stringFromNumber:[dic objectForKey:@"QId"]];
     model.QsT = [numberFormatter stringFromNumber:[dic objectForKey:@"QsT"]];
-    return dic;
+    return model;
     
     
 }

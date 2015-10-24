@@ -8,6 +8,8 @@
 
 #import "OnlineJobHttp.h"
 #import "ParserJson_OnlineJob.h"
+#import "StuHWQsModel.h"
+#import "StuHomeWorkModel.h"
 static OnlineJobHttp *onlineJobHttp = nil;
 
 @implementation OnlineJobHttp
@@ -222,7 +224,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWWithHwInfoId: %@,", result);
-        NSDictionary *dic = [ParserJson_OnlineJob parserJsonStuHW:result];
+        StuHomeWorkModel *model = [ParserJson_OnlineJob parserJsonStuHW:result];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------GetStuHWWithHwInfoId: %@", error);
@@ -243,7 +245,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWQsWithHwInfoId: %@,", result);
-        NSDictionary *dic = [ParserJson_OnlineJob parserJsonStuHWQs:result];
+        StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------GetStuHWQsWithHwInfoId: %@", error);

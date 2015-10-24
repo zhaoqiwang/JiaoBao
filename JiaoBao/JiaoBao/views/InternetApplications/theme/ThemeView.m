@@ -847,13 +847,13 @@
             cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
             RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
             cell.mLab_title.componentsAndPlainText = componentsDS;
-//            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
+            //cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 50);
 //            CGSize titleSize = [cell.mLab_title optimumSize];
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
-                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, 23);
+                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40-33, 30);
 //                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
@@ -861,7 +861,7 @@
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
-                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
+                    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 25);
 //                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
