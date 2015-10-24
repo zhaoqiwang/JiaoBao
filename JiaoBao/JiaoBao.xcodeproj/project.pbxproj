@@ -559,6 +559,10 @@
 		A76F21751B7DDC4C00D957E0 /* RecommentAddAnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A76F21741B7DDC4C00D957E0 /* RecommentAddAnswerModel.m */; };
 		A76F21791B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A76F21771B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.m */; };
 		A76F217A1B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76F21781B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.xib */; };
+		A76F8FF21BDA165300C84186 /* StudentHomewrokViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A76F8FF01BDA165300C84186 /* StudentHomewrokViewController.m */; };
+		A76F8FF31BDA165300C84186 /* StudentHomewrokViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76F8FF11BDA165300C84186 /* StudentHomewrokViewController.xib */; };
+		A76F8FF81BDA2AF200C84186 /* StudentHomework_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A76F8FF61BDA2AF200C84186 /* StudentHomework_TableViewCell.m */; };
+		A76F8FF91BDA2AF200C84186 /* StudentHomework_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76F8FF71BDA2AF200C84186 /* StudentHomework_TableViewCell.xib */; };
 		A7700A941A26D3F6003B532A /* ShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7700A931A26D3F6003B532A /* ShowView.m */; };
 		A77017701BD87C01007EAFD9 /* SaveJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A770176F1BD87C01007EAFD9 /* SaveJobModel.m */; };
 		A77116021A4D11930042CB91 /* noPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = A77115FF1A4D11930042CB91 /* noPhoto.png */; };
@@ -1803,6 +1807,12 @@
 		A76F21761B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnowledgeRecommentAddAnswerViewController.h; path = views/InternetApplications/theme/Knowledge/KnowledgeRecommentAddAnswerViewController.h; sourceTree = "<group>"; };
 		A76F21771B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KnowledgeRecommentAddAnswerViewController.m; path = views/InternetApplications/theme/Knowledge/KnowledgeRecommentAddAnswerViewController.m; sourceTree = "<group>"; };
 		A76F21781B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KnowledgeRecommentAddAnswerViewController.xib; path = views/InternetApplications/theme/Knowledge/KnowledgeRecommentAddAnswerViewController.xib; sourceTree = "<group>"; };
+		A76F8FEF1BDA165300C84186 /* StudentHomewrokViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentHomewrokViewController.h; sourceTree = "<group>"; };
+		A76F8FF01BDA165300C84186 /* StudentHomewrokViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentHomewrokViewController.m; sourceTree = "<group>"; };
+		A76F8FF11BDA165300C84186 /* StudentHomewrokViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentHomewrokViewController.xib; sourceTree = "<group>"; };
+		A76F8FF51BDA2AF200C84186 /* StudentHomework_TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudentHomework_TableViewCell.h; sourceTree = "<group>"; };
+		A76F8FF61BDA2AF200C84186 /* StudentHomework_TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudentHomework_TableViewCell.m; sourceTree = "<group>"; };
+		A76F8FF71BDA2AF200C84186 /* StudentHomework_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentHomework_TableViewCell.xib; sourceTree = "<group>"; };
 		A7700A921A26D3F6003B532A /* ShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowView.h; path = views/InternetApplications/show/ShowView.h; sourceTree = "<group>"; };
 		A7700A931A26D3F6003B532A /* ShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowView.m; path = views/InternetApplications/show/ShowView.m; sourceTree = "<group>"; };
 		A770176E1BD87C01007EAFD9 /* SaveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveJobModel.h; path = JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveJobModel.h; sourceTree = "<group>"; };
@@ -3909,6 +3919,28 @@
 			name = newWork;
 			sourceTree = "<group>";
 		};
+		A76F8FEE1BDA15DD00C84186 /* student */ = {
+			isa = PBXGroup;
+			children = (
+				A76F8FF41BDA2ACE00C84186 /* cell */,
+				A76F8FEF1BDA165300C84186 /* StudentHomewrokViewController.h */,
+				A76F8FF01BDA165300C84186 /* StudentHomewrokViewController.m */,
+				A76F8FF11BDA165300C84186 /* StudentHomewrokViewController.xib */,
+			);
+			name = student;
+			path = views/InternetApplications/onlineJob/student;
+			sourceTree = "<group>";
+		};
+		A76F8FF41BDA2ACE00C84186 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				A76F8FF51BDA2AF200C84186 /* StudentHomework_TableViewCell.h */,
+				A76F8FF61BDA2AF200C84186 /* StudentHomework_TableViewCell.m */,
+				A76F8FF71BDA2AF200C84186 /* StudentHomework_TableViewCell.xib */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		A76FED811A2D9BFA009DB8C0 /* exchange */ = {
 			isa = PBXGroup;
 			children = (
@@ -3997,6 +4029,7 @@
 		A7736DB31BCDEBB600CC39A0 /* onlineJob */ = {
 			isa = PBXGroup;
 			children = (
+				A76F8FEE1BDA15DD00C84186 /* student */,
 				F7FFD9EC1BCFA2C0004A691A /* OnlineJobHttp */,
 				A7736DC11BCE098B00CC39A0 /* cell */,
 				A7736DBA1BCE00E400CC39A0 /* model */,
@@ -5338,6 +5371,7 @@
 				A748219819FF2AE500234020 /* MsgDetailViewController.xib in Resources */,
 				F76B643B1B1EA3F5008F6961 /* CommentCell.xib in Resources */,
 				A769C6071B749FBC006C6B76 /* rootTable_1@2x.png in Resources */,
+				A76F8FF91BDA2AF200C84186 /* StudentHomework_TableViewCell.xib in Resources */,
 				A76ED5B81AD67855006F3E0B /* workView_2.png in Resources */,
 				A76ED5B91AD67855006F3E0B /* workView_2@2x.png in Resources */,
 				F7EE1A0B1B78896000B31D79 /* CommentViewController.xib in Resources */,
@@ -5391,6 +5425,7 @@
 				A73AD8351A20824C00F68C47 /* share_tableV_class@2x.png in Resources */,
 				A7BB17E819F4B22000A81286 /* jsyiamsCA.cer in Resources */,
 				A76ED5C31AD67855006F3E0B /* workView_click_0@3x.png in Resources */,
+				A76F8FF31BDA165300C84186 /* StudentHomewrokViewController.xib in Resources */,
 				A77F9F3F1AFCAAC90003E579 /* appNav_dongtai@3x.png in Resources */,
 				A753FAEE1A1DDC0300AB5F22 /* share_tableV_education@2x.png in Resources */,
 				A72B56521A81CC27005EEA9C /* forward_select2@3x.png in Resources */,
@@ -5551,6 +5586,7 @@
 				F71E9D6B1B86BE4A00D90487 /* TFHppleElement.m in Sources */,
 				A7BEEA191A441E10003C9EAD /* UnintAlbumsListViewController.m in Sources */,
 				A73B52B619FB930D00187CB9 /* UnReadMsg_model.m in Sources */,
+				A76F8FF81BDA2AF200C84186 /* StudentHomework_TableViewCell.m in Sources */,
 				A76829631AC6955F003B31EB /* ClassTableViewCell.m in Sources */,
 				F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */,
 				A70E3CA61A1EEFA600E6D0EC /* ArthDetailModel.m in Sources */,
@@ -5897,6 +5933,7 @@
 				A753E51D1A1AF611005A8EED /* TopArthListModel.m in Sources */,
 				A74339571A452B7700AFC0A5 /* UIImage+MultiFormat.m in Sources */,
 				F71803221AB3C46300E6167F /* JTCalendarMenuMonthView.m in Sources */,
+				A76F8FF21BDA165300C84186 /* StudentHomewrokViewController.m in Sources */,
 				A7B0F94E1A47BC4300C1863A /* MJPhotoBrowser.m in Sources */,
 				F79D84DD1ABD4DC000897477 /* SignInModel.m in Sources */,
 				A755E70519F278B900BBDF3D /* ASIFormDataRequest.m in Sources */,

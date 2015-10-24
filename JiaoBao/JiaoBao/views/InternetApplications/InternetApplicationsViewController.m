@@ -545,6 +545,10 @@
                      image:[UIImage imageNamed:@"appNav_contact"]
                     target:self
                     action:@selector(makeJob:)],
+      [KxMenuItem menuItem:@"我的作业"
+                     image:[UIImage imageNamed:@"appNav_contact"]
+                    target:self
+                    action:@selector(myJob:)],
       
       ];
     
@@ -570,6 +574,12 @@
 
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
+}
+
+//我的作业
+-(void)myJob:(id)sender{
+    StudentHomewrokViewController *view = [[StudentHomewrokViewController alloc] init];
+    [utils pushViewController:view animated:YES];
 }
 
 //作业布置
