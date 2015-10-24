@@ -150,7 +150,7 @@
     
 }
 
-+(NSDictionary *)parserJsonGenInfo:(NSString*)json//解析家长信息
++(GenInfo *)parserJsonGenInfo:(NSString*)json//解析家长信息
 {
     NSDictionary *dic = [json objectFromJSONString];
     GenInfo *model = [[GenInfo alloc] init];
@@ -164,7 +164,7 @@
     model.UnitClassID = [dic objectForKey:@"UnitClassID"];
     
     
-    return dic;
+    return model;
     
 }
 
@@ -179,7 +179,27 @@
         model.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID" ]];
         model.homeworkName = [dic objectForKey:@"homeworkName"];
         model.distribution = [dic objectForKey:@"distribution"];
-        model.itemNumber = [numberFormatter stringFromNumber:[dic objectForKey:@"itemNumber" ]];
+        model.itemNumber = [numberFormatter stringFromNumber:[dic objectForKey:@"itemNumber" ]] ;
+        model.HWID = [numberFormatter stringFromNumber:[dic objectForKey:@"HWID"]];
+        model.AccountID = [numberFormatter stringFromNumber:[dic objectForKey:@"AccountID"]];
+        model.isHWFinish = [numberFormatter stringFromNumber:[dic objectForKey:@"isHWFinish"]];
+        model.isAdFinish = [numberFormatter stringFromNumber:[dic objectForKey:@"isAdFinish"]];
+        model.AddEndTime = [dic objectForKey:@"AddEndTime"];
+        model.HWScore = [numberFormatter stringFromNumber:[dic objectForKey:@"HWScore"]];
+        model.EduLevel = [numberFormatter stringFromNumber:[dic objectForKey:@"EduLevel"]];
+        model.HWEndTime = [dic objectForKey:@"HWEndTime"];
+
+//        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
+//        model.studentLevel = [dic objectForKey:@"studentLevel"];
+//        model.jiaobaohao = [dic objectForKey:@"jiaobaohao"];
+//        model.useLongtime = [dic objectForKey:@"useLongtime"];
+//        model.AddStartTime = [dic objectForKey:@"AddStartTime"];
+//        model.CheckNum = [dic objectForKey:@"CheckNum"];
+//        model.CheckTeacher = [dic objectForKey:@"CheckTeacher"];
+//        model.CheckResultJBH = [dic objectForKey:@"CheckResultJBH"];
+//        model.SubjectID = [dic objectForKey:@"SubjectID"];
+
+        
         [array addObject:model];
     }
     return array;

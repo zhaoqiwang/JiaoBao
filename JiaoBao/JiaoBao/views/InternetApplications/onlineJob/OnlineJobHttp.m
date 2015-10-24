@@ -180,7 +180,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        NSDictionary *dic = [ParserJson_OnlineJob parserJsonGenInfo:dataStr];
+        GenInfo *model = [ParserJson_OnlineJob parserJsonGenInfo:dataStr];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

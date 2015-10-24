@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONKit.h"
+#import "GenInfo.h"
 
 
 @interface ParserJson_OnlineJob : NSObject
@@ -17,7 +18,7 @@
 +(NSMutableArray *)parserJsonChapterList:(NSString *)json;//解析章节
 +(NSMutableArray *)parserJsonHomeworkList:(NSString *)json;//解析自定义作业
 +(NSDictionary *)parserJsonStuInfo:(NSString*)json;//解析学生信息
-+(NSDictionary *)parserJsonGenInfo:(NSString*)json;//解析家长信息
++(GenInfo *)parserJsonGenInfo:(NSString*)json;//解析家长信息
 +(NSMutableArray *)parserJsonStuHWList:(NSString*)json;//解析学生当前作业列表
 +(NSDictionary *)parserJsonStuHW:(NSString*)json;//解析当前作业详细信息
 +(NSDictionary *)parserJsonStuHWQs:(NSString*)json;//解析某作业下某题的作业题及答案
