@@ -22,6 +22,7 @@
 #import "VlorNetWorkAPI.h"
 #import "ParserJson_knowledge.h"
 #import "PublishJobModel.h"
+#import "StuInfoModel.h"
 
 @interface OnlineJobHttp : NSObject<ASIHTTPRequestDelegate>
 //单

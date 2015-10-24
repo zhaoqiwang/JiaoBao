@@ -25,6 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    //学生获取当前作业列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetStuHWList:) name:@"GetStuHWList" object:nil];
+    
     self.mArr_homework = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
     
@@ -34,8 +39,8 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(10, self.mNav_navgationBar.frame.size.height, [dm getInstance].width-20-40, 48)];
-    int tempWidth = 50;
+    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48)];
+    int tempWidth = [dm getInstance].width/2;
     for (int i=0; i<2; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
@@ -43,10 +48,13 @@
         if (i==0) {
             btn.selected = YES;
             self.mInt_index = 0;
+            [btn setTitle:@"做作业" forState:UIControlStateNormal];
+        }else{
+            [btn setTitle:@"做练习" forState:UIControlStateNormal];
         }
         [btn setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
         
-        [btn setTitle:@"做作业" forState:UIControlStateNormal];
+        
         [btn setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateSelected];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         [btn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
@@ -54,20 +62,43 @@
         [btn addTarget:self action:@selector(selectScrollButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.mScrollV_all addSubview:btn];
     }
-    self.mScrollV_all.contentSize = CGSizeMake(50*2, 48);
+    self.mScrollV_all.contentSize = CGSizeMake(tempWidth*2, 48);
     [self.view addSubview:self.mScrollV_all];
     
     //
     self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-48);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
-    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
-    self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
-    self.mTableV_list.headerRefreshingText = @"正在刷新...";
-    [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
-    self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
-    self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
-    self.mTableV_list.footerRefreshingText = @"正在加载...";
+//    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
+//    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
+//    self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
+//    self.mTableV_list.headerRefreshingText = @"正在刷新...";
+//    [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+//    self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+//    self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+//    self.mTableV_list.footerRefreshingText = @"正在加载...";
+    
+    //根据角色信息，获取学生id信息
+    for (int i=0; i<[dm getInstance].identity.count; i++) {
+        Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
+        if ([idenModel.RoleIdentity intValue]==4) {
+            for (int m=0; m<idenModel.UserClasses.count; m++) {
+                Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:m];
+                //找到当前登录的班级，然后获取
+                if ([userUnitsModel.ClassID intValue] ==[dm getInstance].UID) {
+                    D("douifghdoj-====%@",userUnitsModel.ClassID);
+                    [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:userUnitsModel.ClassID];
+                }
+            }
+        }
+    }
+}
+
+//学生获取当前作业列表
+-(void)GetDesHWList:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableArray *array = noti.object;
+    [self.mArr_homework addObjectsFromArray:array];
+    [self.mTableV_list reloadData];
 }
 
 -(void)selectScrollButton:(UIButton *)btn{
@@ -115,7 +146,7 @@
         UINib * n= [UINib nibWithNibName:@"StudentHomework_TableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
     }
-    
+    StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
     
     return cell;
 }

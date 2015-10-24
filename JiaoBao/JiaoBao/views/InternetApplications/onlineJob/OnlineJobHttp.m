@@ -154,7 +154,12 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
-        NSDictionary *dic = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
+        D("JSON--------getStuInfoWithAccID111111: %@,", dataStr);
+        StuInfoModel *model = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
+        //获取学生作业列表
+        if ([model.StudentID intValue]>0) {
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:model.StudentID];
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -202,6 +207,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWListWithStuId: %@,", result);
         NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:arr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------GetStuHWListWithStuId: %@", error);

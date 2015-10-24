@@ -131,7 +131,7 @@
     return array;
 }
 
-+(NSDictionary *)parserJsonStuInfo:(NSString*)json//解析学生信息
++(StuInfoModel *)parserJsonStuInfo:(NSString*)json//解析学生信息
 {
         NSDictionary *dic = [json objectFromJSONString];
         StuInfoModel *model = [[StuInfoModel alloc] init];
@@ -146,7 +146,7 @@
         model.SchoolID = [dic objectForKey:@"SchoolID"];
 
         
-    return dic;
+    return model;
     
 }
 

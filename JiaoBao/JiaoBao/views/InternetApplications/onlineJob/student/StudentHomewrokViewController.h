@@ -12,6 +12,10 @@
 #import "utils.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "StudentHomework_TableViewCell.h"
+#import "Identity_model.h"
+#import "Identity_UserClasses_model.h"
+#import "OnlineJobHttp.h"
+#import "StuHWModel.h"
 
 @interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate>
 
