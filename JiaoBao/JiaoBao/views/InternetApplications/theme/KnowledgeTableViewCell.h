@@ -64,6 +64,9 @@
 @property (nonatomic,assign) int mInt_flag;//0是首页model、1是回答列表answerModel，3是精选pickContentModel
 @property (nonatomic,strong) PickContentModel *pickContentModel;//精选
 @property(nonatomic,strong)ShowPickedModel *ShowPickedModel;
+@property (weak, nonatomic) IBOutlet UIImageView *answerImgV;
+@property (weak, nonatomic) IBOutlet UIImageView *basisImagV;
+@property (weak, nonatomic) IBOutlet UIImageView *askImgV;
 
 
 //给标题和答案添加点击事件,赞
