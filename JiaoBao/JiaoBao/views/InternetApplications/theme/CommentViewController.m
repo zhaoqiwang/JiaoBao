@@ -445,7 +445,7 @@
                     UIButton *tempBtnLike = [UIButton buttonWithType:UIButtonTypeCustom];
                     UIButton *tempBtnCai = [UIButton buttonWithType:UIButtonTypeCustom];
                     //显示内容
-                    NSString *tempTitle = [NSString stringWithFormat:@"%@@%@:%@",refModel.JiaoBaoHao,refModel.UserName,refModel.WContent];
+                    NSString *tempTitle = [NSString stringWithFormat:@"%@:%@",refModel.UserName,refModel.WContent];
                     CGSize sizeTitle = [tempTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-90, 99999)];
                     tempLab.frame = CGRectMake(10, 5, sizeTitle.width, sizeTitle.height);
                     tempLab.text = tempTitle;
@@ -779,7 +779,7 @@
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_ATitle.componentsAndPlainText = componentsDS2;
         CGSize optimalSize2 = [cell.mLab_ATitle optimumSize];
-        cell.mLab_ATitle.frame = CGRectMake(9+26, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize2.height);
+        cell.mLab_ATitle.frame = CGRectMake(9+26, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-10-cell.mImgV_head.frame.size.width, optimalSize2.height);
 
     
     //加载webview
