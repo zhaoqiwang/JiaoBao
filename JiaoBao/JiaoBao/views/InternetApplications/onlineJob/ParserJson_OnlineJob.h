@@ -10,6 +10,9 @@
 #import "JSONKit.h"
 #import "StuInfoModel.h"
 #import "GenInfo.h"
+#import "StuHWModel.h"
+#import "StuHomeWorkModel.h"
+#import "StuHWQsModel.h"
 
 
 @interface ParserJson_OnlineJob : NSObject
@@ -21,8 +24,8 @@
 +(StuInfoModel *)parserJsonStuInfo:(NSString*)json;//解析学生信息
 +(GenInfo *)parserJsonGenInfo:(NSString*)json;//解析家长信息
 +(NSMutableArray *)parserJsonStuHWList:(NSString*)json;//解析学生当前作业列表
-+(NSDictionary *)parserJsonStuHW:(NSString*)json;//解析当前作业详细信息
-+(NSDictionary *)parserJsonStuHWQs:(NSString*)json;//解析某作业下某题的作业题及答案
++(StuHomeWorkModel *)parserJsonStuHW:(NSString*)json;//解析当前作业详细信息
++(StuHWQsModel *)parserJsonStuHWQs:(NSString*)json;//解析某作业下某题的作业题及答案
 
 
 
