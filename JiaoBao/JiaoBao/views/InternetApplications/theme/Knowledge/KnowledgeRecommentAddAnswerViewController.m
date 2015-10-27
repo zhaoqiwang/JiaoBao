@@ -74,7 +74,7 @@
 
 -(void)addDetailCell:(RecommentAddAnswerModel *)model{
     self.mView_titlecell.hidden = NO;
-
+    self.mView_titlecell.askImgV.hidden = NO;
     self.mView_titlecell.delegate = self;
     //标题
 //    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
@@ -84,15 +84,16 @@
     NSString *string1 = model.questionModel.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    self.mView_titlecell.askImgV.image = [UIImage imageNamed:@"ask"];
+    self.mView_titlecell.askImgV.frame = CGRectMake(9, 10, 19, 19);
+    NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1 >%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
 //    CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
-    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
-    //详情
+self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- self.mView_titlecell.answerImgV.frame.size.width, 23);    //详情
     self.mView_titlecell.mBtn_detail.hidden = NO;
     [self.mView_titlecell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
     self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
@@ -249,6 +250,7 @@
     }
 //    AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
     cell.RecommentAnswerModel = model;
+    cell.basisImagV.hidden = NO;
     cell.mLab_title.hidden = YES;
     cell.mBtn_detail.hidden = YES;
     //话题
@@ -315,12 +317,29 @@
 //    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
     NSString *name2 = @"";
     if ([model.Flag integerValue]==0) {//无内容
-        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
+        cell.mView_background.hidden = YES;
+        cell.basisImagV.image = [UIImage imageNamed:@"content"];
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
+        cell.basisImagV.hidden = NO;
+        //cell.answerImgV.hidden = YES;
     }else if ([model.Flag integerValue]==1){//有内容
-        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容</font>"];
+        cell.mView_background.hidden = YES;
+        cell.mView_background.frame = cell.mImgV_head.frame;
+        cell.basisImagV.image = [UIImage imageNamed:@"content"];
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
     }else if ([model.Flag integerValue]==2){//有证据
-        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据</font>"];
+        cell.basisImagV.image = [UIImage imageNamed:@"basis"];
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);
     }
+
+
+//    if ([model.Flag integerValue]==0) {//无内容
+//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
+//    }else if ([model.Flag integerValue]==1){//有内容
+//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>内容</font>"];
+//    }else if ([model.Flag integerValue]==2){//有证据
+//        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据</font>"];
+//    }
 //    CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, MAXFLOAT)];
     cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, 21);
     NSMutableDictionary *row2 = [NSMutableDictionary dictionary];

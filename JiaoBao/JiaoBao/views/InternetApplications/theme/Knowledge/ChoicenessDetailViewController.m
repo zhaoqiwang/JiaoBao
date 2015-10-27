@@ -117,6 +117,7 @@
     cell.mLab_title.hidden = NO;
     cell.mView_background.hidden = NO;
     cell.mBtn_detail.hidden = NO;
+    cell.askImgV.hidden = NO;
     //详情
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
 
@@ -135,17 +136,19 @@
 //    cell.mLab_title.numberOfLines =0;
 //    cell.mLab_title.text = string_title;
 //    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    cell.askImgV.image = [UIImage imageNamed:@"ask"];
+    cell.askImgV.frame = CGRectMake(9, 3, 19, 19);
     NSString *string1 = cell.ShowPickedModel.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1 >%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_title.componentsAndPlainText = componentsDS;
 //    CGSize titleSize = [cell.mLab_title optimumSize];
-    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
+    cell.mLab_title.frame = CGRectMake(9+cell.askImgV.frame.size.width, 3, cell.mBtn_detail.frame.origin.x-5-cell.askImgV.frame.size.width, 23);
     cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, 23);
 
  

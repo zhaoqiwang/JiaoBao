@@ -232,16 +232,25 @@
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if([ResultCode integerValue]==0)
+    if(ResultCode)
     {
-        self.delayTime = [[dic objectForKey:@"Data"] integerValue];
+        if([ResultCode integerValue]==0)
+        {
+            if([dic objectForKey:@"Data"])
+            {
+                self.delayTime = [[dic objectForKey:@"Data"] integerValue];
 
+            }
+            
+        }
+        else
+        {
+            [MBProgressHUD showError:@"获取延迟时间失败" toView:self.view];
+            
+        }
+        
     }
-    else
-    {
-        [MBProgressHUD showError:@"获取延迟时间失败" toView:self.view];
 
-    }
 
 }
 //获取组数据列表
@@ -287,7 +296,12 @@
     {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"dd"];
-        NSInteger dayInt = [[dateFormatter stringFromDate:date]integerValue];
+        NSInteger dayInt;
+        if([dateFormatter stringFromDate:date])
+        {
+            dayInt = [[dateFormatter stringFromDate:date]integerValue];
+        }
+        
         NSString *dayString = [NSString stringWithFormat:@"%ld",(long)dayInt];
         if([self.dateArr containsObject:dayString])
         {
