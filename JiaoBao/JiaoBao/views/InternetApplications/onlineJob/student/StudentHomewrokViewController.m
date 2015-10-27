@@ -32,9 +32,10 @@
     
     self.mArr_homework = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
+    self.mInt_index = 0;
     
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"%"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"作业"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -66,7 +67,7 @@
     [self.view addSubview:self.mScrollV_all];
     
     //
-    self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-48);
+    self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-48+[dm getInstance].statusBar);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
 //    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
@@ -83,21 +84,23 @@
         if ([idenModel.RoleIdentity intValue]==4) {
             for (int m=0; m<idenModel.UserClasses.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:m];
+                D("sdrioghagilr;jae;l-====%@,%d",userUnitsModel.ClassID,[dm getInstance].UID);
                 //找到当前登录的班级，然后获取
-                if ([userUnitsModel.ClassID intValue] ==[dm getInstance].UID) {
+//                if ([userUnitsModel.ClassID intValue] ==[dm getInstance].UID) {
                     D("douifghdoj-====%@",userUnitsModel.ClassID);
                     [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:userUnitsModel.ClassID];
-                }
+//                }
             }
         }
     }
 }
 
 //学生获取当前作业列表
--(void)GetDesHWList:(NSNotification *)noti{
+-(void)GetStuHWList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableArray *array = noti.object;
     [self.mArr_homework addObjectsFromArray:array];
+    D("sdfjghakj-====%lu",(unsigned long)self.mArr_homework.count);
     [self.mTableV_list reloadData];
 }
 
@@ -147,15 +150,63 @@
         [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
     }
     StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
+    if ([model.isHaveAdd intValue]==1) {//主观题
+        cell.mImg_pic.frame = CGRectMake(8, 10, 14, 14);
+    }else{
+        cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
+    }
+    //名称
+    cell.mLab_title.text = model.homeworkName;
+    cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 10, [dm getInstance].width-cell.mImg_pic.frame.origin.x-cell.mImg_pic.frame.size.width-10, cell.mLab_title.frame.size.height);
+    //题量
+    cell.mLab_numLab.frame = CGRectMake(8, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.size.height);
+    cell.mLab_num.text = model.itemNumber;
+    CGSize numSize = [model.itemNumber sizeWithFont:[UIFont systemFontOfSize:10]];
+    cell.mLab_num.frame = CGRectMake(cell.mLab_numLab.frame.origin.x+cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.origin.y, numSize.width, cell.mLab_num.frame.size.height);
+    //过期时间
+    cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+20, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
+    cell.mLab_time.text = model.EXPIRYDATE;
+    D("dfuhguhj-====%@,%@",model.EXPIRYDATE,model.isHWFinish);
+    CGSize timeSize = [model.EXPIRYDATE sizeWithFont:[UIFont systemFontOfSize:10]];
+    cell.mLab_time.frame  = CGRectMake(cell.mLab_timeLab.frame.origin.x+cell.mLab_timeLab.frame.size.width, cell.mLab_numLab.frame.origin.y, timeSize.width, cell.mLab_time.frame.size.height);
+    //判断是否做完
+    if ([model.isHWFinish intValue]==1) {//完成
+        cell.mLab_goto.hidden = YES;
+        cell.mLab_power.hidden = NO;
+        cell.mLab_powerLab.hidden = NO;
+        cell.mLab_score.hidden = NO;
+        cell.mLab_scoreLab.hidden = NO;
+        //学力
+        cell.mLab_power.text = model.EduLevel;
+        CGSize EduLevelSize = [model.EduLevel sizeWithFont:[UIFont systemFontOfSize:10]];
+        cell.mLab_power.frame = CGRectMake([dm getInstance].width-9-EduLevelSize.width, cell.mLab_numLab.frame.origin.y, EduLevelSize.width, cell.mLab_power.frame.size.height);
+        cell.mLab_powerLab.frame = CGRectMake(cell.mLab_power.frame.origin.x-cell.mLab_powerLab.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_powerLab.frame.size.width, cell.mLab_powerLab.frame.size.height);
+        //得分
+        cell.mLab_score.text = model.HWScore;
+        CGSize HWScoreSize = [model.HWScore sizeWithFont:[UIFont systemFontOfSize:10]];
+        cell.mLab_score.frame = CGRectMake(cell.mLab_powerLab.frame.origin.x-10-HWScoreSize.width, cell.mLab_numLab.frame.origin.y, HWScoreSize.width, cell.mLab_score.frame.size.height);
+        cell.mLab_scoreLab.frame = CGRectMake(cell.mLab_score.frame.origin.x-cell.mLab_scoreLab.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_scoreLab.frame.size.width, cell.mLab_scoreLab.frame.size.height);
+    }else{
+        cell.mLab_goto.hidden = NO;
+        cell.mLab_power.hidden = YES;
+        cell.mLab_powerLab.hidden = YES;
+        cell.mLab_score.hidden = YES;
+        cell.mLab_scoreLab.hidden = YES;
+        cell.mLab_goto.frame = CGRectMake([dm getInstance].width-9-cell.mLab_goto.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_goto.frame.size.width, cell.mLab_goto.frame.size.height);
+    }
+    //分割线
+    cell.mLab_line.frame = CGRectMake(0, cell.mLab_numLab.frame.origin.y+cell.mLab_numLab.frame.size.height+5, [dm getInstance].width, cell.mLab_line.frame.size.height);
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 50;
+    return 66;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
+    [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:model.TabID];
 }
 
 #pragma mark 开始进入刷新状态

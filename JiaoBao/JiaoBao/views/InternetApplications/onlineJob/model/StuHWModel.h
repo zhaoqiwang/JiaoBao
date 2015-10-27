@@ -48,7 +48,7 @@
 @property(nonatomic,strong)NSString *isEnable;
 @property(nonatomic,strong)NSString *schoolName;
 @property(nonatomic,strong)NSString *isSelf;
-@property(nonatomic,strong)NSString *isHaveAdd;
+@property(nonatomic,strong)NSString *isHaveAdd;//是否主观题
 @property(nonatomic,strong)NSString *subjectName;
 @property(nonatomic,strong)NSString *questionList;
 @property(nonatomic,strong)NSString *chapterName;

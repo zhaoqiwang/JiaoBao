@@ -17,7 +17,7 @@
 #import "OnlineJobHttp.h"
 #import "StuHWModel.h"
 
-@interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate>
+@interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//做作业、做练习显示

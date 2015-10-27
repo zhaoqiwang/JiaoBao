@@ -182,11 +182,11 @@
         }
         [[InternetAppTopScrollView shareInstance] sendRequest];
         //是否隐藏加号
-        if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
+//        if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
             [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
-        }else{
-            [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
-        }
+//        }else{
+//            [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
+//        }
     }else{
         [MBProgressHUD showError:@"获取个人信息超时" toView:self.view];
     }

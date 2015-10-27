@@ -158,7 +158,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         StuInfoModel *model = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
         //获取学生作业列表
         if ([model.StudentID intValue]>0) {
-            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:model.StudentID];
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:model.StudentID IsSelf:@"0"];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -194,7 +194,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
     
 }
 //学生获取当前作业列表 参数：学生ID
--(void)GetStuHWListWithStuId:(NSString*)StuId
+//学生获取当前作业列表 参数：学生ID                =0为作业，=1为练习
+-(void)GetStuHWListWithStuId:(NSString*)StuId IsSelf:(NSString *)IsSelf
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWList",ONLINEJOBURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
