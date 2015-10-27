@@ -244,10 +244,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[OnlineJobHttp getInstance]GetStuHWListWithStuId:@"3851578"];
-    [[OnlineJobHttp getInstance]GetStuHWWithHwInfoId:@"344910"];
-    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:@"717" QsId:@"1"];
-    [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:@"717" QsId:@"1" Answer:@"3"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
     

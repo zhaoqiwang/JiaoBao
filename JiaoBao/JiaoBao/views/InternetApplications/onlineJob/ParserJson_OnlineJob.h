@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONKit.h"
+#import "StuInfoModel.h"
 #import "GenInfo.h"
 #import "StuHWModel.h"
 #import "StuHomeWorkModel.h"
@@ -20,7 +21,7 @@
 +(NSMutableArray *)parserJsonVersionList:(NSString *)json;//解析教版
 +(NSMutableArray *)parserJsonChapterList:(NSString *)json;//解析章节
 +(NSMutableArray *)parserJsonHomeworkList:(NSString *)json;//解析自定义作业
-+(NSDictionary *)parserJsonStuInfo:(NSString*)json;//解析学生信息
++(StuInfoModel *)parserJsonStuInfo:(NSString*)json;//解析学生信息
 +(GenInfo *)parserJsonGenInfo:(NSString*)json;//解析家长信息
 +(NSMutableArray *)parserJsonStuHWList:(NSString*)json;//解析学生当前作业列表
 +(StuHomeWorkModel *)parserJsonStuHW:(NSString*)json;//解析当前作业详细信息
