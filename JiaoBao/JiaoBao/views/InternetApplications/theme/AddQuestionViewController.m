@@ -270,7 +270,7 @@
     
     NSMutableAttributedString *str1=[[NSMutableAttributedString alloc] initWithString:@"问题描述" attributes:nil];
     
-    [str1 insertAttributedString:strA atIndex:4];
+    //[str1 insertAttributedString:strA atIndex:4];
     self.contentLabel.attributedText = str1;
     
     NSMutableAttributedString *str2=[[NSMutableAttributedString alloc] initWithString:@"问题分类" attributes:nil];
@@ -549,11 +549,11 @@
     {
         [MBProgressHUD showError:@"标题不能超过100字"];
     }
-    if([utils isBlankString:self.mTextV_content.text])
-    {
-        [MBProgressHUD showError:@"请添写问题描述"];
-        return;
-    }
+//    if([utils isBlankString:self.mTextV_content.text])
+//    {
+//        [MBProgressHUD showError:@"请添写问题描述"];
+//        return;
+//    }
     if([utils isBlankString:self.categoryTF.text])
     {
         [MBProgressHUD showError:@"请选择分类"];

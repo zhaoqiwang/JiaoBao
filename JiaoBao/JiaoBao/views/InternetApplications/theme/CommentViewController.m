@@ -445,7 +445,7 @@
                     UIButton *tempBtnLike = [UIButton buttonWithType:UIButtonTypeCustom];
                     UIButton *tempBtnCai = [UIButton buttonWithType:UIButtonTypeCustom];
                     //显示内容
-                    NSString *tempTitle = [NSString stringWithFormat:@"%@@%@:%@",refModel.JiaoBaoHao,refModel.UserName,refModel.WContent];
+                    NSString *tempTitle = [NSString stringWithFormat:@"%@:%@",refModel.UserName,refModel.WContent];
                     CGSize sizeTitle = [tempTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-90, 99999)];
                     tempLab.frame = CGRectMake(10, 5, sizeTitle.width, sizeTitle.height);
                     tempLab.text = tempTitle;
@@ -643,6 +643,7 @@
         cell = (KnowledgeTableViewCell *)[nib objectAtIndex:0];
         //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
     }
+    cell.askImgV.hidden = NO;
     cell.delegate= self;
     cell.model = self.questionModel;
     cell.answerModel = self.answerModel;
@@ -650,7 +651,7 @@
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
 
     //详情
-    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 3, 40, cell.mBtn_detail.frame.size.height);
     if(self.topButtonTag ==  1)
     {
         [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
@@ -680,17 +681,20 @@
     NSString *string1 = cell.model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    cell.askImgV.image = [UIImage imageNamed:@"ask"];
+    cell.askImgV.frame = CGRectMake(9, 10, 19, 19);
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#2589D1'>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_title.componentsAndPlainText = componentsDS;
     //    CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
-    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
+   // cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
+    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);
 
     //话题
-    cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
+    cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",cell.model.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
     cell.mLab_Category1.frame = CGRectMake(30+cell.mLab_Category0.frame.size.width+2, cell.mLab_Category0.frame.origin.y, CategorySize.width, cell.mLab_Category0.frame.size.height);
     cell.mLab_Category1.text = cell.model.CategorySuject;
@@ -712,6 +716,8 @@
     
         //分割线
         cell.mLab_line.hidden = NO;
+        cell.answerImgV.hidden = NO;//答
+        cell.basisImagV.hidden = NO;//依据或内容
         //赞
         cell.mLab_LikeCount.hidden = NO;
         //头像
@@ -767,12 +773,13 @@
 //            size1 = CGSizeMake(size1.width, size1.height);
 //        }
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string2];
+        cell.answerImgV.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, 26, 16);
+        NSString *name2 = [NSString stringWithFormat:@"<font size=12 color=black>%@</font>",string2];
         [row2 setObject:name2 forKey:@"text"];
         RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
         cell.mLab_ATitle.componentsAndPlainText = componentsDS2;
         CGSize optimalSize2 = [cell.mLab_ATitle optimumSize];
-        cell.mLab_ATitle.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-18, optimalSize2.height);
+        cell.mLab_ATitle.frame = CGRectMake(9+26, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-10-cell.mImgV_head.frame.size.width, optimalSize2.height);
 
     
     //加载webview
@@ -792,22 +799,35 @@
 
 
         cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, 50);
-    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
+//    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
     if([self.AnswerDetailModel.Flag integerValue]==1)
     {
-        contentLabel.text = @"内容:";
-        contentLabel.textColor = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:3/255.0 alpha:1];
+        cell.basisImagV.image = [UIImage imageNamed:@"content"];
+        cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 26, 16);
+
+        
+//        contentLabel.text = @"内容:";
+//        contentLabel.textColor = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:3/255.0 alpha:1];
 
 
+    }
+    else if([self.AnswerDetailModel.Flag integerValue]==2)
+    {
+        cell.basisImagV.image = [UIImage imageNamed:@"basis"];
+        cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 29, 29);
+
+//        contentLabel.text = @"依据:";
+//        contentLabel.textColor = [UIColor redColor];
     }
     else
     {
-        contentLabel.text = @"依据:";
-        contentLabel.textColor = [UIColor redColor];
+        cell.basisImagV.image = [UIImage imageNamed:@"content"];
+        cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 26, 16);
+        
     }
-    contentLabel.font = [UIFont systemFontOfSize:13];
-    [cell.contentView addSubview:contentLabel];
-    contentLabel.textAlignment = NSTextAlignmentLeft;
+//    contentLabel.font = [UIFont systemFontOfSize:13];
+//    [cell.contentView addSubview:contentLabel];
+//    contentLabel.textAlignment = NSTextAlignmentLeft;
         //背景色
         cell.mView_background.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-18, cell.mLab_Abstracts.frame.size.height+4);
         //图片
@@ -863,7 +883,7 @@
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(9, self.KnowledgeTableViewCell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-18, height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(9, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width-18, height);
    
 
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);

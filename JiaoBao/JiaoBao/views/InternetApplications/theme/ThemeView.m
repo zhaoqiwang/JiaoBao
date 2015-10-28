@@ -868,7 +868,7 @@
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
-                    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 30);
+                    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);
 //                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
@@ -876,7 +876,7 @@
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
- cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 30);//                }else{
+ cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);//                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
                 cell.mImgV_top.hidden = YES;
@@ -978,12 +978,12 @@
                     cell.mView_background.hidden = YES;
                     cell.basisImagV.image = [UIImage imageNamed:@"content"];
                     cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
-                    cell.basisImagV.hidden = YES;
-                    cell.answerImgV.hidden = YES;
+                    cell.basisImagV.hidden = NO;
+                    //cell.answerImgV.hidden = YES;
                     name2 = [NSString stringWithFormat:@"<font size=12 color='#03AA03'>无内容</font>"];
                 }else if ([model.answerModel.Flag integerValue]==1){//有内容
                     cell.mView_background.hidden = YES;
-                    cell.mView_background.frame = cell.mImgV_head.frame;
+                    //cell.mView_background.frame = cell.mImgV_head.frame;
                     cell.basisImagV.image = [UIImage imageNamed:@"content"];
                     cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
                     name2 = [NSString stringWithFormat:@" <font ont size=12 color=black>%@</font>", string2];
@@ -992,7 +992,6 @@
                     cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);
                     name2 = [NSString stringWithFormat:@" <font size=12 color='#E67215'>%@</font>", string2];
                 }
-
                 NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
                 [row2 setObject:name2 forKey:@"text"];
                 RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
@@ -1008,7 +1007,7 @@
                 cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
                 cell.mLab_Abstracts.textAlignment = RTTextAlignmentLeft;
                 //背景色
-                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.basisImagV.frame.size.height);
+                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);
                 //图片
                 [cell.mCollectionV_pic reloadData];
                 cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
