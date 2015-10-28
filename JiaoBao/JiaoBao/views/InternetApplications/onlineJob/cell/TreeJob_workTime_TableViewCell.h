@@ -25,6 +25,7 @@
 @property (nonatomic,assign) int mInt_count;//个数
 @property (weak,nonatomic) id<TreeJob_workTime_TableViewCellDelegate> delegate;
 @property (nonatomic,strong) TreeJob_node *node;
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
 
 @end
 //向cell中添加点击事件

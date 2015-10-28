@@ -14,6 +14,7 @@
 @property (nonatomic,strong) id model;
 @property (nonatomic,strong) SigleBtnView *sigleBtn;
 @property (weak,nonatomic) id<TreeJob_sigleSelect_TableViewCellDelegate> delegate;
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
 
 @end
 

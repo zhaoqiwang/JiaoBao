@@ -98,10 +98,19 @@
 //学生获取当前作业列表
 -(void)GetStuHWList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    NSMutableArray *array = noti.object;
-    [self.mArr_homework addObjectsFromArray:array];
-    D("sdfjghakj-====%lu",(unsigned long)self.mArr_homework.count);
-    [self.mTableV_list reloadData];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    if ([ResultCode intValue]==0) {
+        NSMutableArray *array = [dic objectForKey:@"array"];
+        if (array.count>0) {
+            [self.mArr_homework addObjectsFromArray:array];
+        }else{
+            [MBProgressHUD showError:@"无数据" toView:self.view];
+        }
+        [self.mTableV_list reloadData];
+    }else{
+        [MBProgressHUD showError:@"服务器异常" toView:self.view];
+    }
 }
 
 -(void)selectScrollButton:(UIButton *)btn{

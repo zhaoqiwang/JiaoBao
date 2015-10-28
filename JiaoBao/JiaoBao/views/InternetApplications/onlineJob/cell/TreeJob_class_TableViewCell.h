@@ -27,6 +27,7 @@
 @property (weak,nonatomic) id<TreeJob_class_TableViewCellDelegate> delegate;
 @property (nonatomic,assign) int mInt_flag;//判断是点击班级0，难度1，回调里用
 @property (nonatomic,strong) TreeJob_node *node;
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
 
 
 @end

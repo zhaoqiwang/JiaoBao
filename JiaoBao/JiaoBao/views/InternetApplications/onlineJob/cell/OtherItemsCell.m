@@ -14,6 +14,27 @@
     // Initialization code
 }
 
+
+
+
+/**
+ 
+ *  通过以下代码实现设置文本框高度
+ 
+ *  44是所希望的高度
+ 
+ */
+
+- (CGRect)borderRectForBounds:(CGRect)bounds
+
+{
+    
+    bounds.size.height = 25;
+    
+    return bounds;
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
