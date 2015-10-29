@@ -12,5 +12,8 @@
 
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_select;//选择显示
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
+@property (nonatomic,strong) IBOutlet UIImageView *mImg_pic;//下拉
+
 
 @end

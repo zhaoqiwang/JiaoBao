@@ -7,14 +7,18 @@
 //
 
 #import "TreeJob_class_TableViewCell.h"
+#import "dm.h"
 
 @implementation TreeJob_class_TableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
     
+    self.mLab_line.frame = CGRectMake(20, 0, [dm getInstance].width-20, .5);
+    
     self.sigleClassBtn = [[SigleBtnView alloc] initWidth:0 height:21 title:@"一年级一班" select:0 sigle:0];
     self.sigleClassBtn.frame = CGRectMake(20, 10, self.sigleClassBtn.frame.size.width, 21);
+    self.sigleClassBtn.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleClassBtn.tag = 0;
     self.sigleClassBtn.delegate = self;
     [self addSubview:self.sigleClassBtn];
@@ -24,30 +28,35 @@
     
     self.sigleBtn1 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 1" select:1 sigle:1];
     self.sigleBtn1.tag = 1;
+    self.sigleBtn1.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn1.delegate = self;
     self.sigleBtn1.frame = CGRectMake(20+self.mLab_nanDu.frame.size.width, 35, self.sigleBtn1.frame.size.width, 21);
     [self addSubview:self.sigleBtn1];
     
     self.sigleBtn2 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 2" select:0 sigle:1];
     self.sigleBtn2.tag = 2;
+    self.sigleBtn2.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn2.delegate = self;
     self.sigleBtn2.frame = CGRectMake(self.sigleBtn1.frame.origin.x+self.sigleBtn2.frame.size.width+20, 35, self.sigleBtn2.frame.size.width, 21);
     [self addSubview:self.sigleBtn2];
     
     self.sigleBtn3 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 3" select:0 sigle:1];
     self.sigleBtn3.tag = 3;
+    self.sigleBtn3.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn3.delegate = self;
     self.sigleBtn3.frame = CGRectMake(self.sigleBtn2.frame.origin.x+self.sigleBtn3.frame.size.width+20, 35, self.sigleBtn3.frame.size.width, 21);
     [self addSubview:self.sigleBtn3];
     
     self.sigleBtn4 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 4" select:0 sigle:1];
     self.sigleBtn4.tag = 4;
+    self.sigleBtn4.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn4.delegate = self;
     self.sigleBtn4.frame = CGRectMake(self.sigleBtn3.frame.origin.x+self.sigleBtn4.frame.size.width+20, 35, self.sigleBtn4.frame.size.width, 21);
     [self addSubview:self.sigleBtn4];
     
     self.sigleBtn5 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 5" select:0 sigle:1];
     self.sigleBtn5.tag = 5;
+    self.sigleBtn5.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn5.delegate = self;
     self.sigleBtn5.frame = CGRectMake(self.sigleBtn4.frame.origin.x+self.sigleBtn5.frame.size.width+20, 35, self.sigleBtn5.frame.size.width, 21);
     [self addSubview:self.sigleBtn5];

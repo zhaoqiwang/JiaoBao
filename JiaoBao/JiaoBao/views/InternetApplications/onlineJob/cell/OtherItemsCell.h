@@ -11,5 +11,6 @@
 @interface OtherItemsCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
 
 @end

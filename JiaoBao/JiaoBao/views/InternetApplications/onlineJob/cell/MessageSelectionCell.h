@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *notificationBtn;
 @property (weak, nonatomic) IBOutlet UIButton *feedbackBtn;
 @property(nonatomic,assign)NSUInteger btnTag;
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
 
 - (IBAction)buttonSelectionAction:(id)sender;
 

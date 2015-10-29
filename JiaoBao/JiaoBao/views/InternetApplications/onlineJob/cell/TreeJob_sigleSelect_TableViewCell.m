@@ -7,14 +7,17 @@
 //
 
 #import "TreeJob_sigleSelect_TableViewCell.h"
+#import "dm.h"
 
 @implementation TreeJob_sigleSelect_TableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
+    self.mLab_line.frame = CGRectMake(20, 0, [dm getInstance].width-20, .5);
     self.sigleBtn = [[SigleBtnView alloc] initWidth:0 height:21 title:@"一年级一班" select:0 sigle:2];
-    self.sigleBtn.frame = CGRectMake(20, 10, self.sigleBtn.frame.size.width, 21);
+    self.sigleBtn.frame = CGRectMake(30, 10, self.sigleBtn.frame.size.width, 21);
     self.sigleBtn.tag = 0;
+    self.sigleBtn.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn.delegate = self;
     [self addSubview:self.sigleBtn];
 }
