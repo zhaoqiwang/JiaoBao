@@ -8,6 +8,7 @@
 
 #import "StudentHomewrokViewController.h"
 #import "define_constant.h"
+#import "DetailHWViewController.h"
 
 @interface StudentHomewrokViewController ()
 
@@ -215,7 +216,11 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
-    [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:model.TabID];
+    
+    DetailHWViewController *detail = [[DetailHWViewController alloc]init];
+    detail.TabID = model.TabID;
+    detail.hwName = model.homeworkName;
+    [self.navigationController pushViewController:detail animated:YES];
 }
 
 #pragma mark 开始进入刷新状态

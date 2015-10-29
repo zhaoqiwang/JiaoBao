@@ -237,6 +237,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWWithHwInfoId: %@,", result);
         StuHomeWorkModel *model = [ParserJson_OnlineJob parserJsonStuHW:result];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------GetStuHWWithHwInfoId: %@", error);

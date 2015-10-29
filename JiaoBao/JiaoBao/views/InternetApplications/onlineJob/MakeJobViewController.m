@@ -136,7 +136,6 @@
         //从appdelegate获取数据数据库上下文
         self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     //通过查询语句获取数据列表
-    
     NSFetchRequest* request=[[NSFetchRequest alloc] init];
     NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
     [request setEntity:JobModelList];
@@ -243,7 +242,26 @@
 }
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
+    NSError* error;
+    //从appdelegate获取数据数据库上下文
+    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    //通过查询语句获取数据列表
+    NSFetchRequest* request=[[NSFetchRequest alloc] init];
+    NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    [request setEntity:JobModelList];
+    NSPredicate * qcondition= [NSPredicate predicateWithFormat:@"teacherJiaobaohao = %@",[dm getInstance].jiaoBaoHao ];
+    [request setPredicate:qcondition];
+    NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    
+    if(mutableFetchResult.count == 0)
+    {
+    }
+    else
+    {
+        
+    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
     
@@ -811,7 +829,7 @@
                 UINib * n= [UINib nibWithNibName:@"PublishJobCellTableViewCell" bundle:[NSBundle mainBundle]];
                 [self.mTableV_work registerNib:n forCellReuseIdentifier:PublishJobIdentifier];
             }
-            //cell.delegate = self;
+            cell.delegate = self;
 //            [self loadDataForTreeViewCell:cell with:node];//重新给cell装载数据
 //            [cell setNeedsDisplay]; //重新描绘cell
             
@@ -1606,11 +1624,11 @@
     self.publishJobModel.ExpTime = dateStr;
     
 }
-
-- (IBAction)publishJobAction:(id)sender {
+-(void)PublishJob
+{
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
-
+    
     if(self.publishJobModel.classIDArr.count == 0)
     {
         [MBProgressHUD showError:@"请选择班级"];
@@ -1624,11 +1642,11 @@
     if([self.publishJobModel.HwType isEqualToString:@"3"])
     {
         if([self.publishJobModel.DesId isEqualToString:@""])
-       {
-        [MBProgressHUD showError:@"请选择自定义作业"];
-        return ;
+        {
+            [MBProgressHUD showError:@"请选择自定义作业"];
+            return ;
         }
- 
+        
     }
     if([utils isBlankString:self.publishJobModel.homeworkName])
     {
@@ -1647,14 +1665,9 @@
         self.publishJobModel.className = model.mStr_className;
         self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
         self.publishJobModel.schoolName = model.mStr_schoolName;
-        
         [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
-
+        
     }
-
-
-
-
-    
 }
+
 @end

@@ -78,6 +78,7 @@
         
         //表格
         self.mTableV_knowledge = [[UITableView alloc] initWithFrame:CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48)];
+        self.mTableV_knowledge.allowsSelection = NO;
         self.mTableV_knowledge.delegate = self;
         self.mTableV_knowledge.dataSource = self;
         self.mTableV_knowledge.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -1177,6 +1178,8 @@
                 tempF=tempF+15+3+23;
                 //回答内容
                 NSString *string2 = model.answerModel.Abstracts;
+//                cell.askImgV.image = [UIImage imageNamed:@"ask"];
+//                cell.askImgV.frame = CGRectMake(9, 10, 19, 19);
                 string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
                 string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
                 NSString *name2 = @"";

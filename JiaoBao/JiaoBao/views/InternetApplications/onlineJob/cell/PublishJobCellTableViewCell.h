@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol PublishJobDelegate;
 @interface PublishJobCellTableViewCell : UITableViewCell
+@property(weak,nonatomic)id<PublishJobDelegate>delegate;
+- (IBAction)publishBtnAction:(id)sender;
 
 @end
+@protocol PublishJobDelegate <NSObject>
+-(void)PublishJob;
+@end
+

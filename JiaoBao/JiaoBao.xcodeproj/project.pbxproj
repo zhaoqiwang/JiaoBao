@@ -862,6 +862,8 @@
 		A7E93DE51B906DBC00CD7B1C /* PickContentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */; };
 		A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */; };
 		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
+		F71283811BE1ADD100074B72 /* DetailHWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F712837F1BE1ADD100074B72 /* DetailHWViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71283801BE1ADD100074B72 /* DetailHWViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
 		F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030E1AB3C46300E6167F /* JTCalendarContentView.m */; };
@@ -2265,6 +2267,9 @@
 		A7E93DE61B90708A00CD7B1C /* ShowPickedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowPickedModel.h; path = views/InternetApplications/theme/model/ShowPickedModel.h; sourceTree = "<group>"; };
 		A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowPickedModel.m; path = views/InternetApplications/theme/model/ShowPickedModel.m; sourceTree = "<group>"; };
 		F70861791B38EDC90032945D /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
+		F712837E1BE1ADD100074B72 /* DetailHWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailHWViewController.h; sourceTree = "<group>"; };
+		F712837F1BE1ADD100074B72 /* DetailHWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailHWViewController.m; sourceTree = "<group>"; };
+		F71283801BE1ADD100074B72 /* DetailHWViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWViewController.xib; sourceTree = "<group>"; };
 		F71803091AB3C46300E6167F /* JTCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendar.h; path = Common/JTCalendar/JTCalendar.h; sourceTree = "<group>"; };
 		F718030A1AB3C46300E6167F /* JTCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JTCalendar.m; path = Common/JTCalendar/JTCalendar.m; sourceTree = "<group>"; };
 		F718030B1AB3C46300E6167F /* JTCalendarAppearance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JTCalendarAppearance.h; path = Common/JTCalendar/JTCalendarAppearance.h; sourceTree = "<group>"; };
@@ -3980,6 +3985,9 @@
 				A76F8FEF1BDA165300C84186 /* StudentHomewrokViewController.h */,
 				A76F8FF01BDA165300C84186 /* StudentHomewrokViewController.m */,
 				A76F8FF11BDA165300C84186 /* StudentHomewrokViewController.xib */,
+				F712837E1BE1ADD100074B72 /* DetailHWViewController.h */,
+				F712837F1BE1ADD100074B72 /* DetailHWViewController.m */,
+				F71283801BE1ADD100074B72 /* DetailHWViewController.xib */,
 			);
 			name = student;
 			path = views/InternetApplications/onlineJob/student;
@@ -5448,6 +5456,7 @@
 				A76ED5B71AD67855006F3E0B /* workView_1@3x.png in Resources */,
 				A73DD81D19FE4D5E00BF0C97 /* root_open.png in Resources */,
 				A76829861AC69B21003B31EB /* classView_click_1@2x.png in Resources */,
+				F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */,
 				A763A53C1A48F372008365B5 /* photo_default@2x.png in Resources */,
 				A773FC511A4C0563005F84C2 /* ELCAssetTablePicker.xib in Resources */,
 				A76ED5CF1AD67855006F3E0B /* workView_click_4@3x.png in Resources */,
@@ -5820,6 +5829,7 @@
 				F71803231AB3C46300E6167F /* JTCalendarMenuView.m in Sources */,
 				A76E432A1A61085F00699F92 /* CommMsgRevicerUnitListModel.m in Sources */,
 				A773FC491A4C0563005F84C2 /* ELCAsset.m in Sources */,
+				F71283811BE1ADD100074B72 /* DetailHWViewController.m in Sources */,
 				A778389E1AE5E17C004C9D41 /* ReleaseNewsUnitsModel.m in Sources */,
 				A7209E701A29CF9800418A9C /* NoticeListViewController.m in Sources */,
 				A755E6A119F24D2C00BBDF3D /* RootViewController.m in Sources */,

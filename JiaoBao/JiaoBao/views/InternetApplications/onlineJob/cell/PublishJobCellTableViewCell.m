@@ -20,4 +20,8 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)publishBtnAction:(id)sender {
+    
+    [self.delegate PublishJob];
+}
 @end
