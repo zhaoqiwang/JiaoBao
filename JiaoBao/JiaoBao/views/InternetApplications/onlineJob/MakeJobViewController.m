@@ -54,7 +54,13 @@
         int index = [[dic objectForKey:@"index"] intValue];
         NSArray *array = [dic objectForKey:@"array"];
 //        NSMutableArray *tempArr = [NSMutableArray array];
-        
+        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:1];
+        TreeJob_level0_model *nodeData = node0.nodeData;
+        if (array.count>0) {
+            nodeData.mStr_title = @"请选择班级";
+        }else{
+            nodeData.mStr_title = @"没有执教班级";
+        }
         if (index == 1) {//关联的班级
             for (int i=0; i<self.mArr_sumData.count; i++) {
                 TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
@@ -1000,7 +1006,23 @@
     TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
     if(node.type == 0){
         TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
-        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+        if (node.sonNodes.count== 0) {
+            if (node.flag==1) {
+                [MBProgressHUD showError:@"没有执教班级" toView:self.view];
+            }else if (node.flag ==2){
+                [MBProgressHUD showError:@"年级为空" toView:self.view];
+            }else if (node.flag ==3){
+                [MBProgressHUD showError:@"科目为空" toView:self.view];
+            }else if (node.flag ==4){
+                [MBProgressHUD showError:@"教版为空" toView:self.view];
+            }else if (node.flag ==5){
+                [MBProgressHUD showError:@"章节为空" toView:self.view];
+            }else if (node.flag ==8){
+                [MBProgressHUD showError:@"自定义作业为空" toView:self.view];
+            }
+        }else{
+            [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+        }
     }
 }
 
@@ -1030,6 +1052,11 @@
                 cell0.mLab_select.hidden = NO;
                 cell0.mLab_line.hidden = NO;
                 cell0.mImg_pic.hidden = NO;
+                TreeJob_level0_model *nodeData = node.nodeData;
+                cell0.mLab_title.text = nodeData.mStr_name;
+                cell0.mLab_title.frame = CGRectMake(20, 15, 80, 21);
+                cell0.mLab_select.text = nodeData.mStr_title;
+                cell0.mLab_select.frame = CGRectMake(90, 15, [dm getInstance].width-110, 21);
             }
         }else{
             cell0.mLab_title.hidden = NO;
@@ -1174,6 +1201,9 @@
     }
     cell0.mLab_line.frame = CGRectMake(20, 0, [dm getInstance].width-20, .5);
     CGSize titleSize = [name sizeWithFont:[UIFont systemFontOfSize:12]];
+    if ([dm getInstance].width-40<titleSize.width+16) {
+        titleSize.width = [dm getInstance].width-40-16;
+    }
     cell0.sigleBtn.mLab_title.frame = CGRectMake(16, 0, titleSize.width, cell0.sigleBtn.mLab_title.frame.size.height);
     cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
 }
@@ -1345,6 +1375,8 @@
 //班级cell的回调
 -(void)TreeJob_class_TableViewCellClick:(TreeJob_class_TableViewCell *)treeJob_class_TableViewCell{
     [self.publishJobModel.classIDArr removeAllObjects];
+    NSString *mStr = @"";
+    
     for (int i=0; i<self.mArr_sumData.count; i++) {
         TreeJob_node *node = [self.mArr_sumData objectAtIndex:i];
         if (node.flag == 1) {
@@ -1367,6 +1399,27 @@
             }
         }
     }
+    //修改选中班级显示
+    TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:1];
+    for (TreeJob_node *node1 in node0.sonNodes) {
+        TreeJob_class_model *nodeData = node1.nodeData;
+        if (nodeData.mInt_class==1) {
+            if (mStr.length>0) {
+                mStr = [NSString stringWithFormat:@"%@,%@",mStr,nodeData.mStr_className];
+            }else{
+                mStr = [NSString stringWithFormat:@"%@",nodeData.mStr_className];
+            }
+        }
+    }
+    if (mStr.length==0) {
+        if (node0.sonNodes.count>0) {
+            mStr = @"请选择班级";
+        }else{
+            mStr = @"没有执教班级";
+        }
+    }
+    TreeJob_level0_model *nodeData = node0.nodeData;
+    nodeData.mStr_title = mStr;
     [self reloadDataForDisplayArray];
 }
 
