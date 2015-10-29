@@ -145,6 +145,7 @@
     self.mView_input.delegate = self;
     [self.view addSubview:self.mView_input];
     self.mView_input.hidden = YES;
+    self.mView_input.mTextF_input.placeholder = @"请输入昵称、教宝号或者邮箱";
     //获取问题的答案列表
     [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:self.mStr_flag];
     //答案明细
@@ -602,11 +603,11 @@
     NSString *name2 = @"";
     if ([model.Flag integerValue]==0) {//无内容
         cell.mView_background.hidden = YES;
-        cell.basisImagV.image = [UIImage imageNamed:@"content"];
-        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
+        cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 36, 16);
         cell.basisImagV.hidden = NO;
         //cell.answerImgV.hidden = YES;
-        name2 = [NSString stringWithFormat:@"<font size=12 color='#03AA03'>无内容</font>"];
+        //name2 = [NSString stringWithFormat:@"<font size=12 color='#03AA03'>无内容</font>"];
     }else if ([model.Flag integerValue]==1){//有内容
         cell.mView_background.hidden = YES;
         cell.mView_background.frame = cell.mImgV_head.frame;

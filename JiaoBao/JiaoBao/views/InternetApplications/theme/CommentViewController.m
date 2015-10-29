@@ -821,8 +821,8 @@
     }
     else
     {
-        cell.basisImagV.image = [UIImage imageNamed:@"content"];
-        cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 26, 16);
+        cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
+        cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 36, 16);
         
     }
 //    contentLabel.font = [UIFont systemFontOfSize:13];

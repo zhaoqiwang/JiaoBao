@@ -610,7 +610,7 @@
             NSString *string1 = model.Title;
             string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-            NSString *name = [NSString stringWithFormat:@" <font size=14 color=black>%@</font>",string1];
+            NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1>%@</font>",string1];
             NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
             [row1 setObject:name forKey:@"text"];
             cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
@@ -976,11 +976,11 @@
                 NSString *name2 = @"";
                 if ([model.answerModel.Flag integerValue]==0) {//无内容
                     cell.mView_background.hidden = YES;
-                    cell.basisImagV.image = [UIImage imageNamed:@"content"];
-                    cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
+                    cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
+                    cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 36, 16);
                     cell.basisImagV.hidden = NO;
                     //cell.answerImgV.hidden = YES;
-                    name2 = [NSString stringWithFormat:@"<font size=12 color='#03AA03'>无内容</font>"];
+                    //name2 = [NSString stringWithFormat:@"<font size=12 color='#03AA03'>无内容</font>"];
                 }else if ([model.answerModel.Flag integerValue]==1){//有内容
                     cell.mView_background.hidden = YES;
                     //cell.mView_background.frame = cell.mImgV_head.frame;
