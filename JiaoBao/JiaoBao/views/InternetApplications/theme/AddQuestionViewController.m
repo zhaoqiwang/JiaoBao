@@ -339,6 +339,16 @@
             self.mText_title.text = @"";
             self.atAccIdsTF.text = @"";
             self.categoryTF.text = @"";
+            [[NSNotificationCenter defaultCenter]removeObserver:self];
+            [dm getInstance].addQuestionNoti = NO;
+            
+            //输入框弹出键盘问题
+            IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+            manager.enable = NO;//控制整个功能是否启用
+            manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+            manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+            manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+            [utils popViewControllerAnimated:YES];
         }
         else
         {
@@ -350,6 +360,17 @@
             self.atAccIdsTF.text = @"";
             self.categoryTF.text = @"";
             [MBProgressHUD showError:@"发布问题成功"];
+            [[NSNotificationCenter defaultCenter]removeObserver:self];
+            [dm getInstance].addQuestionNoti = NO;
+            
+            //输入框弹出键盘问题
+            IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+            manager.enable = NO;//控制整个功能是否启用
+            manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+            manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+            manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+            [utils popViewControllerAnimated:YES];
+            
 
         }
         
@@ -384,7 +405,16 @@
             self.atAccIdsTF.text = @"";
             self.categoryTF.text = @"";
             [MBProgressHUD showSuccess:@"发布问题成功"];
+            [[NSNotificationCenter defaultCenter]removeObserver:self];
+            [dm getInstance].addQuestionNoti = NO;
             
+            //输入框弹出键盘问题
+            IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+            manager.enable = NO;//控制整个功能是否启用
+            manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+            manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+            manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+            [utils popViewControllerAnimated:YES];
         }
         else
         {
@@ -548,6 +578,7 @@
     if(self.mText_title.text.length>100)
     {
         [MBProgressHUD showError:@"标题不能超过100字"];
+        return;
     }
 //    if([utils isBlankString:self.mTextV_content.text])
 //    {
@@ -591,6 +622,48 @@
     }
 
 }
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if(range.location>100)
+    {
+            return NO;
+    }
+    return YES;
+}
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if([textView isEqual:self.mText_title])
+    {
+        if([textView.text isEqualToString:@""])
+        {
+            self.titleTF.hidden = NO;
+        }
+        else
+        {
+            self.titleTF.hidden = YES;
+            
+        }
+        
+    }
+    if([textView isEqual:self.mTextV_content])
+    {
+        if([textView.text isEqualToString:@""])
+        {
+            self.knContentTF.hidden = NO;
+        }
+        else
+        {
+            self.knContentTF.hidden = YES;
+            
+        }
+        
+    }
+
+    
+}
+
+
 
 
 

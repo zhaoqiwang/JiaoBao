@@ -27,7 +27,7 @@
         
         //输入框
         self.mTextF_input = [[UITextField alloc] initWithFrame:CGRectMake(10, 10, [dm getInstance].width-30-40, rect.size.height-20)];
-        self.mTextF_input.placeholder = @"请输入内容";
+        self.mTextF_input.placeholder = @"";
         self.mTextF_input.delegate = self;
         self.mTextF_input.clearsOnBeginEditing = YES;
         self.mTextF_input.font = [UIFont systemFontOfSize:14];

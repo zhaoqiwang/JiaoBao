@@ -318,7 +318,7 @@ self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.
     NSString *name2 = @"";
     if ([model.Flag integerValue]==0) {//无内容
         cell.mView_background.hidden = YES;
-        cell.basisImagV.image = [UIImage imageNamed:@"content"];
+        cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
         cell.basisImagV.hidden = NO;
         //cell.answerImgV.hidden = YES;

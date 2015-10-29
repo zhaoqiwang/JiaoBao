@@ -922,6 +922,9 @@
 		F75757431BA16B7700AA4267 /* ChoicenessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */; };
 		F75757441BA16B7700AA4267 /* ChoicenessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */; };
 		F764F48B1BD4D1070077F55A /* PublishJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F764F48A1BD4D1070077F55A /* PublishJobModel.m */; };
+		F768943C1BDF773F005EA7B6 /* noContent.png in Resources */ = {isa = PBXBuildFile; fileRef = F76894391BDF773F005EA7B6 /* noContent.png */; settings = {ASSET_TAGS = (); }; };
+		F768943D1BDF773F005EA7B6 /* noContent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943A1BDF773F005EA7B6 /* noContent@2x.png */; settings = {ASSET_TAGS = (); }; };
+		F768943E1BDF773F005EA7B6 /* noContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943B1BDF773F005EA7B6 /* noContent@3x.png */; settings = {ASSET_TAGS = (); }; };
 		F76B64351B1EA205008F6961 /* RCLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64321B1EA205008F6961 /* RCLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F76B643A1B1EA3F5008F6961 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64381B1EA3F5008F6961 /* CommentCell.m */; };
 		F76B643B1B1EA3F5008F6961 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76B64391B1EA3F5008F6961 /* CommentCell.xib */; };
@@ -2337,6 +2340,9 @@
 		F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChoicenessDetailViewController.xib; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.xib; sourceTree = "<group>"; };
 		F764F4891BD4D1070077F55A /* PublishJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishJobModel.h; sourceTree = "<group>"; };
 		F764F48A1BD4D1070077F55A /* PublishJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishJobModel.m; sourceTree = "<group>"; };
+		F76894391BDF773F005EA7B6 /* noContent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noContent.png; sourceTree = "<group>"; };
+		F768943A1BDF773F005EA7B6 /* noContent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noContent@2x.png"; sourceTree = "<group>"; };
+		F768943B1BDF773F005EA7B6 /* noContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noContent@3x.png"; sourceTree = "<group>"; };
 		F76B64311B1EA205008F6961 /* RCLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCLabel.h; path = Common/RCLabel/RCLabel.h; sourceTree = "<group>"; };
 		F76B64321B1EA205008F6961 /* RCLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCLabel.m; path = Common/RCLabel/RCLabel.m; sourceTree = "<group>"; };
 		F76B64371B1EA3F5008F6961 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = views/InternetApplications/class/CommentCell.h; sourceTree = "<group>"; };
@@ -4386,6 +4392,9 @@
 				F7E4193D1BDDCC6300004BDF /* answer@3x.png */,
 				F7E4193E1BDDCC6300004BDF /* basis@3x.png */,
 				F7E4193F1BDDCC6300004BDF /* content@3x.png */,
+				F76894391BDF773F005EA7B6 /* noContent.png */,
+				F768943A1BDF773F005EA7B6 /* noContent@2x.png */,
+				F768943B1BDF773F005EA7B6 /* noContent@3x.png */,
 			);
 			name = knowledge;
 			sourceTree = "<group>";
@@ -5104,6 +5113,7 @@
 				A7781F4C1AE8A0F300F03AEB /* NewWorkView_click_1@2x.png in Resources */,
 				A750468D1A0A14BC00C54ECC /* forward_rightNav.png in Resources */,
 				A76ED5BD1AD67855006F3E0B /* workView_3@3x.png in Resources */,
+				F768943C1BDF773F005EA7B6 /* noContent.png in Resources */,
 				A7781F421AE8A0F300F03AEB /* NewWorkView_1.png in Resources */,
 				A76829811AC69B21003B31EB /* classView_4@3x.png in Resources */,
 				A7AD8C4E19F644A2002E65FB /* tabbar_app1.png in Resources */,
@@ -5532,6 +5542,7 @@
 				A75082781B7998E60031E7C9 /* buttonView4@2x.png in Resources */,
 				A77E91741BD77E1300488815 /* sigleSelect1@2x.png in Resources */,
 				A76976A41A8372C3002A4FB3 /* message.wav in Resources */,
+				F768943D1BDF773F005EA7B6 /* noContent@2x.png in Resources */,
 				A749B9D919F89A530036F480 /* top_dian@2x.png in Resources */,
 				A72B58301A3D8EEE004D8920 /* UnitPeopleViewController.xib in Resources */,
 				A76D74751A69095A008F5856 /* share_like_0@3x.png in Resources */,
@@ -5540,6 +5551,7 @@
 				A78D65D81A89E41400BE6326 /* WorkMsgListCell.xib in Resources */,
 				A757DFD71A80BDEF001172A4 /* appNav_groupChat@2x.png in Resources */,
 				A76ED5C21AD67855006F3E0B /* workView_click_0@2x.png in Resources */,
+				F768943E1BDF773F005EA7B6 /* noContent@3x.png in Resources */,
 				F7EE1A101B789CD200B31D79 /* CommentListTableViewCell.xib in Resources */,
 				A749B9D819F89A530036F480 /* top_dian.png in Resources */,
 				A71D61E21A1C96A400B8D33D /* share_new0@2x.png in Resources */,
