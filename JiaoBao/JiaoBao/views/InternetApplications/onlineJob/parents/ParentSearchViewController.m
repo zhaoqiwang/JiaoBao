@@ -25,6 +25,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.mArr_nowHomework = [NSMutableArray array];
+    self.mArr_overHomework = [NSMutableArray array];
+    self.mArr_score = [NSMutableArray array];
+    
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"家长查询"];
     self.mNav_navgationBar.delegate = self;
@@ -78,12 +82,110 @@
         self.mInt_index = 0;
         //判断是否有值
         
-    }else{//获取练习列表
+    }else if (btn.tag==1) {//获取练习列表
         self.mInt_index = 1;
+        //判断是否有值
+        
+    }else if (btn.tag==2) {//获取练习列表
+        self.mInt_index = 2;
         //判断是否有值
         
     }
     [self.mTableV_list reloadData];
+}
+
+-(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.mInt_index==0) {
+        return self.mArr_nowHomework.count;
+    } else if (self.mInt_index==1){
+        return self.mArr_overHomework.count;
+    }else if (self.mInt_index==2){
+        return self.mArr_score.count;
+    }
+    return 0;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *indentifier = @"StudentHomework_TableViewCell";
+    if (self.mInt_index ==0) {
+        StudentHomework_TableViewCell *cell = (StudentHomework_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+        if (cell == nil) {
+            cell = [[StudentHomework_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"StudentHomework_TableViewCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (StudentHomework_TableViewCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"StudentHomework_TableViewCell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
+        }
+        StuHWModel *model;
+        if (self.mInt_index == 0) {
+            model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
+            
+            if ([model.isHaveAdd intValue]==1) {//主观题
+                cell.mImg_pic.frame = CGRectMake(8, 10, 14, 14);
+            }else{
+                cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
+            }
+            //名称
+            cell.mLab_title.text = model.homeworkName;
+            cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 10, [dm getInstance].width-cell.mImg_pic.frame.origin.x-cell.mImg_pic.frame.size.width-10, cell.mLab_title.frame.size.height);
+            //题量
+            cell.mLab_numLab.frame = CGRectMake(8, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.size.height);
+            cell.mLab_num.text = model.itemNumber;
+            CGSize numSize = [model.itemNumber sizeWithFont:[UIFont systemFontOfSize:10]];
+            cell.mLab_num.frame = CGRectMake(cell.mLab_numLab.frame.origin.x+cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.origin.y, numSize.width, cell.mLab_num.frame.size.height);
+            //过期时间
+            cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+20, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
+            cell.mLab_time.text = model.EXPIRYDATE;
+            D("dfuhguhj-====%@,%@",model.EXPIRYDATE,model.isHWFinish);
+            CGSize timeSize = [model.EXPIRYDATE sizeWithFont:[UIFont systemFontOfSize:10]];
+            cell.mLab_time.frame  = CGRectMake(cell.mLab_timeLab.frame.origin.x+cell.mLab_timeLab.frame.size.width, cell.mLab_numLab.frame.origin.y, timeSize.width, cell.mLab_time.frame.size.height);
+            //判断是否做完
+            if ([model.isHWFinish intValue]==1) {//完成
+                cell.mLab_goto.hidden = YES;
+                cell.mLab_power.hidden = NO;
+                cell.mLab_powerLab.hidden = NO;
+                cell.mLab_score.hidden = NO;
+                cell.mLab_scoreLab.hidden = NO;
+                //学力
+                cell.mLab_power.text = model.EduLevel;
+                CGSize EduLevelSize = [model.EduLevel sizeWithFont:[UIFont systemFontOfSize:10]];
+                cell.mLab_power.frame = CGRectMake([dm getInstance].width-9-EduLevelSize.width, cell.mLab_numLab.frame.origin.y, EduLevelSize.width, cell.mLab_power.frame.size.height);
+                cell.mLab_powerLab.frame = CGRectMake(cell.mLab_power.frame.origin.x-cell.mLab_powerLab.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_powerLab.frame.size.width, cell.mLab_powerLab.frame.size.height);
+                //得分
+                cell.mLab_score.text = model.HWScore;
+                CGSize HWScoreSize = [model.HWScore sizeWithFont:[UIFont systemFontOfSize:10]];
+                cell.mLab_score.frame = CGRectMake(cell.mLab_powerLab.frame.origin.x-10-HWScoreSize.width, cell.mLab_numLab.frame.origin.y, HWScoreSize.width, cell.mLab_score.frame.size.height);
+                cell.mLab_scoreLab.frame = CGRectMake(cell.mLab_score.frame.origin.x-cell.mLab_scoreLab.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_scoreLab.frame.size.width, cell.mLab_scoreLab.frame.size.height);
+            }else{
+                cell.mLab_goto.hidden = NO;
+                cell.mLab_power.hidden = YES;
+                cell.mLab_powerLab.hidden = YES;
+                cell.mLab_score.hidden = YES;
+                cell.mLab_scoreLab.hidden = YES;
+                cell.mLab_goto.frame = CGRectMake([dm getInstance].width-9-cell.mLab_goto.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_goto.frame.size.width, cell.mLab_goto.frame.size.height);
+            }
+            //分割线
+            cell.mLab_line.frame = CGRectMake(0, cell.mLab_numLab.frame.origin.y+cell.mLab_numLab.frame.size.height+5, [dm getInstance].width, cell.mLab_line.frame.size.height);
+            
+            return cell;
+        }else{
+            
+        }
+    }
+    return nil;
+}
+
+-(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
+    return 66;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 //导航条返回按钮回调
