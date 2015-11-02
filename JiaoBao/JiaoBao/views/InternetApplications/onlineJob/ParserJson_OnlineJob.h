@@ -13,6 +13,8 @@
 #import "StuHWModel.h"
 #import "StuHomeWorkModel.h"
 #import "StuHWQsModel.h"
+#import "LevelModel.h"
+#import "CompleteStatusModel.h"
 
 
 @interface ParserJson_OnlineJob : NSObject
@@ -26,6 +28,9 @@
 +(NSMutableArray *)parserJsonStuHWList:(NSString*)json;//解析学生当前作业列表
 +(StuHomeWorkModel *)parserJsonStuHW:(NSString*)json;//解析当前作业详细信息
 +(StuHWQsModel *)parserJsonStuHWQs:(NSString*)json;//解析某作业下某题的作业题及答案
++(NSMutableArray *)parserJsonStuEduLevel:(NSString*)json;//解析学生学力
++(NSMutableArray *)parserJsonCompleteStatusHWWith:(NSString*)json;//解析学生作业完成情况
+
 
 
 

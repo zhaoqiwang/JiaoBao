@@ -250,6 +250,43 @@
     
     
 }
++(NSMutableArray *)parserJsonStuEduLevel:(NSString*)json//解析学生学力
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for (int i=0; i<arrList.count; i++) {
+        LevelModel *model = [[LevelModel alloc] init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+        model.Level = [numberFormatter stringFromNumber:[dic objectForKey:@"Level" ]];
+        model.Name = [dic objectForKey:@"Name" ];
+        model.ID = [numberFormatter stringFromNumber:[dic objectForKey:@"ID"]];
+        
+        [array addObject:model];
+    }
+    return array;
+    
+}
++(NSMutableArray *)parserJsonCompleteStatusHWWith:(NSString*)json;//解析学生作业完成情况
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for (int i=0; i<arrList.count; i++) {
+        CompleteStatusModel *model = [[CompleteStatusModel alloc] init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+        model.UnId = [numberFormatter stringFromNumber:[dic objectForKey:@"UnId" ]];
+        model.Name = [dic objectForKey:@"Name" ] ;
+        model.Total = [numberFormatter stringFromNumber:[dic objectForKey:@"Total"]];
+        model.IsF = [numberFormatter stringFromNumber:[dic objectForKey:@"IsF"]];
+        model.UnF = [numberFormatter stringFromNumber:[dic objectForKey:@"UnF"]];
+        
+        [array addObject:model];
+    }
+    return array;
+    
+}
+
 
 
 @end

@@ -289,11 +289,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
 }
 
-//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
--(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid
-{
-    
-}
 //学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
 -(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName{
     NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.172:8201/AtHWPort/StuMakeSelf"];
@@ -305,7 +300,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------StuMakeSelf: %@,", result);
+        D("JSON--------StuMakeSelf: %@,",result);
         if ([result isEqualToString:@"true,"]) {
             [MBProgressHUD showError:@"发布成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:nil];
@@ -315,6 +310,49 @@ static OnlineJobHttp *onlineJobHttp = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD showError:@"发布失败"];
         D("Error---------StuMakeSelf: %@", error);
+    }];
+}
+
+//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
+-(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuEduLevel",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"StuId":StuId,@"uId":uId,@"chapterid":chapterid};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuEduLevelWithStuId: %@,", result);
+        NSArray *levelArr = [ParserJson_OnlineJob parserJsonStuEduLevel:result];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetStuEduLevelWithStuId: %@", error);
+    }];
+    
+}
+
+//获取某学生各科作业完成情况 参数：学生ID
+-(void)GetCompleteStatusHWWithStuId:(NSString*)StuId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetCompleteStatusHW",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"StuId":StuId};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetCompleteStatusHWWithStuId: %@,", result);
+        NSArray *CompleteStatusArr = [ParserJson_OnlineJob parserJsonCompleteStatusHWWith:result];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetCompleteStatusHWWithStuId: %@", error);
     }];
 }
 
