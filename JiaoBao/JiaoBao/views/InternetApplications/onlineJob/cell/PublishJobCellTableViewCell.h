@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol PublishJobDelegate;
 @interface PublishJobCellTableViewCell : UITableViewCell
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_send;//发布
 @property(weak,nonatomic)id<PublishJobDelegate>delegate;
 - (IBAction)publishBtnAction:(id)sender;
 

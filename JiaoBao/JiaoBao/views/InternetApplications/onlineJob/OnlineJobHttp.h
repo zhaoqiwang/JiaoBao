@@ -58,6 +58,9 @@
 //学生递交作业 参数：作业ID - 试题ID - 学生作答该题的答案
 -(void)StuSubQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId Answer:(NSString*)Answer;
 
+//学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
+-(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName;
+
 
 
 @end

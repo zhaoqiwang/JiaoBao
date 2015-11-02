@@ -416,6 +416,8 @@
 		A75E6EC11ABACDBD00B51B18 /* classView_3.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EB51ABACDBD00B51B18 /* classView_3.png */; };
 		A75E6EC21ABACDBD00B51B18 /* classView_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EB61ABACDBD00B51B18 /* classView_3@2x.png */; };
 		A75E6EC31ABACDBD00B51B18 /* classView_3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A75E6EB71ABACDBD00B51B18 /* classView_3@3x.png */; };
+		A75F21441BE70255002B7EDB /* ParentSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75F21421BE70255002B7EDB /* ParentSearchViewController.m */; };
+		A75F21451BE70255002B7EDB /* ParentSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A75F21431BE70255002B7EDB /* ParentSearchViewController.xib */; };
 		A76038FC1BAF96E800FDCBDF /* SigleBtnView.m in Sources */ = {isa = PBXBuildFile; fileRef = A76038FB1BAF96E800FDCBDF /* SigleBtnView.m */; };
 		A761D3EC1A7F697900DCAEB9 /* rootTable_0.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3CE1A7F697900DCAEB9 /* rootTable_0.png */; };
 		A761D3ED1A7F697900DCAEB9 /* rootTable_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A761D3CF1A7F697900DCAEB9 /* rootTable_0@2x.png */; };
@@ -862,8 +864,8 @@
 		A7E93DE51B906DBC00CD7B1C /* PickContentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */; };
 		A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */; };
 		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
-		F71283811BE1ADD100074B72 /* DetailHWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F712837F1BE1ADD100074B72 /* DetailHWViewController.m */; settings = {ASSET_TAGS = (); }; };
-		F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71283801BE1ADD100074B72 /* DetailHWViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		F71283811BE1ADD100074B72 /* DetailHWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F712837F1BE1ADD100074B72 /* DetailHWViewController.m */; };
+		F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71283801BE1ADD100074B72 /* DetailHWViewController.xib */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
 		F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030C1AB3C46300E6167F /* JTCalendarAppearance.m */; };
 		F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030E1AB3C46300E6167F /* JTCalendarContentView.m */; };
@@ -933,9 +935,9 @@
 		F75757431BA16B7700AA4267 /* ChoicenessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */; };
 		F75757441BA16B7700AA4267 /* ChoicenessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */; };
 		F764F48B1BD4D1070077F55A /* PublishJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F764F48A1BD4D1070077F55A /* PublishJobModel.m */; };
-		F768943C1BDF773F005EA7B6 /* noContent.png in Resources */ = {isa = PBXBuildFile; fileRef = F76894391BDF773F005EA7B6 /* noContent.png */; settings = {ASSET_TAGS = (); }; };
-		F768943D1BDF773F005EA7B6 /* noContent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943A1BDF773F005EA7B6 /* noContent@2x.png */; settings = {ASSET_TAGS = (); }; };
-		F768943E1BDF773F005EA7B6 /* noContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943B1BDF773F005EA7B6 /* noContent@3x.png */; settings = {ASSET_TAGS = (); }; };
+		F768943C1BDF773F005EA7B6 /* noContent.png in Resources */ = {isa = PBXBuildFile; fileRef = F76894391BDF773F005EA7B6 /* noContent.png */; };
+		F768943D1BDF773F005EA7B6 /* noContent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943A1BDF773F005EA7B6 /* noContent@2x.png */; };
+		F768943E1BDF773F005EA7B6 /* noContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943B1BDF773F005EA7B6 /* noContent@3x.png */; };
 		F76B64351B1EA205008F6961 /* RCLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64321B1EA205008F6961 /* RCLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F76B643A1B1EA3F5008F6961 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64381B1EA3F5008F6961 /* CommentCell.m */; };
 		F76B643B1B1EA3F5008F6961 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76B64391B1EA3F5008F6961 /* CommentCell.xib */; };
@@ -1667,6 +1669,9 @@
 		A75E6EB51ABACDBD00B51B18 /* classView_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = classView_3.png; path = Image/InternetApp/class/classView_3.png; sourceTree = "<group>"; };
 		A75E6EB61ABACDBD00B51B18 /* classView_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_3@2x.png"; path = "Image/InternetApp/class/classView_3@2x.png"; sourceTree = "<group>"; };
 		A75E6EB71ABACDBD00B51B18 /* classView_3@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "classView_3@3x.png"; path = "Image/InternetApp/class/classView_3@3x.png"; sourceTree = "<group>"; };
+		A75F21411BE70255002B7EDB /* ParentSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentSearchViewController.h; sourceTree = "<group>"; };
+		A75F21421BE70255002B7EDB /* ParentSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentSearchViewController.m; sourceTree = "<group>"; };
+		A75F21431BE70255002B7EDB /* ParentSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParentSearchViewController.xib; sourceTree = "<group>"; };
 		A76038FA1BAF96E800FDCBDF /* SigleBtnView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SigleBtnView.h; path = views/InternetApplications/theme/Knowledge/SigleBtnView.h; sourceTree = "<group>"; };
 		A76038FB1BAF96E800FDCBDF /* SigleBtnView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SigleBtnView.m; path = views/InternetApplications/theme/Knowledge/SigleBtnView.m; sourceTree = "<group>"; };
 		A761D3CE1A7F697900DCAEB9 /* rootTable_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rootTable_0.png; path = Image/root/rootTable_0.png; sourceTree = "<group>"; };
@@ -3813,6 +3818,17 @@
 			name = class;
 			sourceTree = "<group>";
 		};
+		A75F21401BE700D3002B7EDB /* parents */ = {
+			isa = PBXGroup;
+			children = (
+				A75F21411BE70255002B7EDB /* ParentSearchViewController.h */,
+				A75F21421BE70255002B7EDB /* ParentSearchViewController.m */,
+				A75F21431BE70255002B7EDB /* ParentSearchViewController.xib */,
+			);
+			name = parents;
+			path = views/InternetApplications/onlineJob/parents;
+			sourceTree = "<group>";
+		};
 		A76255D41B5C9F3C00AD8089 /* AVCaptureManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -4091,6 +4107,7 @@
 		A7736DB31BCDEBB600CC39A0 /* onlineJob */ = {
 			isa = PBXGroup;
 			children = (
+				A75F21401BE700D3002B7EDB /* parents */,
 				A76F8FEE1BDA15DD00C84186 /* student */,
 				F7FFD9EC1BCFA2C0004A691A /* OnlineJobHttp */,
 				A7736DC11BCE098B00CC39A0 /* cell */,
@@ -5646,6 +5663,7 @@
 				F7502A0C1AEE1E50004F822F /* blank@2x.png in Resources */,
 				F7502A141AEE1E50004F822F /* HomeClass_2@2x.png in Resources */,
 				A79C0F291B9C297C00F8764B /* classViewTopCell@3x.png in Resources */,
+				A75F21451BE70255002B7EDB /* ParentSearchViewController.xib in Resources */,
 				F79D84DA1ABD4DC000897477 /* RecordViewController.xib in Resources */,
 				A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */,
 				F788EA711BAA589D0015965E /* categoryCell.xib in Resources */,
@@ -5920,6 +5938,7 @@
 				A76255D21B5C9EDB00AD8089 /* VideoRecorderViewController.m in Sources */,
 				A7595EA31A5FC2F30027848E /* PSTCollectionViewUpdateItem.m in Sources */,
 				F787CFF91B70560800E8A31B /* CategoryModel.m in Sources */,
+				A75F21441BE70255002B7EDB /* ParentSearchViewController.m in Sources */,
 				A7595E981A5FC2F30027848E /* DACircularProgressView.m in Sources */,
 				A73AD82C1A20721E00F68C47 /* UnitInfoModel.m in Sources */,
 				A76038FC1BAF96E800FDCBDF /* SigleBtnView.m in Sources */,

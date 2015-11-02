@@ -549,6 +549,10 @@
                      image:[UIImage imageNamed:@"appNav_contact"]
                     target:self
                     action:@selector(myJob:)],
+      [KxMenuItem menuItem:@"家长查询"
+                     image:[UIImage imageNamed:@"appNav_contact"]
+                    target:self
+                    action:@selector(parentSearch:)],
       
       ];
     
@@ -579,6 +583,11 @@
 //我的作业
 -(void)myJob:(id)sender{
     StudentHomewrokViewController *view = [[StudentHomewrokViewController alloc] init];
+    [utils pushViewController:view animated:YES];
+}
+
+-(void)parentSearch:(id)sender{
+    ParentSearchViewController *view = [[ParentSearchViewController alloc] init];
     [utils pushViewController:view animated:YES];
 }
 

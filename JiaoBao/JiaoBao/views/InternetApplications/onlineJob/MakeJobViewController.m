@@ -54,13 +54,7 @@
         int index = [[dic objectForKey:@"index"] intValue];
         NSArray *array = [dic objectForKey:@"array"];
 //        NSMutableArray *tempArr = [NSMutableArray array];
-        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:1];
-        TreeJob_level0_model *nodeData = node0.nodeData;
-        if (array.count>0) {
-            nodeData.mStr_title = @"请选择班级";
-        }else{
-            nodeData.mStr_title = @"没有执教班级";
-        }
+        
         if (index == 1) {//关联的班级
             for (int i=0; i<self.mArr_sumData.count; i++) {
                 TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
@@ -100,6 +94,13 @@
                     }
                 }
             }
+        }
+        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:1];
+        TreeJob_level0_model *nodeData = node0.nodeData;
+        if (node0.sonNodes.count>0) {
+            nodeData.mStr_title = @"请选择班级";
+        }else{
+            nodeData.mStr_title = @"没有执教班级";
         }
         [self reloadDataForDisplayArray];
     }else{
@@ -368,6 +369,8 @@
             temp0.mStr_title = @"5";
             self.publishJobModel.SelNum = @"5";
             self.publishJobModel.InpNum = @"5";
+        }else if (i==1){
+            temp0.mStr_title = @"没有执教班级";
         }
         node0.nodeData = temp0;//当前节点数据
         
