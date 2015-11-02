@@ -7,8 +7,11 @@
 //
 
 #import "ParentSearchViewController.h"
+#import "OnlineJobHttp.h"
+#import "StuInfoModel.h"
 
 @interface ParentSearchViewController ()
+@property (nonatomic,strong) StuInfoModel *mModel_stuInf;//学生信息，包含id
 
 @end
 

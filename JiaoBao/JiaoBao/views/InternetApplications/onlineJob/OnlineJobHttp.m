@@ -129,12 +129,13 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
-        [MBProgressHUD showSuccess:@"发布成功"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:nil];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
-        [MBProgressHUD showError:@"发布失败"];
+        //[MBProgressHUD showError:@"发布失败"];
     }];
     
 }
@@ -263,6 +264,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWQsWithHwInfoId: %@,", result);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------GetStuHWQsWithHwInfoId: %@", error);
@@ -298,7 +300,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------StuMakeSelf: %@,", result);
+        D("JSON--------StuMakeSelf: %@,",result);
         if ([result isEqualToString:@"true,"]) {
             [MBProgressHUD showError:@"发布成功"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:nil];
@@ -308,6 +310,49 @@ static OnlineJobHttp *onlineJobHttp = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD showError:@"发布失败"];
         D("Error---------StuMakeSelf: %@", error);
+    }];
+}
+
+//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
+-(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuEduLevel",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"StuId":StuId,@"uId":uId,@"chapterid":chapterid};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuEduLevelWithStuId: %@,", result);
+        NSArray *levelArr = [ParserJson_OnlineJob parserJsonStuEduLevel:result];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetStuEduLevelWithStuId: %@", error);
+    }];
+    
+}
+
+//获取某学生各科作业完成情况 参数：学生ID
+-(void)GetCompleteStatusHWWithStuId:(NSString*)StuId
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetCompleteStatusHW",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"StuId":StuId};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetCompleteStatusHWWithStuId: %@,", result);
+        NSArray *CompleteStatusArr = [ParserJson_OnlineJob parserJsonCompleteStatusHWWith:result];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        D("Error---------GetCompleteStatusHWWithStuId: %@", error);
     }];
 }
 

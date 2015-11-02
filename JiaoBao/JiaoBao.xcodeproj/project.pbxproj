@@ -886,8 +886,17 @@
 		F71E9D6A1B86BE4A00D90487 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D651B86BE4A00D90487 /* TFHpple.m */; };
 		F71E9D6B1B86BE4A00D90487 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D671B86BE4A00D90487 /* TFHppleElement.m */; };
 		F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D691B86BE4A00D90487 /* XPathQuery.m */; };
+		F72385D11BE2F74F0000015D /* DetialHWCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F72385CF1BE2F74F0000015D /* DetialHWCell.m */; };
+		F72385D21BE2F74F0000015D /* DetialHWCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F72385D01BE2F74F0000015D /* DetialHWCell.xib */; };
+		F72385DA1BE344990000015D /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = F72385D41BE344990000015D /* WebViewJavascriptBridge.js.txt */; };
+		F72385DB1BE344990000015D /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = F72385D51BE344990000015D /* WebViewJavascriptBridge.m */; };
+		F72385DC1BE344990000015D /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = F72385D71BE344990000015D /* WebViewJavascriptBridgeBase.m */; };
+		F72385DD1BE344990000015D /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = F72385D91BE344990000015D /* WKWebViewJavascriptBridge.m */; };
+		F72385DF1BE346BC0000015D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72385DE1BE346BC0000015D /* WebKit.framework */; };
 		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F73107981BE743EB0023BD49 /* LevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F73107971BE743EB0023BD49 /* LevelModel.m */; };
+		F731079B1BE74DC00023BD49 /* CompleteStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F731079A1BE74DC00023BD49 /* CompleteStatusModel.m */; };
 		F73DDB931BA9110000DD8228 /* InvitationUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */; };
 		F73DDB971BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F73DDB951BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m */; };
 		F73DDB981BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F73DDB961BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.xib */; };
@@ -2311,10 +2320,25 @@
 		F71E9D671B86BE4A00D90487 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHppleElement.m; path = Common/TFHppleElement.m; sourceTree = "<group>"; };
 		F71E9D681B86BE4A00D90487 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = Common/XPathQuery.h; sourceTree = "<group>"; };
 		F71E9D691B86BE4A00D90487 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = Common/XPathQuery.m; sourceTree = "<group>"; };
+		F72385CE1BE2F74F0000015D /* DetialHWCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetialHWCell.h; path = cell/DetialHWCell.h; sourceTree = "<group>"; };
+		F72385CF1BE2F74F0000015D /* DetialHWCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetialHWCell.m; path = cell/DetialHWCell.m; sourceTree = "<group>"; };
+		F72385D01BE2F74F0000015D /* DetialHWCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetialHWCell.xib; path = cell/DetialHWCell.xib; sourceTree = "<group>"; };
+		F72385D31BE344990000015D /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		F72385D41BE344990000015D /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		F72385D51BE344990000015D /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		F72385D61BE344990000015D /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
+		F72385D71BE344990000015D /* WebViewJavascriptBridgeBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeBase.m; sourceTree = "<group>"; };
+		F72385D81BE344990000015D /* WKWebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		F72385D91BE344990000015D /* WKWebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		F72385DE1BE346BC0000015D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F72A726A1B2BBCFC00378C95 /* RightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RightModel.h; path = views/InternetApplications/workView/NewWorkViewC/RightModel.h; sourceTree = "<group>"; };
 		F72A726B1B2BBCFC00378C95 /* RightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightModel.m; path = views/InternetApplications/workView/NewWorkViewC/RightModel.m; sourceTree = "<group>"; };
 		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
 		F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHImagePickerMutilSelector.m; path = Common/MHImagePick/MHImagePickerMutilSelector.m; sourceTree = "<group>"; };
+		F73107961BE743EB0023BD49 /* LevelModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelModel.h; sourceTree = "<group>"; };
+		F73107971BE743EB0023BD49 /* LevelModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelModel.m; sourceTree = "<group>"; };
+		F73107991BE74DC00023BD49 /* CompleteStatusModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompleteStatusModel.h; sourceTree = "<group>"; };
+		F731079A1BE74DC00023BD49 /* CompleteStatusModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompleteStatusModel.m; sourceTree = "<group>"; };
 		F73DDB911BA9110000DD8228 /* InvitationUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationUserInfo.h; sourceTree = "<group>"; };
 		F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationUserInfo.m; sourceTree = "<group>"; };
 		F73DDB941BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KnowledgePeoleSpaceViewController.h; path = views/InternetApplications/personalSpace/KnowledgePeoleSpaceViewController.h; sourceTree = "<group>"; };
@@ -2632,6 +2656,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72385DF1BE346BC0000015D /* WebKit.framework in Frameworks */,
 				F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */,
 				F7F415C91B847302001B27CE /* libxml2.dylib in Frameworks */,
 				F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */,
@@ -3319,6 +3344,7 @@
 		A755E69719F24AC500BBDF3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F72385DE1BE346BC0000015D /* WebKit.framework */,
 				F7C4D7121BD08CB3008B8924 /* CoreData.framework */,
 				F7F415C81B847302001B27CE /* libxml2.dylib */,
 				F74639961B0EC5DA00365EB7 /* CoreText.framework */,
@@ -3383,6 +3409,13 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F72385D31BE344990000015D /* WebViewJavascriptBridge.h */,
+				F72385D41BE344990000015D /* WebViewJavascriptBridge.js.txt */,
+				F72385D51BE344990000015D /* WebViewJavascriptBridge.m */,
+				F72385D61BE344990000015D /* WebViewJavascriptBridgeBase.h */,
+				F72385D71BE344990000015D /* WebViewJavascriptBridgeBase.m */,
+				F72385D81BE344990000015D /* WKWebViewJavascriptBridge.h */,
+				F72385D91BE344990000015D /* WKWebViewJavascriptBridge.m */,
 				F71E9D641B86BE4A00D90487 /* TFHpple.h */,
 				F71E9D651B86BE4A00D90487 /* TFHpple.m */,
 				F71E9D661B86BE4A00D90487 /* TFHppleElement.h */,
@@ -4004,6 +4037,9 @@
 				F712837E1BE1ADD100074B72 /* DetailHWViewController.h */,
 				F712837F1BE1ADD100074B72 /* DetailHWViewController.m */,
 				F71283801BE1ADD100074B72 /* DetailHWViewController.xib */,
+				F72385CE1BE2F74F0000015D /* DetialHWCell.h */,
+				F72385CF1BE2F74F0000015D /* DetialHWCell.m */,
+				F72385D01BE2F74F0000015D /* DetialHWCell.xib */,
 			);
 			name = student;
 			path = views/InternetApplications/onlineJob/student;
@@ -4151,6 +4187,10 @@
 				F7935A681BDA1BEF0021A048 /* StuHWQsModel.m */,
 				F7935A641BDA136C0021A048 /* StuHomeWorkModel.h */,
 				F7935A651BDA136C0021A048 /* StuHomeWorkModel.m */,
+				F73107961BE743EB0023BD49 /* LevelModel.h */,
+				F73107971BE743EB0023BD49 /* LevelModel.m */,
+				F73107991BE74DC00023BD49 /* CompleteStatusModel.h */,
+				F731079A1BE74DC00023BD49 /* CompleteStatusModel.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -5150,6 +5190,7 @@
 				A75082731B7998E60031E7C9 /* buttonView2@3x.png in Resources */,
 				A76ED5BA1AD67855006F3E0B /* workView_2@3x.png in Resources */,
 				A75E6EC11ABACDBD00B51B18 /* classView_3.png in Resources */,
+				F72385DA1BE344990000015D /* WebViewJavascriptBridge.js.txt in Resources */,
 				A761D3F41A7F697900DCAEB9 /* rootTable_2@3x.png in Resources */,
 				F7502A1C1AEE1E50004F822F /* HomeClass_Click_2@2x.png in Resources */,
 				A79AD7861BAA5A1000F2CE77 /* AtMeQIndexViewController.xib in Resources */,
@@ -5476,6 +5517,7 @@
 				F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */,
 				A763A53C1A48F372008365B5 /* photo_default@2x.png in Resources */,
 				A773FC511A4C0563005F84C2 /* ELCAssetTablePicker.xib in Resources */,
+				F72385D21BE2F74F0000015D /* DetialHWCell.xib in Resources */,
 				A76ED5CF1AD67855006F3E0B /* workView_click_4@3x.png in Resources */,
 				A7BB180F19F4FB1A00A81286 /* Regiser_bg-568h@2x.png in Resources */,
 				A73CAD571A071EC200D6C5AA /* WorkDetailListViewController.xib in Resources */,
@@ -5796,6 +5838,7 @@
 				A73AD8281A20271600F68C47 /* ArthLIstViewController.m in Sources */,
 				A74D128A1A3C510300A93CAC /* UpdateUnitListModel.m in Sources */,
 				A79C310D1BCF44EC003DF7B2 /* TreeJob_node.m in Sources */,
+				F72385DD1BE344990000015D /* WKWebViewJavascriptBridge.m in Sources */,
 				A755E70419F278B900BBDF3D /* ASIDownloadCache.m in Sources */,
 				F78D38661B218727005C17F0 /* MobileUnitViewController.m in Sources */,
 				A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */,
@@ -5834,6 +5877,7 @@
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,
 				A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */,
 				A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */,
+				F72385DB1BE344990000015D /* WebViewJavascriptBridge.m in Sources */,
 				A7357A1B1A3FE1E000A195C5 /* MyFriendsViewController.m in Sources */,
 				A7141DCE1A174A5D00940A3E /* ShareHttp.m in Sources */,
 				A749B9E919F8A2C00036F480 /* TreeView_node.m in Sources */,
@@ -5934,6 +5978,7 @@
 				F7C8AB6C1B73102400E829A4 /* AnswerDetailModel.m in Sources */,
 				A77FF02E1A650B3F00DB85E3 /* JSONModel+networking.m in Sources */,
 				A7375F451A0B235B00B31926 /* Forward_cell.m in Sources */,
+				F72385DC1BE344990000015D /* WebViewJavascriptBridgeBase.m in Sources */,
 				A7BEEA111A43D0C8003C9EAD /* UnitAlbumsViewController.m in Sources */,
 				A76255D21B5C9EDB00AD8089 /* VideoRecorderViewController.m in Sources */,
 				A7595EA31A5FC2F30027848E /* PSTCollectionViewUpdateItem.m in Sources */,
@@ -5962,6 +6007,7 @@
 				F7F7AD741B7C348600923B60 /* CategorySection.m in Sources */,
 				A76ED5911AD6189C006F3E0B /* WorkView_new2.m in Sources */,
 				A74339561A452B7700AFC0A5 /* UIImage+GIF.m in Sources */,
+				F73107981BE743EB0023BD49 /* LevelModel.m in Sources */,
 				A755E71719F278B900BBDF3D /* NSObject+SBJSON.m in Sources */,
 				A79C31111BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.m in Sources */,
 				A78459D81B7B4D1D00EA7D5D /* IQUIWindow+Hierarchy.m in Sources */,
@@ -5999,6 +6045,7 @@
 				A75E3FB61B6F64B700284C3D /* AFURLResponseSerialization.m in Sources */,
 				A7AA1C4A1B9145EC0098E101 /* PickedIndexModel.m in Sources */,
 				A755E6A619F24EBD00BBDF3D /* RegisterViewController.m in Sources */,
+				F72385D11BE2F74F0000015D /* DetialHWCell.m in Sources */,
 				A762FFF81A2828FE00A78B5C /* UnitNoticeModel.m in Sources */,
 				A7B0F94C1A47BC4300C1863A /* MJPhoto.m in Sources */,
 				A73191F51A134C1D008CFD53 /* SMSTreeUnitModel.m in Sources */,
@@ -6025,6 +6072,7 @@
 				F7F415C71B8472A9001B27CE /* GDataXMLNode.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
 				A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */,
+				F731079B1BE74DC00023BD49 /* CompleteStatusModel.m in Sources */,
 				F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */,
 				A72535D81AEB2245006D176A /* NewWorkTopView.m in Sources */,
 				F76B64551B1EA597008F6961 /* TopView.m in Sources */,
