@@ -25,7 +25,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
-                <outlet property="mLab_line" destination="f1Q-g6-53J" id="Xe5-mq-jWk"/>
+                <outlet property="mLab_line" destination="f1Q-g6-53J" id="yyF-QF-FRh"/>
             </connections>
             <point key="canvasLocation" x="620" y="448"/>
         </tableViewCell>

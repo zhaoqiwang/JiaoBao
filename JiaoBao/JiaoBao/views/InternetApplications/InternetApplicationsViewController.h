@@ -23,6 +23,7 @@
 #import "NewWorkViewController.h"
 #import "PeopleSpaceViewController.h"
 #import "StudentHomewrokViewController.h"
+#import "ParentSearchViewController.h"
 
 @interface InternetApplicationsViewController : UIViewController<Nav_internetAppViewDelegate,UITableViewDataSource,UITableViewDelegate,UIGestureRecognizerDelegate,MBProgressHUDDelegate>{
     Nav_internetAppView *nav_internetAppView;

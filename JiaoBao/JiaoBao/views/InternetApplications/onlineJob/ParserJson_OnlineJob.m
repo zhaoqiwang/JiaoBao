@@ -133,19 +133,20 @@
 
 +(StuInfoModel *)parserJsonStuInfo:(NSString*)json//解析学生信息
 {
-        NSDictionary *dic = [json objectFromJSONString];
-        StuInfoModel *model = [[StuInfoModel alloc] init];
-        model.StudentID = [dic objectForKey:@"StudentID"];
-        model.StdName = [dic objectForKey:@"StdName"];
-        model.Sex = [dic objectForKey:@"Sex"];
-        model.SchoolType = [dic objectForKey:@"SchoolType"];
-        model.GradeYear = [dic objectForKey:@"GradeYear"];
-        model.GradeName = [dic objectForKey:@"GradeName"];
-        model.ClassNo = [dic objectForKey:@"ClassNo"];
-        model.UnitClassID = [dic objectForKey:@"UnitClassID"];
-        model.SchoolID = [dic objectForKey:@"SchoolID"];
-
-        
+    NSDictionary *dic = [json objectFromJSONString];
+    StuInfoModel *model = [[StuInfoModel alloc] init];
+    model.StudentID = [dic objectForKey:@"StudentID"];
+    model.StdName = [dic objectForKey:@"StdName"];
+    model.Sex = [dic objectForKey:@"Sex"];
+    model.SchoolType = [dic objectForKey:@"SchoolType"];
+    model.GradeYear = [dic objectForKey:@"GradeYear"];
+    model.GradeName = [dic objectForKey:@"GradeName"];
+    model.ClassNo = [dic objectForKey:@"ClassNo"];
+    model.ClassName = [dic objectForKey:@"ClassName"];
+    model.UnitClassID = [dic objectForKey:@"UnitClassID"];
+    model.SchoolID = [dic objectForKey:@"SchoolID"];
+    
+    
     return model;
     
 }
@@ -188,6 +189,7 @@
         model.HWScore = [numberFormatter stringFromNumber:[dic objectForKey:@"HWScore"]];
         model.EduLevel = [numberFormatter stringFromNumber:[dic objectForKey:@"EduLevel"]];
         model.HWEndTime = [dic objectForKey:@"HWEndTime"];
+        model.EXPIRYDATE = [[dic objectForKey:@"EXPIRYDATE"] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
 
 //        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
 //        model.studentLevel = [dic objectForKey:@"studentLevel"];

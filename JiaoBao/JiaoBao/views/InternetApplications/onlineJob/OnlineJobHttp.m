@@ -160,12 +160,15 @@ static OnlineJobHttp *onlineJobHttp = nil;
         D("JSON--------getStuInfoWithAccID111111: %@,", dataStr);
         StuInfoModel *model = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
         //获取学生作业列表
-        if ([model.StudentID intValue]>0) {
-            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:model.StudentID IsSelf:@"0"];
+        if ([code intValue]==0) {
+            //将学生id传到界面
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:model];
+        }else{
+            [MBProgressHUD showError:ResultDesc];
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [MBProgressHUD showError:@"获取学生信息失败"];
         D("Error---------getStuInfoWithAccID: %@", error);
     }];
     
@@ -214,7 +217,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
         [tempDic setValue:@"0" forKey:@"ResultCode"];
         [tempDic setValue:arr forKey:@"array"];
-        D("dporgpaokgpao-====%lu",(unsigned long)arr.count);
+        [tempDic setValue:IsSelf forKey:@"IsSelf"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
@@ -291,4 +294,28 @@ static OnlineJobHttp *onlineJobHttp = nil;
 {
     
 }
+//学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
+-(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName{
+    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.172:8201/AtHWPort/StuMakeSelf"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"UserJBH":[dm getInstance].jiaoBaoHao,@"StuId":StuId,@"classID":classID,@"className":className,@"Unid":Unid,@"chapterID":chapterID,@"homeworkName":homeworkName,@"schoolName":schoolName};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------StuMakeSelf: %@,", result);
+        if ([result isEqualToString:@"true,"]) {
+            [MBProgressHUD showError:@"发布成功"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:nil];
+        }else{
+            [MBProgressHUD showError:@"发布失败"];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD showError:@"发布失败"];
+        D("Error---------StuMakeSelf: %@", error);
+    }];
+}
+
 @end
