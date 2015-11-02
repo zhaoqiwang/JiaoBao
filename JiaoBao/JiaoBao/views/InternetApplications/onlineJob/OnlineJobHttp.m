@@ -129,12 +129,13 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
-        [MBProgressHUD showSuccess:@"发布成功"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:nil];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
-        [MBProgressHUD showError:@"发布失败"];
+        //[MBProgressHUD showError:@"发布失败"];
     }];
     
 }
@@ -213,6 +214,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
         [tempDic setValue:@"0" forKey:@"ResultCode"];
         [tempDic setValue:arr forKey:@"array"];
+        D("dporgpaokgpao-====%lu",(unsigned long)arr.count);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
@@ -259,6 +261,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWQsWithHwInfoId: %@,", result);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------GetStuHWQsWithHwInfoId: %@", error);
@@ -281,5 +284,11 @@ static OnlineJobHttp *onlineJobHttp = nil;
         
         D("Error---------StuSubQsWithHwInfoId: %@", error);
     }];
+}
+
+//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
+-(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid
+{
+    
 }
 @end
