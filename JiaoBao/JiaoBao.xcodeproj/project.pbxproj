@@ -3324,8 +3324,8 @@
 			isa = PBXGroup;
 			children = (
 				A755E69819F24AE500BBDF3D /* views */,
-				A755E6B419F25E9F00BBDF3D /* Image */,
 				A755E6B019F25B5500BBDF3D /* Common */,
+				A755E6B419F25E9F00BBDF3D /* Image */,
 				A755E67019F2492700BBDF3D /* Supporting Files */,
 			);
 			path = JiaoBao;

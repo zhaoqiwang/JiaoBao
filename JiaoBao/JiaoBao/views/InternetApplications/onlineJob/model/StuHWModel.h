@@ -11,7 +11,7 @@
 @interface StuHWModel : NSObject
 @property(nonatomic,strong)NSString *TabID;//分表ID
 @property(nonatomic,strong)NSString *homeworkName;//作业名称
-@property(nonatomic,strong)NSString *distribution;//作业分布情况
+@property(nonatomic,strong)NSString *distribution;//作业分布情况，"distribution":"1:10,2:10",1选2填
 @property(nonatomic,strong)NSString *itemNumber;//试题数量
 
 @property(nonatomic,strong)NSString *TabIDStr;

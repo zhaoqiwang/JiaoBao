@@ -20,6 +20,10 @@
                     <rect key="frame" x="0.0" y="169" width="320" height="399"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="3Am-Wx-hUe"/>
+                        <outlet property="delegate" destination="-1" id="1df-l4-Cmh"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

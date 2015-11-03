@@ -191,7 +191,7 @@
             }
         }
         if (a>0) {
-            [MBProgressHUD showError:@"您还有练习未完成" toView:self.view];
+            [MBProgressHUD showError:@"您还有作业未完成" toView:self.view];
             return;
         }
         //再发送获取练习列表，然后根据返回的数据，做界面显示
