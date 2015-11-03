@@ -329,6 +329,10 @@
     {
         if(self.invitationUserInfo)
         {
+            if(!self.invitationUserInfo.NickName)
+            {
+                self.invitationUserInfo.NickName = @"";
+            }
             NSString *message = [NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
@@ -590,7 +594,16 @@
         [MBProgressHUD showError:@"请选择分类"];
         return;
     }
-    self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
+    NSString *b = [self.mText_title.text substringFromIndex:self.mText_title.text.length-1];
+    if([b isEqualToString:@"?"]||[b isEqualToString:@"？"])
+    {
+        
+    }
+    else
+    {
+        self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
+
+    }
 
     if(self.proviceModel == nil)
     {
@@ -851,7 +864,6 @@
 {
     self.imageCount = info.count;
     [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
-    
     [self dismissViewControllerAnimated:YES completion:^{
         //发送选中图片上传请求
         if (info.count>0) {

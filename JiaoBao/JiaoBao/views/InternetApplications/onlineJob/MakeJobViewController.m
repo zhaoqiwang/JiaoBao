@@ -140,6 +140,7 @@
 -(void)TecMakeHWWithPublishJobModel:(id)sender
 {
     [MBProgressHUD  hideHUDForView:self.view animated:YES];
+    [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
 //        NSError* error;
 //        //从appdelegate获取数据数据库上下文
 //        self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -1548,7 +1549,6 @@
                     self.publishJobModel.VersionName = model1.VersionName;
                     self.publishJobModel.VersionCode = model1.TabID;
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                    
                     TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
                     TreeJob_level0_model *tempModel = tempNode.nodeData;
                     TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
@@ -1674,9 +1674,17 @@
 
 - (IBAction)doneBtnAction:(id)sender {
     [self.dateTF resignFirstResponder];
+    NSDate *nowDate = [NSDate date];
+    NSComparisonResult result = [self.datePicker.date compare:nowDate];
+    if(result == NSOrderedAscending)
+    {
+        [MBProgressHUD showError:@"时间过期"];
+        return;
+    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
     NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
+
     self.dateTF.text = dateStr;
     self.publishJobModel.ExpTime = dateStr;
     
@@ -1685,6 +1693,7 @@
 {
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
+
     
     if(self.publishJobModel.classIDArr.count == 0)
     {
@@ -1696,13 +1705,20 @@
         [MBProgressHUD showError:@"请选择章节"];
         return ;
     }
+    if([self.publishJobModel.chapterID integerValue]==0)
+    {
+        [MBProgressHUD showError:@"没有章节"];
+        return;
+    }
     if([self.publishJobModel.HwType isEqualToString:@"3"])
     {
+        
         if([self.publishJobModel.DesId isEqualToString:@""])
         {
             [MBProgressHUD showError:@"请选择自定义作业"];
             return ;
         }
+        self.publishJobModel.DoLv = @"3";
         
     }
     if([utils isBlankString:self.publishJobModel.homeworkName])
@@ -1715,6 +1731,17 @@
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+    NSDate *date = [dateFormatter dateFromString:self.publishJobModel.ExpTime];
+    NSDate *nowDate = [NSDate date];
+    NSComparisonResult result = [date compare:nowDate];
+    if(result == NSOrderedAscending)
+    {
+        [MBProgressHUD showError:@"时间过期"];
+        return;
+    }
+    self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
     for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
     {
         TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];

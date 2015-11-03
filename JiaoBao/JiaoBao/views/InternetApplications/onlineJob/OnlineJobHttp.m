@@ -135,7 +135,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
-        //[MBProgressHUD showError:@"发布失败"];
+        //[MBProgressHUD showError:@"发布作业失败"];
     }];
     
 }

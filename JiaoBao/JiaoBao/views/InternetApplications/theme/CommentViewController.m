@@ -77,19 +77,11 @@
 {
     if(view.tag == 100)
     {
-        if(self.answerModel)
-        {
-            //[[KnowledgeHttp getInstance]reportanswerWithAId:self.answerModel.TabID];
-            [[KnowledgeHttp getInstance]ReportAnsWithAId:self.answerModel.TabID repType:@"0"];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否评论" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        alert.delegate = self;
+        alert.tag= 10000;
 
-        }
-        else
-        {
-            //[[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
-            [[KnowledgeHttp getInstance]ReportAnsWithAId:self.questionModel.answerModel.TabID repType:@"0"];
-
-
-        }
     }
     if(view.tag == 101)
     {
@@ -584,7 +576,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",nil];
-    action.tag = 1;
+    action.tag = indexPath.row;
     [action showInView:self.view];
 //    [self.mView_text setHidden:NO];
 //    [self.mTextF_text becomeFirstResponder];
@@ -592,26 +584,51 @@
     
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (actionSheet.tag == 1) {
         if (buttonIndex == 0){
             [self.mView_text setHidden:NO];
             [self.mTextF_text becomeFirstResponder];
 
         }else if (buttonIndex == 1){
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否评论" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alert show];
+            alert.delegate = self;
+            alert.tag = actionSheet.tag;
+
+        }
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 10000)
+    {
+        if(buttonIndex == 1)
+        {
             if(self.answerModel)
             {
-                [[KnowledgeHttp getInstance]ReportAnsWithAId:self.answerModel.TabID repType:@"2"];
+                //[[KnowledgeHttp getInstance]reportanswerWithAId:self.answerModel.TabID];
+                [[KnowledgeHttp getInstance]ReportAnsWithAId:self.answerModel.TabID repType:@"0"];
                 
             }
             else
             {
-                [[KnowledgeHttp getInstance]ReportAnsWithAId:self.questionModel.answerModel.TabID repType:@"2"];
+                //[[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
+                [[KnowledgeHttp getInstance]ReportAnsWithAId:self.questionModel.answerModel.TabID repType:@"0"];
                 
                 
             }
             
         }
+
     }
+    else
+    {
+        if(buttonIndex == 1)
+        {
+            commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:alertView.tag];
+            [[KnowledgeHttp getInstance]ReportAnsWithAId:model.TabID repType:@"2"];
+        }
+    }
+
+
 }
 
 //点击点赞按钮
