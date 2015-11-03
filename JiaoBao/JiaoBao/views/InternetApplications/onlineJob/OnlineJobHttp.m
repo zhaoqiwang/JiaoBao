@@ -183,6 +183,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"AccID":AccID,@"UID":UID};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------getGenInfoWithAccID: %@,", result);
@@ -192,9 +193,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         GenInfo *model = [ParserJson_OnlineJob parserJsonGenInfo:dataStr];
-        
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getGenInfoWithAccID" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getGenInfoWithAccID" object:tempDic];
         D("Error---------getGenInfoWithAccID: %@", error);
     }];
     
@@ -345,13 +351,18 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"StuId":StuId};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetCompleteStatusHWWithStuId: %@,", result);
         NSArray *CompleteStatusArr = [ParserJson_OnlineJob parserJsonCompleteStatusHWWith:result];
-        
+        [tempDic setValue:@"0" forKey:@"ResultCode"];
+        [tempDic setValue:CompleteStatusArr forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCompleteStatusHW" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCompleteStatusHW" object:tempDic];
         D("Error---------GetCompleteStatusHWWithStuId: %@", error);
     }];
 }

@@ -43,7 +43,7 @@
 //学生个人信息数据接口 参数：用户账号ID - 班级ID
 -(void)getStuInfoWithAccID:(NSString*)AccID UID:(NSString*)UID;
 
-//家长数据接口 参数：用户账号ID - 班级ID
+//家长数据接口 参数：用户账号ID - 班级ID____获取学生id
 -(void)getGenInfoWithAccID:(NSString*)AccID UID:(NSString*)UID;
 
 //学生获取当前作业列表 参数：学生ID                =0为作业，=1为练习
@@ -60,8 +60,10 @@
 
 //学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
 -(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName;
+
 //获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
 -(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid;
+
 //获取某学生各科作业完成情况 参数：学生ID
 -(void)GetCompleteStatusHWWithStuId:(NSString*)StuId;
 
