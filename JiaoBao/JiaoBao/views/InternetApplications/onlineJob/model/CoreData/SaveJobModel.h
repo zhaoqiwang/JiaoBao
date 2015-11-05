@@ -51,5 +51,5 @@
 - (void)removeSaveClassObject:(SaveClassModel *)value;
 - (void)addSaveClass:(NSSet *)values;
 - (void)removeSaveClass:(NSSet *)values;
-
+- (NSMutableDictionary *)propertiesDic;
 @end

@@ -78,7 +78,7 @@
         
         //表格
         self.mTableV_knowledge = [[UITableView alloc] initWithFrame:CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48)];
-        self.mTableV_knowledge.allowsSelection = NO;
+        //self.mTableV_knowledge.allowsSelection = NO;
         self.mTableV_knowledge.delegate = self;
         self.mTableV_knowledge.dataSource = self;
         self.mTableV_knowledge.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -522,7 +522,7 @@
         [self.mTableV_knowledge registerNib:n forCellReuseIdentifier:indentifier];
     }
     
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
         for (UIView *temp in cell.subviews) {
@@ -715,6 +715,8 @@
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.askImgV.hidden = YES;
+            cell.answerImgV.hidden = YES;
+            cell.basisImagV.hidden = YES;
             cell.LikeBtn.hidden = YES;
             cell.mLab_title.hidden = YES;
             cell.mLab_Category0.hidden = YES;
@@ -795,6 +797,9 @@
             }
         }else if (model.mInt_btn ==2){//当前的话题id
             cell.backgroundColor = [UIColor whiteColor];
+            cell.basisImagV.hidden = YES;
+            cell.askImgV.hidden = YES;
+            cell.answerImgV.hidden = YES;
             cell.LikeBtn.hidden = YES;
             cell.mLab_title.hidden = YES;
             cell.mLab_Category0.hidden = YES;

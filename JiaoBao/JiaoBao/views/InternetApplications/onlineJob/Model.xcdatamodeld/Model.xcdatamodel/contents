@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="8195" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F1021" minimumToolsVersion="Xcode 7.0">
     <entity name="SaveClassModel" representedClassName="SaveClassModel" syncable="YES">
         <attribute name="classID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="classNam" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,7 +39,7 @@
         <relationship name="saveClass" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SaveClassModel" inverseName="owner" inverseEntity="SaveClassModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SaveJobModel" positionX="-333" positionY="198" width="128" height="493"/>
         <element name="SaveClassModel" positionX="-54" positionY="360" width="128" height="103"/>
+        <element name="SaveJobModel" positionX="-333" positionY="198" width="128" height="493"/>
     </elements>
 </model>

@@ -335,10 +335,8 @@
         page = @"1";
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
-
         NSMutableArray *array = self.AllCommentListModel.mArr_CommentList;
         if (array.count>=20&&array.count%20==0) {
-
             page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         } else {
