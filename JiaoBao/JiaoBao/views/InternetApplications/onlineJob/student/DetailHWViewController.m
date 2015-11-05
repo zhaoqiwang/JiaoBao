@@ -15,6 +15,7 @@
 #import "WebViewJavascriptBridge.h"
 #import "TableViewWithBlock.h"
 #import "SelectionCell.h"
+#import "IQKeyboardManager.h"
 
 @interface DetailHWViewController ()
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
@@ -130,7 +131,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-       self.qNum.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
+    self.qNum.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.qNum.layer.borderWidth = 1;
     self.qNum.layer.cornerRadius = 0.2;
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
@@ -138,7 +140,12 @@
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWWithHwInfoId:) name:@"GetStuHWWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
-    
+//    //输入框弹出键盘问题
+//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+//    manager.enable = YES;//控制整个功能是否启用
+//    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+//    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+//    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"做作业"];
     self.hwNameLabel.text = self.hwName;
@@ -233,6 +240,12 @@
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {

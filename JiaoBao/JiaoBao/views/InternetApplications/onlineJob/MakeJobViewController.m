@@ -107,42 +107,13 @@
         [MBProgressHUD showError:@"超时" toView:self.view];
     }
 }
--(PublishJobModel*)getPublishJobModel
+- (void)viewDidLoad
 {
 
-    PublishJobModel *publishModel = [[PublishJobModel alloc]init];
-    publishModel.teacherJiaobaohao = @"5236705";
-    publishModel.classID =@"72202";
-    publishModel.className = @"班级测试001";
-    publishModel.chapterID = @"1";
-    publishModel.DoLv = @"1";
-    
-    publishModel.AllNum = @"20";
-    publishModel.SelNum =@"10";
-    publishModel.InpNum = @"10";
-    publishModel.Distribution = @"";
-    publishModel.LongTime = @"20";
-    
-    publishModel.ExpTime = @"2015-10-21 09:32:10";
-    publishModel.homeworkName =@"英语第一节（测试)";
-    publishModel.Additional = @"";
-    publishModel.AdditionalDes = @"";
-    publishModel.schoolName = @"开发部测试学校";
-    
-    publishModel.HwType = @"4";
-    publishModel.IsAnSms =0;
-    publishModel.IsQsSms = 0;
-    publishModel.IsRep = 0;
-    publishModel.TecName = @"老师12班";
-    publishModel.DesId = @"";
-    return publishModel;
-}
--(void)TecMakeHWWithPublishJobModel:(id)sender
-{
-    [MBProgressHUD  hideHUDForView:self.view animated:YES];
-//        NSError* error;
-//        //从appdelegate获取数据数据库上下文
-//        self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [super viewDidLoad];
+//    NSError* error;
+//    //从appdelegate获取数据数据库上下文
+//    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
 //    //通过查询语句获取数据列表
 //    NSFetchRequest* request=[[NSFetchRequest alloc] init];
 //    NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
@@ -150,126 +121,14 @@
 //    NSPredicate * qcondition= [NSPredicate predicateWithFormat:@"teacherJiaobaohao = %@",[dm getInstance].jiaoBaoHao ];
 //    [request setPredicate:qcondition];
 //    NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-//
+//    
 //    if(mutableFetchResult.count == 0)
 //    {
-//        //数据库添加数据
-//        self.saveJobModel = (SaveJobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-//        self.saveJobModel.gradeName = self.publishJobModel.GradeName;
-//        self.saveJobModel.gradeCode = self.publishJobModel.GradeCode;
-//        self.saveJobModel.subjectName = self.publishJobModel.subjectName;
-//        self.saveJobModel.subjectID = self.publishJobModel.subjectCode;
-//        self.saveJobModel.versionName = self.publishJobModel.VersionName;
-//        self.saveJobModel.versionID = self.publishJobModel.VersionCode;
-//        self.saveJobModel.chapterName = self.publishJobModel.chapterName;
-//        self.saveJobModel.teacherJiaobaohao = self.publishJobModel.teacherJiaobaohao;
-//        self.saveJobModel.chapterID = self.publishJobModel.chapterID;
-//        self.saveJobModel.allNum = self.publishJobModel.AllNum;
-//        self.saveJobModel.selNum = self.publishJobModel.SelNum;
-//        self.saveJobModel.inpNum = self.publishJobModel.InpNum;
-//        self.saveJobModel.distribution = self.publishJobModel.Distribution;
-//        self.saveJobModel.longTime = self.publishJobModel.LongTime;
-//        self.saveJobModel.expTime = self.publishJobModel.ExpTime;
-//        self.saveJobModel.homeworkName = self.publishJobModel.homeworkName;
-//        self.saveJobModel.additional = self.publishJobModel.Additional;
-//        self.saveJobModel.additionalDes = self.publishJobModel.AdditionalDes;
-//        self.saveJobModel.hwType = self.publishJobModel.HwType;
-//        self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsAnSms];
-//        self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsQsSms];
-//        self.saveJobModel.isRep = [NSNumber numberWithBool:self.publishJobModel.IsRep];
-//        self.saveJobModel.tecName = self.publishJobModel.TecName;
-//        self.saveJobModel.desId = self.publishJobModel.DesId;
-//
-//        for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
-//        {
-//            SaveClassModel *saveClassModel = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-//            TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
-//            saveClassModel.classNam = model.mStr_className;
-//            saveClassModel.classID = model.mStr_tableId;
-//            saveClassModel.doLv =[NSNumber numberWithInt:model.mInt_difficulty];
-//            [self.saveJobModel addSaveClassObject:saveClassModel];
-//
-//        }
-//
-//
-//        //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
-//        BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
-//        if (!isSaveSuccess)
-//        {
-//            NSLog(@"Error:%@",error);
-//        }else{
-//            NSLog(@"Save successful!");
-//        }
 //    }
 //    else
 //    {
-//        if(mutableFetchResult.count>0)
-//        {
-//            self.saveJobModel = [mutableFetchResult objectAtIndex:0];
-//            self.saveJobModel.gradeName = self.publishJobModel.GradeName;
-//            self.saveJobModel.gradeCode = self.publishJobModel.GradeCode;
-//            self.saveJobModel.subjectName = self.publishJobModel.subjectName;
-//            self.saveJobModel.subjectID = self.publishJobModel.subjectCode;
-//            self.saveJobModel.versionName = self.publishJobModel.VersionName;
-//            self.saveJobModel.versionID = self.publishJobModel.VersionCode;
-//            self.saveJobModel.chapterName = self.publishJobModel.chapterName;
-//            self.saveJobModel.teacherJiaobaohao = self.publishJobModel.teacherJiaobaohao;
-//            self.saveJobModel.chapterID = self.publishJobModel.chapterID;
-//            self.saveJobModel.allNum = self.publishJobModel.AllNum;
-//            self.saveJobModel.selNum = self.publishJobModel.SelNum;
-//            self.saveJobModel.inpNum = self.publishJobModel.InpNum;
-//            self.saveJobModel.distribution = self.publishJobModel.Distribution;
-//            self.saveJobModel.longTime = self.publishJobModel.LongTime;
-//            self.saveJobModel.expTime = self.publishJobModel.ExpTime;
-//            self.saveJobModel.homeworkName = self.publishJobModel.homeworkName;
-//            self.saveJobModel.additional = self.publishJobModel.Additional;
-//            self.saveJobModel.additionalDes = self.publishJobModel.AdditionalDes;
-//            self.saveJobModel.hwType = self.publishJobModel.HwType;
-//            self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsAnSms];
-//            self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsQsSms];
-//            self.saveJobModel.isRep = [NSNumber numberWithBool:self.publishJobModel.IsRep];
-//            self.saveJobModel.tecName = self.publishJobModel.TecName;
-//            self.saveJobModel.desId = self.publishJobModel.DesId;
-//            
-//            for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
-//            {
-//  
-//                TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
-////                self.saveJobModel.saveClassModel.classNam = model.mStr_className;
-////                self.saveJobModel.saveClassModel.classID = model.mStr_tableId;
-////                self.saveJobModel.saveClassModel.doLv =[NSNumber numberWithInt:model.mInt_difficulty];
-////                [self.saveJobModel addSaveClassObject:saveClassModel];
-////                
-//            }
-//
-//            
-//        }
+//        
 //    }
-
- 
-}
-- (void)viewDidLoad
-{
-
-    [super viewDidLoad];
-    NSError* error;
-    //从appdelegate获取数据数据库上下文
-    self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    //通过查询语句获取数据列表
-    NSFetchRequest* request=[[NSFetchRequest alloc] init];
-    NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
-    [request setEntity:JobModelList];
-    NSPredicate * qcondition= [NSPredicate predicateWithFormat:@"teacherJiaobaohao = %@",[dm getInstance].jiaoBaoHao ];
-    [request setPredicate:qcondition];
-    NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-    
-    if(mutableFetchResult.count == 0)
-    {
-    }
-    else
-    {
-        
-    }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
     
@@ -1548,7 +1407,6 @@
                     self.publishJobModel.VersionName = model1.VersionName;
                     self.publishJobModel.VersionCode = model1.TabID;
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                    
                     TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
                     TreeJob_level0_model *tempModel = tempNode.nodeData;
                     TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
@@ -1674,9 +1532,17 @@
 
 - (IBAction)doneBtnAction:(id)sender {
     [self.dateTF resignFirstResponder];
+    NSDate *nowDate = [NSDate date];
+    NSComparisonResult result = [self.datePicker.date compare:nowDate];
+    if(result == NSOrderedAscending)
+    {
+        [MBProgressHUD showError:@"时间过期"];
+        return;
+    }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSString *dateStr = [dateFormatter stringFromDate:self.datePicker.date];
+
     self.dateTF.text = dateStr;
     self.publishJobModel.ExpTime = dateStr;
     
@@ -1685,6 +1551,7 @@
 {
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
+
     
     if(self.publishJobModel.classIDArr.count == 0)
     {
@@ -1696,13 +1563,20 @@
         [MBProgressHUD showError:@"请选择章节"];
         return ;
     }
+    if([self.publishJobModel.chapterID integerValue]==0)
+    {
+        [MBProgressHUD showError:@"没有章节"];
+        return;
+    }
     if([self.publishJobModel.HwType isEqualToString:@"3"])
     {
+        
         if([self.publishJobModel.DesId isEqualToString:@""])
         {
             [MBProgressHUD showError:@"请选择自定义作业"];
             return ;
         }
+        self.publishJobModel.DoLv = @"3";
         
     }
     if([utils isBlankString:self.publishJobModel.homeworkName])
@@ -1715,6 +1589,17 @@
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *date = [dateFormatter dateFromString:self.publishJobModel.ExpTime];
+    NSDate *nowDate = [NSDate date];
+    NSComparisonResult result = [date compare:nowDate];
+    if(result == NSOrderedAscending)
+    {
+        [MBProgressHUD showError:@"时间过期"];
+        return;
+    }
+    self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
     for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
     {
         TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
@@ -1727,5 +1612,142 @@
         
     }
 }
+
+-(void)TecMakeHWWithPublishJobModel:(id)sender
+{
+    [MBProgressHUD  hideHUDForView:self.view animated:YES];
+    [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
+    //        NSError* error;
+    //        //从appdelegate获取数据数据库上下文
+    //        self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    //    //通过查询语句获取数据列表
+    //    NSFetchRequest* request=[[NSFetchRequest alloc] init];
+    //    NSEntityDescription* JobModelList=[NSEntityDescription entityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    //    [request setEntity:JobModelList];
+    //    NSPredicate * qcondition= [NSPredicate predicateWithFormat:@"teacherJiaobaohao = %@",[dm getInstance].jiaoBaoHao ];
+    //    [request setPredicate:qcondition];
+    //    NSMutableArray* mutableFetchResult=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    //
+    //    if(mutableFetchResult.count == 0)
+    //    {
+    //        //数据库添加数据
+    //        self.saveJobModel = (SaveJobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    ////        self.saveJobModel.gradeName = self.publishJobModel.GradeName;
+    ////        self.saveJobModel.gradeCode = self.publishJobModel.GradeCode;
+    ////        self.saveJobModel.subjectName = self.publishJobModel.subjectName;
+    ////        self.saveJobModel.subjectID = self.publishJobModel.subjectCode;
+    ////        self.saveJobModel.versionName = self.publishJobModel.VersionName;
+    ////        self.saveJobModel.versionID = self.publishJobModel.VersionCode;
+    ////        self.saveJobModel.chapterName = self.publishJobModel.chapterName;
+    ////        self.saveJobModel.teacherJiaobaohao = self.publishJobModel.teacherJiaobaohao;
+    ////        self.saveJobModel.chapterID = self.publishJobModel.chapterID;
+    ////        self.saveJobModel.allNum = self.publishJobModel.AllNum;
+    ////        self.saveJobModel.selNum = self.publishJobModel.SelNum;
+    ////        self.saveJobModel.inpNum = self.publishJobModel.InpNum;
+    ////        self.saveJobModel.distribution = self.publishJobModel.Distribution;
+    ////        self.saveJobModel.longTime = self.publishJobModel.LongTime;
+    ////        self.saveJobModel.expTime = self.publishJobModel.ExpTime;
+    ////        self.saveJobModel.homeworkName = self.publishJobModel.homeworkName;
+    ////        self.saveJobModel.additional = self.publishJobModel.Additional;
+    ////        self.saveJobModel.additionalDes = self.publishJobModel.AdditionalDes;
+    ////        self.saveJobModel.hwType = self.publishJobModel.HwType;
+    ////        self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsAnSms];
+    ////        self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsQsSms];
+    ////        self.saveJobModel.isRep = [NSNumber numberWithBool:self.publishJobModel.IsRep];
+    ////        self.saveJobModel.tecName = self.publishJobModel.TecName;
+    ////        self.saveJobModel.desId = self.publishJobModel.DesId;
+    ////
+    ////        for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
+    ////        {
+    ////            SaveClassModel *saveClassModel = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    ////            TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
+    ////            saveClassModel.classNam = model.mStr_className;
+    ////            saveClassModel.classID = model.mStr_tableId;
+    ////            saveClassModel.doLv =[NSNumber numberWithInt:model.mInt_difficulty];
+    ////            [self.saveJobModel addSaveClassObject:saveClassModel];
+    ////
+    ////        }
+    //
+    //
+    //        //修改上下文后要记得保存 不保存不会存到磁盘中 只会在内存中改变
+    ////        BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
+    ////        if (!isSaveSuccess)
+    ////        {
+    ////            NSLog(@"Error:%@",error);
+    ////        }else{
+    ////            NSLog(@"Save successful!");
+    ////        }
+    //    }
+    //    else
+    //    {
+    //        if(mutableFetchResult.count>0)
+    //        {
+    //            NSPredicate * qcondition2= [NSPredicate predicateWithFormat:@"hwType = %@",self.publishJobModel.HwType ];
+    //            [request setPredicate:qcondition2];
+    //            NSMutableArray* mutableFetchResult2=[[self.appDelegate.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    //            if(mutableFetchResult2.count>0)
+    //            {
+    //                self.saveJobModel = [mutableFetchResult2 objectAtIndex:0];
+    //
+    //
+    //            }
+    //            else
+    //            {
+    //                //数据库添加数据
+    //                self.saveJobModel = (SaveJobModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveJobModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    //            }
+    //
+    //
+    //
+    //
+    //        }
+    //    }
+    //    self.saveJobModel.gradeName = self.publishJobModel.GradeName;
+    //    self.saveJobModel.gradeCode = self.publishJobModel.GradeCode;
+    //    self.saveJobModel.subjectName = self.publishJobModel.subjectName;
+    //    self.saveJobModel.subjectID = self.publishJobModel.subjectCode;
+    //    self.saveJobModel.versionName = self.publishJobModel.VersionName;
+    //    self.saveJobModel.versionID = self.publishJobModel.VersionCode;
+    //    self.saveJobModel.chapterName = self.publishJobModel.chapterName;
+    //    self.saveJobModel.teacherJiaobaohao = self.publishJobModel.teacherJiaobaohao;
+    //    self.saveJobModel.chapterID = self.publishJobModel.chapterID;
+    //    self.saveJobModel.allNum = self.publishJobModel.AllNum;
+    //    self.saveJobModel.selNum = self.publishJobModel.SelNum;
+    //    self.saveJobModel.inpNum = self.publishJobModel.InpNum;
+    //    self.saveJobModel.distribution = self.publishJobModel.Distribution;
+    //    self.saveJobModel.longTime = self.publishJobModel.LongTime;
+    //    self.saveJobModel.expTime = self.publishJobModel.ExpTime;
+    //    self.saveJobModel.homeworkName = self.publishJobModel.homeworkName;
+    //    self.saveJobModel.additional = self.publishJobModel.Additional;
+    //    self.saveJobModel.additionalDes = self.publishJobModel.AdditionalDes;
+    //    self.saveJobModel.hwType = self.publishJobModel.HwType;
+    //    self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsAnSms];
+    //    self.saveJobModel.isQsSms = [NSNumber numberWithBool:self.publishJobModel.IsQsSms];
+    //    self.saveJobModel.isRep = [NSNumber numberWithBool:self.publishJobModel.IsRep];
+    //    self.saveJobModel.tecName = self.publishJobModel.TecName;
+    //    self.saveJobModel.desId = self.publishJobModel.DesId;
+    //    //            for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
+    //    //            {
+    //    //                SaveClassModel *saveClassModel = (SaveClassModel*)[NSEntityDescription insertNewObjectForEntityForName:@"SaveClassModel" inManagedObjectContext:self.appDelegate.managedObjectContext];
+    //    //                TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
+    //    //                saveClassModel.classNam = model.mStr_className;
+    //    //                saveClassModel.classID = model.mStr_tableId;
+    //    //                saveClassModel.doLv =[NSNumber numberWithInt:model.mInt_difficulty];
+    //    //                [self.saveJobModel addSaveClassObject:saveClassModel];
+    //    //
+    //    //            }
+    //    BOOL isSaveSuccess=[self.appDelegate.managedObjectContext save:&error];
+    //    if (!isSaveSuccess)
+    //    {
+    //        NSLog(@"Error:%@",error);
+    //    }else{
+    //        NSLog(@"Save successful!");
+    //    }
+    //    NSDictionary *dic = [self.saveJobModel propertiesDic];
+    //    NSLog(@"dic = %@",dic);
+    
+    
+}
+
 
 @end

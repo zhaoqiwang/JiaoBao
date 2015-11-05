@@ -9,6 +9,7 @@
 #import "ParentSearchViewController.h"
 #import "OnlineJobHttp.h"
 #import "StuInfoModel.h"
+#import "DetailHWViewController.h"
 
 @interface ParentSearchViewController ()
 

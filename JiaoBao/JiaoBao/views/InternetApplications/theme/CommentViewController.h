@@ -17,7 +17,7 @@
 #import "KnowledgeQuestionViewController.h"
 
 
-@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate,UIWebViewDelegate>
+@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate,UIWebViewDelegate,UIAlertViewDelegate>
 @property(nonatomic,strong)QuestionModel *questionModel;//
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
 @property(nonatomic,strong) commentListModel *cellmodel;
