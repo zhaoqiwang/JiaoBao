@@ -25,12 +25,13 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     for (int i=0; i<arrList.count; i++) {
         GradeModel *model = [[GradeModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
         model.TabIDStr = [dic objectForKey:@"TabIDStr"];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.GradeCode = [dic objectForKey:@"GradeCode"];
+        model.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
+        model.GradeCode = [numberFormatter stringFromNumber:[dic objectForKey:@"GradeCode"]];
         model.GradeName = [dic objectForKey:@"GradeName"];
         model.isEnable = [dic objectForKey:@"isEnable"];
         model.orderby = [dic objectForKey:@"orderby"];
@@ -42,16 +43,17 @@
 +(NSMutableArray *)parserJsonSubjectList:(NSString *)json
 {
     NSMutableArray *array = [NSMutableArray array];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     NSArray *arrList = [json objectFromJSONString];
     for (int i=0; i<arrList.count; i++) {
         SubjectModel *model = [[SubjectModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.VersionCode = [dic objectForKey:@"VersionCode"];
+        model.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
+        model.VersionCode = [numberFormatter stringFromNumber:[dic objectForKey:@"VersionCode"]];
         model.VersionName = [dic objectForKey:@"VersionName"];
-        model.GradeCode = [dic objectForKey:@"GradeCode"];
+        model.GradeCode = [numberFormatter stringFromNumber:[dic objectForKey:@"GradeCode"]];
         model.GradeName = [dic objectForKey:@"GradeName"];
-        model.subjectCode = [dic objectForKey:@"subjectCode"];
+        model.subjectCode = [numberFormatter stringFromNumber:[dic objectForKey:@"subjectCode"]];
         model.subjectName = [dic objectForKey:@"subjectName"];
         [array addObject:model];
     }
@@ -62,15 +64,16 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     for (int i=0; i<arrList.count; i++) {
         VersionModel *model = [[VersionModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.VersionCode = [dic objectForKey:@"VersionCode"];
+        model.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
+        model.VersionCode = [numberFormatter stringFromNumber:[dic objectForKey:@"VersionCode"]];
         model.VersionName = [dic objectForKey:@"VersionName"];
-        model.GradeCode = [dic objectForKey:@"GradeCode"];
+        model.GradeCode = [numberFormatter stringFromNumber:[dic objectForKey:@"GradeCode"]];
         model.GradeName = [dic objectForKey:@"GradeName"];
-        model.subjectCode = [dic objectForKey:@"subjectCode"];
+        model.subjectCode = [numberFormatter stringFromNumber:[dic objectForKey:@"subjectCode"]];
         model.subjectName = [dic objectForKey:@"subjectName"];
         [array addObject:model];
     }
@@ -82,16 +85,17 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     for (int i=0; i<arrList.count; i++) {
         ChapterModel *model = [[ChapterModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
         model.TabIDStr = [dic objectForKey:@"TabIDStr"];
-        model.TabID = [dic objectForKey:@"TabID"];
-        model.subjectID = [dic objectForKey:@"subjectID"];
-        model.TVersionID = [dic objectForKey:@"TVersionID"];
+        model.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
+        model.subjectID = [numberFormatter stringFromNumber:[dic objectForKey:@"subjectID"]];
+        model.TVersionID = [numberFormatter stringFromNumber:[dic objectForKey:@"TVersionID"]];
         model.Unid = [dic objectForKey:@"Unid"];
         model.Pid = [dic objectForKey:@"Pid"];
-        model.chapterCode = [dic objectForKey:@"chapterCode"];
+        model.chapterCode = [numberFormatter stringFromNumber:[dic objectForKey:@"chapterCode"]];
         model.chapterName = [dic objectForKey:@"chapterName"];
         model.Remark = [dic objectForKey:@"Remark"];
         model.isEnable = [dic objectForKey:@"isEnable"];
@@ -114,12 +118,12 @@
         model.TabIDStr = [dic objectForKey:@"TabIDStr"];
         NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
         model.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID" ]];
-        model.AccountID = [dic objectForKey:@"AccountID"];
+        model.AccountID = [numberFormatter stringFromNumber:[dic objectForKey:@"AccountID"]];
         model.jiaobaohao = [dic objectForKey:@"jiaobaohao"];
-        model.SubjectID = [dic objectForKey:@"SubjectID"];
-        model.GradeID = [dic objectForKey:@"GradeID"];
-        model.chapterID = [dic objectForKey:@"chapterID"];
-        model.VersionID = [dic objectForKey:@"VersionID"];
+        model.SubjectID = [numberFormatter stringFromNumber:[dic objectForKey:@"SubjectID"]];
+        model.GradeID = [numberFormatter stringFromNumber:[dic objectForKey:@"GradeID"]];
+        model.chapterID = [numberFormatter stringFromNumber:[dic objectForKey:@"chapterID"]];
+        model.VersionID = [numberFormatter stringFromNumber:[dic objectForKey:@"VersionID"]];
         model.itemNumber = [dic objectForKey:@"itemNumber"];
         model.homeworkName = [dic objectForKey:@"homeworkName"];
         model.questionList = [dic objectForKey:@"questionList"];

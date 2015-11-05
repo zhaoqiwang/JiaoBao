@@ -61,4 +61,13 @@
     free(properties);
     return props;
 }
+-(void)addSaveClassObject:(SaveClassModel *)value
+{
+    NSMutableOrderedSet *saveClass = [self.saveClass mutableCopy];
+    [saveClass addObject:value];
+    self.saveClass = [saveClass copy];
+    
+    
+}
+
 @end
