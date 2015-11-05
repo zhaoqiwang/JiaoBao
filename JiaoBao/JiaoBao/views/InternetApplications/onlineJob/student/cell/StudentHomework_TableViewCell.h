@@ -22,5 +22,6 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_powerLab;//学力标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_power;//学力
 @property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
+@property (nonatomic,strong) IBOutlet UIImageView *mImg_open;//是否打开
 
 @end

@@ -74,7 +74,7 @@
 
 -(IBAction)detailBtn:(id)sender;
 
-//全部、有证据、在讨论按钮
+//全部、有证据、在讨论按钮、无内容
 -(IBAction)mBtn_all:(id)sender;
 -(IBAction)mBtn_evidence:(id)sender;
 -(IBAction)mBtn_discuss:(id)sender;
