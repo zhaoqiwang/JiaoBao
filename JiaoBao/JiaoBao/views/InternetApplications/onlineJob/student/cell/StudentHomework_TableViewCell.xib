@@ -96,11 +96,16 @@
                         <color key="textColor" red="0.14509803921568626" green="0.53725490196078429" blue="0.81960784313725488" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="uQl-tu-Xw5">
+                        <rect key="frame" x="289" y="90" width="14" height="14"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.99215686270000003" green="0.99215686270000003" blue="0.99215686270000003" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
-                <outlet property="mImg_pic" destination="sRr-TP-vba" id="COO-9b-hAV"/>
+                <outlet property="mImg_open" destination="uQl-tu-Xw5" id="fJr-Vq-gMt"/>
+                <outlet property="mImg_pic" destination="sRr-TP-vba" id="5UU-87-d48"/>
                 <outlet property="mLab_goto" destination="T5K-LJ-aVD" id="WCp-fU-aOs"/>
                 <outlet property="mLab_line" destination="sFM-44-Xsa" id="mEr-rc-3Xe"/>
                 <outlet property="mLab_num" destination="iKp-Qv-IWS" id="6Cn-sb-vTU"/>

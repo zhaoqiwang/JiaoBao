@@ -319,9 +319,10 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
 }
 
-//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
--(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid
+//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID - 0学生id取值1教版取值2章取值
+-(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid flag:(NSString *)flag
 {
+    D("sdfgjlksgjkl-=====%@,%@,%@,%@",StuId,uId,chapterid,flag);
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuEduLevel",ONLINEJOBURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
@@ -329,16 +330,24 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"StuId":StuId,@"uId":uId,@"chapterid":chapterid};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuEduLevelWithStuId: %@,", result);
         NSArray *levelArr = [ParserJson_OnlineJob parserJsonStuEduLevel:result];
-        
+        [tempDic setValue:@"0" forKey:@"ResultCode"];
+        [tempDic setValue:levelArr forKey:@"array"];
+        [tempDic setValue:uId forKey:@"uId"];
+        [tempDic setValue:chapterid forKey:@"chapterid"];
+        [tempDic setValue:StuId forKey:@"StuId"];
+        [tempDic setValue:flag forKey:@"flag"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuEduLevel" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuEduLevel" object:tempDic];
         D("Error---------GetStuEduLevelWithStuId: %@", error);
     }];
-    
 }
 
 //获取某学生各科作业完成情况 参数：学生ID

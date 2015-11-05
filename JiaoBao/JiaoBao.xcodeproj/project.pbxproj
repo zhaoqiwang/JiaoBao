@@ -30,6 +30,7 @@
 		A7113F291A41661E00F927DD /* ThemeSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7113F271A41661E00F927DD /* ThemeSpaceViewController.xib */; };
 		A7141DC01A17022E00940A3E /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7141DBF1A17022E00940A3E /* ShareView.m */; };
 		A7141DCE1A174A5D00940A3E /* ShareHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A7141DCD1A174A5D00940A3E /* ShareHttp.m */; };
+		A714FF5A1BE8A6D2003827F9 /* ParentSearchHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A714FF591BE8A6D2003827F9 /* ParentSearchHeadView.m */; };
 		A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A71C797C1A14B4E1003022DF /* UserInfoModel.m */; };
 		A71D61C51A1C797800B8D33D /* share_look@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A71D61C31A1C797800B8D33D /* share_look@2x.png */; };
 		A71D61C81A1C82EF00B8D33D /* UnitSectionMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A71D61C71A1C82EF00B8D33D /* UnitSectionMessageModel.m */; };
@@ -1101,6 +1102,8 @@
 		A7141DBF1A17022E00940A3E /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareView.m; path = views/InternetApplications/shareView/ShareView.m; sourceTree = "<group>"; };
 		A7141DCC1A174A5D00940A3E /* ShareHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareHttp.h; path = views/InternetApplications/shareView/ShareHttp.h; sourceTree = "<group>"; };
 		A7141DCD1A174A5D00940A3E /* ShareHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareHttp.m; path = views/InternetApplications/shareView/ShareHttp.m; sourceTree = "<group>"; };
+		A714FF581BE8A6D2003827F9 /* ParentSearchHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParentSearchHeadView.h; sourceTree = "<group>"; };
+		A714FF591BE8A6D2003827F9 /* ParentSearchHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParentSearchHeadView.m; sourceTree = "<group>"; };
 		A71C797B1A14B4E1003022DF /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoModel.h; path = views/InternetApplications/workView/model/UserInfoModel.h; sourceTree = "<group>"; };
 		A71C797C1A14B4E1003022DF /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoModel.m; path = views/InternetApplications/workView/model/UserInfoModel.m; sourceTree = "<group>"; };
 		A71D61C31A1C797800B8D33D /* share_look@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_look@2x.png"; path = "Image/InternetApp/share/share_look@2x.png"; sourceTree = "<group>"; };
@@ -3857,6 +3860,8 @@
 				A75F21411BE70255002B7EDB /* ParentSearchViewController.h */,
 				A75F21421BE70255002B7EDB /* ParentSearchViewController.m */,
 				A75F21431BE70255002B7EDB /* ParentSearchViewController.xib */,
+				A714FF581BE8A6D2003827F9 /* ParentSearchHeadView.h */,
+				A714FF591BE8A6D2003827F9 /* ParentSearchHeadView.m */,
 			);
 			name = parents;
 			path = views/InternetApplications/onlineJob/parents;
@@ -5875,6 +5880,7 @@
 				F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */,
 				F7D20E911BD1DD0900E77B00 /* OtherItemsCell.m in Sources */,
 				A751A2151A8D9B92008922FC /* ReSendMsgViewController.m in Sources */,
+				A714FF5A1BE8A6D2003827F9 /* ParentSearchHeadView.m in Sources */,
 				A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */,
 				A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */,
 				F72385DB1BE344990000015D /* WebViewJavascriptBridge.m in Sources */,

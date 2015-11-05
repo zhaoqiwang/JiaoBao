@@ -61,8 +61,8 @@
 //学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
 -(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName;
 
-//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID
--(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid;
+//获取某学生学力值 参数：学生ID - 教版科目ID - 章节ID - 0学生id取值1教版取值2章取值
+-(void)GetStuEduLevelWithStuId:(NSString*)StuId uId:(NSString*)uId chapterid:(NSString*)chapterid flag:(NSString *)flag;
 
 //获取某学生各科作业完成情况 参数：学生ID
 -(void)GetCompleteStatusHWWithStuId:(NSString*)StuId;
