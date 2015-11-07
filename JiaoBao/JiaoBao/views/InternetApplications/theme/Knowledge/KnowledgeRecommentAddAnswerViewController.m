@@ -99,7 +99,7 @@
     [self.mView_titlecell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
     self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
     //话题
-    self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+titleSize.height+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
+    self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+self.mView_titlecell.mLab_title.frame.size.height+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
     CGSize CategorySize = [[NSString stringWithFormat:@"%@",self.mModel_question.CategorySuject] sizeWithFont:[UIFont systemFontOfSize:10]];
     self.mView_titlecell.mLab_Category1.frame = CGRectMake(30+self.mView_titlecell.mLab_Category0.frame.size.width+2, self.mView_titlecell.mLab_Category0.frame.origin.y, CategorySize.width, 21);
     self.mView_titlecell.mLab_Category1.text = self.mModel_question.CategorySuject;
