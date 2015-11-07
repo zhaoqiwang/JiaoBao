@@ -439,7 +439,7 @@
     NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1 >%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
-    self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeCharWrapping;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];

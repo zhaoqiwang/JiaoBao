@@ -572,8 +572,8 @@
     self.mInt_index++;
     TreeJob_class_model *temp1 =[[TreeJob_class_model alloc]init];
     temp1.mStr_className = @"一年级2班";
-    temp1.mInt_difficulty = 1;
-    self.publishJobModel.DoLv = @"1";
+    temp1.mInt_difficulty = 3;
+    self.publishJobModel.DoLv = @"3";
     temp1.mInt_class = 0;
     self.sigleClassNode.nodeData = temp1;
 }
@@ -1281,6 +1281,9 @@
             mStr = @"没有执教班级";
         }
     }
+    if ([self.publishJobModel.HwType intValue]==3) {
+        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",treeJob_class_TableViewCell.mInt_diff];
+    }
     TreeJob_level0_model *nodeData = node0.nodeData;
     nodeData.mStr_title = mStr;
     [self reloadDataForDisplayArray];
@@ -1434,6 +1437,7 @@
                     nodeData.mStr_id = model1.TabID;
                     self.publishJobModel.chapterName = model1.chapterName;
                     self.publishJobModel.chapterID = model1.TabID;
+                    D("asjfgasgkljaskl-=====%@",model1.TabID);
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                 }else{
                     model.mInt_select = 0;
@@ -1577,7 +1581,6 @@
             return ;
         }
         self.publishJobModel.DoLv = @"3";
-        
     }
     if([utils isBlankString:self.publishJobModel.homeworkName])
     {
