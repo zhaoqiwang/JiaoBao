@@ -291,6 +291,16 @@
     
 }
 
++(StuSubModel *)parserJsonStuSubModel:(NSString*)json//解析提交答案model
+{
+    NSDictionary *dic = [json objectFromJSONString];
+    StuSubModel *model = [[StuSubModel alloc] init];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+    model.reNum = [numberFormatter stringFromNumber:[dic objectForKey:@"ReNum"]];
+    NSLog(@"fnpsfpe = %@",model.reNum);
+
+    return model;
+}
 
 
 @end

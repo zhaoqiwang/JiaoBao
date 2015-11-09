@@ -1618,7 +1618,9 @@
 -(void)TecMakeHWWithPublishJobModel:(id)sender
 {
     [MBProgressHUD  hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
+    
 //            NSError* error;
 //            //从appdelegate获取数据数据库上下文
 //            self.appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;

@@ -1201,11 +1201,12 @@
                 RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
                 cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
                 CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
-                if (optimalSize2.height==23) {
-                    optimalSize2 = CGSizeMake(optimalSize2.width, 25);
-                }else if (optimalSize2.height>20) {
-                    optimalSize2 = CGSizeMake(optimalSize2.width, 35);
-                }
+                optimalSize2 = CGSizeMake(optimalSize2.width, 35);
+//                if (optimalSize2.height==23) {
+//                    optimalSize2 = CGSizeMake(optimalSize2.width, 148);
+//                }else if (optimalSize2.height>20) {
+//                    optimalSize2 = CGSizeMake(optimalSize2.width, 148);
+//                }
                 tempF = tempF+5+optimalSize2.height;
                 //背景色
                 tempF=tempF+3;

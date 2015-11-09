@@ -908,6 +908,7 @@
 		F74639931B0EC53D00365EB7 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639921B0EC53D00365EB7 /* libicucore.dylib */; };
 		F74639951B0EC5CB00365EB7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */; };
 		F74639971B0EC5DA00365EB7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F74639961B0EC5DA00365EB7 /* CoreText.framework */; };
+		F74B26881BEDB0970021435F /* StuSubModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F74B26871BEDB0970021435F /* StuSubModel.m */; };
 		F7502A081AEE1E50004F822F /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = F75029E61AEE1E50004F822F /* add.png */; };
 		F7502A091AEE1E50004F822F /* add@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F75029E71AEE1E50004F822F /* add@2x.png */; };
 		F7502A0A1AEE1E50004F822F /* add@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F75029E81AEE1E50004F822F /* add@3x.png */; };
@@ -2356,6 +2357,8 @@
 		F74639921B0EC53D00365EB7 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		F74639941B0EC5CB00365EB7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		F74639961B0EC5DA00365EB7 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		F74B26861BEDB0970021435F /* StuSubModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuSubModel.h; sourceTree = "<group>"; };
+		F74B26871BEDB0970021435F /* StuSubModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuSubModel.m; sourceTree = "<group>"; };
 		F75029E61AEE1E50004F822F /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/add.png; sourceTree = "<group>"; };
 		F75029E71AEE1E50004F822F /* add@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/add@2x.png"; sourceTree = "<group>"; };
 		F75029E81AEE1E50004F822F /* add@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/add@3x.png"; sourceTree = "<group>"; };
@@ -4194,6 +4197,8 @@
 				F7935A651BDA136C0021A048 /* StuHomeWorkModel.m */,
 				F73107961BE743EB0023BD49 /* LevelModel.h */,
 				F73107971BE743EB0023BD49 /* LevelModel.m */,
+				F74B26861BEDB0970021435F /* StuSubModel.h */,
+				F74B26871BEDB0970021435F /* StuSubModel.m */,
 				F73107991BE74DC00023BD49 /* CompleteStatusModel.h */,
 				F731079A1BE74DC00023BD49 /* CompleteStatusModel.m */,
 			);
@@ -6128,6 +6133,7 @@
 				A74D12861A3C45DE00A93CAC /* UpdateUnitListViewController.m in Sources */,
 				A74339581A452B7700AFC0A5 /* UIImage+WebP.m in Sources */,
 				A78459DC1B7B4D1D00EA7D5D /* IQTextView.m in Sources */,
+				F74B26881BEDB0970021435F /* StuSubModel.m in Sources */,
 				A7595EA11A5FC2F30027848E /* PSTCollectionViewItemKey.m in Sources */,
 				F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */,
 				A753E51D1A1AF611005A8EED /* TopArthListModel.m in Sources */,

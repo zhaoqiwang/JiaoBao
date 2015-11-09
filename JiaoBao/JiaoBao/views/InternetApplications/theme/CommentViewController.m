@@ -21,7 +21,7 @@
 #import "AirthCommentsListCell.h"
 #import "OnlineJobHttp.h"
 
-@interface CommentViewController ()<UIActionSheetDelegate>
+@interface CommentViewController ()<UIActionSheetDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
@@ -234,8 +234,13 @@
     manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
     manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
 }
+-(void)handleSingleTap:(id)sender
+{
+    [self.mTextF_text resignFirstResponder];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     //[[KnowledgeHttp getInstance]AddMyAttQWithqId:@"11"];
     //[[KnowledgeHttp getInstance]AtMeForAnswerWithAccId:@"5233355" qId:@"11"];
     //[[KnowledgeHttp getInstance]MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
@@ -913,6 +918,10 @@
         self.tableView.delegate = self;
         self.tableView.dataSource = self;
         self.tableView.tableFooterView = [[UIView alloc]init];
+        UITapGestureRecognizer *singletap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+        [singletap setNumberOfTapsRequired:1];
+        singletap.delegate = self;
+        [self.tableView.tableHeaderView addGestureRecognizer:singletap];
 
         [self.view addSubview:self.tableView];
         [self.view addSubview:self.mView_text];
@@ -1076,7 +1085,12 @@
                      }];
 }
 
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if(touch.view != self.tableView){
+        return NO;
+    }else
+        return YES;
+}
 //键盘点击DO
 #pragma mark - UITextView Delegate Methods
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
