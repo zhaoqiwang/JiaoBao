@@ -567,7 +567,7 @@
 //            cell.pickContentModel = model;
             cell.mView_background.hidden = YES;
             cell.mLab_IdFlag.hidden = YES;
-            cell.mLab_RecDate.hidden = NO;
+            cell.mLab_RecDate.hidden = YES;
             cell.mLab_RecDate.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width+5, 10, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
             cell.mLab_RecDate.text = self.mModel_getPickdById.RecDate;
             //按钮
@@ -642,7 +642,6 @@
             RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
             cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
             CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
-            D("dfgjldkjflk-===%@,%f",model.Abstracts,optimalSize2.height);
             if (optimalSize2.height==23) {
                 optimalSize2 = CGSizeMake(optimalSize2.width, 25);
             }else if (optimalSize2.height==14) {

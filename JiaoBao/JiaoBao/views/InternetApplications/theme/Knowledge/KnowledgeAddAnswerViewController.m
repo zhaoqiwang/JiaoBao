@@ -210,11 +210,12 @@
     NSString *name = [NSString stringWithFormat:@"<font size=14 color=#2589D1>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
-    self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeCharWrapping;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
-    self.mView_titlecell.mLab_title.frame = CGRectMake(10+self.mView_titlecell.askImgV.frame.size.width, 10, titleSize.width, 23);    //详情
+    self.mView_titlecell.mLab_title.frame = CGRectMake(10+self.mView_titlecell.askImgV.frame.size.width, 10, [dm getInstance].width-9*2- self.mView_titlecell.answerImgV.frame.size.width, titleSize.height);
+    //详情
     self.mView_titlecell.mBtn_detail.hidden = YES;
     //话题
     self.mView_titlecell.mLab_Category0.frame = CGRectMake(30, self.mView_titlecell.mLab_title.frame.origin.y+self.mView_titlecell.mLab_title.frame.size.height+5, self.mView_titlecell.mLab_Category0.frame.size.width, 21);
@@ -376,6 +377,10 @@
     }
     if (self.mTextV_answer.text.length>100) {
         [MBProgressHUD showError:@"答案标题超出限制" toView:self.view];
+        return;
+    }
+    if ([dm getInstance].NickName.length==0) {
+        [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
         return;
     }
     //计算除去图片后的汉字,计算内容中图片的大小

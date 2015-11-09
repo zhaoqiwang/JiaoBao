@@ -1104,6 +1104,10 @@
 
         //若其有输入内容，则发送
         if (![utils isBlankString:textField.text]) {
+            if ([dm getInstance].NickName.length==0) {
+                [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
+                return YES;
+            }
             if(self.cellmodel.TabIDStr == nil)
             {
                 self.cellmodel = [[commentListModel alloc]init];

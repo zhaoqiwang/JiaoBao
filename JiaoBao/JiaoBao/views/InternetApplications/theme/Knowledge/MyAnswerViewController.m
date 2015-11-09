@@ -147,6 +147,19 @@
     cell.mLab_Answers.font = [UIFont systemFontOfSize:12];
     cell.mLab_Answers.frame = CGRectMake(cell.mLab_Att.frame.origin.x+cell.mLab_Att.frame.size.width+20, cell.mLab_Att.frame.origin.y, AnswersSize.width, cell.mLab_Answers.frame.size.height);
     cell.mLab_Answers.hidden = NO;
+    //话题
+    CGSize CategorySize = [model.CategorySuject sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell.mLab_Category0.text = model.CategorySuject;
+    cell.mLab_Category0.font = [UIFont systemFontOfSize:12];
+    cell.mLab_Category0.hidden = NO;
+    cell.mLab_Category0.frame = CGRectMake(cell.mLab_Answers.frame.origin.x+cell.mLab_Answers.frame.size.width+20, cell.mLab_Att.frame.origin.y, CategorySize.width, cell.mLab_Category0.frame.size.height);
+    //浏览数
+    NSString *ViewStr = [NSString stringWithFormat:@"%@人浏览",model.ViewCount];
+    CGSize ViewSize = [ViewStr sizeWithFont:[UIFont systemFontOfSize:12]];
+    cell.mLab_View.text = ViewStr;
+    cell.mLab_View.hidden = NO;
+    cell.mLab_View.font = [UIFont systemFontOfSize:12];
+    cell.mLab_View.frame = CGRectMake(cell.mLab_Category0.frame.origin.x+cell.mLab_Category0.frame.size.width+20, cell.mLab_Att.frame.origin.y, ViewSize.width, cell.mLab_View.frame.size.height);
     //
     cell.mLab_line.hidden = NO;
     cell.mLab_line.frame = CGRectMake(0, 59, [dm getInstance].width, .5);

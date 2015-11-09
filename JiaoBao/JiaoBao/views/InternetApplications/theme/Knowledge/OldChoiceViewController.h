@@ -20,5 +20,6 @@
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//精选列表
 @property (nonatomic,strong) NSMutableArray *mArr_list;//精选数组
+@property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 
 @end

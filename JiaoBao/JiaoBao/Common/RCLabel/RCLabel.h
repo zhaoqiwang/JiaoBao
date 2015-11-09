@@ -48,10 +48,10 @@ typedef enum
 
 typedef enum
 {
-	RTTextLineBreakModeWordWrapping = kCTLineBreakByWordWrapping,
-	RTTextLineBreakModeCharWrapping = kCTLineBreakByCharWrapping,
-	RTTextLineBreakModeClip = kCTLineBreakByClipping,
-    RTTextLineBreakModeTruncatingTail = kCTLineBreakByTruncatingTail,
+	RTTextLineBreakModeWordWrapping = kCTLineBreakByWordWrapping,//出现在单词边界时起作用，如果该单词不在能在一行里显示时，整体换行。此为段的默认值。
+	RTTextLineBreakModeCharWrapping = kCTLineBreakByCharWrapping,//当一行中最后一个位置的大小不能容纳一个字符时，才进行换行。
+	RTTextLineBreakModeClip = kCTLineBreakByClipping,//超出画布边缘部份将被截除。
+    RTTextLineBreakModeTruncatingTail = kCTLineBreakByTruncatingTail,//截除后面部份，只保留前面一行的数据，后部份以...代替。
 }RTTextLineBreakMode;
 
 

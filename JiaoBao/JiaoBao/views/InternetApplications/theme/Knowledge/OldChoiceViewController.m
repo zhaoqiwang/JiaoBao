@@ -34,6 +34,14 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     self.mTableV_list.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
+    self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
+    self.mTableV_list.headerRefreshingText = @"正在刷新...";
+    [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+    self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+    self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+    self.mTableV_list.footerRefreshingText = @"正在加载...";
     //发送获取往期精选
     [[KnowledgeHttp getInstance] PickedIndexWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
@@ -42,10 +50,17 @@
 //获取往期精选
 -(void)PickedIndex:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
-        self.mArr_list = [dic objectForKey:@"array"];
+        NSMutableArray *array  = [dic objectForKey:@"array"];
+        if (self.mInt_reloadData ==0) {
+            self.mArr_list = [NSMutableArray arrayWithArray:array];
+        }else{
+            [self.mArr_list addObjectsFromArray:array];
+        }
         [self.mTableV_list reloadData];
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -106,6 +121,60 @@
     GetPickedViewController *view = [[GetPickedViewController alloc] init];
     view.mModel_first = model;
     [utils pushViewController:view animated:YES];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_reloadData = 0;
+    [self sendRequest];
+}
+
+- (void)footerRereshing{
+    self.mInt_reloadData = 1;
+    [self sendRequest];
+}
+
+-(void)sendRequest{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    NSString *page = @"";
+    if (self.mInt_reloadData == 0) {
+        page = @"1";
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    }else{
+        NSMutableArray *array = self.mArr_list;
+        if (array.count>=20&&array.count%20==0) {
+            //检查当前网络是否可用
+            if ([self checkNetWork]) {
+                return;
+            }
+            page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        } else {
+            [self.mTableV_list headerEndRefreshing];
+            [self.mTableV_list footerEndRefreshing];
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+            return;
+        }
+    }
+    NSString *rowCount = @"0";
+    if (self.mArr_list.count>0) {
+        PickedIndexModel *model = [self.mArr_list objectAtIndex:self.mArr_list.count-1];
+        rowCount = model.RowCount;
+    }
+    [[KnowledgeHttp getInstance] PickedIndexWithNumPerPage:@"20" pageNum:page RowCount:rowCount];
+}
+
+//检查当前网络是否可用
+-(BOOL)checkNetWork{
+    if([Reachability isEnableNetwork]==NO){
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 //导航条返回按钮回调
