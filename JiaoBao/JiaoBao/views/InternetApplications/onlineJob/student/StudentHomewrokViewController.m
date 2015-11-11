@@ -518,9 +518,9 @@
             model = [self.mArr_practice objectAtIndex:indexPath.row];
         }
         if ([model.isHaveAdd intValue]==1) {//主观题
-            cell.mImg_pic.frame = CGRectMake(8, 10, 14, 14);
+            cell.mImg_pic.frame = CGRectMake(8, 12, 14, 14);
         }else{
-            cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
+            cell.mImg_pic.frame = CGRectMake(8, 12, 0, 0);
         }
         //名称
         cell.mLab_title.text = model.homeworkName;
