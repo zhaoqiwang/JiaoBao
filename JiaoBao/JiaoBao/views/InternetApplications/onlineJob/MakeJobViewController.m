@@ -164,7 +164,7 @@
     self.publishJobModel.ExpTime = dateTime;
     self.publishJobModel.DesId = @"";
     self.publishJobModel.Distribution = @"";
-    self.publishJobModel.LongTime = @"";
+    self.publishJobModel.LongTime = @"20";
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"布置作业"];
@@ -226,9 +226,9 @@
         if (i==8) {//自定义
             temp0.mStr_title = @"请选择自定义作业";
         }else if (i==6||i==7){
-            temp0.mStr_title = @"5";
-            self.publishJobModel.SelNum = @"5";
-            self.publishJobModel.InpNum = @"5";
+            temp0.mStr_title = @"10";
+            self.publishJobModel.SelNum = @"10";
+            self.publishJobModel.InpNum = @"10";
         }else if (i==1){
             temp0.mStr_title = @"没有执教班级";
         }
@@ -302,8 +302,8 @@
                 if (m == 2) {
                     TreeJob_level0_model *nodeData = [[TreeJob_level0_model alloc] init];
                     nodeData.mStr_name = @"作业时长";
-                    nodeData.mStr_title = @"10";
-                    self.publishJobModel.LongTime = @"10";
+                    nodeData.mStr_title = @"20";
+                    self.publishJobModel.LongTime = @"20";
                     node1.nodeData = nodeData;
                 }
                 //塞入数据
@@ -1078,6 +1078,7 @@
     cell0.sigleClassBtn.mLab_title.text = nodeData.mStr_className;
     cell0.sigleClassBtn.mInt_flag = nodeData.mInt_class;//班级是否选择
     cell0.mInt_diff = nodeData.mInt_difficulty;//难度
+    self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",cell0.mInt_diff];
     if (self.mInt_modeSelect == 0) {//个性作业
         if (node.flag == 9999) {//专门的难度行
             cell0.mLab_line.hidden = YES;
@@ -1592,6 +1593,10 @@
     if([utils isBlankString:self.publishJobModel.ExpTime])
     {
         [MBProgressHUD showError:@"请选择截止日期"];
+        return ;
+    }
+    if (self.publishJobModel.homeworkName.length<5||self.publishJobModel.homeworkName.length>50) {
+        [MBProgressHUD showError:@"作业名称要大于5个汉字并且小于50个汉字"];
         return ;
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];

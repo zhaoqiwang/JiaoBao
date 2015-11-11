@@ -595,7 +595,8 @@
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
     //        CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
-    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width, cell.mLab_LikeCount.frame.origin.y, [dm getInstance].width-65, 23);
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width, cell.mLab_LikeCount.frame.origin.y, [dm getInstance].width-85, 23);
     //回答内容
     NSString *string2 = model.Abstracts;
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];

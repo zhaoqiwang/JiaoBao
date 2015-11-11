@@ -297,24 +297,33 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
 //学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
 -(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName{
-    NSString *urlString = [NSString stringWithFormat:@"http://192.168.0.172:8201/AtHWPort/StuMakeSelf"];
+    NSString *urlString = [NSString stringWithFormat:@"%@StuMakeSelf",ONLINEJOBURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"UserJBH":[dm getInstance].jiaoBaoHao,@"StuId":StuId,@"classID":classID,@"className":className,@"Unid":Unid,@"chapterID":chapterID,@"homeworkName":homeworkName,@"schoolName":schoolName};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------StuMakeSelf: %@,",result);
-        if ([result isEqualToString:@"true,"]) {
-            [MBProgressHUD showError:@"发布成功"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:nil];
+//        {"ok":true,"stateCode":200,"stateMessage":"发送成功"},
+        
+        NSDictionary *dic = [result objectFromJSONString];
+        if ([[dic objectForKey:@"stateCode"] intValue] ==200) {
+            [tempDic setValue:@"0" forKey:@"ResultCode"];
+            [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
         }else{
-            [MBProgressHUD showError:@"发布失败"];
+            [tempDic setValue:@"100" forKey:@"ResultCode"];
+            [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD showError:@"发布失败"];
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
         D("Error---------StuMakeSelf: %@", error);
     }];
 }
