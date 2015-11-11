@@ -39,6 +39,6 @@
 
 //判断字符串是否为空、是否都是空格
 + (BOOL)isBlankString:(NSString *)string;
-
++ (void)logDic:(NSDictionary *)dic;
 
 @end

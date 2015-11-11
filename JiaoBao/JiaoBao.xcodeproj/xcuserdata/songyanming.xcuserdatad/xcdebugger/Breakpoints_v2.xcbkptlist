@@ -97,12 +97,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/onlineJob/OnlineJobHttp.m"
-            timestampString = "468836651.400178"
+            filePath = "JiaoBao/views/InternetApplications/onlineJob/MakeJobViewController.m"
+            timestampString = "468898564.812984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "1707"
+            endingLineNumber = "1707"
             landmarkName = "-TecMakeHWWithPublishJobModel:"
             landmarkType = "5">
          </BreakpointContent>
