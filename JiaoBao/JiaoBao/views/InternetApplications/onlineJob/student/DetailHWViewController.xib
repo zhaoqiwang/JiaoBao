@@ -22,6 +22,13 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnP-jp-rOX">
+                    <rect key="frame" x="0.0" y="272" width="320" height="261"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="E8g-gc-51p"/>
+                    </connections>
+                </webView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y5-H5-5pl">
                     <rect key="frame" x="0.0" y="64" width="320" height="28"/>
                     <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
@@ -65,7 +72,7 @@
                         <action selector="nextBtnAction:" destination="-1" eventType="touchUpInside" id="pxT-QU-fe5"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gS6-gn-Zhj">
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gS6-gn-Zhj">
                     <rect key="frame" x="81" y="536" width="45" height="30"/>
                     <state key="normal" title="上一题"/>
                     <connections>
@@ -86,13 +93,6 @@
                         <action selector="qNumQustion:" destination="-1" eventType="touchUpInside" id="0Fp-qM-VlV"/>
                     </connections>
                 </button>
-                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnP-jp-rOX">
-                    <rect key="frame" x="0.0" y="272" width="320" height="261"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="E8g-gc-51p"/>
-                    </connections>
-                </webView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

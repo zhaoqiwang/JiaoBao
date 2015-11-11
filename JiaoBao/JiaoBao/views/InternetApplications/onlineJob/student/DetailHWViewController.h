@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *previousBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextBtn;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+@property(nonatomic,assign)BOOL isSubmit;
+
 - (IBAction)previousBtnAction:(id)sender;
 - (IBAction)nextBtnAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *qNum;//选题数量按钮

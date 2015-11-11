@@ -4,6 +4,7 @@
         <attribute name="classID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="classNam" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="doLv" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="isSelected" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SaveJobModel" inverseName="saveClass" inverseEntity="SaveJobModel" syncable="YES"/>
     </entity>
     <entity name="SaveJobModel" representedClassName="SaveJobModel" syncable="YES">
@@ -39,7 +40,7 @@
         <relationship name="saveClass" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="SaveClassModel" inverseName="owner" inverseEntity="SaveClassModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SaveClassModel" positionX="-54" positionY="360" width="128" height="103"/>
+        <element name="SaveClassModel" positionX="-54" positionY="360" width="128" height="120"/>
         <element name="SaveJobModel" positionX="-333" positionY="198" width="128" height="493"/>
     </elements>
 </model>

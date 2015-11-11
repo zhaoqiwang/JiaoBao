@@ -10,5 +10,6 @@
 
 @interface StuSubModel : NSObject
 @property(nonatomic,strong)NSString *reNum;
+@property(nonatomic,strong)NSString *HWHTML;
 
 @end

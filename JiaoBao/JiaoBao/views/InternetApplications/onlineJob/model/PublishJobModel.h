@@ -20,6 +20,7 @@
 @property(nonatomic,strong)NSString *teacherJiaobaohao;// 老师教宝号
 @property(nonatomic,strong)NSString *classID;// 班级ID
 @property(nonatomic,strong)NSString *className;//班级名称
+@property(nonatomic,strong)NSString *classSel;
 @property(nonatomic,strong)NSMutableArray *classIDArr;// 班级ID数组
 @property(nonatomic,strong)NSString *chapterID;//章节ID
 @property(nonatomic,strong)NSString *DoLv;//难度等级

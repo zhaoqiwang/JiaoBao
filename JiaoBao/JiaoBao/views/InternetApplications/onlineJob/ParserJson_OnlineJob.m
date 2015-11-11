@@ -297,6 +297,7 @@
     StuSubModel *model = [[StuSubModel alloc] init];
     NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     model.reNum = [numberFormatter stringFromNumber:[dic objectForKey:@"ReNum"]];
+    model.HWHTML =[dic objectForKey:@"HWHTML"];
     NSLog(@"fnpsfpe = %@",model.reNum);
 
     return model;

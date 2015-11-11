@@ -69,5 +69,13 @@
     
     
 }
+- (void)removeSaveClassObject:(SaveClassModel *)value
+{
+    NSMutableOrderedSet *saveClass = [self.saveClass mutableCopy];
+    [saveClass removeObject:value];
+    self.saveClass = [saveClass copy];
+}
+
+
 
 @end
