@@ -1863,8 +1863,8 @@
 		A76F8FF71BDA2AF200C84186 /* StudentHomework_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentHomework_TableViewCell.xib; sourceTree = "<group>"; };
 		A7700A921A26D3F6003B532A /* ShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowView.h; path = views/InternetApplications/show/ShowView.h; sourceTree = "<group>"; };
 		A7700A931A26D3F6003B532A /* ShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowView.m; path = views/InternetApplications/show/ShowView.m; sourceTree = "<group>"; };
-		A770176E1BD87C01007EAFD9 /* SaveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveJobModel.h; path = JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveJobModel.h; sourceTree = "<group>"; };
-		A770176F1BD87C01007EAFD9 /* SaveJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveJobModel.m; path = JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveJobModel.m; sourceTree = "<group>"; };
+		A770176E1BD87C01007EAFD9 /* SaveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveJobModel.h; path = CoreData/SaveJobModel.h; sourceTree = "<group>"; };
+		A770176F1BD87C01007EAFD9 /* SaveJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveJobModel.m; path = CoreData/SaveJobModel.m; sourceTree = "<group>"; };
 		A77115FF1A4D11930042CB91 /* noPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noPhoto.png; path = Image/InternetApp/share/noPhoto.png; sourceTree = "<group>"; };
 		A77116001A4D11930042CB91 /* noPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "noPhoto@2x.png"; path = "Image/InternetApp/share/noPhoto@2x.png"; sourceTree = "<group>"; };
 		A77116011A4D11930042CB91 /* noPhoto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "noPhoto@3x.png"; path = "Image/InternetApp/share/noPhoto@3x.png"; sourceTree = "<group>"; };
@@ -2646,10 +2646,10 @@
 		F7F7D7291BD6433700D8B856 /* HomeworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkModel.m; sourceTree = "<group>"; };
 		F7FC3DFB1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveJobModel+CoreDataProperties.h"; path = "CoreData/SaveJobModel+CoreDataProperties.h"; sourceTree = "<group>"; };
 		F7FC3DFC1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveJobModel+CoreDataProperties.m"; path = "CoreData/SaveJobModel+CoreDataProperties.m"; sourceTree = "<group>"; };
-		F7FC3E011BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveClassModel+CoreDataProperties.h"; path = "JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveClassModel+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveClassModel+CoreDataProperties.m"; path = "JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveClassModel+CoreDataProperties.m"; sourceTree = "<group>"; };
-		F7FC3E041BF1D2CA00E6E1AE /* SaveClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveClassModel.h; path = JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveClassModel.h; sourceTree = "<group>"; };
-		F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveClassModel.m; path = JiaoBao/views/InternetApplications/onlineJob/model/CoreData/SaveClassModel.m; sourceTree = "<group>"; };
+		F7FC3E011BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveClassModel+CoreDataProperties.h"; path = "CoreData/SaveClassModel+CoreDataProperties.h"; sourceTree = "<group>"; };
+		F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveClassModel+CoreDataProperties.m"; path = "CoreData/SaveClassModel+CoreDataProperties.m"; sourceTree = "<group>"; };
+		F7FC3E041BF1D2CA00E6E1AE /* SaveClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveClassModel.h; path = CoreData/SaveClassModel.h; sourceTree = "<group>"; };
+		F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveClassModel.m; path = CoreData/SaveClassModel.m; sourceTree = "<group>"; };
 		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
 		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
 		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
@@ -3313,12 +3313,6 @@
 		A755E66419F2492700BBDF3D = {
 			isa = PBXGroup;
 			children = (
-				F7FC3E011BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.h */,
-				F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */,
-				F7FC3E041BF1D2CA00E6E1AE /* SaveClassModel.h */,
-				F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */,
-				A770176E1BD87C01007EAFD9 /* SaveJobModel.h */,
-				A770176F1BD87C01007EAFD9 /* SaveJobModel.m */,
 				A755E66F19F2492700BBDF3D /* JiaoBao */,
 				A755E69719F24AC500BBDF3D /* Frameworks */,
 				A755E66E19F2492700BBDF3D /* Products */,
@@ -5084,6 +5078,12 @@
 		F7C4D71D1BD0E12F008B8924 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				F7FC3E011BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.h */,
+				F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */,
+				F7FC3E041BF1D2CA00E6E1AE /* SaveClassModel.h */,
+				F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */,
+				A770176E1BD87C01007EAFD9 /* SaveJobModel.h */,
+				A770176F1BD87C01007EAFD9 /* SaveJobModel.m */,
 				F7FC3DFB1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.h */,
 				F7FC3DFC1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m */,
 				F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */,
