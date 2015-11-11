@@ -194,7 +194,8 @@
         model.EduLevel = [numberFormatter stringFromNumber:[dic objectForKey:@"EduLevel"]];
         model.HWEndTime = [dic objectForKey:@"HWEndTime"];
         model.EXPIRYDATE = [[dic objectForKey:@"EXPIRYDATE"] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
-
+        model.isHaveAdd = [numberFormatter stringFromNumber:[dic objectForKey:@"isHaveAdd"]];
+        
 //        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
 //        model.studentLevel = [dic objectForKey:@"studentLevel"];
 //        model.jiaobaohao = [dic objectForKey:@"jiaobaohao"];
