@@ -1698,7 +1698,6 @@
 //        }
 //    }
 //    [self.appDelegate.managedObjectContext save:&error];
-//    NSLog(@"");
 //    for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
 //    {
 //
@@ -1719,8 +1718,7 @@
 //            NSLog(@"Save successful!");
 //        }
 //        NSDictionary *dic = [self.saveJobModel propertiesDic];
-//        NSLog(@"dic = %@",dic);
-    
+//    
     
 }
 //-(void)getPublishJobModel
@@ -1739,6 +1737,7 @@
 //    if(mutableFetchResult.count == 0)
 //    {
 //        NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+//        
 //        self.publishJobModel.GradeName = self.saveJobModel.gradeName;
 //        self.publishJobModel.GradeCode = self.saveJobModel.gradeCode;
 //        self.publishJobModel.subjectName = self.saveJobModel.subjectName;
