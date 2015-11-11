@@ -151,6 +151,7 @@
         self.isSubmit = YES;
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
 //        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提交成功" message:@"本次作业得分： 100\r\n本次作业学力：10\r\n所有科目平均学历值：500\r\n" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //        [alertView show];
 //            NSString *lJs = @"document.documentElement.innerHTML";
@@ -177,6 +178,7 @@
     self.qNum.layer.borderWidth = 1;
     self.qNum.layer.cornerRadius = 0.2;
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
+    
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];

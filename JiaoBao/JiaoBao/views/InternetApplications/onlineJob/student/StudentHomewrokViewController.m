@@ -22,11 +22,16 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
-
+-(void)updateUI:(id)sender
+{
+    [self headerRereshing];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    //做作业详情界面返回到此界面时刷新
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateUI" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI:) name:@"updateUI" object:nil];
     //学生获取当前作业列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetStuHWList:) name:@"GetStuHWList" object:nil];
@@ -687,7 +692,7 @@
         [self.navigationController pushViewController:detail animated:YES];
     }else{
         if (self.mArr_practice.count>0) {
-            StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
+            StuHWModel *model = [self.mArr_practice objectAtIndex:indexPath.row];
             
             DetailHWViewController *detail = [[DetailHWViewController alloc]init];
             detail.TabID = model.TabID;
