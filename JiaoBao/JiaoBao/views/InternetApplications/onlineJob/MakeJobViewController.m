@@ -20,8 +20,6 @@
 #import "PublishJobModel.h"
 #import "utils.h"
 #import "PublishJobCellTableViewCell.h"
-#import "SaveJobModel.h"
-#import "SaveClassModel.h"
 
 
 @interface MakeJobViewController ()
@@ -31,7 +29,7 @@
 @property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
 @property(nonatomic,strong)CommMsgRevicerUnitListModel *mModel_unitList;
 @property(nonatomic,strong)PublishJobModel *publishJobModel;
-@property(nonatomic,strong)SaveJobModel *saveJobModel;
+
 
 @end
 
