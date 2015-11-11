@@ -567,7 +567,6 @@
 		A76F8FF81BDA2AF200C84186 /* StudentHomework_TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A76F8FF61BDA2AF200C84186 /* StudentHomework_TableViewCell.m */; };
 		A76F8FF91BDA2AF200C84186 /* StudentHomework_TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76F8FF71BDA2AF200C84186 /* StudentHomework_TableViewCell.xib */; };
 		A7700A941A26D3F6003B532A /* ShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7700A931A26D3F6003B532A /* ShowView.m */; };
-		A77017701BD87C01007EAFD9 /* SaveJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A770176F1BD87C01007EAFD9 /* SaveJobModel.m */; };
 		A77116021A4D11930042CB91 /* noPhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = A77115FF1A4D11930042CB91 /* noPhoto.png */; };
 		A77116031A4D11930042CB91 /* noPhoto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77116001A4D11930042CB91 /* noPhoto@2x.png */; };
 		A77116041A4D11930042CB91 /* noPhoto@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A77116011A4D11930042CB91 /* noPhoto@3x.png */; };
@@ -1015,7 +1014,6 @@
 		F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */; };
 		F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */; };
 		F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C4D7121BD08CB3008B8924 /* CoreData.framework */; };
-		F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */; };
 		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; };
 		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; };
 		F7C4D7261BD0E52D008B8924 /* VersionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7251BD0E52D008B8924 /* VersionModel.m */; };
@@ -1062,9 +1060,6 @@
 		F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */; };
 		F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */; };
 		F7F7D72A1BD6433800D8B856 /* HomeworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7291BD6433700D8B856 /* HomeworkModel.m */; };
-		F7FC3DFD1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FC3DFC1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m */; };
-		F7FC3E031BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */; };
-		F7FC3E061BF1D2CA00E6E1AE /* SaveClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */; };
 		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; };
 		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; };
 		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; };
@@ -1863,8 +1858,6 @@
 		A76F8FF71BDA2AF200C84186 /* StudentHomework_TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StudentHomework_TableViewCell.xib; sourceTree = "<group>"; };
 		A7700A921A26D3F6003B532A /* ShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowView.h; path = views/InternetApplications/show/ShowView.h; sourceTree = "<group>"; };
 		A7700A931A26D3F6003B532A /* ShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowView.m; path = views/InternetApplications/show/ShowView.m; sourceTree = "<group>"; };
-		A770176E1BD87C01007EAFD9 /* SaveJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveJobModel.h; path = CoreData/SaveJobModel.h; sourceTree = "<group>"; };
-		A770176F1BD87C01007EAFD9 /* SaveJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveJobModel.m; path = CoreData/SaveJobModel.m; sourceTree = "<group>"; };
 		A77115FF1A4D11930042CB91 /* noPhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noPhoto.png; path = Image/InternetApp/share/noPhoto.png; sourceTree = "<group>"; };
 		A77116001A4D11930042CB91 /* noPhoto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "noPhoto@2x.png"; path = "Image/InternetApp/share/noPhoto@2x.png"; sourceTree = "<group>"; };
 		A77116011A4D11930042CB91 /* noPhoto@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "noPhoto@3x.png"; path = "Image/InternetApp/share/noPhoto@3x.png"; sourceTree = "<group>"; };
@@ -2574,7 +2567,6 @@
 		F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionCell.xib; path = views/InternetApplications/show/PhotoCollectionCell.xib; sourceTree = "<group>"; };
 		F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "删除键@2x.png"; path = "Image/InternetApp/删除键@2x.png"; sourceTree = "<group>"; };
 		F7C4D7121BD08CB3008B8924 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F7C4D71E1BD0E176008B8924 /* GradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeModel.h; sourceTree = "<group>"; };
 		F7C4D71F1BD0E176008B8924 /* GradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeModel.m; sourceTree = "<group>"; };
 		F7C4D7211BD0E382008B8924 /* SubjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubjectModel.h; sourceTree = "<group>"; };
@@ -2644,12 +2636,6 @@
 		F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishJobCellTableViewCell.xib; sourceTree = "<group>"; };
 		F7F7D7281BD6433700D8B856 /* HomeworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeworkModel.h; sourceTree = "<group>"; };
 		F7F7D7291BD6433700D8B856 /* HomeworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkModel.m; sourceTree = "<group>"; };
-		F7FC3DFB1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveJobModel+CoreDataProperties.h"; path = "CoreData/SaveJobModel+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F7FC3DFC1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveJobModel+CoreDataProperties.m"; path = "CoreData/SaveJobModel+CoreDataProperties.m"; sourceTree = "<group>"; };
-		F7FC3E011BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SaveClassModel+CoreDataProperties.h"; path = "CoreData/SaveClassModel+CoreDataProperties.h"; sourceTree = "<group>"; };
-		F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SaveClassModel+CoreDataProperties.m"; path = "CoreData/SaveClassModel+CoreDataProperties.m"; sourceTree = "<group>"; };
-		F7FC3E041BF1D2CA00E6E1AE /* SaveClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SaveClassModel.h; path = CoreData/SaveClassModel.h; sourceTree = "<group>"; };
-		F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SaveClassModel.m; path = CoreData/SaveClassModel.m; sourceTree = "<group>"; };
 		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
 		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
 		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
@@ -5078,15 +5064,6 @@
 		F7C4D71D1BD0E12F008B8924 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				F7FC3E011BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.h */,
-				F7FC3E021BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m */,
-				F7FC3E041BF1D2CA00E6E1AE /* SaveClassModel.h */,
-				F7FC3E051BF1D2CA00E6E1AE /* SaveClassModel.m */,
-				A770176E1BD87C01007EAFD9 /* SaveJobModel.h */,
-				A770176F1BD87C01007EAFD9 /* SaveJobModel.m */,
-				F7FC3DFB1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.h */,
-				F7FC3DFC1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m */,
-				F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -5811,7 +5788,6 @@
 				A773FC4B1A4C0563005F84C2 /* ELCAssetTablePicker.m in Sources */,
 				F71803271AB3C46300E6167F /* JTCircleView.m in Sources */,
 				A7BEEA151A440819003C9EAD /* UnitAlbumsModel.m in Sources */,
-				F7FC3DFD1BF1D02500E6E1AE /* SaveJobModel+CoreDataProperties.m in Sources */,
 				A755E70E19F278B900BBDF3D /* ASICloudFilesObject.m in Sources */,
 				A761D40D1A7F7B4C00DCAEB9 /* GetArthInfoModel.m in Sources */,
 				A76829691AC69575003B31EB /* ClassModel.m in Sources */,
@@ -5901,7 +5877,6 @@
 				A7AD8C3919F63D58002E65FB /* StudentFileViewController.m in Sources */,
 				F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */,
 				A7595EA41A5FC2F30027848E /* PSTGridLayoutInfo.m in Sources */,
-				A77017701BD87C01007EAFD9 /* SaveJobModel.m in Sources */,
 				A79AD78A1BAA5FE800F2CE77 /* MyAttQViewController.m in Sources */,
 				A78D65D11A89B35500BE6326 /* WorkMsgListViewController.m in Sources */,
 				A755E72B19F27C8E00BBDF3D /* NSString+Base64.m in Sources */,
@@ -6017,7 +5992,6 @@
 				A743394D1A452B7700AFC0A5 /* NSData+ImageContentType.m in Sources */,
 				A7595EA51A5FC2F30027848E /* PSTGridLayoutItem.m in Sources */,
 				F79D84DC1ABD4DC000897477 /* SignInHttp.m in Sources */,
-				F7FC3E031BF1D29100E6E1AE /* SaveClassModel+CoreDataProperties.m in Sources */,
 				A75E3FB31B6F64B700284C3D /* AFSecurityPolicy.m in Sources */,
 				A755E70319F278B900BBDF3D /* ASIDataDecompressor.m in Sources */,
 				F76B64351B1EA205008F6961 /* RCLabel.m in Sources */,
@@ -6141,7 +6115,6 @@
 				A78459DC1B7B4D1D00EA7D5D /* IQTextView.m in Sources */,
 				F74B26881BEDB0970021435F /* StuSubModel.m in Sources */,
 				A7595EA11A5FC2F30027848E /* PSTCollectionViewItemKey.m in Sources */,
-				F7C4D7161BD08D25008B8924 /* Model.xcdatamodeld in Sources */,
 				A753E51D1A1AF611005A8EED /* TopArthListModel.m in Sources */,
 				A74339571A452B7700AFC0A5 /* UIImage+MultiFormat.m in Sources */,
 				F71803221AB3C46300E6167F /* JTCalendarMenuMonthView.m in Sources */,
@@ -6175,7 +6148,6 @@
 				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
-				F7FC3E061BF1D2CA00E6E1AE /* SaveClassModel.m in Sources */,
 				A79C310C1BCF44EC003DF7B2 /* TreeJob_level0_model.m in Sources */,
 				A7B0F9501A47BC4300C1863A /* MJPhotoProgressView.m in Sources */,
 				A725E4331A53F40900957EAE /* MyFriendsGroupsModel.m in Sources */,
@@ -6374,20 +6346,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F7C4D7141BD08D25008B8924 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */,
-			);
-			currentVersion = F7C4D7151BD08D25008B8924 /* Model.xcdatamodel */;
-			name = Model.xcdatamodeld;
-			path = ../Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A755E66519F2492700BBDF3D /* Project object */;
 }

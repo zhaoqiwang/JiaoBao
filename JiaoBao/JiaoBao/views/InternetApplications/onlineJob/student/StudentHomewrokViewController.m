@@ -91,10 +91,10 @@
     //
     self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-48+[dm getInstance].statusBar);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
-//    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
-//    self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
-//    self.mTableV_list.headerRefreshingText = @"正在刷新...";
+    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
+    self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
+    self.mTableV_list.headerRefreshingText = @"正在刷新...";
 //    [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
 //    self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
 //    self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
@@ -122,8 +122,15 @@
 //学生发布练习
 -(void)StuMakeSelf:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode intValue]==0) {
+        [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+    }
 }
 
 //添加默认数据
@@ -147,6 +154,8 @@
 //学生获取当前作业列表
 -(void)GetStuHWList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
@@ -517,7 +526,7 @@
         CGSize numSize = [model.itemNumber sizeWithFont:[UIFont systemFontOfSize:10]];
         cell.mLab_num.frame = CGRectMake(cell.mLab_numLab.frame.origin.x+cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.origin.y, numSize.width, cell.mLab_num.frame.size.height);
         //过期时间
-        cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+20, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
+        cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+6, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
         cell.mLab_time.text = model.EXPIRYDATE;
         D("dfuhguhj-====%@,%@",model.EXPIRYDATE,model.isHWFinish);
         CGSize timeSize = [model.EXPIRYDATE sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -954,7 +963,34 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
-    
+    if (self.mInt_index==0) {//获取作业列表
+        [self.mArr_homework removeAllObjects];
+        //获取
+        [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{//获取练习列表
+        //先判断是现实练习列表，还是布置练习
+        if (self.mArr_practice.count>0) {
+            [self.mArr_practice removeAllObjects];
+            //获取
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+        }else{
+            //判断是否获取到了年级列表
+            for (int i=0; i<self.mArr_sumData.count; i++) {
+                TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+                if (node0.flag == 0) {
+                    if (node0.sonNodes.count==0) {
+                        //获取年级列表
+                        [[OnlineJobHttp getInstance] GetGradeList];
+                    }
+                }
+            }
+            [self.mTableV_list headerEndRefreshing];
+            [self.mTableV_list footerEndRefreshing];
+        }
+    }
+    [self.mTableV_list reloadData];
 }
 
 - (void)footerRereshing{

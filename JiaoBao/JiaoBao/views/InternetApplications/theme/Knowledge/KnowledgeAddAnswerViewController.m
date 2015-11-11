@@ -399,7 +399,7 @@
         [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
         return;
     }
-    if (tempcontent.length<5) {
+    if (tempcontent.length<5&&tempcontent.length>0) {
         [MBProgressHUD showError:@"内容描述不得少于五个字" toView:self.view];
         return;
     }
@@ -429,17 +429,6 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    D("dijgldgj-====%@,%@",textView.text,text);
-    if ([self.mTextV_answer.text isEqualToString:@""]) {
-        self.mLab_answer.hidden = NO;
-    }else{
-        self.mLab_answer.hidden = YES;
-    }
-    if ([self.mTextV_content.text isEqualToString:@""]) {
-        self.mLab_content.hidden = NO;
-    }else{
-        self.mLab_content.hidden = YES;
-    }
     
     // Any new character added is passed in as the "text" parameter
     if ([text isEqualToString:@"\n"]) {
@@ -451,6 +440,24 @@
     }
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
+}
+
+//在这个地方计算输入的字数
+- (void)textViewDidChange:(UITextView *)textView{
+    int  textL =(int)[textView.text length];
+    if ([self.mTextV_answer isFirstResponder]) {
+        if (textL==0) {
+            self.mLab_answer.hidden = NO;
+        }else{
+            self.mLab_answer.hidden = YES;
+        }
+    }else if ([self.mTextV_content isFirstResponder]) {
+        if (textL==0) {
+            self.mLab_content.hidden = NO;
+        }else{
+            self.mLab_content.hidden = YES;
+        }
+    }
 }
 
 #pragma mark - action sheet delegte
