@@ -682,6 +682,7 @@
         
         DetailHWViewController *detail = [[DetailHWViewController alloc]init];
         detail.TabID = model.TabID;
+        detail.isSubmit = [model.isHWFinish integerValue];
         detail.hwName = model.homeworkName;
         [self.navigationController pushViewController:detail animated:YES];
     }else{

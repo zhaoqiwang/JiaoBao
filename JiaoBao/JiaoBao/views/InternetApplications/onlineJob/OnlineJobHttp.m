@@ -10,6 +10,7 @@
 #import "ParserJson_OnlineJob.h"
 #import "StuHWQsModel.h"
 #import "StuHomeWorkModel.h"
+#import "StuSubModel.h"
 static OnlineJobHttp *onlineJobHttp = nil;
 
 @implementation OnlineJobHttp
@@ -289,6 +290,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------StuSubQsWithHwInfoId: %@,", result);
+        StuSubModel *model = [ParserJson_OnlineJob parserJsonStuSubModel:result];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"StuSubQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------StuSubQsWithHwInfoId: %@", error);

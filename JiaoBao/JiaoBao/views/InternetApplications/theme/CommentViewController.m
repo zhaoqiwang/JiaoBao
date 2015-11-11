@@ -21,7 +21,7 @@
 #import "AirthCommentsListCell.h"
 #import "OnlineJobHttp.h"
 
-@interface CommentViewController ()<UIActionSheetDelegate>
+@interface CommentViewController ()<UIActionSheetDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
@@ -227,15 +227,28 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
-    //输入框弹出键盘问题
-    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = NO;//控制整个功能是否启用
-    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
-    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+//    //输入框弹出键盘问题
+//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+//    manager.enable = NO;//控制整个功能是否启用
+//    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+//    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+//    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+}
+
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer
+
+{
+    self.mView_text.hidden = YES;
+    [self.view endEditing:YES];
+
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
+    singleTap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:singleTap];
     //[[KnowledgeHttp getInstance]AddMyAttQWithqId:@"11"];
     //[[KnowledgeHttp getInstance]AtMeForAnswerWithAccId:@"5233355" qId:@"11"];
     //[[KnowledgeHttp getInstance]MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
@@ -572,6 +585,7 @@
 //    return cellHeight;
 //}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.view endEditing:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",nil];
     action.tag = indexPath.row;
@@ -914,6 +928,7 @@
         self.tableView.dataSource = self;
         self.tableView.tableFooterView = [[UIView alloc]init];
 
+
         [self.view addSubview:self.tableView];
         [self.view addSubview:self.mView_text];
         [MBProgressHUD hideHUDForView:self.view];
@@ -1076,12 +1091,18 @@
                      }];
 }
 
-
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if(touch.view != self.tableView){
+        return NO;
+    }else
+        return YES;
+}
 //键盘点击DO
 #pragma mark - UITextView Delegate Methods
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([string isEqualToString:@"\n"]) {
         [textField resignFirstResponder];
+        self.mView_text.hidden = YES;
         if(textField.text.length>1000)
         {
             [MBProgressHUD showError:@"评论字数不能大于1000" toView:self.view];

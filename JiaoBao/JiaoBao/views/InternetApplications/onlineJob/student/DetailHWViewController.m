@@ -16,8 +16,9 @@
 #import "TableViewWithBlock.h"
 #import "SelectionCell.h"
 #import "IQKeyboardManager.h"
+#import "StuSubModel.h"
 
-@interface DetailHWViewController ()
+@interface DetailHWViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
 @property(nonatomic,assign)BOOL selectedFlag;//被选择的标志
 @property(nonatomic,assign)NSUInteger selectedBtnTag;
@@ -31,7 +32,19 @@
 @end
 
 @implementation DetailHWViewController
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    if(self.collectionView.contentSize.height>136)
+    {
+        self.height.constant = 136;
+    }
+    else
+    {
+        self.height.constant = self.collectionView.contentSize.height;
 
+    }
+}
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
@@ -99,8 +112,6 @@
             [self.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index_path.row]];
 
-            
-            
         } completion:^(BOOL finished){
 
         }];
@@ -121,6 +132,8 @@
 -(void)GetStuHWQsWithHwInfoId:(id)sender
 {
     self.stuHWQsModel = [sender object];
+
+
 //    NSString *urlStr = @"http://www.baidu.com";
 //    NSURL *url = [NSURL URLWithString:urlStr];
 //    NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -128,14 +141,45 @@
     [self.webView loadHTMLString:self.stuHWQsModel.QsCon baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
 
 }
+-(void)StuSubQsWithHwInfoId:(id)sender
+{
+    StuSubModel *model = [sender object];
+    if([model.reNum integerValue] == 0)
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.webView loadHTMLString:model.HWHTML baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+        self.isSubmit = YES;
+        self.previousBtn.enabled = NO;
+        self.nextBtn.enabled = NO;
+//        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提交成功" message:@"本次作业得分： 100\r\n本次作业学力：10\r\n所有科目平均学历值：500\r\n" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+//        [alertView show];
+//            NSString *lJs = @"document.documentElement.innerHTML";
+//            NSString *html = [self.webView stringByEvaluatingJavaScriptFromString:lJs];
+//            NSLog(@"html = %@",html);
+        //[MBProgressHUD showSuccess:@"提交作业成功" toView:self.view];
+    }
 
+}
+- (void)willPresentAlertView:(UIAlertView *)alertView {
+    UIView *myView = [[UIView alloc] init];
+    myView.backgroundColor = [UIColor redColor];
+    [alertView addSubview:myView];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if(self.isSubmit == YES)
+    {
+        self.previousBtn.enabled = NO;
+        self.nextBtn.enabled = NO;
+    }
     self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
     self.qNum.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.qNum.layer.borderWidth = 1;
     self.qNum.layer.cornerRadius = 0.2;
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
+    //获取作业信息
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
 
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWWithHwInfoId:) name:@"GetStuHWWithHwInfoId" object:nil];
@@ -160,12 +204,58 @@
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    
+    [self updateViewConstraints];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    if([self.stuHWQsModel.QsT isEqualToString:@"1"])
+    {
+        NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+        for(int i=0;i<inputCount;i++)
+        {
 
+            NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
+            NSString *valueStr = [self.webView stringByEvaluatingJavaScriptFromString:value];
+
+            if([valueStr isEqualToString:self.stuHWQsModel.QsAns])
+            {
+                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].checked = true",i];
+                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+            }
+        
+    }
+    }
+    else if ([self.stuHWQsModel.QsT isEqualToString:@"2"])
+    {
+        NSArray *textArr;
+        NSLog(@"dfrnflre;gm;r = %@",self.stuHWQsModel.QsAns);
+        if([self.stuHWQsModel.QsAns isEqual:[NSNull null]])
+        {
+            return;
+        }
+        textArr = [self.stuHWQsModel.QsAns componentsSeparatedByString:@"," ];
+        NSLog(@"textArr_num = %@",[textArr objectAtIndex:textArr.count-1]);
+        NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+        for(int i=1;i<inputCount;i++)
+        {
+            NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+            NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+            if([typeStr isEqualToString:@"text"])
+            {
+                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i-1]];
+                NSLog(@"checkStr = %@",checkStr);
+                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+            }
+
+            
+        }
+        
+    }
+
+    
 }
 #pragma mark - Collection View Data Source
 //每一组有多少个cell
@@ -201,15 +291,120 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    if(indexPath.row == 0)
+    {
+        self.previousBtn.enabled = NO;
+    }
+    else
+    {
+        self.previousBtn.enabled = YES;
+    }
+    if(self.isSubmit ==  YES)
+    {
+        self.previousBtn.enabled = NO;
+        self.nextBtn.enabled = NO;
+    }
+    if(indexPath.row+1 == [self.stuHomeWorkModel.Qsc integerValue])
+    {
+        [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
+    }
+    if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
+    {
+        if([self.stuHWQsModel.QsT isEqualToString:@"1"])
+        {
+            BOOL isFinish = false;
+            NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            for(int i=0;i<inputCount;i++)
+            {
+                NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+                NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if(![typeStr isEqualToString:@"radio"])
+                {
+                    continue;
+                }
+                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].checked",i];
+                
+                //            NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByName('TopicRadio')[%d].checked",i];
+                NSString *isChecked = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                NSLog(@"isChecked = %@",isChecked);
+                if([isChecked isEqualToString:@"true"])
+                {
+
+                    NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
+                    NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
+                    [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+
+                    isFinish = YES;
+
+                    
+                }
+                
+                
+            }
+
+            
+        }
+        else
+        {
+            BOOL isFinish = false;
+            NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            NSString *answer = @"";
+            for(int i=0;i<inputCount;i++)
+            {
+                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
+                NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                NSString *content = [value stringByAppendingString:@","];
+                NSLog(@"content = %@",content);
+                if(i>0)
+                {
+                    if([content isEqualToString:@","]== NO)
+                    {
+                        isFinish = YES;
+                    }
+                    answer =[answer stringByAppendingString:content];
+                    
+                }
+                
+            }
+            if(isFinish == false)
+            {
+
+            }
+            else
+            {
+                if(self.datasource.count-1==self.selectedBtnTag)
+                {
+//                    [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                }
+                
+                else
+                {
+
+                    [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+
+                }
+                
+            }
+            
+        }
+    }
+
     DetialHWCell *cell = (DetialHWCell*)[collectionView cellForItemAtIndexPath:indexPath];
     cell.numLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:55/255.0 alpha:1];
     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:indexPath.row]];
+    NSLog(@"huoqu = %@ %@",self.stuHomeWorkModel.hwinfoid,[self.datasource objectAtIndex:indexPath.row]);
     [MBProgressHUD showMessage:@"" toView:self.view];
     self.selectedBtnTag = indexPath.row;
+    
 
-//    NSString *lJs = @"document.documentElement.innerHTML";
-//    NSString *html = [self.webView stringByEvaluatingJavaScriptFromString:lJs];
-//    NSLog(@"html = %@",html);
+
     cell.selected = YES;
  
 }
@@ -255,14 +450,20 @@
 
 
 - (IBAction)previousBtnAction:(id)sender {
+    UIButton *btn = (UIButton*)sender;
+
     if(self.selectedBtnTag == 0)
     {
-        [MBProgressHUD showError:@"没有上一题了"];
-        return;
+        btn.enabled = NO;
     }
     else
     {
+        btn.enabled = YES;
         self.selectedBtnTag--;
+        if(self.selectedBtnTag == 0)
+        {
+            btn.enabled = NO;
+        }
         NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
         [self.collectionView reloadData];
         
@@ -274,46 +475,72 @@
 }
 
 - (IBAction)nextBtnAction:(id)sender {
+    self.previousBtn.enabled = YES;
+    UIButton *btn = (UIButton*)sender;
+
+
     if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
     {
-
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
     {
         BOOL isFinish = false;
-        for(int i=0;i<4;i++)
+        NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+        for(int i=0;i<inputCount;i++)
         {
-            NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByName('TopicRadio')[%d].checked",i];
+            NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+            NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+            if(![typeStr isEqualToString:@"radio"])
+            {
+                continue;
+            }
+            NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].checked",i];
+
+//            NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByName('TopicRadio')[%d].checked",i];
             NSString *isChecked = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
             NSLog(@"isChecked = %@",isChecked);
             if([isChecked isEqualToString:@"true"])
             {
-                self.selectedBtnTag++;
-                NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
+
+                NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 [self.collectionView reloadData];
                 [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-                NSString *value = [NSString stringWithFormat:@"document.getElementsByName('TopicRadio')[%d].value",i];
+                NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
-                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+//                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                self.selectedBtnTag++;
+                if(self.selectedBtnTag> [self.stuHomeWorkModel.Qsc integerValue])
+                {
+                    [btn setTitle:@"提交" forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                }
+
                 isFinish = YES;
                 if(self.datasource.count==self.selectedBtnTag-1)
                 {
-                    
+                    [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                    [MBProgressHUD showMessage:@"" toView:self.view];
                 }
                 
                 else
                 {
-                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
+                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                
                 }
 
-                
             }
-            if(isFinish == false)
-            {
-                [MBProgressHUD showError:@"题目没有完成，无法提交"];
-                return;
-            }
+
             
+        }
+        if(isFinish == false)
+        {
+            [MBProgressHUD showError:@"题目没有完成，无法提交"];
+            return;
         }
 
     }
@@ -339,8 +566,6 @@
                 
             }
 
-
-            
         }
         if(isFinish == false)
         {
@@ -352,14 +577,24 @@
             if(self.datasource.count-1==self.selectedBtnTag)
             {
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                [MBProgressHUD showMessage:@"" toView:self.view];
             }
             
             else
             {
-//                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag]];
-//                [MBProgressHUD showMessage:@"" toView:self.view];
+
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                [MBProgressHUD showMessage:@"" toView:self.view];
+                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
+                {
+                    [btn setTitle:@"提交" forState:UIControlStateNormal];
+                }
+                else
+                {
+                    [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                }
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
                 [self.collectionView reloadData];
                 
@@ -370,7 +605,6 @@
  
     }
     }
-
 //    if(self.selectedBtnTag == 0)
 //    {
 //        [MBProgressHUD showError:@"没有上一题了"];

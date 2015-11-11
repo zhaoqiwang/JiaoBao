@@ -2,7 +2,7 @@
 //  SaveClassModel+CoreDataProperties.h
 //  JiaoBao
 //
-//  Created by songyanming on 15/10/21.
+//  Created by songyanming on 15/11/10.
 //  Copyright © 2015年 JSY. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *classID;
 @property (nullable, nonatomic, retain) NSString *classNam;
 @property (nullable, nonatomic, retain) NSNumber *doLv;
+@property (nullable, nonatomic, retain) NSString *isSelected;
 @property (nullable, nonatomic, retain) SaveJobModel *owner;
 
 @end
