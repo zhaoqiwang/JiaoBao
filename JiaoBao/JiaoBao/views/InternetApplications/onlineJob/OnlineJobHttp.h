@@ -66,6 +66,7 @@
 
 //获取某学生各科作业完成情况 参数：学生ID
 -(void)GetCompleteStatusHWWithStuId:(NSString*)StuId;
+-(void)TecQswithchapterid:(NSString*)chapterid;
 
 
 @end

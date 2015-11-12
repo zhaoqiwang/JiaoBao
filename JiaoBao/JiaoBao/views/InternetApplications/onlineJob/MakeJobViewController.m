@@ -126,11 +126,38 @@
         [MBProgressHUD showError:@"超时" toView:self.view];
     }
 }
+-(void)TecQswithchapterid:(id)sender
+{
+    NSString *result = [sender object];
+    if([result isEqualToString:@"false"])
+    {
+        [MBProgressHUD showError:@"此章节没有题目"];
+    }
+    else
+    {
+    self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
+    for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
+    {
+        TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
+        self.publishJobModel.classID = model.mStr_tableId;
+        self.publishJobModel.className = model.mStr_className;
+        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+        self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
+        self.publishJobModel.schoolName = model.mStr_schoolName;
+        [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        
+    }
+    }
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-
+    
+//是否有题回调
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecQswithchapterid:) name:@"TecQswithchapterid" object:nil];
+//发布作业回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
     
@@ -1601,6 +1628,7 @@
         [MBProgressHUD showError:@"作业名称要大于5个汉字并且小于50个汉字"];
         return ;
     }
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSDate *date = [dateFormatter dateFromString:self.publishJobModel.ExpTime];
@@ -1611,19 +1639,9 @@
         [MBProgressHUD showError:@"时间过期"];
         return;
     }
-    self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
-    for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
-    {
-        TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
-        self.publishJobModel.classID = model.mStr_tableId;
-        self.publishJobModel.className = model.mStr_className;
-        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
-        self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
-        self.publishJobModel.schoolName = model.mStr_schoolName;
-        [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
-        [MBProgressHUD showMessage:@"" toView:self.view];
-        
-    }
+    [[OnlineJobHttp getInstance]TecQswithchapterid:self.publishJobModel.chapterID];
+
+
 }
 
 -(void)TecMakeHWWithPublishJobModel:(id)sender

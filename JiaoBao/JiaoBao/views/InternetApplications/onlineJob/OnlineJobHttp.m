@@ -388,4 +388,23 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
 }
 
+-(void)TecQswithchapterid:(NSString*)chapterid
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@TecQs",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"chapterid":chapterid};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------TecQswithchapterid: %@,", result);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:result];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------TecQswithchapterid: %@", error);
+    }];
+}
+
 @end
