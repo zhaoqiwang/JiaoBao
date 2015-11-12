@@ -15,7 +15,7 @@
 #import "WebViewJavascriptBridge.h"
 #import "TableViewWithBlock.h"
 #import "SelectionCell.h"
-#import "IQKeyboardManager.h"
+//#import "IQKeyboardManager.h"
 #import "StuSubModel.h"
 
 @interface DetailHWViewController ()<UIAlertViewDelegate>
@@ -28,6 +28,7 @@
 @property WebViewJavascriptBridge* bridge;
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;
 @property(nonatomic,assign)BOOL isOpen;
+@property(nonatomic,assign)BOOL isShow;
 
 @end
 
@@ -45,6 +46,24 @@
 
     }
 }
+-(void)updateWebView
+{
+    [super updateViewConstraints];
+    if(self.isShow == YES)
+    {
+        NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.scrollview attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0 constant:-self.collectionView.frame.origin.y-self.collectionView.frame.size.height+30];
+        [NSLayoutConstraint activateConstraints:@[topConstraint]];
+        topConstraint.active = YES;
+
+//               self.scrollview.frame = CGRectMake(0, 0-self.collectionView.frame.size.height-self.collectionView.frame.origin.y+30, [dm getInstance].width, self.view.frame.size.height);
+    }
+    else
+    {
+        self.scrollview.frame = CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
+    }
+
+}
+
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
@@ -168,17 +187,22 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.webView.scrollView.scrollEnabled = NO;
     if(self.isSubmit == YES)
     {
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
     }
-    self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
+    //self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
     self.qNum.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.qNum.layer.borderWidth = 1;
     self.qNum.layer.cornerRadius = 0.2;
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
-    
+    //键盘事件
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardDidHideNotification object:nil];
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
@@ -256,6 +280,8 @@
         }
         
     }
+    //[webView stringByEvaluatingJavaScriptFromString:@"document.activeElement.blur()"];
+   // self.scrollview.frame = CGRectMake(0, 0, [dm getInstance].width, <#CGFloat height#>)
 
     
 }
@@ -341,9 +367,7 @@
                     NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                     NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
                     [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
-
                     isFinish = YES;
-
                     
                 }
                 
@@ -438,11 +462,11 @@
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //输入框弹出键盘问题
-    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = NO;//控制整个功能是否启用
-    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
-    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
-    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+//    manager.enable = NO;//控制整个功能是否启用
+//    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+//    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+//    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -556,7 +580,16 @@
         {
             NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-            NSString *content = [value stringByAppendingString:@","];
+            NSString *content;
+            if(i == inputCount-1)
+            {
+                content = [value stringByAppendingString:@""];
+            }
+            else
+            {
+                content = [value stringByAppendingString:@","];
+
+            }
             NSLog(@"content = %@",content);
             if(i>0)
             {
@@ -638,4 +671,43 @@
         self.isOpen = YES;
     }
 }
+
+- (void) keyboardWasShown:(NSNotification *) notif{
+    self.isShow = YES;
+
+    NSDictionary *info = [notif userInfo];
+    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGSize keyboardSize = [value CGRectValue].size;
+    NSValue *animationDurationValue = [info objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    //self.view.frame = CGRectMake(0, 0-keyboardSize.height, [dm getInstance].width, self.view.frame.size.height);
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         [self updateWebView];
+
+
+
+                     }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+- (void) keyboardWasHidden:(NSNotification *) notif{
+    self.isShow = NO;
+    NSDictionary *userInfo = [notif userInfo];
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         [self updateWebView];
+                 
+
+                                              }
+                     completion:^(BOOL finished){
+                         ;
+                     }];
+}
+
 @end

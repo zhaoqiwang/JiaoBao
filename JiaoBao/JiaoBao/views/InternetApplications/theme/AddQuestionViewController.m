@@ -329,9 +329,9 @@
     {
         if(self.invitationUserInfo)
         {
-            if(!self.invitationUserInfo.NickName)
+            if([self.invitationUserInfo.NickName isEqual:[NSNull null]])
             {
-                self.invitationUserInfo.NickName = @"";
+                self.invitationUserInfo.NickName = self.atAccIdsTF.text;
             }
             NSString *message = [NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布问题成功" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];

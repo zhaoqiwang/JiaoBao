@@ -263,8 +263,14 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode integerValue] ==0) {
+        if([self.invitationUserInfo.NickName isEqual:[NSNull null]])
+        {
+            self.invitationUserInfo.NickName = self.mView_input.mTextF_input.text;
+        }
         [MBProgressHUD showSuccess:[NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName]];
         self.invitationUserInfo = nil;
+        self.mView_input.mTextF_input.text = @"";
+
         
         
     }else{
@@ -884,7 +890,6 @@
             self.invitationUserInfo = [arr objectAtIndex:0];
             NSString *accid = self.invitationUserInfo.JiaoBaoHao;
             [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
-            self.mView_input.mTextF_input.text = @"";
 
         }
         else
