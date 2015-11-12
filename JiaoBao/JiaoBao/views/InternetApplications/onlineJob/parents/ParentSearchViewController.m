@@ -309,10 +309,10 @@
         StuHWModel *model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
         
         if ([model.isHaveAdd intValue]==1) {//主观题
-            cell.mImg_pic.frame = CGRectMake(8, 10, 14, 14);
+            cell.mImg_pic.frame = CGRectMake(8, 12, 14, 14);
             cell.mImg_pic.hidden = NO;
         }else{
-            cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
+            cell.mImg_pic.frame = CGRectMake(8, 12, 0, 0);
             cell.mImg_pic.hidden = YES;
         }
         //名称
