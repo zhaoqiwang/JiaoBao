@@ -642,14 +642,28 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    if(range.location>100)
+    if([textView isEqual:self.mText_title])
     {
+        if(range.location>100)
+        {
             return NO;
+        }
     }
+
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
+    if([textView isEqual:self.mText_title])
+    {
+        if(textView.text.length>100)
+        {
+            textView.text = [textView.text substringToIndex:100];
+        }
+    }
+
+
+
     if([textView isEqual:self.mText_title])
     {
         if([textView.text isEqualToString:@""])

@@ -11,7 +11,7 @@
 #import "NickNameModel.h"
 #import "InvitationUserInfo.h"
 
-@interface KnowledgeQuestionViewController ()
+@interface KnowledgeQuestionViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;//返回的正确的昵称model数组
 
 
@@ -855,8 +855,27 @@
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
     }else if (view.tag == 103){//举报
-        [[KnowledgeHttp getInstance]ReportAnsWithAId:self.mModel_question.TabID repType:@"1"];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        alert.delegate = self;
+        alert.tag= 10000;
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 10000)
+    {
+        if(buttonIndex == 1)
+        {
+            [[KnowledgeHttp getInstance]ReportAnsWithAId:self.mModel_question.TabID repType:@"1"];
+
+            
+        }
+        
+    }
+
+    
 }
 
 //邀请回答确定按钮
