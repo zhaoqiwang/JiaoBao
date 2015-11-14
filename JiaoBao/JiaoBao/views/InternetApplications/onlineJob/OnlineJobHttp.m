@@ -388,6 +388,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
 }
 
+//根据章节id判断题库中是否有数据      章节id
 -(void)TecQswithchapterid:(NSString*)chapterid
 {
     NSString *urlString = [NSString stringWithFormat:@"%@TecQs",ONLINEJOBURL];

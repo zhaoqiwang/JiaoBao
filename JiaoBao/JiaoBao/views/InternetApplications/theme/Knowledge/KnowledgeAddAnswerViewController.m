@@ -379,7 +379,7 @@
         [MBProgressHUD showError:@"答案标题超出限制" toView:self.view];
         return;
     }
-    if ([dm getInstance].NickName.length==0) {
+    if ([dm getInstance].NickName1.length==0) {
         [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
         return;
     }
@@ -395,9 +395,11 @@
         }
         tempcontent = [tempcontent stringByReplacingOccurrencesOfString:temp withString:@""];
     }
-    if ([utils isBlankString:tempcontent]) {
-        [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
-        return;
+    if (tempcontent.length>0) {
+        if ([utils isBlankString:tempcontent]) {
+            [MBProgressHUD showError:@"请输入答案内容" toView:self.view];
+            return;
+        }
     }
     if (tempcontent.length<5&&tempcontent.length>0) {
         [MBProgressHUD showError:@"内容描述不得少于五个字" toView:self.view];
@@ -427,7 +429,7 @@
     }
     [MBProgressHUD showMessage:@"提交中..." toView:self.view];
 }
-
+//如果输入超过规定的字数100，就不再让输入
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     
     // Any new character added is passed in as the "text" parameter
@@ -437,6 +439,11 @@
         
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
+    }
+    if (range.location>100){
+        return  NO;
+    }else{
+        return YES;
     }
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;

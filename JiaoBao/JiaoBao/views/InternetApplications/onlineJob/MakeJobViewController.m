@@ -135,13 +135,18 @@
     }
     else
     {
-    self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
+    
     for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
     {
         TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
+        self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
         self.publishJobModel.classID = model.mStr_tableId;
         self.publishJobModel.className = model.mStr_className;
-        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+        if ([self.publishJobModel.HwType intValue]==3) {
+            self.publishJobModel.Distribution = @"";
+        }else if ([self.publishJobModel.HwType intValue]==0){
+            self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+        }
         self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
         self.publishJobModel.schoolName = model.mStr_schoolName;
         [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
@@ -293,7 +298,7 @@
                     nodeData.mStr_id = temp1.TabID;
                     self.publishJobModel.GradeCode = temp1.TabID;
                     self.publishJobModel.GradeName = temp1.homeworkName;
-
+                    self.publishJobModel.DesId = temp1.TabID;
                     temp1.mInt_select = 1;
                 }else{
                     temp1.mInt_select = 0;
@@ -301,6 +306,9 @@
                 node1.nodeData = temp1;
                 //塞入数据
                 [node0.sonNodes addObject:node1];
+            }
+            if (array.count==0) {
+                self.publishJobModel.DesId = @"";
             }
         }
     }
@@ -1256,6 +1264,17 @@
         }
     }
     [self reloadDataForDisplayArray];
+    //给当前的全局难度赋值
+    for (TreeJob_node *node in self.mArr_sumData) {
+        if(node.flag == 1){
+            for (TreeJob_node *node1 in node.sonNodes) {
+                if (node1.flag == 9999) {//专门的难度行
+                    TreeJob_class_model *nodeData = node1.nodeData;
+                    self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",nodeData.mInt_difficulty];
+                }
+            }
+        }
+    }
 }
 
 -(void)MessageSelectionActionWithButtonTag0:(NSUInteger)tag0 tag1:(NSUInteger)tag1//tag0家长通知 tag1反馈（0是没选中 1是选中）
@@ -1312,9 +1331,9 @@
             mStr = @"没有执教班级";
         }
     }
-    if ([self.publishJobModel.HwType intValue]==3) {
-        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",treeJob_class_TableViewCell.mInt_diff];
-    }
+//    if ([self.publishJobModel.HwType intValue]==3) {
+//        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",treeJob_class_TableViewCell.mInt_diff];
+//    }
     TreeJob_level0_model *nodeData = node0.nodeData;
     nodeData.mStr_title = mStr;
     [self reloadDataForDisplayArray];
@@ -1624,7 +1643,7 @@
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
     }
-    if (self.publishJobModel.homeworkName.length<5||self.publishJobModel.homeworkName.length>50) {
+    if (self.publishJobModel.homeworkName.length<6||self.publishJobModel.homeworkName.length>49) {
         [MBProgressHUD showError:@"作业名称要大于5个汉字并且小于50个汉字"];
         return ;
     }
@@ -1639,6 +1658,7 @@
         [MBProgressHUD showError:@"时间过期"];
         return;
     }
+    D("发布时的难度为：%@，模式:%@",self.publishJobModel.DoLv,self.publishJobModel.HwType);
     [[OnlineJobHttp getInstance]TecQswithchapterid:self.publishJobModel.chapterID];
 
 

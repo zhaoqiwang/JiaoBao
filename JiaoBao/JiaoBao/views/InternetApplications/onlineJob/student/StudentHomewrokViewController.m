@@ -47,6 +47,9 @@
     //学生发布练习
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"StuMakeSelf" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(StuMakeSelf:) name:@"StuMakeSelf" object:nil];
+    //根据章节id判断题库中是否有数据
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecQswithchapterid:) name:@"TecQswithchapterid" object:nil];
     
     self.mArr_homework = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
@@ -122,6 +125,18 @@
     }
     //添加默认数据
     [self addDefaultData];
+}
+
+//根据章节id判断题库中是否有数据
+-(void)TecQswithchapterid:(NSNotification *)noti{
+    NSString *result = [noti object];
+    if([result isEqualToString:@"false"]){
+        [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD showError:@"此章节没有题目"];
+    }else{
+        //发送发布练习请求
+        [self sendPractice];
+    }
 }
 
 //学生发布练习
@@ -533,7 +548,6 @@
         //过期时间
         cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+6, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
         cell.mLab_time.text = model.EXPIRYDATE;
-        D("dfuhguhj-====%@,%@",model.EXPIRYDATE,model.isHWFinish);
         CGSize timeSize = [model.EXPIRYDATE sizeWithFont:[UIFont systemFontOfSize:10]];
         cell.mLab_time.frame  = CGRectMake(cell.mLab_timeLab.frame.origin.x+cell.mLab_timeLab.frame.size.width, cell.mLab_numLab.frame.origin.y, timeSize.width, cell.mLab_time.frame.size.height);
         //判断是否做完
@@ -956,6 +970,29 @@
         [MBProgressHUD showError:@"练习名称为6--49个字符"];
         return ;
     }
+    //发送当前章节中是否有题库请求
+    [[OnlineJobHttp getInstance] TecQswithchapterid:tempModel3.mStr_id];
+    [MBProgressHUD showMessage:@"" toView:self.view];
+}
+
+//发布作业协议
+-(void)sendPractice{
+    //年级
+    TreeView_node *tempNode0 = [self.mArr_sumData objectAtIndex:0];
+    TreeJob_level0_model *tempModel0 = tempNode0.nodeData;
+
+    //科目
+    TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
+    TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+
+    //教版
+    TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:2];
+    TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
+
+    //章节
+    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:3];
+    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+
     //联合id
     NSString *tempId = [NSString stringWithFormat:@"%@%@%@",tempModel0.mStr_id,tempModel1.mStr_id,tempModel2.mStr_id];
     

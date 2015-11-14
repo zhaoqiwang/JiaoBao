@@ -27,6 +27,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mInt_reloadData = 0;
+    self.mInt_load = 1;
     //获取邀请我回答的问题
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeQIndexWithnumPerPage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeQIndexWithnumPerPage:) name:@"AtMeQIndexWithnumPerPage" object:nil];
@@ -184,11 +185,13 @@
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
     self.mInt_reloadData = 0;
+    self.mInt_load = 1;
     [self sendRequest];
 }
 
 - (void)footerRereshing{
     self.mInt_reloadData = 1;
+    self.mInt_load++;
     [self sendRequest];
 }
 
@@ -207,32 +210,25 @@
     if ([self checkNetWork]) {
         return;
     }
-    NSString *page = @"";
-    if (self.mInt_reloadData == 0) {
-        page = @"1";
-        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
-    }else{
-        NSMutableArray *array = self.mArr_list;
-        if (array.count>=10&&array.count%10==0) {
-            //检查当前网络是否可用
-            if ([self checkNetWork]) {
-                return;
-            }
-            page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
-            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
-        } else {
-            [self.mTalbeV_liset headerEndRefreshing];
-            [self.mTalbeV_liset footerEndRefreshing];
-            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
-            return;
-        }
-    }
     NSString *rowCount = @"0";
     if (self.mArr_list.count>0) {
         QuestionModel *model = [self.mArr_list objectAtIndex:self.mArr_list.count-1];
         rowCount = model.rowCount;
     }
-    [[KnowledgeHttp getInstance] AtMeQIndexWithnumPerPage:@"10" pageNum:page RowCount:rowCount];
+    if (self.mInt_reloadData == 0) {
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    }else{
+        if (self.mArr_list.count==[rowCount intValue]) {
+            [self.mTalbeV_liset headerEndRefreshing];
+            [self.mTalbeV_liset footerEndRefreshing];
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+            return;
+        }else{
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        }
+    }
+    
+    [[KnowledgeHttp getInstance] AtMeQIndexWithnumPerPage:@"10" pageNum:[NSString stringWithFormat:@"%d",self.mInt_load] RowCount:rowCount];
 }
 
 //导航条返回按钮回调

@@ -52,7 +52,16 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48)];
+    //学生选择
+    self.mLab_select.frame = CGRectMake(20, self.mNav_navgationBar.frame.size.height+10, self.mLab_select.frame.size.width, self.mLab_select.frame.size.height);
+    self.mBtn_select.frame = CGRectMake(20+self.mLab_select.frame.size.width, self.mLab_select.frame.origin.y, self.mBtn_select.frame.size.width, self.mBtn_select.frame.size.height+5);
+    [self.mBtn_select.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.mBtn_select.layer setBorderWidth:1];
+    [self.mBtn_select.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+    self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.mBtn_select.frame.origin.x, self.mBtn_select.frame.origin.y+self.mBtn_select.frame.size.height, self.mBtn_select.frame.size.width, 0)];
+    
+    //三种状态
+    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.mLab_select.frame.origin.y+self.mLab_select.frame.size.height, [dm getInstance].width, 48)];
     int tempWidth = [dm getInstance].width/3;
     for (int i=0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -82,7 +91,7 @@
     
     self.mView_head = [[ParentSearchHeadView alloc] initFrame1];
     //
-    self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-48+[dm getInstance].statusBar);
+    self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-self.mLab_select.frame.size.height-10-self.mScrollV_all.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    self.mTableV_list.tableHeaderView = self.mView_head;
     //根据角色信息，获取学生id信息
@@ -96,6 +105,7 @@
             }
         }
     }
+    [self.view addSubview:self.mTableV_name];
 }
 
 //获取某学生学力值
@@ -175,6 +185,16 @@
     [self reloadDataForDisplayArray];
 }
 
+//点击学生下拉选择
+- (IBAction)selectStuBtnAction:(id)sender{
+    if (self.mTableV_name.frame.size.height>0) {
+        self.mTableV_name.frame =  CGRectMake(self.mTableV_name.frame.origin.x, self.mTableV_name.frame.origin.y, self.mTableV_name.frame.size.width, 0);
+    }else{
+        self.mTableV_name.frame =  CGRectMake(self.mTableV_name.frame.origin.x, self.mTableV_name.frame.origin.y, self.mTableV_name.frame.size.width, 44*self.mArr_parent.count);
+    }
+    [self.mTableV_name reloadData];
+}
+
 //获取到学生id
 -(void)getGenInfoWithAccID:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
@@ -183,13 +203,53 @@
     if ([ResultCode intValue]==0) {
         GenInfo *model = [dic objectForKey:@"model"];
         [self.mArr_parent addObject:model];
+        
+        [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
+            return self.mArr_parent.count;
+        } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
+            UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
+            if (!cell) {
+                cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectionCell"];
+                [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
+            }
+            GenInfo *model = [self.mArr_parent objectAtIndex:indexPath.row];
+            cell.textLabel.text = model.StdName;
+            cell.textLabel.font = [UIFont systemFontOfSize:14];
+            return cell;
+        } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
+            [UIView animateWithDuration:0.3 animations:^{
+                self.mTableV_name.frame =  CGRectMake(self.mTableV_name.frame.origin.x, self.mTableV_name.frame.origin.y, self.mTableV_name.frame.size.width, 0);
+            } completion:^(BOOL finished){
+                GenInfo *model = [self.mArr_parent objectAtIndex:indexPath.row];
+                [self.mBtn_select setTitle:model.StdName forState:UIControlStateNormal];
+                if ([self.mModel_gen.StudentID intValue] == [model.StudentID intValue]) {
+                    
+                }else{
+                    self.mModel_gen = model;
+                    [self.mArr_nowHomework removeAllObjects];
+                    [self.mArr_overHomework removeAllObjects];
+                    [self.mArr_score removeAllObjects];
+                    //重新获取数据
+                    [self sendRequst];
+                }
+            }];
+        }];
+        
+        [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [self.mTableV_name.layer setBorderWidth:2];
         //发送请求
-        [[OnlineJobHttp getInstance] GetStuHWListWithStuId:model.StudentID IsSelf:@"0"];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+        if (self.mArr_parent.count==1) {
+            GenInfo *tempModel = [self.mArr_parent objectAtIndex:0];
+            self.mModel_gen = tempModel;
+            [self.mBtn_select setTitle:tempModel.StdName forState:UIControlStateNormal];
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:tempModel.StudentID IsSelf:@"0"];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+        }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showError:ResultDesc toView:self.view];
     }
+//    [self.mTableV_list reloadData];
 }
 
 //获取某学生各科作业完成情况
@@ -199,7 +259,7 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
-        [self.mArr_overHomework addObjectsFromArray:array];
+        self.mArr_overHomework = array;
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showError:ResultDesc toView:self.view];
@@ -217,7 +277,7 @@
         NSString *IsSelf = [dic objectForKey:@"IsSelf"];
         if ([IsSelf intValue]==0) {
             if (array.count>0) {
-                [self.mArr_nowHomework addObjectsFromArray:array];
+                self.mArr_nowHomework = array;
             }else{
                 [MBProgressHUD showError:@"无数据" toView:self.view];
             }
@@ -249,28 +309,28 @@
             }
         }
     }
-    if (btn.tag==0) {//获取作业列表
-        self.mInt_index = 0;
+    //发送请求
+    [self sendRequst];
+}
+
+//发送请求
+-(void)sendRequst{
+    if (self.mInt_index==0) {//获取作业列表
         //判断是否有值
-        
-    }else if (btn.tag==1) {//获取完成情况
-        self.mInt_index = 1;
-        //判断是否有值
-        if (self.mArr_overHomework.count==0) {
-            for (int i=0; i<self.mArr_parent.count; i++) {
-                GenInfo *model = [self.mArr_parent objectAtIndex:i];
-                [[OnlineJobHttp getInstance] GetCompleteStatusHWWithStuId:model.StudentID];
-            }
+        if (self.mArr_nowHomework.count==0) {
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_gen.StudentID IsSelf:@"0"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if (btn.tag==2) {//获取学力
-        self.mInt_index = 2;
+    }else if (self.mInt_index==1) {//获取完成情况
+        //判断是否有值
+        if (self.mArr_overHomework.count==0) {
+            [[OnlineJobHttp getInstance] GetCompleteStatusHWWithStuId:self.mModel_gen.StudentID];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+        }
+    }else if (self.mInt_index==2) {//获取学力
         //判断是否有值
         if (self.mArr_score.count==0) {
-            for (int i=0; i<self.mArr_parent.count; i++) {
-                GenInfo *model = [self.mArr_parent objectAtIndex:i];
-                [[OnlineJobHttp getInstance] GetStuEduLevelWithStuId:model.StudentID uId:@"" chapterid:@"" flag:@"0"];
-            }
+            [[OnlineJobHttp getInstance] GetStuEduLevelWithStuId:self.mModel_gen.StudentID uId:@"" chapterid:@"" flag:@"0"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
     }

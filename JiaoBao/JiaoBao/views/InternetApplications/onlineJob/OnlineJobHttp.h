@@ -66,6 +66,8 @@
 
 //获取某学生各科作业完成情况 参数：学生ID
 -(void)GetCompleteStatusHWWithStuId:(NSString*)StuId;
+
+//根据章节id判断题库中是否有数据      章节id
 -(void)TecQswithchapterid:(NSString*)chapterid;
 
 
