@@ -10,6 +10,7 @@
 #import "HtmlString.h"
 #import "NickNameModel.h"
 #import "InvitationUserInfo.h"
+#import "IQKeyboardManager.h"
 
 @interface KnowledgeQuestionViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;//返回的正确的昵称model数组
@@ -67,6 +68,13 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    
+    //输入框弹出键盘问题
+//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+//    manager.enable = YES;//控制整个功能是否启用
+//    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+//    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+//    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     
     //标题话题等显示
     static NSString *indentifier = @"KnowledgeTableViewCell";
@@ -933,6 +941,7 @@
     self.mTableV_answers = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.mView_input];
+    [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [utils popViewControllerAnimated:YES];
 }
 

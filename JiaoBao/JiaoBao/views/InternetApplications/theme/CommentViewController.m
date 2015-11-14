@@ -715,12 +715,12 @@
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#2589D1'>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
-    cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    cell.mLab_title.lineBreakMode = RTTextLineBreakModeCharWrapping;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_title.componentsAndPlainText = componentsDS;
-    //    CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
+    CGSize titleSize = [cell.mLab_title optimumSize];
    // cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
-    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);
+    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, titleSize.height);
 
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
@@ -1111,7 +1111,7 @@
 
         //若其有输入内容，则发送
         if (![utils isBlankString:textField.text]) {
-            if ([dm getInstance].NickName.length==0) {
+            if ([dm getInstance].NickName1.length==0) {
                 [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
                 return YES;
             }

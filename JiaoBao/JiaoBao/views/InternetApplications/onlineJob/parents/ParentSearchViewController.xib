@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ParentSearchViewController">
             <connections>
+                <outlet property="mBtn_select" destination="Bgt-19-dq1" id="ohX-ji-AkG"/>
+                <outlet property="mLab_select" destination="kXR-M5-m8O" id="raJ-4p-Waw"/>
                 <outlet property="mTableV_list" destination="lTF-LH-o3S" id="voJ-le-rak"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,17 +21,40 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lTF-LH-o3S">
                     <rect key="frame" x="0.0" y="169" width="320" height="399"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="3Am-Wx-hUe"/>
                         <outlet property="delegate" destination="-1" id="1df-l4-Cmh"/>
                     </connections>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前学生:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kXR-M5-m8O">
+                    <rect key="frame" x="20" y="30" width="66" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bgt-19-dq1">
+                    <rect key="frame" x="86" y="33" width="210" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="tintColor" red="0.12941176469999999" green="0.16078431369999999" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="imageEdgeInsets" minX="190" minY="4" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" image="bTri.png">
+                        <color key="titleColor" red="0.12941176469999999" green="0.16078431369999999" blue="0.16862745100000001" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="selectStuBtnAction:" destination="-1" eventType="touchUpInside" id="rCS-R9-FBD"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="915" y="476"/>
         </view>
     </objects>
+    <resources>
+        <image name="bTri.png" width="10" height="10"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

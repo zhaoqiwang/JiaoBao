@@ -898,8 +898,10 @@ static LoginSendHttp *loginSendHttp = nil;
             NSString *name = [dic objectForKey:@"Nickname"];
             if ([name isKindOfClass:[NSNull class]]||[name isEqual:@"null"]) {
                 [dm getInstance].NickName = [dic objectForKey:@"TrueName"];
+                [dm getInstance].NickName1 = @"";
             }else{
                 [dm getInstance].NickName = [dic objectForKey:@"Nickname"];
+                [dm getInstance].NickName1 = [dic objectForKey:@"Nickname"];
             }
             [dm getInstance].TrueName = [dic objectForKey:@"TrueName"];
             //请求融云用户token

@@ -584,7 +584,7 @@
         [MBProgressHUD showError:@"标题不能超过100字"];
         return;
     }
-    if ([dm getInstance].NickName.length==0) {
+    if ([dm getInstance].NickName1.length==0) {
         [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
         return;
     }

@@ -18,6 +18,7 @@
 #import "ParentSearchHeadView.h"
 #import "TreeJob_node.h"
 #import "LevelModel.h"
+#import "TableViewWithBlock.h"
 
 @interface ParentSearchViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -31,5 +32,12 @@
 @property (nonatomic,strong) NSArray *mArr_disScore;///学力查询,显示数据
 @property (nonatomic,strong) NSMutableArray *mArr_parent;//家长信息数组，其中包括学生id
 @property (nonatomic,strong) ParentSearchHeadView *mView_head;//表头
+@property (nonatomic,strong) IBOutlet UILabel *mLab_select;//学生选择文字
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_select;//学生选择下拉按钮
+@property (nonatomic,strong) TableViewWithBlock *mTableV_name;//下拉列表
+@property (nonatomic,strong) GenInfo *mModel_gen;//当前选择的学生
+
+//点击学生下拉选择
+- (IBAction)selectStuBtnAction:(id)sender;
 
 @end

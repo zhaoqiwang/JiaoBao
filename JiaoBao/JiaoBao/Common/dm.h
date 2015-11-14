@@ -19,7 +19,8 @@
     int statusBar;//状态栏
     NSString *jiaoBaoHao;//教宝号,accid
     NSString *name;//自己的名字`
-    NSString *NickName;
+    NSString *NickName;//显示的时候用，当为空时，会将真实姓名赋值
+    NSString *NickName1;//求知中回答问题、提问时用，昵称为空，不能操作
     NSString *TrueName;
     NSMutableArray *identity;//个人的班级或者学校信息
     NSString *unReadMsg1;//未读交流信息数量
@@ -52,6 +53,7 @@
 @property (nonatomic,strong) NSString *jiaoBaoHao;//教宝号
 @property (nonatomic,strong) NSString *name;//自己的名字
 @property (nonatomic,strong) NSString *NickName;
+@property (nonatomic,strong) NSString *NickName1;
 @property (nonatomic,strong) NSString *TrueName;
 @property (nonatomic,strong) NSMutableArray *identity;//个人的班级或者学校信息
 @property (nonatomic,strong) NSString *unReadMsg1;//未读交流信息数量
