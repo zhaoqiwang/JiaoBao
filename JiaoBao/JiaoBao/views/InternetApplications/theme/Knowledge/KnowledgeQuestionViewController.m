@@ -12,7 +12,7 @@
 #import "InvitationUserInfo.h"
 #import "IQKeyboardManager.h"
 
-@interface KnowledgeQuestionViewController ()
+@interface KnowledgeQuestionViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;//返回的正确的昵称model数组
 
 
@@ -271,8 +271,14 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode integerValue] ==0) {
+        if([self.invitationUserInfo.NickName isEqual:[NSNull null]])
+        {
+            self.invitationUserInfo.NickName = self.mView_input.mTextF_input.text;
+        }
         [MBProgressHUD showSuccess:[NSString stringWithFormat:@"邀请%@成功",self.invitationUserInfo.NickName]];
         self.invitationUserInfo = nil;
+        self.mView_input.mTextF_input.text = @"";
+
         
         
     }else{
@@ -857,8 +863,27 @@
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
     }else if (view.tag == 103){//举报
-        [[KnowledgeHttp getInstance]ReportAnsWithAId:self.mModel_question.TabID repType:@"1"];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        alert.delegate = self;
+        alert.tag= 10000;
     }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 10000)
+    {
+        if(buttonIndex == 1)
+        {
+            [[KnowledgeHttp getInstance]ReportAnsWithAId:self.mModel_question.TabID repType:@"1"];
+
+            
+        }
+        
+    }
+
+    
 }
 
 //邀请回答确定按钮
@@ -892,7 +917,6 @@
             self.invitationUserInfo = [arr objectAtIndex:0];
             NSString *accid = self.invitationUserInfo.JiaoBaoHao;
             [[KnowledgeHttp getInstance] AtMeForAnswerWithAccId:accid qId:self.mModel_question.TabID];
-            self.mView_input.mTextF_input.text = @"";
 
         }
         else

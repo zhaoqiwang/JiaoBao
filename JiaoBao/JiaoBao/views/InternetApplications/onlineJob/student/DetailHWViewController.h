@@ -27,5 +27,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *qNum;//选题数量按钮
 - (IBAction)qNumQustion:(id)sender;//选题数量按钮方法
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
+@property (weak, nonatomic) IBOutlet UIView *mainView;
 
 @end

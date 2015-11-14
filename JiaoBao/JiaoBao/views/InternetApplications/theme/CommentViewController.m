@@ -77,7 +77,7 @@
 {
     if(view.tag == 100)
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否评论" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
         alert.delegate = self;
         alert.tag= 10000;
@@ -601,7 +601,7 @@
             [self.mTextF_text becomeFirstResponder];
 
         }else if (buttonIndex == 1){
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否评论" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             [alert show];
             alert.delegate = self;
             alert.tag = actionSheet.tag;

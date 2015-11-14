@@ -28,6 +28,7 @@
 @property WebViewJavascriptBridge* bridge;
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;
 @property(nonatomic,assign)BOOL isOpen;
+@property(nonatomic,assign)BOOL isShow;
 
 @end
 
@@ -45,6 +46,8 @@
 
     }
 }
+
+
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
@@ -168,17 +171,22 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.webView.scrollView.scrollEnabled = NO;
     if(self.isSubmit == YES)
     {
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
     }
-    self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
+    //self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
     self.qNum.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.qNum.layer.borderWidth = 1;
     self.qNum.layer.cornerRadius = 0.2;
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
-    
+    //键盘事件
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
@@ -186,12 +194,12 @@
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWWithHwInfoId:) name:@"GetStuHWWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
-//    //输入框弹出键盘问题
-//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-//    manager.enable = YES;//控制整个功能是否启用
-//    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-//    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
-//    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"做作业"];
     self.hwNameLabel.text = self.hwName;
@@ -256,6 +264,8 @@
         }
         
     }
+    //[webView stringByEvaluatingJavaScriptFromString:@"document.activeElement.blur()"];
+   // self.scrollview.frame = CGRectMake(0, 0, [dm getInstance].width, <#CGFloat height#>)
 
     
 }
@@ -341,9 +351,7 @@
                     NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                     NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
                     [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
-
                     isFinish = YES;
-
                     
                 }
                 
@@ -438,11 +446,11 @@
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //输入框弹出键盘问题
-    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = NO;//控制整个功能是否启用
-    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
-    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
-    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+//    manager.enable = NO;//控制整个功能是否启用
+//    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+//    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+//    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -529,7 +537,7 @@
                 
                 else
                 {
-                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag-1] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
                 
@@ -556,7 +564,16 @@
         {
             NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-            NSString *content = [value stringByAppendingString:@","];
+            NSString *content;
+            if(i == inputCount-1)
+            {
+                content = [value stringByAppendingString:@""];
+            }
+            else
+            {
+                content = [value stringByAppendingString:@","];
+
+            }
             NSLog(@"content = %@",content);
             if(i>0)
             {
@@ -638,4 +655,17 @@
         self.isOpen = YES;
     }
 }
+
+- (void) keyboardWasShown:(NSNotification *) notif{
+
+                         self.view.frame = CGRectMake(0, -self.collectionView.frame.size.height-self.collectionView.frame.origin.y+30, [dm getInstance].width, self.view.frame.size.height);
+
+
+}
+- (void) keyboardWasHidden:(NSNotification *) notif{
+
+ self.view.frame = CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
+
+}
+
 @end
