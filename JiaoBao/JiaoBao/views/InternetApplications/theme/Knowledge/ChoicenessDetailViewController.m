@@ -149,7 +149,7 @@
     cell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [cell.mLab_title optimumSize];
     cell.mLab_title.frame = CGRectMake(9+cell.askImgV.frame.size.width, 3, cell.mBtn_detail.frame.origin.x-5-cell.askImgV.frame.size.width, titleSize.height);
-    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, titleSize.height+3);
+    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, titleSize.height+8);
  
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
         cell.mWebV_comment.tag = -1;
@@ -177,12 +177,12 @@
 -(void)webViewLoadFinish:(float)height Width:(float)width{
     self.KnowledgeTableViewCell.mWebV_comment.backgroundColor = [UIColor clearColor];
     self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height, width, height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(5, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, width, height);
     
 //    self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake([dm getInstance].width,[dm getInstance].height-self.mNav_navgationBar.frame.size.height);
     
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
-    self.scrollview.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.frame.size.width+16, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+    self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
 //    UIButton *detailBtn = [[UIButton alloc]initWithFrame:CGRectMake([dm getInstance].width/2-50, self.KnowledgeTableViewCell.frame.size.height-40, 100, 30)];
 //    [self.KnowledgeTableViewCell.contentView addSubview:detailBtn];
 //    detailBtn.backgroundColor = [UIColor colorWithRed:68/255.0 green:193/255.0 blue:24/255.0 alpha:1];
@@ -211,7 +211,7 @@
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-    [self webViewLoadFinish:webViewHeight Width:webViewWidth];
+    [self webViewLoadFinish:webViewHeight+20 Width:webViewWidth+16];
 }
 
 //cell的点击事件---详情

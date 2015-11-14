@@ -248,6 +248,8 @@
     model.hwinfoid = [numberFormatter stringFromNumber:[dic objectForKey:@"hwinfoid"]];
     model.QsCon = [dic objectForKey:@"QsCon"];
     model.QsAns = [dic objectForKey:@"QsAns"];
+    model.QsCorectAnswer = [dic objectForKey:@"QsCorectAnswer"];
+    model.QsExplain = [dic objectForKey:@"QsExplain"];
     model.QsId = [numberFormatter stringFromNumber:[dic objectForKey:@"QsId"]];
     model.QId = [numberFormatter stringFromNumber:[dic objectForKey:@"QId"]];
     model.QsT = [numberFormatter stringFromNumber:[dic objectForKey:@"QsT"]];

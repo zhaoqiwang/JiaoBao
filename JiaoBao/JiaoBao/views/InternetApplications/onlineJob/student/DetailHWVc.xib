@@ -1,15 +1,107 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailHWViewController">
+            <connections>
+                <outlet property="collectionView" destination="qQ1-VE-0xb" id="A7V-FO-3Ov"/>
+                <outlet property="height" destination="XEK-3X-D76" id="KKK-Zg-fiH"/>
+                <outlet property="hwNameLabel" destination="KsZ-Nv-nac" id="u1i-gf-um6"/>
+                <outlet property="qNum" destination="eDO-re-aQB" id="oaD-2F-d2u"/>
+                <outlet property="view" destination="uce-mQ-aEi" id="7AZ-L4-CAM"/>
+                <outlet property="webView" destination="Rbk-0I-u89" id="IhO-Zd-jbP"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="uce-mQ-aEi">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <subviews>
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rbk-0I-u89">
+                    <rect key="frame" x="0.0" y="272" width="320" height="296"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="0EH-Bm-Ucu"/>
+                    </connections>
+                </webView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KsZ-Nv-nac">
+                    <rect key="frame" x="0.0" y="64" width="320" height="28"/>
+                    <color key="backgroundColor" red="0.92156862750000001" green="0.92156862750000001" blue="0.92156862750000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="1xB-NV-yDV"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选题:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDx-iV-ynD">
+                    <rect key="frame" x="10" y="102" width="34" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="yVn-ra-ddR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="qQ1-VE-0xb">
+                    <rect key="frame" x="0.0" y="133" width="320" height="136"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="136" id="XEK-3X-D76"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="GP3-Os-6vW">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="TuH-6m-siP"/>
+                        <outlet property="delegate" destination="-1" id="97Z-fh-boy"/>
+                    </connections>
+                </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDO-re-aQB">
+                    <rect key="frame" x="46" y="101" width="68" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="68" id="EAF-Wk-nvJ"/>
+                    </constraints>
+                    <inset key="titleEdgeInsets" minX="-26" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="56" minY="4" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="1-20" image="bTri.png">
+                        <color key="titleColor" red="0.98823529409999999" green="0.56078431370000004" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="qNumQustion:" destination="-1" eventType="touchUpInside" id="udg-Mc-XEk"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Rbk-0I-u89" secondAttribute="bottom" id="0XY-ZH-mzb"/>
+                <constraint firstItem="PDx-iV-ynD" firstAttribute="leading" secondItem="uce-mQ-aEi" secondAttribute="leading" constant="10" id="1pM-mU-OB6"/>
+                <constraint firstItem="qQ1-VE-0xb" firstAttribute="trailing" secondItem="Rbk-0I-u89" secondAttribute="trailing" id="39H-k7-1FR"/>
+                <constraint firstItem="PDx-iV-ynD" firstAttribute="centerY" secondItem="eDO-re-aQB" secondAttribute="centerY" id="3s3-EX-bnw"/>
+                <constraint firstItem="PDx-iV-ynD" firstAttribute="bottom" secondItem="eDO-re-aQB" secondAttribute="bottom" id="6aC-tD-0G2"/>
+                <constraint firstItem="eDO-re-aQB" firstAttribute="leading" secondItem="PDx-iV-ynD" secondAttribute="trailing" constant="2" id="Fl8-nt-NcC"/>
+                <constraint firstItem="Rbk-0I-u89" firstAttribute="leading" secondItem="uce-mQ-aEi" secondAttribute="leading" id="O0Q-VK-mnF"/>
+                <constraint firstItem="KsZ-Nv-nac" firstAttribute="top" secondItem="uce-mQ-aEi" secondAttribute="top" constant="64" id="PIY-BP-TYF"/>
+                <constraint firstAttribute="trailing" secondItem="qQ1-VE-0xb" secondAttribute="trailing" id="RrW-Vq-hts"/>
+                <constraint firstItem="qQ1-VE-0xb" firstAttribute="top" secondItem="PDx-iV-ynD" secondAttribute="bottom" constant="10" id="c97-Oz-JfS"/>
+                <constraint firstItem="qQ1-VE-0xb" firstAttribute="leading" secondItem="Rbk-0I-u89" secondAttribute="leading" id="h8s-du-evB"/>
+                <constraint firstItem="KsZ-Nv-nac" firstAttribute="trailing" secondItem="qQ1-VE-0xb" secondAttribute="trailing" id="uTY-jL-o6E"/>
+                <constraint firstItem="Rbk-0I-u89" firstAttribute="top" secondItem="qQ1-VE-0xb" secondAttribute="bottom" constant="3" id="yAE-Ep-VYn"/>
+                <constraint firstItem="eDO-re-aQB" firstAttribute="top" secondItem="KsZ-Nv-nac" secondAttribute="bottom" constant="9" id="yYn-SP-xwR"/>
+                <constraint firstItem="qQ1-VE-0xb" firstAttribute="leading" secondItem="KsZ-Nv-nac" secondAttribute="leading" id="zcU-Uq-OBW"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="360" y="331"/>
         </view>
     </objects>
+    <resources>
+        <image name="bTri.png" width="10" height="10"/>
+    </resources>
 </document>

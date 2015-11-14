@@ -684,8 +684,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (self.mInt_index==0) {
         StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
-        
-        DetailHWViewController *detail = [[DetailHWViewController alloc]init];
+        DetailHWViewController *detail;
+        if([model.isHWFinish integerValue] == 0)
+        {
+            detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWViewController" bundle:nil];
+
+        }
+        else
+        {
+            detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
+        }
         detail.TabID = model.TabID;
         detail.isSubmit = [model.isHWFinish integerValue];
         detail.hwName = model.homeworkName;
@@ -694,8 +702,16 @@
         if (self.mArr_practice.count>0) {
             StuHWModel *model = [self.mArr_practice objectAtIndex:indexPath.row];
             
-            DetailHWViewController *detail = [[DetailHWViewController alloc]init];
-            detail.TabID = model.TabID;
+            DetailHWViewController *detail;
+            if([model.isHWFinish integerValue] == 1)
+            {
+                detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWViewController" bundle:nil];
+                
+            }
+            else
+            {
+                detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
+            }            detail.TabID = model.TabID;
             detail.hwName = model.homeworkName;
             [self.navigationController pushViewController:detail animated:YES];
         }else{

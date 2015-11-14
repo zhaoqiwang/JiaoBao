@@ -320,7 +320,12 @@
 
 //每一个cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(60, 30);
+    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:indexPath.section];
+    ItemModel *itemModel = [model.mArr_subItem objectAtIndex:indexPath.row];
+    UILabel *label = [[UILabel alloc]init];
+    label.text = itemModel.Subject;
+    CGSize size = [itemModel.Subject sizeWithFont:[UIFont systemFontOfSize:15]];
+    return CGSizeMake(size.width, 30);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(0, 5, 0, 5);

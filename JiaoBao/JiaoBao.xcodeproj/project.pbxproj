@@ -864,6 +864,7 @@
 		A7E93DE51B906DBC00CD7B1C /* PickContentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */; };
 		A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */; };
 		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
+		F70C77AF1BF5BF1D007BAE2D /* DetailHWVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */; };
 		F71283811BE1ADD100074B72 /* DetailHWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F712837F1BE1ADD100074B72 /* DetailHWViewController.m */; };
 		F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71283801BE1ADD100074B72 /* DetailHWViewController.xib */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
@@ -2279,6 +2280,7 @@
 		A7E93DE61B90708A00CD7B1C /* ShowPickedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowPickedModel.h; path = views/InternetApplications/theme/model/ShowPickedModel.h; sourceTree = "<group>"; };
 		A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowPickedModel.m; path = views/InternetApplications/theme/model/ShowPickedModel.m; sourceTree = "<group>"; };
 		F70861791B38EDC90032945D /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
+		F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWVc.xib; sourceTree = "<group>"; };
 		F712837E1BE1ADD100074B72 /* DetailHWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailHWViewController.h; sourceTree = "<group>"; };
 		F712837F1BE1ADD100074B72 /* DetailHWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailHWViewController.m; sourceTree = "<group>"; };
 		F71283801BE1ADD100074B72 /* DetailHWViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWViewController.xib; sourceTree = "<group>"; };
@@ -4032,6 +4034,7 @@
 				F712837E1BE1ADD100074B72 /* DetailHWViewController.h */,
 				F712837F1BE1ADD100074B72 /* DetailHWViewController.m */,
 				F71283801BE1ADD100074B72 /* DetailHWViewController.xib */,
+				F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */,
 				F72385CE1BE2F74F0000015D /* DetialHWCell.h */,
 				F72385CF1BE2F74F0000015D /* DetialHWCell.m */,
 				F72385D01BE2F74F0000015D /* DetialHWCell.xib */,
@@ -5216,6 +5219,7 @@
 				A7BB180419F4F91E00A81286 /* Regiser_login.png in Resources */,
 				A749B9C719F89A530036F480 /* root_detail@2x.png in Resources */,
 				A75E6EC01ABACDBD00B51B18 /* classView_2@3x.png in Resources */,
+				F70C77AF1BF5BF1D007BAE2D /* DetailHWVc.xib in Resources */,
 				A7724D591B5DF94C0095850A /* VideoShot0.png in Resources */,
 				A7595EBA1A5FC2F30027848E /* MWPhotoBrowser.bundle in Resources */,
 				A763A53B1A48F372008365B5 /* photo_default.png in Resources */,

@@ -29,6 +29,7 @@
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;
 @property(nonatomic,assign)BOOL isOpen;
 @property(nonatomic,assign)BOOL isShow;
+@property(nonatomic,assign)float webHeight;
 
 @end
 
@@ -45,7 +46,10 @@
         self.height.constant = self.collectionView.contentSize.height;
 
     }
+
+    
 }
+
 
 
 -(void)GetStuHWWithHwInfoId:(id)sender
@@ -136,12 +140,26 @@
 {
     self.stuHWQsModel = [sender object];
 
+    NSString *webHtml;
+    if(self.isSubmit == 1)
+    {
+        if([self.stuHWQsModel.QsAns isEqualToString:self.stuHWQsModel.QsCorectAnswer])
+        {
+            webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:green\">%@</span><br />正确答案：%@<br />解析：%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
+            
+        }
+        else
+        {
+            webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br />解析：%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
+        }
 
-//    NSString *urlStr = @"http://www.baidu.com";
-//    NSURL *url = [NSURL URLWithString:urlStr];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//    [self.webView loadRequest:request];
-    [self.webView loadHTMLString:self.stuHWQsModel.QsCon baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    }
+    else
+    {
+        webHtml = self.stuHWQsModel.QsCon;
+    }
+
+    [self.webView loadHTMLString:webHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
 
 }
 -(void)StuSubQsWithHwInfoId:(id)sender
@@ -264,8 +282,7 @@
         }
         
     }
-    //[webView stringByEvaluatingJavaScriptFromString:@"document.activeElement.blur()"];
-   // self.scrollview.frame = CGRectMake(0, 0, [dm getInstance].width, <#CGFloat height#>)
+
 
     
 }
@@ -370,7 +387,16 @@
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-                NSString *content = [value stringByAppendingString:@","];
+                NSString *content;
+                if(i == inputCount-1)
+                {
+                    content = [value stringByAppendingString:@""];
+                }
+                else
+                {
+                    content = [value stringByAppendingString:@","];
+                    
+                }
                 NSLog(@"content = %@",content);
                 if(i>0)
                 {
@@ -511,7 +537,6 @@
             NSLog(@"isChecked = %@",isChecked);
             if([isChecked isEqualToString:@"true"])
             {
-
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 [self.collectionView reloadData];
                 [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
@@ -565,25 +590,28 @@
             NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
             NSString *content;
-            if(i == inputCount-1)
-            {
-                content = [value stringByAppendingString:@""];
-            }
-            else
-            {
-                content = [value stringByAppendingString:@","];
-
-            }
-            NSLog(@"content = %@",content);
             if(i>0)
             {
-                if([content isEqualToString:@","]== NO)
+                if([value isEqualToString:@""]== NO)
                 {
                     isFinish = YES;
                 }
+                if(i == inputCount-1)
+                {
+                    content = [value stringByAppendingString:@""];
+                }
+                else
+                {
+                    content = [value stringByAppendingString:@","];
+                    
+                }
                 answer =[answer stringByAppendingString:content];
                 
+                NSLog(@"content = %@",content);
+                
             }
+
+
 
         }
         if(isFinish == false)
@@ -656,15 +684,14 @@
     }
 }
 
-- (void) keyboardWasShown:(NSNotification *) notif{
-
-                         self.view.frame = CGRectMake(0, -self.collectionView.frame.size.height-self.collectionView.frame.origin.y+30, [dm getInstance].width, self.view.frame.size.height);
-
-
+- (void) keyboardWasShown:(NSNotification *) notif
+{
+    self.view.frame = CGRectMake(0, -self.collectionView.frame.size.height-self.collectionView.frame.origin.y+30, [dm getInstance].width, self.view.frame.size.height);
+    
 }
-- (void) keyboardWasHidden:(NSNotification *) notif{
-
- self.view.frame = CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
+- (void) keyboardWasHidden:(NSNotification *) notif
+{
+     self.view.frame = CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
 
 }
 

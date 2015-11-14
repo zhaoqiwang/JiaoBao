@@ -149,6 +149,7 @@
         [aNa setNavigationBarHidden:YES];
         self.window.rootViewController = aNa;
     }
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
