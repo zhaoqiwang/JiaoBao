@@ -529,7 +529,7 @@
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    if (self.mInt_index == 0 ) {
+    if (self.mInt_index == 0) {
         return 66;
     }else if (self.mInt_index == 1){
         return 44;
@@ -550,6 +550,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (self.mInt_index ==0) {//当前作业查询
         StuHWModel *model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
+            DetailHWViewController *detail;
+            detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
+            detail.TabID = model.TabID;
+            detail.isSubmit = [model.isHWFinish integerValue];
+            detail.hwName = model.homeworkName;
+        detail.FlagStr = @"2";
+            [self.navigationController pushViewController:detail animated:YES];
     }else if (self.mInt_index == 2){
         TreeJob_node *node = [self.mArr_disScore objectAtIndex:indexPath.row];
         LevelModel *model = node.nodeData;

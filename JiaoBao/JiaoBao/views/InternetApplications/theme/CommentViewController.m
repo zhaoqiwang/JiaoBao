@@ -587,7 +587,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.view endEditing:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",nil];
+    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",@"赞",nil];
     action.tag = indexPath.row;
     [action showInView:self.view];
 //    [self.mView_text setHidden:NO];
@@ -607,6 +607,11 @@
             alert.tag = actionSheet.tag;
 
         }
+//    else if(buttonIndex == 2)
+//    {
+//        commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
+//        [[KnowledgeHttp getInstance]SetYesNoWithAId:model.TabID yesNoFlag:@"1"];
+//    }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

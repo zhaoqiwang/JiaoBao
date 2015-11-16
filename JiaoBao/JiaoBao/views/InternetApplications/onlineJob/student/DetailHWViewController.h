@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextBtn;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property(nonatomic,assign)BOOL isSubmit;
+@property(nonatomic,strong)NSString *FlagStr;//区分跳转到那个界面 1是学生 2是家长
 
 - (IBAction)previousBtnAction:(id)sender;
 - (IBAction)nextBtnAction:(id)sender;
