@@ -723,7 +723,7 @@
             StuHWModel *model = [self.mArr_practice objectAtIndex:indexPath.row];
             
             DetailHWViewController *detail;
-            if([model.isHWFinish integerValue] == 1)
+            if([model.isHWFinish integerValue] == 0)
             {
                 detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWViewController" bundle:nil];
                 
