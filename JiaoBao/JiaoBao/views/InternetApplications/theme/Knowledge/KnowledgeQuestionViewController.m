@@ -26,9 +26,20 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer
 
+{
+    self.mView_input.hidden = YES;
+    [self.view endEditing:YES];
+    
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
+    singleTap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:singleTap];
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     // Do any additional setup after loading the view from its nib.
     //获取邀请人

@@ -713,6 +713,7 @@
         {
             detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
         }
+        detail.FlagStr = @"1";
         detail.TabID = model.TabID;
         detail.isSubmit = [model.isHWFinish integerValue];
         detail.hwName = model.homeworkName;
@@ -732,6 +733,7 @@
                 detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
             }            detail.TabID = model.TabID;
             detail.hwName = model.homeworkName;
+            detail.FlagStr = @"1";
             [self.navigationController pushViewController:detail animated:YES];
         }else{
             TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];

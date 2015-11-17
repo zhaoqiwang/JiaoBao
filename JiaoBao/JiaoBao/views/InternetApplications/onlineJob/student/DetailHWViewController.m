@@ -194,6 +194,8 @@
     {
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
+//        self.webView.userInteractionEnabled = NO;
+//        self.webView.scrollView.scrollEnabled = YES;
     }
     //self.webView.scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag; // 当拖动时移除键盘
     self.qNum.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -237,20 +239,64 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
     {
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
         NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
         for(int i=0;i<inputCount;i++)
         {
+            if(self.isSubmit == YES)
+            {
+                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+            }
 
+            else
+            {
+
+            }
             NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *valueStr = [self.webView stringByEvaluatingJavaScriptFromString:value];
 
             if([valueStr isEqualToString:self.stuHWQsModel.QsAns])
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].checked = true",i];
-                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                if([self.FlagStr isEqualToString:@"1"])
+                {
+                    if(self.isSubmit == YES)
+                    {
+                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+
+                    }
+                    
+                    else
+                    {
+                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+
+                    }
+                }
+                else
+                {
+                    if(self.isSubmit == YES)
+                    {
+                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+
+
+                    }
+                    
+                    else
+                    {
+                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                    }
+
+
+                }
             }
         
     }
@@ -269,13 +315,63 @@
         NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
         for(int i=1;i<inputCount;i++)
         {
+
             NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
             NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
             if([typeStr isEqualToString:@"text"])
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i-1]];
                 NSLog(@"checkStr = %@",checkStr);
-                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                if([self.FlagStr isEqualToString:@"1"])
+                {
+                    if(self.isSubmit == YES)
+                    {
+                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+
+                    }
+                    
+                    else
+                    {
+                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                        
+                    }
+                }
+                else
+                {
+                    if(self.isSubmit == YES)
+                    {
+                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                        
+                        
+                    }
+                    
+                    else
+                    {
+                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                    }
+                    
+                    
+                }
+
+//                if([self.FlagStr isEqualToString:@"1"])
+//                {
+//                    if(self.isSubmit == YES)
+//                    {
+//                        NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+//                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+//                    }
+//                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+//                }
+//                else
+//                {
+//                    NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+//                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+//                }
             }
 
             

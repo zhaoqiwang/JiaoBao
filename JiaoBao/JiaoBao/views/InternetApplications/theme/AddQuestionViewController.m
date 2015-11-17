@@ -958,6 +958,7 @@
         
         
     }];
+    self.knContentTF.hidden = YES;
     // [self.mProgressV hide:YES];
 }
 
