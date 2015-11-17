@@ -30,6 +30,10 @@
 //获取单位头像
 #define UnitIDImg [NSURL URLWithString:[NSString stringWithFormat:@"%@/ClientSrv/getUnitlogo?UnitID=",[dm getInstance].url]]
 
+//没有加入单位时，对求知的提示
+#define JoinUnit if ([dm getInstance].joinUnit==0) {[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
+#define JoinUnitTextV if ([dm getInstance].joinUnit==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
+
 @interface define_constant : NSObject
 
 @end

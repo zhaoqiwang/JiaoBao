@@ -345,6 +345,8 @@
 -(IBAction)mBtn_photo:(id)sender{
     [self.mTextV_content resignFirstResponder];
     [self.mTextV_answer resignFirstResponder];
+    //先判断是否加入单位，没有，则不能进行交互
+    JoinUnit
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -366,6 +368,8 @@
 
 //提交答案
 -(void)submitAnswer:(int)flag{
+    //先判断是否加入单位，没有，则不能进行交互
+    JoinUnit
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -440,13 +444,22 @@
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
-    if (range.location>100){
-        return  NO;
-    }else{
-        return YES;
+    if (textView.tag == 1) {//标题
+        if (range.location>100){
+            return  NO;
+        }else{
+            return YES;
+        }
     }
+    
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
+}
+
+//点击开始编辑：
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    //先判断是否加入单位，没有，则不能进行交互
+    JoinUnitTextV
 }
 
 //在这个地方计算输入的字数

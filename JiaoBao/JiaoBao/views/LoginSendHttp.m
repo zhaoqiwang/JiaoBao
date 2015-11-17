@@ -975,6 +975,8 @@ static LoginSendHttp *loginSendHttp = nil;
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("tag-=login== 2=== %@",str000);
+        //将自己是否加入单位参数清空
+        [dm getInstance].joinUnit=0;
         //解析成model数组
         NSMutableArray *array = [ParserJson parserJsonwith:str000];
         //将得到的个人信息，通知界面

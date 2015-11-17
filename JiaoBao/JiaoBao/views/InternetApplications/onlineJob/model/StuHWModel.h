@@ -15,7 +15,7 @@
 @property(nonatomic,strong)NSString *itemNumber;//试题数量
 
 @property(nonatomic,strong)NSString *TabIDStr;
-@property(nonatomic,strong)NSString *HWStartTime;//判断是否开始作业
+@property(nonatomic,strong)NSString *HWStartTime;//判断是否开始作业"HWStartTime":"1970-01-01T00:00:00"，等于此值，就是没开始做题
 @property(nonatomic,strong)NSString *HWID;//主表ID
 @property(nonatomic,strong)NSString *studentLevel;
 @property(nonatomic,strong)NSString *jiaobaohao;
