@@ -583,7 +583,6 @@
 
 - (IBAction)previousBtnAction:(id)sender {
     UIButton *btn = (UIButton*)sender;
-
     if(self.selectedBtnTag == 0)
     {
         btn.enabled = NO;
