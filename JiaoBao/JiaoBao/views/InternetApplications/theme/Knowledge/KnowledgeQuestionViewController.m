@@ -330,6 +330,9 @@
         }else{
             [self.mArr_answers addObjectsFromArray:array];
         }
+        if (self.mArr_answers.count==0&&array.count==0) {
+            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+        }
     }
     [self.mTableV_answers reloadData];
 }
@@ -796,7 +799,10 @@
 
 //详情按钮
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    [self gotoAddAnswerVC];
+    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+    detail.mModel_question = self.mModel_question;
+    detail.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
+    [utils pushViewController:detail animated:YES];
 }
 
 //跳转到回答问题界面
@@ -857,6 +863,8 @@
 
 //ButtonView回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
+    //先判断是否加入单位，没有，则不能进行交互
+    JoinUnit
     D("view.tag-=====%ld",(long)view.tag);
 //    view.mLab_title.text = @"取消关注";
     if (view.tag ==100) {

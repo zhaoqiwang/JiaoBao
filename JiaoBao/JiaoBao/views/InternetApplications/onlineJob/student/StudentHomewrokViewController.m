@@ -574,6 +574,11 @@
             cell.mLab_score.hidden = YES;
             cell.mLab_scoreLab.hidden = YES;
             cell.mLab_goto.frame = CGRectMake([dm getInstance].width-9-cell.mLab_goto.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_goto.frame.size.width, cell.mLab_goto.frame.size.height);
+            if ([model.HWStartTime isEqual:@"1970-01-01T00:00:00"]) {
+                cell.mLab_goto.text = @"开始作业";
+            }else{
+                cell.mLab_goto.text = @"继续作业";
+            }
         }
         //分割线
         cell.mLab_line.frame = CGRectMake(0, cell.mLab_numLab.frame.origin.y+cell.mLab_numLab.frame.size.height+5, [dm getInstance].width, cell.mLab_line.frame.size.height);

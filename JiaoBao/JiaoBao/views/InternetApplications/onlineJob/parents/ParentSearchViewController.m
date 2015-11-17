@@ -93,6 +93,10 @@
     //
     self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-self.mLab_select.frame.size.height-10-self.mScrollV_all.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
+    self.mTableV_list.headerReleaseToRefreshText = @"松开后刷新";
+    self.mTableV_list.headerRefreshingText = @"正在刷新...";
 //    self.mTableV_list.tableHeaderView = self.mView_head;
     //根据角色信息，获取学生id信息
     for (int i=0; i<[dm getInstance].identity.count; i++) {
@@ -111,6 +115,8 @@
 //获取某学生学力值
 -(void)GetStuEduLevel:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
@@ -198,6 +204,8 @@
 //获取到学生id
 -(void)getGenInfoWithAccID:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
@@ -255,6 +263,8 @@
 //获取某学生各科作业完成情况
 -(void)GetCompleteStatusHW:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
@@ -270,6 +280,8 @@
 //学生获取当前作业列表
 -(void)GetStuHWList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
@@ -335,6 +347,18 @@
         }
     }
     [self.mTableV_list reloadData];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    if (self.mInt_index==0) {//获取作业列表
+        [self.mArr_nowHomework removeAllObjects];
+    }else if (self.mInt_index ==1){//获取练习列表
+        [self.mArr_overHomework removeAllObjects];
+    }else{
+        [self.mArr_score removeAllObjects];
+    }
+    [self sendRequst];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{

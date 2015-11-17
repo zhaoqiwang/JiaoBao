@@ -31,6 +31,8 @@
         identityModel.UserUnits = [NSMutableArray arrayWithArray:arrUserUnits];
         identityModel.UserClasses = [NSMutableArray arrayWithArray:arrUserClasses];
         identityModel.DefaultUnitId = [result objectForKey:@"DefaultUnitId"];
+        //是否加入单位参数
+        [dm getInstance].joinUnit = [dm getInstance].joinUnit+(int)arrUserClasses.count+(int)arrUserUnits.count;
         [array addObject:identityModel];
     }
     return array;

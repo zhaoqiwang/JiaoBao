@@ -72,6 +72,9 @@
         }else{
             [self.mArr_list addObjectsFromArray:array];
         }
+        if (self.mArr_list.count==0&&array.count==0) {
+            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+        }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
