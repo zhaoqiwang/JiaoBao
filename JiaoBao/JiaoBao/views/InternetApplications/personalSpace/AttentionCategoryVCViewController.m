@@ -73,6 +73,7 @@
         else
         {
             [[KnowledgeHttp getInstance]GetCategoryById:[self.categoryArr objectAtIndex:i]];
+            [MBProgressHUD showMessage:@"" toView:self.view];
 
         }
 

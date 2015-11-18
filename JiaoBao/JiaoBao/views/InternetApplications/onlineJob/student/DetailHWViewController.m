@@ -134,7 +134,6 @@
     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:0]];
     [MBProgressHUD showMessage:@"" toView:self.view];
 
-
 }
 -(void)GetStuHWQsWithHwInfoId:(id)sender
 {
@@ -183,6 +182,7 @@
 
 }
 - (void)willPresentAlertView:(UIAlertView *)alertView {
+    
     UIView *myView = [[UIView alloc] init];
     myView.backgroundColor = [UIColor redColor];
     [alertView addSubview:myView];
@@ -518,7 +518,6 @@
                 
                 else
                 {
-
                     [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
 
                 }
@@ -534,9 +533,6 @@
     NSLog(@"huoqu = %@ %@",self.stuHomeWorkModel.hwinfoid,[self.datasource objectAtIndex:indexPath.row]);
     [MBProgressHUD showMessage:@"" toView:self.view];
     self.selectedBtnTag = indexPath.row;
-    
-
-
     cell.selected = YES;
  
 }
