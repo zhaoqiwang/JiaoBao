@@ -1037,7 +1037,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         D("JSON--------AddMyattCateWithuid: %@,", result);
         if([code integerValue]==0)
         {
-            [MBProgressHUD showSuccess:@"关注话题成功"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"AddMyattCateWithuid" object:nil];
+            //[MBProgressHUD showSuccess:@"关注话题成功"];
 
         }
         else
