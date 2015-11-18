@@ -25,7 +25,7 @@
 @implementation AttentionCategoryVCViewController
 -(void)GetCategoryById:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.view];
     NSNotification *note = sender;
     
     NSString *code = [note.object objectForKey:@"ResultCode"];
@@ -64,6 +64,8 @@
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetCategoryById" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetCategoryById:) name:@"GetCategoryById" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AddMyattCateWithuid" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddMyattCateWithuid:) name:@"AddMyattCateWithuid" object:nil];
     for(int i=0;i<self.categoryArr.count;i++)
     {
         if([[self.categoryArr objectAtIndex:i] isEqualToString:@""])
@@ -73,6 +75,11 @@
         else
         {
             [[KnowledgeHttp getInstance]GetCategoryById:[self.categoryArr objectAtIndex:i]];
+            if(i==0)
+            {
+                [MBProgressHUD showMessage:@"" toView:self.view];
+
+            }
 
         }
 
@@ -108,7 +115,7 @@
 
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 74 ;
+    return 43 ;
     
 }
 
@@ -134,10 +141,56 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否取消关注" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+    alert.delegate = self;
+    alert.tag = indexPath.row;
+
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+        [self.datasource removeObjectAtIndex:alertView.tag];
+        for(int i =0;i<self.datasource.count;i++)
+        {
+            CategoryModel *model = [self.datasource objectAtIndex:i];
+            [mArr addObject:model.TabID];
+            
+        }
+        NSString *tabIdsStr = [mArr componentsJoinedByString:@","];
+        [[KnowledgeHttp getInstance]AddMyattCateWithuid:tabIdsStr];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        [self.tableView reloadData];
+        
+    }
+}
+
+-(void)AddMyattCateWithuid:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+    NSNotification *note = sender;
     
-    
+    NSString *code = [note.object objectForKey:@"ResultCode"];
+    if([code integerValue]==0)
+    {
+        [MBProgressHUD showSuccess:@"取消话题成功" toView:self.view];
+        
+    }
+    else
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSString *ResultDesc = [note.object objectForKey:@"ResultDesc"];
+        
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+        
+    }
     
 }
+
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];

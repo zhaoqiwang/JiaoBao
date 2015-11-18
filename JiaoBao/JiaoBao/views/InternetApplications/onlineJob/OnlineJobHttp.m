@@ -269,7 +269,11 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------GetStuHWQsWithHwInfoId: %@,", result);
+        NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
+        NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
+
+        
+        D("JSON--------GetStuHWQsWithHwInfoId: %@,", str2);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

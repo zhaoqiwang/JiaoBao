@@ -28,6 +28,10 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
+-(void)AddMyattCateWithuid:(id)sender
+{
+    [MBProgressHUD showSuccess:@"关注话题成功"];
+}
 -(void)GetMyattCate:(id)sender
 {
     NSNotification *note = sender;
@@ -111,6 +115,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AddMyattCateWithuid" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddMyattCateWithuid:) name:@"AddMyattCateWithuid" object:nil];
 //    [[OnlineJobHttp getInstance]getStuInfoWithAccID:@"723609" UID:@"72202"];
 //    [[OnlineJobHttp getInstance]getGenInfoWithAccID:@"5236710" UID:@"72202"];
 

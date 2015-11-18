@@ -92,10 +92,14 @@
     }
     
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
+-(void)viewWillAppear:(BOOL)animated
+{
     [[KnowledgeHttp getInstance]GetMyattCate];
     [MBProgressHUD showMessage:@"" toView:self.view];
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
     //改变头像
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"changeFaceImg" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeFaceImg:) name:@"changeFaceImg" object:nil];

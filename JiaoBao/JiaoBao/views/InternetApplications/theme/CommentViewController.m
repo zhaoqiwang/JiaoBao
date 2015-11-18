@@ -75,6 +75,7 @@
 //举报 评论 反对点击方法
 -(void) ButtonViewTitleBtn:(ButtonViewCell *) view
 {
+    JoinUnit
     if(view.tag == 100)
     {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -585,6 +586,7 @@
 //    return cellHeight;
 //}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    JoinUnit
     [self.view endEditing:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",@"赞",nil];
@@ -651,6 +653,7 @@
 //点击点赞按钮
 -(void)likeAction:(id)sender
 {
+    JoinUnit;
 //    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
 //    {
 //        [MBProgressHUD showText:@"你已经评价过了"];
