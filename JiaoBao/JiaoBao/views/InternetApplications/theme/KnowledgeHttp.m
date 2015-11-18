@@ -38,6 +38,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetProvice" object:dic];
@@ -64,6 +66,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetCity" object:dic];
@@ -88,11 +92,13 @@ static KnowledgeHttp *knowledgeHttp = nil;
     //NSDictionary *parameters = @{@"cityCode": cityCode,@"level": level};
     [manager POST:urlString parameters:nickNames success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-                NSMutableDictionary *jsonDic = [result objectFromJSONString];
-                NSString *code = [jsonDic objectForKey:@"ResultCode"];
-                NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSArray *array = [ParserJson_knowledge parserJsonGetJiaoBaoHao:[jsonDic objectForKey:@"Data"]];
-                //NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
+        //NSArray *array = [ParserJson_knowledge parserJsonGetProvice:[jsonDic objectForKey:@"Data"]];
         NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic1];
         D("JSON--------GetAccIdbyNickname: %@,", result);
@@ -114,6 +120,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         UserInformationModel *model = [ParserJson_knowledge parserJsonGetUserInfo:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetUserInfo: %@,", result);
@@ -134,6 +142,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------SetIdflagWithAccId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -154,6 +164,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetCategory:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetCategoryWithParentId: %@,", result);
@@ -175,6 +187,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         CategoryModel *model = [ParserJson_knowledge parserJsonGetCategoryById:[jsonDic objectForKey:@"Data"]];
         NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
@@ -200,6 +214,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetAllCategory:[jsonDic objectForKey:@"Data"]];
         
@@ -230,6 +246,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
 
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *Data = [jsonDic objectForKey:@"Data"];
         NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":Data};
@@ -279,6 +297,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonQuestionIndex:[jsonDic objectForKey:@"Data"]];
         
@@ -302,6 +322,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         QuestionDetailModel *model = [ParserJson_knowledge parserJsonQuestionDetail:[jsonDic objectForKey:@"Data"]];
         
@@ -331,6 +353,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
         D("JSON--------AddAnswerWithQId: %@,", result);
@@ -358,6 +382,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
         D("JSON--------UpdateAnswerWithTabID: %@,", result);
@@ -385,6 +411,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetAnswerById:[jsonDic objectForKey:@"Data"]];
         
@@ -414,6 +442,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
 //        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         if([code  integerValue] == 0)
         {
@@ -445,6 +475,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *dataStr = [jsonDic objectForKey:@"Data"];
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":dataStr};
@@ -473,6 +505,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
@@ -498,6 +532,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
 
         AllCommentListModel *model = [ParserJson_knowledge parserJsonCommentsList:[jsonDic objectForKey:@"Data"]];
@@ -527,6 +563,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         AnswerDetailModel *model = [ParserJson_knowledge parserJsonAnswerDetail:[jsonDic objectForKey:@"Data"]];
         NSDictionary *resultDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
@@ -560,6 +598,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
@@ -591,9 +631,11 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
-        
+//        JSON--------CategoryIndexQuestionWith: {"ResultCode":8,"ResultDesc":"请先进行握手通讯!","Data":""},
         D("JSON--------CategoryIndexQuestionWith: %@,", result);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
@@ -621,6 +663,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonRecommentIndex:[jsonDic objectForKey:@"Data"]];
         
@@ -650,6 +694,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         RecommentAddAnswerModel *model = [ParserJson_knowledge parserJsonShowRecomment:[jsonDic objectForKey:@"Data"]];
         
@@ -679,6 +725,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
@@ -708,6 +756,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         GetPickedByIdModel *model = [ParserJson_knowledge parserJsonGetPickedById:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetPickedById: %@,", result);
@@ -744,6 +794,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         ShowPickedModel *model = [ParserJson_knowledge parserJsonShowPicked:[jsonDic objectForKey:@"Data"]];
         
@@ -773,6 +825,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonPickedIndex:[jsonDic objectForKey:@"Data"]];
         
@@ -803,6 +857,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------AddMyAttQWithqId: %@,", result);
         [tempDic setValue:code forKey:@"ResultCode"];
@@ -829,6 +885,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------RemoveMyAttQWithqId: %@,", result);
         [tempDic setValue:code forKey:@"ResultCode"];
@@ -856,6 +914,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------AtMeForAnswerWithAccId: %@,", result);
         [tempDic setValue:code forKey:@"ResultCode"];
@@ -882,6 +942,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
@@ -911,6 +973,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
@@ -940,6 +1004,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
@@ -969,6 +1035,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonCategoryIndexQuestion:[jsonDic objectForKey:@"Data"]];
         
@@ -999,6 +1067,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *Data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [Data stringByReplacingOccurrencesOfString:@"[" withString:@""];
@@ -1033,6 +1103,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------AddMyattCateWithuid: %@,", result);
         if([code integerValue]==0)
@@ -1067,6 +1139,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonInvitationUserInfo:[jsonDic objectForKey:@"Data"]];
         NSDictionary *tempDic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
@@ -1094,6 +1168,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         //        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         if([code  integerValue] == 0)
         {
