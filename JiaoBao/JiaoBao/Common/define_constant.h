@@ -34,6 +34,9 @@
 #define JoinUnit if ([dm getInstance].joinUnit==0) {[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
 #define JoinUnitTextV if ([dm getInstance].joinUnit==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
 
+//握手通讯失败后，进行登录操作
+#define Login if ([code intValue] == 8) {[[LoginSendHttp getInstance] hands_login];return;}
+
 @interface define_constant : NSObject
 
 @end
