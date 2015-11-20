@@ -798,8 +798,9 @@ static KnowledgeHttp *knowledgeHttp = nil;
         Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         ShowPickedModel *model = [ParserJson_knowledge parserJsonShowPicked:[jsonDic objectForKey:@"Data"]];
-        
-        D("JSON--------ShowPicked: %@,", result);
+        NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
+        NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
+        D("JSON--------ShowPicked: %@,", str2);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];

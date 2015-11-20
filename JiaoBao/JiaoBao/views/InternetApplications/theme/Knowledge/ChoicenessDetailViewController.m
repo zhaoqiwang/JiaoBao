@@ -157,11 +157,13 @@
     //cell.mWebV_comment.scrollView.bounces = NO;
     cell.mWebV_comment.scrollView.showsHorizontalScrollIndicator = NO;
     cell.mWebV_comment.scrollView.showsVerticalScrollIndicator = NO;
-        NSString *content = cell.ShowPickedModel.PContent;
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,[dm getInstance].width,content];
+        NSMutableString *content = [cell.ShowPickedModel.PContent mutableCopy];
+    
+//    [content insertString:[NSString stringWithFormat:@"<p><img src = 'ask@2x.png' width = 20 height = 20><span style=\"background-color:#2589D1 border:1px solid: #000\">问</span>%@</p><span>",cell.ShowPickedModel.Title] atIndex:12];
+        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
+        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
+        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""]mutableCopy];
+        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width-10,[dm getInstance].width,[dm getInstance].width,content];
         [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         //[MBProgressHUD showMessage:@"" toView:self.view];
 
@@ -176,6 +178,7 @@
 
 -(void)webViewLoadFinish:(float)height Width:(float)width{
     self.KnowledgeTableViewCell.mWebV_comment.backgroundColor = [UIColor clearColor];
+    self.scrollview.bounces = NO;
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f)
     {
         self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
@@ -183,21 +186,25 @@
         
         self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
         self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+
     }
     else
     {
         if(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width>[dm getInstance].width)
         {
-            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
-            self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width+20, height);
             
-            self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width+20, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
-            self.scrollview.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+            self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+            
+            self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
+            self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+            self.KnowledgeTableViewCell.mWebV_comment.scrollView.scrollEnabled = YES;
+            self.scrollview.scrollEnabled = NO;
         }
         else
         {
             self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
-            self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, width, height);
+            self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, [dm getInstance].width, height);
             
             self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
             self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
@@ -233,6 +240,7 @@
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
+
     [self webViewLoadFinish:webViewHeight+20 Width:webViewWidth+16];
 }
 

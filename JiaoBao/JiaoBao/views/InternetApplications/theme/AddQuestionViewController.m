@@ -598,7 +598,7 @@
         [MBProgressHUD showError:@"请选择分类"];
         return;
     }
-    NSString *b = [self.mText_title.text substringFromIndex:self.mText_title.text.length-1];
+//    NSString *b = [self.mText_title.text substringFromIndex:self.mText_title.text.length-1];
 //    if([b isEqualToString:@"?"]||[b isEqualToString:@"？"])
 //    {
 //        
@@ -873,6 +873,8 @@
     }
     
     self.mInt_index ++;
+    self.knContentTF.hidden = YES;
+
     //[self.mProgressV hide:YES];
 }
 
