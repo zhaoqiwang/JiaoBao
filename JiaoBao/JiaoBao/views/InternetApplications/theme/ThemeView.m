@@ -203,6 +203,14 @@
     }else if ([model.flag intValue]==1&&model.mArr_evidence.count==0){
         self.mInt_reloadData = 0;
         [self sendRequest];
+    }else{
+        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+        model.item_now = model.item;
+        [model.mArr_discuss removeAllObjects];
+        [model.mArr_evidence removeAllObjects];
+        [model.mArr_all removeAllObjects];
+        [model.mArr_top removeAllObjects];
+        [self sendRequest];
     }
     [self.mTableV_knowledge reloadData];
 }
@@ -372,11 +380,11 @@
                 AllCategoryModel *model = [array objectAtIndex:i];
                 model.flag = @"-1";
                 //给一个默认的话题，暂时为二级话题中的第一个
-                if (model.mArr_subItem.count>0) {
-                    model.item_now = [model.mArr_subItem objectAtIndex:0];
-                }else{
+//                if (model.mArr_subItem.count>0) {
+//                    model.item_now = [model.mArr_subItem objectAtIndex:0];
+//                }else{
                     model.item_now = model.item;
-                }
+//                }
                 
                 [self.mArr_AllCategory addObject:model];
             }
@@ -1101,22 +1109,7 @@
         if (model.mInt_btn==1||model.mInt_btn==2) {//三个按钮,话题显示行
             return 44;
         }else{//正常显示内容
-            static NSString *indentifier = @"KnowledgeTableViewCell";
-            KnowledgeTableViewCell *cell = (KnowledgeTableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-            if (cell == nil) {
-                cell = [[KnowledgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"KnowledgeTableViewCell" owner:self options:nil];
-                //这时myCell对象已经通过自定义xib文件生成了
-                if ([nib count]>0) {
-                    cell = (KnowledgeTableViewCell *)[nib objectAtIndex:0];
-                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
-                }
-                //添加图片点击事件
-                //若是需要重用，需要写上以下两句代码
-                UINib * n= [UINib nibWithNibName:@"KnowledgeTableViewCell" bundle:[NSBundle mainBundle]];
-                [self.mTableV_knowledge registerNib:n forCellReuseIdentifier:indentifier];
-            }
-            return [self cellHeight:indexPath cell:cell];
+            return [self cellHeight:indexPath];
         }
     }
     
@@ -1163,7 +1156,7 @@
     
 }
 
--(float)cellHeight:(NSIndexPath *)indexPath cell:(KnowledgeTableViewCell *)cell{
+-(float)cellHeight:(NSIndexPath *)indexPath{
     float tempF = 0.0;
     NSMutableArray *array = [self arrayDataSourceSum];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
@@ -1197,9 +1190,12 @@
                 
                 NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
                 [row2 setObject:name2 forKey:@"text"];
+                RCLabel *tempLab = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 16)];
+                tempLab.lineBreakMode = NSLineBreakByWordWrapping;
+                tempLab.font = [UIFont systemFontOfSize:14];
                 RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-                cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
-                CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
+                tempLab.componentsAndPlainText = componentsDS2;
+                CGSize optimalSize2 = [tempLab optimumSize];
                 optimalSize2 = CGSizeMake(optimalSize2.width, 35);
 //                if (optimalSize2.height==23) {
 //                    optimalSize2 = CGSizeMake(optimalSize2.width, 148);

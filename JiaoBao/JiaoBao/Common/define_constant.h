@@ -33,6 +33,9 @@
 //没有加入单位时，对求知的提示
 #define JoinUnit if ([dm getInstance].joinUnit==0) {[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
 #define JoinUnitTextV if ([dm getInstance].joinUnit==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
+//没有昵称，不能对求知进行输入性操作
+#define NoNickName if ([dm getInstance].NickName1.length==0) {[MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];return;}
+#define NoNickNameTextV if ([dm getInstance].NickName1.length==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"请去个人中心设置昵称" toView:self.view];return;}
 
 //握手通讯失败后，进行登录操作
 #define Login if ([code intValue] == 8) {[[LoginSendHttp getInstance] hands_login];return;}

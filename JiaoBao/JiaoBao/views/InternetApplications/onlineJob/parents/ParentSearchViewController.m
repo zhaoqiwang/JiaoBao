@@ -403,23 +403,36 @@
         cell.mLab_title.text = model.homeworkName;
         cell.mLab_title.textColor = [UIColor colorWithRed:37/255.0 green:137/255.0 blue:209/255.0 alpha:1];
         cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 10, [dm getInstance].width-cell.mImg_pic.frame.origin.x-cell.mImg_pic.frame.size.width-10, cell.mLab_title.frame.size.height);
+//        //题量
+//        cell.mLab_numLab.text = @"选/填/总: ";
+//        CGSize numSize0 = [cell.mLab_numLab.text sizeWithFont:[UIFont systemFontOfSize:10]];
+//        cell.mLab_numLab.frame = CGRectMake(8, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, numSize0.width, cell.mLab_numLab.frame.size.height);
+//        cell.mLab_numLab.hidden = NO;
+//        NSString *num0 = model.distribution;//选择题、填空题分布---1:10,2:10
+//        num0 = [num0 stringByReplacingOccurrencesOfString:@"1:" withString:@""];
+//        num0 = [num0 stringByReplacingOccurrencesOfString:@",2:" withString:@"/"];
+//        num0 = [NSString stringWithFormat:@"%@/%@",num0,model.itemNumber];
+//        cell.mLab_num.text = num0;
+//        CGSize numSize = [num0 sizeWithFont:[UIFont systemFontOfSize:10]];
+//        cell.mLab_num.frame = CGRectMake(cell.mLab_numLab.frame.origin.x+cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.origin.y, numSize.width, cell.mLab_num.frame.size.height);
+//        cell.mLab_num.hidden = NO;
+//        //过期时间
+//        cell.mLab_timeLab.hidden = YES;
+//        cell.mLab_time.hidden = YES;
         //题量
-        cell.mLab_numLab.text = @"选/填/总: ";
-        CGSize numSize0 = [cell.mLab_numLab.text sizeWithFont:[UIFont systemFontOfSize:10]];
-        cell.mLab_numLab.frame = CGRectMake(8, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, numSize0.width, cell.mLab_numLab.frame.size.height);
-        cell.mLab_numLab.hidden = NO;
-        
-        NSString *num0 = model.distribution;//选择题、填空题分布---1:10,2:10
-        num0 = [num0 stringByReplacingOccurrencesOfString:@"1:" withString:@""];
-        num0 = [num0 stringByReplacingOccurrencesOfString:@",2:" withString:@"/"];
-        num0 = [NSString stringWithFormat:@"%@/%@",num0,model.itemNumber];
-        cell.mLab_num.text = num0;
-        CGSize numSize = [num0 sizeWithFont:[UIFont systemFontOfSize:10]];
+        cell.mLab_numLab.frame = CGRectMake(8, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.size.height);
+        cell.mLab_num.text = model.itemNumber;
+        CGSize numSize = [model.itemNumber sizeWithFont:[UIFont systemFontOfSize:10]];
         cell.mLab_num.frame = CGRectMake(cell.mLab_numLab.frame.origin.x+cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.origin.y, numSize.width, cell.mLab_num.frame.size.height);
+        cell.mLab_numLab.hidden = NO;
         cell.mLab_num.hidden = NO;
         //过期时间
-        cell.mLab_timeLab.hidden = YES;
-        cell.mLab_time.hidden = YES;
+        cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+6, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
+        cell.mLab_time.text = model.EXPIRYDATE;
+        CGSize timeSize = [model.EXPIRYDATE sizeWithFont:[UIFont systemFontOfSize:10]];
+        cell.mLab_time.frame  = CGRectMake(cell.mLab_timeLab.frame.origin.x+cell.mLab_timeLab.frame.size.width, cell.mLab_numLab.frame.origin.y, timeSize.width, cell.mLab_time.frame.size.height);
+        cell.mLab_timeLab.hidden = NO;
+        cell.mLab_time.hidden = NO;
         //判断是否做完
         if ([model.isHWFinish intValue]==1) {//完成
             cell.mLab_goto.hidden = YES;

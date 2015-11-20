@@ -347,6 +347,8 @@
     [self.mTextV_answer resignFirstResponder];
     //先判断是否加入单位，没有，则不能进行交互
     JoinUnit
+    //没有昵称，不能对求知进行输入性操作
+    NoNickName
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -370,6 +372,8 @@
 -(void)submitAnswer:(int)flag{
     //先判断是否加入单位，没有，则不能进行交互
     JoinUnit
+    //没有昵称，不能对求知进行输入性操作
+    NoNickName
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
@@ -383,10 +387,7 @@
         [MBProgressHUD showError:@"答案标题超出限制" toView:self.view];
         return;
     }
-    if ([dm getInstance].NickName1.length==0) {
-        [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
-        return;
-    }
+    
     //计算除去图片后的汉字,计算内容中图片的大小
     NSString *tempcontent = self.mTextV_content.text;
     float tempF = 0;
@@ -424,7 +425,7 @@
         NSString *temp = model.originalName;
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
     }
-    content = [NSString stringWithFormat:@"<p>%@</p>",content];
+//    content = [NSString stringWithFormat:@"<p>%@</p>",content];
     //如果已经回答过
     if ([self.mStr_MyAnswerId intValue]>0) {
         [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
@@ -460,6 +461,8 @@
 -(void)textViewDidBeginEditing:(UITextView *)textView{
     //先判断是否加入单位，没有，则不能进行交互
     JoinUnitTextV
+    //没有昵称，不能交互
+    NoNickNameTextV
 }
 
 //在这个地方计算输入的字数

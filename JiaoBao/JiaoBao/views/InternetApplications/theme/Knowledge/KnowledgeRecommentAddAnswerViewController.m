@@ -354,8 +354,9 @@
 //    cell.mWebV_comment.scalesPageToFit = YES;
     [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y+2+21, [dm getInstance].width-75, model.floatH);
-    D("dfjgkl;dfjls;'-====%f,%lu",model.floatH,(unsigned long)model.Abstracts.length);
+    
     if (model.floatH==0&&model.Abstracts.length>0) {
+        D("dfjgkl;dfjls;'-====%f,%lu,%@,%ld",model.floatH,(unsigned long)model.Abstracts.length,model.ATitle,(long)cell.mWebV_comment.tag);
         cell.mWebV_comment.delegate = self;
     }
     NSString *content = model.Abstracts;

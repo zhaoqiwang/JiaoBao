@@ -1644,7 +1644,7 @@
         return ;
     }
     if (self.publishJobModel.homeworkName.length<6||self.publishJobModel.homeworkName.length>49) {
-        [MBProgressHUD showError:@"作业名称要大于5个汉字并且小于50个汉字"];
+        [MBProgressHUD showError:@"作业名称要求5到50个汉字"];
         return ;
     }
 
