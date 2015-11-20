@@ -868,8 +868,12 @@
     D("view.tag-=====%ld",(long)view.tag);
 //    view.mLab_title.text = @"取消关注";
     if (view.tag ==100) {
+        //没有昵称，不能对求知进行输入性操作
+        NoNickName
         [self gotoAddAnswerVC];
     }else if (view.tag == 101){//邀请回答
+        //没有昵称，不能对求知进行输入性操作
+        NoNickName
         self.mView_input.hidden = NO;
         [self.mView_input.mTextF_input becomeFirstResponder];
     }else if (view.tag == 102){//关注问题
