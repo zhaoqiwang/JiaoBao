@@ -271,7 +271,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
         NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
-
         
         D("JSON--------GetStuHWQsWithHwInfoId: %@,", str2);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];

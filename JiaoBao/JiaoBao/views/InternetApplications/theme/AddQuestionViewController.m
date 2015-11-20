@@ -598,16 +598,6 @@
         [MBProgressHUD showError:@"请选择分类"];
         return;
     }
-//    NSString *b = [self.mText_title.text substringFromIndex:self.mText_title.text.length-1];
-//    if([b isEqualToString:@"?"]||[b isEqualToString:@"？"])
-//    {
-//        
-//    }
-//    else
-//    {
-//        self.mText_title.text = [NSString stringWithFormat:@"%@？",self.mText_title.text];
-//
-//    }
 
     if(self.proviceModel == nil)
     {
