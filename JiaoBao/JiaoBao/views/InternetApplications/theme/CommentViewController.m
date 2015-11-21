@@ -86,6 +86,8 @@
     }
     if(view.tag == 101)
     {
+        NoNickName
+
         self.cellmodel.TabID = @"";
         self.mInt_reloadData = 0;
         [self.mView_text setHidden:NO];
@@ -599,6 +601,8 @@
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
         if (buttonIndex == 0){
+            NoNickName
+
             [self.mView_text setHidden:NO];
             [self.mTextF_text becomeFirstResponder];
 
@@ -654,6 +658,7 @@
 -(void)likeAction:(id)sender
 {
     JoinUnit;
+    NoNickName
 //    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
 //    {
 //        [MBProgressHUD showText:@"你已经评价过了"];

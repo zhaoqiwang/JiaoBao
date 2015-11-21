@@ -12,7 +12,7 @@
 #include<AssetsLibrary/AssetsLibrary.h>
 
 
-@interface AddQuestionViewController : UIViewController<MyNavigationDelegate,UIActionSheetDelegate,ELCAssetSelectionDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate>
+@interface AddQuestionViewController : UIViewController<MyNavigationDelegate,UIActionSheetDelegate,ELCAssetSelectionDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property (weak, nonatomic) IBOutlet UITextField *provinceTF;//省输入框
 @property (weak, nonatomic) IBOutlet UITextField *regionTF;//地区输入框

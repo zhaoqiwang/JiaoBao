@@ -433,6 +433,8 @@
 }
 //点击省份
 - (IBAction)provinceBtnAction:(id)sender {
+    JoinUnit
+    NoNickName
     self.selectedTF = self.provinceTF;
     self.dataArr = self.provinceArr;
     [self.mTableV_name reloadData];
@@ -470,6 +472,8 @@
 }
 //点击地区
 - (IBAction)regionBtnAction:(id)sender {
+    JoinUnit
+    NoNickName
     if([self.provinceTF.text isEqualToString:@""])
     {
         return;
@@ -501,6 +505,8 @@
 }
 //点击区县
 - (IBAction)countyBtnAction:(id)sender {
+    JoinUnit
+    NoNickName
     if([self.provinceTF.text isEqualToString:@""]||[self.regionTF.text isEqualToString:@""])
     {
         return;
@@ -533,13 +539,22 @@
 }
 //点击分类
 - (IBAction)categaryBtnAction:(id)sender {
+    JoinUnit
+    NoNickName
     [[KnowledgeHttp getInstance]GetAllCategory];
     [MBProgressHUD showMessage:@"" toView:self.view];
 
 
 }
-//点击拍照
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    JoinUnitTextF
+    NoNickNameTextF
+}
+
 - (IBAction)selectBtnAction:(id)sender {
+    JoinUnit
+    NoNickName
     UIButton *btn = self.selectBtn;
     if([[btn imageForState:UIControlStateNormal]isEqual:[UIImage imageNamed:@"selected"]])
     {
@@ -553,9 +568,10 @@
     }
     
 }
-
+//点击拍照
 -(IBAction)mBtn_photo:(id)sender{
-    
+    JoinUnit
+    NoNickName
     [self.mTextV_content resignFirstResponder];
     UIActionSheet *sheet;
     
@@ -573,6 +589,8 @@
 
 //点击发布问题
 - (IBAction)addQuestionAction:(id)sender {
+    JoinUnit
+    NoNickName
 
     if([utils isBlankString:self.mText_title.text])
     {
@@ -630,9 +648,16 @@
     }
 
 }
-
+//点击开始编辑：
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    //先判断是否加入单位，没有，则不能进行交互
+    JoinUnitTextV
+    //没有昵称，不能交互
+    NoNickNameTextV
+}
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+
     if([textView isEqual:self.mText_title])
     {
         if(range.location>100)
