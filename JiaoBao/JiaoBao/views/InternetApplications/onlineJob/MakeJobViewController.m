@@ -132,27 +132,27 @@
     if([result isEqualToString:@"false"])
     {
         [MBProgressHUD showError:@"此章节没有题目"];
+    }else if ([result isEqualToString:@"服务器异常"]){
+        [MBProgressHUD showError:@"服务器异常"];
     }
     else
     {
-    
-    for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
-    {
-        TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
-        self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
-        self.publishJobModel.classID = model.mStr_tableId;
-        self.publishJobModel.className = model.mStr_className;
-        if ([self.publishJobModel.HwType intValue]==3) {
-            self.publishJobModel.Distribution = @"";
-        }else if ([self.publishJobModel.HwType intValue]==0){
-            self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+        for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
+        {
+            TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
+            self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
+            self.publishJobModel.classID = model.mStr_tableId;
+            self.publishJobModel.className = model.mStr_className;
+            if ([self.publishJobModel.HwType intValue]==3) {
+                self.publishJobModel.Distribution = @"";
+            }else if ([self.publishJobModel.HwType intValue]==1){
+                self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",model.mInt_difficulty];
+            }
+            self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
+            self.publishJobModel.schoolName = model.mStr_schoolName;
+            [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
+            [MBProgressHUD showMessage:@"" toView:self.view];
         }
-        self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
-        self.publishJobModel.schoolName = model.mStr_schoolName;
-        [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
-        [MBProgressHUD showMessage:@"" toView:self.view];
-        
-    }
     }
 }
 - (void)viewDidLoad
@@ -354,6 +354,9 @@
 -(void)GetGradeList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableArray *array = noti.object;
+    if (array.count==0) {
+        [MBProgressHUD showError:@"年级列表为空"];
+    }
     for (int i=0; i<self.mArr_sumData.count; i++) {
         TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
         if (node0.flag == 2) {
@@ -1658,10 +1661,7 @@
         [MBProgressHUD showError:@"时间过期"];
         return;
     }
-    D("发布时的难度为：%@，模式:%@",self.publishJobModel.DoLv,self.publishJobModel.HwType);
     [[OnlineJobHttp getInstance]TecQswithchapterid:self.publishJobModel.chapterID];
-
-
 }
 
 -(void)TecMakeHWWithPublishJobModel:(id)sender
