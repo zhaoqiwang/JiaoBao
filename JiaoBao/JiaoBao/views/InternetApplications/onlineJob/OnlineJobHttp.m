@@ -44,7 +44,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:array];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetGradeList: %@", error);
-
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:nil];
     }];
 }
 //获取联动列表 //（年级代码）- （科目代码）- （教版联动代码）- （0： 根据年级获取科目，1：根据科目获取教版，2： 根据教版获取章节）
@@ -150,6 +150,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"AccID":AccID,@"UID":UID};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------getStuInfoWithAccID: %@,", result);
@@ -160,16 +161,16 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("JSON--------getStuInfoWithAccID111111: %@,", dataStr);
         StuInfoModel *model = [ParserJson_OnlineJob parserJsonStuInfo:dataStr];
-        //获取学生作业列表
-        if ([code intValue]==0) {
-            //将学生id传到界面
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:model];
-        }else{
-            [MBProgressHUD showError:ResultDesc];
-        }
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:model forKey:@"model"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:tempDic];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD showError:@"获取学生信息失败"];
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:tempDic];
         D("Error---------getStuInfoWithAccID: %@", error);
     }];
     
@@ -407,6 +408,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:result];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:@"服务器异常"];
         D("Error---------TecQswithchapterid: %@", error);
     }];
 }

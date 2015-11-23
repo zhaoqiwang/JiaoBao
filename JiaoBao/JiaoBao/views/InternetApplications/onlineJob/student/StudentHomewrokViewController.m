@@ -133,6 +133,8 @@
     if([result isEqualToString:@"false"]){
         [MBProgressHUD hideHUDForView:self.view];
         [MBProgressHUD showError:@"此章节没有题目"];
+    }else if ([result isEqualToString:@"服务器异常"]){
+        [MBProgressHUD showError:@"服务器异常"];
     }else{
         //发送发布练习请求
         [self sendPractice];
@@ -204,8 +206,15 @@
 //获取到学生信息
 -(void)getStuInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    self.mModel_stuInf = noti.object;
-    [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    if ([ResultCode intValue]==0) {
+        self.mModel_stuInf = noti.object;
+        [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
+    }else{
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
+    }
 }
 
 -(void)selectScrollButton:(UIButton *)btn{

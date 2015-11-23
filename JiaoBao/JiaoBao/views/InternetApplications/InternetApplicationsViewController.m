@@ -530,7 +530,7 @@
 
 //右上角“+”方法
 - (void)showMenu:(UIButton *)sender{
-    NSArray *menuItems =
+    NSArray *menuItems0 =
     @[
       
       [KxMenuItem menuItem:@"签到考勤"
@@ -541,20 +541,26 @@
                      image:[UIImage imageNamed:@"appNav_contact"]
                     target:self
                     action:@selector(pushMenuItemSchedule:)],
-      [KxMenuItem menuItem:@"作业布置"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(makeJob:)],
-      [KxMenuItem menuItem:@"我的作业"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(myJob:)],
-      [KxMenuItem menuItem:@"家长查询"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(parentSearch:)],
+//      [KxMenuItem menuItem:@"作业布置"
+//                     image:[UIImage imageNamed:@"appNav_contact"]
+//                    target:self
+//                    action:@selector(makeJob:)],
+//      [KxMenuItem menuItem:@"我的作业"
+//                     image:[UIImage imageNamed:@"appNav_contact"]
+//                    target:self
+//                    action:@selector(myJob:)],
+//      [KxMenuItem menuItem:@"家长查询"
+//                     image:[UIImage imageNamed:@"appNav_contact"]
+//                    target:self
+//                    action:@selector(parentSearch:)],
       
       ];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
+    if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
+        [array addObject:[self addOnLineJob]];
+    }
+    NSArray *menuItems = array;
+    D("iudhfgjhjh-==========%d",[dm getInstance].uType);
     
 //    KxMenuItem *first = menuItems[0];
 //    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
@@ -563,6 +569,25 @@
     [KxMenu showMenuInView:self.view
                   fromRect:sender.frame
                  menuItems:menuItems];
+}
+-(KxMenuItem *)addOnLineJob{
+    if ([dm getInstance].uType==2) {
+        return [KxMenuItem menuItem:@"作业布置"
+                       image:[UIImage imageNamed:@"appNav_contact"]
+                      target:self
+                      action:@selector(makeJob:)];
+    }else if ([dm getInstance].uType==3){
+        return [KxMenuItem menuItem:@"家长查询"
+                       image:[UIImage imageNamed:@"appNav_contact"]
+                      target:self
+                      action:@selector(parentSearch:)];
+    }else if ([dm getInstance].uType==4){
+        return [KxMenuItem menuItem:@"我的作业"
+                       image:[UIImage imageNamed:@"appNav_contact"]
+                      target:self
+                      action:@selector(myJob:)];
+    }
+    return nil;
 }
 - (void) pushMenuItemSignIn:(id)sender{
     [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
