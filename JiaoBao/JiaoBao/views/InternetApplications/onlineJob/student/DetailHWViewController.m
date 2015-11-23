@@ -144,12 +144,12 @@
     {
         if([self.stuHWQsModel.QsAns isEqualToString:self.stuHWQsModel.QsCorectAnswer])
         {
-            webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:green\">%@</span><br />正确答案：%@<br />解析：%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
+            webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:green\">%@</span><br />正确答案：%@<br />%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
             
         }
         else
         {
-            webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br />解析：%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
+            webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br />%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
         }
 
     }
@@ -246,25 +246,30 @@
         NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
         for(int i=0;i<inputCount;i++)
         {
-            if(self.isSubmit == YES)
+            if(self.isSubmit == YES)//如果作业已经完成
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                 [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
             }
 
-            else
+            else//如果作业没有完成
             {
+                if([self.FlagStr isEqualToString:@"2"])
+                {
+                    NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                }
 
             }
             NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *valueStr = [self.webView stringByEvaluatingJavaScriptFromString:value];
 
-            if([valueStr isEqualToString:self.stuHWQsModel.QsAns])
+            if([valueStr isEqualToString:self.stuHWQsModel.QsAns])//如果radio的值等于正确答案
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].checked = true",i];
-                if([self.FlagStr isEqualToString:@"1"])
+                if([self.FlagStr isEqualToString:@"1"])//如果当前界面是学生界面
                 {
-                    if(self.isSubmit == YES)
+                    if(self.isSubmit == YES)//学生界面且作业已经提交
                     {
                         NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                         [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -272,7 +277,7 @@
 
                     }
                     
-                    else
+                    else//学生界面且作业没有提交
                     {
                         [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
 
@@ -280,7 +285,7 @@
                 }
                 else
                 {
-                    if(self.isSubmit == YES)
+                    if(self.isSubmit == YES)//家长界面且作业已经提交
                     {
                         NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                         [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -289,7 +294,7 @@
 
                     }
                     
-                    else
+                    else//家长界面且作业没有提交
                     {
                         NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                         [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -307,75 +312,104 @@
         NSLog(@"dfrnflre;gm;r = %@",self.stuHWQsModel.QsAns);
         if([self.stuHWQsModel.QsAns isEqual:[NSNull null]])
         {
-            return;
-        }
-        textArr = [self.stuHWQsModel.QsAns componentsSeparatedByString:@"," ];
-        NSLog(@"textArr_num = %@",[textArr objectAtIndex:textArr.count-1]);
-        NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
-        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
-        for(int i=1;i<inputCount;i++)
-        {
-
-            NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
-            NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
-            if([typeStr isEqualToString:@"text"])
+            NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            for(int i=1;i<inputCount;i++)
             {
-                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i-1]];
-                NSLog(@"checkStr = %@",checkStr);
-                if([self.FlagStr isEqualToString:@"1"])
+                NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+                NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if([typeStr isEqualToString:@"text"])
                 {
-                    if(self.isSubmit == YES)
+                    if([self.FlagStr isEqualToString:@"1"])
                     {
-                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
-                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-
+                        if(self.isSubmit == YES)
+                        {
+                            NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                            [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                            
+                        }
+                        
+                        else
+                        {
+                            
+                        }
                     }
-                    
                     else
                     {
-                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-                        
-                    }
-                }
-                else
-                {
-                    if(self.isSubmit == YES)
-                    {
-                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
-                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-                        
-                        
-                    }
-                    
-                    else
-                    {
-                        NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-                        [self.webView stringByEvaluatingJavaScriptFromString:disabled];
-                    }
-                    
-                    
-                }
+                            NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                            [self.webView stringByEvaluatingJavaScriptFromString:disabled];
 
-//                if([self.FlagStr isEqualToString:@"1"])
-//                {
-//                    if(self.isSubmit == YES)
-//                    {
-//                        NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-//                        [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-//                    }
-//                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-//                }
-//                else
-//                {
-//                    NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-//                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-//                }
+                    }
+                }
             }
-
-            
         }
+        else
+        {
+            textArr = [self.stuHWQsModel.QsAns componentsSeparatedByString:@"," ];
+            NSLog(@"textArr_num = %@",[textArr objectAtIndex:textArr.count-1]);
+            NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            for(int i=1;i<inputCount;i++)
+            {
+                
+                NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+                NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if([typeStr isEqualToString:@"text"])
+                {
+                    NSString *checkStr;
+                    if(i<=textArr.count)
+                    {
+                        checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i-1]];
+                    }
+                    else
+                    {
+                        checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,@""];
+                    }
+                    
+                    NSLog(@"checkStr = %@",checkStr);
+                    if([self.FlagStr isEqualToString:@"1"])
+                    {
+                        if(self.isSubmit == YES)
+                        {
+                            NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                            [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                            [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                            
+                        }
+                        
+                        else
+                        {
+                            [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                            
+                        }
+                    }
+                    else
+                    {
+                        if(self.isSubmit == YES)
+                        {
+                            NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                            [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                            [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                            
+                            
+                        }
+                        
+                        else
+                        {
+                            NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                            [self.webView stringByEvaluatingJavaScriptFromString:disabled];
+                        }
+                        
+                        
+                    }
+                    
+                    
+                }
+                
+                
+            }
+        }
+
         
     }
 

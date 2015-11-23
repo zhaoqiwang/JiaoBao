@@ -592,7 +592,7 @@
             detail.TabID = model.TabID;
             detail.isSubmit = [model.isHWFinish integerValue];
             detail.hwName = model.homeworkName;
-        detail.FlagStr = @"2";
+            detail.FlagStr = @"2";
             [self.navigationController pushViewController:detail animated:YES];
     }else if (self.mInt_index == 2){
         TreeJob_node *node = [self.mArr_disScore objectAtIndex:indexPath.row];

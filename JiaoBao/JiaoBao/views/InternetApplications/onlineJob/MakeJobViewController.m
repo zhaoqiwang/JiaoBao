@@ -1581,8 +1581,6 @@
 
 - (IBAction)cancelBtnAction:(id)sender {
     [self.dateTF resignFirstResponder];
-
-    
 }
 
 - (IBAction)doneBtnAction:(id)sender {

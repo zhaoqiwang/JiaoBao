@@ -7,7 +7,6 @@
 //
 
 #import "ChapterModel.h"
-
 @implementation ChapterModel
 
 @end
