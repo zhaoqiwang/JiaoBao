@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mTableV_answer.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Do any additional setup after loading the view from its nib.
     //推荐问题详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ShowRecomment" object:nil];
@@ -208,7 +209,6 @@
     self.mView_titlecell.mLab_line.frame = CGRectMake(0, self.mView_titlecell.mCollectionV_pic.frame.origin.y+self.mView_titlecell.mCollectionV_pic.frame.size.height+5, [dm getInstance].width, .5);
     self.mView_titlecell.mLab_line2.hidden = YES;
     self.mView_titlecell.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_line.frame.origin.y+1);
-    
     self.mTableV_answer.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, self.mTableV_answer.contentSize.height);
     
     self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_answer.frame.origin.y+self.mTableV_answer.contentSize.height);
@@ -288,10 +288,10 @@
     cell.mLab_commentCount.hidden = NO;
     cell.mLab_comment.hidden = NO;
     //分割线
-    cell.mLab_line.hidden = YES;
+    cell.mLab_line2.hidden = YES;
     cell.mLab_line.frame = CGRectMake(20, 5, [dm getInstance].width-20, .5);
     //赞
-    cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 22);
+    cell.mLab_LikeCount.frame = CGRectMake(9, 10, 42, 22);
     NSString *strLike = model.LikeCount;
     if ([model.LikeCount integerValue]>0) {
         strLike = @"99+";
@@ -307,11 +307,14 @@
     NSString *string1 = model.ATitle;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
-    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, cell.mLab_ATitle.frame.size.height);
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
+            CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeCharWrapping;
+    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, optimalSize1.height);
+
     //回答内容
 //    NSString *string2 = model.Abstracts;
 //    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -320,17 +323,17 @@
     if ([model.Flag integerValue]==0) {//无内容
         cell.mView_background.hidden = YES;
         cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
-        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 26, 16);
         cell.basisImagV.hidden = NO;
         //cell.answerImgV.hidden = YES;
     }else if ([model.Flag integerValue]==1){//有内容
         cell.mView_background.hidden = YES;
         cell.mView_background.frame = cell.mImgV_head.frame;
         cell.basisImagV.image = [UIImage imageNamed:@"content"];
-        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 26, 16);
     }else if ([model.Flag integerValue]==2){//有证据
         cell.basisImagV.image = [UIImage imageNamed:@"basis"];
-        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 29, 29);
     }
 
 
@@ -342,18 +345,18 @@
 //        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据</font>"];
 //    }
 //    CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, MAXFLOAT)];
-    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, 21);
+    cell.mLab_Abstracts.frame = CGRectMake(63, cell.basisImagV.frame.origin.y+cell.basisImagV.frame.size.height+2, [dm getInstance].width-75, 21);
     NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
     [row2 setObject:name2 forKey:@"text"];
     RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
     cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
-    cell.mLab_Abstracts.hidden = NO;
+    cell.mLab_Abstracts.hidden = YES;
     //
     cell.mWebV_comment.hidden = NO;
     cell.mWebV_comment.tag = indexPath.row;
 //    cell.mWebV_comment.scalesPageToFit = YES;
     [cell.mWebV_comment.scrollView setScrollEnabled:NO];
-    cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y+2+21, [dm getInstance].width-75, model.floatH);
+    cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
     
     if (model.floatH==0&&model.Abstracts.length>0) {
         D("dfjgkl;dfjls;'-====%f,%lu,%@,%ld",model.floatH,(unsigned long)model.Abstracts.length,model.ATitle,(long)cell.mWebV_comment.tag);
@@ -370,7 +373,7 @@
     [cell.mWebV_comment reload];
     
     //背景色
-    cell.mView_background.frame = CGRectMake(cell.mWebV_comment.frame.origin.x-2, cell.mWebV_comment.frame.origin.y-3, [dm getInstance].width-70, cell.mWebV_comment.frame.size.height+4);
+    cell.mView_background.frame = CGRectMake(cell.mWebV_comment.frame.origin.x-2, cell.mWebV_comment.frame.origin.y-3-29, [dm getInstance].width-70, cell.mWebV_comment.frame.size.height+4+29);
     //图片
     [cell.mCollectionV_pic reloadData];
     cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
@@ -380,7 +383,7 @@
         cell.mCollectionV_pic.frame = cell.mView_background.frame;
     }
     //时间
-    cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mCollectionV_pic.frame.origin.y+cell.mCollectionV_pic.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
+    cell.mLab_RecDate.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, cell.mLab_RecDate.frame.size.width, cell.mLab_RecDate.frame.size.height);
     cell.mLab_RecDate.text = model.RecDate;
     //评论
     CGSize commentSize = [[NSString stringWithFormat:@"%@",model.CCount] sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -433,11 +436,24 @@
     //    if ([model.AnswersCount integerValue]>0) {
     //分割线
     //        tempF = tempF+5;
-    tempF = 5;
-    float tempF1 = 5.0;
+    tempF = 10;
+    float tempF1 = 10.0;
 //    if (model.Abstracts.length>0) {
         //回答标题
-        tempF = tempF+15+22;
+    NSString *string1 = model.ATitle;
+    RCLabel *label = [[RCLabel alloc]init];
+
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    label.componentsAndPlainText = componentsDS;
+    CGSize optimalSize1 = [label optimumSize];
+    label.lineBreakMode = RTTextLineBreakModeCharWrapping;
+    label.frame = CGRectMake(0, 0, [dm getInstance].width-65, optimalSize1.height);
+
+        tempF = tempF+optimalSize1.height;
         //回答内容
 //        NSString *string2 = model.Abstracts;
 //        NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
@@ -446,8 +462,8 @@
 //            size = CGSizeMake(size.width, 32);
 //        }
 //        tempF = tempF+5+size.height;
-    tempF=tempF+24;
-        tempF = tempF+5+model.floatH;
+    tempF=tempF+29+5;
+        tempF = tempF+2+model.floatH;
         //背景色
         tempF = tempF+3;
         //图片
@@ -456,10 +472,10 @@
         }
         //时间
         tempF = tempF+10+21;
-        tempF = tempF+20;
+        tempF = tempF+20+10;
 //    }else{
         //赞
-        tempF1 = tempF1+15+22;
+        tempF1 = tempF1+optimalSize1.height;
         //头像
         tempF1 = tempF1+10+42;
         //姓名
