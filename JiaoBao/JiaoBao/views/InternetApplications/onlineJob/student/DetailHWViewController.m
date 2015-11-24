@@ -170,7 +170,7 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
-        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){alert(\"事件\");}</script><input type=\"button\" onClick=\"clicke()\" style=\"background:none;border:none;color:rgb(36,137,210);font-size:15px\" value=\"继续作业\"/></div></HTML>"];
+        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){alert(\"事件\");}</script><input type=\"button\" onClick=\"clicke()\" style=\"background:none;border:none;color:rgb(36,137,210);font-size:15px\" value=\"继续作业\"/></div></HTML>"];
         [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
   
         self.isSubmit = YES;
