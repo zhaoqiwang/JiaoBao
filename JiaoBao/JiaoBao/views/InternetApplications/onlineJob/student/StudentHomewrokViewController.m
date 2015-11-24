@@ -209,7 +209,7 @@
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
-        self.mModel_stuInf = noti.object;
+        self.mModel_stuInf = [dic objectForKey:@"model"];
         [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];

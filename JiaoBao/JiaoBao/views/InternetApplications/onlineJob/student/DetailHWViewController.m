@@ -17,6 +17,8 @@
 #import "SelectionCell.h"
 #import "IQKeyboardManager.h"
 #import "StuSubModel.h"
+#import <JavaScriptCore/JavaScriptCore.h>
+
 
 @interface DetailHWViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
@@ -167,7 +169,10 @@
     if([model.reNum integerValue] == 0)
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [self.webView loadHTMLString:model.HWHTML baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+//        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
+        NSString *html = @"<HTML><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){alert(\"事件\");}</script><input type=\"button\" onClick=\"clicke()\" style=\"background:none;border:none;color:rgb(36,137,210);font-size:15px\" value=\"继续作业\"/></div></HTML>";
+        [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+  
         self.isSubmit = YES;
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
@@ -238,6 +243,8 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+
+
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
@@ -412,7 +419,12 @@
 
         
     }
-
+    JSContext *content = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    content[@"clicke"] = ^() {
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+    };
 
     
 }
