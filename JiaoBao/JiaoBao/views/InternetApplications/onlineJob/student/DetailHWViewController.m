@@ -76,6 +76,10 @@
     NSIndexPath *index = [NSIndexPath indexPathForItem:0 inSection:0];
     [self.collectionView reloadData];
     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+    if(self.datasource.count == 1)
+    {
+        [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+    }
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0)] ;
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
         NSInteger count = [self.stuHomeWorkModel.Qsc integerValue];
@@ -573,8 +577,6 @@
                         [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                     }
 
-                    
-
                 }
                 
             }
@@ -636,6 +638,8 @@
 
 
 - (IBAction)previousBtnAction:(id)sender {
+    
+    [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
     UIButton *btn = (UIButton*)sender;
     if(self.selectedBtnTag == 0)
     {
@@ -660,7 +664,6 @@
 }
 
 - (IBAction)nextBtnAction:(id)sender {
-    self.previousBtn.enabled = YES;
     UIButton *btn = (UIButton*)sender;
 
 
@@ -693,7 +696,7 @@
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
 //                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag> [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
                 }
@@ -705,12 +708,16 @@
                 isFinish = YES;
                 if(self.datasource.count==self.selectedBtnTag-1)
                 {
+                    self.previousBtn.enabled = YES;
+
                     [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                     [MBProgressHUD showMessage:@"" toView:self.view];
                 }
                 
                 else
                 {
+                self.previousBtn.enabled = YES;
+
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag-1] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
@@ -760,8 +767,6 @@
                 
             }
 
-
-
         }
         if(isFinish == false)
         {
@@ -770,6 +775,8 @@
         }
         else
         {
+            self.previousBtn.enabled = YES;
+
             if(self.datasource.count-1==self.selectedBtnTag)
             {
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
@@ -783,7 +790,7 @@
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
                 }
