@@ -137,6 +137,16 @@
     }
     else
     {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否发布作业" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+        alert.delegate = self;
+
+    }
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
         for(int i=0;i<self.publishJobModel.classIDArr.count;i++)
         {
             TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
@@ -154,7 +164,12 @@
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
     }
+
+ 
+    
+    
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -22,7 +22,6 @@
 
 @interface DetailHWViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
-@property(nonatomic,assign)BOOL selectedFlag;//被选择的标志
 @property(nonatomic,assign)NSUInteger selectedBtnTag;
 @property(nonatomic,strong)StuHomeWorkModel *stuHomeWorkModel;
 @property(nonatomic,strong)StuHWQsModel *stuHWQsModel;
@@ -62,12 +61,15 @@
     {
         NSString *QsIdQIdStr = [arr objectAtIndex:i];
         NSArray *QsIdQIdArr = [QsIdQIdStr componentsSeparatedByString:@"_"];
-        NSString *QsIdQId;
-        if(QsIdQIdArr.count>0)
+        NSString *QsIdQId,*QsIdQId2;
+        if(QsIdQIdArr.count>2)
         {
             QsIdQId = [QsIdQIdArr objectAtIndex:0];
+            QsIdQId2 = [QsIdQIdArr objectAtIndex:2];
             [self.datasource addObject:QsIdQId];
+            [self.subArr addObject:QsIdQId2];
         }
+        
     }
     if(self.datasource.count<20)
     {
@@ -198,6 +200,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.subArr = [[NSMutableArray alloc]initWithCapacity:0];
     //self.webView.scrollView.scrollEnabled = NO;
     if(self.isSubmit == YES)
     {
@@ -453,6 +456,13 @@
     DetialHWCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailHWCell" forIndexPath:indexPath];
 
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
+    if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
+    {
+        cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+ 
+    }
+
+
     if(cell.selected == YES)
     {
         cell.numLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:55/255.0 alpha:1];
@@ -733,6 +743,10 @@
             [MBProgressHUD showError:@"题目没有完成，无法提交"];
             return;
         }
+        else
+        {
+            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+        }
 
     }
     else
@@ -775,6 +789,7 @@
         }
         else
         {
+            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
             self.previousBtn.enabled = YES;
 
             if(self.datasource.count-1==self.selectedBtnTag)
