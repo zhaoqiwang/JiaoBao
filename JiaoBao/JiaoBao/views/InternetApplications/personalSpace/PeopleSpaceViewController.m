@@ -82,6 +82,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"changeFaceImg" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeFaceImg:) name:@"changeFaceImg" object:nil];
     __weak PeopleSpaceViewController *weakSelf = self;
@@ -161,9 +162,6 @@
             
         }
 
-
-
-        
     }
 
     self.unitArr = mArr;

@@ -99,7 +99,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    //[[KnowledgeHttp getInstance]GetMyCommsWithNumPerPage:@"10" pageNum:@"0"];
+    //[[KnowledgeHttp getInstance]GetMyPointsDayWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
+    //[[KnowledgeHttp getInstance]GetMyPointsMonthWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
     //改变头像
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"changeFaceImg" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeFaceImg:) name:@"changeFaceImg" object:nil];
@@ -113,7 +115,7 @@
     [self.view addSubview:self.mNav_navgationBar];
 //    self.questionArr = [NSArray arrayWithObjects:@"我答过得问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
 //    self.categoryArr = [NSArray arrayWithObjects:@"", nil];
-    self.datasource = [NSArray arrayWithObjects:@"我答过的问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
+    self.datasource = [NSArray arrayWithObjects:@"我答过的问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题",@"我做出的评论", nil];
     self.HeadCell = [[HeadCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HeadCell"];
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeadCell" owner:self options:nil];
     if ([nib count]>0) {

@@ -69,6 +69,8 @@
         model.JiaoBaoHao = @"";
     }
     model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
+    model.IsKnlFeezeUser = [NSString stringWithFormat:@"%@",[dic objectForKey:@"IsKnlFeezeUser"]];
+    model.DUnitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"DUnitId"]];
     return model;
 }
 
@@ -713,6 +715,42 @@
         model.NickName = [dic objectForKey:@"NickName"];
         model.UserPoint = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UserPoint"]];
         model.UserDesc = [NSString stringWithFormat:@"%@",[dic objectForKey:@"RowCount"]];
+        [array addObject:model];
+    }
+    return array;
+}
+
+//解析日积分或者月积分
++(PointsModel *)parserJsonGetMyPoints:(NSString *)json
+{
+    PointsModel *model = [[PointsModel alloc] init];
+    NSDictionary *dic0 = [json objectFromJSONString];
+    model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"JiaoBaoHao"]];
+    model.Point = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"Point"]];
+    model.DelPoint = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"DelPoint"]];
+    NSString *str2 = [dic0 objectForKey:@"RecDate"];
+    model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    return model;
+}
+
+//解析我的评论列表
++(NSMutableArray*)parserJsonMyComms:(NSString*)json
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for(int i=0;i<arrList.count;i++){
+        CommsModel *model = [[CommsModel alloc ]init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
+        model.WContent = [NSString stringWithFormat:@"%@",[dic objectForKey:@"WContent"]];
+        model.QId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"QId"]];
+        model.AId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"AId"]];
+        model.LikeCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"LikeCount"]];
+        model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
+        model.rowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"rowCount"]];
+        NSString *str2 = [dic objectForKey:@"RecDate"];
+        model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+
         [array addObject:model];
     }
     return array;
