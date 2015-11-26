@@ -464,9 +464,9 @@
                     if (m==0) {
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.VersionName;
-                        nodeData.mStr_id = temp1.VersionCode;
+                        nodeData.mStr_id = temp1.TabID;
                         self.publishJobModel.VersionName = temp1.VersionName;
-                        self.publishJobModel.VersionCode = temp1.VersionCode;
+                        self.publishJobModel.VersionCode = temp1.TabID;
                         self.publishJobModel.chapterName = @"";
                         self.publishJobModel.chapterID = @"0";
                         temp1.mInt_select = 1;
@@ -493,9 +493,9 @@
                     if (m==0) {
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.chapterName;
-                        nodeData.mStr_id = temp1.chapterCode;
+                        nodeData.mStr_id = temp1.TabID;
                         self.publishJobModel.chapterName = temp1.chapterName;
-                        self.publishJobModel.chapterID = temp1.chapterCode;
+                        self.publishJobModel.chapterID = temp1.TabID;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -525,8 +525,8 @@
                     if (m==0) {
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.VersionName;
-                        nodeData.mStr_id = temp1.VersionCode;
-                        self.publishJobModel.VersionCode = temp1.VersionCode;
+                        nodeData.mStr_id = temp1.TabID;
+                        self.publishJobModel.VersionCode = temp1.TabID;
                         self.publishJobModel.VersionName = temp1.VersionName;
                         self.publishJobModel.chapterName = @"";
                         self.publishJobModel.chapterID = @"0";
@@ -554,9 +554,9 @@
                     if (m==0) {
                         TreeJob_level0_model *nodeData = node0.nodeData;
                         nodeData.mStr_title = temp1.chapterName;
-                        nodeData.mStr_id = temp1.chapterCode;
+                        nodeData.mStr_id = temp1.TabID;
                         self.publishJobModel.chapterName = temp1.chapterName;
-                        self.publishJobModel.chapterID = temp1.chapterCode;
+                        self.publishJobModel.chapterID = temp1.TabID;
                         temp1.mInt_select = 1;
                     }else{
                         temp1.mInt_select = 0;
@@ -641,20 +641,25 @@
         [tmp addObject:node];
         if(node.isExpanded){
             for(TreeJob_node *node2 in node.sonNodes){
-//                TreeJob_level0_model *temp1 =node2.nodeData;
                 [tmp addObject:node2];
-//                if(node2.isExpanded){
-//                    for(TreeJob_node *node3 in node2.sonNodes){
-//                        [tmp addObject:node3];
-//                    }
-//                }
+                if (node2.flag == 501) {
+                    ChapterModel *model = node2.nodeData;
+                    [self addArrayChapter:model array:tmp];
+                }
             }
         }
     }
     self.mArr_display = [NSArray arrayWithArray:tmp];
     [self.mTableV_work reloadData];
 }
-
+-(void)addArrayChapter:(ChapterModel *)model array:(NSMutableArray *)array{
+    if (model.isExpanded) {
+        for (ChapterModel *temp1 in model.array) {
+            [array addObject:temp1];
+            [self addArrayChapter:temp1 array:array];
+        }
+    }
+}
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     return self.mArr_display.count;
 }
@@ -672,6 +677,31 @@
     
 //    static NSString *indentifier1 = @"TreeView_Level1_Cell";
 //    static NSString *indentifier2 = @"TreeView_Level2_Cell";
+    id node1 = [self.mArr_display objectAtIndex:indexPath.row];
+    if ([node1 isKindOfClass:[ChapterModel class]]) {
+        ChapterModel *model = [self.mArr_display objectAtIndex:indexPath.row];
+            TreeJob_sigleSelect_TableViewCell *cell = (TreeJob_sigleSelect_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:TreeJob_sigleSelect_indentifier];
+            if (cell == nil) {
+                cell = [[TreeJob_sigleSelect_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TreeJob_sigleSelect_indentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TreeJob_sigleSelect_TableViewCell" owner:self options:nil];
+                //这时myCell对象已经通过自定义xib文件生成了
+                if ([nib count]>0) {
+                    cell = (TreeJob_sigleSelect_TableViewCell *)[nib objectAtIndex:0];
+                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                }
+                
+                //添加图片点击事件
+                //若是需要重用，需要写上以下两句代码
+                UINib * n= [UINib nibWithNibName:@"TreeJob_sigleSelect_TableViewCell" bundle:[NSBundle mainBundle]];
+                [self.mTableV_work registerNib:n forCellReuseIdentifier:TreeJob_sigleSelect_indentifier];
+            }
+            cell.delegate = self;
+            cell.model = model;
+            [self loadDataForSigleSelectTreeViewCell1:cell with:model flag:501];//重新给cell装载数据
+            [cell setNeedsDisplay]; //重新描绘cell
+            
+            return cell;
+    }
     TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
     if(node.type == 0){//类型为0的cell,一级列表
         if (node.flag == 0) {//模式选择
@@ -879,68 +909,119 @@
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
-    if (node.type == 0) {
-        if (self.mInt_modeSelect==0||self.mInt_modeSelect==1||self.mInt_modeSelect == 2) {//个性作业,//统一作业、AB卷
-            if (node.flag==8) {//自定义作业
+    id node1 = [self.mArr_display objectAtIndex:indexPath.row];
+    if ([node1 isKindOfClass:[TreeJob_node class]]) {
+        TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
+        if (node.type == 0) {
+            if (self.mInt_modeSelect==0||self.mInt_modeSelect==1||self.mInt_modeSelect == 2) {//个性作业,//统一作业、AB卷
+                if (node.flag==8) {//自定义作业
+                    return 0;
+                }
+                else if (node.flag == 11)
+                {
+                    return 150;
+                }
+            }else if (self.mInt_modeSelect==3){//自定义作业
+                if (node.flag==6||node.flag==7) {
+                    return 0;
+                }
+                else if (node.flag == 11)
+                {
+                    return 150;
+                }
+            }
+            return 44;
+        }else if (node.type == 1){
+            if (node.flag == 101) {
+                if (self.mInt_modeSelect == 0) {//个性作业
+                    return 65;
+                }else{//统一作业、自定义作业
+                    return 35;
+                }
+            }else if (node.flag == 9999){//
+                if (self.mInt_modeSelect == 1||self.mInt_modeSelect == 2) {//统一作业、AB卷
+                    return 35;
+                }
                 return 0;
-            }
-            else if (node.flag == 11)
-            {
-                return 150;
-            }
-        }else if (self.mInt_modeSelect==3){//自定义作业
-            if (node.flag==6||node.flag==7) {
-                return 0;
-            }
-            else if (node.flag == 11)
-            {
-                return 150;
-            }
-        }
-        return 44;
-    }else if (node.type == 1){
-        if (node.flag == 101) {
-            if (self.mInt_modeSelect == 0) {//个性作业
-                return 65;
-            }else{//统一作业、自定义作业
+            }else if(node.flag == 300){
+                return 70;
+            }else{
                 return 35;
             }
-        }else if (node.flag == 9999){//
-            if (self.mInt_modeSelect == 1||self.mInt_modeSelect == 2) {//统一作业、AB卷
-                return 35;
-            }
-            return 0;
-        }else if(node.flag == 300){
-            return 70;
-        }else{
-            return 35;
         }
+    }else{
+        return 35;
     }
     return 44;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
-    if(node.type == 0){
+    id node1 = [self.mArr_display objectAtIndex:indexPath.row];
+    if ([node1 isKindOfClass:[TreeJob_node class]]) {
         TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
-        if (node.sonNodes.count== 0) {
-            if (node.flag==1) {
-                [MBProgressHUD showError:@"没有执教班级" toView:self.view];
-            }else if (node.flag ==2){
-                [MBProgressHUD showError:@"年级为空" toView:self.view];
-            }else if (node.flag ==3){
-                [MBProgressHUD showError:@"科目为空" toView:self.view];
-            }else if (node.flag ==4){
-                [MBProgressHUD showError:@"教版为空" toView:self.view];
-            }else if (node.flag ==5){
-                [MBProgressHUD showError:@"章节为空" toView:self.view];
-            }else if (node.flag ==8){
-                [MBProgressHUD showError:@"自定义作业为空" toView:self.view];
+        if(node.type == 0){
+            TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
+            if (node.sonNodes.count== 0) {
+                if (node.flag==1) {
+                    [MBProgressHUD showError:@"没有执教班级" toView:self.view];
+                }else if (node.flag ==2){
+                    [MBProgressHUD showError:@"年级为空" toView:self.view];
+                }else if (node.flag ==3){
+                    [MBProgressHUD showError:@"科目为空" toView:self.view];
+                }else if (node.flag ==4){
+                    [MBProgressHUD showError:@"教版为空" toView:self.view];
+                }else if (node.flag ==5){
+                    [MBProgressHUD showError:@"章节为空" toView:self.view];
+                }else if (node.flag ==8){
+                    [MBProgressHUD showError:@"自定义作业为空" toView:self.view];
+                }
+            }else{
+                if (node.flag==501) {
+                    ChapterModel *model = node.nodeData;
+                    [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
+                }else{
+                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                }
             }
         }else{
-            [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+            if (node.flag==501) {
+                ChapterModel *model = node.nodeData;
+                [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
+            }else{
+                [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+            }
+        }
+    }else{
+        ChapterModel *model = [self.mArr_display objectAtIndex:indexPath.row];
+        [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
+    }
+}
+
+-(void) reloadDataForDisplayArrayChangeAt1:(NSString *)tableID{
+    for (TreeJob_node *node in self.mArr_sumData) {
+        if(node.flag == 5){
+            for(TreeJob_node *node2 in node.sonNodes){
+                ChapterModel *model = node2.nodeData;
+                if ([model.TabID isEqualToString:tableID]) {
+                        model.isExpanded = !model.isExpanded;
+                        break;
+                }else{
+                    [self addArrayChapter1:[tableID intValue] array:model.array];
+                }
+            }
+        }
+    }
+    [self reloadDataForDisplayArray];
+}
+
+-(void)addArrayChapter1:(NSInteger)tableID array:(NSMutableArray *)array{
+    for (ChapterModel *temp1 in array) {
+        if ([temp1.TabID intValue]==tableID) {
+            temp1.isExpanded = !temp1.isExpanded;
+            break;
+        }else{
+            [self addArrayChapter1:tableID array:temp1.array];
         }
     }
 }
@@ -1083,6 +1164,48 @@
     }
 }
 
+-(void)loadDataForSigleSelectTreeViewCell1:(UITableViewCell*)cell with:(ChapterModel*)model flag:(int)flag{
+    TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
+    NSString *name = @"";
+    if (flag==501){//章节
+//        ChapterModel *model = node.nodeData;
+        cell0.sigleBtn.mLab_title.text = model.chapterName;
+        cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
+        name = model.chapterName;
+    }
+    
+    if (cell0.sigleBtn.mInt_flag ==1) {
+        [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"sigleSelect1"]];
+    }else{
+        [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"sigleSelect0"]];
+    }
+    cell0.mLab_line.frame = CGRectMake(20, 0, [dm getInstance].width-20, .5);
+    CGSize titleSize = [name sizeWithFont:[UIFont systemFontOfSize:12]];
+    if ([dm getInstance].width-40<titleSize.width+16) {
+        titleSize.width = [dm getInstance].width-40-16;
+    }
+    cell0.sigleBtn.mLab_title.frame = CGRectMake(16, 0, titleSize.width, cell0.sigleBtn.mLab_title.frame.size.height);
+    if (flag==501) {//章节
+//        ChapterModel *model = node.nodeData;
+        cell0.sigleBtn.frame = CGRectMake(30+20*model.mInt_flag, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
+        if (model.array.count>0) {
+            cell0.mImg_pic.hidden = NO;
+            cell0.mImg_pic.frame = CGRectMake([dm getInstance].width-20, 10, 10, 10);
+            [cell0.mImg_pic setImage:[UIImage imageNamed:@"homework_down0"]];
+            if (model.isExpanded) {
+                [cell0.mImg_pic setImage:[UIImage imageNamed:@"homework_down0"]];
+            }else{
+                [cell0.mImg_pic setImage:[UIImage imageNamed:@"homework_down1"]];
+            }
+        }else{
+            cell0.mImg_pic.hidden = YES;
+        }
+    }else{
+        cell0.mImg_pic.hidden = YES;
+        cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
+    }
+}
+
 -(void)loadDataForSigleSelectTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -1124,7 +1247,25 @@
         titleSize.width = [dm getInstance].width-40-16;
     }
     cell0.sigleBtn.mLab_title.frame = CGRectMake(16, 0, titleSize.width, cell0.sigleBtn.mLab_title.frame.size.height);
-    cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
+    if (flag==501) {//章节
+        ChapterModel *model = node.nodeData;
+        cell0.sigleBtn.frame = CGRectMake(30+20*model.mInt_flag, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
+        if (model.array.count>0) {
+            cell0.mImg_pic.hidden = NO;
+            cell0.mImg_pic.frame = CGRectMake([dm getInstance].width-20, 10, 10, 10);
+            [cell0.mImg_pic setImage:[UIImage imageNamed:@"homework_down0"]];
+            if (model.isExpanded) {
+                [cell0.mImg_pic setImage:[UIImage imageNamed:@"homework_down0"]];
+            }else{
+                [cell0.mImg_pic setImage:[UIImage imageNamed:@"homework_down1"]];
+            }
+        }else{
+            cell0.mImg_pic.hidden = YES;
+        }
+    }else{
+        cell0.mImg_pic.hidden = YES;
+        cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
+    }
 }
 
 -(void) loadDataForClassTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node{
@@ -1252,6 +1393,7 @@
     }
     [self reloadDataForDisplayArray];
 }
+
 -(void)modeSelectionActionWithButtonTag:(NSUInteger)tag//0个性 1统一 2AB卷 3自定义
 {
     self.mInt_modeSelect = (int)tag;
@@ -1393,164 +1535,239 @@
     self.publishJobModel.InpNum = model1.mStr_title;
 }
 
-//年级、科目、教版、章节的单选cell回调
--(void)TreeJob_sigleSelect_TableViewCellClick:(TreeJob_sigleSelect_TableViewCell *)treeJob_sigleSelect_TableViewCell{
-    TreeJob_node *tempNode = treeJob_sigleSelect_TableViewCell.model;
+-(void) reloadDataForDisplayArrayChangeAt2:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
-        if (node.flag == tempNode.faType&&node.flag==2) {//年级
-            for (TreeView_node *node1 in node.sonNodes) {
-                GradeModel *model = node1.nodeData;
-                GradeModel *model1 = tempNode.nodeData;
-                if ([model.GradeCode intValue]==[model1.GradeCode intValue]) {
-                    model.mInt_select = 1;
-                    TreeJob_level0_model *nodeData = node.nodeData;
-                    nodeData.mStr_title = model1.GradeName;
-                    nodeData.mStr_id = model1.GradeCode;
-                    self.publishJobModel.GradeCode = model1.GradeCode;
-                    self.publishJobModel.GradeName = model1.GradeName;
-
-                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
-                    //给默认空值
-                    TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
-                    TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
-                    tempModel1.mStr_title = @"没有科目";
-                    tempModel1.mStr_id = 0;
-                    TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
-                    TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
-                    tempModel2.mStr_title = @"没有教版";
-                    tempModel2.mStr_id = 0;
-                    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
-                    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
-                    tempModel3.mStr_title = @"没有章节";
-                    tempModel3.mStr_id = 0;
-                    self.publishJobModel.subjectName = tempModel1.mStr_title;
-                    self.publishJobModel.subjectCode = tempModel1.mStr_id;
-                    self.publishJobModel.VersionName = @"";
-                    self.publishJobModel.VersionCode = @"0";
-                    self.publishJobModel.chapterName = @"";
-                    self.publishJobModel.chapterID = @"0";
-                }else{
-                    model.mInt_select = 0;
-                }
-            }
-        }else if (node.flag == tempNode.faType&&node.flag==3) {//科目
-            for (TreeView_node *node1 in node.sonNodes) {
-                SubjectModel *model = node1.nodeData;
-                SubjectModel *model1 = tempNode.nodeData;
-                if ([model.subjectCode intValue]==[model1.subjectCode intValue]) {
-                    model.mInt_select = 1;
-                    TreeJob_level0_model *nodeData = node.nodeData;
-                    nodeData.mStr_title = model1.subjectName;
-                    nodeData.mStr_id = model1.subjectCode;
-                    self.publishJobModel.subjectName = model1.subjectName;
-                    self.publishJobModel.subjectCode = model1.subjectCode;
-                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                    
-                    TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
-                    TreeJob_level0_model *tempModel = tempNode.nodeData;
-                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
-                    //给默认空值
-                    TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
-                    TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
-                    tempModel2.mStr_title = @"没有教版";
-                    tempModel2.mStr_id = 0;
-                    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
-                    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
-                    tempModel3.mStr_title = @"没有章节";
-                    tempModel3.mStr_id = 0;
-                    self.publishJobModel.VersionName = @"";
-                    self.publishJobModel.VersionCode = @"0";
-                    self.publishJobModel.chapterName = @"";
-                    self.publishJobModel.chapterID = @"0";
-                }else{
-                    model.mInt_select = 0;
-                }
-            }
-        }else if (node.flag == tempNode.faType&&node.flag==4) {//教版
-            for (TreeView_node *node1 in node.sonNodes) {
-                VersionModel *model = node1.nodeData;
-                VersionModel *model1 = tempNode.nodeData;
-                if ([model.TabID intValue]==[model1.TabID intValue]) {
-                    model.mInt_select = 1;
-                    TreeJob_level0_model *nodeData = node.nodeData;
-                    nodeData.mStr_title = model1.VersionName;
-                    nodeData.mStr_id = model1.TabID;
-                    self.publishJobModel.VersionName = model1.VersionName;
-                    self.publishJobModel.VersionCode = model1.TabID;
-                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                    TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
-                    TreeJob_level0_model *tempModel = tempNode.nodeData;
-                    TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
-                    TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
-                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
-                    //给默认空值
-                    TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
-                    TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
-                    tempModel3.mStr_title = @"没有章节";
-                    tempModel3.mStr_id = 0;
-                    self.publishJobModel.chapterName = @"";
-                    self.publishJobModel.chapterID = @"0";
-                }else{
-                    model.mInt_select = 0;
-                }
-            }
-        }else if (node.flag == tempNode.faType&&node.flag==5) {//章节
-            for (TreeView_node *node1 in node.sonNodes) {
-                ChapterModel *model = node1.nodeData;
-                ChapterModel *model1 = tempNode.nodeData;
-                if ([model.TabID intValue]==[model1.TabID intValue]) {
-                    model.mInt_select = 1;
+        if(node.flag == 5){
+            for(TreeJob_node *node2 in node.sonNodes){
+                ChapterModel *model1 = node2.nodeData;
+                if ([model1.TabID isEqualToString:tableID]) {
+                    model1.mInt_select = 1;
                     TreeJob_level0_model *nodeData = node.nodeData;
                     nodeData.mStr_title = model1.chapterName;
                     nodeData.mStr_id = model1.TabID;
                     self.publishJobModel.chapterName = model1.chapterName;
                     self.publishJobModel.chapterID = model1.TabID;
-                    D("asjfgasgkljaskl-=====%@",model1.TabID);
-                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                    [self addArrayChapter2:[tableID intValue] array:model1.array node:node];
+                    //获取自定义作业
+                    if (self.mInt_modeSelect ==3) {
+                        //清掉自定义作业列表
+                        TreeView_node *tempNode7 = [self.mArr_sumData objectAtIndex:8];
+                        TreeJob_level0_model *tempModel7 = tempNode7.nodeData;
+                        tempModel7.mStr_title = @"没有自定义作业";
+                        tempModel7.mStr_id = 0;
+                        [tempNode7.sonNodes removeAllObjects];
+                        D("self.publishJobModel.chapterID-===%@",self.publishJobModel.chapterID);
+                        if ([self.publishJobModel.chapterID intValue]>0) {
+                            [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+                        }
+                    }
                 }else{
-                    model.mInt_select = 0;
-                }
-            }
-        }else if (node.flag == tempNode.faType&&node.flag==8) {//自定义作业
-            for (TreeView_node *node1 in node.sonNodes) {
-                HomeworkModel *model = node1.nodeData;
-                HomeworkModel *model1 = tempNode.nodeData;
-                if ([model.TabID intValue]==[model1.TabID intValue]) {
-                    model.mInt_select = 1;
-                    TreeJob_level0_model *nodeData = node.nodeData;
-                    nodeData.mStr_title = model1.homeworkName;
-                    nodeData.mStr_id = model1.TabID;
-                    self.publishJobModel.DesId = model1.TabID;
-                    [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                }else{
-                    model.mInt_select = 0;
+                    model1.mInt_select = 0;
+                    [self addArrayChapter2:[tableID intValue] array:model1.array node:node];
                 }
             }
         }
     }
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
-    self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
     [self reloadDataForDisplayArray];
-    if (tempNode.faType==8) {//点击了自定义作业
-        
-    }else{
-        //清掉自定义作业列表
-        TreeView_node *tempNode7 = [self.mArr_sumData objectAtIndex:8];
-        TreeJob_level0_model *tempModel7 = tempNode7.nodeData;
-        tempModel7.mStr_title = @"没有自定义作业";
-        tempModel7.mStr_id = 0;
-        [tempNode7.sonNodes removeAllObjects];
-        //获取自定义作业
-        if (self.mInt_modeSelect ==3) {
-            D("self.publishJobModel.chapterID-===%@",self.publishJobModel.chapterID);
-            if ([self.publishJobModel.chapterID intValue]>0) {
-                [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+}
+
+-(void)addArrayChapter2:(NSInteger)tableID array:(NSMutableArray *)array node:(TreeJob_node *)node{
+    for (ChapterModel *model1 in array) {
+        if ([model1.TabID intValue]==tableID) {
+            model1.mInt_select = 1;
+            TreeJob_level0_model *nodeData = node.nodeData;
+            nodeData.mStr_title = model1.chapterName;
+            nodeData.mStr_id = model1.TabID;
+            self.publishJobModel.chapterName = model1.chapterName;
+            self.publishJobModel.chapterID = model1.TabID;
+            [self addArrayChapter2:tableID array:model1.array node:node];
+            //获取自定义作业
+            if (self.mInt_modeSelect ==3) {
+                //清掉自定义作业列表
+                TreeView_node *tempNode7 = [self.mArr_sumData objectAtIndex:8];
+                TreeJob_level0_model *tempModel7 = tempNode7.nodeData;
+                tempModel7.mStr_title = @"没有自定义作业";
+                tempModel7.mStr_id = 0;
+                [tempNode7.sonNodes removeAllObjects];
+                D("self.publishJobModel.chapterID-===%@",self.publishJobModel.chapterID);
+                if ([self.publishJobModel.chapterID intValue]>0) {
+                    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+                }
+            }
+        }else{
+            model1.mInt_select = 0;
+            [self addArrayChapter2:tableID array:model1.array node:node];
+        }
+    }
+}
+
+//年级、科目、教版、章节的单选cell回调
+-(void)TreeJob_sigleSelect_TableViewCellClick:(TreeJob_sigleSelect_TableViewCell *)treeJob_sigleSelect_TableViewCell{
+    id temp = treeJob_sigleSelect_TableViewCell.model;
+    if ([temp isKindOfClass:[ChapterModel class]]) {
+        ChapterModel *model = treeJob_sigleSelect_TableViewCell.model;
+        [self reloadDataForDisplayArrayChangeAt2:model.TabID];
+    }else if ([temp isKindOfClass:[TreeJob_node class]]) {
+        TreeJob_node *tempNode = treeJob_sigleSelect_TableViewCell.model;
+        for (TreeJob_node *node in self.mArr_sumData) {
+            if (node.flag == tempNode.faType&&node.flag==2) {//年级
+                for (TreeView_node *node1 in node.sonNodes) {
+                    GradeModel *model = node1.nodeData;
+                    GradeModel *model1 = tempNode.nodeData;
+                    if ([model.GradeCode intValue]==[model1.GradeCode intValue]) {
+                        model.mInt_select = 1;
+                        TreeJob_level0_model *nodeData = node.nodeData;
+                        nodeData.mStr_title = model1.GradeName;
+                        nodeData.mStr_id = model1.GradeCode;
+                        self.publishJobModel.GradeCode = model1.GradeCode;
+                        self.publishJobModel.GradeName = model1.GradeName;
+                        
+                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                        //给默认空值
+                        TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
+                        TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+                        tempModel1.mStr_title = @"没有科目";
+                        tempModel1.mStr_id = 0;
+                        TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
+                        TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
+                        tempModel2.mStr_title = @"没有教版";
+                        tempModel2.mStr_id = 0;
+                        TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
+                        TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+                        tempModel3.mStr_title = @"没有章节";
+                        tempModel3.mStr_id = 0;
+                        self.publishJobModel.subjectName = tempModel1.mStr_title;
+                        self.publishJobModel.subjectCode = tempModel1.mStr_id;
+                        self.publishJobModel.VersionName = @"";
+                        self.publishJobModel.VersionCode = @"0";
+                        self.publishJobModel.chapterName = @"";
+                        self.publishJobModel.chapterID = @"0";
+                    }else{
+                        model.mInt_select = 0;
+                    }
+                }
+            }else if (node.flag == tempNode.faType&&node.flag==3) {//科目
+                for (TreeView_node *node1 in node.sonNodes) {
+                    SubjectModel *model = node1.nodeData;
+                    SubjectModel *model1 = tempNode.nodeData;
+                    if ([model.subjectCode intValue]==[model1.subjectCode intValue]) {
+                        model.mInt_select = 1;
+                        TreeJob_level0_model *nodeData = node.nodeData;
+                        nodeData.mStr_title = model1.subjectName;
+                        nodeData.mStr_id = model1.subjectCode;
+                        self.publishJobModel.subjectName = model1.subjectName;
+                        self.publishJobModel.subjectCode = model1.subjectCode;
+                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                        
+                        TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
+                        TreeJob_level0_model *tempModel = tempNode.nodeData;
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
+                        //给默认空值
+                        TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
+                        TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
+                        tempModel2.mStr_title = @"没有教版";
+                        tempModel2.mStr_id = 0;
+                        TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
+                        TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+                        tempModel3.mStr_title = @"没有章节";
+                        tempModel3.mStr_id = 0;
+                        self.publishJobModel.VersionName = @"";
+                        self.publishJobModel.VersionCode = @"0";
+                        self.publishJobModel.chapterName = @"";
+                        self.publishJobModel.chapterID = @"0";
+                    }else{
+                        model.mInt_select = 0;
+                    }
+                }
+            }else if (node.flag == tempNode.faType&&node.flag==4) {//教版
+                for (TreeView_node *node1 in node.sonNodes) {
+                    VersionModel *model = node1.nodeData;
+                    VersionModel *model1 = tempNode.nodeData;
+                    if ([model.TabID intValue]==[model1.TabID intValue]) {
+                        model.mInt_select = 1;
+                        TreeJob_level0_model *nodeData = node.nodeData;
+                        nodeData.mStr_title = model1.VersionName;
+                        nodeData.mStr_id = model1.TabID;
+                        self.publishJobModel.VersionName = model1.VersionName;
+                        self.publishJobModel.VersionCode = model1.TabID;
+                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                        TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
+                        TreeJob_level0_model *tempModel = tempNode.nodeData;
+                        TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
+                        TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
+                        //给默认空值
+                        TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
+                        TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
+                        tempModel3.mStr_title = @"没有章节";
+                        tempModel3.mStr_id = 0;
+                        self.publishJobModel.chapterName = @"";
+                        self.publishJobModel.chapterID = @"0";
+                    }else{
+                        model.mInt_select = 0;
+                    }
+                }
+            }else if (node.flag == tempNode.faType&&node.flag==5) {//章节
+                for (TreeView_node *node1 in node.sonNodes) {
+                    ChapterModel *model = node1.nodeData;
+                    ChapterModel *model1 = tempNode.nodeData;
+                    if ([model.TabID intValue]==[model1.TabID intValue]) {
+                        model.mInt_select = 1;
+                        TreeJob_level0_model *nodeData = node.nodeData;
+                        nodeData.mStr_title = model1.chapterName;
+                        nodeData.mStr_id = model1.TabID;
+                        self.publishJobModel.chapterName = model1.chapterName;
+                        self.publishJobModel.chapterID = model1.TabID;
+                        D("asjfgasgkljaskl-=====%@",model1.TabID);
+//                        [self addArrayChapter2:[model1.TabID intValue] array:model1.array node:node];
+//                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                        [self reloadDataForDisplayArrayChangeAt2:model1.TabID];
+                    }else{
+                        model.mInt_select = 0;
+                    }
+                }
+            }else if (node.flag == tempNode.faType&&node.flag==8) {//自定义作业
+                for (TreeView_node *node1 in node.sonNodes) {
+                    HomeworkModel *model = node1.nodeData;
+                    HomeworkModel *model1 = tempNode.nodeData;
+                    if ([model.TabID intValue]==[model1.TabID intValue]) {
+                        model.mInt_select = 1;
+                        TreeJob_level0_model *nodeData = node.nodeData;
+                        nodeData.mStr_title = model1.homeworkName;
+                        nodeData.mStr_id = model1.TabID;
+                        self.publishJobModel.DesId = model1.TabID;
+                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                    }else{
+                        model.mInt_select = 0;
+                    }
+                }
+            }
+        }
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+        self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
+        [self reloadDataForDisplayArray];
+        if (tempNode.faType==8) {//点击了自定义作业
+            
+        }else{
+            //清掉自定义作业列表
+            TreeView_node *tempNode7 = [self.mArr_sumData objectAtIndex:8];
+            TreeJob_level0_model *tempModel7 = tempNode7.nodeData;
+            tempModel7.mStr_title = @"没有自定义作业";
+            tempModel7.mStr_id = 0;
+            [tempNode7.sonNodes removeAllObjects];
+            //获取自定义作业
+            if (self.mInt_modeSelect ==3) {
+                D("self.publishJobModel.chapterID-===%@",self.publishJobModel.chapterID);
+                if ([self.publishJobModel.chapterID intValue]>0) {
+                    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+                }
             }
         }
     }
+    
 }
 
 //导航条返回按钮回调

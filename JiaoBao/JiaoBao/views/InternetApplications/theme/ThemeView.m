@@ -897,7 +897,7 @@
             
             //详情
             cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, cell.mBtn_detail.frame.size.height);
-            [cell.mBtn_detail setTitleColor:[UIColor colorWithRed:37/255.0 green:137/255.0 blue:209/255.0 alpha:1] forState:UIControlStateNormal ];
+            [cell.mBtn_detail setTitleColor:[UIColor colorWithRed:230/255.0 green:114/255.0 blue:21/255.0 alpha:1] forState:UIControlStateNormal ];
             cell.mBtn_detail.hidden = NO;
             //话题
             cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
@@ -1381,6 +1381,7 @@
             [utils pushViewController:recomment animated:YES];
         }else{
             KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+            detail.mInt_view = 0;
             detail.mModel_question = knowledgeTableViewCell.model;
             [utils pushViewController:detail animated:YES];
         }

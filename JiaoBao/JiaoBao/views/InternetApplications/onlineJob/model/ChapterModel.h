@@ -14,7 +14,7 @@
 @property(nonatomic,strong)NSString *subjectID;//
 @property(nonatomic,strong)NSString *TVersionID;//
 @property(nonatomic,strong)NSString *Unid;//
-@property(nonatomic,strong)NSString *Pid;//
+@property(nonatomic,strong)NSString *Pid;//父级id
 @property(nonatomic,strong)NSString *chapterCode;//
 @property(nonatomic,strong)NSString *chapterName;//
 @property(nonatomic,strong)NSString *Remark;//
@@ -22,7 +22,9 @@
 @property(nonatomic,strong)NSString *orderby;//
 @property(nonatomic,strong)NSString *chapterCodePid;//
 @property (nonatomic,assign) int mInt_select;//是否选择1，否0
-
+@property (nonatomic,assign) int mInt_flag;//区分是第几级列表
+@property(nonatomic,strong) NSMutableArray *array;//章节里面的父子级关系
+@property (nonatomic) BOOL isExpanded;//节点是否展开
 
 @end
 

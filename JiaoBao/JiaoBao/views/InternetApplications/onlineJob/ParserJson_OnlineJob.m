@@ -101,11 +101,27 @@
         model.isEnable = [dic objectForKey:@"isEnable"];
         model.orderby = [dic objectForKey:@"orderby"];
         model.chapterCodePid = [dic objectForKey:@"chapterCodePid"];
-
-        [array addObject:model];
+        model.isExpanded = NO;
+        if ([model.Pid intValue]==0) {
+            model.mInt_flag = 0;
+            [array addObject:model];
+        }else{
+            [self addArrayChapter:model array:array flag:1];
+        }
     }
     return array;
-    
+}
+
++(void)addArrayChapter:(ChapterModel *)model array:(NSMutableArray *)array flag:(int)flag{
+    for (ChapterModel *temp1 in array) {
+        if ([model.Pid intValue] == [temp1.TabID intValue]) {
+            model.mInt_flag = flag;
+            [temp1.array addObject:model];
+            break;
+        }else{
+            [self addArrayChapter:model array:temp1.array flag:flag+1];
+        }
+    }
 }
 //解析自定义作业
 +(NSMutableArray *)parserJsonHomeworkList:(NSString *)json

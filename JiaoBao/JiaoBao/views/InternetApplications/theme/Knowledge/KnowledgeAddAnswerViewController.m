@@ -21,11 +21,6 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     //问题详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
@@ -41,6 +36,12 @@
     //修改答案
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UpdateAnswer" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddAnswer:) name:@"UpdateAnswer" object:nil];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
     
     self.mArr_pic = [NSMutableArray array];
     self.mInt_flag = 0;
@@ -144,17 +145,28 @@
             self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
             self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         }
-        if (self.mInt_flag==1) {
-            //问题明细
-            [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
-        }
+//        if (self.mInt_flag==1) {
+//            //问题明细
+//            [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
+//        }
+        [self.mTextV_answer resignFirstResponder];
+        [self.mTextV_content resignFirstResponder];
         //通知其余界面，更新答案数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetailModel" object:self.mModel_questionDetail];
+        D("dufghdjfgh-====%d",self.mInt_view);
+        if (self.mInt_view == 1) {
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            [self myNavigationGoback];
+        }else{
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+            queston.mModel_question = self.mModel_question;
+            [utils pushViewController:queston animated:YES];
+        }
     }else{
-        
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 }
 
 //问题详情

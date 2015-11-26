@@ -20,6 +20,7 @@
 #import "ShareHttp.h"
 #include<AssetsLibrary/AssetsLibrary.h>
 #import "SigleBtnView.h"
+#import "KnowledgeQuestionViewController.h"
 
 @interface KnowledgeAddAnswerViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIWebViewDelegate>
 
@@ -42,6 +43,7 @@
 @property (nonatomic,copy) NSString *mStr_MyAnswerId;//判断是修改答案>0还是添加回答0
 @property (nonatomic,assign) int mInt_flag;//判断是第一次进入页面获取详情0还是提交答案后1
 @property (nonatomic,strong) SigleBtnView *mSigleBtn;//
+@property (nonatomic,assign) int mInt_view;//判断是从哪个界面过来的，1代表问题的回答列表，做回答后的自动跳转用
 
 
 -(IBAction)mBtn_submit:(id)sender;

@@ -24,6 +24,7 @@
 #import "PublishJobModel.h"
 #import "StuInfoModel.h"
 #import "GenInfo.h"
+#import "ChapterModel.h"
 
 @interface OnlineJobHttp : NSObject<ASIHTTPRequestDelegate>
 //单

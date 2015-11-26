@@ -22,9 +22,14 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="E1z-hl-F2u">
+                        <rect key="frame" x="290" y="13" width="22" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="mImg_pic" destination="E1z-hl-F2u" id="Rm5-FD-iPO"/>
                 <outlet property="mLab_line" destination="f1Q-g6-53J" id="yyF-QF-FRh"/>
             </connections>
             <point key="canvasLocation" x="620" y="448"/>

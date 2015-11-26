@@ -25,23 +25,6 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-}
--(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer
-
-{
-    self.mView_input.hidden = YES;
-    [self.view endEditing:YES];
-    
-    
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.view.userInteractionEnabled = YES;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
-    singleTap.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:singleTap];
-    self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-    // Do any additional setup after loading the view from its nib.
     //获取邀请人
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAtMeUsersWithuid:) name:@"GetAtMeUsersWithuid" object:nil];
@@ -69,6 +52,44 @@
     //问题详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
+}
+
+-(void)removeNoti{
+    //获取邀请人
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
+    //获取昵称对应的教宝号
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
+    //获取问题的答案列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAnswerById" object:nil];
+    //通知界面，更新访问量等数据
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
+    //是否关注该问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMyAttQWithqId" object:nil];
+    //取消关注该问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RemoveMyAttQWithqId" object:nil];
+    //邀请指定的用户回答问题
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AtMeForAnswerWithAccId" object:nil];
+    //问题详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
+}
+
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer
+
+{
+    self.mView_input.hidden = YES;
+    [self.view endEditing:YES];
+    
+    
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
+    singleTap.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:singleTap];
+    self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    // Do any additional setup after loading the view from its nib.
+    
     
     self.mArr_answers = [NSMutableArray array];
     self.mInt_reloadData = 0;
@@ -799,9 +820,12 @@
 
 //详情按钮
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    //移除部分通知
+    [self removeNoti];
     KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
     detail.mModel_question = self.mModel_question;
     detail.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
+    detail.mInt_view = 1;
     [utils pushViewController:detail animated:YES];
 }
 
@@ -810,6 +834,7 @@
     KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
     detail.mModel_question = self.mModel_question;
     detail.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
+    detail.mInt_view = 1;
     [utils pushViewController:detail animated:YES];
 }
 
@@ -867,9 +892,11 @@
     JoinUnit
     D("view.tag-=====%ld",(long)view.tag);
 //    view.mLab_title.text = @"取消关注";
-    if (view.tag ==100) {
+    if (view.tag ==100) {//回答问题
         //没有昵称，不能对求知进行输入性操作
         NoNickName
+        //移除部分通知
+        [self removeNoti];
         [self gotoAddAnswerVC];
     }else if (view.tag == 101){//邀请回答
         //没有昵称，不能对求知进行输入性操作
