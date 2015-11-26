@@ -7,6 +7,8 @@
 //
 
 #import "KnowledgeHttp.h"
+#import "PointsModel.h"
+#import "CommsModel.h"
 
 static KnowledgeHttp *knowledgeHttp = nil;
 
@@ -1190,6 +1192,105 @@ static KnowledgeHttp *knowledgeHttp = nil;
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
+//求知日积分 参数：用户教宝号 - （日期，取指定日期的积分，如果为null,或者不可识别 为日期，则默认取今天的积分，日期如：“2015-11-1”）
+-(void)GetMyPointsDayWithAccId:(NSString*)accId dateTime:(NSString*)dateTime{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetMyPointsDay",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"accId":accId,@"dateTime":dateTime};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *resultData = [jsonDic objectForKey:@"Data"];
+        
+        PointsModel *model = [ParserJson_knowledge parserJsonGetMyPoints:resultData];
+        D("JSON--------GetMyPointsDayWithAccId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetMyPointsDayWithAccId: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
+    }];
+}
 
+//本月积分只包含累计分（加分和扣分之和).由本月内每一天的日积分累计结果。
+//参数:用户教宝号 - (日期，取指定日期所在月份的月积分，如果为null,或者不可识别 为日期，则默认取当前月份的积分，日期如：“2015-11-1”，可以是月内的任何一天)
+-(void)GetMyPointsMonthWithAccId:(NSString*)accId dateTime:(NSString*)dateTime
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetMyPointsMonth",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"accId":accId,@"dateTime":dateTime};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *resultData = [jsonDic objectForKey:@"Data"];
+        
+        PointsModel *model = [ParserJson_knowledge parserJsonGetMyPoints:resultData];
+        D("JSON--------GetMyPointsMonthWithAccId: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetMyPointsMonthWithAccId: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
+    }];
+}
+
+//功能：对评论进行顶或踩的操作。参数：（评论ID,不加密，直接是int）-（顶=1，踩=0）
+-(void)AddScoreWithtabid:(NSString*)tabid tp:(NSString*)tp
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddScore",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"tabid":tabid,@"tp":tp};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        if([ResultCode integerValue]==0)
+        {
+            [MBProgressHUD showSuccess:@"成功"];
+        }
+        else
+        {
+            [MBProgressHUD showSuccess:@"成功"];
+        }
+        D("JSON--------AddScoreWithtabid: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------AddScoreWithtabid: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
+    }];
+}
+//功能：获取我的评论列表
+-(void)GetMyCommsWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetMyComms",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum};
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *resultData = [jsonDic objectForKey:@"Data"];
+        
+        NSMutableArray *mArr = [ParserJson_knowledge parserJsonMyComms:resultData];
+        D("JSON--------GetMyCommsWithNumPerPage: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetMyCommsWithNumPerPage: %@", error);
+        [MBProgressHUD showError:@"服务器异常"];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
+    }];
+}
 
 @end

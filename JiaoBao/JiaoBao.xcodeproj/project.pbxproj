@@ -969,6 +969,8 @@
 		F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B64691B1EA8CB008F6961 /* bj@2x.png */; };
 		F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F76B646A1B1EA8CB008F6961 /* bj@3x.png */; };
 		F77118D71B70476100CA8FAC /* NickNameModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77118D61B70476100CA8FAC /* NickNameModel.m */; };
+		F776E9B01C059872004A1F1E /* PointsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F776E9AF1C059872004A1F1E /* PointsModel.m */; };
+		F776E9B61C05A8C1004A1F1E /* CommsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F776E9B51C05A8C1004A1F1E /* CommsModel.m */; };
 		F776FCB11B55FFD400AF41D3 /* DetailQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */; };
 		F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F77B42671BD47A17006CF240 /* OtherItemsModel.m */; };
 		F786F84D1BDB156B004A8155 /* ask.png in Resources */ = {isa = PBXBuildFile; fileRef = F786F84C1BDB156B004A8155 /* ask.png */; };
@@ -2431,6 +2433,10 @@
 		F76B646A1B1EA8CB008F6961 /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bj@3x.png"; path = "Image/InternetApp/class/bj@3x.png"; sourceTree = "<group>"; };
 		F77118D51B70476100CA8FAC /* NickNameModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NickNameModel.h; path = views/InternetApplications/theme/model/NickNameModel.h; sourceTree = "<group>"; };
 		F77118D61B70476100CA8FAC /* NickNameModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NickNameModel.m; path = views/InternetApplications/theme/model/NickNameModel.m; sourceTree = "<group>"; };
+		F776E9AE1C059872004A1F1E /* PointsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointsModel.h; path = views/InternetApplications/theme/model/PointsModel.h; sourceTree = "<group>"; };
+		F776E9AF1C059872004A1F1E /* PointsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PointsModel.m; path = views/InternetApplications/theme/model/PointsModel.m; sourceTree = "<group>"; };
+		F776E9B41C05A8C1004A1F1E /* CommsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommsModel.h; path = views/InternetApplications/theme/model/CommsModel.h; sourceTree = "<group>"; };
+		F776E9B51C05A8C1004A1F1E /* CommsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommsModel.m; path = views/InternetApplications/theme/model/CommsModel.m; sourceTree = "<group>"; };
 		F776FCB01B55FFD400AF41D3 /* DetailQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailQueryCell.xib; sourceTree = "<group>"; };
 		F77B42661BD47A17006CF240 /* OtherItemsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherItemsModel.h; sourceTree = "<group>"; };
 		F77B42671BD47A17006CF240 /* OtherItemsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherItemsModel.m; sourceTree = "<group>"; };
@@ -2848,6 +2854,10 @@
 				A7AA1C491B9145EC0098E101 /* PickedIndexModel.m */,
 				F73DDB911BA9110000DD8228 /* InvitationUserInfo.h */,
 				F73DDB921BA9110000DD8228 /* InvitationUserInfo.m */,
+				F776E9AE1C059872004A1F1E /* PointsModel.h */,
+				F776E9AF1C059872004A1F1E /* PointsModel.m */,
+				F776E9B41C05A8C1004A1F1E /* CommsModel.h */,
+				F776E9B51C05A8C1004A1F1E /* CommsModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -5879,6 +5889,7 @@
 				A75082831B79A53A0031E7C9 /* KnowledgeAddAnswerViewController.m in Sources */,
 				A75E3F971B6F63FF00284C3D /* KnowledgeHttp.m in Sources */,
 				F72385DB1BE344990000015D /* WebViewJavascriptBridge.m in Sources */,
+				F776E9B01C059872004A1F1E /* PointsModel.m in Sources */,
 				A7357A1B1A3FE1E000A195C5 /* MyFriendsViewController.m in Sources */,
 				A7141DCE1A174A5D00940A3E /* ShareHttp.m in Sources */,
 				A749B9E919F8A2C00036F480 /* TreeView_node.m in Sources */,
@@ -5970,6 +5981,7 @@
 				A75E3F9A1B6F646400284C3D /* VlorNetWorkAPI.m in Sources */,
 				F7E981071B79F6FE008B42E9 /* AddQuestionViewController.m in Sources */,
 				A71D61C81A1C82EF00B8D33D /* UnitSectionMessageModel.m in Sources */,
+				F776E9B61C05A8C1004A1F1E /* CommsModel.m in Sources */,
 				A755E71B19F278B900BBDF3D /* SBJsonParser.m in Sources */,
 				F7935A5D1BD9CBB90021A048 /* StuInfoModel.m in Sources */,
 				A78459D91B7B4D1D00EA7D5D /* IQKeyboardManager.m in Sources */,

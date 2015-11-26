@@ -148,5 +148,13 @@
 -(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid;
 //举报 参数描述：答案ID - (举报类型,0=答案，1=问题， 2=评论)
 -(void)ReportAnsWithAId:(NSString*)AId repType:(NSString*)repType;
-
+//求知日积分 参数：用户教宝号 - （日期，取指定日期的积分，如果为null,或者不可识别 为日期，则默认取今天的积分，日期如：“2015-11-1”）
+-(void)GetMyPointsDayWithAccId:(NSString*)accId dateTime:(NSString*)dateTime;
+//本月积分只包含累计分（加分和扣分之和).由本月内每一天的日积分累计结果。
+//参数:用户教宝号 - (日期，取指定日期所在月份的月积分，如果为null,或者不可识别 为日期，则默认取当前月份的积分，日期如：“2015-11-1”，可以是月内的任何一天)
+-(void)GetMyPointsMonthWithAccId:(NSString*)accId dateTime:(NSString*)dateTime;
+//功能：对评论进行顶或踩的操作。参数：（评论ID,不加密，直接是int）-（顶=1，踩=0）
+-(void)AddScoreWithtabid:(NSString*)tabid tp:(NSString*)tp;
+//功能：获取我的评论列表
+-(void)GetMyCommsWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum;
 @end

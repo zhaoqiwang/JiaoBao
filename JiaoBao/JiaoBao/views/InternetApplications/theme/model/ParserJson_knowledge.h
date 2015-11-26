@@ -19,6 +19,8 @@
 #import "PickContentModel.h"
 #import "ShowPickedModel.h"
 #import "PickedIndexModel.h"
+#import "PointsModel.h"
+#import "CommsModel.h"
 
 @interface ParserJson_knowledge : NSObject
 
@@ -74,6 +76,10 @@
 +(NSMutableArray *)parserJsonPickedIndex:(NSString *)json;
 //邀请人回答时，获取回答该话题问题最多的用户列表（4个）
 +(NSMutableArray*)parserJsonInvitationUserInfo:(NSString*)json;
+//解析日积分或者月积分
++(PointsModel *)parserJsonGetMyPoints:(NSString *)json;
+//解析我的评论列表
++(NSMutableArray*)parserJsonMyComms:(NSString*)json;
 
 
 @end

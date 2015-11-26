@@ -15,5 +15,7 @@
 @property(nonatomic,strong)NSString *UserName;//姓名
 @property(nonatomic,strong)NSString *IdFlag;//称号
 @property(nonatomic,strong)NSString *State;//状态：1（正常）,0（禁用）
+@property(nonatomic,strong)NSString *IsKnlFeezeUser;//true=封号中，false=正常
+@property(nonatomic,strong)NSString *DUnitId;//>0有单位，=0无单位
 
 @end
