@@ -1164,8 +1164,9 @@
                         TreeJob_level0_model *nodeData = node.nodeData;
                         nodeData.mStr_title = model1.chapterName;
                         nodeData.mStr_id = model1.TabID;
-                        [self addArrayChapter2:[model1.TabID intValue] array:model1.array node:node];
+//                        [self addArrayChapter2:[model1.TabID intValue] array:model1.array node:node];
 //                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                        [self reloadDataForDisplayArrayChangeAt2:model1.TabID];
                     }else{
                         model.mInt_select = 0;
                     }

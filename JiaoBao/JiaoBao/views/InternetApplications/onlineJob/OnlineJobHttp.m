@@ -120,7 +120,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetDestHWListWithChapterID: %@", error);
     }];
-    
 }
 
 //老师发布作业接口

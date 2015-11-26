@@ -1533,6 +1533,19 @@
                     self.publishJobModel.chapterName = model1.chapterName;
                     self.publishJobModel.chapterID = model1.TabID;
                     [self addArrayChapter2:[tableID intValue] array:model1.array node:node];
+                    //获取自定义作业
+                    if (self.mInt_modeSelect ==3) {
+                        //清掉自定义作业列表
+                        TreeView_node *tempNode7 = [self.mArr_sumData objectAtIndex:8];
+                        TreeJob_level0_model *tempModel7 = tempNode7.nodeData;
+                        tempModel7.mStr_title = @"没有自定义作业";
+                        tempModel7.mStr_id = 0;
+                        [tempNode7.sonNodes removeAllObjects];
+                        D("self.publishJobModel.chapterID-===%@",self.publishJobModel.chapterID);
+                        if ([self.publishJobModel.chapterID intValue]>0) {
+                            [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+                        }
+                    }
                 }else{
                     model1.mInt_select = 0;
                     [self addArrayChapter2:[tableID intValue] array:model1.array node:node];
@@ -1553,6 +1566,19 @@
             self.publishJobModel.chapterName = model1.chapterName;
             self.publishJobModel.chapterID = model1.TabID;
             [self addArrayChapter2:tableID array:model1.array node:node];
+            //获取自定义作业
+            if (self.mInt_modeSelect ==3) {
+                //清掉自定义作业列表
+                TreeView_node *tempNode7 = [self.mArr_sumData objectAtIndex:8];
+                TreeJob_level0_model *tempModel7 = tempNode7.nodeData;
+                tempModel7.mStr_title = @"没有自定义作业";
+                tempModel7.mStr_id = 0;
+                [tempNode7.sonNodes removeAllObjects];
+                D("self.publishJobModel.chapterID-===%@",self.publishJobModel.chapterID);
+                if ([self.publishJobModel.chapterID intValue]>0) {
+                    [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
+                }
+            }
         }else{
             model1.mInt_select = 0;
             [self addArrayChapter2:tableID array:model1.array node:node];
@@ -1679,8 +1705,9 @@
                         self.publishJobModel.chapterName = model1.chapterName;
                         self.publishJobModel.chapterID = model1.TabID;
                         D("asjfgasgkljaskl-=====%@",model1.TabID);
-                        [self addArrayChapter2:[model1.TabID intValue] array:model1.array node:node];
+//                        [self addArrayChapter2:[model1.TabID intValue] array:model1.array node:node];
 //                        [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
+                        [self reloadDataForDisplayArrayChangeAt2:model1.TabID];
                     }else{
                         model.mInt_select = 0;
                     }
