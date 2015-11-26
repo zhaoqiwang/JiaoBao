@@ -10,4 +10,11 @@
 
 @implementation ChapterModel
 
+-(instancetype)init
+{
+    self = [super init];
+    self.array = [NSMutableArray array];
+    return self;
+}
+
 @end

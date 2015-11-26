@@ -16,6 +16,7 @@
 #import "LevelModel.h"
 #import "CompleteStatusModel.h"
 #import "StuSubModel.h"
+#import "TreeJob_node.h"
 
 
 @interface ParserJson_OnlineJob : NSObject

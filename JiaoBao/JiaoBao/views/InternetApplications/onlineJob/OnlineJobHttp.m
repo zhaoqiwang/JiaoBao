@@ -77,6 +77,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
 //            {
                 NSArray *array3 = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"]];
 //            }
+            D("alirjglkgj-=====%@",array3);
+            [self nslogarray3:array3 aaa:0];
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setValue:flag forKey:@"flag"];
             [dic setValue:array1 forKey:@"args1"];
@@ -87,10 +89,17 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
         D("JSON--------GetUnionChaterListWithgCode: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
         D("Error---------GetUnionChaterListWithgCode: %@", error);
     }];
-    
+}
+-(void)nslogarray3:(NSArray *)array aaa:(int)a{
+    for (ChapterModel *model in array) {
+        D("model-=====%d,%@",model.mInt_flag,model.chapterName);
+        if (model.array.count>0) {
+            a++;
+            [self nslogarray3:model.array aaa:a];
+        }
+    }
 }
 //获取老师的自定义作业列表
 -(void)GetDesHWListWithChapterID:(NSString*)ChapterID teacherJiaobaohao:(NSString*)teacherJiaobaohao
