@@ -564,6 +564,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        D("hkhjhjh-====%@,%@",result,jsonDic);
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         //长时间不操作，握手通讯失败后，进行登录操作
         Login
