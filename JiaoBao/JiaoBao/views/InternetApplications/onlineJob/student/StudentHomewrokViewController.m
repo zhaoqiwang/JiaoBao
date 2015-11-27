@@ -481,10 +481,13 @@
     }
     TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
     TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
     if (tempModel1.mStr_id>0) {
         self.mStr_textName = [NSString stringWithFormat:@"%@%@",self.mStr_textName,tempModel1.mStr_title];
     }
-    self.mStr_textName = [NSString stringWithFormat:@"%@练习",self.mStr_textName];
+    self.mStr_textName = [NSString stringWithFormat:@"%@%@练习",dateStr,self.mStr_textName];
     [self reloadDataForDisplayArray];
 }
 
@@ -1177,20 +1180,23 @@
                 }
             }
         }
-        TreeView_node *tempNode0 = [self.mArr_sumData objectAtIndex:1];
-        TreeJob_level0_model *tempModel0 = tempNode0.nodeData;
-        if (tempModel0.mStr_id>0) {
-            self.mStr_textName = tempModel0.mStr_title;
-        }
-        TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
-        TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
-        if (tempModel1.mStr_id>0) {
-            self.mStr_textName = [NSString stringWithFormat:@"%@%@",self.mStr_textName,tempModel1.mStr_title];
-        }
-        self.mStr_textName = [NSString stringWithFormat:@"%@练习",self.mStr_textName];
-        
-        [self reloadDataForDisplayArray];
     }
+    TreeView_node *tempNode0 = [self.mArr_sumData objectAtIndex:1];
+    TreeJob_level0_model *tempModel0 = tempNode0.nodeData;
+    if (tempModel0.mStr_id>0) {
+        self.mStr_textName = tempModel0.mStr_title;
+    }
+    TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
+    TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    if (tempModel1.mStr_id>0) {
+        self.mStr_textName = [NSString stringWithFormat:@"%@%@",self.mStr_textName,tempModel1.mStr_title];
+    }
+    self.mStr_textName = [NSString stringWithFormat:@"%@%@练习",dateStr,self.mStr_textName];
+    
+    [self reloadDataForDisplayArray];
 }
 
 //发布练习按钮回调
@@ -1252,9 +1258,9 @@
 
     //联合id
     NSString *tempId = [NSString stringWithFormat:@"%@%@%@",tempModel0.mStr_id,tempModel1.mStr_id,tempModel2.mStr_id];
-    D("-====fabu-====%@,%@,%@,%@,%@,%@",self.mModel_stuInf.StudentID,self.mModel_stuInf.ClassNo,self.mModel_stuInf.ClassName,tempId,tempModel3.mStr_id,self.mStr_textName);
+    D("-====fabu-====%@,%@,%@,%@,%@,%@",self.mModel_stuInf.StudentID,self.mModel_stuInf.UnitClassID,self.mModel_stuInf.ClassName,tempId,tempModel3.mStr_id,self.mStr_textName);
     
-    [[OnlineJobHttp getInstance] StuMakeSelfWithStuId:self.mModel_stuInf.StudentID classID:self.mModel_stuInf.ClassNo className:self.mModel_stuInf.ClassName Unid:tempId chapterID:tempModel3.mStr_id homeworkName:self.mStr_textName schoolName:@""];
+    [[OnlineJobHttp getInstance] StuMakeSelfWithStuId:self.mModel_stuInf.StudentID classID:self.mModel_stuInf.UnitClassID className:self.mModel_stuInf.ClassName Unid:tempId chapterID:tempModel3.mStr_id homeworkName:self.mStr_textName schoolName:@""];
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{

@@ -317,7 +317,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *parameters = @{@"UserJBH":[dm getInstance].jiaoBaoHao,@"StuId":StuId,@"classID":classID,@"className":className,@"Unid":Unid,@"chapterID":chapterID,@"homeworkName":homeworkName,@"schoolName":schoolName};
+    NSDictionary *parameters = @{@"UserJBH":[dm getInstance].jiaoBaoHao,@"StuId":StuId,@"classID":classID,@"className":className,@"Unid":Unid,@"chapterID":chapterID,@"homeworkName":homeworkName,@"schoolName":schoolName,@"IsSys":@"2"};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

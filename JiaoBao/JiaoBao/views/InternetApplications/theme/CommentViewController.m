@@ -311,27 +311,31 @@
     [self.mView_text setHidden:YES];
 
     [MBProgressHUD showMessage:@"" toView:self.view];
-    D("dspfgijagopfjdp-====%@",self.answerModel.TabID);
-    //获取答案详情
-    if(self.answerModel)//答案列表跳转用answerModel
-    {
-        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
-
-    }
-    else
-    {
-        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
-
-    }
-    if(self.answerModel)
-    {
-        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.answerModel.TabID];
-    }
-    else
-    {
-        [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.questionModel.answerModel.TabID];
-
-        
+    D("dspfgijagopfjdp-====%@,%@",self.answerModel.TabID,self.questionModel.answerModel.TabID);
+    if ([self.answerModel.TabID isEqualToString:@"(null)"]) {
+        [MBProgressHUD showSuccess:@"当前回答可能已被删除" toView:self.view];
+    }else{
+        //获取答案详情
+        if(self.answerModel)//答案列表跳转用answerModel
+        {
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
+            D("11111111");
+        }
+        else
+        {
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
+            D("11111112");
+        }
+        if(self.answerModel)
+        {
+            D("11111113");
+            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.answerModel.TabID];
+        }
+        else
+        {
+            D("11111114");
+            [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.questionModel.answerModel.TabID];
+        }
     }
         // Do any additional setup after loading the view from its nib.
 }
