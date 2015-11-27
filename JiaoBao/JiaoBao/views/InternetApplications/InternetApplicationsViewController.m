@@ -741,6 +741,8 @@
 }
 -(void)pushMenuItem9:(id)sender
 {
+    JoinUnit
+    NoNickName
     AddQuestionViewController *addQuestionVC = [[AddQuestionViewController alloc]init];
     [utils pushViewController:addQuestionVC animated:YES];
 }

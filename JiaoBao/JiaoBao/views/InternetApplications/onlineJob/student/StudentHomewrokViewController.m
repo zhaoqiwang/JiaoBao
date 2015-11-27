@@ -792,6 +792,7 @@
         {
             detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
         }
+        detail.navBarName = @"做作业";
         detail.FlagStr = @"1";
         detail.TabID = model.TabID;
         detail.isSubmit = [model.isHWFinish integerValue];
@@ -810,7 +811,10 @@
             else
             {
                 detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
-            }            detail.TabID = model.TabID;
+            }
+            detail.navBarName = @"做练习";
+            NSLog(@"fpweijfpwefn = %@",detail.navBarName);
+            detail.TabID = model.TabID;
             detail.hwName = model.homeworkName;
             detail.FlagStr = @"1";
             [self.navigationController pushViewController:detail animated:YES];

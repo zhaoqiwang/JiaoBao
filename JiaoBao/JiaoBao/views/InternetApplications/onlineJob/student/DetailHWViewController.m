@@ -233,7 +233,7 @@
     manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
     manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"做作业"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.navBarName];
     self.hwNameLabel.text = self.hwName;
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
@@ -262,8 +262,14 @@
         {
             if(self.isSubmit == YES)//如果作业已经完成
             {
-                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+                NSString *valueStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if([valueStr isEqualToString:@"radio"])
+                {
+                    NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                }
+
             }
 
             else//如果作业没有完成
@@ -453,6 +459,7 @@
 
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"index = %ld",(long)indexPath.row);
     DetialHWCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailHWCell" forIndexPath:indexPath];
 
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
@@ -460,6 +467,10 @@
     {
         cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
  
+    }
+    else
+    {
+        cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     }
 
 
@@ -730,7 +741,11 @@
 
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag-1] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
-                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                if(index.row<self.datasource.count)
+                {
+                    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                }
+
                 
                 }
 
@@ -745,7 +760,8 @@
         }
         else
         {
-            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+            [self.subArr replaceObjectAtIndex:self.selectedBtnTag-1 withObject:@"1"];
+            
         }
 
     }
