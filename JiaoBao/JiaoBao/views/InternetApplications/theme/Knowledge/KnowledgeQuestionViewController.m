@@ -844,7 +844,7 @@
     
     commentVC.questionModel = self.mModel_question;
     commentVC.answerModel = knowledgeTableViewCell.answerModel;
-    commentVC.flag = NO;
+    commentVC.flag = YES;
     [utils pushViewController:commentVC animated:YES];
 }
 
@@ -889,18 +889,18 @@
 //ButtonView回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
     //先判断是否加入单位，没有，则不能进行交互
-    JoinUnit
+    
     D("view.tag-=====%ld",(long)view.tag);
 //    view.mLab_title.text = @"取消关注";
     if (view.tag ==100) {//回答问题
         //没有昵称，不能对求知进行输入性操作
+        JoinUnit
         NoNickName
         //移除部分通知
         [self removeNoti];
         [self gotoAddAnswerVC];
     }else if (view.tag == 101){//邀请回答
         //没有昵称，不能对求知进行输入性操作
-        NoNickName
         self.mView_input.hidden = NO;
         [self.mView_input.mTextF_input becomeFirstResponder];
     }else if (view.tag == 102){//关注问题

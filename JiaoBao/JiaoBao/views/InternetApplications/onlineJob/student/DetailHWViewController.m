@@ -22,7 +22,6 @@
 
 @interface DetailHWViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
-@property(nonatomic,assign)BOOL selectedFlag;//被选择的标志
 @property(nonatomic,assign)NSUInteger selectedBtnTag;
 @property(nonatomic,strong)StuHomeWorkModel *stuHomeWorkModel;
 @property(nonatomic,strong)StuHWQsModel *stuHWQsModel;
@@ -62,12 +61,15 @@
     {
         NSString *QsIdQIdStr = [arr objectAtIndex:i];
         NSArray *QsIdQIdArr = [QsIdQIdStr componentsSeparatedByString:@"_"];
-        NSString *QsIdQId;
-        if(QsIdQIdArr.count>0)
+        NSString *QsIdQId,*QsIdQId2;
+        if(QsIdQIdArr.count>2)
         {
             QsIdQId = [QsIdQIdArr objectAtIndex:0];
+            QsIdQId2 = [QsIdQIdArr objectAtIndex:2];
             [self.datasource addObject:QsIdQId];
+            [self.subArr addObject:QsIdQId2];
         }
+        
     }
     if(self.datasource.count<20)
     {
@@ -198,6 +200,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.subArr = [[NSMutableArray alloc]initWithCapacity:0];
     //self.webView.scrollView.scrollEnabled = NO;
     if(self.isSubmit == YES)
     {
@@ -230,7 +233,7 @@
     manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
     manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"做作业"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.navBarName];
     self.hwNameLabel.text = self.hwName;
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
@@ -259,8 +262,14 @@
         {
             if(self.isSubmit == YES)//如果作业已经完成
             {
-                NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
-                [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+                NSString *valueStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if([valueStr isEqualToString:@"radio"])
+                {
+                    NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
+                    [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                }
+
             }
 
             else//如果作业没有完成
@@ -450,9 +459,21 @@
 
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"index = %ld",(long)indexPath.row);
     DetialHWCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailHWCell" forIndexPath:indexPath];
 
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
+    if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
+    {
+        cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+ 
+    }
+    else
+    {
+        cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    }
+
+
     if(cell.selected == YES)
     {
         cell.numLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:55/255.0 alpha:1];
@@ -720,7 +741,11 @@
 
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag-1] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
-                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                if(index.row<self.datasource.count)
+                {
+                    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                }
+
                 
                 }
 
@@ -732,6 +757,11 @@
         {
             [MBProgressHUD showError:@"题目没有完成，无法提交"];
             return;
+        }
+        else
+        {
+            [self.subArr replaceObjectAtIndex:self.selectedBtnTag-1 withObject:@"1"];
+            
         }
 
     }
@@ -775,6 +805,7 @@
         }
         else
         {
+            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
             self.previousBtn.enabled = YES;
 
             if(self.datasource.count-1==self.selectedBtnTag)

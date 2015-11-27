@@ -81,7 +81,6 @@
         cell.mImgV_select.frame = CGRectMake(0, 0, ([dm getInstance].width-70-40)/3, ([dm getInstance].width-70-40)/3);
     }
     
-    
     return cell;
 }
 

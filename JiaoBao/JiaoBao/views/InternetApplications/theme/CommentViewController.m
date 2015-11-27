@@ -670,7 +670,6 @@
 -(void)likeAction:(id)sender
 {
     JoinUnit;
-    NoNickName
 //    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
 //    {
 //        [MBProgressHUD showText:@"你已经评价过了"];
