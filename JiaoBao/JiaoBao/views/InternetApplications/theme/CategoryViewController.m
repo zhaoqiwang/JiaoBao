@@ -30,7 +30,7 @@
 }
 -(void)AddMyattCateWithuid:(id)sender
 {
-    [MBProgressHUD showSuccess:@"关注话题成功"];
+    [MBProgressHUD showSuccess:@"保存成功"];
 }
 -(void)GetMyattCate:(id)sender
 {
@@ -127,7 +127,7 @@
         [[KnowledgeHttp getInstance]GetMyattCate];
 
         self.collectionView.allowsMultipleSelection = YES;
-        self.titileLabel.text = @"显示优先显示的话题类别";
+        self.titileLabel.text = @"选择优先显示的话题类别";
         [self.collectionView selectItemAtIndexPath:0 animated:0 scrollPosition:UICollectionViewScrollPositionNone];
         self.selBtn.hidden = NO;
         //获取我关注的话题数组
@@ -401,7 +401,7 @@
     else
     {
         [[KnowledgeHttp getInstance]AddMyattCateWithuid:@""];
-        [[NSNotificationCenter defaultCenter]removeObserver:self];
+        //[[NSNotificationCenter defaultCenter]removeObserver:self];
 
     }
     [self dismissViewControllerAnimated:YES completion:nil];

@@ -137,7 +137,8 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否发布作业" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        NSString *message = [NSString stringWithFormat:@"是否发布%@",self.publishJobModel.homeworkName];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
         alert.delegate = self;
 
@@ -152,7 +153,9 @@
             TreeJob_class_model *model = [self.publishJobModel.classIDArr objectAtIndex:i];
             self.publishJobModel.Distribution = [NSString stringWithFormat:@"1:%@,2:%@",self.publishJobModel.SelNum,self.publishJobModel.InpNum];
             self.publishJobModel.classID = model.mStr_tableId;
-            self.publishJobModel.className = model.mStr_className;
+            NSRange range = [model.mStr_className rangeOfString:@"["];
+            NSString *clsName = [model.mStr_className substringToIndex:range.location];
+            self.publishJobModel.className = clsName;
             if ([self.publishJobModel.HwType intValue]==3) {
                 self.publishJobModel.Distribution = @"";
             }else if ([self.publishJobModel.HwType intValue]==1){
@@ -205,6 +208,8 @@
     self.publishJobModel.AdditionalDes = @"";
     self.publishJobModel.schoolName = [dm getInstance].mStr_unit;
     self.publishJobModel.TecName = [dm getInstance].TrueName;
+    self.publishJobModel.IsRep = @"1";
+    self.publishJobModel.IsQsSms = @"1";
     self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -1610,7 +1615,7 @@
     }else if ([temp isKindOfClass:[TreeJob_node class]]) {
         TreeJob_node *tempNode = treeJob_sigleSelect_TableViewCell.model;
         for (TreeJob_node *node in self.mArr_sumData) {
-            if (node.flag == tempNode.faType&&node.flag==2) {//年级
+            if (node.flag == tempNode.faType&&node.flag==2)  {//年级
                 for (TreeView_node *node1 in node.sonNodes) {
                     GradeModel *model = node1.nodeData;
                     GradeModel *model1 = tempNode.nodeData;

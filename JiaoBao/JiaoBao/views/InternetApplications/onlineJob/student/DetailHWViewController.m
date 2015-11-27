@@ -176,7 +176,7 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
-        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){alert(\"事件\");}</script><input type=\"button\" onClick=\"clicke()\" style=\"background:none;border:none;color:rgb(36,137,210);font-size:15px\" value=\"继续作业\"/></div></HTML>"];
+        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:15px\" value=\"继续作业\"/></div></HTML>"];
         [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
   
         self.isSubmit = YES;
@@ -434,7 +434,11 @@
     }
     JSContext *content = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     content[@"clicke"] = ^() {
-        [self.navigationController popViewControllerAnimated:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // 更UI
+             [self.navigationController popViewControllerAnimated:YES];
+        });
+       
         
         
     };
@@ -536,7 +540,15 @@
                     NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
                     if(self.isSubmit == NO)
                     {
-                        [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                        if(self.datasource.count-1==self.selectedBtnTag)
+                        {
+                            
+                        }
+                        else
+                        {
+                            [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                        }
+ 
                     }
 
                     isFinish = YES;
