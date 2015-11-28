@@ -1744,11 +1744,7 @@
                 }
             }
         }
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
-        self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
-        [self reloadDataForDisplayArray];
+        
         if (tempNode.faType==8) {//点击了自定义作业
             
         }else{
@@ -1767,6 +1763,11 @@
             }
         }
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
+    [self reloadDataForDisplayArray];
     
 }
 
