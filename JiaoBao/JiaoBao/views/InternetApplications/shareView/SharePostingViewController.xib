@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -33,22 +33,27 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A9c-3y-hea">
                     <rect key="frame" x="0.0" y="380" width="320" height="1"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qql-H3-tlt">
                     <rect key="frame" x="0.0" y="319" width="320" height="1"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jGd-Do-koE">
                     <rect key="frame" x="0.0" y="293" width="320" height="1"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydi-Lf-4GD">
                     <rect key="frame" x="0.0" y="73" width="320" height="1"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.85098039215686272" green="0.85098039215686272" blue="0.85098039215686272" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EGS-iV-XoG">
                     <rect key="frame" x="103" y="418" width="42" height="21"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="42" id="J5L-Wd-DRv"/>
                         <constraint firstAttribute="height" constant="21" id="fch-dP-1mu"/>
@@ -59,6 +64,7 @@
                 </label>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RGJ-U4-QZv">
                     <rect key="frame" x="229" y="173" width="78" height="30"/>
+                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="78" id="jBS-wD-rtg"/>
@@ -71,6 +77,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sAS-s8-8qr">
                     <rect key="frame" x="138" y="322" width="70" height="30"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.066520301089999997" green="0.41960784309999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="bia-9X-Cfw"/>
@@ -84,6 +91,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RR9-G4-S78">
                     <rect key="frame" x="13" y="400" width="294" height="30"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="RLs-bq-AWc"/>
@@ -99,18 +107,21 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="动态" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUs-9h-hUZ">
                             <rect key="frame" x="260" y="20" width="54" height="20"/>
+                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发布到" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YE9-zw-KbH">
                             <rect key="frame" x="10" y="20" width="42" height="20"/>
+                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzW-eT-F2h">
                             <rect key="frame" x="63" y="18" width="194" height="26"/>
+                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal">
                                 <color key="titleColor" red="0.91764705882352937" green="0.56470588235294117" blue="0.066666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -122,11 +133,13 @@
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bTri.png" translatesAutoresizingMaskIntoConstraints="NO" id="fdc-H6-siK">
                             <rect key="frame" x="240" y="25" width="15" height="15"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="15" id="Vgz-r5-gPA"/>
                             </constraints>
                         </imageView>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="fdc-H6-siK" firstAttribute="top" secondItem="Pyi-Gv-iDg" secondAttribute="top" constant="25" id="2FM-QL-6RW"/>
@@ -150,12 +163,14 @@
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9XG-IG-Z0o">
                             <rect key="frame" x="10" y="63" width="304" height="87"/>
+                            <animations/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-Wo-Bcq">
                             <rect key="frame" x="171" y="170" width="90" height="29"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="相册取图">
@@ -168,11 +183,13 @@
                         </button>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="输入标题" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Du8-IG-Nug">
                             <rect key="frame" x="10" y="10" width="300" height="30"/>
+                            <animations/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" returnKeyType="done"/>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="输入内容" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BBf-Ty-Qge">
                             <rect key="frame" x="18" y="72" width="66" height="21"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="66" id="XKu-QC-Dkg"/>
                                 <constraint firstAttribute="height" constant="21" id="grE-gX-y2N"/>
@@ -183,6 +200,7 @@
                         </label>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x97-gE-mvi">
                             <rect key="frame" x="50" y="134" width="94" height="28"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="录制视频">
@@ -195,6 +213,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bae-zF-XCz">
                             <rect key="frame" x="50" y="170" width="94" height="29"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.26666666666666666" green="0.75686274509803919" blue="0.094117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="29" id="13c-66-Kn2"/>
@@ -211,6 +230,7 @@
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEj-6T-Bnb">
                             <rect key="frame" x="171" y="134" width="90" height="29"/>
+                            <animations/>
                             <color key="backgroundColor" red="0.2666666667" green="0.75686274509999996" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="录制音频">
@@ -224,6 +244,7 @@
                             </connections>
                         </button>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="W5t-Wo-Bcq" secondAttribute="trailing" constant="59" id="1P7-w4-RSh"/>
@@ -244,6 +265,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="ydi-Lf-4GD" secondAttribute="trailing" id="2Qj-93-Lrf"/>

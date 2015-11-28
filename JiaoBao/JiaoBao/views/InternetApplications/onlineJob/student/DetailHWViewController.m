@@ -176,7 +176,7 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
-        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:15px\" value=\"继续作业\"/></div></HTML>"];
+        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做作业\"/></div></HTML>"];
         [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
   
         self.isSubmit = YES;
@@ -469,7 +469,11 @@
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
     if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
     {
-        cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+        if([self.FlagStr integerValue]==1)
+        {
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+
+        }
  
     }
     else
@@ -546,7 +550,10 @@
                         }
                         else
                         {
+                            
                             [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+                            [self.collectionView reloadData];
                         }
  
                     }
@@ -581,7 +588,7 @@
                     
                 }
                 NSLog(@"content = %@",content);
-                if(i>0)
+                if(i>0&&i<inputCount-1)
                 {
                     if([content isEqualToString:@","]== NO)
                     {
@@ -589,6 +596,14 @@
                     }
                     answer =[answer stringByAppendingString:content];
                     
+                }
+                else if (i==inputCount-1)
+                {
+                    if([content isEqualToString:@""]== NO)
+                    {
+                        isFinish = YES;
+                    }
+                    answer =[answer stringByAppendingString:content];
                 }
                 
             }
@@ -607,7 +622,11 @@
                 {
                     if(self.isSubmit == NO)
                     {
+
                         [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                        [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+                        [self.collectionView reloadData];
+
                     }
 
                 }

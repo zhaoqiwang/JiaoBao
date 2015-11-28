@@ -210,6 +210,7 @@
     self.publishJobModel.TecName = [dm getInstance].TrueName;
     self.publishJobModel.IsRep = @"1";
     self.publishJobModel.IsQsSms = @"1";
+    self.publishJobModel.IsSys = @"2";
     self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
