@@ -138,7 +138,7 @@
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:1];
     [self.view addSubview:self.mTableV_name];
-
+    D("0----=-======%@,%lu",self.stuHomeWorkModel.hwinfoid,(unsigned long)self.datasource.count);
     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:0]];
     [MBProgressHUD showMessage:@"" toView:self.view];
 

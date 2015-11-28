@@ -828,31 +828,32 @@
         NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
         cell.answerImgV.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, 26, 16);
         NSString *name2 = [NSString stringWithFormat:@"<font size=12 color=black>%@</font>",string2];
-        [row2 setObject:name2 forKey:@"text"];
-        RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-        cell.mLab_ATitle.componentsAndPlainText = componentsDS2;
-        CGSize optimalSize2 = [cell.mLab_ATitle optimumSize];
-        cell.mLab_ATitle.frame = CGRectMake(9+26, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-10-cell.mImgV_head.frame.size.width, optimalSize2.height);
-
+    [row2 setObject:name2 forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+    cell.mLab_ATitle.componentsAndPlainText = componentsDS2;
+    CGSize optimalSize2 = [cell.mLab_ATitle optimumSize];
+    cell.mLab_ATitle.frame = CGRectMake(9+26, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15, [dm getInstance].width-10-cell.mImgV_head.frame.size.width, optimalSize2.height);
+    
     
     //加载webview
-        [cell.mWebV_comment.scrollView setScrollEnabled:NO];
-        cell.mWebV_comment.tag = -1;
+    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
+    cell.mWebV_comment.tag = -1;
     cell.mWebV_comment.scalesPageToFit = YES;
-        cell.mWebV_comment.delegate = self;
-        NSString *content = self.AnswerDetailModel.AContent;
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,content];
-        [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-        //加载
-        //[self webViewLoadFinish:0];
-
-
-
-        cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, 50);
-//    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
+    cell.mWebV_comment.delegate = self;
+    NSString *content = self.AnswerDetailModel.AContent;
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
+    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,content];
+    [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    //加载
+    //[self webViewLoadFinish:0];
+    
+    
+    
+    cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, 50);
+    //    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
     if([self.AnswerDetailModel.Flag integerValue]==1)
     {
         cell.basisImagV.image = [UIImage imageNamed:@"content"];
