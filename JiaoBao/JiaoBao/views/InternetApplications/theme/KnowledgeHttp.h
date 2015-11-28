@@ -78,8 +78,6 @@
 //获取问题的答案列表 参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- 问题Id - 回答标志
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag;
 
-//举报答案 参数描述:答案id
--(void)reportanswerWithAId:(NSString*)AId;
 
 //评价答案 参数描述:答案id - (1=反对，0=支持)
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag;

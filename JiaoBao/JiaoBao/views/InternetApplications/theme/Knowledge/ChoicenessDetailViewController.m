@@ -176,6 +176,11 @@
         NSMutableString *content = [cell.ShowPickedModel.PContent mutableCopy];
     
 //    [content insertString:[NSString stringWithFormat:@"<p><img align='absmiddle' src = 'ask@2x.png' width = 20 height = 20> %@</p>",cell.ShowPickedModel.Title] atIndex:12];
+//       content = [[content stringByReplacingOccurrencesOfString:@"答" withString:@"<p><img align='absmiddle' src = 'ask@2x.png'></p>"] mutableCopy];
+//        content = [[content stringByReplacingOccurrencesOfString:@"内容" withString:@"<p><img align='absmiddle' src = 'anwser@2x.png'></p>"] mutableCopy];
+   content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">答"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white;width:120px ;display:inline-block;\"> 答 "]mutableCopy];
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">内容"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white\">内容"]mutableCopy];
+
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"]mutableCopy];

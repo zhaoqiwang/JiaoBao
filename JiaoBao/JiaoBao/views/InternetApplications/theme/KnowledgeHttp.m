@@ -431,38 +431,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
     
 }
 
-//举报答案 参数描述:答案id
--(void)reportanswerWithAId:(NSString*)AId
-{
-    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ReportAns",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer.timeoutInterval = TIMEOUT;
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *dic = @{@"ansId":AId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *code = [jsonDic objectForKey:@"ResultCode"];
-        //长时间不操作，握手通讯失败后，进行登录操作
-        Login
-//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        if([code  integerValue] == 0)
-        {
-            [MBProgressHUD showSuccess:@"举报成功"];
-        }
-        else
-        {
-            [MBProgressHUD showError:@"举报失败"];
-        }
-        D("JSON--------reportanswerWithAId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        D("Error---------reportanswerWithAId: %@", error);
-        [MBProgressHUD showError:@"服务器异常"];
-//        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
-    }];
-}
+
 
 //评价答案 参数描述:答案id - (0=反对，1=支持)
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag
