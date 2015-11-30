@@ -1011,7 +1011,6 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.mView_text];
-    
     [self.mView_text addSubview:self.mTextF_text];
     
     self.tableView.tableFooterView = [[UIView alloc]init];

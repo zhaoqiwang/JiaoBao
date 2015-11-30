@@ -131,7 +131,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *parameters = [publishJobModel propertiesDic];
     [parameters removeObjectForKey:@"classIDArr"];

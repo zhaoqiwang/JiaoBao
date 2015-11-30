@@ -136,10 +136,7 @@
     cell.askImgV.hidden = NO;
     //详情
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
-
-        [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
-
-
+    [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
 
 //    NSString *string_title = cell.ShowPickedModel.Title;
 //    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
