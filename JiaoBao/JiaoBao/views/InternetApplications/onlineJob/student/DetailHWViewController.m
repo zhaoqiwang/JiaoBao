@@ -48,10 +48,7 @@
 
     }
 
-    
 }
-
-
 
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
@@ -131,10 +128,7 @@
 
         }];
 
-        
-        
     }];
-    
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:1];
     [self.view addSubview:self.mTableV_name];
@@ -165,8 +159,16 @@
     {
         webHtml = self.stuHWQsModel.QsCon;
     }
+    if([webHtml isEqual:[NSNull null]])
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
 
-    [self.webView loadHTMLString:webHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    else
+    {
+        [self.webView loadHTMLString:webHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+
+    }
 
 }
 -(void)StuSubQsWithHwInfoId:(id)sender
@@ -250,10 +252,7 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-
-
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
     {
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
@@ -313,14 +312,11 @@
 
 
                     }
-                    
                     else//家长界面且作业没有提交
                     {
                         NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                         [self.webView stringByEvaluatingJavaScriptFromString:disabled];
                     }
-
-
                 }
             }
         
@@ -348,7 +344,6 @@
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
                             
                         }
-                        
                         else
                         {
                             
@@ -643,6 +638,12 @@
     [MBProgressHUD showMessage:@"" toView:self.view];
     self.selectedBtnTag = indexPath.row;
     cell.selected = YES;
+    int a = ([cell.numLabel.text intValue]-1)/20;
+    NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+    [self.qNum setTitle:aStr forState:UIControlStateNormal];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:indexPath.section];
+    [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
+
  
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
