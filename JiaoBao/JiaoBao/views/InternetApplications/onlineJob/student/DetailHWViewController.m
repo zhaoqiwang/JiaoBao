@@ -127,7 +127,6 @@
         } completion:^(BOOL finished){
 
         }];
-
     }];
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:1];
@@ -548,7 +547,7 @@
                             
                             [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                             [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
-                            [self.collectionView reloadData];
+                            //[self.collectionView reloadData];
                         }
  
                     }
@@ -620,7 +619,7 @@
 
                         [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                         [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
-                        [self.collectionView reloadData];
+                        //[self.collectionView reloadData];
 
                     }
 
@@ -634,10 +633,10 @@
     DetialHWCell *cell = (DetialHWCell*)[collectionView cellForItemAtIndexPath:indexPath];
     cell.numLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:55/255.0 alpha:1];
     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:indexPath.row]];
-    NSLog(@"huoqu = %@ %@",self.stuHomeWorkModel.hwinfoid,[self.datasource objectAtIndex:indexPath.row]);
     [MBProgressHUD showMessage:@"" toView:self.view];
     self.selectedBtnTag = indexPath.row;
-    cell.selected = YES;
+    [self.collectionView reloadData];
+    [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     int a = ([cell.numLabel.text intValue]-1)/20;
     NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
     [self.qNum setTitle:aStr forState:UIControlStateNormal];
@@ -719,7 +718,6 @@
 - (IBAction)nextBtnAction:(id)sender {
     UIButton *btn = (UIButton*)sender;
 
-
     if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
     {
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
@@ -744,7 +742,7 @@
             {
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 [self.collectionView reloadData];
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
 //                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
@@ -776,6 +774,11 @@
                 if(index.row<self.datasource.count)
                 {
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                    int a = (int)(index.row)/20;
+                    NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+                    [self.qNum setTitle:aStr forState:UIControlStateNormal];
+                    NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:0];
+                    [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
                 }
 
                 
@@ -852,6 +855,11 @@
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
+                int a = (int)(self.selectedBtnTag)/20;
+                NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+                [self.qNum setTitle:aStr forState:UIControlStateNormal];
+                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:a inSection:0];
+                [self.mTableV_name selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionNone];
                 if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -862,8 +870,7 @@
                 }
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
                 [self.collectionView reloadData];
-                
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
             }
 
         }
