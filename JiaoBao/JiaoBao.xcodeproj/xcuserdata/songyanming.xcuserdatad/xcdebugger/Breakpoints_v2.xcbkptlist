@@ -97,13 +97,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/CommentViewController.m"
-            timestampString = "470540937.329462"
+            filePath = "JiaoBao/views/InternetApplications/theme/AddQuestionViewController.m"
+            timestampString = "470634802.101232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "963"
-            endingLineNumber = "963"
-            landmarkName = "-webViewLoadFinish:"
+            startingLineNumber = "558"
+            endingLineNumber = "558"
+            landmarkName = "-selectBtnAction:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

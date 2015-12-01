@@ -573,6 +573,13 @@
     JoinUnit
     NoNickName
     [self.mTextV_content resignFirstResponder];
+    [self.mText_title resignFirstResponder];
+    if(self.mArr_pic.count>=20)
+    {
+        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传20张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertview show];
+        return;
+    }
     UIActionSheet *sheet;
     
     // 判断是否支持相机
@@ -753,7 +760,7 @@
                 {
                     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
                     
-                    elcPicker.maximumImagesCount = 10; //Set the maximum number of images to select to 10
+                    elcPicker.maximumImagesCount = 20 - self.mArr_pic.count; //Set the maximum number of images to select to 10
                     elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
                     elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
                     elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
@@ -899,7 +906,11 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
-    [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+    if(picker.maximumImagesCount>0)
+    {
+        [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+
+    }
     [self dismissViewControllerAnimated:YES completion:^{
         //发送选中图片上传请求
         if (info.count>0) {

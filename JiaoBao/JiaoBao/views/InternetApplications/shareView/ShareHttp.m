@@ -196,7 +196,7 @@ static ShareHttp *shareHttp = nil;
     NSURL *url = [NSURL URLWithString:urlString];
     
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
-    request.timeOutSeconds = TIMEOUT;
+    request.timeOutSeconds = 15;
     [request addRequestHeader:@"Content-Type" value:@"text/xml"];
     [request addRequestHeader:@"charset" value:@"UTF8"];
     [request setRequestMethod:@"POST"];
