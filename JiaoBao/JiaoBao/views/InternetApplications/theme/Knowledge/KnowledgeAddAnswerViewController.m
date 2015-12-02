@@ -360,6 +360,12 @@
 -(IBAction)mBtn_photo:(id)sender{
     [self.mTextV_content resignFirstResponder];
     [self.mTextV_answer resignFirstResponder];
+    if(self.mArr_pic.count>=20)
+    {
+        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传20张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertview show];
+        return;
+    }
     //先判断是否加入单位，没有，则不能进行交互
     JoinUnit
     //没有昵称，不能对求知进行输入性操作
@@ -525,7 +531,7 @@
                 {
                     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
                     
-                    elcPicker.maximumImagesCount = 10; //Set the maximum number of images to select to 10
+                    elcPicker.maximumImagesCount = 20-self.mArr_pic.count; //Set the maximum number of images to select to 10
                     elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
                     elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
                     elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
@@ -618,6 +624,7 @@
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
+    image = [self fixOrientation:image];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -662,8 +669,11 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
-    [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
-    
+    if(picker.maximumImagesCount>0)
+    {
+        [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+        
+    }
     [self dismissViewControllerAnimated:YES completion:^{
         //发送选中图片上传请求
         if (info.count>0) {
@@ -764,6 +774,82 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [utils popViewControllerAnimated:YES];
+}
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
 }
 
 - (void)didReceiveMemoryWarning {
