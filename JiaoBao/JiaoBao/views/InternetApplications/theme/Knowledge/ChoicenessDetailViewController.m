@@ -136,10 +136,7 @@
     cell.askImgV.hidden = NO;
     //详情
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
-
-        [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
-
-
+    [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
 
 //    NSString *string_title = cell.ShowPickedModel.Title;
 //    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -286,12 +283,12 @@
         NSString *str =  [NSString stringWithFormat:@"%.0f%%",a*100-8];
         NSString *str2 = [NSString stringWithFormat:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '%@'",str];
         [webView stringByEvaluatingJavaScriptFromString:str2];
+        
         NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
         [webView stringByEvaluatingJavaScriptFromString:meta];
         CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
         CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
         [self webViewLoadFinish:webViewHeight+20 Width:webViewWidth+16];
-
 
     }
     else

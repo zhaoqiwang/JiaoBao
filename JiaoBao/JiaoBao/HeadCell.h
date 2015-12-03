@@ -15,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *mLab_nickName;
 @property (weak, nonatomic) IBOutlet UILabel *mLab_categoryCount;
 @property (weak, nonatomic) IBOutlet UIButton *categoryBtn;
+@property (weak, nonatomic) IBOutlet UILabel *monthPointsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dayPointsLabel;
 
 @end

@@ -48,10 +48,7 @@
 
     }
 
-    
 }
-
-
 
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
@@ -130,11 +127,7 @@
         } completion:^(BOOL finished){
 
         }];
-
-        
-        
     }];
-    
     [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.mTableV_name.layer setBorderWidth:1];
     [self.view addSubview:self.mTableV_name];
@@ -165,8 +158,16 @@
     {
         webHtml = self.stuHWQsModel.QsCon;
     }
+    if([webHtml isEqual:[NSNull null]])
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }
 
-    [self.webView loadHTMLString:webHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    else
+    {
+        [self.webView loadHTMLString:webHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+
+    }
 
 }
 -(void)StuSubQsWithHwInfoId:(id)sender
@@ -176,13 +177,22 @@
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
-        NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做作业\"/></div></HTML>"];
-        [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+        if([self.navBarName isEqualToString:@"做作业"])
+        {
+            NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做作业\"/></div></HTML>"];
+            [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+        }
+        else
+        {
+            NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做练习\"/></div></HTML>"];
+            [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+        }
+
   
         self.isSubmit = YES;
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
+        //[[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
 //        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提交成功" message:@"本次作业得分： 100\r\n本次作业学力：10\r\n所有科目平均学历值：500\r\n" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
 //        [alertView show];
 //            NSString *lJs = @"document.documentElement.innerHTML";
@@ -250,10 +260,7 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-
-
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
     {
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
@@ -313,14 +320,11 @@
 
 
                     }
-                    
                     else//家长界面且作业没有提交
                     {
                         NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                         [self.webView stringByEvaluatingJavaScriptFromString:disabled];
                     }
-
-
                 }
             }
         
@@ -348,7 +352,6 @@
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
                             
                         }
-                        
                         else
                         {
                             
@@ -553,7 +556,7 @@
                             
                             [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                             [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
-                            [self.collectionView reloadData];
+                            //[self.collectionView reloadData];
                         }
  
                     }
@@ -625,7 +628,7 @@
 
                         [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                         [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
-                        [self.collectionView reloadData];
+                        //[self.collectionView reloadData];
 
                     }
 
@@ -639,10 +642,16 @@
     DetialHWCell *cell = (DetialHWCell*)[collectionView cellForItemAtIndexPath:indexPath];
     cell.numLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:55/255.0 alpha:1];
     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:indexPath.row]];
-    NSLog(@"huoqu = %@ %@",self.stuHomeWorkModel.hwinfoid,[self.datasource objectAtIndex:indexPath.row]);
     [MBProgressHUD showMessage:@"" toView:self.view];
     self.selectedBtnTag = indexPath.row;
-    cell.selected = YES;
+    [self.collectionView reloadData];
+    [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+    int a = ([cell.numLabel.text intValue]-1)/20;
+    NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+    [self.qNum setTitle:aStr forState:UIControlStateNormal];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:indexPath.section];
+    [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
+
  
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -690,7 +699,6 @@
 
 
 - (IBAction)previousBtnAction:(id)sender {
-    
     [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
     UIButton *btn = (UIButton*)sender;
     if(self.selectedBtnTag == 0)
@@ -706,18 +714,22 @@
             btn.enabled = NO;
         }
         NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
-        [self.collectionView reloadData];
-        
-        [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-        [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+        int a = (int)(index.row)/20;
+        NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+        [self.qNum setTitle:aStr forState:UIControlStateNormal];
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:a inSection:0];
+        [self.mTableV_name selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionNone];
         [MBProgressHUD showMessage:@"" toView:self.view];
+        [self.collectionView reloadData];
+        [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop ];
+        [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+
     }
 
 }
 
 - (IBAction)nextBtnAction:(id)sender {
     UIButton *btn = (UIButton*)sender;
-
 
     if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
     {
@@ -743,7 +755,7 @@
             {
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 [self.collectionView reloadData];
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
 //                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
@@ -769,15 +781,17 @@
                 else
                 {
                 self.previousBtn.enabled = YES;
-
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag-1] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 if(index.row<self.datasource.count)
                 {
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+                    int a = (int)(index.row)/20;
+                    NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+                    [self.qNum setTitle:aStr forState:UIControlStateNormal];
+                    NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:0];
+                    [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
                 }
-
-                
                 }
 
             }
@@ -851,6 +865,11 @@
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
+                int a = (int)(self.selectedBtnTag)/20;
+                NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+                [self.qNum setTitle:aStr forState:UIControlStateNormal];
+                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:a inSection:0];
+                [self.mTableV_name selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionNone];
                 if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -861,8 +880,7 @@
                 }
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
                 [self.collectionView reloadData];
-                
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
+                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
             }
 
         }

@@ -1904,9 +1904,20 @@
 
 -(void)TecMakeHWWithPublishJobModel:(id)sender
 {
-    [MBProgressHUD  hideHUDForView:self.view animated:YES];
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
+    NSString *result = [sender object];
+    if([result isEqualToString:@"成功"])
+    {
+        [MBProgressHUD  hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
+    }
+    else
+    {
+        [MBProgressHUD  hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD showSuccess:@"发布作业失败" toView:self.view];
+    }
+
     
 //        NSError* error;
 //        //从appdelegate获取数据数据库上下文

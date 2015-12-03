@@ -964,6 +964,7 @@
                 //头像
                 cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+16+10, 42, 42);
                 [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+
 //                D("dsrgijodfpgj'p-=====%@",model.answerModel.JiaoBaoHao);
 //                D("dsrgijodfpgj'p-222=====%@",[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao]);
                 cell.mImgV_head.hidden = NO;

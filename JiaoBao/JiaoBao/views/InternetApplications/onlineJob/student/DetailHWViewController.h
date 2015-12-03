@@ -19,12 +19,12 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *previousBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextBtn;
-@property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property(nonatomic,assign)BOOL isSubmit;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;//加载题目
+@property(nonatomic,assign)BOOL isSubmit;//作业是否已经完成 1：完成 0：未完成
 @property(nonatomic,strong)NSString *FlagStr;//区分跳转到那个界面 1是学生 2是家长
 
-- (IBAction)previousBtnAction:(id)sender;
-- (IBAction)nextBtnAction:(id)sender;
+- (IBAction)previousBtnAction:(id)sender;//上一题方法
+- (IBAction)nextBtnAction:(id)sender;//下一题方法
 @property (weak, nonatomic) IBOutlet UIButton *qNum;//选题数量按钮
 - (IBAction)qNumQustion:(id)sender;//选题数量按钮方法
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
