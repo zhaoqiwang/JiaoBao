@@ -195,6 +195,7 @@
 
 //通知界面，更新答案数据
 -(void)updataQuestionDetailModel:(NSNotification *)noti{
+    self.mInt_reloadData =0;
     //获取问题的答案列表
     [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:self.mStr_flag];
 }
@@ -619,7 +620,7 @@
     cell.mLab_comment.hidden = NO;
     //分割线
     cell.mLab_line.hidden = YES;
-    cell.mLab_line.frame = CGRectMake(20, 5, [dm getInstance].width-20, .5);
+    cell.mLab_line.frame = CGRectMake(20, 0, [dm getInstance].width-20, .5);
     //赞
     cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 22);
     NSString *strLike = model.LikeCount;
@@ -631,7 +632,14 @@
     cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
     [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //姓名
-    cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
+    CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+    if (nameSize.height>21) {
+        nameSize = CGSizeMake(nameSize.width, 30);
+        cell.mLab_IdFlag.numberOfLines = 2;
+    }else{
+        cell.mLab_IdFlag.numberOfLines = 1;
+    }
+    cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, nameSize.height);
     cell.mLab_IdFlag.text = model.IdFlag;
     //回答标题
     NSString *string1 = model.ATitle;
@@ -669,13 +677,6 @@
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);
         name2 = [NSString stringWithFormat:@" <font size=12 color='#E67215'>%@</font>", string2];
     }
-//    if ([model.Flag integerValue]==0) {//无内容
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
-//    }else if ([model.Flag integerValue]==1){//有内容
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容 : </font> <font>%@</font>", string2];
-//    }else if ([model.Flag integerValue]==2){//有证据
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-//    }
     NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
     [row2 setObject:name2 forKey:@"text"];
     RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
@@ -712,7 +713,6 @@
     }else{
         cell.mLab_line2.frame = CGRectMake(0, cell.mLab_IdFlag.frame.origin.y+cell.mLab_IdFlag.frame.size.height+10, [dm getInstance].width, 10);
     }
-    
     return cell;
 }
 
@@ -727,45 +727,51 @@
     float tempF = 0.0;
     NSMutableArray *array = self.mArr_answers;
     AnswerByIdModel *model = [array objectAtIndex:indexPath.row];
-    //标题
-//    tempF = tempF+10+16;
-//    //话题
-//    tempF = tempF+5+21;
-    //判断是否有回答
-//    if ([model.AnswersCount integerValue]>0) {
-        //分割线
-//        tempF = tempF+5;
-    tempF = 5;
-        if (model.Thumbnail.count>0) {
-            //回答标题
-            tempF = tempF+15+22;
-            //回答内容
-            NSString *string2 = model.Abstracts;
-            NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-            CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, 1000)];
-            if (size.height>20) {
-                size = CGSizeMake(size.width, 32);
-            }
-            tempF = tempF+5+size.height;
-            //背景色
-            tempF = tempF+3;
-            //图片
-            tempF = tempF+5+([dm getInstance].width-65-30)/3;
-            //时间
-            tempF = tempF+10+21;
-            tempF = tempF+20;
+    //分割线
+    tempF = 0;
+    if (model.Thumbnail.count>0) {
+        //回答标题
+        tempF = tempF+15+22;
+        //内容
+        if ([model.Flag integerValue]==2){//有证据
+            tempF = tempF+39+10;
         }else{
-            //赞
-            tempF = tempF+15+22;
-            //头像
-            tempF = tempF+10+42;
-            //姓名
-            tempF = tempF+10+21;
             tempF = tempF+20;
+            NSString *string2 = model.Abstracts;
+            string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+            string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
+            CGSize abSize;
+            if ([model.Flag intValue]==0) {//无内容
+                abSize = [string2 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9- 61-36, MAXFLOAT)];
+            }else{//有内容
+                abSize = [string2 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9- 61-26, MAXFLOAT)];
+            }
+            
+            if (abSize.height==23) {
+                abSize = CGSizeMake(abSize.width, 25);
+            }else if (abSize.height>21) {
+                abSize = CGSizeMake(abSize.width, 35);
+            }
+            tempF = tempF+abSize.height;
         }
-//    }else{
-//        tempF = tempF+20;
-//    }
+        //图片
+        tempF = tempF+([dm getInstance].width-65-30)/3;
+        //时间
+        tempF = tempF+10+21;
+        tempF = tempF+20;
+    }else{
+        //赞
+        tempF = tempF+15+22;
+        //头像
+        tempF = tempF+10+42;
+        //姓名
+        CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+        if (nameSize.height>21) {
+            nameSize = CGSizeMake(nameSize.width, 30);
+        }
+        tempF = tempF+10+nameSize.height;
+        tempF = tempF+20;
+    }
     return tempF;
 }
 

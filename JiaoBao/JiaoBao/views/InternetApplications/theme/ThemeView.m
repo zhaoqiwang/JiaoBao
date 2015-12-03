@@ -530,7 +530,7 @@
         [self.mTableV_knowledge registerNib:n forCellReuseIdentifier:indentifier];
     }
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
         for (UIView *temp in cell.subviews) {
@@ -876,15 +876,15 @@
             RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
             cell.mLab_title.componentsAndPlainText = componentsDS;
             //cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 50);
-//            CGSize titleSize = [cell.mLab_title optimumSize];
+            CGSize titleSize = [cell.mLab_title optimumSize];
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
-//                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
-                    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);
-//                }else{
-//                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
-//                }
+                if (titleSize.width>[dm getInstance].width-9*2-40-33-cell.askImgV.frame.size.width) {
+                    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40-33- cell.answerImgV.frame.size.width, 25);
+                }else{
+                    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, 10, titleSize.width, cell.mLab_title.frame.size.height);
+                }
                 cell.mImgV_top.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width, 12, 33, 12);
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
@@ -968,7 +968,14 @@
 //                D("dsrgijodfpgj'p-222=====%@",[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao]);
                 cell.mImgV_head.hidden = NO;
                 //姓名
-                cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
+                CGSize nameSize = [model.answerModel.IdFlag sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+                if (nameSize.height>20) {
+                    nameSize = CGSizeMake(nameSize.width, 35);
+                    cell.mLab_IdFlag.numberOfLines = 2;
+                }else{
+                    cell.mLab_IdFlag.numberOfLines = 1;
+                }
+                cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, nameSize.height);
                 cell.mLab_IdFlag.text = model.answerModel.IdFlag;
                 //回答标题
                 NSString *string1 = model.answerModel.ATitle;
@@ -1020,6 +1027,7 @@
                 cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
                 cell.mLab_Abstracts.textAlignment = RTTextAlignmentLeft;
                 //背景色
+//                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);
                 cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);
                 //图片
                 [cell.mCollectionV_pic reloadData];
@@ -1160,80 +1168,72 @@
     float tempF = 0.0;
     NSMutableArray *array = [self arrayDataSourceSum];
     QuestionModel *model = [array objectAtIndex:indexPath.row];
-    if ([model.TabID intValue]>0) {
-        //判断是否为置顶数据
-        tempF = tempF+10+16;
-        //话题
-        tempF = tempF+5+21;
-        //判断是否有回答
-        if ([model.answerModel.TabID integerValue]>0) {
-            //图片
-            if (model.answerModel.Thumbnail.count>0) {
-                //分割线
-                tempF=tempF+5+1;
-                //回答标题
-                tempF=tempF+15+3+23;
-                //回答内容
-                NSString *string2 = model.answerModel.Abstracts;
-//                cell.askImgV.image = [UIImage imageNamed:@"ask"];
-//                cell.askImgV.frame = CGRectMake(9, 10, 19, 19);
-                string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-                string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-                NSString *name2 = @"";
-                if ([model.answerModel.Flag integerValue]==0) {//无内容
-                    name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
-                }else if ([model.answerModel.Flag integerValue]==1){//有内容
-                    name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容 : </font> <font>%@</font>", string2];
-                }else if ([model.answerModel.Flag integerValue]==2){//有证据
-                    name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-                }
-                
-                NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-                [row2 setObject:name2 forKey:@"text"];
-                RCLabel *tempLab = [[RCLabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 16)];
-                tempLab.lineBreakMode = NSLineBreakByWordWrapping;
-                tempLab.font = [UIFont systemFontOfSize:14];
-                RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-                tempLab.componentsAndPlainText = componentsDS2;
-                CGSize optimalSize2 = [tempLab optimumSize];
-                optimalSize2 = CGSizeMake(optimalSize2.width, 35);
-//                if (optimalSize2.height==23) {
-//                    optimalSize2 = CGSizeMake(optimalSize2.width, 148);
-//                }else if (optimalSize2.height>20) {
-//                    optimalSize2 = CGSizeMake(optimalSize2.width, 148);
+    
+    //提问
+    tempF = tempF+10+19;
+    //话题
+    tempF = tempF+21;
+    //判断是否有回答
+    if ([model.answerModel.TabID integerValue]>0) {
+        //是否有图片
+        if (model.answerModel.Thumbnail.count>0) {
+            //分割线
+            tempF = tempF+5;
+            //回答标题
+            //            tempF = tempF+15+23;
+            //和头像的y值齐平
+            tempF = tempF+15+16+10;
+            //回答内容
+//            if ([model.answerModel.Flag integerValue]==2){//有证据
+//                tempF = tempF+34;
+//            }else{
+//                NSString *string2 = model.answerModel.Abstracts;
+//                string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+//                string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//                tempF = tempF+20;
+//                CGSize abSize;
+//                if ([model.answerModel.Flag intValue]==0) {//无内容
+//                    abSize = [string2 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9- 61-36, MAXFLOAT)];
+//                }else{//有内容
+//                    abSize = [string2 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9- 61-26, MAXFLOAT)];
+//                    tempF =tempF-20;
 //                }
-                tempF = tempF+5+optimalSize2.height;
-                //背景色
-                tempF=tempF+3;
-                tempF=tempF+5+([dm getInstance].width-65-30)/3;
-                //时间
-                tempF=tempF+5+21;
-                //分割线
-                tempF=tempF+20;
-            }else{
-                //分割线
-                tempF=tempF+5+1;
-                //赞
-                tempF=tempF+15+22;
-                //头像
-                tempF=tempF+10+42;
-                //姓名
-                tempF=tempF+10+21;
-                //分割线
-                tempF=tempF+20;
-            }
+//                
+//                if (abSize.height==23) {
+//                    abSize = CGSizeMake(abSize.width, 25);
+//                }else if (abSize.height>21) {
+//                    abSize = CGSizeMake(abSize.width, 35);
+//                }
+//                tempF = tempF+abSize.height;
+//            }
+            //背景色
+            tempF = tempF+39+3;
+            //图片
+            tempF = tempF + 5+([dm getInstance].width-65-30)/3+10;
+            //时间
+            tempF =tempF+21;
         }else{
-            if (model.mInt_top ==1) {
-                
-            }else{
-                tempF = tempF+20;
+            //分割线
+            tempF = tempF+5;
+            //赞
+            tempF = tempF+15+16;
+            //头像
+            tempF = tempF+10+42;
+            //姓名
+            CGSize nameSize = [model.answerModel.IdFlag sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+            if (nameSize.height>20) {
+                nameSize = CGSizeMake(nameSize.width, 35);
             }
+            tempF =tempF+10+nameSize.height;
+            tempF =tempF+10;
         }
     }else{
-        return 0;
+        tempF = tempF+10;
     }
+    tempF =tempF+10+5;
     return tempF;
 }
+
 
 -(float)cellHeightPicked:(NSIndexPath *)indexPath{
     float tempF = 0.0;

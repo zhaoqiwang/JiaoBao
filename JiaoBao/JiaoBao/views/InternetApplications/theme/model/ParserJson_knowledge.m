@@ -21,6 +21,7 @@
 #import "commentListModel.h"
 #import "utils.h"
 #import "InvitationUserInfo.h"
+#import "dm.h"
 
 @implementation ParserJson_knowledge
 
@@ -71,6 +72,9 @@
     model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
     model.IsKnlFeezeUser = [NSString stringWithFormat:@"%@",[dic objectForKey:@"IsKnlFeezeUser"]];
     model.DUnitId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"DUnitId"]];
+    //是否被封号
+    [dm getInstance].isCanUser = [model.IsKnlFeezeUser intValue];
+//    [dm getInstance].joinUnit = [model.DUnitId intValue];
     return model;
 }
 

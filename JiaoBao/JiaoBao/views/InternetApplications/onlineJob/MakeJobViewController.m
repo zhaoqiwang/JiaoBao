@@ -163,6 +163,7 @@
             }
             self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
             self.publishJobModel.schoolName = model.mStr_schoolName;
+            D("kjlksfjdkj-=====%@,%@",self.publishJobModel.HwType,self.publishJobModel.DoLv);
             [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
@@ -208,8 +209,8 @@
     self.publishJobModel.AdditionalDes = @"";
     self.publishJobModel.schoolName = [dm getInstance].mStr_unit;
     self.publishJobModel.TecName = [dm getInstance].TrueName;
-    self.publishJobModel.IsRep = @"1";
-    self.publishJobModel.IsQsSms = @"1";
+    self.publishJobModel.IsRep = 1;
+    self.publishJobModel.IsQsSms = 1;
     self.publishJobModel.IsSys = @"2";
     self.publishJobModel.teacherJiaobaohao = [dm getInstance].jiaoBaoHao;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
@@ -1883,7 +1884,7 @@
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
     }
-    if (self.publishJobModel.homeworkName.length<6||self.publishJobModel.homeworkName.length>49) {
+    if (self.publishJobModel.homeworkName.length<5||self.publishJobModel.homeworkName.length>50) {
         [MBProgressHUD showError:@"作业名称要求5到50个汉字"];
         return ;
     }

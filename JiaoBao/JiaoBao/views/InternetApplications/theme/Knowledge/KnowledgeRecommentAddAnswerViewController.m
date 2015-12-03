@@ -304,6 +304,13 @@
     cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
     [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //姓名
+//    CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+//    if (nameSize.height>21) {
+//        nameSize = CGSizeMake(nameSize.width, 30);
+//        cell.mLab_IdFlag.numberOfLines = 2;
+//    }else{
+//        cell.mLab_IdFlag.numberOfLines = 1;
+//    }
     cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
     cell.mLab_IdFlag.text = model.IdFlag;
     //回答标题
@@ -326,7 +333,7 @@
     if ([model.Flag integerValue]==0) {//无内容
         cell.mView_background.hidden = YES;
         cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
-        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 26, 16);
+        cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 36, 16);
         cell.basisImagV.hidden = NO;
         //cell.answerImgV.hidden = YES;
     }else if ([model.Flag integerValue]==1){//有内容

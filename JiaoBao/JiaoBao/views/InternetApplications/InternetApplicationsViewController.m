@@ -286,7 +286,12 @@
     [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     //检查更新
     [[LoginSendHttp getInstance] login_itunesUpdataCheck];
+    //获取求知中的个人信息
+    [[KnowledgeHttp getInstance] GetUserInfo];
 }
+
+//获取求知中的个人信息
+
 
 //点击事件，点击隐藏
 -(void)pressTap:(UITapGestureRecognizer *)tap{

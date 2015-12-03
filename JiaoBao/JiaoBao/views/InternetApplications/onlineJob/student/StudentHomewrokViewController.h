@@ -29,7 +29,7 @@
 #import "OtherItemsCell.h"
 #import "IQKeyboardManager.h"
 
-@interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,TreeJob_sigleSelect_TableViewCellDelegate,PublishJobDelegate,UITextFieldDelegate>
+@interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,TreeJob_sigleSelect_TableViewCellDelegate,PublishJobDelegate,UITextFieldDelegate,UITextViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) UIScrollView *mScrollV_all;//做作业、做练习显示

@@ -21,17 +21,20 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    if ([self.mModel_stuInf.StudentID intValue]>0) {
+        [self headerRereshing];
+    }
 }
--(void)updateUI:(id)sender
-{
-    [self headerRereshing];
-}
+//-(void)updateUI:(id)sender
+//{
+//    [self headerRereshing];
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //做作业详情界面返回到此界面时刷新
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateUI" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI:) name:@"updateUI" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateUI" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateUI:) name:@"updateUI" object:nil];
     //学生获取当前作业列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWList" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetStuHWList:) name:@"GetStuHWList" object:nil];
@@ -1199,6 +1202,31 @@
     [self reloadDataForDisplayArray];
 }
 
+//如果输入超过规定的字数100，就不再让输入
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    //输入删除时
+    if ([string isEqualToString:@""]) {
+        return YES;
+    }
+    //不能大于规定字数限制
+    NSString *new = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSInteger res = 49-[new length];
+    if(res >= 0){
+        return YES;
+    }else{
+        NSRange rg = {0,[string length]+res};
+        if (rg.length>0) {
+            NSString *s = [string substringWithRange:rg];
+            [textField setText:[textField.text stringByReplacingCharactersInRange:range withString:s]];
+        }
+        return NO;
+    }
+    
+    // For any other character return TRUE so that the text gets added to the view
+    return TRUE;
+}
+
 //发布练习按钮回调
 -(void)PublishJob{
     //年级
@@ -1228,6 +1256,10 @@
     if ([tempModel3.mStr_id intValue]==0) {
         [MBProgressHUD showError:@"请选择章节"];
         return ;
+    }
+    if ([utils isBlankString:self.mStr_textName]) {
+        [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
+        return;
     }
     if (self.mStr_textName.length<6||self.mStr_textName.length>49) {
         [MBProgressHUD showError:@"练习名称为6--49个字符"];
