@@ -641,8 +641,12 @@
             NSString *temp = model.originalName;
             content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
         }
-        content = [NSString stringWithFormat:@"<p>%@</p>",content];
-        
+        if (content.length>4000) {
+            [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
+            return;
+        }
+//        content = [NSString stringWithFormat:@"<p>%@</p>",content];
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }

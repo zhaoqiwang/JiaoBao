@@ -446,8 +446,13 @@
         NSString *temp = model.originalName;
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
     }
+    if (content.length>4000) {
+        [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
+        return;
+    }
 //    content = [NSString stringWithFormat:@"<p>%@</p>",content];
     //如果已经回答过
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     if ([self.mStr_MyAnswerId intValue]>0) {
         [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
     }else{
