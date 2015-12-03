@@ -457,7 +457,6 @@
 }
 //如果输入超过规定的字数100，就不再让输入
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    
     // Any new character added is passed in as the "text" parameter
     if ([text isEqualToString:@"\n"]) {
         // Be sure to test for equality using the "isEqualToString" message
@@ -466,12 +465,29 @@
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
+    //输入删除时
+    if ([text isEqualToString:@""]) {
+        return YES;
+    }
+    //不能大于规定字数限制
     if (textView.tag == 1) {//标题
-        if (range.location>100){
-            return  NO;
-        }else{
+        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
+        NSInteger res = 100-[new length];
+        if(res >= 0){
             return YES;
+        }else{
+            NSRange rg = {0,[text length]+res};
+            if (rg.length>0) {
+                NSString *s = [text substringWithRange:rg];
+                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+            }
+            return NO;
         }
+//        if (range.location>=100){
+//            return  NO;
+//        }else{
+//            return YES;
+//        }
     }
     
     // For any other character return TRUE so that the text gets added to the view

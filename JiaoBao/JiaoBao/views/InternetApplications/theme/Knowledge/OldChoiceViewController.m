@@ -89,17 +89,18 @@
         [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
     }
     PickedIndexModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-    cell.mLab_background.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_background.frame.size.height);
+    //分割线
+    cell.mLab_background.frame = CGRectMake(10, 0, [dm getInstance].width-10, .5);
+    cell.mLab_background.textColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     //标题
-    CGSize titleSize = [model.PTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-27-86, 99999)];
-    if (titleSize.height>18) {
-        titleSize.height = 30;
-    }
-    cell.mLab_title.frame = CGRectMake(9, 30, [dm getInstance].width-27-86, titleSize.height);
+    CGSize titleSize = [model.PTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-27-70, MAXFLOAT)];
+    cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-27-70, titleSize.height);
     cell.mLab_title.text = model.PTitle;
+    cell.mLab_title.textColor = [UIColor colorWithRed:37/255.0 green:137/255.0 blue:209/255.0 alpha:1];
     //日期
-    cell.mLab_time.frame = CGRectMake(9, 100-20-cell.mLab_time.frame.size.height, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
+    cell.mLab_time.frame = CGRectMake(9, cell.mLab_title.frame.origin.y+titleSize.height+10, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
     cell.mLab_time.text = model.RecDate;
+    cell.mLab_time.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
     //图片
     NSString *tempUrl;
     if (model.ImgContent.count>0) {
@@ -107,13 +108,21 @@
     }
     D("ldghjalksgjaskl-===%@",tempUrl);
     [cell.mImgV_img sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
-    cell.mImgV_img.frame = CGRectMake([dm getInstance].width-86-9, 20, 86, 70);
+    cell.mImgV_img.frame = CGRectMake([dm getInstance].width-70-9, 10, 70, 50);
     
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 100;
+    float height = 0.0;
+    PickedIndexModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    //标题
+    CGSize titleSize = [model.PTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-27-70, MAXFLOAT)];
+    height = height+10+titleSize.height+10+21+10;
+    if (height>70) {
+        return height;
+    }
+    return 70;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

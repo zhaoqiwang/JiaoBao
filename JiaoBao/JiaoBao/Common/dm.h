@@ -86,6 +86,7 @@
 @property(nonatomic,strong)NSString * onlyGetInfo;
 @property(nonatomic,assign)BOOL addQuestionNoti;
 @property(nonatomic,assign) int joinUnit;//判断自己是否加入单位，求知是否可以有操作判定，0无
+@property(nonatomic,assign) int isCanUser;//判断自己是否被封号，求知是否可以有操作判定，0无
 + (dm*) getInstance;
 
 

@@ -30,10 +30,10 @@
 //获取单位头像
 #define UnitIDImg [NSURL URLWithString:[NSString stringWithFormat:@"%@/ClientSrv/getUnitlogo?UnitID=",[dm getInstance].url]]
 
-//没有加入单位时，对求知的提示
-#define JoinUnit if ([dm getInstance].joinUnit==0) {[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
-#define JoinUnitTextV if ([dm getInstance].joinUnit==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
-#define JoinUnitTextF if ([dm getInstance].joinUnit==0) {[textField resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}
+//没有加入单位时，对求知的提示,账号被封
+#define JoinUnit if ([dm getInstance].joinUnit==0||[dm getInstance].isCanUser==1) {if ([dm getInstance].joinUnit==0) {[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}else if ([dm getInstance].isCanUser==1){[MBProgressHUD showSuccess:@"您的账号已被停用求知权限" toView:self.view];return;}}
+#define JoinUnitTextV if ([dm getInstance].joinUnit==0||[dm getInstance].isCanUser==1) {if ([dm getInstance].joinUnit==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}else if ([dm getInstance].isCanUser==1){[textView resignFirstResponder];[MBProgressHUD showSuccess:@"您的账号已被停用求知权限" toView:self.view];return;}}
+#define JoinUnitTextF if ([dm getInstance].joinUnit==0||[dm getInstance].isCanUser==1) {if ([dm getInstance].joinUnit==0) {[textField resignFirstResponder];[MBProgressHUD showSuccess:@"必须加入单位方可进行此操作" toView:self.view];return;}else if ([dm getInstance].isCanUser==1){[textField resignFirstResponder];[MBProgressHUD showSuccess:@"您的账号已被停用求知权限" toView:self.view];return;}}
 //没有昵称，不能对求知进行输入性操作
 #define NoNickName if ([dm getInstance].NickName1.length==0) {[MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];return;}
 #define NoNickNameTextV if ([dm getInstance].NickName1.length==0) {[textView resignFirstResponder];[MBProgressHUD showSuccess:@"请去个人中心设置昵称" toView:self.view];return;}

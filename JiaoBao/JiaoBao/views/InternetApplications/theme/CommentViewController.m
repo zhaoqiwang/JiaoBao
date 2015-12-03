@@ -839,8 +839,12 @@
     cell.mWebV_comment.scalesPageToFit = YES;
     cell.mWebV_comment.delegate = self;
     NSString *content = self.AnswerDetailModel.AContent;
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
