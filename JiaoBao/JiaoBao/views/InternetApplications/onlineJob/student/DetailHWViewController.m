@@ -477,35 +477,11 @@
     }
     else{
         if(self.isSubmit == 1&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1){
-           cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+           cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         } else{
            cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
     }
-//    if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
-//    {
-//        if([self.FlagStr integerValue]==1)
-//        {
-//            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
-//
-//        }
-// 
-//    }
-//    else if(self.isSubmit == 1&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
-//    {
-//        if([self.FlagStr integerValue]==2)
-//        {
-//            cell.numLabel.backgroundColor = [UIColor redColor];
-//
-//        } else{
-//          cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-//        }
-//    }
-//    else{
-//        cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-//        
-//    }
-
 
     if(cell.selected == YES)
     {
@@ -668,12 +644,7 @@
     self.selectedBtnTag = indexPath.row;
     [self.collectionView reloadData];
     [self.collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-    int a = ([cell.numLabel.text intValue]-1)/20;
-    NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
-    [self.qNum setTitle:aStr forState:UIControlStateNormal];
-    NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:indexPath.section];
-    [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
-
+    [self changeQuestionRange:[cell.numLabel.text intValue]-1];
  
 }
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
@@ -736,11 +707,8 @@
             btn.enabled = NO;
         }
         NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
-        int a = (int)(index.row)/20;
-        NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
-        [self.qNum setTitle:aStr forState:UIControlStateNormal];
-        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:a inSection:0];
-        [self.mTableV_name selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        [self changeQuestionRange:(int)index.row];
+
         [MBProgressHUD showMessage:@"" toView:self.view];
         [self.collectionView reloadData];
         [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop ];
@@ -808,11 +776,10 @@
                 if(index.row<self.datasource.count)
                 {
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
-                    int a = (int)(index.row)/20;
-                    NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
-                    [self.qNum setTitle:aStr forState:UIControlStateNormal];
-                    NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:0];
-                    [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
+                    [self changeQuestionRange:(int)index.row];
+
+//                    }
+
                 }
                 }
 
@@ -887,11 +854,8 @@
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
-                int a = (int)(self.selectedBtnTag)/20;
-                NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
-                [self.qNum setTitle:aStr forState:UIControlStateNormal];
-                NSIndexPath *indexpath = [NSIndexPath indexPathForRow:a inSection:0];
-                [self.mTableV_name selectRowAtIndexPath:indexpath animated:NO scrollPosition:UITableViewScrollPositionNone];
+                [self changeQuestionRange:(int)self.selectedBtnTag];
+
                 if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -950,6 +914,24 @@
 {
      self.view.frame = CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
 
+}
+-(void)changeQuestionRange:(int)num
+{
+    int a = (int)(num)/20;
+    if((a+1)*20<self.datasource.count)
+    {
+        NSString *aStr = [NSString stringWithFormat:@"%d-%d",20*a+1,(a+1)*20];
+        [self.qNum setTitle:aStr forState:UIControlStateNormal];
+        NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:0];
+        [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
+    else
+    {
+        NSString *aStr = [NSString stringWithFormat:@"%d-%lu",20*a+1,(unsigned long)self.datasource.count];
+        [self.qNum setTitle:aStr forState:UIControlStateNormal];
+        NSIndexPath *index = [NSIndexPath indexPathForRow:a inSection:0];
+        [self.mTableV_name selectRowAtIndexPath:index animated:NO scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 @end
