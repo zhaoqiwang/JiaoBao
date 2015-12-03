@@ -111,7 +111,6 @@
         {
             cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,[self.stuHomeWorkModel.Qsc integerValue]];
         }
-        NSLog(@"num = %@",cell.textLabel.text);
         return cell;
     } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
         [UIView animateWithDuration:0.3 animations:^{
@@ -466,23 +465,46 @@
 
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"index = %ld",(long)indexPath.row);
     DetialHWCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailHWCell" forIndexPath:indexPath];
-
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
-    if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
-    {
-        if([self.FlagStr integerValue]==1)
+    if([self.FlagStr integerValue]==1){
+        if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
         {
-            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
-
+               cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+        } else{
+               cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
- 
     }
-    else
-    {
-        cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+    else{
+        if(self.isSubmit == 1&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1){
+           cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+        } else{
+           cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+        }
     }
+//    if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
+//    {
+//        if([self.FlagStr integerValue]==1)
+//        {
+//            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+//
+//        }
+// 
+//    }
+//    else if(self.isSubmit == 1&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
+//    {
+//        if([self.FlagStr integerValue]==2)
+//        {
+//            cell.numLabel.backgroundColor = [UIColor redColor];
+//
+//        } else{
+//          cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+//        }
+//    }
+//    else{
+//        cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+//        
+//    }
 
 
     if(cell.selected == YES)
