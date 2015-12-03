@@ -408,7 +408,7 @@
             self.mText_title.text = @"";
             self.atAccIdsTF.text = @"";
             self.categoryTF.text = @"";
-            [MBProgressHUD showSuccess:@"发布问题成功"];
+            [MBProgressHUD showSuccess:ResultDesc];
             [[NSNotificationCenter defaultCenter]removeObserver:self];
             [dm getInstance].addQuestionNoti = NO;
             

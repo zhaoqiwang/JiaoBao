@@ -1176,6 +1176,7 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *resultData = [jsonDic objectForKey:@"Data"];
         
         PointsModel *model = [ParserJson_knowledge parserJsonGetMyPoints:resultData];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyPointsDayWithAccId" object:model];
         D("JSON--------GetMyPointsDayWithAccId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyPointsDayWithAccId: %@", error);
@@ -1201,6 +1202,8 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *resultData = [jsonDic objectForKey:@"Data"];
         
         PointsModel *model = [ParserJson_knowledge parserJsonGetMyPoints:resultData];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyPointsMonthWithAccId" object:model];
+
         D("JSON--------GetMyPointsMonthWithAccId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyPointsMonthWithAccId: %@", error);

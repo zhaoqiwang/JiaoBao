@@ -157,7 +157,6 @@
 //答案详情回调
 -(void)AnswerDetailWithAId:(id)sender
 {
-    
     {
         //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSDictionary *dic = [sender object];
@@ -180,7 +179,6 @@
             ButtonViewCell *btnView101 = (ButtonViewCell*)[self.view viewWithTag:101];
             btnView101.mLab_title.text = [NSString stringWithFormat:@"评论%@",self.AnswerDetailModel.CCount];
             }
-
         }
     }
 }

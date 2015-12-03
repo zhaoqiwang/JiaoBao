@@ -24,6 +24,7 @@
 #import "MyQuestionViewController.h"
 #import "MyAnswerViewController.h"
 #import "MyAttQViewController.h"
+#import "PointsModel.h"
 
 @interface KnowledgePeoleSpaceViewController ()<MyNavigationDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)NSArray *questionArr;
@@ -97,11 +98,32 @@
     [[KnowledgeHttp getInstance]GetMyattCate];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
+-(void)GetMyPointsDayWithAccId:(NSNotification*)sender
+{
+    PointsModel *model = [sender object];
+    if (model.Point) {
+        self.HeadCell.dayPointsLabel.text = model.Point;
+    }
+}
+
+-(void)GetMyPointsMonthWithAccId:(NSNotification*)sender
+{
+    PointsModel *model = [sender object];
+    if (model.Point) {
+        self.HeadCell.monthPointsLabel.text = model.Point;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //[[KnowledgeHttp getInstance]GetMyCommsWithNumPerPage:@"10" pageNum:@"0"];
-    //[[KnowledgeHttp getInstance]GetMyPointsDayWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
-    //[[KnowledgeHttp getInstance]GetMyPointsMonthWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
+    [[KnowledgeHttp getInstance]GetMyPointsDayWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
+    [[KnowledgeHttp getInstance]GetMyPointsMonthWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
+    //获取日积分
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyPointsDayWithAccId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyPointsDayWithAccId:) name:@"GetMyPointsDayWithAccId" object:nil];
+    //获取月积分
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyPointsMonthWithAccId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyPointsMonthWithAccId:) name:@"GetMyPointsMonthWithAccId" object:nil];
     //改变头像
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"changeFaceImg" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeFaceImg:) name:@"changeFaceImg" object:nil];
