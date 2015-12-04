@@ -22,6 +22,7 @@
 
 @interface DetailHWViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
+@property(nonatomic,strong)NSMutableArray *errQuestionArr;//做错的题目 0:没做的 1:正确 2：错误
 @property(nonatomic,assign)NSUInteger selectedBtnTag;
 @property(nonatomic,strong)StuHomeWorkModel *stuHomeWorkModel;
 @property(nonatomic,strong)StuHWQsModel *stuHWQsModel;
@@ -58,13 +59,15 @@
     {
         NSString *QsIdQIdStr = [arr objectAtIndex:i];
         NSArray *QsIdQIdArr = [QsIdQIdStr componentsSeparatedByString:@"_"];
-        NSString *QsIdQId,*QsIdQId2;
-        if(QsIdQIdArr.count>2)
+        NSString *QsIdQId,*QsIdQId2,*QsIdQId3;
+        if(QsIdQIdArr.count>3)
         {
             QsIdQId = [QsIdQIdArr objectAtIndex:0];
             QsIdQId2 = [QsIdQIdArr objectAtIndex:2];
+            QsIdQId3 = [QsIdQIdArr objectAtIndex:3];
             [self.datasource addObject:QsIdQId];
             [self.subArr addObject:QsIdQId2];
+            [self.errQuestionArr addObject:QsIdQId3];
         }
         
     }
@@ -210,6 +213,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.subArr = [[NSMutableArray alloc]initWithCapacity:0];
+    self.errQuestionArr = [[NSMutableArray alloc]initWithCapacity:0];
     //self.webView.scrollView.scrollEnabled = NO;
     if(self.isSubmit == YES)
     {
@@ -461,24 +465,50 @@
     return YES;
 }
 
-
-
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     DetialHWCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailHWCell" forIndexPath:indexPath];
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
     if([self.FlagStr integerValue]==1){
-        if(self.isSubmit == 0&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1)
+        if(self.isSubmit == 0&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]!=0)
         {
-               cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
-        } else{
-               cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+            
+        }
+        
+        else if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
+        {
+            cell.numLabel.textColor = [UIColor redColor];
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+        }
+        
+        else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)
+        {
+            cell.numLabel.textColor = [UIColor redColor];
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+        }
+        
+        else
+        {
+           cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
     }
-    else{
-        if(self.isSubmit == 1&&[[self.subArr objectAtIndex:indexPath.row]integerValue]==1){
+    
+    else
+    {
+        if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
+        {
+           cell.numLabel.textColor = [UIColor redColor];
            cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-        } else{
+        }
+        
+        else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)
+        {
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+        }
+        
+        else
+        {
            cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
     }
@@ -487,9 +517,18 @@
     {
         cell.numLabel.textColor = [UIColor colorWithRed:0 green:127/255.0 blue:55/255.0 alpha:1];
     }
+    
     else
     {
-        cell.numLabel.textColor = [UIColor blackColor];
+        if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
+        {
+            cell.numLabel.textColor = [UIColor redColor];
+        }
+        
+        else
+        {
+            cell.numLabel.textColor = [UIColor blackColor];
+        }
     }
     return cell;
 }
@@ -553,7 +592,7 @@
                         {
                             
                             [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
-                            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+                            [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
                             //[self.collectionView reloadData];
                         }
  
@@ -625,7 +664,7 @@
                     {
 
                         [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
-                        [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+                        [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
                         //[self.collectionView reloadData];
 
                     }
@@ -794,7 +833,7 @@
         }
         else
         {
-            [self.subArr replaceObjectAtIndex:self.selectedBtnTag-1 withObject:@"1"];
+            [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag-1 withObject:@"1"];
             
         }
 
@@ -839,7 +878,7 @@
         }
         else
         {
-            [self.subArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
+            [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
             self.previousBtn.enabled = YES;
 
             if(self.datasource.count-1==self.selectedBtnTag)

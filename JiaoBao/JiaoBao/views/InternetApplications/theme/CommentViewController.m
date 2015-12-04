@@ -702,6 +702,7 @@
     [cell.LikeBtn addTarget:self action:@selector(likeAction:) forControlEvents:UIControlEventTouchUpInside];
 
     //详情
+    //cell.mBtn_detail.hidden = YES;
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 3, 40, cell.mBtn_detail.frame.size.height);
     if(self.topButtonTag ==  1)
     {
@@ -1064,21 +1065,26 @@
     QuestionDetailModel *model = noti.object;
     self.KnowledgeTableViewCell.mLab_ViewCount.text = [NSString stringWithFormat:@"%d",[model.ViewCount intValue]+1];
     self.KnowledgeTableViewCell.mLab_AnswersCount.text = model.AnswersCount;
-    self.KnowledgeTableViewCell.mLab_Att.text = model.AttCount;
+    self.KnowledgeTableViewCell.mLab_AttCount.text = model.AttCount;
 
 }
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
-    QuestionModel *model = [[QuestionModel alloc] init];
-    model.TabID = self.questionModel.TabID;
-    model.ViewCount = self.questionModel.ViewCount;
-    model.AttCount = self.questionModel.AttCount;
-    model.AnswersCount = self.questionModel.AnswersCount;
-    model.Title = self.questionModel.Title;
-    model.CategorySuject = self.questionModel.CategorySuject;
-    queston.mModel_question = model;
-    [utils pushViewController:queston animated:YES];
+//    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+//    QuestionModel *model = [[QuestionModel alloc] init];
+//    model.TabID = self.questionModel.TabID;
+//    model.ViewCount = self.questionModel.ViewCount;
+//    model.AttCount = self.questionModel.AttCount;
+//    model.AnswersCount = self.questionModel.AnswersCount;
+//    model.Title = self.questionModel.Title;
+//    model.CategorySuject = self.questionModel.CategorySuject;
+//    queston.mModel_question = model;
+//    [utils pushViewController:queston animated:YES];
+
+    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+    detail.mInt_view = 0;
+    detail.mModel_question = knowledgeTableViewCell.model;
+    [utils pushViewController:detail animated:YES];
 }
 
 -(void)tapAction:(id)sender
