@@ -163,6 +163,7 @@
     if([webHtml isEqual:[NSNull null]])
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.webView loadHTMLString:@"" baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     }
 
     else
@@ -178,6 +179,8 @@
     if([model.reNum integerValue] == 0)
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
+        //[[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID];
+
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
         if([self.navBarName isEqualToString:@"做作业"])
         {
@@ -475,6 +478,10 @@
             cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
             
         }
+        else if (self.isSubmit == 0&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]== 0)
+        {
+             cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+        }
         
         else if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
         {
@@ -484,32 +491,38 @@
         
         else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)
         {
-            cell.numLabel.textColor = [UIColor redColor];
-            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+            //cell.numLabel.textColor = [UIColor redColor];
+            //cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+
         }
         
         else
         {
-           cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+          cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];      }
         }
-    }
     
     else
     {
         if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
         {
            cell.numLabel.textColor = [UIColor redColor];
-           cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+          cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+
+           //cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
         
         else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)
         {
-            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+             cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+            //cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
         }
         
         else
         {
-           cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
+            cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
+
+           //cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
     }
 
@@ -784,7 +797,7 @@
             {
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 [self.collectionView reloadData];
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+
                 NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
 //                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
@@ -795,6 +808,7 @@
                 }
                 else
                 {
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
                 }
 
@@ -885,6 +899,7 @@
             {
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
+                [self.collectionView reloadData];
             }
             
             else
