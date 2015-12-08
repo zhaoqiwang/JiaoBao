@@ -116,6 +116,7 @@
         NSString *content = model.AContent;
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
         self.mTextV_content.text = content;
         self.mLab_answer.hidden = YES;
         self.mLab_content.hidden = YES;
@@ -453,6 +454,8 @@
 //    content = [NSString stringWithFormat:@"<p>%@</p>",content];
     //如果已经回答过
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
     if ([self.mStr_MyAnswerId intValue]>0) {
         [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
     }else{
@@ -552,7 +555,7 @@
                 {
                     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
                     
-                    elcPicker.maximumImagesCount = 20-self.mArr_pic.count; //Set the maximum number of images to select to 10
+                    elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
                     elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
                     elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
                     elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
@@ -572,7 +575,7 @@
             } else {
                 ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
                 
-                elcPicker.maximumImagesCount = 10; //Set the maximum number of images to select to 10
+                elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
                 elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
                 elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
                 elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images

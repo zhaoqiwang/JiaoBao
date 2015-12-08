@@ -13,6 +13,7 @@
                 <outlet property="nextBtn" destination="Wll-GM-IW9" id="RBE-A3-2Pj"/>
                 <outlet property="previousBtn" destination="gS6-gn-Zhj" id="QZg-nd-Wsi"/>
                 <outlet property="qNum" destination="4Be-QF-e2D" id="1xK-PG-UU6"/>
+                <outlet property="questionNumLabel" destination="Q52-JJ-29r" id="Z75-of-nl1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="webView" destination="qnP-jp-rOX" id="RL3-Gy-XjQ"/>
             </connections>
@@ -100,6 +101,13 @@
                         <action selector="qNumQustion:" destination="-1" eventType="touchUpInside" id="0Fp-qM-VlV"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="共10题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q52-JJ-29r">
+                    <rect key="frame" x="262" y="100" width="58" height="23"/>
+                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

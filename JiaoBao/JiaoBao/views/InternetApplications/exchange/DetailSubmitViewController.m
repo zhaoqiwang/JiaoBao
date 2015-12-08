@@ -177,8 +177,20 @@
 
     if(![utils isBlankString:self.textView.text]&&![utils isBlankString:self.textView2.text]&&![self.startTime.text isEqualToString:@""]&&![self.endTime.text isEqualToString:@""])
     {
-        NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,unitName,unitType,unitTypeName,DetptID,DetptName,@"0",@"未审核",userID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
-        [[SignInHttp getInstance]uploadschedule:dic];
+        @try {
+
+            
+            NSDictionary *dic = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:startStr,endStr,self.textView.text,self.textView2.text,@"0",self.recordDate.text,self.selectedDate.text,unitID,unitName,unitType,unitTypeName,DetptID,DetptName,@"0",@"未审核",userID,dmInsance.userInfo.UserName,flagStr,@"正常", nil] forKeys:[NSArray arrayWithObjects:@"dSdate",@"dEdate",@"sWorkPlace",@"sSubject",@"allday",@"dRecDate",@"dUpdateDate",@"UnitID",@"UnitName",@"UnitType",@"UnitTypeName",@"DetptID",@"DetptName",@"Checked",@"Checker",@"sRecorder",@"RecodrderName",@"Flag",@"FlagName",nil]];
+            [[SignInHttp getInstance]uploadschedule:dic];
+        }
+        @catch (NSException *exception) {
+            [MBProgressHUD showError:@"数据异常" toView:self.view];
+            
+        }
+        @finally {
+            
+        }
+
         
     }
     else

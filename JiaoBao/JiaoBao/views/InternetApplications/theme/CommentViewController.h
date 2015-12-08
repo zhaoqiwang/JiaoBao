@@ -15,9 +15,10 @@
 #import "KnowledgeTableViewCell.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "KnowledgeQuestionViewController.h"
+#import "AirthCommentsListCell.h"
 
 
-@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate,UIWebViewDelegate,UIAlertViewDelegate>
+@interface CommentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate,UITextFieldDelegate,KnowledgeTableViewCellDelegate,UIWebViewDelegate,UIAlertViewDelegate,AirthCommentsListCellDelegate>
 @property(nonatomic,strong)QuestionModel *questionModel;//
 @property (nonatomic,strong) AnswerByIdModel *answerModel;
 @property(nonatomic,strong) commentListModel *cellmodel;

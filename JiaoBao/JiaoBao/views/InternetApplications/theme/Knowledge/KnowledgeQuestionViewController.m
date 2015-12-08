@@ -855,7 +855,7 @@
     
     commentVC.questionModel = self.mModel_question;
     commentVC.answerModel = knowledgeTableViewCell.answerModel;
-    commentVC.flag = YES;
+    commentVC.flag = NO;
     [utils pushViewController:commentVC animated:YES];
 }
 

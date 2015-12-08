@@ -195,7 +195,7 @@
         if (buttonIndex == 0){//相册添加
             ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
             
-            elcPicker.maximumImagesCount = 10; //设置的图像的最大数目来选择至10
+            elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至10
             elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
             elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
             elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单

@@ -17,7 +17,7 @@
 @property(nonatomic,strong)PickContentModel *pickContentModel;
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 @property(nonatomic,strong)QuestionDetailModel *QuestionDetailModel;
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollview;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollview;
 
 
 @end
