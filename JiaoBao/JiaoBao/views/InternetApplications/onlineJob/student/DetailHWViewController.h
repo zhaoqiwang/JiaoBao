@@ -30,5 +30,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *webviewHeight;
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property(nonatomic,strong)NSString *navBarName;
+@property (weak, nonatomic) IBOutlet UILabel *questionNumLabel;
 
 @end

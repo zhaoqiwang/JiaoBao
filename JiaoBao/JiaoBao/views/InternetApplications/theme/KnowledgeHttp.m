@@ -1228,11 +1228,12 @@ static KnowledgeHttp *knowledgeHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         if([ResultCode integerValue]==0)
         {
-            [MBProgressHUD showSuccess:@"成功"];
+            //[MBProgressHUD showSuccess:@"成功"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"AddScoreWithtabid" object:nil];
         }
         else
         {
-            [MBProgressHUD showSuccess:@"成功"];
+            [MBProgressHUD showSuccess:@"失败"];
         }
         D("JSON--------AddScoreWithtabid: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

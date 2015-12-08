@@ -91,6 +91,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"ShowPicked" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(ShowPicked:) name:@"ShowPicked" object:nil];
     
@@ -104,7 +105,8 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-
+    self.scrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height)];
+    [self.view addSubview:self.scrollview];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -113,7 +115,6 @@
     // Dispose of any resources that can be recreated.
 }
 -(KnowledgeTableViewCell*)getMainView
-
 {
     KnowledgeTableViewCell *cell = [[KnowledgeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"KnowledgeTableViewCell" owner:self options:nil];
@@ -135,7 +136,7 @@
     cell.mBtn_detail.hidden = NO;
     cell.askImgV.hidden = NO;
     //详情
-    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2, 40, cell.mBtn_detail.frame.size.height);
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, -2+3, 40, cell.mBtn_detail.frame.size.height);
     [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
 
 //    NSString *string_title = cell.ShowPickedModel.Title;
@@ -150,7 +151,7 @@
 //    cell.mLab_title.text = string_title;
 //    cell.mLab_title.frame = CGRectMake(9, 0, cell.mBtn_detail.frame.origin.x-5, size_title.height);
     cell.askImgV.image = [UIImage imageNamed:@"ask"];
-    cell.askImgV.frame = CGRectMake(9, 3, 19, 19);
+    cell.askImgV.frame = CGRectMake(9, 3+3, 19, 19);
     NSString *string1 = cell.ShowPickedModel.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
@@ -161,8 +162,8 @@
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [cell.mLab_title optimumSize];
-    cell.mLab_title.frame = CGRectMake(9+cell.askImgV.frame.size.width, 3, cell.mBtn_detail.frame.origin.x-5-cell.askImgV.frame.size.width, titleSize.height);
-    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, titleSize.height+8);
+    cell.mLab_title.frame = CGRectMake(9+cell.askImgV.frame.size.width, 3+3, cell.mBtn_detail.frame.origin.x-5-cell.askImgV.frame.size.width, titleSize.height);
+    cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, titleSize.height+8+3);
  
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
         cell.mWebV_comment.tag = -1;
@@ -175,6 +176,7 @@
 //    [content insertString:[NSString stringWithFormat:@"<p><img align='absmiddle' src = 'ask@2x.png' width = 20 height = 20> %@</p>",cell.ShowPickedModel.Title] atIndex:12];
 //       content = [[content stringByReplacingOccurrencesOfString:@"答" withString:@"<p><img align='absmiddle' src = 'ask@2x.png'></p>"] mutableCopy];
 //        content = [[content stringByReplacingOccurrencesOfString:@"内容" withString:@"<p><img align='absmiddle' src = 'anwser@2x.png'></p>"] mutableCopy];
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p><br/></p>"] withString:@""]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">答"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white;padding:1px 2px 1px 2px;\">答"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">内容"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">内容"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">依据"] withString:@"style = \"background:rgb(251,68,8);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">依据"]mutableCopy];
@@ -191,7 +193,7 @@
         //加载
         //[self webViewLoadFinish:0];
     
-    cell.frame = CGRectMake(0, 64, [dm getInstance].width, cell.mWebV_comment.frame.size.height+cell.mWebV_comment.frame.origin.y+10);
+    cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mWebV_comment.frame.size.height+cell.mWebV_comment.frame.origin.y+10);
     //cell.userInteractionEnabled = YES;
     return cell;
 }
@@ -206,7 +208,7 @@
 //    }
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f)
     {
-        self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+        self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
         self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, width, height);
         
         self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
@@ -218,7 +220,7 @@
         if(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width>[dm getInstance].width)
         {
 
-            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
             self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, [dm getInstance].width, height);
             
             self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
@@ -234,7 +236,7 @@
         }
         else
         {
-            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
             self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, [dm getInstance].width, height);
             
             self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);

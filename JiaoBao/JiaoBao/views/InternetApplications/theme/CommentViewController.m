@@ -26,6 +26,7 @@
 @property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
 @property(nonatomic,assign)int mInt_reloadData;
+@property(nonatomic,strong)UIButton *btn;//评论的支持和反对按钮（被点击的）
 @end
 
 @implementation CommentViewController
@@ -244,6 +245,20 @@
 
     
 }
+-(void)AddScoreWithtabid:(id)sender
+{
+    NSString *btnTitle = [self.btn titleForState:UIControlStateNormal];
+    NSArray *arry=[btnTitle componentsSeparatedByString:@"("];
+    if(arry.count>0)
+    {
+        NSString *name = [arry objectAtIndex:0];
+        NSString*str = [arry objectAtIndex:1];
+        NSString *string = [str stringByReplacingOccurrencesOfString:@")" withString:@""];
+        int num = [string intValue];
+        [self.btn setTitle:[NSString stringWithFormat:@"%@(%d)",name,num+1] forState:UIControlStateNormal];
+    }
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.userInteractionEnabled = YES;
@@ -259,7 +274,11 @@
     //[[KnowledgeHttp getInstance]GetAtMeUsersWithuid:@"" catid:@"3"];
     self.mInt_reloadData = 0;
     self.btn_tag = -1;
+    //评论的赞和反对回调
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddScoreWithtabid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddScoreWithtabid:) name:@"AddScoreWithtabid" object:nil];
     //通知界面，更新访问量等数据
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updataQuestionDetail:) name:@"updataQuestionDetail" object:nil];
     //通知界面，更新答案数据
@@ -425,6 +444,10 @@
     
     [cell.mImg_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //人名、单位名
+    if([model.UserName isEqual:[NSNull null]])
+    {
+        model.UserName = model.JiaoBaoHao;
+    }
     NSString *tempName = [NSString stringWithFormat:@"%@",model.UserName];
     CGSize sizeName = [tempName sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mLab_UnitShortname.frame = CGRectMake(70, 10, 180, 15);
@@ -453,6 +476,10 @@
                     UIButton *tempBtnLike = [UIButton buttonWithType:UIButtonTypeCustom];
                     UIButton *tempBtnCai = [UIButton buttonWithType:UIButtonTypeCustom];
                     //显示内容
+                    if([refModel.UserName isEqual:[NSNull null]])
+                    {
+                        refModel.UserName = model.JiaoBaoHao;
+                    }
                     NSString *tempTitle = [NSString stringWithFormat:@"%@:%@",refModel.UserName,refModel.WContent];
                     CGSize sizeTitle = [tempTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-90, 99999)];
                     tempLab.frame = CGRectMake(10, 5, sizeTitle.width, sizeTitle.height);
@@ -467,8 +494,8 @@
                     [tempBtnCai setTitle:tempCaiCount forState:UIControlStateNormal];
                     tempBtnCai.titleLabel.font = [UIFont systemFontOfSize:12];
                     [tempBtnCai setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-                    tempBtnCai.restorationIdentifier = refModel.TabIDStr;
-                    tempBtnCai.hidden = YES;
+                    tempBtnCai.restorationIdentifier = refModel.TabID;
+                    //tempBtnCai.hidden = YES;
                     //边框
                     [tempBtnCai.layer setMasksToBounds:YES];
                     [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -478,14 +505,14 @@
                     [tempBtnCai addTarget:self action:@selector(tempViewBtnCai:) forControlEvents:UIControlEventTouchUpInside];
                     [tempView addSubview:tempBtnCai];
                     //顶
-                    NSString *tempLikeCount = [NSString stringWithFormat:@"顶(%@)",refModel.LikeCount];
+                    NSString *tempLikeCount = [NSString stringWithFormat:@"赞(%@)",refModel.LikeCount];
                     CGSize sizeLike = [tempLikeCount sizeWithFont:[UIFont systemFontOfSize:12]];
                     tempBtnLike.frame = CGRectMake(tempBtnCai.frame.origin.x-25-sizeLike.width, tempBtnCai.frame.origin.y, sizeLike.width+15, 20);
                     [tempBtnLike setTitle:tempLikeCount forState:UIControlStateNormal];
                     tempBtnLike.titleLabel.font = [UIFont systemFontOfSize:12];
                     [tempBtnLike setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-                    tempBtnLike.restorationIdentifier = refModel.TabIDStr;
-                    tempBtnLike.hidden = YES;
+                    tempBtnLike.restorationIdentifier = refModel.TabID;
+                    //tempBtnLike.hidden = YES;
                     //边框
                     [tempBtnLike.layer setMasksToBounds:YES];
                     [tempBtnLike.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -514,20 +541,20 @@
     cell.mLab_Commnets.numberOfLines = 99999;
     //回复按钮
     CGSize sizeReply = [@"回复" sizeWithFont:[UIFont systemFontOfSize:12]];
-    cell.mBtn_reply.frame = CGRectMake([dm getInstance].width-30-sizeReply.width, cell.mLab_Commnets.frame.origin.y+cell.mLab_Commnets.frame.size.height+10, sizeReply.width+20, 30);
+    cell.mBtn_reply.frame = CGRectMake([dm getInstance].width, cell.mLab_Commnets.frame.origin.y+cell.mLab_Commnets.frame.size.height+10, sizeReply.width+20, 30);
     cell.mBtn_reply.hidden = YES;
     //踩按钮
     NSString *tempCai = [NSString stringWithFormat:@"踩(%@)",model.CaiCount];
     CGSize sizeCai = [tempCai sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mBtn_CaiCount.frame = CGRectMake(cell.mBtn_reply.frame.origin.x-30-sizeCai.width, cell.mBtn_reply.frame.origin.y, sizeCai.width+20, 30);
     [cell.mBtn_CaiCount setTitle:tempCai forState:UIControlStateNormal];
-    cell.mBtn_CaiCount.hidden = YES;
+    //cell.mBtn_CaiCount.hidden = YES;
     //顶按钮
-    NSString *tempLike = [NSString stringWithFormat:@"顶(%@)",model.LikeCount];
+    NSString *tempLike = [NSString stringWithFormat:@"赞(%@)",model.LikeCount];
     CGSize sizeLike = [tempLike sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mBtn_LikeCount.frame = CGRectMake(cell.mBtn_CaiCount.frame.origin.x-30-sizeLike.width, cell.mBtn_CaiCount.frame.origin.y, sizeLike.width+20, 30);
     [cell.mBtn_LikeCount setTitle:tempLike forState:UIControlStateNormal];
-    cell.mBtn_LikeCount.hidden = YES;
+    //cell.mBtn_LikeCount.hidden = YES;
     
     
     //给头像添加点击事件
@@ -619,6 +646,9 @@
     {
         commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
         [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"1"];
+        NSIndexPath *index =[NSIndexPath indexPathForRow:actionSheet.tag inSection:0];
+        AirthCommentsListCell *cell = (AirthCommentsListCell *)[self.tableView cellForRowAtIndexPath:index];
+        self.btn = cell.mBtn_LikeCount;
 
         //[[KnowledgeHttp getInstance]SetYesNoWithAId:model.TabID yesNoFlag:@"1"];
     }
@@ -626,6 +656,9 @@
     {
         commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
         [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"0"];
+        NSIndexPath *index =[NSIndexPath indexPathForRow:actionSheet.tag inSection:0];
+        AirthCommentsListCell *cell = (AirthCommentsListCell *)[self.tableView cellForRowAtIndexPath:index];
+        self.btn = cell.mBtn_CaiCount;
     }
 
 }
@@ -1160,6 +1193,7 @@
             else
             {
                 [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabID];
+                
             }
 
         }
@@ -1169,6 +1203,36 @@
         return NO;
     }
     return YES;
+}
+
+-(void)tempViewBtnLike:(id)sender
+{
+    UIButton *likeBtn = sender;
+    self.btn = sender;
+    [[KnowledgeHttp getInstance]AddScoreWithtabid:likeBtn.restorationIdentifier tp:@"1"];
+
+}
+-(void)tempViewBtnCai:(id)sender
+{
+    UIButton *caiBtn = sender;
+    self.btn = sender;
+    [[KnowledgeHttp getInstance]AddScoreWithtabid:caiBtn.restorationIdentifier tp:@"0"];
+
+}
+
+//顶
+- (void) mBtn_LikeCount:(AirthCommentsListCell *) airthCommentsListCell{
+    self.btn = airthCommentsListCell.mBtn_LikeCount;
+    commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:airthCommentsListCell.tag];
+    [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"1"];
+
+}
+//踩
+- (void) mBtn_CaiCount:(AirthCommentsListCell *) airthCommentsListCell{
+    self.btn = airthCommentsListCell.mBtn_CaiCount;
+
+    commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:airthCommentsListCell.tag];
+    [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"0"];
 }
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];

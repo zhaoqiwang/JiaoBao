@@ -647,6 +647,7 @@
         }
 //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
