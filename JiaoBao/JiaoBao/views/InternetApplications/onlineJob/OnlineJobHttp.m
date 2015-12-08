@@ -216,6 +216,34 @@ static OnlineJobHttp *onlineJobHttp = nil;
     }];
     
 }
+//单位信息获取接口      参数：用户单位ID
+-(void)getUnitInfoWithUID:(NSString *)UID{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Basic/GetUnitInfo",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"UID":UID};
+    //    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+//        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        GetUnitInfoModel *model = [ParserJson_OnlineJob parserJsonGetUnitInfoModel:dataStr];
+        D("JSON--------getUnitInfoWithUID: %@,", dataStr);
+        //        NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
+        //        [tempDic setValue:@"0" forKey:@"ResultCode"];
+        //        [tempDic setValue:arr forKey:@"array"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfoWithUID" object:model];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------getUnitInfoWithUID: %@", error);
+    }];
+}
+
 //学生获取当前作业列表 参数：学生ID
 //学生获取当前作业列表 参数：学生ID                =0为作业，=1为练习
 -(void)GetStuHWListWithStuId:(NSString*)StuId IsSelf:(NSString *)IsSelf
@@ -242,7 +270,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:tempDic];
         D("Error---------GetStuHWListWithStuId: %@", error);
     }];
-    
 }
 
 //获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID

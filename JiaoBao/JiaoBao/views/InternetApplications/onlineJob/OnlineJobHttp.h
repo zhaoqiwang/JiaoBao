@@ -50,6 +50,9 @@
 //学生获取当前作业列表 参数：学生ID                =0为作业，=1为练习
 -(void)GetStuHWListWithStuId:(NSString*)StuId IsSelf:(NSString *)IsSelf;
 
+//单位信息获取接口      参数：用户单位ID
+-(void)getUnitInfoWithUID:(NSString *)UID;
+
 //获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID
 -(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId;
 

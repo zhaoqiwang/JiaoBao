@@ -103,7 +103,7 @@
 
 
                         //}
-                        temp1.mInt_difficulty = 1;//难度
+                        temp1.mInt_difficulty = 2;//难度
                         temp1.mInt_class = 0;//是否选中
                         temp1.mStr_tableId = model.ClassID;
                         node1.nodeData = temp1;
@@ -168,10 +168,6 @@
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
     }
-
- 
-    
-    
 }
 
 - (void)viewDidLoad
@@ -232,8 +228,8 @@
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;//控制整个功能是否启用
     manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
-    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     
     self.mTableV_work.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_work.separatorStyle = UITableViewCellSelectionStyleNone;
@@ -635,8 +631,8 @@
     self.mInt_index++;
     TreeJob_class_model *temp1 =[[TreeJob_class_model alloc]init];
     temp1.mStr_className = @"一年级2班";
-    temp1.mInt_difficulty = 3;
-    self.publishJobModel.DoLv = @"3";
+    temp1.mInt_difficulty = 2;
+    self.publishJobModel.DoLv = @"2";
     temp1.mInt_class = 0;
     self.sigleClassNode.nodeData = temp1;
 }
@@ -1188,13 +1184,14 @@
     }
     cell0.mLab_line.frame = CGRectMake(20, 0, [dm getInstance].width-20, .5);
     CGSize titleSize = [name sizeWithFont:[UIFont systemFontOfSize:12]];
-    if ([dm getInstance].width-40<titleSize.width+16) {
-        titleSize.width = [dm getInstance].width-40-16;
+    if ([dm getInstance].width-40-(30+20*model.mInt_flag)<titleSize.width+16) {
+        titleSize.width = [dm getInstance].width-40-(30+20*model.mInt_flag);
     }
     cell0.sigleBtn.mLab_title.frame = CGRectMake(16, 0, titleSize.width, cell0.sigleBtn.mLab_title.frame.size.height);
     if (flag==501) {//章节
 //        ChapterModel *model = node.nodeData;
         cell0.sigleBtn.frame = CGRectMake(30+20*model.mInt_flag, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
+        
         if (model.array.count>0) {
             cell0.mImg_pic.hidden = NO;
             cell0.mImg_pic.frame = CGRectMake([dm getInstance].width-20, 10, 10, 10);
@@ -1281,7 +1278,7 @@
     cell0.sigleClassBtn.mLab_title.text = nodeData.mStr_className;
     cell0.sigleClassBtn.mInt_flag = nodeData.mInt_class;//班级是否选择
     cell0.mInt_diff = nodeData.mInt_difficulty;//难度
-    self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",cell0.mInt_diff];
+    
     if (self.mInt_modeSelect == 0) {//个性作业
         if (node.flag == 9999) {//专门的难度行
             cell0.mLab_line.hidden = YES;
@@ -1321,6 +1318,7 @@
             cell0.sigleBtn3.hidden = NO;
             cell0.sigleBtn4.hidden = NO;
             cell0.sigleBtn5.hidden = NO;
+            self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",cell0.mInt_diff];
             //难度
             cell0.mLab_nanDu.frame = CGRectMake(30, 8, cell0.mLab_nanDu.frame.size.width, 21);
             cell0.sigleBtn1.frame = CGRectMake(30+cell0.mLab_nanDu.frame.size.width, 10, cell0.sigleBtn1.frame.size.width, 21);
@@ -1498,9 +1496,6 @@
             mStr = @"没有执教班级";
         }
     }
-//    if ([self.publishJobModel.HwType intValue]==3) {
-//        self.publishJobModel.DoLv = [NSString stringWithFormat:@"%d",treeJob_class_TableViewCell.mInt_diff];
-//    }
     TreeJob_level0_model *nodeData = node0.nodeData;
     nodeData.mStr_title = mStr;
     [self reloadDataForDisplayArray];
@@ -1884,8 +1879,8 @@
         [MBProgressHUD showError:@"请选择截止日期"];
         return ;
     }
-    if (self.publishJobModel.homeworkName.length<5||self.publishJobModel.homeworkName.length>50) {
-        [MBProgressHUD showError:@"作业名称要求5到50个汉字"];
+    if (self.publishJobModel.homeworkName.length<6||self.publishJobModel.homeworkName.length>49) {
+        [MBProgressHUD showError:@"作业名称要求6到49个字符"];
         return ;
     }
 

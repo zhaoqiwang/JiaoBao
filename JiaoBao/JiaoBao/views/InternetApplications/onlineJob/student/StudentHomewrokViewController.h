@@ -28,6 +28,7 @@
 #import "PublishJobCellTableViewCell.h"
 #import "OtherItemsCell.h"
 #import "IQKeyboardManager.h"
+#import "GetUnitInfoModel.h"
 
 @interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,TreeJob_sigleSelect_TableViewCellDelegate,PublishJobDelegate,UITextFieldDelegate,UITextViewDelegate>
 
@@ -41,6 +42,6 @@
 @property (strong,nonatomic) NSMutableArray *mArr_sumData;//保存全部数据的数组--发布练习
 @property (strong,nonatomic) NSArray *mArr_display;//保存要显示在界面上的数据的数组--发布练习
 @property (strong,nonatomic) NSString *mStr_textName;//练习名称
-
+@property (strong,nonatomic) GetUnitInfoModel *mModel_unitInfo;//获取到的单位信息
 
 @end

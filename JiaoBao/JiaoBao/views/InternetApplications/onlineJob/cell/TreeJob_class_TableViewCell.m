@@ -26,14 +26,14 @@
     //难度
     self.mLab_nanDu.frame = CGRectMake(20, 35, self.mLab_nanDu.frame.size.width, 21);
     
-    self.sigleBtn1 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 1" select:1 sigle:1];
+    self.sigleBtn1 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 1" select:0 sigle:1];
     self.sigleBtn1.tag = 1;
     self.sigleBtn1.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn1.delegate = self;
     self.sigleBtn1.frame = CGRectMake(20+self.mLab_nanDu.frame.size.width, 35, self.sigleBtn1.frame.size.width, 21);
     [self addSubview:self.sigleBtn1];
     
-    self.sigleBtn2 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 2" select:0 sigle:1];
+    self.sigleBtn2 = [[SigleBtnView alloc] initWidth:0 height:21 title:@" 2" select:1 sigle:1];
     self.sigleBtn2.tag = 2;
     self.sigleBtn2.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
     self.sigleBtn2.delegate = self;

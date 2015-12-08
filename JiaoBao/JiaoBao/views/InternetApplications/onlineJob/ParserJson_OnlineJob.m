@@ -144,7 +144,7 @@
         model.homeworkName = [dic objectForKey:@"homeworkName"];
         model.questionList = [dic objectForKey:@"questionList"];
         model.CreateTime = [dic objectForKey:@"CreateTime"];
-                model.itemSelect = [dic objectForKey:@"itemSelect"];
+        model.itemSelect = [dic objectForKey:@"itemSelect"];
         model.itemInput = [dic objectForKey:@"itemInput"];
         [array addObject:model];
     }
@@ -324,5 +324,21 @@
     return model;
 }
 
++(GetUnitInfoModel *)parserJsonGetUnitInfoModel:(NSString *)json//解析单位信息获取接口
+{
+    NSDictionary *dic = [json objectFromJSONString];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+    GetUnitInfoModel *model = [[GetUnitInfoModel alloc] init];
+    model.UnitID = [numberFormatter stringFromNumber:[dic objectForKey:@"UnitID"]];
+    model.UnitType = [numberFormatter stringFromNumber:[dic objectForKey:@"UnitType"]];
+    model.UnitName = [dic objectForKey:@"UnitName"];
+    model.ShortName = [dic objectForKey:@"ShortName"];
+    model.Area = [dic objectForKey:@"Area"];
+    model.SchoolType = [dic objectForKey:@"SchoolType"];
+    model.TownShip = [dic objectForKey:@"TownShip"];
+    model.TabIDStr = [dic objectForKey:@"TabIDStr"];
+    
+    return model;
+}
 
 @end

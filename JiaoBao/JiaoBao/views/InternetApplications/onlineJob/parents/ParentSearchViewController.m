@@ -393,16 +393,17 @@
         StuHWModel *model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
         
         if ([model.isHaveAdd intValue]==1) {//主观题
-            cell.mImg_pic.frame = CGRectMake(8, 12, 14, 14);
+            cell.mImg_pic.frame = CGRectMake(8, 10, 14, 14);
             cell.mImg_pic.hidden = NO;
         }else{
-            cell.mImg_pic.frame = CGRectMake(8, 12, 0, 0);
+            cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
             cell.mImg_pic.hidden = YES;
         }
         //名称
         cell.mLab_title.text = model.homeworkName;
+        cell.mLab_title.font = [UIFont systemFontOfSize:14];
         cell.mLab_title.textColor = [UIColor colorWithRed:37/255.0 green:137/255.0 blue:209/255.0 alpha:1];
-        cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 10, [dm getInstance].width-cell.mImg_pic.frame.origin.x-cell.mImg_pic.frame.size.width-10, cell.mLab_title.frame.size.height);
+        cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 8, [dm getInstance].width-cell.mImg_pic.frame.origin.x-cell.mImg_pic.frame.size.width-10, cell.mLab_title.frame.size.height);
 //        //题量
 //        cell.mLab_numLab.text = @"选/填/总: ";
 //        CGSize numSize0 = [cell.mLab_numLab.text sizeWithFont:[UIFont systemFontOfSize:10]];
@@ -462,8 +463,7 @@
         }
         cell.mImg_open.hidden = YES;
         //分割线
-        cell.mLab_line.frame = CGRectMake(0, cell.mLab_numLab.frame.origin.y+cell.mLab_numLab.frame.size.height+5, [dm getInstance].width, 5);
-        
+        cell.mLab_line.frame = CGRectMake(0, cell.mLab_numLab.frame.origin.y+cell.mLab_numLab.frame.size.height+5, [dm getInstance].width, .5);
         return cell;
     }else if (self.mInt_index == 1) {
         CompleteStatusModel *model = [self.mArr_overHomework objectAtIndex:indexPath.row];
@@ -522,6 +522,9 @@
             cell.mLab_title.textColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
             cell.mImg_open.hidden = NO;
         }else if (node.type == 2){
+            if (titleSize.width>[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25)) {
+                titleSize.width =[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25);
+            }
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, .5);
             cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25, 8, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:12];
@@ -567,7 +570,7 @@
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     if (self.mInt_index == 0) {
-        return 66;
+        return 56;
     }else if (self.mInt_index == 1){
         return 44;
     }else{

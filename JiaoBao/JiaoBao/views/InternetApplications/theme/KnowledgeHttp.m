@@ -10,14 +10,17 @@
 #import "PointsModel.h"
 #import "CommsModel.h"
 
-static KnowledgeHttp *knowledgeHttp = nil;
+//static KnowledgeHttp *knowledgeHttp = nil;
 
 @implementation KnowledgeHttp
 
 +(KnowledgeHttp *)getInstance{
-    if (knowledgeHttp == nil) {
+//    if (knowledgeHttp == nil) {
+    static KnowledgeHttp *knowledgeHttp = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         knowledgeHttp = [[KnowledgeHttp alloc] init];
-    }
+    });
     return knowledgeHttp;
 }
 -(id)init{

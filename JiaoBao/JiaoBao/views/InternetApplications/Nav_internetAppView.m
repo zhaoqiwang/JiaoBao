@@ -9,7 +9,7 @@
 #import "Nav_internetAppView.h"
 #import "define_constant.h"
 
-static Nav_internetAppView *nav_internetAppView = nil;
+//static Nav_internetAppView *nav_internetAppView = nil;
 
 #define Nav_width 44
 #define Nav_height 43
@@ -19,12 +19,18 @@ static Nav_internetAppView *nav_internetAppView = nil;
 @synthesize mLab_name,mBtn_add,mBtn_search,mBtn_setting,mScrollV_name,delegate;
 
 +(Nav_internetAppView *)getInstance{
-    if (nav_internetAppView == nil) {
+//    if (nav_internetAppView == nil) {
+//        nav_internetAppView = [[Nav_internetAppView alloc] init];
+//        for (UIView *view in nav_internetAppView.subviews) {
+//            [view removeFromSuperview];
+//        }
+//    }
+//    return nav_internetAppView;
+    static Nav_internetAppView *nav_internetAppView = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         nav_internetAppView = [[Nav_internetAppView alloc] init];
-        for (UIView *view in nav_internetAppView.subviews) {
-            [view removeFromSuperview];
-        }
-    }
+    });
     return nav_internetAppView;
 }
 //-(id)init{

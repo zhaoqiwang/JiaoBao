@@ -9,6 +9,7 @@
 #import "StudentHomewrokViewController.h"
 #import "define_constant.h"
 #import "DetailHWViewController.h"
+#import "GetUnitInfoModel.h"
 
 @interface StudentHomewrokViewController ()
 
@@ -53,6 +54,9 @@
     //根据章节id判断题库中是否有数据
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecQswithchapterid:) name:@"TecQswithchapterid" object:nil];
+    //单位信息获取接口
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getUnitInfoWithUID" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnitInfoWithUID:) name:@"getUnitInfoWithUID" object:nil];
     
     self.mArr_homework = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
@@ -64,8 +68,8 @@
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;//控制整个功能是否启用
     manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
-    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"作业"];
@@ -122,12 +126,18 @@
 //                if ([userUnitsModel.ClassID intValue] ==[dm getInstance].UID) {
                     D("douifghdoj-====%@",userUnitsModel.ClassID);
                     [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:userUnitsModel.ClassID];
+                [[OnlineJobHttp getInstance] getUnitInfoWithUID:userUnitsModel.SchoolID];
 //                }
             }
         }
     }
     //添加默认数据
     [self addDefaultData];
+}
+
+//单位信息获取接口
+-(void)getUnitInfoWithUID:(NSNotification *)noti{
+    self.mModel_unitInfo = noti.object;
 }
 
 //根据章节id判断题库中是否有数据
@@ -1207,12 +1217,14 @@
     // Any new character added is passed in as the "text" parameter
     //输入删除时
     if ([string isEqualToString:@""]) {
+        self.mStr_textName = textField.text;
         return YES;
     }
     //不能大于规定字数限制
     NSString *new = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSInteger res = 49-[new length];
     if(res >= 0){
+        self.mStr_textName = textField.text;
         return YES;
     }else{
         NSRange rg = {0,[string length]+res};
@@ -1220,9 +1232,9 @@
             NSString *s = [string substringWithRange:rg];
             [textField setText:[textField.text stringByReplacingCharactersInRange:range withString:s]];
         }
+        self.mStr_textName = textField.text;
         return NO;
     }
-    
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
 }
@@ -1258,7 +1270,7 @@
         return ;
     }
     if ([utils isBlankString:self.mStr_textName]) {
-        [MBProgressHUD showError:@"请输入答案标题" toView:self.view];
+        [MBProgressHUD showError:@"请输入练习标题" toView:self.view];
         return;
     }
     if (self.mStr_textName.length<6||self.mStr_textName.length>49) {
@@ -1292,12 +1304,12 @@
     NSString *tempId = [NSString stringWithFormat:@"%@%@%@",tempModel0.mStr_id,tempModel1.mStr_id,tempModel2.mStr_id];
     D("-====fabu-====%@,%@,%@,%@,%@,%@",self.mModel_stuInf.StudentID,self.mModel_stuInf.UnitClassID,self.mModel_stuInf.ClassName,tempId,tempModel3.mStr_id,self.mStr_textName);
     
-    [[OnlineJobHttp getInstance] StuMakeSelfWithStuId:self.mModel_stuInf.StudentID classID:self.mModel_stuInf.UnitClassID className:self.mModel_stuInf.ClassName Unid:tempId chapterID:tempModel3.mStr_id homeworkName:self.mStr_textName schoolName:@""];
+    [[OnlineJobHttp getInstance] StuMakeSelfWithStuId:self.mModel_stuInf.StudentID classID:self.mModel_stuInf.UnitClassID className:self.mModel_stuInf.ClassName Unid:tempId chapterID:tempModel3.mStr_id homeworkName:self.mStr_textName schoolName:self.mModel_unitInfo.UnitName];
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField{
-    self.mStr_textName = textField.text;
-}
+//-(void)textFieldDidEndEditing:(UITextField *)textField{
+//    self.mStr_textName = textField.text;
+//}
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{

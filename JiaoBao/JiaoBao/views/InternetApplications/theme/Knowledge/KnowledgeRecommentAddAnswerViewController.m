@@ -304,14 +304,16 @@
     cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
     [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //姓名
-//    CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
-//    if (nameSize.height>21) {
-//        nameSize = CGSizeMake(nameSize.width, 30);
-//        cell.mLab_IdFlag.numberOfLines = 2;
-//    }else{
-//        cell.mLab_IdFlag.numberOfLines = 1;
-//    }
-    cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
+    CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+    if (nameSize.height>21) {
+        nameSize = CGSizeMake(nameSize.width, 30);
+        cell.mLab_IdFlag.numberOfLines = 2;
+        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10-(nameSize.height-cell.mLab_IdFlag.frame.size.height), 42, nameSize.height);
+    }else{
+        cell.mLab_IdFlag.numberOfLines = 1;
+        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
+    }
+    
     cell.mLab_IdFlag.text = model.IdFlag;
     //回答标题
     NSString *string1 = model.ATitle;

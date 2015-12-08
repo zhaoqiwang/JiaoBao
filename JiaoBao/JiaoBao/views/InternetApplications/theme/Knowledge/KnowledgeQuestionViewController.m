@@ -195,6 +195,11 @@
 
 //通知界面，更新答案数据
 -(void)updataQuestionDetailModel:(NSNotification *)noti{
+    for (ButtonViewCell *view in self.mBtnV_btn.subviews) {
+        if (view.tag ==100) {
+            view.mLab_title.text = @"修改答案";
+        }
+    }
     self.mInt_reloadData =0;
     //获取问题的答案列表
     [[KnowledgeHttp getInstance] GetAnswerByIdWithNumPerPage:@"10" pageNum:@"1" QId:self.mModel_question.TabID flag:self.mStr_flag];
@@ -802,7 +807,7 @@
         return;
     }
     NSString *page = @"";
-    if (self.mInt_reloadData == 0) {
+    if (self.mInt_reloadData == 0||self.mArr_answers.count==0) {
         page = @"1";
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
