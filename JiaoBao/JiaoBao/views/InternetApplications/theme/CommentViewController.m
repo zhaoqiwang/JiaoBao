@@ -1011,6 +1011,7 @@
     cell.mWebV_comment.tag = -1;
     cell.mWebV_comment.scalesPageToFit = YES;
     cell.mWebV_comment.delegate = self;
+    cell.mWebV_comment.backgroundColor = [UIColor whiteColor];
     NSString *content = self.AnswerDetailModel.AContent;
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
@@ -1103,7 +1104,8 @@
         cell.mLab_commentCount.text = self.AnswerDetailModel.CCount;
         cell.mLab_comment.frame = CGRectMake(cell.mLab_commentCount.frame.origin.x-2-cell.mLab_comment.frame.size.width, cell.mLab_RecDate.frame.origin.y, cell.mLab_View.frame.size.width, cell.mLab_comment.frame.size.height);
         if (cell.model.answerModel.Thumbnail.count>0) {
-            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 1);
+            cell.mLab_line2.frame = CGRectMake(0, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+5, [dm getInstance].width, 1);
+//            cell.mLab_line2.frame = CGRectMake(0, cell.mLab_RecDate.frame.origin.y+cell.mLab_RecDate.frame.size.height+10, [dm getInstance].width, 1);
         }else{
             cell.mLab_line2.frame = CGRectMake(0, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+5, [dm getInstance].width, 1);
         }

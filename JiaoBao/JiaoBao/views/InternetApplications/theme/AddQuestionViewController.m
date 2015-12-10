@@ -195,6 +195,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mInt_index = 1;
     //邀请指定的用户回答问题
     //获取邀请人
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];

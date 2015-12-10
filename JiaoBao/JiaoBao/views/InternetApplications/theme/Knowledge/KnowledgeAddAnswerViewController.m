@@ -131,7 +131,11 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+
     if ([code integerValue]==0) {
+        [MBProgressHUD showSuccess:ResultDesc ];
+
 //        self.mTextV_content.text = @"";
 //        self.mTextV_answer.text = @"";
 //        self.mLab_answer.hidden = NO;
@@ -165,7 +169,6 @@
             [utils pushViewController:queston animated:YES];
         }
     }else{
-        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
 }
