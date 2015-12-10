@@ -482,7 +482,10 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
-    [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+    if(info.count>0){
+        [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+   
+    }
 
     [self dismissViewControllerAnimated:YES completion:^{
         //发送选中图片上传请求

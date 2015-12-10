@@ -928,7 +928,7 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
-    if(picker.maximumImagesCount>0)
+    if(info.count>0)
     {
         [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
 
@@ -953,12 +953,8 @@
             if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                    
-                    
-                    
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
-                    
-                    // NSLog(@"%lu",(unsigned long)imageData.length);
+                                        // NSLog(@"%lu",(unsigned long)imageData.length);
                     
                     NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
                     

@@ -27,6 +27,7 @@
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
 @property(nonatomic,assign)int mInt_reloadData;
 @property(nonatomic,strong)UIButton *btn;//评论的支持和反对按钮（被点击的）
+@property(nonatomic,strong)NSString *hideHUDTag;
 @end
 
 @implementation CommentViewController
@@ -34,7 +35,12 @@
 //评论列表回调
 -(void)CommentsListWithNumPerPage:(id)sender
 {
-    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+    if([self.hideHUDTag isEqualToString:@"1"])
+    {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+    }
+    self.hideHUDTag = @"0";
 
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
@@ -263,13 +269,15 @@
             int num = [string intValue];
             if ([name isEqualToString:@"赞"]) {
                 Model.LikeCount = [NSString stringWithFormat:@"%d",num+1];
+                Model.Likeselected = YES;
             }
             else
             {
                 Model.CaiCount = [NSString stringWithFormat:@"%d",num+1];
+                Model.Caiselected = YES;
 
             }
-//            [self.btn setTitle:[NSString stringWithFormat:@"%@(%d)",name,num+1] forState:UIControlStateNormal];
+            //[self.btn setTitle:[NSString stringWithFormat:@"%@(%d)",name,num+1] forState:UIControlStateNormal];
         }
 
 
@@ -288,23 +296,35 @@
             int num = [string intValue];
             if ([name isEqualToString:@"赞"]) {
                 refModel.LikeCount = [NSString stringWithFormat:@"%d",num+1];
+                refModel.Likeselected = YES;
             }
             else
             {
                 refModel.CaiCount = [NSString stringWithFormat:@"%d",num+1];
+                refModel.Caiselected = YES;
                 
             }
-//            [self.btn setTitle:[NSString stringWithFormat:@"%@(%d)",name,num+1] forState:UIControlStateNormal];
+            //[self.btn setTitle:[NSString stringWithFormat:@"%@(%d)",name,num+1] forState:UIControlStateNormal];
+            
         }
 
     }
     [self.tableView reloadData];
+//    self.btn.enabled = NO;
+//    [self.btn.layer setMasksToBounds:YES];
+//    [self.btn.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
+//    [self.btn.layer setBorderWidth:1.0]; //边框宽度
+//    CGColorRef colorref = [UIColor grayColor].CGColor;
+//    [self.btn.layer setBorderColor:colorref];
+//    [self.btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+
 
 
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.hideHUDTag = @"0";
     self.view.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
     singleTap.cancelsTouchesInView = NO;
@@ -400,11 +420,13 @@
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    self.hideHUDTag = @"1";
     self.mInt_reloadData = 0;
     [self sendRequest];
 }
 
 - (void)footerRereshing{
+    self.hideHUDTag = @"1";
     self.mInt_reloadData = 1;
     [self sendRequest];
 }
@@ -535,36 +557,74 @@
                     tempBtnCai.frame = CGRectMake([dm getInstance].width-100-sizeCai.width, tempLab.frame.origin.y+tempLab.frame.size.height+10, sizeCai.width+15, 20);
                     [tempBtnCai setTitle:tempCaiCount forState:UIControlStateNormal];
                     tempBtnCai.titleLabel.font = [UIFont systemFontOfSize:12];
-                    [tempBtnCai setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     tempBtnCai.restorationIdentifier = [NSString stringWithFormat:@"%d",a ];
                     tempBtnCai.tag = -2;
                     //tempBtnCai.hidden = YES;
                     //边框
-                    [tempBtnCai.layer setMasksToBounds:YES];
-                    [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
-                    [tempBtnCai.layer setBorderWidth:1.0]; //边框宽度
-                    CGColorRef colorref = [UIColor blueColor].CGColor;
-                    [tempBtnCai.layer setBorderColor:colorref];//边框颜色
-                    [tempBtnCai addTarget:self action:@selector(tempViewBtnCai:) forControlEvents:UIControlEventTouchUpInside];
-                    [tempView addSubview:tempBtnCai];
+                    if(refModel.Caiselected == YES)
+                    {
+                        tempBtnCai.enabled = NO;
+                        [tempBtnCai.layer setMasksToBounds:YES];
+                        [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
+                        [tempBtnCai.layer setBorderWidth:1.0]; //边框宽度
+                        CGColorRef colorref = [UIColor grayColor].CGColor;
+                        [tempBtnCai.layer setBorderColor:colorref];//边框颜色
+                        [tempBtnCai addTarget:self action:@selector(tempViewBtnCai:) forControlEvents:UIControlEventTouchUpInside];
+                        [tempView addSubview:tempBtnCai];
+                        [tempBtnCai setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                        
+                    }else{
+                        tempBtnCai.enabled = YES;
+                        [tempBtnCai.layer setMasksToBounds:YES];
+                        [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
+                        [tempBtnCai.layer setBorderWidth:1.0]; //边框宽度
+                        CGColorRef colorref = [UIColor blueColor].CGColor;
+                        [tempBtnCai.layer setBorderColor:colorref];//边框颜色
+                        [tempBtnCai addTarget:self action:@selector(tempViewBtnCai:) forControlEvents:UIControlEventTouchUpInside];
+                        [tempView addSubview:tempBtnCai];
+                        [tempBtnCai setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+
+                    }
+                    if(refModel.Likeselected == YES){
+                        tempBtnLike.enabled = NO;
+                        CGColorRef colorref = [UIColor grayColor].CGColor;
+
+                        [tempBtnLike.layer setMasksToBounds:YES];
+                        [tempBtnLike.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
+                        [tempBtnLike.layer setBorderWidth:1.0]; //边框宽度
+                        [tempBtnLike.layer setBorderColor:colorref];//边框颜色
+                        [tempBtnLike addTarget:self action:@selector(tempViewBtnLike:) forControlEvents:UIControlEventTouchUpInside];
+                        [tempView addSubview:tempBtnLike];
+                        [tempBtnLike setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+
+                        
+                    }else{
+                        tempBtnLike.enabled = YES;
+                        CGColorRef colorref = [UIColor blueColor].CGColor;
+
+                        [tempBtnLike.layer setMasksToBounds:YES];
+                        [tempBtnLike.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
+                        [tempBtnLike.layer setBorderWidth:1.0]; //边框宽度
+                        [tempBtnLike.layer setBorderColor:colorref];//边框颜色
+                        [tempBtnLike addTarget:self action:@selector(tempViewBtnLike:) forControlEvents:UIControlEventTouchUpInside];
+                        [tempView addSubview:tempBtnLike];
+                        [tempBtnLike setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+
+                        
+                    }
+
                     //顶
                     NSString *tempLikeCount = [NSString stringWithFormat:@"赞(%@)",refModel.LikeCount];
                     CGSize sizeLike = [tempLikeCount sizeWithFont:[UIFont systemFontOfSize:12]];
                     tempBtnLike.frame = CGRectMake(tempBtnCai.frame.origin.x-25-sizeLike.width, tempBtnCai.frame.origin.y, sizeLike.width+15, 20);
                     [tempBtnLike setTitle:tempLikeCount forState:UIControlStateNormal];
                     tempBtnLike.titleLabel.font = [UIFont systemFontOfSize:12];
-                    [tempBtnLike setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     tempBtnLike.restorationIdentifier = [NSString stringWithFormat:@"%d",a ];
                     tempBtnLike.tag = -1;
 
                     //tempBtnLike.hidden = YES;
                     //边框
-                    [tempBtnLike.layer setMasksToBounds:YES];
-                    [tempBtnLike.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
-                    [tempBtnLike.layer setBorderWidth:1.0]; //边框宽度
-                    [tempBtnLike.layer setBorderColor:colorref];//边框颜色
-                    [tempBtnLike addTarget:self action:@selector(tempViewBtnLike:) forControlEvents:UIControlEventTouchUpInside];
-                    [tempView addSubview:tempBtnLike];
+
                     //设置坐标
                     tempView.frame = CGRectMake(0, m, [dm getInstance].width-80, tempBtnLike.frame.origin.y+tempBtnLike.frame.size.height);
                     tempView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
@@ -601,7 +661,35 @@
     cell.mBtn_LikeCount.frame = CGRectMake(cell.mBtn_CaiCount.frame.origin.x-30-sizeLike.width, cell.mBtn_CaiCount.frame.origin.y, sizeLike.width+20, 30);
     [cell.mBtn_LikeCount setTitle:tempLike forState:UIControlStateNormal];
     cell.mBtn_LikeCount.restorationIdentifier = model.TabID;
+    if(model.Likeselected == YES){
+        cell.mBtn_LikeCount.enabled = NO;
 
+        CGColorRef colorref = [UIColor grayColor].CGColor;
+        [cell.mBtn_LikeCount.layer setBorderColor:colorref];//边框颜色
+        [cell.mBtn_LikeCount setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+ 
+    }else{
+        cell.mBtn_LikeCount.enabled = YES;
+
+        CGColorRef colorref = [UIColor blueColor].CGColor;
+        [cell.mBtn_LikeCount.layer setBorderColor:colorref];//边框颜色
+        [cell.mBtn_LikeCount setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        
+    }
+    
+    if(model.Caiselected == YES){
+        cell.mBtn_CaiCount.enabled = NO;
+        CGColorRef colorref = [UIColor grayColor].CGColor;
+        [cell.mBtn_CaiCount.layer setBorderColor:colorref];//边框颜色
+        [cell.mBtn_CaiCount setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        
+    }else{
+        cell.mBtn_CaiCount.enabled = YES;
+        CGColorRef colorref = [UIColor blueColor].CGColor;
+        [cell.mBtn_CaiCount.layer setBorderColor:colorref];//边框颜色
+        [cell.mBtn_CaiCount setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        
+    }
     //cell.mBtn_LikeCount.hidden = YES;
     
     

@@ -693,7 +693,7 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
-    if(picker.maximumImagesCount>0)
+    if(info.count>0)
     {
         [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
         

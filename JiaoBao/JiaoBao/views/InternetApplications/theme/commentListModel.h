@@ -19,5 +19,6 @@
 @property(nonatomic,strong)NSString *WContent;//内容
 @property(nonatomic,strong)NSString *UserName;//评论者
 @property(nonatomic,strong)NSString *TabIDStr;
+@property(nonatomic,assign)BOOL Likeselected,Caiselected;
 
 @end
