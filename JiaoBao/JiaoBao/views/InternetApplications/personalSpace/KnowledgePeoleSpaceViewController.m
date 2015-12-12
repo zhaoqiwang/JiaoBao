@@ -102,22 +102,25 @@
 {
     PointsModel *model = [sender object];
     if (model.Point) {
-        self.HeadCell.dayPointsLabel.text = model.Point;
+        int dayPoint = [model.Point intValue]+[model.DelPoint intValue];
+        self.HeadCell.dayPointsLabel.text = [NSString stringWithFormat:@"%d",dayPoint];
     }
+    [[KnowledgeHttp getInstance]GetMyPointsMonthWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
+
 }
 
 -(void)GetMyPointsMonthWithAccId:(NSNotification*)sender
 {
     PointsModel *model = [sender object];
     if (model.Point) {
-        self.HeadCell.monthPointsLabel.text = model.Point;
+        int monthPoint = [model.Point intValue]+[self.HeadCell.dayPointsLabel.text intValue];
+        self.HeadCell.monthPointsLabel.text = [NSString stringWithFormat:@"%d",monthPoint];
     }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     //[[KnowledgeHttp getInstance]GetMyCommsWithNumPerPage:@"10" pageNum:@"0"];
     [[KnowledgeHttp getInstance]GetMyPointsDayWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
-    [[KnowledgeHttp getInstance]GetMyPointsMonthWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
     //获取日积分
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyPointsDayWithAccId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyPointsDayWithAccId:) name:@"GetMyPointsDayWithAccId" object:nil];

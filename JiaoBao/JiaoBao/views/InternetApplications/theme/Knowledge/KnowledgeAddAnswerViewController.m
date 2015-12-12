@@ -133,6 +133,8 @@
     NSString *code = [dic objectForKey:@"code"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]==0) {
+        [MBProgressHUD showSuccess:ResultDesc ];
+
 //        self.mTextV_content.text = @"";
 //        self.mTextV_answer.text = @"";
 //        self.mLab_answer.hidden = NO;
@@ -689,7 +691,7 @@
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
 {
     self.imageCount = info.count;
-    if(picker.maximumImagesCount>0)
+    if(info.count>0)
     {
         [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
         
