@@ -65,6 +65,36 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
         self.mModel_recomment = [dic objectForKey:@"model"];
+        
+        NSMutableArray *array = self.mModel_recomment.answerArray;
+        
+        if (array.count==0) {
+            [MBProgressHUD showError:@"原答案已被删除或已屏蔽!" toView:self.view];
+        }
+        for (int i=0; i<array.count; i++) {
+            UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-75, 0)];
+            AnswerModel *model = [array objectAtIndex:i];
+            if (i==0&&[model.TabID intValue]==0) {
+                [MBProgressHUD showError:@"原答案已被删除或已屏蔽!" toView:self.view];
+            }
+            tempWeb.delegate = self;
+            tempWeb.tag = i;
+            NSString *content = model.Abstracts;
+            D("ShowRecomment:-=====%@",content);
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,content];
+            tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
+            [tempWeb setBackgroundColor:[UIColor clearColor]];
+            [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+//            [tempWeb reload];
+            [self.view addSubview:tempWeb];
+            [tempWeb setHidden:YES];
+        }
+        
         [self.mTableV_answer reloadData];
         [self addDetailCell:self.mModel_recomment];
     }else{
@@ -171,20 +201,23 @@
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
     [webView stringByEvaluatingJavaScriptFromString:meta];
-    D("kdsrglkjsd;-====%@,%ld",NSStringFromCGRect(webView.frame),(long)webView.tag);
+    
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
-    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-    D("webViewHeight-====%f,%f,%f",webViewHeight,webView.scrollView.frame.size.height,webViewWidth);
-    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
+//    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
+//    D("webViewHeight-====%f,%f,%f",webViewHeight,webView.scrollView.frame.size.height,webViewWidth);
+//    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
 //        [self webViewLoadFinish:webView.scrollView.contentSize.height];
         [self webViewLoadFinish:webViewHeight+10];
     }else{
-//        [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#EBEBEB'"];
+        CGRect frame = webView.frame;
+        frame.size.width = [dm getInstance].width-75;
+        frame.size.height = 1;
+        webView.frame = frame;
+        frame.size.height = webView.scrollView.contentSize.height;
         [webView setBackgroundColor:[UIColor clearColor]];
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
-//        model.floatH = webView.scrollView.contentSize.height;
-        model.floatH = webViewHeight+10;
+        model.floatH = frame.size.height+10;
         [self.mTableV_answer reloadData];
         self.mTableV_answer.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, self.mTableV_answer.contentSize.height);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_answer.frame.origin.y+self.mTableV_answer.contentSize.height);
@@ -323,14 +356,11 @@
     [row1 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-            CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
+    CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
     cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeCharWrapping;
     cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, optimalSize1.height);
 
     //回答内容
-//    NSString *string2 = model.Abstracts;
-//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
     NSString *name2 = @"";
     if ([model.Flag integerValue]==0) {//无内容
         cell.mView_background.hidden = YES;
@@ -348,15 +378,6 @@
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 29, 29);
     }
 
-
-//    if ([model.Flag integerValue]==0) {//无内容
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
-//    }else if ([model.Flag integerValue]==1){//有内容
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>内容</font>"];
-//    }else if ([model.Flag integerValue]==2){//有证据
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据</font>"];
-//    }
-//    CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, MAXFLOAT)];
     cell.mLab_Abstracts.frame = CGRectMake(63, cell.basisImagV.frame.origin.y+cell.basisImagV.frame.size.height+2, [dm getInstance].width-75, 21);
     NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
     [row2 setObject:name2 forKey:@"text"];
@@ -370,10 +391,6 @@
     [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
     
-    if (model.floatH==0&&model.Abstracts.length>0) {
-        D("dfjgkl;dfjls;'-====%f,%lu,%@,%ld",model.floatH,(unsigned long)model.Abstracts.length,model.ATitle,(long)cell.mWebV_comment.tag);
-        cell.mWebV_comment.delegate = self;
-    }
     NSString *content = model.Abstracts;
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
@@ -435,6 +452,7 @@
 
 -(float)cellHeight:(NSIndexPath *)indexPath{
     float tempF = 0.0;
+    float tempF1 = 0.0;
     NSMutableArray *array = self.mModel_recomment.answerArray;
     AnswerModel *model = [array objectAtIndex:indexPath.row];
     if ([model.TabID intValue]>0) {
@@ -442,70 +460,47 @@
     }else{
         return tempF;
     }
-    //标题
-    //    tempF = tempF+10+16;
-    //    //话题
-    //    tempF = tempF+5+21;
-    //判断是否有回答
-    //    if ([model.AnswersCount integerValue]>0) {
-    //分割线
-    //        tempF = tempF+5;
-    tempF = 10;
-    float tempF1 = 10.0;
-//    if (model.Abstracts.length>0) {
-        //回答标题
-    NSString *string1 = model.ATitle;
-    RCLabel *label = [[RCLabel alloc]init];
-
-    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
-    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-    [row1 setObject:name forKey:@"text"];
-    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
-    label.componentsAndPlainText = componentsDS;
-    CGSize optimalSize1 = [label optimumSize];
-    label.lineBreakMode = RTTextLineBreakModeCharWrapping;
-    label.frame = CGRectMake(0, 0, [dm getInstance].width-65, optimalSize1.height);
-
-        tempF = tempF+optimalSize1.height;
-        //回答内容
-//        NSString *string2 = model.Abstracts;
-//        NSString *string = [NSString stringWithFormat:@"依据 : %@",string2];
-//        CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-75, MAXFLOAT)];
-//        if (size.height>20) {
-//            size = CGSizeMake(size.width, 32);
-//        }
-//        tempF = tempF+5+size.height;
-    tempF=tempF+29+5;
-        tempF = tempF+2+model.floatH;
-        //背景色
-        tempF = tempF+3;
-        //图片
-        if (model.Thumbnail.count>0) {
-            tempF = tempF+5+([dm getInstance].width-65-30)/3;
-        }
-        //时间
-        tempF = tempF+10+21;
-        tempF = tempF+20+10;
-//    }else{
-        //赞
-        tempF1 = tempF1+optimalSize1.height;
-        //头像
-        tempF1 = tempF1+10+42;
-        //姓名
-        tempF1 = tempF1+10+21;
-        tempF1 = tempF1+20;
-//    }
-    if (tempF>tempF1) {
-        return tempF;
+    
+    //赞
+    tempF1 = tempF1+10+22;
+    //头像
+    tempF1 = tempF1+10+42;
+    //姓名
+    CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+    if (nameSize.height>21) {
+        nameSize = CGSizeMake(nameSize.width, 30);
+        tempF1 = tempF1+10-(nameSize.height-21)+nameSize.height;
     }else{
-        return tempF1;
+        tempF1 = tempF1+10+21;
     }
     
-    //    }else{
-    //        tempF = tempF+20;
-    //    }
-//    return tempF;
+    //回答标题
+    NSString *string1 = model.ATitle;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+    string1 = [NSString stringWithFormat:@"答 : %@",string1];
+    CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, MAXFLOAT)];
+    tempF = tempF+10+3+titleSize.height;
+    if ([model.Flag integerValue]==0) {//无内容
+        tempF = tempF+5+16;
+    }else if ([model.Flag integerValue]==1){//有内容
+        tempF = tempF+5+16;
+    }else if ([model.Flag integerValue]==2){//有证据
+        tempF = tempF+5+29;
+    }
+    tempF = tempF+21;
+    //
+    tempF = tempF+model.floatH;
+    
+    //背景色
+    //图片
+    //时间
+    tempF = tempF+5+21;
+    //计算姓名和时间的高度
+    if (tempF<tempF1) {
+        return tempF1+20;
+    }else{
+        return tempF;
+    }
 }
 
 //详情按钮

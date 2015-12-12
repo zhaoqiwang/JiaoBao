@@ -678,19 +678,6 @@
     if ([text isEqualToString:@""]) {
         return YES;
     }
-    //不能大于规定字数限制
-    NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
-    NSInteger res = 100-[new length];
-    if(res >= 0){
-        return YES;
-    }else{
-        NSRange rg = {0,[text length]+res};
-        if (rg.length>0) {
-            NSString *s = [text substringWithRange:rg];
-            [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
-        }
-        return NO;
-    }
     if([textView isEqual:self.mText_title])
     {
         if(range.location>100)
@@ -698,7 +685,7 @@
             return NO;
         }
     }
-
+    
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView

@@ -20,7 +20,7 @@
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -222,7 +222,7 @@
     NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGSize keyboardSize = [value CGRectValue].size;
     self.mImgV_bg.frame = CGRectMake(0, 0, [dm getInstance].width, [dm getInstance].height-keyboardSize.height);
-    self.mView_view.frame = CGRectMake(0, 80, [dm getInstance].width, 300);
+    self.mView_view.frame = CGRectMake(0, 70, [dm getInstance].width, 300);
 }
 - (void) keyboardWasHidden:(NSNotification *) notif
 {

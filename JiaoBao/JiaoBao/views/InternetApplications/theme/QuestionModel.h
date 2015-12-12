@@ -28,7 +28,10 @@
 @property(nonatomic,assign)int mInt_btn;//是否显示全部、有证据、在讨论等按钮标识，默认0不显示，1显示，2是当前的话题行
 @property(nonatomic,assign)int mInt_top;//1为置顶数据，0为普通
 @property(nonatomic,strong)NSMutableArray *hiddenid;//关注之后被隐藏或被删除的问题id，可以提示用户，原问题已隐藏或已删除，提供取消关注按钮
+@property(nonatomic,strong)NSString *Flag;//如果flag==1,那么在结果集中answer=null就隐藏起来，不显示了。（因为有证据的答案已隐藏或删除）
 
 @property(nonatomic,strong)NSString *Tag;//我已关注该问题，0未关注,1已关注--自己添加
 
 @end
+
+//[{"TabID":1393,"Title":"人为什么会放屁?","AnswersCount":4,"AttCount":5,"ViewCount":142,"CategorySuject":"科普","CategoryId":113,"LastUpdate":"2015-12-11T16:15:18","AreaCode":null,"JiaoBaoHao":5236924,"rowCount":94,"answer":{"ATitle":"放屁，是人体胃肠道通过向下蠕动，将其中气体排出肛门的过程。","Abstracts":"人们进餐、喝水、吞咽时，会把空气带入胃肠。唾液泡沫和食物中的气体也会经口腔潜入体内。除了外来空气，潜伏在人体肠道内数以亿计的各种细菌，它们在帮助发酵、分解消化道中的食物的同时，也会产生气体。……","AFlag":1,"TabID":1228,"RecDate":"2015-11-25T09:42:35","LikeCount":1,"Flag":2,"CaiCount":2,"CCount":33,"JiaoBaoHao":5263784,"IdFlag":"一二三四五六七八九十","Thumbnail":null}}

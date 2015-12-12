@@ -868,7 +868,7 @@
             NSString *string1 = model.Title;
             string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-            NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1 >%@</font>",string1];
+            NSString *name = [NSString stringWithFormat:@"<font size=14 color=#2589D1 >%@</font>",string1];
             NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
             [row1 setObject:name forKey:@"text"];
             cell.mLab_title.textAlignment = RTTextAlignmentLeft;
@@ -880,16 +880,17 @@
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;
+                D("titleSize-======%f",titleSize.width);
                 if (titleSize.width>[dm getInstance].width-9*2-40-33-cell.askImgV.frame.size.width) {
                     cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40-33- cell.answerImgV.frame.size.width, 25);
                 }else{
                     cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, 10, titleSize.width, cell.mLab_title.frame.size.height);
                 }
-                cell.mImgV_top.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width, 12, 33, 12);
+                cell.mImgV_top.frame = CGRectMake(cell.mLab_title.frame.origin.x+cell.mLab_title.frame.size.width+5, 12, 33, 12);
                 [cell.mImgV_top setImage:[UIImage imageNamed:@"classViewTopCell"]];
             }else{
 //                if (titleSize.width>[dm getInstance].width-9*2-40-33) {
- cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);//                }else{
+                cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, 25);//                }else{
 //                    cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, cell.mLab_title.frame.size.height);
 //                }
                 cell.mImgV_top.hidden = YES;
@@ -1120,6 +1121,7 @@
         }else{//正常显示内容
             return [self cellHeight:indexPath];
         }
+        
     }
     
     return 0;
