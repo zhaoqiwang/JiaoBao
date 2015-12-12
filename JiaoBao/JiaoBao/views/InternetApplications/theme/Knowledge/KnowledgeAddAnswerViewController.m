@@ -49,7 +49,7 @@
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;//控制整个功能是否启用
     manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
     manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     
     //添加导航条
@@ -131,6 +131,7 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]==0) {
 //        self.mTextV_content.text = @"";
 //        self.mTextV_answer.text = @"";
@@ -154,20 +155,26 @@
         [self.mTextV_content resignFirstResponder];
         //通知其余界面，更新答案数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetailModel" object:self.mModel_questionDetail];
+        //界面显示，停留2秒
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
         D("dufghdjfgh-====%d",self.mInt_view);
         if (self.mInt_view == 1) {
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-            [self myNavigationGoback];
+            [NSTimer scheduledTimerWithTimeInterval:1.8 target:self selector:@selector(myNavigationGoback) userInfo:nil repeats:NO];
         }else{
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-            KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
-            queston.mModel_question = self.mModel_question;
-            [utils pushViewController:queston animated:YES];
+            [NSTimer scheduledTimerWithTimeInterval:1.8 target:self selector:@selector(gotoView) userInfo:nil repeats:NO];
+            
         }
     }else{
-        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
+}
+
+-(void)gotoView{
+    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+    queston.mModel_question = self.mModel_question;
+    [utils pushViewController:queston animated:YES];
 }
 
 //问题详情
@@ -466,36 +473,18 @@
 //如果输入超过规定的字数100，就不再让输入
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     // Any new character added is passed in as the "text" parameter
-    if ([text isEqualToString:@"\n"]) {
-        // Be sure to test for equality using the "isEqualToString" message
-        [textView resignFirstResponder];
-        
-        // Return FALSE so that the final '\n' character doesn't get added
-        return FALSE;
+    if ([self.mTextV_answer isFirstResponder]) {
+        if ([text isEqualToString:@"\n"]) {
+            // Be sure to test for equality using the "isEqualToString" message
+            [textView resignFirstResponder];
+            
+            // Return FALSE so that the final '\n' character doesn't get added
+            return FALSE;
+        }
     }
     //输入删除时
     if ([text isEqualToString:@""]) {
         return YES;
-    }
-    //不能大于规定字数限制
-    if (textView.tag == 1) {//标题
-        NSString *new = [textView.text stringByReplacingCharactersInRange:range withString:text];
-        NSInteger res = 100-[new length];
-        if(res >= 0){
-            return YES;
-        }else{
-            NSRange rg = {0,[text length]+res};
-            if (rg.length>0) {
-                NSString *s = [text substringWithRange:rg];
-                [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
-            }
-            return NO;
-        }
-//        if (range.location>=100){
-//            return  NO;
-//        }else{
-//            return YES;
-//        }
     }
     
     // For any other character return TRUE so that the text gets added to the view
@@ -512,6 +501,13 @@
 
 //在这个地方计算输入的字数
 - (void)textViewDidChange:(UITextView *)textView{
+    if([textView isEqual:self.mTextV_answer])
+    {
+        if(textView.text.length>100)
+        {
+            textView.text = [textView.text substringToIndex:100];
+        }
+    }
     int  textL =(int)[textView.text length];
     if ([self.mTextV_answer isFirstResponder]) {
         if (textL==0) {

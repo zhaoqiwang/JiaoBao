@@ -412,6 +412,7 @@
 +(NSMutableArray*)parserJsonCategoryIndexQuestion:(NSString*)json
 {
     D("sdoighjdofk-=222222===%@",json);
+//    [{"TabID":1393,"Title":"人为什么会放屁?","AnswersCount":2,"AttCount":5,"ViewCount":112,"CategorySuject":"科普","CategoryId":113,"LastUpdate":"2015-12-09T11:04:38","AreaCode":null,"JiaoBaoHao":5236924,"rowCount":14,"hiddenid":["1173"]},
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
     for(int i=0;i<arrList.count;i++)
@@ -439,7 +440,7 @@
         }else{
             model.AreaCode = [dic objectForKey:@"AreaCode"];
         }
-        
+        model.hiddenid = [dic objectForKey:@"hiddenid"];
         model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         model.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         NSArray *temp0 = [[dic objectForKey:@"Thumbnail"] objectFromJSONString];
@@ -602,35 +603,40 @@
     model.questionModel.AreaCode = [dic objectForKey:@"AreaCode"];
     model.questionModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
     
-    NSMutableArray *mArr_answer = [dic0 objectForKey:@"answers"];
-    for(int i=0;i<mArr_answer.count;i++)
-    {
-        AnswerModel *answerModel = [[AnswerModel alloc]init];
-        NSDictionary *answerDic =  [mArr_answer objectAtIndex:i];
-        answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
-        answerModel.Abstracts = [answerDic objectForKey:@"AContent"];
-        answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
-        answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
-        answerModel.Flag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"Flag"]];
-        NSString *str2 = [answerDic objectForKey:@"RecDate"];
-        NSRange range = [str2 rangeOfString:str];
-        if (range.length>0) {
-            answerModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
-        }else{
-            answerModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    NSString *tempAns = [dic0 objectForKey:@"answers"];
+    if ([tempAns isKindOfClass:[NSNull class]]) {
+        
+    }else{
+        NSMutableArray *mArr_answer = [dic0 objectForKey:@"answers"];
+        for(int i=0;i<mArr_answer.count;i++)
+        {
+            AnswerModel *answerModel = [[AnswerModel alloc]init];
+            NSDictionary *answerDic =  [mArr_answer objectAtIndex:i];
+            answerModel.ATitle = [answerDic objectForKey:@"ATitle"];
+            answerModel.Abstracts = [answerDic objectForKey:@"AContent"];
+            answerModel.AFlag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"AFlag"]];
+            answerModel.TabID = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"TabID"]];
+            answerModel.Flag = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"Flag"]];
+            NSString *str2 = [answerDic objectForKey:@"RecDate"];
+            NSRange range = [str2 rangeOfString:str];
+            if (range.length>0) {
+                answerModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+            }else{
+                answerModel.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+            }
+            answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
+            answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
+            answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
+            answerModel.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
+            answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
+            if (answerModel.IdFlag.length==0) {
+                answerModel.IdFlag = @"匿名回答";
+                answerModel.JiaoBaoHao = @"";
+            }
+            answerModel.floatH = 0;
+            answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
+            [model.answerArray addObject:answerModel];
         }
-        answerModel.LikeCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"LikeCount"]];
-        answerModel.CaiCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CaiCount"]];
-        answerModel.JiaoBaoHao = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
-        answerModel.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"JiaoBaoHao"]];
-        answerModel.IdFlag = [answerDic objectForKey:@"IdFlag"];
-        if (answerModel.IdFlag.length==0) {
-            answerModel.IdFlag = @"匿名回答";
-            answerModel.JiaoBaoHao = @"";
-        }
-        answerModel.floatH = 0;
-        answerModel.CCount = [NSString stringWithFormat:@"%@",[answerDic objectForKey:@"CCount"]];
-        [model.answerArray addObject:answerModel];
     }
     return model;
 }

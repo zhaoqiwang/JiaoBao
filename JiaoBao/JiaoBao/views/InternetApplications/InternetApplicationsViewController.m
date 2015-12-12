@@ -310,113 +310,112 @@
 
 //导航条按钮回调事件
 -(void)Nav_internetAppViewClickBtnWith:(UIButton *)btn{
-    D("点击的button是  %ld",(long)btn.tag);
-    if (btn.tag == 1) {//点击设置按钮
-        NSArray *menuItems ;
-        if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
-            menuItems =
-            @[ [KxMenuItem menuItem:@"添加问题"
-                            image:[UIImage imageNamed:@"appNav_dongtai"]
-                            target:self
-                            action:@selector(pushMenuItem9:)],
-              [KxMenuItem menuItem:@"发布单位动态"
-                             image:[UIImage imageNamed:@"appNav_dongtai"]
-                            target:self
-                            action:@selector(pushMenuItem4:)],
-              [KxMenuItem menuItem:@"发表分享"
-                             image:[UIImage imageNamed:@"appNav_share"]
-                            target:self
-                            action:@selector(pushMenuItem5:)],
-              
-              [KxMenuItem menuItem:@"下载的附件"
-                             image:[UIImage imageNamed:@"appNav_access"]
-                            target:self
-                            action:@selector(pushMenuItem7:)],
-              
-              [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem8:)],
-              
-              [KxMenuItem menuItem:@"切换单位"
-                             image:[UIImage imageNamed:@"appNav_changeUnit"]
-                            target:self
-                            action:@selector(pushMenuItem2:)],
-              
-              [KxMenuItem menuItem:@"切换账号"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem3:)],
-              
-              ];
-        }else if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
-            menuItems =
-            @[[KxMenuItem menuItem:@"添加问题"
-                            image:[UIImage imageNamed:@"appNav_dongtai"]
-                            target:self
-                            action:@selector(pushMenuItem9:)],
-              [KxMenuItem menuItem:@"新建事务"
-                             image:[UIImage imageNamed:@"appNav_work"]
-                            target:self
-                            action:@selector(pushMenuItem6:)],
-              
-              [KxMenuItem menuItem:@"发布单位动态"
-                             image:[UIImage imageNamed:@"appNav_dongtai"]
-                            target:self
-                            action:@selector(pushMenuItem4:)],
-              [KxMenuItem menuItem:@"发表分享"
-                             image:[UIImage imageNamed:@"appNav_share"]
-                            target:self
-                            action:@selector(pushMenuItem5:)],
-              
-              [KxMenuItem menuItem:@"下载的附件"
-                             image:[UIImage imageNamed:@"appNav_access"]
-                            target:self
-                            action:@selector(pushMenuItem7:)],
-              
-              [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem8:)],
-              
-              [KxMenuItem menuItem:@"切换单位"
-                             image:[UIImage imageNamed:@"appNav_changeUnit"]
-                            target:self
-                            action:@selector(pushMenuItem2:)],
-              
-              [KxMenuItem menuItem:@"切换账号"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem3:)],
-              
-              ];
-        }else{
-            menuItems =
-            @[
-              
-              [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem8:)],
-              
-              [KxMenuItem menuItem:@"切换账号"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem3:)],
-              
-              ];
-        }
-        
-        
-        [KxMenu showMenuInView:self.view
-                      fromRect:btn.frame
-                     menuItems:menuItems];
-    }else if (btn.tag == 2) {//点击添加按钮,让显示不同的界面时，点击出现不同的功能
-//        if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
+    if ([[dm getInstance].jiaoBaoHao intValue]>0) {
+        if (btn.tag == 1) {//点击设置按钮
+            NSArray *menuItems ;
+            if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
+                menuItems =
+                @[ [KxMenuItem menuItem:@"添加问题"
+                                  image:[UIImage imageNamed:@"appNav_dongtai"]
+                                 target:self
+                                 action:@selector(pushMenuItem9:)],
+                   [KxMenuItem menuItem:@"发布单位动态"
+                                  image:[UIImage imageNamed:@"appNav_dongtai"]
+                                 target:self
+                                 action:@selector(pushMenuItem4:)],
+                   [KxMenuItem menuItem:@"发表分享"
+                                  image:[UIImage imageNamed:@"appNav_share"]
+                                 target:self
+                                 action:@selector(pushMenuItem5:)],
+                   
+                   [KxMenuItem menuItem:@"下载的附件"
+                                  image:[UIImage imageNamed:@"appNav_access"]
+                                 target:self
+                                 action:@selector(pushMenuItem7:)],
+                   
+                   [KxMenuItem menuItem:@"个人中心"
+                                  image:[UIImage imageNamed:@"appNav_changeUser"]
+                                 target:self
+                                 action:@selector(pushMenuItem8:)],
+                   
+                   [KxMenuItem menuItem:@"切换单位"
+                                  image:[UIImage imageNamed:@"appNav_changeUnit"]
+                                 target:self
+                                 action:@selector(pushMenuItem2:)],
+                   
+                   [KxMenuItem menuItem:@"切换账号"
+                                  image:[UIImage imageNamed:@"appNav_changeUser"]
+                                 target:self
+                                 action:@selector(pushMenuItem3:)],
+                   
+                   ];
+            }else if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
+                menuItems =
+                @[[KxMenuItem menuItem:@"添加问题"
+                                 image:[UIImage imageNamed:@"appNav_dongtai"]
+                                target:self
+                                action:@selector(pushMenuItem9:)],
+                  [KxMenuItem menuItem:@"新建事务"
+                                 image:[UIImage imageNamed:@"appNav_work"]
+                                target:self
+                                action:@selector(pushMenuItem6:)],
+                  
+                  [KxMenuItem menuItem:@"发布单位动态"
+                                 image:[UIImage imageNamed:@"appNav_dongtai"]
+                                target:self
+                                action:@selector(pushMenuItem4:)],
+                  [KxMenuItem menuItem:@"发表分享"
+                                 image:[UIImage imageNamed:@"appNav_share"]
+                                target:self
+                                action:@selector(pushMenuItem5:)],
+                  
+                  [KxMenuItem menuItem:@"下载的附件"
+                                 image:[UIImage imageNamed:@"appNav_access"]
+                                target:self
+                                action:@selector(pushMenuItem7:)],
+                  
+                  [KxMenuItem menuItem:@"个人中心"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem8:)],
+                  
+                  [KxMenuItem menuItem:@"切换单位"
+                                 image:[UIImage imageNamed:@"appNav_changeUnit"]
+                                target:self
+                                action:@selector(pushMenuItem2:)],
+                  
+                  [KxMenuItem menuItem:@"切换账号"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem3:)],
+                  
+                  ];
+            }else{
+                menuItems =
+                @[
+                  
+                  [KxMenuItem menuItem:@"个人中心"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem8:)],
+                  
+                  [KxMenuItem menuItem:@"切换账号"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem3:)],
+                  
+                  ];
+            }
+            
+            
+            [KxMenu showMenuInView:self.view
+                          fromRect:btn.frame
+                         menuItems:menuItems];
+        }else if (btn.tag == 2) {//点击添加按钮,让显示不同的界面时，点击出现不同的功能
             [self showMenu:btn];
-//        }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
-//            [self shareAddMenu:btn];
-//        }
+        }
+    }else{
+        [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
 }
 
@@ -535,45 +534,32 @@
 
 //右上角“+”方法
 - (void)showMenu:(UIButton *)sender{
-    NSArray *menuItems0 =
-    @[
-      
-      [KxMenuItem menuItem:@"签到考勤"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(pushMenuItemSignIn:)],
-      [KxMenuItem menuItem:@"日程记录"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(pushMenuItemSchedule:)],
-//      [KxMenuItem menuItem:@"作业布置"
-//                     image:[UIImage imageNamed:@"appNav_contact"]
-//                    target:self
-//                    action:@selector(makeJob:)],
-//      [KxMenuItem menuItem:@"我的作业"
-//                     image:[UIImage imageNamed:@"appNav_contact"]
-//                    target:self
-//                    action:@selector(myJob:)],
-//      [KxMenuItem menuItem:@"家长查询"
-//                     image:[UIImage imageNamed:@"appNav_contact"]
-//                    target:self
-//                    action:@selector(parentSearch:)],
-      
-      ];
-    NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
-    if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
-        [array addObject:[self addOnLineJob]];
+    if ([[dm getInstance].jiaoBaoHao intValue]>0) {
+        NSArray *menuItems0 =
+        @[
+          
+          [KxMenuItem menuItem:@"签到考勤"
+                         image:[UIImage imageNamed:@"appNav_contact"]
+                        target:self
+                        action:@selector(pushMenuItemSignIn:)],
+          [KxMenuItem menuItem:@"日程记录"
+                         image:[UIImage imageNamed:@"appNav_contact"]
+                        target:self
+                        action:@selector(pushMenuItemSchedule:)],
+          
+          ];
+        NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
+        if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
+            [array addObject:[self addOnLineJob]];
+        }
+        NSArray *menuItems = array;
+        D("iudhfgjhjh-==========%d",[dm getInstance].uType);
+        [KxMenu showMenuInView:self.view
+                      fromRect:sender.frame
+                     menuItems:menuItems];
+    }else{
+        [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
-    NSArray *menuItems = array;
-    D("iudhfgjhjh-==========%d",[dm getInstance].uType);
-    
-//    KxMenuItem *first = menuItems[0];
-//    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-//    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.view
-                  fromRect:sender.frame
-                 menuItems:menuItems];
 }
 -(KxMenuItem *)addOnLineJob{
     if ([dm getInstance].uType==2) {

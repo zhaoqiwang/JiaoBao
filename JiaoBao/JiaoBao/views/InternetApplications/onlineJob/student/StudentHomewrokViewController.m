@@ -1220,22 +1220,12 @@
         self.mStr_textName = textField.text;
         return YES;
     }
-    //不能大于规定字数限制
-    NSString *new = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSInteger res = 49-[new length];
-    if(res >= 0){
-        self.mStr_textName = textField.text;
-        return YES;
-    }else{
-        NSRange rg = {0,[string length]+res};
-        if (rg.length>0) {
-            NSString *s = [string substringWithRange:rg];
-            [textField setText:[textField.text stringByReplacingCharactersInRange:range withString:s]];
-        }
-        self.mStr_textName = textField.text;
-        return NO;
-    }
     // For any other character return TRUE so that the text gets added to the view
+    if(textField.text.length>49)
+    {
+        textField.text = [textField.text substringToIndex:49];
+        self.mStr_textName = textField.text;
+    }
     return TRUE;
 }
 

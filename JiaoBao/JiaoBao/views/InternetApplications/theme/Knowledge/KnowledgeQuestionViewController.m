@@ -210,6 +210,7 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue] ==0) {
         QuestionDetailModel *model = [dic objectForKey:@"model"];
         if ([model.TabID intValue]==[self.mModel_question.TabID intValue]) {
@@ -240,6 +241,8 @@
                 }
             }
         }
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
 }
 
@@ -322,8 +325,6 @@
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
         self.invitationUserInfo = nil;
-
-        
     }
 }
 
@@ -358,7 +359,7 @@
             [self.mArr_answers addObjectsFromArray:array];
         }
         if (self.mArr_answers.count==0&&array.count==0) {
-            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+//            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
         }
     }
     [self.mTableV_answers reloadData];
@@ -491,7 +492,7 @@
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     self.mView_titlecell.askImgV.image = [UIImage imageNamed:@"ask"];
     self.mView_titlecell.askImgV.frame = CGRectMake(9, 10, 19, 19);
-    NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1 >%@</font>",string1];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color=#2589D1 >%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeCharWrapping;
