@@ -176,6 +176,12 @@
         else
         {
             self.AnswerDetailModel = [dic objectForKey:@"model"];
+            if([self.AnswerDetailModel.TabID integerValue]==0)
+            {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                self.hideHUDTag = @"1";
+                [MBProgressHUD showError:@"该条回答已被屏蔽或删除"];
+            }
             if(self.KnowledgeTableViewCell == nil)
             {
                 self.KnowledgeTableViewCell = [self getMainView];
@@ -205,7 +211,6 @@
         NSString *Data = [dic objectForKey:@"Data"];
         if([Data integerValue]==-1)
         {
-            
             [MBProgressHUD showText:@"你已经评价过了"];
             return;
         }
@@ -545,11 +550,12 @@
                         refModel.UserName = model.JiaoBaoHao;
                     }
                     NSString *tempTitle = [NSString stringWithFormat:@"%@:%@",refModel.UserName,refModel.WContent];
+                    tempLab.font = [UIFont systemFontOfSize:12];
+                    tempLab.numberOfLines = 99999;
+                    tempLab.lineBreakMode = NSLineBreakByWordWrapping;
                     CGSize sizeTitle = [tempTitle sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-90, 99999)];
                     tempLab.frame = CGRectMake(10, 5, sizeTitle.width, sizeTitle.height);
                     tempLab.text = tempTitle;
-                    tempLab.font = [UIFont systemFontOfSize:12];
-                    tempLab.numberOfLines = 99999;
                     [tempView addSubview:tempLab];
                     //踩
                     NSString *tempCaiCount = [NSString stringWithFormat:@"踩(%@)",refModel.CaiCount];
@@ -964,6 +970,10 @@
         cell.mWebV_comment.hidden =NO;
         //分割线
         cell.mLab_line.frame = CGRectMake(20, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+5, [dm getInstance].width-20, .5);
+      if([self.AnswerDetailModel.TabID integerValue]==0)
+      {
+          return cell;
+      }
         
         //头像
         cell.mImgV_head.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+15, 42, 42);
