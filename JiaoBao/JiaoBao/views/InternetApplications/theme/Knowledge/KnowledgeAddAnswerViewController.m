@@ -11,6 +11,7 @@
 #import "IQKeyboardManager.h"
 
 @interface KnowledgeAddAnswerViewController ()
+@property(nonatomic,assign)NSRange cursorPosition;
 
 @end
 
@@ -368,6 +369,7 @@
     [self submitAnswer:1];
 }
 -(IBAction)mBtn_photo:(id)sender{
+    self.cursorPosition = [self.mTextV_content selectedRange];
     [self.mTextV_content resignFirstResponder];
     [self.mTextV_answer resignFirstResponder];
     if(self.mArr_pic.count>=20)
@@ -604,27 +606,31 @@
         {
             //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
-            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p1_int = [su_p11 intValue];
-                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-                
-                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p2_int = [su_p22 intValue];
-                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-                
-                return [p1_num compare:p2_num];
-            }];
-            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
-            {
-                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
-                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
-                
-            }
-            
+            NSInteger index = self.cursorPosition.location;
+            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
+            [content insertString:model.originalName atIndex:index];
+            self.mTextV_content.text = content;
+//            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+//                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+//                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+//                int p1_int = [su_p11 intValue];
+//                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
+//                
+//                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+//                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+//                int p2_int = [su_p22 intValue];
+//                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
+//                
+//                return [p1_num compare:p2_num];
+//            }];
+//            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+//            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
+//            {
+//                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
+//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
+//                
+//            }
+//            
         }
         self.mLab_content.hidden = YES;
     }else{

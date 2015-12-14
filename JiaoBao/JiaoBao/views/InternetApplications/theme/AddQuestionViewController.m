@@ -29,6 +29,7 @@
 @property(nonatomic,assign)NSString *QId;
 @property(nonatomic,strong)NickNameModel *nickNameModel;
 @property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;
+@property(nonatomic,assign)NSRange cursorPosition;
 @end
 
 @implementation AddQuestionViewController
@@ -573,6 +574,8 @@
 -(IBAction)mBtn_photo:(id)sender{
     JoinUnit
     NoNickName
+    self.cursorPosition = [self.mTextV_content selectedRange];
+
     [self.mTextV_content resignFirstResponder];
     [self.mText_title resignFirstResponder];
     if(self.mArr_pic.count>=20)
@@ -667,6 +670,7 @@
     JoinUnitTextV
     //没有昵称，不能交互
     NoNickNameTextV
+
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
@@ -820,34 +824,40 @@
         {
             //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
-            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p1_int = [su_p11 intValue];
-                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-                
-                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p2_int = [su_p22 intValue];
-                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-                
-                return [p1_num compare:p2_num];
-            }];
-            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
-            {
-//                NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
-//                NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
-//                textAttach.image = [UIImage imageNamed:@"buttonView3"];
-//                textAttach.bounds=CGRectMake(3, 0, 10, 10);
-//                NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
-//                [str insertAttributedString:strA atIndex:2];
-//                self.ttitleLabel.attributedText = str;
+            NSInteger index = self.cursorPosition.location;
+            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
+            [content insertString:model.originalName atIndex:index];
+            self.mTextV_content.text = content;
+            //self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
 
-                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
-                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
-                
-            }
+//            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+//                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+//                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+//                int p1_int = [su_p11 intValue];
+//                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
+//                
+//                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+//                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+//                int p2_int = [su_p22 intValue];
+//                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
+//                
+//                return [p1_num compare:p2_num];
+//            }];
+//            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+//            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
+//            {
+////                NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
+////                NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+////                textAttach.image = [UIImage imageNamed:@"buttonView3"];
+////                textAttach.bounds=CGRectMake(3, 0, 10, 10);
+////                NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+////                [str insertAttributedString:strA atIndex:2];
+////                self.ttitleLabel.attributedText = str;
+//
+//                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
+//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
+//                
+//            }
             
         }
     }else{

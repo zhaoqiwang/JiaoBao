@@ -16,6 +16,7 @@
 @interface SharePostingViewController ()
 @property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
 @property(nonatomic,assign)BOOL isOpen;//是否下拉的标志
+@property(nonatomic,assign)NSRange cursorPosition;
 
 @end
 
@@ -288,27 +289,31 @@
         {
             //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
-            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p1_int = [su_p11 intValue];
-                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-                
-                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-                int p2_int = [su_p22 intValue];
-                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-                
-                return [p1_num compare:p2_num];
-            }];
-            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
-            {
-                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
-                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
-
-            }
-
+            NSInteger index = self.cursorPosition.location;
+            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
+            [content insertString:model.originalName atIndex:index];
+            self.mTextV_content.text = content;
+//            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+//                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+//                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+//                int p1_int = [su_p11 intValue];
+//                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
+//                
+//                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+//                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+//                int p2_int = [su_p22 intValue];
+//                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
+//                
+//                return [p1_num compare:p2_num];
+//            }];
+//            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+//            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
+//            {
+//                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
+//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
+//
+//            }
+//
         }
         self._placeholdLabel.hidden = YES;
     }else{
@@ -574,6 +579,8 @@
 }
 
 - (IBAction)cameraBtnAction:(id)sender {
+    self.cursorPosition = [self.mTextV_content selectedRange];
+
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
         NSUInteger sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -596,6 +603,8 @@
 }
 
 - (IBAction)albumBtnAction:(id)sender {
+    self.cursorPosition = [self.mTextV_content selectedRange];
+
     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
     
     elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
