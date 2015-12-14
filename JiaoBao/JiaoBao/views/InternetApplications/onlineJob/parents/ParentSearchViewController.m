@@ -244,7 +244,7 @@
         }];
         
         [self.mTableV_name.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [self.mTableV_name.layer setBorderWidth:2];
+        [self.mTableV_name.layer setBorderWidth:.5];
         //发送请求
         if (self.mArr_parent.count==1) {
             GenInfo *tempModel = [self.mArr_parent objectAtIndex:0];
