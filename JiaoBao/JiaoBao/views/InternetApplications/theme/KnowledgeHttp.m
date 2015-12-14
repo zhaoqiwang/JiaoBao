@@ -1232,7 +1232,7 @@
         if([ResultCode integerValue]==0)
         {
             //[MBProgressHUD showSuccess:@"成功"];
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"AddScoreWithtabid" object:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"AddScoreWithtabid" object:ResultCode];
         }
         else
         {

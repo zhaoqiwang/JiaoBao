@@ -98,7 +98,7 @@
         self.cellmodel.TabID = @"";
         self.mInt_reloadData = 0;
         [self.mView_text setHidden:NO];
-        [self.mTextF_text becomeFirstResponder];
+        [self.mTextV_text becomeFirstResponder];
         
     }
     if(view.tag == 102 )
@@ -121,14 +121,14 @@
 //添加评论回调
 -(void)refreshComment:(id)sender
 {
-    self.mTextF_text.text = @"";
+    self.mTextV_text.text = @"";
     //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc];
+        [MBProgressHUD showError:@"目标可能已经被删除"];
     }
     else
     {
@@ -204,7 +204,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:ResultDesc];
+        [MBProgressHUD showError:@"答案可能被删除"];
     }
     else
     {
@@ -258,8 +258,15 @@
 }
 -(void)AddScoreWithtabid:(id)sender
 {
+    NSString *resultCode = [sender object];
     NSString *btnTitle = [self.btn titleForState:UIControlStateNormal];
-    [MBProgressHUD showSuccess:@"成功" toView:self.view];
+    if([resultCode integerValue]==0){
+        [MBProgressHUD showSuccess:@"成功" toView:self.view];
+   
+    }
+    else{
+        [MBProgressHUD showError:@"目标可能已被删除" toView:self.view];
+    }
     if(self.btn.tag>=0)
     {
         commentListModel *Model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:self.btn.tag];
@@ -387,13 +394,19 @@
     self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
 
     //输入框
-    self.mTextF_text = [[UITextField alloc] init];
-    self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15*2, 51-20);
-    self.mTextF_text.placeholder = @"请输入评论内容";
-    self.mTextF_text.delegate = self;
-    self.mTextF_text.font = [UIFont systemFontOfSize:14];
-    self.mTextF_text.borderStyle = UITextBorderStyleRoundedRect;
-    self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+    self.mTextV_text = [[UITextView alloc] init];
+    self.mTextV_text.frame = CGRectMake(15, 10, [dm getInstance].width-15*2-40, 51-20);
+    //self.mTextV_text.placeholder = @"请输入评论内容";
+    self.mTextV_text.delegate = self;
+    self.mTextV_text.font = [UIFont systemFontOfSize:14];
+    self.mTextV_text.layer.borderWidth = .5;
+    self.mTextV_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
+    //self.mTextV_text.borderStyle = UITextBorderStyleRoundedRect;
+    //self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+    self.doneBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    self.doneBtn.frame =CGRectMake(self.mTextV_text.frame.origin.x+self.mTextV_text.frame.size.width+10, 10, 30, 31);
+    [self.doneBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [self.doneBtn addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mView_text setHidden:YES];
 
     D("dspfgijagopfjdp-====%@,%@",self.answerModel.TabID,self.questionModel.answerModel.TabID);
@@ -513,7 +526,7 @@
     
     [cell.mImg_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     //人名、单位名
-    if([model.UserName isEqual:[NSNull null]])
+    if([model.UserName isEqual:[NSNull null]]||[model.UserName isEqualToString: @""])
     {
         model.UserName = model.JiaoBaoHao;
     }
@@ -547,7 +560,7 @@
                     //显示内容
                     if([refModel.UserName isEqual:[NSNull null]])
                     {
-                        refModel.UserName = model.JiaoBaoHao;
+                        refModel.UserName = refModel.JiaoBaoHao;
                     }
                     NSString *tempTitle = [NSString stringWithFormat:@"%@:%@",refModel.UserName,refModel.WContent];
                     tempLab.font = [UIFont systemFontOfSize:12];
@@ -762,7 +775,7 @@
     JoinUnit
     [self.view endEditing:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"更多" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",@"赞",@"反对",nil];
+    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"举报",nil];
     action.tag = indexPath.row;
     [action showInView:self.view];
 //    [self.mView_text setHidden:NO];
@@ -775,7 +788,7 @@
             NoNickName
 
             [self.mView_text setHidden:NO];
-            [self.mTextF_text becomeFirstResponder];
+            [self.mTextV_text becomeFirstResponder];
 
         }else if (buttonIndex == 1){
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -784,27 +797,27 @@
             alert.tag = actionSheet.tag;
 
         }
-    else if(buttonIndex == 2)
-    {
-        commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
-        [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"1"];
-        NSIndexPath *index =[NSIndexPath indexPathForRow:actionSheet.tag inSection:0];
-        AirthCommentsListCell *cell = (AirthCommentsListCell *)[self.tableView cellForRowAtIndexPath:index];
-        self.btn = cell.mBtn_LikeCount;
-        self.btn.tag = cell.tag;
-
-        //[[KnowledgeHttp getInstance]SetYesNoWithAId:model.TabID yesNoFlag:@"1"];
-    }
-    else if(buttonIndex == 3)
-    {
-        commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
-        [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"0"];
-        NSIndexPath *index =[NSIndexPath indexPathForRow:actionSheet.tag inSection:0];
-        AirthCommentsListCell *cell = (AirthCommentsListCell *)[self.tableView cellForRowAtIndexPath:index];
-        self.btn = cell.mBtn_CaiCount;
-        self.btn.tag = cell.tag;
-
-    }
+//    else if(buttonIndex == 2)
+//    {
+//        commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
+//        [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"1"];
+//        NSIndexPath *index =[NSIndexPath indexPathForRow:actionSheet.tag inSection:0];
+//        AirthCommentsListCell *cell = (AirthCommentsListCell *)[self.tableView cellForRowAtIndexPath:index];
+//        self.btn = cell.mBtn_LikeCount;
+//        self.btn.tag = cell.tag;
+//
+//        //[[KnowledgeHttp getInstance]SetYesNoWithAId:model.TabID yesNoFlag:@"1"];
+//    }
+//    else if(buttonIndex == 3)
+//    {
+//        commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:actionSheet.tag];
+//        [[KnowledgeHttp getInstance]AddScoreWithtabid:model.TabID tp:@"0"];
+//        NSIndexPath *index =[NSIndexPath indexPathForRow:actionSheet.tag inSection:0];
+//        AirthCommentsListCell *cell = (AirthCommentsListCell *)[self.tableView cellForRowAtIndexPath:index];
+//        self.btn = cell.mBtn_CaiCount;
+//        self.btn.tag = cell.tag;
+//
+//    }
 
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -1199,7 +1212,8 @@
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.mView_text];
-    [self.mView_text addSubview:self.mTextF_text];
+    [self.mView_text addSubview:self.mTextV_text];
+    [self.mView_text addSubview:self.doneBtn];
     
     self.tableView.tableFooterView = [[UIView alloc]init];
 
@@ -1277,7 +1291,7 @@
 -(void)tapAction:(id)sender
 {
     self.mView_text.hidden = YES;
-    [self.mTextF_text resignFirstResponder];
+    [self.mTextV_text resignFirstResponder];
 }
 
 - (void) keyboardWasShown:(NSNotification *) notif{
@@ -1317,23 +1331,21 @@
     }else
         return YES;
 }
-//键盘点击DO
-#pragma mark - UITextView Delegate Methods
--(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if ([string isEqualToString:@"\n"]) {
-        [textField resignFirstResponder];
+-(void)doneAction:(id)sender
+{
+        [self.mTextV_text resignFirstResponder];
         self.mView_text.hidden = YES;
-        if(textField.text.length>1000)
+        if(self.mTextV_text.text.length>1000)
         {
             [MBProgressHUD showError:@"评论字数不能大于1000" toView:self.view];
-            return YES;
+            return ;
         }
-
+        
         //若其有输入内容，则发送
-        if (![utils isBlankString:textField.text]) {
+        if (![utils isBlankString:self.mTextV_text.text]) {
             if ([dm getInstance].NickName1.length==0) {
                 [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
-                return YES;
+                return ;
             }
             if(self.cellmodel.TabIDStr == nil)
             {
@@ -1342,20 +1354,56 @@
             }
             if(self.answerModel)
             {
-                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabID];
+                [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:self.mTextV_text.text RefID:self.cellmodel.TabID];
             }
             else
             {
-                [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabID];
+                [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:self.mTextV_text.text RefID:self.cellmodel.TabID];
                 
             }
+            
 
-        }
-        else
-        {
-        }
-        return NO;
     }
+}
+//键盘点击DO
+#pragma mark - UITextView Delegate Methods
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+//    if ([string isEqualToString:@"\n"]) {
+//        [textField resignFirstResponder];
+//        self.mView_text.hidden = YES;
+//        if(textField.text.length>1000)
+//        {
+//            [MBProgressHUD showError:@"评论字数不能大于1000" toView:self.view];
+//            return YES;
+//        }
+//
+//        //若其有输入内容，则发送
+//        if (![utils isBlankString:textField.text]) {
+//            if ([dm getInstance].NickName1.length==0) {
+//                [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
+//                return YES;
+//            }
+//            if(self.cellmodel.TabIDStr == nil)
+//            {
+//                self.cellmodel = [[commentListModel alloc]init];
+//                self.cellmodel.TabID = @"";
+//            }
+//            if(self.answerModel)
+//            {
+//                    [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabID];
+//            }
+//            else
+//            {
+//                [[KnowledgeHttp getInstance]AddCommentWithAId:self.questionModel.answerModel.TabID comment:textField.text RefID:self.cellmodel.TabID];
+//                
+//            }
+//
+//        }
+//        else
+//        {
+//        }
+//        return NO;
+//    }
     return YES;
 }
 

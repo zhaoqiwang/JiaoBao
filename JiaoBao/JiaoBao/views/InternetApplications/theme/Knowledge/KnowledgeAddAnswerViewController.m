@@ -42,7 +42,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    self.mInt_index = 1;
+
     
     self.mArr_pic = [NSMutableArray array];
     self.mInt_flag = 0;
