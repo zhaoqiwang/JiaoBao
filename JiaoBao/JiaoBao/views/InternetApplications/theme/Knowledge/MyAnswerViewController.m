@@ -28,6 +28,7 @@
     self.mArr_list = [NSMutableArray array];
     self.mInt_reloadData = 0;
     self.mInt_load = 1;
+    self.mInt_list = 0;
     //获取我参与回答的问题列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MyAnswerIndexWithnumPerPage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(MyAnswerIndexWithnumPerPage:) name:@"MyAnswerIndexWithnumPerPage" object:nil];
@@ -65,12 +66,16 @@
     if ([code integerValue]==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
         if (self.mInt_reloadData ==0) {
+            self.mInt_list = 0;
             self.mArr_list = [NSMutableArray arrayWithArray:array];
         }else{
             [self.mArr_list addObjectsFromArray:array];
         }
         if (self.mArr_list.count==0&&array.count==0) {
             [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+        }else{
+            QuestionModel *model = [array objectAtIndex:0];
+            self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
         }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -259,7 +264,7 @@
     if (self.mInt_reloadData == 0) {
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
-        if (self.mArr_list.count==[rowCount intValue]) {
+        if (self.mInt_list==[rowCount intValue]) {
             [self.mTalbeV_liset headerEndRefreshing];
             [self.mTalbeV_liset footerEndRefreshing];
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];

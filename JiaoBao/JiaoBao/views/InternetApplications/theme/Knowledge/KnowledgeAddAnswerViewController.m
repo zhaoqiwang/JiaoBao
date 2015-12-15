@@ -148,6 +148,7 @@
             
         }else{
             self.mView_titlecell.mLab_AnswersCount.text = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
+            self.mModel_questionDetail.AnswersCount = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
             self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         }
 //        if (self.mInt_flag==1) {
@@ -158,6 +159,8 @@
         [self.mTextV_content resignFirstResponder];
         //通知其余界面，更新答案数据
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetailModel" object:self.mModel_questionDetail];
+        //通知其余界面，更新访问量等数据
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updataQuestionDetail" object:self.mModel_questionDetail];
         //界面显示，停留2秒
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
         D("dufghdjfgh-====%d",self.mInt_view);
@@ -301,6 +304,10 @@
     D("doifjgj-===kncontent-=====%@",model.KnContent);
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];

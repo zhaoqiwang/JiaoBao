@@ -60,9 +60,9 @@
     //获取昵称对应的教宝号
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
     //获取问题的答案列表
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAnswerById" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAnswerById" object:nil];
     //通知界面，更新访问量等数据
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updataQuestionDetail" object:nil];
     //是否关注该问题
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddMyAttQWithqId" object:nil];
     //取消关注该问题
@@ -359,7 +359,7 @@
             [self.mArr_answers addObjectsFromArray:array];
         }
         if (self.mArr_answers.count==0&&array.count==0) {
-//            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
         }
     }
     [self.mTableV_answers reloadData];

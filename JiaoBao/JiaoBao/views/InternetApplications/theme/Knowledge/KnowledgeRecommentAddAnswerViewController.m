@@ -83,6 +83,10 @@
             D("ShowRecomment:-=====%@",content);
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
@@ -117,14 +121,14 @@
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     self.mView_titlecell.askImgV.image = [UIImage imageNamed:@"ask"];
     self.mView_titlecell.askImgV.frame = CGRectMake(9, 10, 19, 19);
-    NSString *name = [NSString stringWithFormat:@" <font size=14 color=#2589D1 >%@</font>",string1];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color=#2589D1 >%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeCharWrapping;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
-    self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- self.mView_titlecell.answerImgV.frame.size.width, titleSize.height);
+    self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- self.mView_titlecell.askImgV.frame.size.width, titleSize.height);
     //详情
     self.mView_titlecell.mBtn_detail.hidden = NO;
     [self.mView_titlecell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
@@ -179,6 +183,10 @@
     NSString *content = model.questionModel.KnContent;
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
@@ -272,7 +280,7 @@
     }
     //添加点击事件
     //    cell.delegate = self;
-    [cell addTapClick];
+//    [cell addTapClick];
     cell.mInt_flag = 1;
     NSMutableArray *array = self.mModel_recomment.answerArray;
     AnswerModel *model = [array objectAtIndex:indexPath.row];
@@ -341,7 +349,7 @@
     if (nameSize.height>21) {
         nameSize = CGSizeMake(nameSize.width, 30);
         cell.mLab_IdFlag.numberOfLines = 2;
-        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10-(nameSize.height-cell.mLab_IdFlag.frame.size.height), 42, nameSize.height);
+        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, nameSize.height);
     }else{
         cell.mLab_IdFlag.numberOfLines = 1;
         cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
@@ -394,6 +402,10 @@
     NSString *content = model.Abstracts;
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
@@ -401,7 +413,7 @@
     cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-    [cell.mWebV_comment reload];
+//    [cell.mWebV_comment reload];
     
     //背景色
     cell.mView_background.frame = CGRectMake(cell.mWebV_comment.frame.origin.x-2, cell.mWebV_comment.frame.origin.y-3-29, [dm getInstance].width-70, cell.mWebV_comment.frame.size.height+4+29);
@@ -469,7 +481,7 @@
     CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
     if (nameSize.height>21) {
         nameSize = CGSizeMake(nameSize.width, 30);
-        tempF1 = tempF1+10-(nameSize.height-21)+nameSize.height;
+        tempF1 = tempF1+10+nameSize.height;
     }else{
         tempF1 = tempF1+10+21;
     }

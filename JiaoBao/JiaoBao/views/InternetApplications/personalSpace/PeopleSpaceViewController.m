@@ -339,8 +339,8 @@
         cell.mImgV_head.frame = CGRectMake(10, 10, cell.mImgV_head.frame.size.width, cell.mImgV_head.frame.size.height);
         cell.imgBtn.frame = cell.mImgV_head.frame;
         [cell.imgBtn addTarget:self action:@selector(imgBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        cell.mLab_nickName.frame = CGRectMake(cell.mImgV_head.frame.size.width+20, 15, [dm getInstance].width-75, cell.mLab_nickName.frame.size.height);
-        cell.mLab_trueName.frame = CGRectMake(cell.mImgV_head.frame.size.width+20, 15+cell.mLab_nickName.frame.size.height+5, [dm getInstance].width-75, cell.mLab_nickName.frame.size.height);
+        cell.mLab_nickName.frame = CGRectMake(cell.mImgV_head.frame.size.width+20, 15, [dm getInstance].width-75-20, cell.mLab_nickName.frame.size.height);
+        cell.mLab_trueName.frame = CGRectMake(cell.mImgV_head.frame.size.width+20, 15+cell.mLab_nickName.frame.size.height+5, [dm getInstance].width-75-20, cell.mLab_nickName.frame.size.height);
         cell.mLab_line.frame = CGRectMake(0, 69, [dm getInstance].width, .5);
         cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     }else{

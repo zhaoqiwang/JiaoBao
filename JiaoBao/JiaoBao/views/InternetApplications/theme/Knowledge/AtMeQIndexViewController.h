@@ -25,5 +25,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_list;//我提出的问题列表
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 @property (nonatomic,assign) int mInt_load;//加载数据页码page
+@property (nonatomic,assign) int mInt_list;//总数组，包括隐藏的
 
 @end

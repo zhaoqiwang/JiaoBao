@@ -441,6 +441,7 @@
             model.AreaCode = [dic objectForKey:@"AreaCode"];
         }
         model.hiddenid = [dic objectForKey:@"hiddenid"];
+        model.State = [NSString stringWithFormat:@"%@",[dic objectForKey:@"State"]];
         model.JiaoBaoHao = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         model.JiaoBaoHao2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"JiaoBaoHao"]];
         NSArray *temp0 = [[dic objectForKey:@"Thumbnail"] objectFromJSONString];

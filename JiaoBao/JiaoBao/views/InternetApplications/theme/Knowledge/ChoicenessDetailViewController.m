@@ -183,6 +183,10 @@
 
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"]mutableCopy];
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"]mutableCopy];
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"]mutableCopy];
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""]mutableCopy];

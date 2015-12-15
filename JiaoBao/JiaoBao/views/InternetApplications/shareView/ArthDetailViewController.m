@@ -414,6 +414,12 @@
 //            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
 //            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
             NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-20,[dm getInstance].width-20,[dm getInstance].width-20,[dm getInstance].width-20,[dm getInstance].width-20,str];
@@ -453,6 +459,12 @@
 //            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
 //            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
             NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-20,[dm getInstance].width-20,[dm getInstance].width-20,[dm getInstance].width-20,[dm getInstance].width-20,str];

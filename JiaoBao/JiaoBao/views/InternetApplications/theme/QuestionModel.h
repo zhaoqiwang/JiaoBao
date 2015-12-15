@@ -29,6 +29,7 @@
 @property(nonatomic,assign)int mInt_top;//1为置顶数据，0为普通
 @property(nonatomic,strong)NSMutableArray *hiddenid;//关注之后被隐藏或被删除的问题id，可以提示用户，原问题已隐藏或已删除，提供取消关注按钮
 @property(nonatomic,strong)NSString *Flag;//如果flag==1,那么在结果集中answer=null就隐藏起来，不显示了。（因为有证据的答案已隐藏或删除）
+@property(nonatomic,strong)NSString *State;//=1是正常的，=0是禁用的
 
 @property(nonatomic,strong)NSString *Tag;//我已关注该问题，0未关注,1已关注--自己添加
 
