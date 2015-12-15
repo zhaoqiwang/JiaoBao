@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-//    self.textField.returnKeyType = UIReturnKeyDone;
+    self.textField.returnKeyType = UIReturnKeyDone;
 }
 
 
