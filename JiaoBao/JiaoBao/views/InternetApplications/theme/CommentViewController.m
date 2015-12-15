@@ -204,7 +204,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]!=0)
     {
-        [MBProgressHUD showError:@"答案可能被删除"];
+        [MBProgressHUD showError:ResultDesc];
     }
     else
     {
@@ -212,6 +212,11 @@
         if([Data integerValue]==-1)
         {
             [MBProgressHUD showText:@"你已经评价过了"];
+            return;
+        }
+        else if([Data integerValue]==-2)
+        {
+            [MBProgressHUD showText:@"答案可能已被删除"];
             return;
         }
         if(self.btn_tag == 1)
@@ -229,8 +234,6 @@
             NSUInteger num = [self.KnowledgeTableViewCell.mLab_LikeCount.text integerValue]+1;
             self.KnowledgeTableViewCell.mLab_LikeCount.text = [NSString stringWithFormat:@"%ld",num];
             [MBProgressHUD showText:@"点赞成功"];
-
-
         }
     }
 }
@@ -837,7 +840,6 @@
                 //[[KnowledgeHttp getInstance]reportanswerWithAId:self.questionModel.answerModel.TabID];
                 [[KnowledgeHttp getInstance]ReportAnsWithAId:self.questionModel.answerModel.TabID repType:@"0"];
                 
-                
             }
             
         }
@@ -851,8 +853,6 @@
             [[KnowledgeHttp getInstance]ReportAnsWithAId:model.TabID repType:@"2"];
         }
     }
-
-
 }
 
 //点击点赞按钮
@@ -875,7 +875,6 @@
     }
     self.btn_tag = 0;
 }
-
 //获取上面的cellview
 -(KnowledgeTableViewCell*)getMainView
 {
