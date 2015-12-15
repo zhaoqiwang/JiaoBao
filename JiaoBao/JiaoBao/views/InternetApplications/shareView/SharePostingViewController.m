@@ -54,6 +54,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mInt_index = 1;
+
     //音频
     [self audio];
     //上传图片
