@@ -589,7 +589,15 @@
         }
         else
         {
-            [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+            if([self.FlagStr isEqualToString:@"1"]){
+                [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+                self.nextBtn.enabled = YES;
+   
+            }
+            else{
+                [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+                self.nextBtn.enabled = NO;
+            }
         }
         
     }
