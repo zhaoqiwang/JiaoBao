@@ -81,7 +81,22 @@
     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     if(self.datasource.count == 1)
     {
-        [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+        if([self.FlagStr isEqualToString:@"1"]){
+            if(self.isSubmit == YES){
+                [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+                self.nextBtn.enabled = NO;
+
+            }else{
+                [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+                self.nextBtn.enabled = YES;
+            }
+   
+        }
+        else{
+            [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+            self.nextBtn.enabled = NO;
+
+        }
     }
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0)] ;
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
@@ -836,8 +851,12 @@
                     self.previousBtn.enabled = YES;
                     if(self.isSubmit == NO)
                     {
-                        [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
-                        [MBProgressHUD showMessage:@"" toView:self.view];
+                        {
+                            [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                            [MBProgressHUD showMessage:@"" toView:self.view];
+
+                        }
+
                     }
 
                 }
@@ -864,8 +883,28 @@
         if(isFinish == false)
         {
             if(self.isSubmit == NO){
-                
+                if([self.FlagStr isEqualToString:@"1"]){
+
                 [MBProgressHUD showError:@"题目没有完成，无法提交"];
+
+                }else{
+                    self.previousBtn.enabled = YES;
+                    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
+                    NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
+                    self.selectedBtnTag++;
+                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                    {
+                            [btn setTitle:@"提交" forState:UIControlStateNormal];
+                            btn.enabled = NO;
+                    }
+                    else
+                    {
+                        [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                        btn.enabled = YES;
+                    }
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+                }
 
             }
             else{
@@ -939,8 +978,28 @@
         if(isFinish == false)
         {
             if(self.isSubmit == NO){
+                if([self.FlagStr isEqualToString:@"1"]){
+
 
             [MBProgressHUD showError:@"题目没有完成，无法提交"];
+                }else{
+                    self.previousBtn.enabled = YES;
+                    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
+                    NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
+                    self.selectedBtnTag++;
+                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                    {
+                            [btn setTitle:@"提交" forState:UIControlStateNormal];
+                            btn.enabled = NO;
+                    }
+                    else
+                    {
+                        [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                        btn.enabled = YES;
+                    }
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+                }
             }
             else{
                 self.previousBtn.enabled = YES;
@@ -975,17 +1034,24 @@
             if(self.datasource.count-1==self.selectedBtnTag)
             {
                 if(self.isSubmit == NO){
-                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
-                [MBProgressHUD showMessage:@"" toView:self.view];
-                [self.collectionView reloadData];
+                    {
+                        [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
+                        [self.collectionView reloadData];
+                        
+                    }
+
                 }
             }
             
             else
             {
                 if(self.isSubmit == NO){
+                    {
+
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
+                    }
             }
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
