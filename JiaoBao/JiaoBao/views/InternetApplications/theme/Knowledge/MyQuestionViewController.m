@@ -131,13 +131,17 @@
     NSString *string1 = model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
+    NSString *stateTemp = @"";
+    if ([model.State intValue]==0) {
+        stateTemp = [NSString stringWithFormat:@"<font size=14 color=gray>[屏蔽]</font>"];
+    }
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>%@",string1,stateTemp];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
     cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
-    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingMiddle;
     cell.mLab_ATitle.hidden = NO;
     //关注、答案个数
     //关注

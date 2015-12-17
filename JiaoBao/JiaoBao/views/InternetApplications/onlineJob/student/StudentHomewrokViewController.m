@@ -12,6 +12,7 @@
 #import "GetUnitInfoModel.h"
 
 @interface StudentHomewrokViewController ()
+@property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
 
 @end
 
@@ -930,6 +931,7 @@
             cell0.titleLabel.frame = CGRectMake(20, 15, 80, 21);
             cell0.textField.frame = CGRectMake(90, 8, [dm getInstance].width-110, 31);
             cell0.textField.text = self.mStr_textName;
+            self.titleTF = cell0.textField;
         }else{
             cell0.mLab_title.hidden = NO;
             cell0.mLab_select.hidden = NO;
@@ -1106,6 +1108,7 @@
                         nodeData.mStr_id = model1.GradeCode;
                         [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                         [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
@@ -1137,6 +1140,7 @@
                         TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:0];
                         TreeJob_level0_model *tempModel = tempNode.nodeData;
                         [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:2];
                         TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
@@ -1166,6 +1170,7 @@
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
                         [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:3];
                         TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
@@ -1231,6 +1236,7 @@
 
 //发布练习按钮回调
 -(void)PublishJob{
+    self.mStr_textName = self.titleTF.text;
     //年级
     TreeView_node *tempNode0 = [self.mArr_sumData objectAtIndex:0];
     TreeJob_level0_model *tempModel0 = tempNode0.nodeData;
@@ -1259,6 +1265,7 @@
         [MBProgressHUD showError:@"请选择章节"];
         return ;
     }
+    D("self.mStr_textName-====%@",self.mStr_textName);
     if ([utils isBlankString:self.mStr_textName]) {
         [MBProgressHUD showError:@"请输入练习标题" toView:self.view];
         return;

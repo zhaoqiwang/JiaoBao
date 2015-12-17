@@ -52,6 +52,7 @@ typedef enum
 	RTTextLineBreakModeCharWrapping = kCTLineBreakByCharWrapping,//当一行中最后一个位置的大小不能容纳一个字符时，才进行换行。
 	RTTextLineBreakModeClip = kCTLineBreakByClipping,//超出画布边缘部份将被截除。
     RTTextLineBreakModeTruncatingTail = kCTLineBreakByTruncatingTail,//截除后面部份，只保留前面一行的数据，后部份以...代替。
+    RTTextLineBreakModeTruncatingMiddle = kCTLineBreakByTruncatingMiddle,
 }RTTextLineBreakMode;
 
 

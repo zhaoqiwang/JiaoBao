@@ -163,7 +163,7 @@
             }
             self.publishJobModel.classSel = [NSString stringWithFormat:@"%d",model.mInt_class];
             self.publishJobModel.schoolName = model.mStr_schoolName;
-            D("kjlksfjdkj-=====%@,%@",self.publishJobModel.HwType,self.publishJobModel.DoLv);
+            D("kjlksfjdkj-=====%@,%@,%@",self.publishJobModel.HwType,self.publishJobModel.DoLv,self.publishJobModel.homeworkName);
             [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
@@ -1626,6 +1626,7 @@
                         
                         [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                         [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
@@ -1665,6 +1666,7 @@
                         TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:2];
                         TreeJob_level0_model *tempModel = tempNode.nodeData;
                         [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
                         TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
@@ -1699,6 +1701,7 @@
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:3];
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
                         [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
+                        [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
                         TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
@@ -1803,6 +1806,30 @@
 //        textField.inputAccessoryView = nil;
 //    }
 }
+//如果输入超过规定的字数100，就不再让输入
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    //输入删除时
+//    self.publishJobModel.homeworkName = textField.text;
+    
+    if ([string isEqualToString:@""]) {
+        return YES;
+    }
+    if ([string isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textField resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+//    if(textField.text.length>49)
+//    {
+//        textField.text = [textField.text substringToIndex:49];
+//        self.mStr_textName = textField.text;
+//    }
+    return TRUE;
+}
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     if([textField isEqual:self.dateTF])
@@ -1842,8 +1869,7 @@
 {
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
-
-    
+    self.publishJobModel.homeworkName = self.titleTF.text;
     if(self.publishJobModel.classIDArr.count == 0)
     {
         [MBProgressHUD showError:@"请选择班级"];
