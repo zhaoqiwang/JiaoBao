@@ -651,7 +651,7 @@
     NSString *string1 = model.ATitle;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
     cell.answerImgV.frame = CGRectMake(60, cell.mLab_LikeCount.frame.origin.y, 26, 16);
-    NSString *name = [NSString stringWithFormat:@" <font size=12 color=black>%@</font>",string1];
+    NSString *name = [NSString stringWithFormat:@"<font size=12 color=black>%@</font>",string1];
     
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
@@ -659,7 +659,7 @@
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
     //        CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
     cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
-    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width, cell.mLab_LikeCount.frame.origin.y, [dm getInstance].width-85, 23);
+    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width, cell.mLab_LikeCount.frame.origin.y+2, [dm getInstance].width-85, 23);
     //回答内容
     NSString *string2 = model.Abstracts;
     string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -677,11 +677,11 @@
         cell.mView_background.frame = cell.mImgV_head.frame;
         cell.basisImagV.image = [UIImage imageNamed:@"content"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
-        name2 = [NSString stringWithFormat:@" <font ont size=12 color=black>%@</font>", string2];
+        name2 = [NSString stringWithFormat:@"<font ont size=12 color=black>%@</font>", string2];
     }else if ([model.Flag integerValue]==2){//有证据
         cell.basisImagV.image = [UIImage imageNamed:@"basis"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);
-        name2 = [NSString stringWithFormat:@" <font size=12 color='#E67215'>%@</font>", string2];
+        name2 = [NSString stringWithFormat:@"<font size=12 color='#E67215'>%@</font>", string2];
     }
     NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
     [row2 setObject:name2 forKey:@"text"];
@@ -693,7 +693,7 @@
     }else if (optimalSize2.height>20) {
         optimalSize2 = CGSizeMake(optimalSize2.width, 35);
     }
-    cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
+    cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y+5, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
 //    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, optimalSize2.height);
     //背景色
     cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.basisImagV.frame.size.height+10);

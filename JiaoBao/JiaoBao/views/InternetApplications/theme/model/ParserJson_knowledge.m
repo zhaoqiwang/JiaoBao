@@ -670,7 +670,7 @@
         pickModel.Title = [answerDic objectForKey:@"Title"];
         NSString *Abstracts = [answerDic objectForKey:@"Abstracts"];
         if ([Abstracts isKindOfClass:[NSNull class]]||[Abstracts isEqual:@"null"]) {
-            pickModel.Abstracts = @"无内容";
+            pickModel.Abstracts = @"";
         }else{
             pickModel.Abstracts = [answerDic objectForKey:@"Abstracts"];
         }

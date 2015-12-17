@@ -69,13 +69,15 @@
         NSMutableArray *array = self.mModel_recomment.answerArray;
         
         if (array.count==0) {
-            [MBProgressHUD showError:@"原答案已被删除或已屏蔽!" toView:self.view];
+            [MBProgressHUD showError:@"有答案已被删除或已屏蔽!" toView:self.view];
         }
+        int m=0;
         for (int i=0; i<array.count; i++) {
             UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-75, 0)];
             AnswerModel *model = [array objectAtIndex:i];
-            if (i==0&&[model.TabID intValue]==0) {
-                [MBProgressHUD showError:@"原答案已被删除或已屏蔽!" toView:self.view];
+            if (m==0&&[model.TabID intValue]==0) {
+                m++;
+                [MBProgressHUD showError:@"有答案已被删除或已屏蔽!" toView:self.view];
             }
             tempWeb.delegate = self;
             tempWeb.tag = i;

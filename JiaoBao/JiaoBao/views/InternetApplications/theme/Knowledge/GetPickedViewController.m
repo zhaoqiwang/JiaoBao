@@ -179,7 +179,7 @@
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
         cell.askImgV.frame = CGRectMake(9, 10, 19, 19);
-        NSString *name = [NSString stringWithFormat:@" <font size=14 color=black>%@</font>",string1];
+        NSString *name = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string1];
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
         [row1 setObject:name forKey:@"text"];
         cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
