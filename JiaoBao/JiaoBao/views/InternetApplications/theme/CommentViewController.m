@@ -64,7 +64,6 @@
         if(model.mArr_CommentList.count == 0)
         {
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
-
         }
         [self.AllCommentListModel.mArr_CommentList addObjectsFromArray:model.mArr_CommentList];
     }

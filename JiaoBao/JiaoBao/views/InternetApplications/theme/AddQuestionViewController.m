@@ -674,13 +674,13 @@
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-    //输入删除时
-    if ([text isEqualToString:@""]) {
-        return YES;
-    }
+//    //输入删除时
+//    if ([text isEqualToString:@""]) {
+//        return YES;
+//    }
     if([textView isEqual:self.mText_title])
     {
-        if(range.location>100)
+        if(range.location>=100)
         {
             return NO;
         }
@@ -692,7 +692,7 @@
 {
     if([textView isEqual:self.mText_title])
     {
-        if(textView.text.length>100)
+        if(textView.text.length>=100)
         {
             textView.text = [textView.text substringToIndex:100];
         }
@@ -730,14 +730,9 @@
     
 }
 
-
-
-
-
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [dm getInstance].addQuestionNoti = NO;
-    
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = NO;//控制整个功能是否启用
@@ -798,7 +793,6 @@
                 elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
                 elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
                 elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
-                
                 elcPicker.imagePickerDelegate = self;
                 //                self.tfContentTag= self.mArr_pic.count;
                 
