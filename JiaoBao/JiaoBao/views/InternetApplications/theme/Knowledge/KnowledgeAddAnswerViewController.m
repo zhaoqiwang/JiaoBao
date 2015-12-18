@@ -319,7 +319,7 @@
 }
 
 -(void)webViewLoadFinish:(float)height Width:(float)width{
-    self.mView_titlecell.mWebV_comment.frame = CGRectMake(9, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-18, height);
+    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width, height);
     self.mView_titlecell.mWebV_comment.scrollView.contentSize = CGSizeMake(width, height);
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];

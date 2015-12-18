@@ -556,8 +556,13 @@
             cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
             RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
             cell.mLab_title.componentsAndPlainText = componentsDS;
-            CGSize optimalSize2 = [cell.mLab_title optimumSize];
-            cell.mLab_title.frame = CGRectMake(5+cell.askImgV.frame.size.width, 10, optimalSize2.width, 23);
+//            CGSize optimalSize2 = [cell.mLab_title optimumSize];
+            CGSize titleSize2 = [[NSString stringWithFormat:@" %@",self.mModel_getPickdById.PTitle] sizeWithFont:[UIFont systemFontOfSize:14]];
+            if (titleSize2.width>[dm getInstance].width-(5+cell.askImgV.frame.size.width)-70) {
+                titleSize2.width = [dm getInstance].width-(5+cell.askImgV.frame.size.width)-70;
+            }
+            
+            cell.mLab_title.frame = CGRectMake(5+cell.askImgV.frame.size.width, 10, titleSize2.width, 23);
 //            cell.mLab_title.frame = CGRectMake(9, 10, titleSize2.width, cell.mLab_title.frame.size.height);
 //            cell.mLab_title.text = self.mModel_getPickdById.PTitle;
             cell.mLab_Category0.hidden = YES;
