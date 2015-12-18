@@ -30,6 +30,7 @@
 @property(nonatomic,strong)NickNameModel *nickNameModel;
 @property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;
 @property(nonatomic,assign)NSRange cursorPosition;
+@property(nonatomic,strong)NSString *deleteStr;
 @end
 
 @implementation AddQuestionViewController
@@ -674,31 +675,52 @@
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-//    //输入删除时
-//    if ([text isEqualToString:@""]) {
-//        return YES;
-//    }
+    //输入删除时
+    if ([text isEqualToString:@""]) {
+        return YES;
+    }
+
     if([textView isEqual:self.mText_title])
     {
-        if(range.location>=100)
+        if(range.location==99&&text.length==1)
         {
-            return NO;
+            NSLog(@"text = %@",text);
+
+            if([text isEqualToString:@"➋"])
+            {
+                text = @"a";
+            }else if([text isEqualToString:@"➌"]){
+               text = @"d";
+            }else if([text isEqualToString:@"➍"]){
+                text = @"g";
+            }else if([text isEqualToString:@"➎"]){
+                text = @"j";
+            }else if([text isEqualToString:@"➏"]){
+                text = @"m";
+            }else if([text isEqualToString:@"➐"]){
+                text = @"p";
+            }else if([text isEqualToString:@"➑"]){
+                text = @"t";
+            }else if([text isEqualToString:@"➒"]){
+                text = @"w";
+            }else if([text isEqualToString:@"☻"]){
+                text = @"^";
+            }else {
+            }
         }
+        NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
+            if(Sumstr.length>99)
+            {
+                textView.text = [Sumstr substringToIndex:100];
+                self.titleTF.hidden = YES;
+                return NO;
+            }
     }
     
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
-    if([textView isEqual:self.mText_title])
-    {
-        if(textView.text.length>=100)
-        {
-            textView.text = [textView.text substringToIndex:100];
-        }
-    }
-
-
 
     if([textView isEqual:self.mText_title])
     {
@@ -726,6 +748,15 @@
         }
         
     }
+
+    if([textView isEqual:self.mText_title])
+    {
+        if(textView.text.length>100)
+        {
+            textView.text = [textView.text substringToIndex:100];
+        }
+    }
+
 
     
 }

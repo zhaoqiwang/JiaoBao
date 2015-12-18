@@ -98,11 +98,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/theme/AddQuestionViewController.m"
-            timestampString = "471576668.385513"
+            timestampString = "472027164.564799"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560"
+            startingLineNumber = "561"
+            endingLineNumber = "561"
             landmarkName = "-selectBtnAction:"
             landmarkType = "5">
          </BreakpointContent>

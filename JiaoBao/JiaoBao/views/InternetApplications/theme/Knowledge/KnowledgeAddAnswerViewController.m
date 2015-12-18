@@ -484,8 +484,48 @@
 }
 //如果输入超过规定的字数100，就不再让输入
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    //输入删除时
+    if ([text isEqualToString:@""]) {
+        return YES;
+    }
+
     // Any new character added is passed in as the "text" parameter
     if ([self.mTextV_answer isFirstResponder]) {
+        {
+            if(range.location==99&&text.length==1)
+            {
+                NSLog(@"text = %@",text);
+                
+                if([text isEqualToString:@"➋"])
+                {
+                    text = @"a";
+                }else if([text isEqualToString:@"➌"]){
+                    text = @"d";
+                }else if([text isEqualToString:@"➍"]){
+                    text = @"g";
+                }else if([text isEqualToString:@"➎"]){
+                    text = @"j";
+                }else if([text isEqualToString:@"➏"]){
+                    text = @"m";
+                }else if([text isEqualToString:@"➐"]){
+                    text = @"p";
+                }else if([text isEqualToString:@"➑"]){
+                    text = @"t";
+                }else if([text isEqualToString:@"➒"]){
+                    text = @"w";
+                }else if([text isEqualToString:@"☻"]){
+                    text = @"^";
+                }else {
+                }
+            }
+            NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
+            if(Sumstr.length>99)
+            {
+                textView.text = [Sumstr substringToIndex:100];
+                return NO;
+            }
+        }
+
         if ([text isEqualToString:@"\n"]) {
             // Be sure to test for equality using the "isEqualToString" message
             [textView resignFirstResponder];
@@ -494,11 +534,7 @@
             return FALSE;
         }
     }
-    //输入删除时
-    if ([text isEqualToString:@""]) {
-        return YES;
-    }
-    
+
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
 }
@@ -514,12 +550,12 @@
 //在这个地方计算输入的字数
 - (void)textViewDidChange:(UITextView *)textView{
     if([textView isEqual:self.mTextV_answer])
-    {
-        if(textView.text.length>100)
         {
-            textView.text = [textView.text substringToIndex:100];
+            if(textView.text.length>100)
+            {
+                textView.text = [textView.text substringToIndex:100];
+            }
         }
-    }
     int  textL =(int)[textView.text length];
     if ([self.mTextV_answer isFirstResponder]) {
         if (textL==0) {
