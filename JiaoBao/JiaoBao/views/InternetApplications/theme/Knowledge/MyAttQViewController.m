@@ -138,20 +138,21 @@
     cell.mLab_selectCategory1.hidden = YES;
     cell.mImgV_top.hidden = YES;
     //问题名称
+    CGSize detailSize = [@"取消关注" sizeWithFont:[UIFont systemFontOfSize:14]];
     NSString *string1 = model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
-    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18-40, 23);
+    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18-detailSize.width, 23);
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
     cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     cell.mLab_ATitle.hidden = NO;
     //取消关注
-    [cell.mBtn_detail setTitle:@"取消" forState:UIControlStateNormal];
-    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 0, 40, 60);
+    [cell.mBtn_detail setTitle:@"取消关注" forState:UIControlStateNormal];
+    cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-9-detailSize.width, 0, detailSize.width, 40);
     //关注、答案个数
     //关注
     NSString *attStr = [NSString stringWithFormat:@"%@人关注",model.AttCount];

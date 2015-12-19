@@ -955,7 +955,12 @@
 //    self.nickNameArr = [NSMutableArray arrayWithArray:arr];
 //    
 //    [[KnowledgeHttp getInstance]GetAccIdbyNickname:arr];
-    [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.mView_input.mTextF_input.text catid:self.mModel_question.CategoryId];
+    if ([self.mModel_question.CategoryId intValue]>0) {
+        [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.mView_input.mTextF_input.text catid:self.mModel_question.CategoryId];
+    }else{
+        [MBProgressHUD showError:@"当前问题已被删除！" toView:self.view];
+    }
+    
     //[MBProgressHUD showMessage:@"" toView:self.view];
 }
 //邀请人回调

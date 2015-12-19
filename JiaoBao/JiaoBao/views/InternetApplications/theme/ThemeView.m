@@ -884,7 +884,8 @@
             RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
             cell.mLab_title.componentsAndPlainText = componentsDS;
             //cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 50);
-            CGSize titleSize = [cell.mLab_title optimumSize];
+//            CGSize titleSize = [cell.mLab_title optimumSize];
+            CGSize titleSize = [[NSString stringWithFormat:@" %@",string1] sizeWithFont:[UIFont systemFontOfSize:14]];
             //判断是否为置顶数据
             if (model.mInt_top ==1) {//置顶
                 cell.mImgV_top.hidden = NO;

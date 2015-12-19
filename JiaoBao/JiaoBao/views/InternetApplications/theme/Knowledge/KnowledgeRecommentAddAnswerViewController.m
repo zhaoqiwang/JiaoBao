@@ -73,7 +73,7 @@
         }
         int m=0;
         for (int i=0; i<array.count; i++) {
-            UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-75, 0)];
+            UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
             AnswerModel *model = [array objectAtIndex:i];
             if (m==0&&[model.TabID intValue]==0) {
                 m++;
@@ -92,7 +92,7 @@
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
             content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,content];
+            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,content];
             tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
             [tempWeb setBackgroundColor:[UIColor clearColor]];
             [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -192,7 +192,7 @@
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-5,[dm getInstance].width-5,[dm getInstance].width-5,[dm getInstance].width-5,[dm getInstance].width-5,content];
+    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-10,[dm getInstance].width-10,[dm getInstance].width-10,[dm getInstance].width-10,[dm getInstance].width-10,content];
     
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
@@ -206,7 +206,7 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     NSString *meta;
     if (webView.tag==-1) {
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-5];
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
@@ -221,7 +221,7 @@
         [self webViewLoadFinish:webViewHeight+10];
     }else{
         CGRect frame = webView.frame;
-        frame.size.width = [dm getInstance].width-75;
+        frame.size.width = [dm getInstance].width-85;
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
@@ -235,7 +235,7 @@
 }
 
 -(void)webViewLoadFinish:(float)height{
-    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-5, height);
+    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width, height);
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
@@ -411,7 +411,7 @@
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,[dm getInstance].width-75,content];
+    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,content];
     cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -526,6 +526,8 @@
     model.AttCount = self.mModel_question.AttCount;
     model.AnswersCount = self.mModel_question.AnswersCount;
     model.Title = self.mModel_question.Title;
+    model.CategorySuject = self.mModel_question.CategorySuject;
+    model.CategoryId = self.mModel_question.CategoryId;
     queston.mModel_question = model;
     [utils pushViewController:queston animated:YES];
 }

@@ -176,7 +176,7 @@
     NSString *code = [note.object objectForKey:@"ResultCode"];
     if([code integerValue]==0)
     {
-        [MBProgressHUD showSuccess:@"取消话题成功" toView:self.view];
+        [MBProgressHUD showSuccess:@"取消关注话题成功" toView:self.view];
         
     }
     else
