@@ -522,6 +522,10 @@
             if(Sumstr.length>99)
             {
                 textView.text = [Sumstr substringToIndex:100];
+                if ([self.mTextV_answer isFirstResponder]){
+                    self.mLab_answer.hidden = YES;
+ 
+                }
                 return NO;
             }
         }

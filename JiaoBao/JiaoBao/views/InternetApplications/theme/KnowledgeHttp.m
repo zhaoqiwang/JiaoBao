@@ -1255,17 +1255,28 @@
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum};
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *resultData = [jsonDic objectForKey:@"Data"];
-        
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSMutableArray *mArr = [ParserJson_knowledge parserJsonMyComms:resultData];
+        [tempDic setValue:code forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:mArr forKey:@"array"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyCommsWithNumPerPage" object:tempDic];
+
         D("JSON--------GetMyCommsWithNumPerPage: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyCommsWithNumPerPage: %@", error);
-        [MBProgressHUD showError:@"服务器异常"];
-        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyCommsWithNumPerPage" object:tempDic];        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }

@@ -765,7 +765,7 @@
         model.CaiCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"CaiCount"]];
         model.rowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"rowCount"]];
         NSString *str2 = [dic objectForKey:@"RecDate"];
-        model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        model.RecDate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "];
 
         [array addObject:model];
     }

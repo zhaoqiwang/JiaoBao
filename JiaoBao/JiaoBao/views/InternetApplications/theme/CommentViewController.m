@@ -1136,7 +1136,7 @@
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(9, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width-18, height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width, height);
    
 
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
@@ -1279,11 +1279,22 @@
 //    model.CategorySuject = self.questionModel.CategorySuject;
 //    queston.mModel_question = model;
 //    [utils pushViewController:queston animated:YES];
+    if(self.topButtonTag == 1)
+    {
+        KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
 
-    KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
-    detail.mInt_view = 0;
-    detail.mModel_question = knowledgeTableViewCell.model;
-    [utils pushViewController:detail animated:YES];
+        queston.mModel_question = knowledgeTableViewCell.model;
+        [utils pushViewController:queston animated:YES];
+    }
+    else{
+        
+        KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
+        detail.mInt_view = 0;
+        detail.mModel_question = knowledgeTableViewCell.model;
+        [utils pushViewController:detail animated:YES];
+        
+    }
+
 }
 
 -(void)tapAction:(id)sender

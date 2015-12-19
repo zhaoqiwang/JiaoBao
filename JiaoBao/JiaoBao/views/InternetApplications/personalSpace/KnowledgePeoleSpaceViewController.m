@@ -25,6 +25,7 @@
 #import "MyAnswerViewController.h"
 #import "MyAttQViewController.h"
 #import "PointsModel.h"
+#import "MyCommentViewController.h"
 
 @interface KnowledgePeoleSpaceViewController ()<MyNavigationDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)NSArray *questionArr;
@@ -119,7 +120,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[[KnowledgeHttp getInstance]GetMyCommsWithNumPerPage:@"10" pageNum:@"0"];
+
     [[KnowledgeHttp getInstance]GetMyPointsDayWithAccId:[dm getInstance].jiaoBaoHao dateTime:@""];
     //获取日积分
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyPointsDayWithAccId" object:nil];
@@ -140,7 +141,7 @@
     [self.view addSubview:self.mNav_navgationBar];
 //    self.questionArr = [NSArray arrayWithObjects:@"我答过得问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
 //    self.categoryArr = [NSArray arrayWithObjects:@"", nil];
-    self.datasource = [NSArray arrayWithObjects:@"我答过的问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题", nil];
+    self.datasource = [NSArray arrayWithObjects:@"我答过的问题",@"我提出的问题",@"邀请我回答的问题",@"我关注的问题",@"我做出的评论", nil];
     self.HeadCell = [[HeadCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"HeadCell"];
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeadCell" owner:self options:nil];
     if ([nib count]>0) {
@@ -296,6 +297,9 @@
         [utils pushViewController:view animated:YES];
     }else if (indexPath.row==3){
         MyAttQViewController *view = [[MyAttQViewController alloc] init];
+        [utils pushViewController:view animated:YES];
+    }else if(indexPath.row == 4){
+        MyCommentViewController *view = [[MyCommentViewController alloc] init];
         [utils pushViewController:view animated:YES];
     }
 }

@@ -866,6 +866,10 @@
 		A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */; };
 		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
 		F70C77AF1BF5BF1D007BAE2D /* DetailHWVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */; };
+		F711B6E21C23A22200FF36DF /* MyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F711B6E01C23A22200FF36DF /* MyCommentViewController.m */; };
+		F711B6E31C23A22200FF36DF /* MyCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F711B6E11C23A22200FF36DF /* MyCommentViewController.xib */; };
+		F711B6E71C23ED2F00FF36DF /* MyComentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F711B6E51C23ED2F00FF36DF /* MyComentCell.m */; };
+		F711B6E81C23ED2F00FF36DF /* MyComentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F711B6E61C23ED2F00FF36DF /* MyComentCell.xib */; };
 		F71283811BE1ADD100074B72 /* DetailHWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F712837F1BE1ADD100074B72 /* DetailHWViewController.m */; };
 		F71283821BE1ADD100074B72 /* DetailHWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F71283801BE1ADD100074B72 /* DetailHWViewController.xib */; };
 		F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = F718030A1AB3C46300E6167F /* JTCalendar.m */; };
@@ -2287,6 +2291,12 @@
 		A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowPickedModel.m; path = views/InternetApplications/theme/model/ShowPickedModel.m; sourceTree = "<group>"; };
 		F70861791B38EDC90032945D /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
 		F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWVc.xib; sourceTree = "<group>"; };
+		F711B6DF1C23A22200FF36DF /* MyCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCommentViewController.h; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.h; sourceTree = "<group>"; };
+		F711B6E01C23A22200FF36DF /* MyCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCommentViewController.m; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.m; sourceTree = "<group>"; };
+		F711B6E11C23A22200FF36DF /* MyCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyCommentViewController.xib; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.xib; sourceTree = "<group>"; };
+		F711B6E41C23ED2F00FF36DF /* MyComentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyComentCell.h; path = views/InternetApplications/theme/Knowledge/MyComentCell.h; sourceTree = "<group>"; };
+		F711B6E51C23ED2F00FF36DF /* MyComentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyComentCell.m; path = views/InternetApplications/theme/Knowledge/MyComentCell.m; sourceTree = "<group>"; };
+		F711B6E61C23ED2F00FF36DF /* MyComentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyComentCell.xib; path = views/InternetApplications/theme/Knowledge/MyComentCell.xib; sourceTree = "<group>"; };
 		F712837E1BE1ADD100074B72 /* DetailHWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailHWViewController.h; sourceTree = "<group>"; };
 		F712837F1BE1ADD100074B72 /* DetailHWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailHWViewController.m; sourceTree = "<group>"; };
 		F71283801BE1ADD100074B72 /* DetailHWViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWViewController.xib; sourceTree = "<group>"; };
@@ -3995,6 +4005,12 @@
 				A79AD7871BAA5FE800F2CE77 /* MyAttQViewController.h */,
 				A79AD7881BAA5FE800F2CE77 /* MyAttQViewController.m */,
 				A79AD7891BAA5FE800F2CE77 /* MyAttQViewController.xib */,
+				F711B6DF1C23A22200FF36DF /* MyCommentViewController.h */,
+				F711B6E01C23A22200FF36DF /* MyCommentViewController.m */,
+				F711B6E11C23A22200FF36DF /* MyCommentViewController.xib */,
+				F711B6E41C23ED2F00FF36DF /* MyComentCell.h */,
+				F711B6E51C23ED2F00FF36DF /* MyComentCell.m */,
+				F711B6E61C23ED2F00FF36DF /* MyComentCell.xib */,
 				A75C7F0F1BAC06B900B1EBBA /* GetPickedViewController.h */,
 				A75C7F101BAC06B900B1EBBA /* GetPickedViewController.m */,
 				A75C7F111BAC06B900B1EBBA /* GetPickedViewController.xib */,
@@ -5631,6 +5647,7 @@
 				F7E419381BDDCC2400004BDF /* ask@2x.png in Resources */,
 				A750827A1B7998E60031E7C9 /* buttonView5.png in Resources */,
 				A76D74781A69095A008F5856 /* share_like_1@3x.png in Resources */,
+				F711B6E31C23A22200FF36DF /* MyCommentViewController.xib in Resources */,
 				A78D65E11A8A04E800BE6326 /* workDetail@3x.png in Resources */,
 				A727C7DC1A6F93780019C4CD /* share_likeBig_1@3x.png in Resources */,
 				A71D61E71A1C96A400B8D33D /* share_next1.png in Resources */,
@@ -5666,6 +5683,7 @@
 				A70179891AB91D2100E7093F /* work_accessory@3x.png in Resources */,
 				A7724D5D1B5DF94C0095850A /* VideoShot1@2x.png in Resources */,
 				A78D65D81A89E41400BE6326 /* WorkMsgListCell.xib in Resources */,
+				F711B6E81C23ED2F00FF36DF /* MyComentCell.xib in Resources */,
 				A757DFD71A80BDEF001172A4 /* appNav_groupChat@2x.png in Resources */,
 				A76ED5C21AD67855006F3E0B /* workView_click_0@2x.png in Resources */,
 				F768943E1BDF773F005EA7B6 /* noContent@3x.png in Resources */,
@@ -5897,6 +5915,7 @@
 				F776E9B01C059872004A1F1E /* PointsModel.m in Sources */,
 				A7357A1B1A3FE1E000A195C5 /* MyFriendsViewController.m in Sources */,
 				A7141DCE1A174A5D00940A3E /* ShareHttp.m in Sources */,
+				F711B6E71C23ED2F00FF36DF /* MyComentCell.m in Sources */,
 				A749B9E919F8A2C00036F480 /* TreeView_node.m in Sources */,
 				A7AD8C3919F63D58002E65FB /* StudentFileViewController.m in Sources */,
 				F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */,
@@ -6187,6 +6206,7 @@
 				A7AAC4C219F73F1400A0ED40 /* Nav_internetAppView.m in Sources */,
 				A79A1B0F1B9ED67E00028823 /* CustomTextFieldView.m in Sources */,
 				A7216E361A3A7B010093876A /* KxMenu.m in Sources */,
+				F711B6E21C23A22200FF36DF /* MyCommentViewController.m in Sources */,
 				F73DDB971BA95BB300DD8228 /* KnowledgePeoleSpaceViewController.m in Sources */,
 				A773FC281A4B9869005F84C2 /* TableViewWithBlock.m in Sources */,
 				A755E71C19F278B900BBDF3D /* SBJsonWriter.m in Sources */,
