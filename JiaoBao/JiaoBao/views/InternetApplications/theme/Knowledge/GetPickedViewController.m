@@ -117,6 +117,9 @@
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
         cell.mLab_title.componentsAndPlainText = componentsDS;
         CGSize titleSize = [cell.mLab_title optimumSize];
+        if (titleSize.width>[dm getInstance].width-(5+cell.askImgV.frame.size.width)-cell.mLab_RecDate.frame.size.width-15) {
+            titleSize.width = [dm getInstance].width-(5+cell.askImgV.frame.size.width)-cell.mLab_RecDate.frame.size.width-15;
+        }
 //        cell.mLab_title.frame = CGRectMake(9, 10, titleSize.width, 23);
         cell.mLab_title.frame = CGRectMake(5+cell.askImgV.frame.size.width, 10, titleSize.width, 23);
         
@@ -171,23 +174,21 @@
     }else{
         PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
         cell.LikeBtn.hidden = YES;
-        cell.mLab_title.hidden = NO;
         cell.askImgV.hidden = NO;
-//        cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
-//        cell.mLab_title.text = model.Title;
+        cell.mLab_title.hidden = NO;
+        //            cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, cell.mLab_title.frame.size.height);
+        //            cell.mLab_title.text = model.Title;
+        cell.askImgV.frame = CGRectMake(9, 10, 19, 19);
         NSString *string1 = model.Title;
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-        cell.askImgV.frame = CGRectMake(9, 10, 19, 19);
-        NSString *name = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string1];
+        NSString *name = [NSString stringWithFormat:@"<font size=14 color=#2589D1>%@</font>",string1];
         NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
         [row1 setObject:name forKey:@"text"];
         cell.mLab_title.lineBreakMode = RTTextLineBreakModeTruncatingTail;
         RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
         cell.mLab_title.componentsAndPlainText = componentsDS;
-//        CGSize titleSize = [cell.mLab_title optimumSize];
-//        cell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 23);
-        cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-cell.askImgV.frame.size.width-10, 23);
+        cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y+2, [dm getInstance].width-9*2-cell.askImgV.frame.size.width-10, 23);
         cell.mLab_Category0.hidden = YES;
         cell.mLab_Category1.hidden = YES;
         cell.mLab_Att.hidden = YES;
@@ -203,26 +204,27 @@
         cell.pickContentModel = model;
         cell.tag = indexPath.row;
         NSString *string2 = model.Abstracts;
-        string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-        NSString *name2 = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string2];
-        
-        NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-        [row2 setObject:name2 forKey:@"text"];
-        RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-        cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
-        CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
-        D("dfgjldkjflk-===%@,%f",model.Abstracts,optimalSize2.height);
-        if (optimalSize2.height==23) {
-            optimalSize2 = CGSizeMake(optimalSize2.width, 25);
-        }else if (optimalSize2.height==14) {
-            optimalSize2 = CGSizeMake(optimalSize2.width, 20);
-        }else if (optimalSize2.height>20) {
-            optimalSize2 = CGSizeMake(optimalSize2.width, 35);
+        if (string2.length==0) {
+            cell.mLab_Abstracts.hidden = YES;
+            cell.mView_background.hidden = YES;
+            cell.mView_background.frame = cell.mLab_title.frame;
+        }else{
+            string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            CGSize nameSize = [string2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10, MAXFLOAT)];
+            NSString *name2 = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string2];
+            cell.mLab_Abstracts.hidden = NO;
+            NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
+            [row2 setObject:name2 forKey:@"text"];
+            RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+            cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+            //                CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
+            
+            cell.mLab_Abstracts.frame = CGRectMake(5, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+7, [dm getInstance].width-10, nameSize.height);
+            cell.mView_background.hidden = NO;
+            cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-4, [dm getInstance].width-6, cell.mLab_Abstracts.frame.size.height+8);
         }
-        cell.mLab_Abstracts.frame = CGRectMake(5, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+7, [dm getInstance].width-10, optimalSize2.height);
-        cell.mView_background.hidden = NO;
-        cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-5, [dm getInstance].width-6, cell.mLab_Abstracts.frame.size.height+4);
+        
         cell.mLab_IdFlag.hidden = YES;
         cell.mLab_RecDate.hidden = YES;
         cell.mLab_comment.hidden = YES;
@@ -234,7 +236,7 @@
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
         if (model.Thumbnail.count>0) {
-            cell.mCollectionV_pic.frame = CGRectMake(5, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+            cell.mCollectionV_pic.frame = CGRectMake(10, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
         }else{
             cell.mCollectionV_pic.frame = cell.mView_background.frame;
         }
@@ -249,6 +251,7 @@
         cell.mLab_selectCategory.hidden = YES;
         cell.mLab_selectCategory1.hidden = YES;
         cell.mScrollV_pic.hidden = YES;
+        return cell;
     }
     
     
@@ -275,28 +278,27 @@
 -(float)cellHeightPicked:(NSIndexPath *)indexPath{
     float tempF = 0.0;
     PickContentModel *model = [self.mModel_getPickdById.PickContent objectAtIndex:indexPath.row-1];
-    tempF = tempF+10+16;
+    //标题
+    tempF = tempF+10+2+23;
+    //简介
     NSString *string2 = model.Abstracts;
-    string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    NSString *name2 = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string2];
-    
-    CGSize size = [name2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10, 1000)];
-    if (size.height>20) {
-        size = CGSizeMake(size.width, 32);
+    if (string2.length==0) {
+        
+    }else{
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        CGSize size = [string2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10, MAXFLOAT)];
+        tempF = tempF+7+size.height+4;
     }
     
-    if (size.height==23) {
-        size = CGSizeMake(size.width, 25);
-    }else if (size.height>20) {
-        size = CGSizeMake(size.width, 35);
-    }
-    tempF = tempF+size.height;
     //图片
     if (model.Thumbnail.count>0) {
         tempF = tempF+5+([dm getInstance].width-65-30)/3;
+    }else{
+        
     }
-    tempF = tempF +13;
+    //分割线
+    tempF = tempF+6;
     return tempF;
 }
 
