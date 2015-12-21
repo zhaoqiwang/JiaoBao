@@ -549,9 +549,9 @@
           
           ];
         NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
-        if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
-            [array addObject:[self addOnLineJob]];
-        }
+//        if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
+//            [array addObject:[self addOnLineJob]];
+//        }
         NSArray *menuItems = array;
         D("iudhfgjhjh-==========%d",[dm getInstance].uType);
         [KxMenu showMenuInView:self.view

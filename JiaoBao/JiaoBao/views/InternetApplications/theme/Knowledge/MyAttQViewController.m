@@ -77,8 +77,10 @@
         if (self.mArr_list.count==0&&array.count==0) {
             [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
         }else{
-            QuestionModel *model = [array objectAtIndex:0];
-            self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+            if (array.count>0) {
+                QuestionModel *model = [array objectAtIndex:0];
+                self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+            }
         }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];

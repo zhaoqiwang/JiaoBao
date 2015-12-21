@@ -6261,7 +6261,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "c3f51fe1-6a40-405b-b7f1-6be1d8b366e9";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 				SDKROOT = iphoneos8.2;
 			};
 			name = Debug;
@@ -6298,7 +6298,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "c3f51fe1-6a40-405b-b7f1-6be1d8b366e9";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 				SDKROOT = iphoneos8.2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -6310,8 +6310,8 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6332,7 +6332,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -6343,8 +6343,8 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6365,7 +6365,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "405c8838-6801-450f-a94b-ed3404abcc5e";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
