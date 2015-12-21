@@ -1138,12 +1138,9 @@
 }
 -(void)webViewLoadFinish:(float)height{
     self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width, height);
-   
-    self.KnowledgeTableViewCell.mWebV_comment.backgroundColor = [UIColor redColor];
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
     self.tableHeadView = [[UIView alloc]init];
     [self.tableHeadView addSubview:self.KnowledgeTableViewCell];
-    self.tableHeadView.backgroundColor = [UIColor redColor];
     if(self.topButtonTag == 1)
     {
     self.tableHeadView.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
