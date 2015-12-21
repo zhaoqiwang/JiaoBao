@@ -98,11 +98,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/theme/AddQuestionViewController.m"
-            timestampString = "472027164.564799"
+            timestampString = "472373822.066114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "561"
-            endingLineNumber = "561"
+            startingLineNumber = "564"
+            endingLineNumber = "564"
             landmarkName = "-selectBtnAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -120,22 +120,6 @@
             startingLineNumber = "133"
             endingLineNumber = "133"
             landmarkName = "-AddAnswer:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/CommentViewController.m"
-            timestampString = "472352509.68858"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

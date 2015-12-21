@@ -48,6 +48,11 @@
     else
     {
         self.ShowPickedModel = [dic objectForKey:@"model"];
+        if([self.ShowPickedModel.QID isEqual:[NSNull null]]||self.ShowPickedModel.QID == nil||[self.ShowPickedModel.QID integerValue]==0)
+        {
+            [MBProgressHUD showError:@"该问题可能已经被删除"];
+            return;
+        }
         [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.ShowPickedModel.QID];
 //        self.webView = [[UIWebView alloc]initWithFrame: CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height)];
 //        self.webView.tag = -1;

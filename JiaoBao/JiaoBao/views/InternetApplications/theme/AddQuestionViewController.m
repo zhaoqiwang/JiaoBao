@@ -147,6 +147,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue] != 0)
     {
+        [MBProgressHUD hideHUDForView:self.view];
         [MBProgressHUD showError:ResultDesc];
         return;
     }
@@ -429,10 +430,7 @@
             
         }
 
-
     }
-
-
 }
 //点击省份
 - (IBAction)provinceBtnAction:(id)sender {
@@ -477,13 +475,16 @@
 - (IBAction)regionBtnAction:(id)sender {
     JoinUnit
     NoNickName
-    if([self.provinceTF.text isEqualToString:@""])
+    if([self.provinceTF.text isEqualToString:@""]||[self.provinceTF.text isEqualToString:@"请选择"])
     {
         return;
     }
     self.selectedTF = self.regionTF;
     self.countyTF.text = @"";
-    [[KnowledgeHttp getInstance]knowledgeHttpGetCity:self.proviceModel.CityCode level:@"1"];
+    if(![self.regionTF.text isEqualToString:@"请选择"]){
+        [[KnowledgeHttp getInstance]knowledgeHttpGetCity:self.proviceModel.CityCode level:@"1"];
+
+    }
     if(self.isOpen == NO)
     {
         [UIView animateWithDuration:0.3 animations:^{
@@ -510,12 +511,14 @@
 - (IBAction)countyBtnAction:(id)sender {
     JoinUnit
     NoNickName
-    if([self.provinceTF.text isEqualToString:@""]||[self.regionTF.text isEqualToString:@""])
+    if([self.provinceTF.text isEqualToString:@""]||[self.regionTF.text isEqualToString:@""]||[self.provinceTF.text isEqualToString:@"请选择"]||[self.regionTF.text isEqualToString:@"请选择"])
     {
         return;
     }
     self.selectedTF = self.countyTF;
-    [[KnowledgeHttp getInstance]knowledgeHttpGetCity:self.proviceModel.CityCode level:@"2"];
+    if(![self.countyTF.text isEqualToString:@"请选择"]){
+        [[KnowledgeHttp getInstance]knowledgeHttpGetCity:self.proviceModel.CityCode level:@"2"];
+    }
     if(self.isOpen == NO)
     {
         [UIView animateWithDuration:0.3 animations:^{

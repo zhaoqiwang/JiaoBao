@@ -28,6 +28,9 @@
 //取系统中的省份信息
 +(NSMutableArray *)parserJsonGetProvice:(NSString *)json{
     NSMutableArray *array = [NSMutableArray array];
+    ProviceModel *model = [[ProviceModel alloc] init];
+    model.CnName = @"请选择";
+    [array addObject:model];
     NSArray *arrList = [json objectFromJSONString];
     for (int i=0; i<arrList.count; i++) {
         ProviceModel *model = [[ProviceModel alloc] init];

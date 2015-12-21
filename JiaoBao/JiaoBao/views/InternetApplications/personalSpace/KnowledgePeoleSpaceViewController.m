@@ -163,14 +163,21 @@
 
 -(void)imgBtnAction:(id)sender
 {
-    UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:@"选择图片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册",@"拍照",nil];
+    UIActionSheet *  action = [[UIActionSheet alloc] initWithTitle:@"选择图片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册",@"拍照",nil];
     action.tag = 1;
     [action showInView:self.view];
 }
 -(void)categoryBtnAction:(id)sender
 {
     AttentionCategoryVCViewController *detail = [[AttentionCategoryVCViewController alloc]init];
-    detail.categoryArr = self.categoryArr;
+    NSMutableArray *categoryArray = [[NSMutableArray alloc] init];
+    for (unsigned i = 0; i < [self.categoryArr count]; i++){
+        if ([categoryArray containsObject:[self.categoryArr objectAtIndex:i]] == NO){
+            [categoryArray addObject:[self.categoryArr objectAtIndex:i]];
+        }
+        
+    }
+    detail.categoryArr = categoryArray;
     [self.navigationController pushViewController:detail animated:YES];
 }
 
