@@ -413,6 +413,7 @@
 //            self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, self.mScrollV_view.frame.size.height-self.mLab_name.frame.origin.y-self.mLab_name.frame.size.height-5);
 //            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
 //            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
@@ -458,6 +459,7 @@
             self.mLab_time.text = self.mModel.RecDate;
 //            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" />%@",[dm getInstance].width,str];
 //            tempHtml = [NSString stringWithFormat:@"<div style=width=300px>%@",tempHtml];
+            str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
             str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];

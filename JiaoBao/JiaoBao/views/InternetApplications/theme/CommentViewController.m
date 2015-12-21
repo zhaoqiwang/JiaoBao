@@ -1034,6 +1034,7 @@
     cell.mWebV_comment.delegate = self;
     cell.mWebV_comment.backgroundColor = [UIColor whiteColor];
     NSString *content = self.AnswerDetailModel.AContent;
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
