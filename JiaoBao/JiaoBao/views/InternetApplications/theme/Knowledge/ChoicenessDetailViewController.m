@@ -181,6 +181,7 @@
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">内容"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">内容"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">依据"] withString:@"style = \"background:rgb(251,68,8);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">依据"]mutableCopy];
 
+    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "] mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"]mutableCopy];

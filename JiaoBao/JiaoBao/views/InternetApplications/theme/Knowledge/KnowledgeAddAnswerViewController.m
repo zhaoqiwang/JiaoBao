@@ -302,7 +302,8 @@
     self.mView_titlecell.mWebV_comment.tag = -1;
     self.mView_titlecell.mWebV_comment.delegate = self;
     NSString *content = model.KnContent;
-    D("doifjgj-===kncontent-=====%@",model.KnContent);
+//    D("doifjgj-===kncontent-=====%@",model.KnContent);
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
