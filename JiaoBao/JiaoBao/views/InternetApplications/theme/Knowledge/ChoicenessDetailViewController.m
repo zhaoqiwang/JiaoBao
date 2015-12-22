@@ -50,6 +50,7 @@
         self.ShowPickedModel = [dic objectForKey:@"model"];
         if([self.ShowPickedModel.QID isEqual:[NSNull null]]||self.ShowPickedModel.QID == nil||[self.ShowPickedModel.QID integerValue]==0)
         {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
             [MBProgressHUD showError:@"该问题可能已经被删除"];
             return;
         }
