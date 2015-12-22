@@ -29,7 +29,7 @@
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //友盟统计
     [MobClick setAppVersion:XcodeAppVersion];//参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"APPS"];//channelId默认会被被当作@"App Store"渠道
+    [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"TEST"];//channelId默认会被被当作@"App Store"渠道
     //初始化
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
     

@@ -194,7 +194,7 @@ void HandleException(NSException *exception)
     //获取当前版本号
     NSDictionary* infoDict =[[NSBundle mainBundle] infoDictionary];
     NSString* versionNum =[infoDict objectForKey:@"CFBundleShortVersionString"];
-    NSString *temp = [NSString stringWithFormat:@"app--教宝-求知--号:%@,    密码:%@,    版本号:%@,     系统版本号:%f     界面:%@,   bug:%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"],[[NSUserDefaults standardUserDefaults] valueForKey:@"PassWD"],versionNum,[[[UIDevice currentDevice] systemVersion] floatValue],[[NSUserDefaults standardUserDefaults] valueForKey:BUGFROM],errortemp];
+    NSString *temp = [NSString stringWithFormat:@"test--教宝-求知--号:%@,    密码:%@,    版本号:%@,     系统版本号:%f     界面:%@,   bug:%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"UserName"],[[NSUserDefaults standardUserDefaults] valueForKey:@"PassWD"],versionNum,[[[UIDevice currentDevice] systemVersion] floatValue],[[NSUserDefaults standardUserDefaults] valueForKey:BUGFROM],errortemp];
     [[[[UncaughtExceptionHandler alloc] init] autorelease] sendRequestWithProb:temp errorMessage:errortemp];
 }
 
