@@ -46,7 +46,7 @@
             {
                 if([[arr objectAtIndex:i] isEqualToString:@""])
                 {
-                    
+                    [MBProgressHUD hideHUDForView:self.view animated:YES];
                 }
                 else
                 {
@@ -72,7 +72,6 @@
 }
 -(void)GetCategoryById:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSNotification *note = sender;
     
     NSString *code = [note.object objectForKey:@"ResultCode"];
@@ -99,6 +98,8 @@
         if(self.myAttCateArr.count == self.mArr_selectCategory.count)
         {
             [self.collectionView reloadData];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+
         }
 
         
@@ -125,6 +126,7 @@
     if([self.classStr isEqualToString:@"ThemeView"])
     {
         [[KnowledgeHttp getInstance]GetMyattCate];
+        [MBProgressHUD showMessage:@"" toView:self.view];
 
         self.collectionView.allowsMultipleSelection = YES;
         self.titileLabel.text = @"选择优先显示的话题类别";
