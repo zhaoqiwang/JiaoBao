@@ -532,6 +532,7 @@
         }
 
         if ([text isEqualToString:@"\n"]) {
+            text = @"";
             // Be sure to test for equality using the "isEqualToString" message
             [textView resignFirstResponder];
             
