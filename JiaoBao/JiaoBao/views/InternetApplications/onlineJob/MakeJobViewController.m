@@ -1570,7 +1570,7 @@
             }
         }
     }
-    [self reloadDataForDisplayArray];
+//    [self reloadDataForDisplayArray];
 }
 
 -(void)addArrayChapter2:(NSInteger)tableID array:(NSMutableArray *)array node:(TreeJob_node *)node{
@@ -1838,7 +1838,9 @@
     }
     else
     {
-        self.publishJobModel.homeworkName = textField.text;
+        //去掉前后空格
+        NSString *textName = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        self.publishJobModel.homeworkName = textName;
 
     }
 }
@@ -1869,7 +1871,8 @@
 {
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
-    self.publishJobModel.homeworkName = self.titleTF.text;
+    NSString *textName = [self.titleTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.publishJobModel.homeworkName = textName;
     if(self.publishJobModel.classIDArr.count == 0)
     {
         [MBProgressHUD showError:@"请选择班级"];
