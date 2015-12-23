@@ -78,7 +78,12 @@
         } completion:^(BOOL finished){
             ProviceModel *model = [self.dataArr objectAtIndex:indexPath.row];
             self.selectedTF.text = model.CnName;
-            self.proviceModel = model;
+            self.selectedTF.tag = [model.CityCode integerValue];
+            if(![model.CnName isEqualToString:@"请选择"])
+            {
+                self.proviceModel = model;
+
+            }
         }];
         if([self.selectedTF isEqual:self.provinceTF])
         {
@@ -148,6 +153,10 @@
     if([ResultCode integerValue] != 0)
     {
         [MBProgressHUD hideHUDForView:self.view];
+        if([ResultCode integerValue]==999999){
+            ResultDesc = @"不存在此邀请人";
+            
+        }
         [MBProgressHUD showError:ResultDesc];
         return;
     }
@@ -385,6 +394,9 @@
         
     }else
     {
+        if([ResultCode integerValue]==999999){
+            ResultDesc = @"不存在此邀请人";
+        }
         [MBProgressHUD showError:ResultDesc] ;
 
     }
@@ -633,13 +645,24 @@
     }
 
 
-    if(self.proviceModel == nil)
-    {
+//    if(self.proviceModel == nil||[self.proviceModel.CnName isEqualToString:@"请选择"])
+//    {
+//        self.AreaCode = @"";
+//    }
+//    else
+//    {
+//        self.AreaCode = self.proviceModel.CityCode;
+//    }
+    if([self.provinceTF.text isEqualToString:@"请选择"]||[self.provinceTF.text isEqualToString:@""]){
         self.AreaCode = @"";
     }
-    else
-    {
-        self.AreaCode = self.proviceModel.CityCode;
+    else if ([self.regionTF.text isEqualToString:@"请选择"]||[self.regionTF.text isEqualToString:@""]){
+        self.AreaCode = [NSString stringWithFormat:@"%ld",self.provinceTF.tag];
+    }
+    else if ([self.countyTF.text isEqualToString:@"请选择"]||[self.countyTF.text isEqualToString:@""]){
+        self.AreaCode = [NSString stringWithFormat:@"%ld",self.regionTF.tag];
+    }else{
+        self.AreaCode = [NSString stringWithFormat:@"%ld",self.countyTF.tag];
     }
     if([self.atAccIdsTF.text isEqualToString: @""])
     {

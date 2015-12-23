@@ -52,7 +52,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
 

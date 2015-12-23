@@ -30,6 +30,7 @@
     NSMutableArray *array = [NSMutableArray array];
     ProviceModel *model = [[ProviceModel alloc] init];
     model.CnName = @"请选择";
+    model.CityCode = @"1";
     [array addObject:model];
     NSArray *arrList = [json objectFromJSONString];
     for (int i=0; i<arrList.count; i++) {

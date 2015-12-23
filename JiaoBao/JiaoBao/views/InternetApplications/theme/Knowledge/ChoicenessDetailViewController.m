@@ -174,6 +174,8 @@
         [cell.mWebV_comment.scrollView setScrollEnabled:NO];
         cell.mWebV_comment.tag = -1;
         cell.mWebV_comment.delegate = self;
+    cell.mWebV_comment.frame = CGRectMake(0, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, [dm getInstance].width, 0);
+
     //cell.mWebV_comment.scrollView.bounces = NO;
     cell.mWebV_comment.scrollView.showsHorizontalScrollIndicator = NO;
     cell.mWebV_comment.scrollView.showsVerticalScrollIndicator = NO;

@@ -98,11 +98,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/theme/AddQuestionViewController.m"
-            timestampString = "472373822.066114"
+            timestampString = "472525634.442736"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "564"
-            endingLineNumber = "564"
+            startingLineNumber = "576"
+            endingLineNumber = "576"
             landmarkName = "-selectBtnAction:"
             landmarkType = "5">
          </BreakpointContent>
@@ -113,13 +113,125 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeAddAnswerViewController.m"
-            timestampString = "472352418.219478"
+            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
+            timestampString = "472446506.598346"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "-AddAnswer:"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
+            landmarkName = "-updataQuestionDetailModel:"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[KnowledgeQuestionViewController updataQuestionDetailModel:]"
+                  moduleName = "JiaoBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
+                  timestampString = "472527983.832623"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198"
+                  offsetFromSymbolStart = "92">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[KnowledgeQuestionViewController updataQuestionDetailModel:]"
+                  moduleName = "JiaoBao"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
+                  timestampString = "472527983.832911"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "198"
+                  endingLineNumber = "198"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
+            timestampString = "472525564.166794"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "-updataQuestionDetail:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/theme/ThemeView.m"
+            timestampString = "472447756.737321"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1392"
+            endingLineNumber = "1392"
+            landmarkName = "-KnowledgeTableVIewCellDetailBtn:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/theme/ThemeView.m"
+            timestampString = "472447759.049722"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1397"
+            endingLineNumber = "1397"
+            landmarkName = "-KnowledgeTableVIewCellDetailBtn:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/theme/AddQuestionViewController.m"
+            timestampString = "472525634.442736"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "-AtMeForAnswerWithAccId:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/register/RegisterHttp.m"
+            timestampString = "472527682.671828"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "511"
+            endingLineNumber = "511"
+            landmarkName = "-requestFailed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

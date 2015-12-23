@@ -323,7 +323,9 @@
         
         
     }else{
+
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+
         self.invitationUserInfo = nil;
     }
 }
@@ -973,6 +975,10 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue] != 0)
     {
+        if([ResultCode integerValue]==999999){
+            ResultDesc = @"不存在此邀请人";
+            
+        }
         [MBProgressHUD showError:ResultDesc];
         return;
     }
@@ -989,8 +995,8 @@
         else
         {
 
-                NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.mView_input.mTextF_input.text];
-                [MBProgressHUD showError:str toView:self.view];
+            NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.mView_input.mTextF_input.text];
+            [MBProgressHUD showError:str toView:self.view];
 
             self.invitationUserInfo = nil;
             self.mView_input.mTextF_input.text = @"";
