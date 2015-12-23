@@ -23,9 +23,29 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    //获取我提出的问题列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMyCommsWithNumPerPage" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetMyCommsWithNumPerPage:) name:@"GetMyCommsWithNumPerPage" object:nil];
+    //获取答案详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AnswerDetailWithAId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnswerDetailWithAId:) name:@"AnswerDetailWithAId" object:nil];
+    
+    //获取提问详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    //获取我提出的问题列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMyCommsWithNumPerPage" object:nil];
+    //获取答案详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AnswerDetailWithAId" object:nil];
+    
+    //获取提问详情
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
 }
 -(void)QuestionDetail:(id)sender
 {
@@ -66,16 +86,7 @@
     self.mArr_list = [NSMutableArray array];
     self.mInt_reloadData = 0;
     self.mInt_load = 1;
-    //获取我提出的问题列表
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetMyCommsWithNumPerPage" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetMyCommsWithNumPerPage:) name:@"GetMyCommsWithNumPerPage" object:nil];
-    //获取答案详情
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AnswerDetailWithAId" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AnswerDetailWithAId:) name:@"AnswerDetailWithAId" object:nil];
-    
-    //获取提问详情
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
+
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"我做出的评论"];
