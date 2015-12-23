@@ -1236,7 +1236,9 @@
 
 //发布练习按钮回调
 -(void)PublishJob{
-    self.mStr_textName = self.titleTF.text;
+    //去掉前后的空格
+    NSString *textName = [self.titleTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.mStr_textName = textName;
     //年级
     TreeView_node *tempNode0 = [self.mArr_sumData objectAtIndex:0];
     TreeJob_level0_model *tempModel0 = tempNode0.nodeData;
