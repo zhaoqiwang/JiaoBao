@@ -121,6 +121,9 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     if ([ResultCode intValue]==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
+        if (array.count==0) {
+            [MBProgressHUD showError:@"暂无章节" toView:self.view];
+        }
         NSString *uId = [dic objectForKey:@"uId"];//教版
         NSString *chapterid = [dic objectForKey:@"chapterid"];//章
         NSString *StuId = [dic objectForKey:@"StuId"];//学生id
@@ -553,7 +556,7 @@
         cell.mLab_powerLab.hidden = YES;
         //箭头
         cell.mImg_open.frame = CGRectMake([dm getInstance].width-10-10, cell.mLab_title.frame.origin.y+5, 10, 10);
-        if (node.isExpanded) {
+        if (node.sonNodes.count>0&&node.isExpanded) {
             [cell.mImg_open setImage:[UIImage imageNamed:@"homework_down0"]];
         }else{
             [cell.mImg_open setImage:[UIImage imageNamed:@"homework_down1"]];
