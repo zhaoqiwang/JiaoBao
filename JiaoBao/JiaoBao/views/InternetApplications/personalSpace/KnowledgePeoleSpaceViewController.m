@@ -315,7 +315,6 @@
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (UIImage *)fixOrientation:(UIImage *)aImage {

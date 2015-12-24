@@ -814,6 +814,7 @@
         detail.TabID = model.TabID;
         detail.isSubmit = [model.isHWFinish integerValue];
         detail.hwName = model.homeworkName;
+        detail.startTime = model.HWStartTime;
         [self.navigationController pushViewController:detail animated:YES];
     }else{
         if (self.mArr_practice.count>0) {

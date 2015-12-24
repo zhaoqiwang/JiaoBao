@@ -7,10 +7,12 @@
 //
 
 #import "MyComentCell.h"
+#import "dm.h"
 
 @implementation MyComentCell
 
 - (void)awakeFromNib {
+    self.lineLabel.frame = CGRectMake(0, self.frame.size.height-0.5, [dm getInstance].width, 0.5);
     // Initialization code
 }
 
