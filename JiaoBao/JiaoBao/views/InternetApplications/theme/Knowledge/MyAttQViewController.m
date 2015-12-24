@@ -79,7 +79,13 @@
         }else{
             if (array.count>0) {
                 QuestionModel *model = [array objectAtIndex:0];
-                self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+                //当页面如果没有记录，刚返回一条TabID=-1的记录，该记录只为了返回rowcount，没有实际意义。
+                if ([model.TabID intValue]==-1) {
+                    [MBProgressHUD showSuccess:@"本页被全部隐藏" toView:self.view];
+                    self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
+                }else{
+                    self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+                }
             }
         }
     }else{
@@ -112,6 +118,16 @@
     cell.delegate = self;
     cell.tag = indexPath.row;
     QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    if ([model.TabID intValue]>0) {
+        for (UIView *temp in cell.subviews) {
+            temp.hidden = NO;
+        }
+    }else{
+        for (UIView *temp in cell.subviews) {
+            temp.hidden = YES;
+        }
+        return cell;
+    }
     cell.LikeBtn.hidden = YES;
     cell.mLab_title.hidden = YES;
     cell.mLab_Category0.hidden = YES;
@@ -191,6 +207,11 @@
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
+    QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    D("model.tableid-===%@",model.TabID);
+    if ([model.TabID intValue]==-1) {
+        return 0;
+    }
     return 60;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
