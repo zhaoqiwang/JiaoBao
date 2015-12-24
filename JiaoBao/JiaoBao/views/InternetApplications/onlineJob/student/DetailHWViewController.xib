@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailHWViewController">
             <connections>
+                <outlet property="clockLabel" destination="yCt-Jc-vMw" id="iUJ-Ff-Xip"/>
                 <outlet property="collectionView" destination="eDe-I3-Efk" id="1KY-Yz-9Py"/>
+                <outlet property="countdownLabel" destination="Wak-cb-5n0" id="kkR-Yw-DT5"/>
                 <outlet property="height" destination="xpK-1Y-8fa" id="xxt-2A-vcb"/>
                 <outlet property="hwNameLabel" destination="0Y5-H5-5pl" id="5R5-0M-Xaq"/>
                 <outlet property="nextBtn" destination="Wll-GM-IW9" id="RBE-A3-2Pj"/>
@@ -25,18 +27,16 @@
             <subviews>
                 <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnP-jp-rOX">
                     <rect key="frame" x="0.0" y="272" width="320" height="261"/>
-                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="E8g-gc-51p"/>
                     </connections>
                 </webView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y5-H5-5pl">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Y5-H5-5pl">
                     <rect key="frame" x="0.0" y="64" width="320" height="28"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="28" id="ZlQ-PS-z0W"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="28" id="ZlQ-PS-z0W"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,7 +44,6 @@
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选题:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y5o-CK-Wn8">
                     <rect key="frame" x="10" y="102" width="34" height="21"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="34" id="38I-jN-GGI"/>
                     </constraints>
@@ -54,7 +53,6 @@
                 </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="eDe-I3-Efk">
                     <rect key="frame" x="0.0" y="133" width="320" height="136"/>
-                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="136" id="xpK-1Y-8fa"/>
@@ -72,7 +70,6 @@
                 </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wll-GM-IW9">
                     <rect key="frame" x="197" y="536" width="45" height="30"/>
-                    <animations/>
                     <state key="normal" title="下一题"/>
                     <connections>
                         <action selector="nextBtnAction:" destination="-1" eventType="touchUpInside" id="pxT-QU-fe5"/>
@@ -80,7 +77,6 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gS6-gn-Zhj">
                     <rect key="frame" x="81" y="536" width="45" height="30"/>
-                    <animations/>
                     <state key="normal" title="上一题"/>
                     <connections>
                         <action selector="previousBtnAction:" destination="-1" eventType="touchUpInside" id="wS5-Dp-fEu"/>
@@ -88,7 +84,6 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Be-QF-e2D">
                     <rect key="frame" x="46" y="101" width="68" height="22"/>
-                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="68" id="09o-jD-82Y"/>
                     </constraints>
@@ -103,13 +98,23 @@
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="共10题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q52-JJ-29r">
                     <rect key="frame" x="262" y="100" width="58" height="23"/>
-                    <animations/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="倒计时:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wak-cb-5n0">
+                    <rect key="frame" x="131" y="102" width="51" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="23:44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yCt-Jc-vMw">
+                    <rect key="frame" x="183" y="102" width="59" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="gS6-gn-Zhj" firstAttribute="top" secondItem="qnP-jp-rOX" secondAttribute="bottom" constant="3" id="1La-Xu-01s"/>

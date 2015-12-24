@@ -130,7 +130,7 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-                  timestampString = "472529046.728431"
+                  timestampString = "472621294.731643"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
@@ -145,7 +145,7 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-                  timestampString = "472529046.728614"
+                  timestampString = "472621294.731918"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
@@ -153,22 +153,6 @@
                   offsetFromSymbolStart = "108">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-            timestampString = "472525564.166794"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
-            landmarkName = "-updataQuestionDetail:"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

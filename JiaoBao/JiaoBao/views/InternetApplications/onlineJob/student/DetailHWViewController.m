@@ -54,6 +54,66 @@
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
+    if(self.isSubmit == NO){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+        NSDate *currentDate = [NSDate date];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate: currentDate];
+        NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
+        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){
+            self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
+            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+            NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+            //加入主循环池中
+            [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
+            //开始循环
+            [timer fire];
+
+        }else{
+            NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
+            NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
+
+            NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
+            NSUInteger unitFlags =
+            NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
+            NSInteger diffHour = [cps hour];
+            NSInteger diffMin    = [cps minute];
+            NSInteger diffSec   = [cps second];
+            if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
+                self.clockLabel.text = @"已超时";
+//                self.clockLabel.text = [NSString stringWithFormat:@"%ld:%ld",(long)diffMin,(long)diffSec];
+//                NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+//                //加入主循环池中
+//                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
+//                //开始循环
+//                [timer fire];
+            }
+            else{
+                diffMin = [self.stuHomeWorkModel.LongTime integerValue]+diffMin;
+                diffSec = 60+diffSec;
+                if(diffSec==60)
+                {
+                    diffSec = 0;
+                }
+                self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                //加入主循环池中
+                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
+                //开始循环
+                [timer fire];
+            }
+
+            
+        }
+
+    }
+    else
+    {
+        self.clockLabel.hidden = YES;
+        self.countdownLabel.hidden = YES;
+    }
     self.questionNumLabel.text = [NSString stringWithFormat:@"共%@题",self.stuHomeWorkModel.Qsc];
     NSArray *arr = [self.stuHomeWorkModel.QsIdQId componentsSeparatedByString:@"|"];
     for(int i=0;i<arr.count;i++)
@@ -229,8 +289,39 @@
     myView.backgroundColor = [UIColor redColor];
     [alertView addSubview:myView];
 }
+-(void)timerAction{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *currentDate = [NSDate date];
+    NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: currentDate];
+    NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
+    NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
+
+    NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
+    NSUInteger unitFlags =
+    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+    NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeCurrentDate  toDate:localeStartDate  options:0];
+    NSInteger diffHour = [cps hour];
+    NSInteger diffMin    = [cps minute];
+    NSInteger diffSec   = [cps second];
+    if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
+        self.clockLabel.text  = @"已超时";
+    }
+    diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
+    diffSec = 60+diffSec;
+    if(diffSec==60)
+    {
+        diffMin = diffMin+1;
+        diffSec = 0;
+    }
+    self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+
     self.subArr = [[NSMutableArray alloc]initWithCapacity:0];
     self.errQuestionArr = [[NSMutableArray alloc]initWithCapacity:0];
     //self.webView.scrollView.scrollEnabled = NO;
@@ -892,8 +983,14 @@
         {
             if(self.isSubmit == NO){
                 if([self.FlagStr isEqualToString:@"1"]){
+                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue]){
+                        [MBProgressHUD showError:@"题目没有完成，无法提交"];
 
-                [MBProgressHUD showError:@"题目没有完成，无法提交"];
+                    }else{
+                        [MBProgressHUD showError:@"题目没有完成，无法进入下一题"];
+ 
+                    }
+
 
                 }else{
                     self.previousBtn.enabled = YES;
@@ -987,9 +1084,14 @@
         {
             if(self.isSubmit == NO){
                 if([self.FlagStr isEqualToString:@"1"]){
+                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue]){
+                        [MBProgressHUD showError:@"题目没有完成，无法提交"];
+                        
+                    }else{
+                        [MBProgressHUD showError:@"题目没有完成，无法进入下一题"];
+                        
+                    }
 
-
-            [MBProgressHUD showError:@"题目没有完成，无法提交"];
                 }else{
                     self.previousBtn.enabled = YES;
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];

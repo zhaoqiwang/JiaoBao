@@ -248,7 +248,8 @@
 //    }else{
 //        model.HWStartTime = [[[dic objectForKey:@"HWStartTime"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
 //    }
-    model.HWStartTime = [dic objectForKey:@"HWStartTime"];
+    NSString *str = [dic objectForKey:@"HWStartTime"];
+    model.HWStartTime = [str stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     model.LongTime = [numberFormatter stringFromNumber:[dic objectForKey:@"LongTime"]];
     model.Qsc = [numberFormatter stringFromNumber:[dic objectForKey:@"Qsc"]];
     model.QsIdQId = [dic objectForKey:@"QsIdQId"];

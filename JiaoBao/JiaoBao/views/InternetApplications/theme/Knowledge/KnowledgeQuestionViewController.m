@@ -329,9 +329,6 @@
         self.invitationUserInfo = nil;
     }
 }
-
-
-
 //通知界面，更新访问量等数据
 -(void)updataQuestionDetail:(NSNotification *)noti{
     QuestionDetailModel *model = noti.object;
