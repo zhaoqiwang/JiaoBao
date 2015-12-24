@@ -434,7 +434,8 @@
             manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
             manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
             manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
-            [utils popViewControllerAnimated:YES];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(gotoView) userInfo:nil repeats:NO];
+            
         }
         else
         {
@@ -443,6 +444,9 @@
         }
 
     }
+}
+-(void)gotoView{
+    [utils popViewControllerAnimated:YES];
 }
 //点击省份
 - (IBAction)provinceBtnAction:(id)sender {

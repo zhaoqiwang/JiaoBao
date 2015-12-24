@@ -81,8 +81,10 @@
                 QuestionModel *model = [array objectAtIndex:0];
                 //当页面如果没有记录，刚返回一条TabID=-1的记录，该记录只为了返回rowcount，没有实际意义。
                 if ([model.TabID intValue]==-1) {
-                    [MBProgressHUD showSuccess:@"本页被全部隐藏" toView:self.view];
+//                    [MBProgressHUD showSuccess:@"本页被全部隐藏" toView:self.view];
                     self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
+                    //如果全部为空，重新获取
+                    [self footerRereshing];
                 }else{
                     self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
                 }

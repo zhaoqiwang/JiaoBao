@@ -184,6 +184,14 @@
 
 -(void)selectScrollButton:(UIButton *)btn{
     self.mInt_index = (int)btn.tag;
+    if (self.mInt_index==2) {
+        [self.mTableV_knowledge removeFooter];
+    }else{
+        [self.mTableV_knowledge addFooterWithTarget:self action:@selector(footerRereshing)];
+        self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
+        self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
+        self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
+    }
     for (UIButton *btn1 in self.mScrollV_all.subviews) {
         if ([btn1.class isSubclassOfClass:[UIButton class]]) {
             if ((int)btn1.tag == self.mInt_index) {
