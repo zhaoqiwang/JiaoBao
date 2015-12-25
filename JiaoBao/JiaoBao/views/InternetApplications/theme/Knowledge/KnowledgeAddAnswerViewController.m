@@ -167,10 +167,10 @@
         D("dufghdjfgh-====%d",self.mInt_view);
         if (self.mInt_view == 1) {
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-            [NSTimer scheduledTimerWithTimeInterval:1.8 target:self selector:@selector(myNavigationGoback) userInfo:nil repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(myNavigationGoback) userInfo:nil repeats:NO];
         }else{
             [[NSNotificationCenter defaultCenter] removeObserver:self];
-            [NSTimer scheduledTimerWithTimeInterval:1.8 target:self selector:@selector(gotoView) userInfo:nil repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(gotoView) userInfo:nil repeats:NO];
             
         }
     }else{
