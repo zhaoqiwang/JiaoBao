@@ -1028,8 +1028,10 @@
     
     
     //加载webview
-    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
+    [cell.mWebV_comment.scrollView setScrollEnabled:YES];
     cell.mWebV_comment.tag = -1;
+    cell.mWebV_comment.scrollView.bounces = NO;
+
     cell.mWebV_comment.scalesPageToFit = YES;
     cell.mWebV_comment.delegate = self;
     cell.mWebV_comment.backgroundColor = [UIColor whiteColor];
@@ -1137,8 +1139,9 @@
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width, height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width, height+15);
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
+//    self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+20);
     self.tableHeadView = [[UIView alloc]init];
     [self.tableHeadView addSubview:self.KnowledgeTableViewCell];
     if(self.topButtonTag == 1)
@@ -1238,6 +1241,7 @@
     
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSLog(@"dfosjfpjsf = %f",webView.scrollView.contentSize.width);
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
 //    NSString* js = @"document.getElementById(\"main\") ? document.getElementById(\"main\").offsetHeight : -1";

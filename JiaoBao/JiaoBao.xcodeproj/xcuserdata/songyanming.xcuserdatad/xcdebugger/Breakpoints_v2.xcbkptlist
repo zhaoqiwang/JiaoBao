@@ -130,12 +130,12 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-                  timestampString = "472621294.731643"
+                  timestampString = "472727572.538828"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
                   endingLineNumber = "198"
-                  offsetFromSymbolStart = "92">
+                  offsetFromSymbolStart = "86">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -145,12 +145,12 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-                  timestampString = "472621294.731918"
+                  timestampString = "472727572.539147"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
                   endingLineNumber = "198"
-                  offsetFromSymbolStart = "108">
+                  offsetFromSymbolStart = "94">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -216,6 +216,22 @@
             startingLineNumber = "511"
             endingLineNumber = "511"
             landmarkName = "-requestFailed:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.m"
+            timestampString = "472726249.469116"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
+            landmarkName = "-webViewLoadFinish:Width:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
