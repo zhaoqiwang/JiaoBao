@@ -120,6 +120,20 @@
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
         self.mTextV_content.text = content;
+        NSArray *imgNumArr = [content componentsSeparatedByString:@"<img src"];
+        if(imgNumArr.count>1){
+            for(int i=0;i<imgNumArr.count-1;i++)
+            {
+                UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
+                ImgModel.originalName = @"";
+                ImgModel.url = @"";
+                ImgModel.size = @"";
+                ImgModel.type = @"";
+                [self.mArr_pic addObject:ImgModel];
+            }
+        }
+
+
         self.mLab_answer.hidden = YES;
         self.mLab_content.hidden = YES;
         //切换按钮显示标题

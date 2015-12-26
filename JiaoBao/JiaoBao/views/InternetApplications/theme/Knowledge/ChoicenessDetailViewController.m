@@ -289,7 +289,10 @@
 //        
 //        
 //    };
-    
+//    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f)
+//    {
+//        return;
+//    }
     NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'";
     [webView stringByEvaluatingJavaScriptFromString:str];
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];

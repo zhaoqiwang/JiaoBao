@@ -1241,6 +1241,7 @@
     
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    
     NSLog(@"dfosjfpjsf = %f",webView.scrollView.contentSize.width);
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];

@@ -32,6 +32,7 @@
 @property(nonatomic,assign)BOOL isOpen;
 @property(nonatomic,assign)BOOL isShow;
 @property(nonatomic,assign)float webHeight;
+@property(nonatomic,strong)NSTimer *timer;
 
 @end
 
@@ -54,66 +55,7 @@
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
-    if(self.isSubmit == NO){
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-        NSDate *currentDate = [NSDate date];
-        NSTimeZone *zone = [NSTimeZone systemTimeZone];
-        NSInteger interval = [zone secondsFromGMTForDate: currentDate];
-        NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
-        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){
-            self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
-            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
-            NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-            //加入主循环池中
-            [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
-            //开始循环
-            [timer fire];
 
-        }else{
-            NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
-            NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
-
-            NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
-            NSUInteger unitFlags =
-            NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
-            NSInteger diffHour = [cps hour];
-            NSInteger diffMin    = [cps minute];
-            NSInteger diffSec   = [cps second];
-            if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
-                self.clockLabel.text = @"已超时";
-//                self.clockLabel.text = [NSString stringWithFormat:@"%ld:%ld",(long)diffMin,(long)diffSec];
-//                NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-//                //加入主循环池中
-//                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
-//                //开始循环
-//                [timer fire];
-            }
-            else{
-                diffMin = [self.stuHomeWorkModel.LongTime integerValue]+diffMin;
-                diffSec = 60+diffSec;
-                if(diffSec==60)
-                {
-                    diffSec = 0;
-                }
-                self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
-                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                //加入主循环池中
-                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
-                //开始循环
-                [timer fire];
-            }
-
-            
-        }
-
-    }
-    else
-    {
-        self.clockLabel.hidden = YES;
-        self.countdownLabel.hidden = YES;
-    }
     self.questionNumLabel.text = [NSString stringWithFormat:@"共%@题",self.stuHomeWorkModel.Qsc];
     NSArray *arr = [self.stuHomeWorkModel.QsIdQId componentsSeparatedByString:@"|"];
     for(int i=0;i<arr.count;i++)
@@ -216,7 +158,68 @@
 }
 -(void)GetStuHWQsWithHwInfoId:(id)sender
 {
+    if(self.isSubmit == NO){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+        NSDate *currentDate = [NSDate date];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate: currentDate];
+        NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
+        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){
+            self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
+            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+            //加入主循环池中
+            [[NSRunLoop mainRunLoop]addTimer:self.timer forMode:NSDefaultRunLoopMode];
+            //开始循环
+            [self.timer fire];
+            
+        }else{
+            NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
+            NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
+            
+            NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
+            NSUInteger unitFlags =
+            NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
+            NSInteger diffHour = [cps hour];
+            NSInteger diffMin    = [cps minute];
+            NSInteger diffSec   = [cps second];
+            if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
+                self.clockLabel.text = @"已超时";
+                //                self.clockLabel.text = [NSString stringWithFormat:@"%ld:%ld",(long)diffMin,(long)diffSec];
+                //                NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                //                //加入主循环池中
+                //                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
+                //                //开始循环
+                //                [timer fire];
+            }
+            else{
+                diffMin = [self.stuHomeWorkModel.LongTime integerValue]+diffMin;
+                diffSec = 60+diffSec;
+                if(diffSec==60)
+                {
+                    diffSec = 0;
+                }
+                self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                //加入主循环池中
+                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
+                //开始循环
+                [timer fire];
+            }
+            
+            
+        }
+        
+    }
+    else
+    {
+        self.clockLabel.hidden = YES;
+        self.countdownLabel.hidden = YES;
+    }
     self.stuHWQsModel = [sender object];
+    
 
     NSString *webHtml;
     if(self.isSubmit == 1)
@@ -260,6 +263,9 @@
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
         if([self.navBarName isEqualToString:@"做作业"])
         {
+            self.clockLabel.text = @"00:00";
+            [self.timer invalidate];
+            self.timer = nil;
             NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做作业\"/></div></HTML>"];
             [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         }
@@ -301,13 +307,16 @@
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
     NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeCurrentDate  toDate:localeStartDate  options:0];
-    NSInteger diffHour = [cps hour];
     NSInteger diffMin    = [cps minute];
     NSInteger diffSec   = [cps second];
-    if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
-        self.clockLabel.text  = @"已超时";
-    }
+
     diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
+    if(diffMin<0){
+        self.clockLabel.text  = @"已超时";
+        [self.timer invalidate];
+        self.timer = nil;
+        return;
+    }
     diffSec = 60+diffSec;
     if(diffSec==60)
     {
