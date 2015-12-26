@@ -47,7 +47,7 @@
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
-
+    
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -415,6 +415,9 @@
     }
 }
 -(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
     NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
     if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {
         NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
@@ -448,6 +451,9 @@
 
 #pragma 拍照模块
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
     [picker dismissViewControllerAnimated:YES completion:nil];
     NSString *lastChosenMediaType=[info objectForKey:UIImagePickerControllerMediaType];
     if([lastChosenMediaType isEqual:(NSString *) kUTTypeImage])
@@ -471,7 +477,12 @@
 
 }
 
-
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 
 -(void)ClickBtnWith:(UIButton *)btn cell:(UnitTableViewCell *)cell

@@ -76,6 +76,12 @@
         }else{
             QuestionModel *model = [array objectAtIndex:0];
             self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+            for (int i=0; i<model.hiddenid.count; i++) {
+                QuestionModel *model7 = [[QuestionModel alloc] init];
+                model7.TabID = @"0";
+                model7.rowCount = model.rowCount;
+                [self.mArr_list addObject:model7];
+            }
         }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -124,7 +130,7 @@
     cell.mImgV_head.hidden = YES;
     cell.mCollectionV_pic.hidden = YES;
     cell.mLab_line2.hidden = YES;
-    cell.mBtn_detail.hidden = YES;
+    cell.mBtn_detail.hidden = NO;
     cell.mWebV_comment.hidden = YES;
     cell.mBtn_all.hidden = YES;
     cell.mBtn_evidence.hidden = YES;
@@ -132,6 +138,42 @@
     cell.mLab_selectCategory.hidden = YES;
     cell.mLab_selectCategory1.hidden = YES;
     cell.mImgV_top.hidden = YES;
+    if ([model.TabID intValue]>=0) {
+        for (UIView *temp in cell.subviews) {
+            temp.hidden = NO;
+        }
+        if ([model.TabID intValue]==0) {
+            //问题名称
+            NSString *name = [NSString stringWithFormat:@"</font> <font size=12 color=black>该问题已被删除或屏蔽</font>"];
+            NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+            [row1 setObject:name forKey:@"text"];
+            cell.mLab_ATitle.frame = CGRectMake(12, 15, [dm getInstance].width-18, 23);
+            RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+            cell.mLab_ATitle.componentsAndPlainText = componentsDS;
+            cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+            cell.mLab_ATitle.hidden = NO;
+            //取消关注
+            cell.mBtn_detail.hidden = YES;
+            //关注、答案个数
+            //关注
+            cell.mLab_Att.hidden = YES;
+            //回答
+            cell.mLab_Answers.hidden = YES;
+            //话题
+            cell.mLab_Category0.hidden = YES;
+            //浏览数
+            cell.mLab_View.hidden = YES;
+            //
+            cell.mLab_line.hidden = NO;
+            cell.mLab_line.frame = CGRectMake(0, 39, [dm getInstance].width, .5);
+            return cell;
+        }
+    }else{
+        for (UIView *temp in cell.subviews) {
+            temp.hidden = YES;
+        }
+        return cell;
+    }
     //问题名称
     NSString *string1 = model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
@@ -180,14 +222,22 @@
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
+    QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    if ([model.TabID intValue]==0) {
+        return 40;
+    }else if ([model.TabID intValue]==-1) {
+        return 0;
+    }
     return 60;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-    KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
-    queston.mModel_question = model;
-    [utils pushViewController:queston animated:YES];
+    if ([model.TabID intValue]>0) {
+        KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
+        queston.mModel_question = model;
+        [utils pushViewController:queston animated:YES];
+    }
 }
 
 #pragma mark 开始进入刷新状态
