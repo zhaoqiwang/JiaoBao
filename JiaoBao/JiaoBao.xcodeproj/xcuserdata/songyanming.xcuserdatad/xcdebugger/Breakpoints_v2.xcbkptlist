@@ -130,12 +130,12 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-                  timestampString = "472727572.538828"
+                  timestampString = "472789350.833858"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
                   endingLineNumber = "198"
-                  offsetFromSymbolStart = "86">
+                  offsetFromSymbolStart = "92">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -145,46 +145,14 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Desktop/%E6%95%99%E5%AE%9D/JiaoBao/JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeQuestionViewController.m"
-                  timestampString = "472727572.539147"
+                  timestampString = "472789350.834075"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
                   endingLineNumber = "198"
-                  offsetFromSymbolStart = "94">
+                  offsetFromSymbolStart = "108">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/ThemeView.m"
-            timestampString = "472447756.737321"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1392"
-            endingLineNumber = "1392"
-            landmarkName = "-KnowledgeTableVIewCellDetailBtn:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/ThemeView.m"
-            timestampString = "472447759.049722"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1397"
-            endingLineNumber = "1397"
-            landmarkName = "-KnowledgeTableVIewCellDetailBtn:"
-            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
