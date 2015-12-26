@@ -74,13 +74,22 @@
         if (self.mArr_list.count==0&&array.count==0) {
             [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
         }else{
-            QuestionModel *model = [array objectAtIndex:0];
-            self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
-            for (int i=0; i<model.hiddenid.count; i++) {
-                QuestionModel *model7 = [[QuestionModel alloc] init];
-                model7.TabID = @"0";
-                model7.rowCount = model.rowCount;
-                [self.mArr_list addObject:model7];
+            if (array.count>0) {
+                QuestionModel *model = [array objectAtIndex:0];
+                //将隐藏数据添加进数组
+                for (int i=0; i<model.hiddenid.count; i++) {
+                    QuestionModel *model7 = [[QuestionModel alloc] init];
+                    model7.TabID = @"0";
+                    model7.rowCount = model.rowCount;
+                    [self.mArr_list addObject:model7];
+                }
+                //当页面如果没有记录，刚返回一条TabID=-1的记录，该记录只为了返回rowcount，没有实际意义。
+                if ([model.TabID intValue]==-1) {
+                    [self.mArr_list removeObject:model];
+                    self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
+                }else{
+                    self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+                }
             }
         }
     }else{
@@ -129,7 +138,7 @@
     cell.mImgV_head.hidden = YES;
     cell.mCollectionV_pic.hidden = YES;
     cell.mLab_line2.hidden = YES;
-    cell.mBtn_detail.hidden = NO;
+    cell.mBtn_detail.hidden = YES;
     cell.mWebV_comment.hidden = YES;
     cell.mBtn_all.hidden = YES;
     cell.mBtn_evidence.hidden = YES;
@@ -147,7 +156,7 @@
             NSString *name = [NSString stringWithFormat:@"</font> <font size=12 color=black>该问题已被删除或屏蔽</font>"];
             NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
             [row1 setObject:name forKey:@"text"];
-            cell.mLab_ATitle.frame = CGRectMake(12, 15, [dm getInstance].width-18, 23);
+            cell.mLab_ATitle.frame = CGRectMake(12, 12, [dm getInstance].width-18, 23);
             RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
             cell.mLab_ATitle.componentsAndPlainText = componentsDS;
             cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;

@@ -79,18 +79,19 @@
         }else{
             if (array.count>0) {
                 QuestionModel *model = [array objectAtIndex:0];
+                //将隐藏数据添加进数组
+                for (int i=0; i<model.hiddenid.count; i++) {
+                    QuestionModel *model7 = [[QuestionModel alloc] init];
+                    model7.TabID = @"0";
+                    model7.rowCount = model.rowCount;
+                    [self.mArr_list addObject:model7];
+                }
                 //当页面如果没有记录，刚返回一条TabID=-1的记录，该记录只为了返回rowcount，没有实际意义。
                 if ([model.TabID intValue]==-1) {
                     [self.mArr_list removeObject:model];
                     self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
                     //如果全部为空，重新获取
 //                    [self footerRereshing];
-                    for (int i=0; i<model.hiddenid.count; i++) {
-                        QuestionModel *model7 = [[QuestionModel alloc] init];
-                        model7.TabID = @"0";
-                        model7.rowCount = model.rowCount;
-                        [self.mArr_list addObject:model7];
-                    }
                 }else{
                     self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
                 }
