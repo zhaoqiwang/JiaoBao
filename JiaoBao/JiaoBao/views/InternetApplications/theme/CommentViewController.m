@@ -1036,17 +1036,7 @@
     cell.mWebV_comment.delegate = self;
     cell.mWebV_comment.backgroundColor = [UIColor whiteColor];
     NSString *content = self.AnswerDetailModel.AContent;
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width"] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,[dm getInstance].width-18,content];
+    NSString *tempHtml = [utils clearHtml:content width:18];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     //加载
     //[self webViewLoadFinish:0];

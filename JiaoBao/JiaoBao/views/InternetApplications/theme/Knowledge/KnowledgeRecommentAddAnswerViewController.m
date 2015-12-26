@@ -83,17 +83,7 @@
             tempWeb.tag = i;
             NSString *content = model.Abstracts;
 //            D("ShowRecomment:-=====%@",content);
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-            content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-            NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,content];
+            NSString *tempHtml = [utils clearHtml:content width:85];
             tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
             [tempWeb setBackgroundColor:[UIColor clearColor]];
             [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -184,17 +174,7 @@
     self.mView_titlecell.mWebV_comment.delegate = self;
     
     NSString *content = model.questionModel.KnContent;
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-10,[dm getInstance].width-10,[dm getInstance].width-10,[dm getInstance].width-10,[dm getInstance].width-10,content];
+    NSString *tempHtml = [utils clearHtml:content width:10];
     
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
@@ -404,17 +384,7 @@
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
     
     NSString *content = model.Abstracts;
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
-    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
-    NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,[dm getInstance].width-85,content];
+    NSString *tempHtml = [utils clearHtml:content width:85];
     cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -494,8 +464,17 @@
     //回答标题
     NSString *string1 = model.ATitle;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    string1 = [NSString stringWithFormat:@"答 : %@",string1];
-    CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, MAXFLOAT)];
+    
+    RCLabel *tempLab = [[RCLabel alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 5)];
+    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
+    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+    [row1 setObject:name forKey:@"text"];
+    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+    tempLab.componentsAndPlainText = componentsDS;
+    CGSize titleSize = [tempLab optimumSize];
+    
+//    string1 = [NSString stringWithFormat:@"答 : %@",string1];
+//    CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, MAXFLOAT)];
     tempF = tempF+10+3+titleSize.height;
     if ([model.Flag integerValue]==0) {//无内容
         tempF = tempF+5+16;

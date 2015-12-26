@@ -55,27 +55,9 @@
             return;
         }
         [[KnowledgeHttp getInstance]QuestionDetailWithQId:self.ShowPickedModel.QID];
-//        self.webView = [[UIWebView alloc]initWithFrame: CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height)];
-//        self.webView.tag = -1;
-//        self.webView.delegate = self;
-//        //cell.mWebV_comment.scrollView.bounces = NO;
-//        self.webView.scrollView.showsHorizontalScrollIndicator = NO;
-//        self.webView.scrollView.showsVerticalScrollIndicator = NO;
-//        NSMutableString *content = [self.ShowPickedModel.PContent mutableCopy];
-//        
-//        [content insertString:[NSString stringWithFormat:@"<p><img align='absmiddle' src = 'ask@2x.png' width = 20 height = 20> %@<button type='button'align='absmiddle' onclick = \"onClick\">详情</button></p>",self.ShowPickedModel.Title] atIndex:12];
-//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
-//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
-//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""]mutableCopy];
-//        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width-10,[dm getInstance].width,[dm getInstance].width,content];
-//        [self.webView loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-//        [self.view addSubview:self.webView];
         self.KnowledgeTableViewCell = [self getMainView];
         [self.scrollview addSubview:self.KnowledgeTableViewCell];
     }
-
-    
-    
 }
 -(void)QuestionDetail:(id)noti
 {

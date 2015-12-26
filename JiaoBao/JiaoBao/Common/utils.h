@@ -41,4 +41,7 @@
 + (BOOL)isBlankString:(NSString *)string;
 + (void)logDic:(NSDictionary *)dic;
 
+//去掉html中的无用标签，适配手机
++(NSString *)clearHtml:(NSString *)content width:(int)tempW;
+
 @end
