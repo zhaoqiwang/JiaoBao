@@ -1822,12 +1822,6 @@
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
-    // For any other character return TRUE so that the text gets added to the view
-//    if(textField.text.length>49)
-//    {
-//        textField.text = [textField.text substringToIndex:49];
-//        self.mStr_textName = textField.text;
-//    }
     return TRUE;
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField
@@ -1870,8 +1864,14 @@
 -(void)PublishJob
 {
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
-    self.publishJobModel.AllNum =[ NSString stringWithFormat:@"%d",int_All];
-    NSString *textName = [self.titleTF.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.publishJobModel.AllNum =[NSString stringWithFormat:@"%d",int_All];
+    NSString *textName;
+    if ([self.titleTF isFirstResponder]) {
+        textName = self.titleTF.text;
+    }else{
+        textName = self.publishJobModel.homeworkName;
+    }
+    textName = [textName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     self.publishJobModel.homeworkName = textName;
     if(self.publishJobModel.classIDArr.count == 0)
     {
