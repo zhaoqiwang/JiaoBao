@@ -153,7 +153,7 @@
     cell.mLab_title.frame = CGRectMake(9+cell.askImgV.frame.size.width, 3+3, cell.mBtn_detail.frame.origin.x-5-cell.askImgV.frame.size.width, titleSize.height);
     cell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, titleSize.height+8+3);
  
-        [cell.mWebV_comment.scrollView setScrollEnabled:NO];
+        [cell.mWebV_comment.scrollView setScrollEnabled:YES];
         cell.mWebV_comment.tag = -1;
         cell.mWebV_comment.delegate = self;
     cell.mWebV_comment.frame = CGRectMake(0, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+5, [dm getInstance].width, 0);
@@ -173,14 +173,14 @@
 
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "] mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
-        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"]mutableCopy];
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"]mutableCopy];
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"]mutableCopy];
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"]mutableCopy];
-        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"]mutableCopy];
+//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
+//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"]mutableCopy];
+//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"]mutableCopy];
+//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"]mutableCopy];
+//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"]mutableCopy];
+//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"]mutableCopy];
         content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""]mutableCopy];
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""]mutableCopy];
+    //content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""]mutableCopy];
         NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width-10,[dm getInstance].width,[dm getInstance].width,content];
         [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         //[MBProgressHUD showMessage:@"" toView:self.view];
@@ -208,6 +208,7 @@
         
         self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
         self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+        self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
 
     }
     else
@@ -220,6 +221,7 @@
             
             self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
             self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+            self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
 //
 //            self.scrollview.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
 //            self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.mLab_title.frame.origin.y+self.KnowledgeTableViewCell.mLab_title.frame.size.height+5, self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, height);
@@ -236,6 +238,7 @@
             
             self.KnowledgeTableViewCell.frame = CGRectMake(0, 0, self.KnowledgeTableViewCell.mWebV_comment.frame.size.width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
             self.scrollview.contentSize = CGSizeMake([dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
+            self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
         }
 
     }
@@ -269,13 +272,14 @@
 //        
 //    };
     
-    NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '90%'";
+    NSString *str = @"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'";
     [webView stringByEvaluatingJavaScriptFromString:str];
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-
+    NSLog(@"jfpsjfgjg = %f",webView.scrollView.contentSize.width);
+    D("frame-== %@",NSStringFromCGSize(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize));
     if(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width>[dm getInstance].width)
     {
         float a =[dm getInstance].width/(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width);

@@ -16,6 +16,9 @@
 @interface MyCommentViewController ()
 @property(nonatomic,strong)NSMutableArray *answerArr;
 @property(nonatomic,assign)NSUInteger indexTag;
+@property(nonatomic,assign)BOOL hideFlag;
+@property(nonatomic,assign)NSInteger pageCount;
+@property(nonatomic,strong)NSMutableArray *tempArr;
 
 @end
 
@@ -75,6 +78,10 @@
         commentVC.flag = YES;
         [utils pushViewController:commentVC animated:YES];
     }
+    else
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
     
     
 }
@@ -82,6 +89,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.answerArr = [[NSMutableArray alloc]initWithCapacity:0];
+    self.tempArr = [[NSMutableArray alloc]initWithCapacity:0];
+
     // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mInt_reloadData = 0;
@@ -113,29 +122,34 @@
 
 //获取我做的评论列表
 -(void)GetMyCommsWithNumPerPage:(NSNotification *)noti{
-    [self.mTalbeV_liset headerEndRefreshing];
-    [self.mTalbeV_liset footerEndRefreshing];
+
+
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue]==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
+        self.pageCount = array.count;
+        if (self.mInt_reloadData ==0) {
+            self.mArr_list = [NSMutableArray arrayWithArray:array];
+            self.tempArr  = [[NSMutableArray alloc]initWithCapacity:0];
+        }else{
+            [self.mArr_list addObjectsFromArray:array];
+            
+        }
+        if (self.mArr_list.count==0&&array.count==0) {
+            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+        }
         for(int i=0;i<array.count;i++)
         {
             CommsModel *model = [array objectAtIndex:i];
             [[KnowledgeHttp getInstance]AnswerDetailWithAId:model.AId];
         }
-        if (self.mInt_reloadData ==0) {
-            self.mArr_list = [NSMutableArray arrayWithArray:array];
-        }else{
-            [self.mArr_list addObjectsFromArray:array];
-        }
-        if (self.mArr_list.count==0&&array.count==0) {
-            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
-        }
+
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
+
 }
 
 //答案详情回调
@@ -152,21 +166,29 @@
         else
         {
             AnswerDetailModel *model = [dic objectForKey:@"model"];
-            [self.answerArr addObject:model];
-            if(self.answerArr.count == self.mArr_list.count )
+            [self.tempArr addObject:model];
+            NSMutableArray *arr = [[NSMutableArray alloc]initWithCapacity:0];
+            if(self.tempArr.count == self.mArr_list.count )
             {
+                for(int i=0;i<self.mArr_list.count;i++){
+                    CommsModel *model = [self.mArr_list objectAtIndex:i];
+                    for(int j=0;j<self.tempArr.count;j++){
+                        AnswerDetailModel *answerModel = [self.tempArr objectAtIndex:j];                    if([model.AId isEqualToString:answerModel.TabID]){
+                            [arr addObject:answerModel];
+                            break;
+                        }
 
-                NSArray *arr = [self.answerArr sortedArrayUsingComparator:^NSComparisonResult(CommsModel *p1, CommsModel *p2){
-                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                    [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-                    NSDate *date1 = [dateFormatter dateFromString:p1.RecDate];
-                    NSDate *date2 = [dateFormatter dateFromString:p2.RecDate];
-                    return [date1 compare:date2];
-                }];
+                    }
+                }
+
+
                 self.answerArr =[NSMutableArray arrayWithArray:arr];
+                NSLog(@"count = %ld",self.answerArr.count);
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-
+                [self.mTalbeV_liset headerEndRefreshing];
+                [self.mTalbeV_liset footerEndRefreshing];
                 [self.mTalbeV_liset reloadData];
+                self.hideFlag = 0;
 //            if([self.AnswerDetailModel.TabID integerValue]==0)
 //            {
 //                [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -258,7 +280,8 @@
         rowCount = model.rowCount;
     }
     if (self.mInt_reloadData == 0) {
-        //[MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        self.hideFlag = 1;
     }else{
         if (self.mArr_list.count==[rowCount intValue]) {
             [self.mTalbeV_liset headerEndRefreshing];
@@ -266,7 +289,8 @@
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             return;
         }else{
-            //[MBProgressHUD showMessage:@"加载中..." toView:self.view];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+            self.hideFlag = 1;
         }
     }
     [[KnowledgeHttp getInstance]GetMyCommsWithNumPerPage:@"10" pageNum:[NSString stringWithFormat:@"%d",self.mInt_load]];

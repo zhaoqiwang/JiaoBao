@@ -535,8 +535,10 @@
     NSDictionary *dic = @{@"AId":AId};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
+        NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        D("hkhjhjh-====%@,%@",result,jsonDic);
+        D("hkhjhjh-====%@,%@",str2,jsonDic);
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         //长时间不操作，握手通讯失败后，进行登录操作
         Login

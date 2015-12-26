@@ -265,11 +265,9 @@
         }
         else
         {
-            NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做练习\"/></div></HTML>"];
+            NSString *html = [model.HWHTML stringByAppendingString:@"<p><span style = \"color:rgb(235,115,80); font-size:11px \">选择继续练习，将无法通过手机端再次查看本次的错题，请登录电脑端查看。</span></p><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做练习\"/></div>"];
             [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         }
-
-  
         self.isSubmit = YES;
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
