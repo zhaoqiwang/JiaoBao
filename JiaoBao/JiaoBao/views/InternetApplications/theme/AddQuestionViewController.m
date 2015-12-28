@@ -745,6 +745,14 @@
                 self.titleTF.hidden = YES;
                 return NO;
             }
+        if ([text isEqualToString:@"\n"]) {
+            textView.text = [NSString stringWithFormat:@"%@ ",textView.text];
+            self.titleTF.hidden = YES;
+            // Be sure to test for equality using the "isEqualToString" message
+            
+            // Return FALSE so that the final '\n' character doesn't get added
+            return NO;
+        }
     }
     
     return YES;

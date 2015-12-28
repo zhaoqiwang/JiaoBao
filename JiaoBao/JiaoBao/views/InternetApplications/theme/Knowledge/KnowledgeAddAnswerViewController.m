@@ -536,12 +536,13 @@
         }
 
         if ([text isEqualToString:@"\n"]) {
-            text = @"";
+            text = @" ";
+            textView.text = [NSString stringWithFormat:@"%@ ",textView.text];
+            self.mLab_answer.hidden = YES;
             // Be sure to test for equality using the "isEqualToString" message
-            [textView resignFirstResponder];
             
             // Return FALSE so that the final '\n' character doesn't get added
-            return FALSE;
+            return NO;
         }
     }
 
