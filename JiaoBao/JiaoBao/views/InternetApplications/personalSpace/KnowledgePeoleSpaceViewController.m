@@ -135,7 +135,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyattCate" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyattCate:) name:@"GetMyattCate" object:nil];
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"个人中心"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"求知个人中心"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
@@ -194,6 +194,9 @@
 
 -(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
     NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
     if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {
         NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
         self.picker=[[UIImagePickerController alloc] init];
@@ -223,6 +226,9 @@
 #pragma 拍照模块
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     [picker dismissViewControllerAnimated:YES completion:nil];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
     NSString *lastChosenMediaType=[info objectForKey:UIImagePickerControllerMediaType];
     if([lastChosenMediaType isEqual:(NSString *) kUTTypeImage])
     {
@@ -246,7 +252,12 @@
     
 }
 
-
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

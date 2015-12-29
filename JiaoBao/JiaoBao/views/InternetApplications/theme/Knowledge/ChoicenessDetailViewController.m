@@ -161,28 +161,14 @@
     //cell.mWebV_comment.scrollView.bounces = NO;
     cell.mWebV_comment.scrollView.showsHorizontalScrollIndicator = NO;
     cell.mWebV_comment.scrollView.showsVerticalScrollIndicator = NO;
-        NSMutableString *content = [cell.ShowPickedModel.PContent mutableCopy];
+    NSString *content = cell.ShowPickedModel.PContent;
     
-//    [content insertString:[NSString stringWithFormat:@"<p><img align='absmiddle' src = 'ask@2x.png' width = 20 height = 20> %@</p>",cell.ShowPickedModel.Title] atIndex:12];
-//       content = [[content stringByReplacingOccurrencesOfString:@"答" withString:@"<p><img align='absmiddle' src = 'ask@2x.png'></p>"] mutableCopy];
-//        content = [[content stringByReplacingOccurrencesOfString:@"内容" withString:@"<p><img align='absmiddle' src = 'anwser@2x.png'></p>"] mutableCopy];
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p><br/></p>"] withString:@""]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">答"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white;padding:1px 2px 1px 2px;\">答"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">内容"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">内容"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">依据"] withString:@"style = \"background:rgb(251,68,8);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">依据"]mutableCopy];
-
-    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"height"] withString:@" "] mutableCopy];
-        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width:"] withString:@" "]mutableCopy];
-//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width="] withString:@" "]mutableCopy];
-//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"table"] withString:@"div"]mutableCopy];
-//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tbody"] withString:@"div"]mutableCopy];
-//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"tr"] withString:@"p"]mutableCopy];
-//    content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"td"] withString:@"div"]mutableCopy];
-//        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"]mutableCopy];
-        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""]mutableCopy];
-    //content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""]mutableCopy];
-        NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width,[dm getInstance].width,[dm getInstance].width-10,[dm getInstance].width,[dm getInstance].width,content];
-        [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    
+    NSString *tempHtml = [utils clearHtml:content width:10];
+    [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         //[MBProgressHUD showMessage:@"" toView:self.view];
 
         //加载
