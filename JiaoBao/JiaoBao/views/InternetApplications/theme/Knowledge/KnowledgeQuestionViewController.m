@@ -680,6 +680,9 @@
     }else if ([model.Flag integerValue]==2){//有证据
         cell.basisImagV.image = [UIImage imageNamed:@"basis"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);
+        if (string2.length==0) {
+            string2 = @"此答案已被修改";
+        }
         name2 = [NSString stringWithFormat:@"<font size=12 color='#E67215'>%@</font>", string2];
     }
     NSMutableDictionary *row2 = [NSMutableDictionary dictionary];

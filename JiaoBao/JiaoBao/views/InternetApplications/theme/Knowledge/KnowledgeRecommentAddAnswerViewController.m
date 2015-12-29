@@ -174,7 +174,7 @@
     self.mView_titlecell.mWebV_comment.delegate = self;
     
     NSString *content = model.questionModel.KnContent;
-    NSString *tempHtml = [utils clearHtml:content width:10];
+    NSString *tempHtml = [utils clearHtml:content width:15];
     
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
@@ -188,7 +188,7 @@
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     NSString *meta;
     if (webView.tag==-1) {
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-15];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
@@ -384,6 +384,9 @@
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
     
     NSString *content = model.Abstracts;
+    if (content.length==0) {
+        content = @"此答案已被修改";
+    }
     NSString *tempHtml = [utils clearHtml:content width:85];
     cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];

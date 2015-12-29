@@ -21,6 +21,7 @@
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTalbeV_liset;//
+@property (nonatomic,strong) IBOutlet UILabel *mLab_warn;//提醒有几条数据被隐藏或删除
 
 @property (nonatomic,strong) NSMutableArray *mArr_list;//我提出的问题列表
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1

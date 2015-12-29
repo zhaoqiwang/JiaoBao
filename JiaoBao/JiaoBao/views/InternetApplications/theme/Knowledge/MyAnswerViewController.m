@@ -76,17 +76,12 @@
         }else{
             if (array.count>0) {
                 QuestionModel *model = [array objectAtIndex:0];
-                //将隐藏数据添加进数组
-                for (int i=0; i<model.hiddenid.count; i++) {
-                    QuestionModel *model7 = [[QuestionModel alloc] init];
-                    model7.TabID = @"0";
-                    model7.rowCount = model.rowCount;
-                    [self.mArr_list addObject:model7];
-                }
                 //当页面如果没有记录，刚返回一条TabID=-1的记录，该记录只为了返回rowcount，没有实际意义。
                 if ([model.TabID intValue]==-1) {
                     [self.mArr_list removeObject:model];
                     self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
+                    //如果全部为空，重新获取
+                    [self footerRereshing];
                 }else{
                     self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
                 }
@@ -95,6 +90,16 @@
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
+    //判断是否提示隐藏数据数量
+    if (self.mInt_list>self.mArr_list.count) {
+        self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar-20);
+        self.mLab_warn.hidden = NO;
+        self.mLab_warn.frame = CGRectMake(0, [dm getInstance].height-20, [dm getInstance].width, 20);
+        self.mLab_warn.text = [NSString stringWithFormat:@"有%lu条数据被隐藏或删除",self.mInt_list-self.mArr_list.count];
+    }else{
+        self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+        self.mLab_warn.hidden = YES;
     }
     [self.mTalbeV_liset reloadData];
 }
@@ -151,32 +156,6 @@
         for (UIView *temp in cell.subviews) {
             temp.hidden = NO;
         }
-        if ([model.TabID intValue]==0) {
-            //问题名称
-            NSString *name = [NSString stringWithFormat:@"</font> <font size=12 color=black>该问题已被删除或屏蔽</font>"];
-            NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-            [row1 setObject:name forKey:@"text"];
-            cell.mLab_ATitle.frame = CGRectMake(12, 12, [dm getInstance].width-18, 23);
-            RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
-            cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-            cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
-            cell.mLab_ATitle.hidden = NO;
-            //取消关注
-            cell.mBtn_detail.hidden = YES;
-            //关注、答案个数
-            //关注
-            cell.mLab_Att.hidden = YES;
-            //回答
-            cell.mLab_Answers.hidden = YES;
-            //话题
-            cell.mLab_Category0.hidden = YES;
-            //浏览数
-            cell.mLab_View.hidden = YES;
-            //
-            cell.mLab_line.hidden = NO;
-            cell.mLab_line.frame = CGRectMake(0, 39, [dm getInstance].width, .5);
-            return cell;
-        }
     }else{
         for (UIView *temp in cell.subviews) {
             temp.hidden = YES;
@@ -226,56 +205,17 @@
     //
     cell.mLab_line.hidden = NO;
     cell.mLab_line.frame = CGRectMake(0, 59, [dm getInstance].width, .5);
-//    cell.mLab_line.frame = CGRectMake(20, cell.mLab_ATitle.frame.origin.x+cell.mLab_ATitle.frame.size.height+5, [dm getInstance].width-20, .5);
-//    //喜欢个数
-//    cell.mLab_LikeCount.frame = CGRectMake(9, cell.mLab_line.frame.origin.y+10, 42, 22);
-//    NSString *strLike = model.answerModel.LikeCount;
-//    if ([model.answerModel.LikeCount integerValue]>99) {
-//        strLike = @"99+";
-//    }
-//    cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
     cell.mLab_LikeCount.hidden = YES;
-//    //头像
-//    cell.mImgV_head.frame = CGRectMake(9, cell.mLab_LikeCount.frame.origin.y+22+10, 42, 42);
-//    [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.answerModel.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     cell.mImgV_head.hidden = YES;
-//    //回答内容
-//    NSString *string2 = model.answerModel.Abstracts;
-//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//    NSString *name2 = @"";
-//    if ([model.answerModel.Flag integerValue]==0) {//无内容
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>无内容</font>"];
-//    }else if ([model.answerModel.Flag integerValue]==1){//有内容
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>有内容 : </font> <font>%@</font>", string2];
-//    }else if ([model.answerModel.Flag integerValue]==2){//有证据
-//        name2 = [NSString stringWithFormat:@"<font size=14 color='red'>依据 : </font> <font>%@</font>", string2];
-//    }
-//    
-//    NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-//    [row2 setObject:name2 forKey:@"text"];
-//    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-//    cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
-//    CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
-//    if (optimalSize2.height==23) {
-//        optimalSize2 = CGSizeMake(optimalSize2.width, 25);
-//    }else if (optimalSize2.height>20) {
-//        optimalSize2 = CGSizeMake(optimalSize2.width, 35);
-//    }
     cell.mLab_Abstracts.hidden = YES;
-//    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, optimalSize2.height);
-//    cell.mLab_line2.frame = CGRectMake(0, cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+10, [dm getInstance].width, 10);
     cell.mLab_line2.hidden = YES;
 
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-//    return 150;
     QuestionModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-    if ([model.TabID intValue]==0) {
-        return 40;
-    }else if ([model.TabID intValue]==-1) {
+    if ([model.TabID intValue]==-1) {
         return 0;
     }
     return 60;
