@@ -459,7 +459,13 @@
     if([lastChosenMediaType isEqual:(NSString *) kUTTypeImage])
     {
         UIImage *chosenImage=[info objectForKey:UIImagePickerControllerOriginalImage];
-        chosenImage = [self fixOrientation:chosenImage];
+//        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+//        if(orientation == UIInterfaceOrientationLandscapeLeft||orientation == UIInterfaceOrientationLandscapeRight){
+        
+            chosenImage = [self fixOrientation:chosenImage];
+
+       // }
+
         NSData *imageData = UIImageJPEGRepresentation(chosenImage,0);
         self.tempData  = [[NSData alloc] initWithData:imageData];
         [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
@@ -546,7 +552,7 @@
 }
 
 - (UIImage *)fixOrientation:(UIImage *)aImage {
-    
+
     // No-op if the orientation is already correct
     if (aImage.imageOrientation == UIImageOrientationUp)
         return aImage;

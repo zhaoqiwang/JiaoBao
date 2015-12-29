@@ -52,6 +52,7 @@
 
 }
 
+
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
@@ -100,9 +101,11 @@
 
         }
     }
+    __weak DetailHWViewController *weakSelf = self;
+
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0)] ;
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
-        NSInteger count = [self.stuHomeWorkModel.Qsc integerValue];
+        NSInteger count = [weakSelf.stuHomeWorkModel.Qsc integerValue];
         NSInteger cellCount = count/20;
         NSInteger cellCount2 = count%20;
         if(cellCount2==0)
@@ -118,31 +121,31 @@
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
         if (!cell) {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectionCell"];
-            cell.frame = CGRectMake(0, 0, self.qNum.frame.size.width, 25);
+            cell.frame = CGRectMake(0, 0, weakSelf.qNum.frame.size.width, 25);
             [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
             cell.textLabel.font = [UIFont systemFontOfSize:13];
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
         }
-        if((indexPath.row+1)*20<[self.stuHomeWorkModel.Qsc integerValue])
+        if((indexPath.row+1)*20<[weakSelf.stuHomeWorkModel.Qsc integerValue])
         {
             cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,(indexPath.row+1)*20];
 
         }
         else
         {
-            cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,[self.stuHomeWorkModel.Qsc integerValue]];
+            cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,[weakSelf.stuHomeWorkModel.Qsc integerValue]];
         }
         return cell;
     } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
         [UIView animateWithDuration:0.3 animations:^{
             SelectionCell *cell = (SelectionCell*)[tableView cellForRowAtIndexPath:indexPath];
-            self.mTableV_name.frame =  CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0);
-            [self.qNum setTitle:cell.textLabel.text forState:UIControlStateNormal];
-            self.isOpen = NO;
+            weakSelf.mTableV_name.frame =  CGRectMake(weakSelf.qNum.frame.origin.x, weakSelf.qNum.frame.origin.y+weakSelf.qNum.frame.size.height, weakSelf.qNum.frame.size.width, 0);
+            [weakSelf.qNum setTitle:cell.textLabel.text forState:UIControlStateNormal];
+            weakSelf.isOpen = NO;
             NSIndexPath *index_path = [NSIndexPath indexPathForItem:indexPath.row*20 inSection:0];
-            [self.collectionView reloadData];
-            [self.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
-                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index_path.row]];
+            [weakSelf.collectionView reloadData];
+            [weakSelf.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:weakSelf.stuHomeWorkModel.hwinfoid QsId:[weakSelf.datasource objectAtIndex:index_path.row]];
 
         } completion:^(BOOL finished){
 
@@ -167,13 +170,13 @@
         NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
         if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){
             self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
-            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-            //加入主循环池中
-            [[NSRunLoop mainRunLoop]addTimer:self.timer forMode:NSDefaultRunLoopMode];
-            //开始循环
-            [self.timer fire];
-            
+            if(!self.timer)
+            {
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+
+            }
+
         }else{
             NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
             NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
@@ -184,29 +187,27 @@
             NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
             NSInteger diffHour = [cps hour];
             NSInteger diffMin    = [cps minute];
-            NSInteger diffSec   = [cps second];
             if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
                 self.clockLabel.text = @"已超时";
-                //                self.clockLabel.text = [NSString stringWithFormat:@"%ld:%ld",(long)diffMin,(long)diffSec];
-                //                NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                //                //加入主循环池中
-                //                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
-                //                //开始循环
-                //                [timer fire];
+
             }
             else{
-                diffMin = [self.stuHomeWorkModel.LongTime integerValue]+diffMin;
+                NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeCurrentDate  toDate:localeStartDate  options:0];
+                NSInteger diffMin    = [cps minute];
+                NSInteger diffSec   = [cps second];
+                diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
                 diffSec = 60+diffSec;
                 if(diffSec==60)
                 {
                     diffSec = 0;
                 }
+                if(!self.timer)
+                {
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
                 self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
-                NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                //加入主循环池中
-                [[NSRunLoop mainRunLoop]addTimer:timer forMode:NSDefaultRunLoopMode];
-                //开始循环
-                [timer fire];
+
+                }
+
             }
             
             
@@ -263,7 +264,7 @@
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
         if([self.navBarName isEqualToString:@"做作业"])
         {
-            self.clockLabel.text = @"00:00";
+            self.clockLabel.text = @"已提交";
             [self.timer invalidate];
             self.timer = nil;
             NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做作业\"/></div></HTML>"];
@@ -271,6 +272,7 @@
         }
         else
         {
+            self.clockLabel.text = @"已提交";
             NSString *html = [model.HWHTML stringByAppendingString:@"<p><span style = \"color:rgb(235,115,80); font-size:11px \">选择继续练习，将无法通过手机端再次查看本次的错题，请登录电脑端查看。</span></p><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做练习\"/></div>"];
             [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         }
@@ -294,6 +296,7 @@
     [alertView addSubview:myView];
 }
 -(void)timerAction{
+
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *currentDate = [NSDate date];
@@ -324,6 +327,15 @@
         diffSec = 0;
     }
     self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+}
+-(void)dealloc
+{
+    
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self.timer invalidate];
+    self.timer = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -555,10 +567,12 @@
         
     }
     JSContext *content = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    __weak DetailHWViewController *weakSelf = self;
+
     content[@"clicke"] = ^() {
         dispatch_async(dispatch_get_main_queue(), ^{
             // 更UI
-             [self.navigationController popViewControllerAnimated:YES];
+             [weakSelf.navigationController popViewControllerAnimated:YES];
         });
        
         
@@ -856,10 +870,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 10;
 }
--(void)dealloc
-{
-    
-}
+
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

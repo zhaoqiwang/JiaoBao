@@ -173,7 +173,8 @@
                 for(int i=0;i<self.mArr_list.count;i++){
                     CommsModel *model = [self.mArr_list objectAtIndex:i];
                     for(int j=0;j<self.tempArr.count;j++){
-                        AnswerDetailModel *answerModel = [self.tempArr objectAtIndex:j];                    if([model.AId isEqualToString:answerModel.TabID]){
+                        AnswerDetailModel *answerModel = [self.tempArr objectAtIndex:j];
+                        if([model.AId isEqualToString:answerModel.TabID]){
                             [arr addObject:answerModel];
                             break;
                         }
@@ -187,7 +188,14 @@
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 [self.mTalbeV_liset headerEndRefreshing];
                 [self.mTalbeV_liset footerEndRefreshing];
+
+
                 [self.mTalbeV_liset reloadData];
+//                    if(self.mInt_load>1){
+//                            NSIndexPath *index_path = [NSIndexPath indexPathForRow:(self.mInt_load-1)*10 inSection:0];
+//                            [self.mTalbeV_liset scrollToRowAtIndexPath:index_path atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//                        }
+
                 self.hideFlag = 0;
 //            if([self.AnswerDetailModel.TabID integerValue]==0)
 //            {
@@ -234,6 +242,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CommsModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    AnswerDetailModel *answerModel = [self.answerArr objectAtIndex:indexPath.row];
+    
+    if([answerModel.State integerValue]==0){
+        [MBProgressHUD showError: @"此答案已经被屏蔽" toView:self.view];
+        return;
+    }
     
     self.indexTag = indexPath.row;
 

@@ -336,6 +336,7 @@
         model.JiaoBaoHao = @"";
     }
     model.AContent = [dic objectForKey:@"AContent"];
+    model.State = [dic objectForKey:@"State"];
     return model;
 }
 //评论列表
