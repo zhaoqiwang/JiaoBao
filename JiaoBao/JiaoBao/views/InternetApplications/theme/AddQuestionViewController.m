@@ -553,7 +553,6 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.mTableV_name.frame =  CGRectMake(self.countyTF.frame.origin.x, self.countyTF.frame.origin.y+30, 166, 0);
             
-            
         } completion:^(BOOL finished){
         }];
     }
