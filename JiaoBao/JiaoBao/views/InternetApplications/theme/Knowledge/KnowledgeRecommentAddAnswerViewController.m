@@ -60,7 +60,6 @@
 
 //推荐问题详情
 -(void)ShowRecomment:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
@@ -186,9 +185,10 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *meta;
     if (webView.tag==-1) {
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-15];
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-20];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
@@ -209,7 +209,7 @@
         frame.size.height = webView.scrollView.contentSize.height;
         [webView setBackgroundColor:[UIColor clearColor]];
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
-        model.floatH = frame.size.height+10;
+        model.floatH = frame.size.height+20;
         [self.mTableV_answer reloadData];
         self.mTableV_answer.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, self.mTableV_answer.contentSize.height);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_answer.frame.origin.y+self.mTableV_answer.contentSize.height);
@@ -341,16 +341,18 @@
     
     cell.mLab_IdFlag.text = model.IdFlag;
     //回答标题
+    cell.answerImgV.hidden = NO;
     NSString *string1 = model.ATitle;
-    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+    cell.answerImgV.frame = CGRectMake(60, cell.mLab_LikeCount.frame.origin.y, 26, 16);
+    NSString *name = [NSString stringWithFormat:@"<font size=12 color=black>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-    CGSize optimalSize1 = [cell.mLab_ATitle optimumSize];
-    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeCharWrapping;
-    cell.mLab_ATitle.frame = CGRectMake(63, cell.mLab_LikeCount.frame.origin.y+3, [dm getInstance].width-65, optimalSize1.height);
+    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width+5, cell.mLab_LikeCount.frame.origin.y+2, [dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, 23);
 
     //回答内容
     NSString *name2 = @"";
@@ -359,7 +361,7 @@
         cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+5, 36, 16);
         cell.basisImagV.hidden = NO;
-        //cell.answerImgV.hidden = YES;
+        
     }else if ([model.Flag integerValue]==1){//有内容
         cell.mView_background.hidden = YES;
         cell.mView_background.frame = cell.mImgV_head.frame;
@@ -465,20 +467,17 @@
     }
     
     //回答标题
-    NSString *string1 = model.ATitle;
-    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-    
-    RCLabel *tempLab = [[RCLabel alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65, 5)];
-    NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>答 : </font> <font size=14 color=black>%@</font>",string1];
-    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-    [row1 setObject:name forKey:@"text"];
-    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
-    tempLab.componentsAndPlainText = componentsDS;
-    CGSize titleSize = [tempLab optimumSize];
-    
-//    string1 = [NSString stringWithFormat:@"答 : %@",string1];
-//    CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-65, MAXFLOAT)];
-    tempF = tempF+10+3+titleSize.height;
+//    NSString *string1 = model.ATitle;
+//    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
+//    
+//    RCLabel *tempLab = [[RCLabel alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65-26, 5)];
+//    NSString *name = [NSString stringWithFormat:@"</font> <font size=12 color=black>%@</font>",string1];
+//    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
+//    [row1 setObject:name forKey:@"text"];
+//    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
+//    tempLab.componentsAndPlainText = componentsDS;
+//    CGSize titleSize = [tempLab optimumSize];
+    tempF = tempF+10+3+23;
     if ([model.Flag integerValue]==0) {//无内容
         tempF = tempF+5+16;
     }else if ([model.Flag integerValue]==1){//有内容

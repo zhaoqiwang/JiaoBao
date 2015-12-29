@@ -200,7 +200,6 @@
 
 //问题详情
 -(void)QuestionDetail:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"code"];
     if ([code integerValue] ==0) {
@@ -363,6 +362,7 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];

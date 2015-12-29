@@ -1322,8 +1322,12 @@
     if (self.mInt_index==0) {//获取作业列表
         [self.mArr_homework removeAllObjects];
         //获取
-        [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+        if ([self.mModel_stuInf.StudentID intValue]>0) {
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+        }else{
+            [MBProgressHUD showMessage:@"获取学生信息错误" toView:self.view];
+        }
     }else{//获取练习列表
         //先判断是现实练习列表，还是布置练习
         if (self.mArr_practice.count>0) {
