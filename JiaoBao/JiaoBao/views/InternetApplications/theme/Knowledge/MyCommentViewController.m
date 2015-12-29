@@ -242,6 +242,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CommsModel *model = [self.mArr_list objectAtIndex:indexPath.row];
+    AnswerDetailModel *answerModel = [self.answerArr objectAtIndex:indexPath.row];
+    
+    if([answerModel.State integerValue]==0){
+        [MBProgressHUD showError: @"此答案已经被屏蔽" toView:self.view];
+        return;
+    }
     
     self.indexTag = indexPath.row;
 

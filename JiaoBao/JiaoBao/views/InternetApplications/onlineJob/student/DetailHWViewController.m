@@ -52,6 +52,7 @@
 
 }
 
+
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
@@ -100,9 +101,11 @@
 
         }
     }
+    __weak DetailHWViewController *weakSelf = self;
+
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0)] ;
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
-        NSInteger count = [self.stuHomeWorkModel.Qsc integerValue];
+        NSInteger count = [weakSelf.stuHomeWorkModel.Qsc integerValue];
         NSInteger cellCount = count/20;
         NSInteger cellCount2 = count%20;
         if(cellCount2==0)
@@ -118,31 +121,31 @@
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
         if (!cell) {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectionCell"];
-            cell.frame = CGRectMake(0, 0, self.qNum.frame.size.width, 25);
+            cell.frame = CGRectMake(0, 0, weakSelf.qNum.frame.size.width, 25);
             [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
             cell.textLabel.font = [UIFont systemFontOfSize:13];
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
         }
-        if((indexPath.row+1)*20<[self.stuHomeWorkModel.Qsc integerValue])
+        if((indexPath.row+1)*20<[weakSelf.stuHomeWorkModel.Qsc integerValue])
         {
             cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,(indexPath.row+1)*20];
 
         }
         else
         {
-            cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,[self.stuHomeWorkModel.Qsc integerValue]];
+            cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,[weakSelf.stuHomeWorkModel.Qsc integerValue]];
         }
         return cell;
     } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
         [UIView animateWithDuration:0.3 animations:^{
             SelectionCell *cell = (SelectionCell*)[tableView cellForRowAtIndexPath:indexPath];
-            self.mTableV_name.frame =  CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0);
-            [self.qNum setTitle:cell.textLabel.text forState:UIControlStateNormal];
-            self.isOpen = NO;
+            weakSelf.mTableV_name.frame =  CGRectMake(weakSelf.qNum.frame.origin.x, weakSelf.qNum.frame.origin.y+weakSelf.qNum.frame.size.height, weakSelf.qNum.frame.size.width, 0);
+            [weakSelf.qNum setTitle:cell.textLabel.text forState:UIControlStateNormal];
+            weakSelf.isOpen = NO;
             NSIndexPath *index_path = [NSIndexPath indexPathForItem:indexPath.row*20 inSection:0];
-            [self.collectionView reloadData];
-            [self.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
-                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index_path.row]];
+            [weakSelf.collectionView reloadData];
+            [weakSelf.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:weakSelf.stuHomeWorkModel.hwinfoid QsId:[weakSelf.datasource objectAtIndex:index_path.row]];
 
         } completion:^(BOOL finished){
 
@@ -564,10 +567,12 @@
         
     }
     JSContext *content = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    __weak DetailHWViewController *weakSelf = self;
+
     content[@"clicke"] = ^() {
         dispatch_async(dispatch_get_main_queue(), ^{
             // 更UI
-             [self.navigationController popViewControllerAnimated:YES];
+             [weakSelf.navigationController popViewControllerAnimated:YES];
         });
        
         

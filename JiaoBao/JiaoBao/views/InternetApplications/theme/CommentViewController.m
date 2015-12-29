@@ -1180,10 +1180,12 @@
                 
             }
             [temp addObject:model];
+
         }
-        
-        self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, [dm getInstance].width, 50) Array:temp];
-        
+        self.rdateLabel = [[UILabel alloc]initWithFrame:CGRectMake([dm getInstance].width-100, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, 100, 30)];
+        self.rdateLabel.text = self.AnswerDetailModel.RecDate;
+        self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.rdateLabel.frame.origin.y+self.rdateLabel.frame.size.height, [dm getInstance].width, 50) Array:temp];
+
         self.mBtnV_btn.delegate = self;
     }
     else
@@ -1192,8 +1194,11 @@
         ButtonViewCell *btnView102 = (ButtonViewCell*)[self.view viewWithTag:102];
         btnView101.mLab_title.text = [NSString stringWithFormat:@"评论%@",self.AnswerDetailModel.CCount];
         btnView102.mLab_title.text = [NSString stringWithFormat:@"反对%@",self.AnswerDetailModel.CaiCount];
+        self.rdateLabel.text = self.AnswerDetailModel.RecDate;
         
     }
+
+    [self.tableHeadView addSubview:self.rdateLabel];
     [self.tableHeadView addSubview:self.mBtnV_btn];
 
 
@@ -1457,6 +1462,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)dealloc{
+    
+    
 }
 
 

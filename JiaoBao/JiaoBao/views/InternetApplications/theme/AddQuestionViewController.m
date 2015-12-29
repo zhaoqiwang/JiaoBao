@@ -58,44 +58,45 @@
         self.provinceArr = arr;
         
     }
+    __weak AddQuestionViewController *weakSelf = self;
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.provinceTF.frame.origin.x, self.provinceTF.frame.origin.y+30, 166, 0)] ;
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
-        return self.dataArr.count;
+        return weakSelf.dataArr.count;
     } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
         UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
         if (!cell) {
             cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectionCell"];
             [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
         }
-        ProviceModel *model = [self.dataArr objectAtIndex:indexPath.row];
+        ProviceModel *model = [weakSelf.dataArr objectAtIndex:indexPath.row];
         cell.textLabel.text = model.CnName ;
         return cell;
     } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
         [UIView animateWithDuration:0.3 animations:^{
-            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 0);
+            weakSelf.mTableV_name.frame =  CGRectMake(weakSelf.selectedTF.frame.origin.x, weakSelf.selectedTF.frame.origin.y+30, 166, 0);
             
             
         } completion:^(BOOL finished){
-            ProviceModel *model = [self.dataArr objectAtIndex:indexPath.row];
-            self.selectedTF.text = model.CnName;
-            self.selectedTF.tag = [model.CityCode integerValue];
+            ProviceModel *model = [weakSelf.dataArr objectAtIndex:indexPath.row];
+            weakSelf.selectedTF.text = model.CnName;
+            weakSelf.selectedTF.tag = [model.CityCode integerValue];
             if(![model.CnName isEqualToString:@"请选择"])
             {
-                self.proviceModel = model;
+                weakSelf.proviceModel = model;
 
             }
         }];
-        if([self.selectedTF isEqual:self.provinceTF])
+        if([weakSelf.selectedTF isEqual:weakSelf.provinceTF])
         {
-            self.regionTF.text = @"";
-            self.countyTF.text = @"";
+            weakSelf.regionTF.text = @"";
+            weakSelf.countyTF.text = @"";
         }
-        if([self.selectedTF isEqual:self.regionTF])
+        if([weakSelf.selectedTF isEqual:weakSelf.regionTF])
         {
-            self.countyTF.text = @"";
+            weakSelf.countyTF.text = @"";
 
         }
-        self.isOpen = NO;
+        weakSelf.isOpen = NO;
         
         
     }];
@@ -218,7 +219,7 @@
     [self.selectBtn setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
     self.QFlag = 1;
     [dm getInstance].addQuestionNoti = YES;
-    
+
 
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
@@ -242,7 +243,7 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-    
+
     [[KnowledgeHttp getInstance]knowledgeHttpGetProvice];
     [MBProgressHUD showMessage:@"" toView:self.view];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"knowledgeHttpGetProvice" object:nil];
@@ -404,6 +405,7 @@
 //发布问题回调
 -(void)NewQuestionWithCategoryId:(id)sender
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -434,7 +436,7 @@
             manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
             manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
             manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
-            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(gotoView) userInfo:nil repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(gotoView:) userInfo:nil repeats:NO];
             
         }
         else
@@ -445,8 +447,14 @@
 
     }
 }
--(void)gotoView{
-    [utils popViewControllerAnimated:YES];
+-(void)gotoView:(id)sender{
+    NSTimer *timer = sender;
+    [timer invalidate];
+    timer =nil;
+    [self myNavigationGoback];
+    //[utils popViewControllerAnimated:YES];
+
+    
 }
 //点击省份
 - (IBAction)provinceBtnAction:(id)sender {
@@ -683,6 +691,7 @@
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+        [MBProgressHUD showMessage:@"" toView:self.view];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
     else

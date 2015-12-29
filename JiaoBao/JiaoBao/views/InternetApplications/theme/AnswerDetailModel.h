@@ -24,6 +24,7 @@
 @property(nonatomic,strong)NSString *IdFlag;//回答者姓名+称号
 @property(nonatomic,strong)NSString *AContent;// 内容
 @property(nonatomic,strong)NSString *LikeList;
+@property(nonatomic,strong)NSString *State;
 
 
 
