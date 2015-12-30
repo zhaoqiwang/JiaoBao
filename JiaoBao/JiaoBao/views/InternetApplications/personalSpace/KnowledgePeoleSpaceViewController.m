@@ -153,6 +153,8 @@
     self.HeadCell.mLab_nickName.text = [dm getInstance].NickName;
     [self.HeadCell.imgBtn addTarget:self action:@selector(imgBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.HeadCell.categoryBtn addTarget:self action:@selector(categoryBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.HeadCell.personBtn addTarget:self action:@selector(personBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.HeadCell.meBtn addTarget:self action:@selector(meBtnAction:) forControlEvents:UIControlEventTouchUpInside];
 
     UIView *headView = [[UIView alloc]initWithFrame:self.HeadCell.frame];
     headView.backgroundColor = [UIColor clearColor];
@@ -166,6 +168,12 @@
     UIActionSheet *  action = [[UIActionSheet alloc] initWithTitle:@"选择图片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"相册",@"拍照",nil];
     action.tag = 1;
     [action showInView:self.view];
+}
+-(void)personBtnAction:(id)sender{
+    [MBProgressHUD showError:@"该功能暂未开放" toView:self.view];
+}
+-(void)meBtnAction:(id)sender{
+    [MBProgressHUD showError:@"该功能暂未开放" toView:self.view];
 }
 -(void)categoryBtnAction:(id)sender
 {

@@ -12,7 +12,6 @@
 #import "DetialHWCell.h"
 #import "StuHomeWorkModel.h"
 #import "StuHWQsModel.h"
-#import "WebViewJavascriptBridge.h"
 #import "TableViewWithBlock.h"
 #import "SelectionCell.h"
 #import "IQKeyboardManager.h"
@@ -23,20 +22,18 @@
 @interface DetailHWViewController ()<UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *subArr;//提交的题目
 @property(nonatomic,strong)NSMutableArray *errQuestionArr;//做错的题目 0:没做的 1:正确 2：错误
-@property(nonatomic,assign)NSUInteger selectedBtnTag;
-@property(nonatomic,strong)StuHomeWorkModel *stuHomeWorkModel;
-@property(nonatomic,strong)StuHWQsModel *stuHWQsModel;
-@property(nonatomic,strong)NSMutableArray *datasource;
-@property WebViewJavascriptBridge* bridge;
-@property(nonatomic,strong)TableViewWithBlock *mTableV_name;
-@property(nonatomic,assign)BOOL isOpen;
-@property(nonatomic,assign)BOOL isShow;
-@property(nonatomic,assign)float webHeight;
-@property(nonatomic,strong)NSTimer *timer;
+@property(nonatomic,assign)NSUInteger selectedBtnTag;//标志选择的第几题
+@property(nonatomic,strong)StuHomeWorkModel *stuHomeWorkModel;//学生当前作业信息model
+@property(nonatomic,strong)StuHWQsModel *stuHWQsModel;//某作业下某题的作业题及答案model
+@property(nonatomic,strong)NSMutableArray *datasource;//collectionview数据源
+@property(nonatomic,strong)TableViewWithBlock *mTableV_name;//显示题数范围
+@property(nonatomic,assign)BOOL isOpen;//是否展开
+@property(nonatomic,strong)NSTimer *timer;//计时器
 
 @end
 
 @implementation DetailHWViewController
+//动态改变collectionview高度
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
@@ -52,7 +49,7 @@
 
 }
 
-
+//获取作业信息
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
@@ -82,7 +79,7 @@
     NSIndexPath *index = [NSIndexPath indexPathForItem:0 inSection:0];
     [self.collectionView reloadData];
     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-    if(self.datasource.count == 1)
+    if(self.datasource.count == 1)//如果只用一道题
     {
         if([self.FlagStr isEqualToString:@"1"]){
             if(self.isSubmit == YES){
@@ -155,12 +152,14 @@
     [self.mTableV_name.layer setBorderWidth:1];
     [self.view addSubview:self.mTableV_name];
     D("0----=-======%@,%lu",self.stuHomeWorkModel.hwinfoid,(unsigned long)self.datasource.count);
-    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:0]];
+    [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:0]];//获取第一题
     [MBProgressHUD showMessage:@"" toView:self.view];
 
 }
+//获取第几题的作业详情
 -(void)GetStuHWQsWithHwInfoId:(id)sender
 {
+    //倒计时
     if(self.isSubmit == NO){
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
@@ -168,7 +167,7 @@
         NSTimeZone *zone = [NSTimeZone systemTimeZone];
         NSInteger interval = [zone secondsFromGMTForDate: currentDate];
         NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
-        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){
+        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
             self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
             if(!self.timer)
             {
@@ -177,7 +176,7 @@
 
             }
 
-        }else{
+        }else{//再次进入做作业界面 从服务器获取开始时间
             NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
             NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
             
@@ -187,7 +186,7 @@
             NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
             NSInteger diffHour = [cps hour];
             NSInteger diffMin    = [cps minute];
-            if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){
+            if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
                 self.clockLabel.text = @"已超时";
 
             }
@@ -214,7 +213,7 @@
         }
         
     }
-    else
+    else//已经提交的作业不显示倒计时
     {
         self.clockLabel.hidden = YES;
         self.countdownLabel.hidden = YES;
@@ -223,24 +222,24 @@
     
 
     NSString *webHtml;
-    if(self.isSubmit == 1)
+    if(self.isSubmit == 1)//如果作业已经提交
     {
-        if([self.stuHWQsModel.QsAns isEqualToString:self.stuHWQsModel.QsCorectAnswer])
+        if([self.stuHWQsModel.QsAns isEqualToString:self.stuHWQsModel.QsCorectAnswer])//如果答案正确
         {
             webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:green\">%@</span><br />正确答案：%@<br />%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
             
         }
-        else
+        else//答案错误
         {
             webHtml = [self.stuHWQsModel.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br />%@</p>",self.stuHWQsModel.QsAns,self.stuHWQsModel.QsCorectAnswer,self.stuHWQsModel.QsExplain]];
         }
 
     }
-    else
+    else//作业未提交不显示答案解析
     {
         webHtml = self.stuHWQsModel.QsCon;
     }
-    if([webHtml isEqual:[NSNull null]])
+    if([webHtml isEqual:[NSNull null]])//如果获取的题目的内容是空
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self.webView loadHTMLString:@"" baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -253,16 +252,17 @@
     }
 
 }
+//提交题目
 -(void)StuSubQsWithHwInfoId:(id)sender
 {
     StuSubModel *model = [sender object];
-    if([model.reNum integerValue] == 0)
+    if([model.reNum integerValue] == 0)//提交作业
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         //[[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID];
 
 //        NSString *strHtml = [model.HWHTML stringByAppendingString:@"<br /><button type='button' onclick ='buttonClick'>继续</button><script>function buttonClick(){alert(\"事件\");}</script>"];
-        if([self.navBarName isEqualToString:@"做作业"])
+        if([self.navBarName isEqualToString:@"做作业"])//获取作业成绩
         {
             self.clockLabel.text = @"已提交";
             [self.timer invalidate];
@@ -270,13 +270,13 @@
             NSString *html = [model.HWHTML stringByAppendingString:@"<HTML><br /><br /><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做作业\"/></div></HTML>"];
             [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         }
-        else
+        else//获取练习成绩
         {
             self.clockLabel.text = @"已提交";
             NSString *html = [model.HWHTML stringByAppendingString:@"<p><span style = \"color:rgb(235,115,80); font-size:11px \">选择继续练习，将无法通过手机端再次查看本次的错题，请登录电脑端查看。</span></p><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做练习\"/></div>"];
             [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         }
-        self.isSubmit = YES;
+        self.isSubmit = YES;//设置成已提交
         self.previousBtn.enabled = NO;
         self.nextBtn.enabled = NO;
         //[[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
@@ -295,6 +295,7 @@
     myView.backgroundColor = [UIColor redColor];
     [alertView addSubview:myView];
 }
+//计时器方法
 -(void)timerAction{
 
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

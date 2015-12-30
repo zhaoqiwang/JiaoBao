@@ -124,6 +124,12 @@
                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Odd-X5-7QV">
+                                <rect key="frame" x="157" y="37" width="61" height="38"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CFy-4z-Bad">
+                                <rect key="frame" x="235" y="37" width="77" height="35"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -137,9 +143,11 @@
                 <outlet property="mImgV_head" destination="yge-Yo-wwq" id="y9u-pG-ESX"/>
                 <outlet property="mLab_categoryCount" destination="P7B-83-Gk4" id="YLy-dg-rGq"/>
                 <outlet property="mLab_nickName" destination="a2M-Ay-mWh" id="Xr8-Dz-dcd"/>
+                <outlet property="meBtn" destination="CFy-4z-Bad" id="rtB-Xo-Odq"/>
                 <outlet property="monthPointsLabel" destination="9ZS-h6-25F" id="w7J-RC-Rp0"/>
+                <outlet property="personBtn" destination="Odd-X5-7QV" id="dDe-aL-zeM"/>
             </connections>
-            <point key="canvasLocation" x="761" y="37.5"/>
+            <point key="canvasLocation" x="694" y="70.5"/>
         </tableViewCell>
     </objects>
 </document>

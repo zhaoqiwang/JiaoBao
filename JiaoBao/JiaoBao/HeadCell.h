@@ -17,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *categoryBtn;
 @property (weak, nonatomic) IBOutlet UILabel *monthPointsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dayPointsLabel;
+@property (weak, nonatomic) IBOutlet UIButton *personBtn;//我关注的人
+@property (weak, nonatomic) IBOutlet UIButton *meBtn;//关注我的人
 
 @end
