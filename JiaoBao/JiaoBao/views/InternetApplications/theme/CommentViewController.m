@@ -1036,15 +1036,13 @@
     cell.mWebV_comment.delegate = self;
     cell.mWebV_comment.backgroundColor = [UIColor whiteColor];
     NSString *content = self.AnswerDetailModel.AContent;
-    if (content.length==0) {
+    if (content.length==0&&[self.AnswerDetailModel.Flag integerValue]==2) {
         content = @"此答案已被修改";
     }
     NSString *tempHtml = [utils clearHtml:content width:18];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     //加载
     //[self webViewLoadFinish:0];
-    
-    
     
     cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, 50);
     //    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];

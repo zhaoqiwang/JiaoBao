@@ -62,6 +62,14 @@
         self.mInt_index = 0;
         self.mInt_reloadData = 0;
         self.mModel_getPickdById = [[GetPickedByIdModel alloc] init];
+        //有依据页面，有多少条数据被隐藏
+        self.mLab_warn = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 20)];
+        self.mLab_warn.backgroundColor = [UIColor grayColor];
+        self.mLab_warn.textColor = [UIColor orangeColor];
+        self.mLab_warn.font = [UIFont systemFontOfSize:12];
+        self.mLab_warn.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:self.mLab_warn];
+        self.mLab_warn.hidden = YES;
         //首页精选等
         self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(10, 0, [dm getInstance].width-20-40, 48)];
         
@@ -472,6 +480,9 @@
                 [model.mArr_sum insertObjects:model.mArr_top atIndexes:indexes];
             }
             [model.mArr_sum addObjectsFromArray:[self arrayDataSourceTemp:model]];
+//            if ([self arrayDataSourceTemp:model].count==0) {
+//                [MBProgressHUD showError:@"暂无数据" toView:self];
+//            }
             //话题显示行
             QuestionModel *temp1 = [[QuestionModel alloc] init];
             temp1.mInt_btn = 2;
@@ -512,11 +523,45 @@
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.mInt_index ==2) {//精选
+        self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
+        self.mLab_warn.hidden = YES;
         if ([self.mModel_getPickdById.TabID integerValue]>0) {
             return self.mModel_getPickdById.PickContent.count+1;
         }
     }else{
-        return [self arrayDataSourceSum].count;
+        NSMutableArray *array = [self arrayDataSourceSum];
+        //先确认是有证据
+        D("usdfhgdljgfflk-===%lu,%d",(unsigned long)self.mArr_AllCategory.count,self.mInt_index);
+        if (self.mArr_AllCategory.count>self.mInt_index) {
+            AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+            if ([model.flag intValue]==1) {
+                //计算是否有答案被删除的
+                
+                int m=0;
+                for (int i=0; i<array.count; i++) {
+                    QuestionModel *model = [array objectAtIndex:i];
+                    if (model.mInt_btn==1||model.mInt_btn==2) {//三个按钮,话题显示行
+                        
+                    }else if ([model.answerModel.TabID intValue]==0) {//正常显示内容
+                        m++;
+                    }
+                }
+                if (m>0) {
+                    self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48-20);
+                    self.mLab_warn.hidden = NO;
+                    self.mLab_warn.frame = CGRectMake(0, self.frame.size.height-20, [dm getInstance].width, 20);
+                    self.mLab_warn.text = [NSString stringWithFormat:@"有%d条问题因答案被屏蔽或删除无法查看",m];
+                }else{
+                    self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
+                    self.mLab_warn.hidden = YES;
+                }
+            }else{
+                self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
+                self.mLab_warn.hidden = YES;
+            }
+        }
+        
+        return array.count;
     }
     return 0;
 }
@@ -720,6 +765,13 @@
             }
         }else{
             if ([model.TabID intValue]>0) {
+                AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+                if ([allModel.flag integerValue]==1&&[model.answerModel.TabID intValue]==0) {
+                    for (UIView *temp in cell.subviews) {
+                        temp.hidden = YES;
+                    }
+                    return cell;
+                }
                 for (UIView *temp in cell.subviews) {
                     temp.hidden = NO;
                 }
@@ -1139,9 +1191,14 @@
         if (model.mInt_btn==1||model.mInt_btn==2) {//三个按钮,话题显示行
             return 44;
         }else{//正常显示内容
+            if ([model.TabID intValue]>0) {
+                AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+                if ([allModel.flag integerValue]==1&&[model.answerModel.TabID intValue]==0) {
+                    return 0;
+                }
+            }
             return [self cellHeight:indexPath];
         }
-        
     }
     
     return 0;

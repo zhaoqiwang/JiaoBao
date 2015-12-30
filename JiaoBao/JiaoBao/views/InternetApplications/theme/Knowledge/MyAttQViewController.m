@@ -83,10 +83,12 @@
                 if ([model.TabID intValue]==-1) {
                     [self.mArr_list removeObject:model];
                     self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
-                    //如果全部为空，重新获取
-                    [self footerRereshing];
                 }else{
                     self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+                }
+                //如果全部为空，重新获取
+                if ([model.rowCount intValue]>self.mInt_list&&[model.TabID intValue]==-1) {
+                    [self footerRereshing];
                 }
             }
         }
@@ -99,7 +101,7 @@
         self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar-20);
         self.mLab_warn.hidden = NO;
         self.mLab_warn.frame = CGRectMake(0, [dm getInstance].height-20, [dm getInstance].width, 20);
-        self.mLab_warn.text = [NSString stringWithFormat:@"有%lu条数据被隐藏或删除",self.mInt_list-self.mArr_list.count];
+        self.mLab_warn.text = [NSString stringWithFormat:@"有%d条数据被隐藏或删除",(int)self.mInt_list-(int)self.mArr_list.count];
     }else{
         self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
         self.mLab_warn.hidden = YES;

@@ -36,7 +36,7 @@
 @property (nonatomic,strong) UIButton *mBtn_down;//下拉选择按钮
 @property(nonatomic,strong)NSMutableArray *mArr_selectCategory;//被选择的分类 数组
 @property (nonatomic,strong) GetPickedByIdModel *mModel_getPickdById;//精选model
-
+@property (nonatomic,strong) UILabel *mLab_warn;//提醒有几条数据被隐藏或删除，有证据列表
 
 
 - (id)initWithFrame1:(CGRect)frame;
