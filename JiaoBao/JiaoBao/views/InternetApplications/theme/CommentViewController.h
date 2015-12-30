@@ -26,7 +26,7 @@
 @property(nonatomic,strong)AnswerDetailModel *AnswerDetailModel;
 @property (strong, nonatomic)  UITableView *tableView;//评论列表
 @property(nonatomic,strong)ButtonView *mBtnV_btn;//放举报 评论 反对按钮的view
-@property(nonatomic,strong)UILabel *rdateLabel;
+@property(nonatomic,strong)UILabel *rdateLabel;//日期
 @property (nonatomic,strong)IBOutlet UITextView *mTextV_text;//输入框
 - (IBAction)doneAction:(id)sender;
 @property(nonatomic,strong)UIView *mView_text;
