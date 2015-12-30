@@ -128,6 +128,11 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue]==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
+        if(array.count == 0){
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD showError:@"你还没有做出评论" toView:self.view];
+            return;
+        }
         self.pageCount = array.count;
         if (self.mInt_reloadData ==0) {
             self.mArr_list = [NSMutableArray arrayWithArray:array];
