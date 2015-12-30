@@ -80,10 +80,12 @@
                 if ([model.TabID intValue]==-1) {
                     [self.mArr_list removeObject:model];
                     self.mInt_list = self.mInt_list+(int)model.hiddenid.count;
-                    //如果全部为空，重新获取
-                    [self footerRereshing];
                 }else{
                     self.mInt_list = self.mInt_list+(int)array.count+(int)model.hiddenid.count;
+                }
+                //如果全部为空，重新获取
+                if ([model.rowCount intValue]>self.mInt_list&&[model.TabID intValue]==-1) {
+                    [self footerRereshing];
                 }
             }
         }

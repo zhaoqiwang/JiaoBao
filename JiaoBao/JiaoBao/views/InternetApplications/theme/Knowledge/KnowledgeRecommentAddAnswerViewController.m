@@ -386,7 +386,7 @@
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
     
     NSString *content = model.Abstracts;
-    if (content.length==0) {
+    if (content.length==0&&[model.Flag integerValue]==2) {
         content = @"此答案已被修改";
     }
     NSString *tempHtml = [utils clearHtml:content width:85];
