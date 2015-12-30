@@ -261,6 +261,7 @@
         //修改model中的值，和界面显示
         //重新获取
         self.mInt_reloadData = 0;
+        self.mInt_load = 1;
         [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         //关注问题，只增不减，----
