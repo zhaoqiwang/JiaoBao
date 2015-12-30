@@ -76,6 +76,7 @@
         }else{
             if (array.count>0) {
                 QuestionModel *model = [array objectAtIndex:0];
+                self.mInt_rowcount = [model.rowCount intValue];
                 //当页面如果没有记录，刚返回一条TabID=-1的记录，该记录只为了返回rowcount，没有实际意义。
                 if ([model.TabID intValue]==-1) {
                     [self.mArr_list removeObject:model];
@@ -89,6 +90,9 @@
                 }
             }
         }
+        if (self.mInt_rowcount==self.mInt_list&&self.mArr_list.count==0) {
+            [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+        }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -98,7 +102,7 @@
         self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar-20);
         self.mLab_warn.hidden = NO;
         self.mLab_warn.frame = CGRectMake(0, [dm getInstance].height-20, [dm getInstance].width, 20);
-        self.mLab_warn.text = [NSString stringWithFormat:@"有%lu条数据被隐藏或删除",self.mInt_list-self.mArr_list.count];
+        self.mLab_warn.text = [NSString stringWithFormat:@"有%d条数据被隐藏或删除",(int)self.mInt_list-(int)self.mArr_list.count];
     }else{
         self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
         self.mLab_warn.hidden = YES;
@@ -236,6 +240,7 @@
 - (void)headerRereshing{
     self.mInt_reloadData = 0;
     self.mInt_load = 1;
+    self.mInt_rowcount = 0;
     [self sendRequest];
 }
 
@@ -260,15 +265,15 @@
     if ([self checkNetWork]) {
         return;
     }
-    NSString *rowCount = @"0";
-    if (self.mArr_list.count>0) {
-        QuestionModel *model = [self.mArr_list objectAtIndex:self.mArr_list.count-1];
-        rowCount = model.rowCount;
-    }
+//    NSString *rowCount = @"0";
+//    if (self.mArr_list.count>0) {
+//        QuestionModel *model = [self.mArr_list objectAtIndex:self.mArr_list.count-1];
+//        rowCount = model.rowCount;
+//    }
     if (self.mInt_reloadData == 0) {
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
-        if (self.mInt_list==[rowCount intValue]) {
+        if (self.mInt_list==self.mInt_rowcount) {
             [self.mTalbeV_liset headerEndRefreshing];
             [self.mTalbeV_liset footerEndRefreshing];
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
@@ -277,7 +282,7 @@
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
     }
-    [[KnowledgeHttp getInstance] MyAnswerIndexWithnumPerPage:@"10" pageNum:[NSString stringWithFormat:@"%d",self.mInt_load] RowCount:rowCount];
+    [[KnowledgeHttp getInstance] MyAnswerIndexWithnumPerPage:@"10" pageNum:[NSString stringWithFormat:@"%d",self.mInt_load] RowCount:[NSString stringWithFormat:@"%d",self.mInt_rowcount]];
 }
 
 //导航条返回按钮回调
