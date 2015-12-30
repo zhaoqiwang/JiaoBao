@@ -531,32 +531,36 @@
     }else{
         NSMutableArray *array = [self arrayDataSourceSum];
         //先确认是有证据
-        AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-        if ([model.flag intValue]==1) {
-            //计算是否有答案被删除的
-            
-            int m=0;
-            for (int i=0; i<array.count; i++) {
-                QuestionModel *model = [array objectAtIndex:i];
-                if (model.mInt_btn==1||model.mInt_btn==2) {//三个按钮,话题显示行
-                    
-                }else if ([model.answerModel.TabID intValue]==0) {//正常显示内容
-                    m++;
+        D("usdfhgdljgfflk-===%lu,%d",(unsigned long)self.mArr_AllCategory.count,self.mInt_index);
+        if (self.mArr_AllCategory.count>self.mInt_index) {
+            AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+            if ([model.flag intValue]==1) {
+                //计算是否有答案被删除的
+                
+                int m=0;
+                for (int i=0; i<array.count; i++) {
+                    QuestionModel *model = [array objectAtIndex:i];
+                    if (model.mInt_btn==1||model.mInt_btn==2) {//三个按钮,话题显示行
+                        
+                    }else if ([model.answerModel.TabID intValue]==0) {//正常显示内容
+                        m++;
+                    }
                 }
-            }
-            if (m>0) {
-                self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48-20);
-                self.mLab_warn.hidden = NO;
-                self.mLab_warn.frame = CGRectMake(0, self.frame.size.height-20, [dm getInstance].width, 20);
-                self.mLab_warn.text = [NSString stringWithFormat:@"有%d条问题因答案被屏蔽或删除无法查看",m];
+                if (m>0) {
+                    self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48-20);
+                    self.mLab_warn.hidden = NO;
+                    self.mLab_warn.frame = CGRectMake(0, self.frame.size.height-20, [dm getInstance].width, 20);
+                    self.mLab_warn.text = [NSString stringWithFormat:@"有%d条问题因答案被屏蔽或删除无法查看",m];
+                }else{
+                    self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
+                    self.mLab_warn.hidden = YES;
+                }
             }else{
                 self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
                 self.mLab_warn.hidden = YES;
             }
-        }else{
-            self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
-            self.mLab_warn.hidden = YES;
         }
+        
         return array.count;
     }
     return 0;
