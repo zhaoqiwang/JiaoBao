@@ -100,6 +100,7 @@
 -(void)UnReadMsg{
     NSString *temp = [NSString stringWithFormat:@"%d",[[dm getInstance].unReadMsg1 intValue] + [[dm getInstance].unReadMsg2 intValue]];
     D("tempCount -=== %@",temp);
+//    [self.mProgressV hide:YES];
     TreeView_node *node0 = [self.mArr_sumData objectAtIndex:0];
     ((TreeView_Level0_Model *)node0.nodeData).mInt_number = [temp intValue];
     TreeView_node *node6 = [node0.sonNodes objectAtIndex:0];

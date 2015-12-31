@@ -191,44 +191,48 @@
 }
 
 -(void)selectScrollButton:(UIButton *)btn{
-    self.mInt_index = (int)btn.tag;
-    if (self.mInt_index==2) {
-        [self.mTableV_knowledge removeFooter];
-    }else{
-        [self.mTableV_knowledge addFooterWithTarget:self action:@selector(footerRereshing)];
-        self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
-        self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
-        self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
-    }
-    for (UIButton *btn1 in self.mScrollV_all.subviews) {
-        if ([btn1.class isSubclassOfClass:[UIButton class]]) {
-            if ((int)btn1.tag == self.mInt_index) {
-                btn1.selected = YES;
-            }else{
-                btn1.selected = NO;
+    if ([[dm getInstance].jiaoBaoHao intValue]>0) {
+        self.mInt_index = (int)btn.tag;
+        if (self.mInt_index==2) {
+            [self.mTableV_knowledge removeFooter];
+        }else{
+            [self.mTableV_knowledge addFooterWithTarget:self action:@selector(footerRereshing)];
+            self.mTableV_knowledge.footerPullToRefreshText = @"上拉加载更多";
+            self.mTableV_knowledge.footerReleaseToRefreshText = @"松开加载更多数据";
+            self.mTableV_knowledge.footerRefreshingText = @"正在加载...";
+        }
+        for (UIButton *btn1 in self.mScrollV_all.subviews) {
+            if ([btn1.class isSubclassOfClass:[UIButton class]]) {
+                if ((int)btn1.tag == self.mInt_index) {
+                    btn1.selected = YES;
+                }else{
+                    btn1.selected = NO;
+                }
             }
         }
-    }
-    AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-    if ([model.flag intValue]==-1&&model.mArr_all.count==0) {
-        self.mInt_reloadData = 0;
-        [self sendRequest];
-    }else if ([model.flag intValue]==0&&model.mArr_discuss.count==0){
-        self.mInt_reloadData = 0;
-        [self sendRequest];
-    }else if ([model.flag intValue]==1&&model.mArr_evidence.count==0){
-        self.mInt_reloadData = 0;
-        [self sendRequest];
-    }else{
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
-        model.item_now = model.item;
-        [model.mArr_discuss removeAllObjects];
-        [model.mArr_evidence removeAllObjects];
-        [model.mArr_all removeAllObjects];
-        [model.mArr_top removeAllObjects];
-        [self sendRequest];
+        if ([model.flag intValue]==-1&&model.mArr_all.count==0) {
+            self.mInt_reloadData = 0;
+            [self sendRequest];
+        }else if ([model.flag intValue]==0&&model.mArr_discuss.count==0){
+            self.mInt_reloadData = 0;
+            [self sendRequest];
+        }else if ([model.flag intValue]==1&&model.mArr_evidence.count==0){
+            self.mInt_reloadData = 0;
+            [self sendRequest];
+        }else{
+            AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
+            model.item_now = model.item;
+            [model.mArr_discuss removeAllObjects];
+            [model.mArr_evidence removeAllObjects];
+            [model.mArr_all removeAllObjects];
+            [model.mArr_top removeAllObjects];
+            [self sendRequest];
+        }
+        [self.mTableV_knowledge reloadData];
+    }else{
+        [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self];
     }
-    [self.mTableV_knowledge reloadData];
 }
 
 -(void)ProgressViewLoad{
