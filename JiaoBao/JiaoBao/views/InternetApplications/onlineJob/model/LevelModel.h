@@ -15,6 +15,7 @@
 @property(nonatomic,strong)NSString *StudentID;//学生id
 @property(nonatomic,strong)NSString *uId;//教版id
 @property(nonatomic,strong)NSString *chapterid;//章id
+@property(nonatomic,assign)int index;//章节时，第几个节点
 //调用实例：
 //1、
 //获取学生（3851578）各科目学力值

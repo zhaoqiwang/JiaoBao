@@ -176,13 +176,14 @@
                                     node0.type = 2;//节点类型
                                     node0.isExpanded = FALSE;//节点是否展开
                                     LevelModel *temp0 =[array objectAtIndex:i];
+                                    temp0.uId = uId;
                                     temp0.StudentID = StuId;
                                     node0.nodeData = temp0;//当前节点数据
-                                    //                                node0.flag = [temp0.ID intValue];//标注当前是哪个节点
                                     [node1.sonNodes addObject:node0];
                                 }
                             }
                         }
+                        [self addChapterRunloop:node Array:array chapterid:chapterid uId:uId StuId:StuId index:0];
                     }
                 }
             }
@@ -192,6 +193,35 @@
         [MBProgressHUD showError:ResultDesc toView:self.view];
     }
     [self reloadDataForDisplayArray];
+}
+
+-(void)addChapterRunloop:(TreeJob_node *)node Array:(NSMutableArray *)array chapterid:(NSString *)chapterid uId:(NSString *)uId StuId:(NSString *)StuId index:(int)index{
+    for (TreeJob_node *node1 in node.sonNodes) {
+        LevelModel *model1 = node1.nodeData;
+        if ([chapterid intValue]==[model1.chapterid intValue]) {//匹配章
+            for (int i=0; i<array.count; i++) {
+                TreeJob_node *node0 = [[TreeJob_node alloc]init];
+                node0.nodeLevel = 2;//节点所处层次
+                node0.type = 2;//节点类型
+                node0.isExpanded = FALSE;//节点是否展开
+                LevelModel *temp0 =[array objectAtIndex:i];
+                temp0.uId = uId;
+                if (index>0) {
+                    temp0.index = index-2;
+                }else{
+                    temp0.index = index;
+                }
+                temp0.chapterid = temp0.ID;
+                temp0.StudentID = StuId;
+                node0.nodeData = temp0;//当前节点数据
+                [node1.sonNodes addObject:node0];
+            }
+            break;
+        }else{
+            index++;
+            [self addChapterRunloop:node1 Array:array chapterid:chapterid uId:uId StuId:StuId index:index];
+        }
+    }
 }
 
 //点击学生下拉选择
@@ -529,7 +559,8 @@
                 titleSize.width =[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25);
             }
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, .5);
-            cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25, 8, titleSize.width, cell.mLab_title.frame.size.height);
+            D("model.index=-=====%d",model.index);
+            cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25+(model.index)*20, 8, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:12];
             cell.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
             cell.mImg_open.hidden = YES;
@@ -617,6 +648,12 @@
                 [MBProgressHUD showMessage:@"" toView:self.view];
             }
             [self reloadDataForDisplayArrayChangeAt:node flag:@"1"];//修改cell的状态(关闭或打开)
+        }else{
+            if (node.sonNodes.count==0) {//判断里面没有数据，然后请求
+                [[OnlineJobHttp getInstance] GetStuEduLevelWithStuId:model.StudentID uId:model.uId chapterid:model.ID flag:@"2"];
+                [MBProgressHUD showMessage:@"" toView:self.view];
+            }
+            [self reloadDataForDisplayArrayChangeAt:node flag:@"2"];//修改cell的状态(关闭或打开)
         }
     }
 }
@@ -650,9 +687,36 @@
                 }
             }
         }
+    }else{
+        for (TreeJob_node *node0 in self.mArr_score) {
+            LevelModel *model0 = node0.nodeData;
+            if ([model.StudentID intValue]==[model0.StudentID intValue]) {
+                if ([model.uId intValue]==[model0.uId intValue]) {
+//                    for (TreeJob_node *node1 in node0.sonNodes) {
+//                        LevelModel *model1 = node1.nodeData;
+//                        if ([model.ID intValue]==[model1.ID intValue]) {
+//                            node1.isExpanded = !node1.isExpanded;
+//                        }
+//                    }
+                    [self openOrClose:node0 Model:model];
+                }
+            }
+        }
     }
-    
     [self reloadDataForDisplayArray];
+}
+
+-(void)openOrClose:(TreeJob_node *)node0 Model:(LevelModel *)model{
+    for (TreeJob_node *node1 in node0.sonNodes) {
+        LevelModel *model1 = node1.nodeData;
+        D("2323232232323232323-=======%@,%@",model.ID,model1.ID);
+        if ([model.ID intValue]==[model1.ID intValue]) {
+            node1.isExpanded = !node1.isExpanded;
+            break;
+        }else{
+            [self openOrClose:node1 Model:model];
+        }
+    }
 }
 
 //初始化将要显示的数据
@@ -661,18 +725,35 @@
     for (TreeJob_node *node in self.mArr_score) {
         [tmp addObject:node];
         if(node.isExpanded){
-            for(TreeJob_node *node2 in node.sonNodes){
-                [tmp addObject:node2];
-                if (node2.isExpanded) {
-                    for (TreeJob_node *node3 in node2.sonNodes) {
-                        [tmp addObject:node3];
-                    }
-                }
-            }
+//            for(TreeJob_node *node2 in node.sonNodes){
+//                [tmp addObject:node2];
+//                if (node2.isExpanded) {
+//                    for (TreeJob_node *node3 in node2.sonNodes) {
+//                        [tmp addObject:node3];
+//                    }
+//                }
+//            }
+            [self addRunloop:node SumArr:tmp];
         }
     }
     self.mArr_disScore = [NSArray arrayWithArray:tmp];
     [self.mTableV_list reloadData];
+}
+
+-(void)addRunloop:(TreeJob_node *)node SumArr:(NSMutableArray *)tmp{
+    for(TreeJob_node *node2 in node.sonNodes){
+        [tmp addObject:node2];
+        if (node2.isExpanded) {
+            for (TreeJob_node *node3 in node2.sonNodes) {
+                [tmp addObject:node3];
+                if (node3.isExpanded) {
+                    [self addRunloop:node3 SumArr:tmp];
+                }
+            }
+        }else{
+            [self addRunloop:node2 SumArr:tmp];
+        }
+    }
 }
 
 //导航条返回按钮回调

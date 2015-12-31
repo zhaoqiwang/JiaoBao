@@ -498,7 +498,7 @@
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
-    self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, titleSize.width, titleSize.height);
+    self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, [dm getInstance].width-28-49, titleSize.height);
     //详情
     self.mView_titlecell.mBtn_detail.frame = CGRectMake([dm getInstance].width-49, 3, 40, self.mView_titlecell.mBtn_detail.frame.size.height);
     //话题
