@@ -460,6 +460,7 @@
 - (IBAction)provinceBtnAction:(id)sender {
     JoinUnit
     NoNickName
+    [self.view endEditing:YES];
     self.selectedTF = self.provinceTF;
     self.dataArr = self.provinceArr;
     [self.mTableV_name reloadData];
@@ -499,6 +500,7 @@
 - (IBAction)regionBtnAction:(id)sender {
     JoinUnit
     NoNickName
+    [self.view endEditing:YES];
     if([self.provinceTF.text isEqualToString:@""]||[self.provinceTF.text isEqualToString:@"请选择"])
     {
         return;
@@ -535,6 +537,7 @@
 - (IBAction)countyBtnAction:(id)sender {
     JoinUnit
     NoNickName
+    [self.view endEditing:YES];
     if([self.provinceTF.text isEqualToString:@""]||[self.regionTF.text isEqualToString:@""]||[self.provinceTF.text isEqualToString:@"请选择"]||[self.regionTF.text isEqualToString:@"请选择"])
     {
         return;
@@ -629,7 +632,7 @@
 - (IBAction)addQuestionAction:(id)sender {
     JoinUnit
     NoNickName
-
+   [self.view endEditing:YES];
     if([utils isBlankString:self.mText_title.text])
     {
         [MBProgressHUD showError:@"请添写标题"];
@@ -645,6 +648,8 @@
         return;
     }
 //    if([utils isBlankString:self.mTextV_content.text])
+    
+    
 //    {
 //        [MBProgressHUD showError:@"请添写问题描述"];
 //        return;

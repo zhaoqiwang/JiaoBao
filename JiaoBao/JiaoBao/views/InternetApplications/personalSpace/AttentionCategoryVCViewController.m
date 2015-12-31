@@ -25,7 +25,6 @@
 @implementation AttentionCategoryVCViewController
 -(void)GetCategoryById:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view];
     NSNotification *note = sender;
     
     NSString *code = [note.object objectForKey:@"ResultCode"];
@@ -35,6 +34,7 @@
         [self.datasource addObject:model];
         if(self.datasource.count == self.categoryArr.count )
         {
+            [MBProgressHUD hideHUDForView:self.view];
             NSArray *arr = [self.datasource sortedArrayUsingComparator:^NSComparisonResult(CategoryModel *p1, CategoryModel *p2){
                 int p1_int = [p1.TabID intValue];
                 NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
@@ -53,6 +53,7 @@
     }
     else
     {
+        [MBProgressHUD hideHUDForView:self.view];
         NSString *ResultDesc = [note.object objectForKey:@"ResultDesc"];
         [MBProgressHUD showError:ResultDesc toView:self.view];
         
