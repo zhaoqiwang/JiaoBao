@@ -955,6 +955,7 @@
 		F768943C1BDF773F005EA7B6 /* noContent.png in Resources */ = {isa = PBXBuildFile; fileRef = F76894391BDF773F005EA7B6 /* noContent.png */; };
 		F768943D1BDF773F005EA7B6 /* noContent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943A1BDF773F005EA7B6 /* noContent@2x.png */; };
 		F768943E1BDF773F005EA7B6 /* noContent@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F768943B1BDF773F005EA7B6 /* noContent@3x.png */; };
+		F76988A01C3A02610052DE77 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769889F1C3A02610052DE77 /* Photos.framework */; };
 		F76B64351B1EA205008F6961 /* RCLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64321B1EA205008F6961 /* RCLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F76B643A1B1EA3F5008F6961 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64381B1EA3F5008F6961 /* CommentCell.m */; };
 		F76B643B1B1EA3F5008F6961 /* CommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F76B64391B1EA3F5008F6961 /* CommentCell.xib */; };
@@ -2414,6 +2415,7 @@
 		F76894391BDF773F005EA7B6 /* noContent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noContent.png; sourceTree = "<group>"; };
 		F768943A1BDF773F005EA7B6 /* noContent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noContent@2x.png"; sourceTree = "<group>"; };
 		F768943B1BDF773F005EA7B6 /* noContent@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noContent@3x.png"; sourceTree = "<group>"; };
+		F769889F1C3A02610052DE77 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		F76B64311B1EA205008F6961 /* RCLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RCLabel.h; path = Common/RCLabel/RCLabel.h; sourceTree = "<group>"; };
 		F76B64321B1EA205008F6961 /* RCLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RCLabel.m; path = Common/RCLabel/RCLabel.m; sourceTree = "<group>"; };
 		F76B64371B1EA3F5008F6961 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentCell.h; path = views/InternetApplications/class/CommentCell.h; sourceTree = "<group>"; };
@@ -2674,6 +2676,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F76988A01C3A02610052DE77 /* Photos.framework in Frameworks */,
 				F71878301BFF1BAC00A5ABCA /* JavaScriptCore.framework in Frameworks */,
 				F72385DF1BE346BC0000015D /* WebKit.framework in Frameworks */,
 				F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */,
@@ -3365,6 +3368,7 @@
 		A755E69719F24AC500BBDF3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F769889F1C3A02610052DE77 /* Photos.framework */,
 				F718782F1BFF1BAC00A5ABCA /* JavaScriptCore.framework */,
 				F72385DE1BE346BC0000015D /* WebKit.framework */,
 				F7C4D7121BD08CB3008B8924 /* CoreData.framework */,
