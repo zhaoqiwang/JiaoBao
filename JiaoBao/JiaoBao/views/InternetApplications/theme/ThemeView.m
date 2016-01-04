@@ -136,30 +136,38 @@
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
 //    [[KnowledgeHttp getInstance] GetAllCategory];
-    CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
-    detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
-    detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
-    detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
-    self.mArr_selectCategory = detailVC.mArr_selectCategory;
-
-    detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
-    for(int i=3;i<self.mArr_AllCategory.count;i++)
-    {
-        [detailVC.mArr_AllCategory addObject:[self.mArr_AllCategory objectAtIndex:i]];
-    }
-    
-    for (UIView* next = [self superview]; next; next =
-         next.superview) {
-        UIResponder* nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController
-                                          class]]) {
-            UIViewController *vc = (UIViewController*)nextResponder;
-            [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
-        //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
-                
-            }];
+    if([[dm getInstance].jiaoBaoHao intValue]>0){
+        CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
+        detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];
+        detailVC.mArr_selectCategory = [[NSMutableArray alloc]initWithCapacity:0];
+        self.mArr_selectCategory = detailVC.mArr_selectCategory;
+        
+        detailVC.classStr = [NSString stringWithUTF8String:object_getClassName(self)];
+        for(int i=3;i<self.mArr_AllCategory.count;i++)
+        {
+            [detailVC.mArr_AllCategory addObject:[self.mArr_AllCategory objectAtIndex:i]];
         }
+        
+        for (UIView* next = [self superview]; next; next =
+             next.superview) {
+            UIResponder* nextResponder = [next nextResponder];
+            if ([nextResponder isKindOfClass:[UIViewController
+                                              class]]) {
+                UIViewController *vc = (UIViewController*)nextResponder;
+                [vc.navigationController  presentViewController:detailVC animated:YES completion:^{
+                    //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
+                    
+                }];
+            }
+        }
+        
     }
+    else
+    {
+        [MBProgressHUD showError:@"登录成功后方可操作" toView:self];
+    }
+
 }
 
 //加载一级话题列表
