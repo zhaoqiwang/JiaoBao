@@ -19,6 +19,9 @@
 @property (nonatomic,strong) NSString *url;
 @property (nonatomic,strong) NSString *size;
 @property (nonatomic,strong) NSString *type;
+@property(nonatomic,assign)NSRange cursorPosition;
+
+@property(nonatomic,strong)NSAttributedString *attributedString;
 
 @end
 //{"originalName":"111.png","url":"http://www.jsyoa.edu8800.com/JBClient/AppFiles/getSectionFiletmp?fn=Igk9iyhkIXk-SO1PKKtwm2okVzWqFDHHlYj2p7jmiXDi4iQvGJSvyt6-SQITdEQCQXPnJwGnSpIC0","size":221682,"type":".png"}

@@ -9,6 +9,7 @@
 #import "KnowledgeAddAnswerViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "IQKeyboardManager.h"
+#import "TFHpple.h"
 
 @interface KnowledgeAddAnswerViewController ()
 @property(nonatomic,assign)NSRange cursorPosition;
@@ -115,24 +116,55 @@
     }else{
         AnswerDetailModel *model = [dic objectForKey:@"model"];
         self.mTextV_answer.text = model.ATitle;
-        NSString *content = model.AContent;
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
-        self.mTextV_content.text = content;
-        NSArray *imgNumArr = [content componentsSeparatedByString:@"<img src"];
-        if(imgNumArr.count>1){
-            for(int i=0;i<imgNumArr.count-1;i++)
-            {
-                UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
-                ImgModel.originalName = @"";
-                ImgModel.url = @"";
-                ImgModel.size = @"";
-                ImgModel.type = @"";
-                [self.mArr_pic addObject:ImgModel];
-            }
-        }
+//        NSString *contentStr = [model.AContent stringByReplacingOccurrencesOfString:@"<img " withString:@"<img height=\"30\" width=\"30\""];
+//        NSString *content = contentStr;
+//        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
+//        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+        //content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
+//        NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
+//        NSAttributedString *string = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
+//        //textView是UITextView
+//        self.mTextV_content.attributedText = string;
+        NSData* htmlData = [model.AContent dataUsingEncoding:NSUTF8StringEncoding];
+        
+        TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+        NSArray *aArray = [xpathParser searchWithXPathQuery:@"//img"];
+        
+        NSString *contentText = model.AContent;
+        NSString *tempStr = model.AContent;
+        for (int i =0; i < aArray.count; i++) {
+            TFHppleElement *aElement = [aArray objectAtIndex:i];
+            NSDictionary *aAttributeDict = [aElement attributes];
+            NSString *srcStr = [aAttributeDict objectForKey:@"src"];
+            UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
+            ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\" />",srcStr];
+            ImgModel.originalName = @"";
+            ImgModel.size = @"";
+            ImgModel.type = @"";
+            NSRange range = [contentText rangeOfString:ImgModel.url];
+            ImgModel.cursorPosition = NSMakeRange(range.location, 1);
+            tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];
+            contentText = [contentText stringByReplacingOccurrencesOfString:ImgModel.url withString:@" "];
+            NSLog(@"contentText = %@ tempStr = %@",contentText,tempStr);
 
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:srcStr]]];
+            NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+            textAttach.image = image;
+            textAttach.bounds=CGRectMake(0, 0, 30, 30);
+            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+            ImgModel.attributedString = strA;
+            [self.mArr_pic addObject:ImgModel];
+            
+        }
+        NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:tempStr];
+
+        for(long i=0;i<self.mArr_pic.count;i++){
+            UploadImgModel *imgModel = [self.mArr_pic objectAtIndex:i];
+            [str insertAttributedString:imgModel.attributedString atIndex:imgModel.cursorPosition.location];
+        }
+        self.mTextV_content.attributedText = str;
+
+        
 
         self.mLab_answer.hidden = YES;
         self.mLab_content.hidden = YES;
@@ -141,7 +173,22 @@
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
     }
 }
+//如果解析的网页不是utf8编码，如gbk编码，可以先将其转换为utf8编码再对其进行解析
 
+-(NSData *) toUTF8:(NSData *)sourceData {
+    CFStringRef gbkStr = CFStringCreateWithBytes(NULL, [sourceData bytes], [sourceData length], kCFStringEncodingGB_18030_2000, false);
+    
+    if (gbkStr == NULL) {
+        return nil;
+    } else {
+        NSString *gbkString = (__bridge NSString *)gbkStr;
+        //根据网页源代码中编码方式进行修改，此处为从gbk转换为utf8
+        NSString *utf8_String = [gbkString stringByReplacingOccurrencesOfString:@"META http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\""
+                                                                     withString:@"META http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\""];
+        
+        return [utf8_String dataUsingEncoding:NSUTF8StringEncoding];
+    }
+}
 //提交答案
 -(void)AddAnswer:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
@@ -465,12 +512,22 @@
     if (flag ==0) {
         name = [dm getInstance].NickName;
     }
-    NSString *content = self.mTextV_content.text;
-    for (int i=0; i<self.mArr_pic.count; i++) {
+    for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
         UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-        NSString *temp = model.originalName;
-        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        NSRange range = NSMakeRange(model.cursorPosition.location, 1);
+        //NSString *temp = model.originalName;
+        //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: self.mTextV_content.attributedText];
+        [strz replaceCharactersInRange:range withString:model.url];
+        self.mTextV_content.attributedText = strz;
+        
     }
+    NSString *content = self.mTextV_content.text;
+//    for (int i=0; i<self.mArr_pic.count; i++) {
+//        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+//        NSString *temp = model.originalName;
+//        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+//    }
     if (content.length>4000) {
         [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
         return;
@@ -491,6 +548,37 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     //输入删除时
     if ([text isEqualToString:@""]) {
+        if([textView isEqual:self.mTextV_content]){
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(range.length==1){
+                    if(range.location < model.cursorPosition.location){
+                        model.cursorPosition = NSMakeRange(model.cursorPosition.location-1, model.cursorPosition.length);
+                    }
+                    else{
+                        if(range.location == model.cursorPosition.location ){
+                            [self.mArr_pic removeObject:model];
+                        }
+                        
+                    }
+                } else{
+                    if(range.location<=model.cursorPosition.location&&range.location+range.length>model.cursorPosition.location){
+                        [self.mArr_pic removeObject:model];
+                        
+                    }
+                    else if(range.location<=model.cursorPosition.location&&range.location+range.length<=model.cursorPosition.location){
+                        model.cursorPosition = NSMakeRange(model.cursorPosition.location-range.length, model.cursorPosition.length);
+                        
+                    }else if(range.location>model.cursorPosition.location){
+                        
+                    }
+                }
+                
+                
+            }
+            
+        }
+
         return YES;
     }
 
@@ -544,7 +632,18 @@
             // Return FALSE so that the final '\n' character doesn't get added
             return NO;
         }
+    } else{
+        for (int i=0; i<self.mArr_pic.count; i++) {
+            UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+            if(range.location <= model.cursorPosition.location){
+                model.cursorPosition = NSMakeRange(model.cursorPosition.location+range.length, model.cursorPosition.length);
+            }
+            
+            
+            
+        }
     }
+
 
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
@@ -656,36 +755,34 @@
     if ([flag integerValue]==0) {
         self.imageCount--;
         UploadImgModel *model = [dic objectForKey:@"model"];
-        [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
         {
-            //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSInteger index = self.cursorPosition.location;
-            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
-            [content insertString:model.originalName atIndex:index];
-            self.mTextV_content.text = content;
-//            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-//                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-//                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-//                int p1_int = [su_p11 intValue];
-//                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-//                
-//                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-//                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-//                int p2_int = [su_p22 intValue];
-//                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-//                
-//                return [p1_num compare:p2_num];
-//            }];
-//            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-//            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
-//            {
-//                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
-//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
-//                
-//            }
-//            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+            NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index-1]];
+            UIImage *image = [UIImage imageWithContentsOfFile:imgPath];
+            NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithAttributedString:self.mTextV_content.attributedText];
+            NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+            textAttach.image = image;
+            textAttach.bounds=CGRectMake(0, 0, 30, 30);
+            model.cursorPosition = self.cursorPosition;
+            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+            [str insertAttributedString:strA atIndex:index];
+            model.attributedString = strA;
+            self.mTextV_content.attributedText = str;
+            [self.mArr_pic addObject:model];
+            
+            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+                
+                NSNumber *p1_num = [NSNumber numberWithInteger:p1.cursorPosition.location ];
+                NSNumber *p2_num = [NSNumber numberWithInteger:p2.cursorPosition.location ];
+                
+                return [p1_num compare:p2_num];
+            }];
+            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+
         }
         self.mLab_content.hidden = YES;
     }else{
