@@ -930,9 +930,13 @@
     image = [self fixOrientation:image];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     NSData *imageData = UIImageJPEGRepresentation(image,0);
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+    NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
     D("图片路径是：%@",imgPath);
     
     

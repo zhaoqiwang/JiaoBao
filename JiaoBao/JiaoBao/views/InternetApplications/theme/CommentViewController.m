@@ -406,7 +406,7 @@
     //self.mTextV_text.borderStyle = UITextBorderStyleRoundedRect;
     //self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
     self.doneBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    self.doneBtn.frame =CGRectMake(self.mTextV_text.frame.origin.x+self.mTextV_text.frame.size.width+10, 10, 30, 31);
+    self.doneBtn.frame =CGRectMake(self.mTextV_text.frame.origin.x+self.mTextV_text.frame.size.width, 0, 50, 50);
     [self.doneBtn setTitle:@"确定" forState:UIControlStateNormal];
     [self.doneBtn addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.mView_text setHidden:YES];

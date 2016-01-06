@@ -14,6 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ELCConsole.h"
+#import "MBProgressHUD+AD.h"
 
 @implementation ELCImagePickerController
 
@@ -108,7 +109,10 @@
 
         //This method returns nil for assets from a shared photo stream that are not yet available locally. If the asset becomes available in the future, an ALAssetsLibraryChangedNotification notification is posted.
         ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-
+        if(assetRep.size>10000000){
+            [MBProgressHUD showError:@"图片大小不能超过10M"];
+            return;
+        }
         if(assetRep != nil) {
             if (_returnsImage) {
                 CGImageRef imgRef = nil;
