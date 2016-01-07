@@ -617,7 +617,7 @@
         self.AreaCode = [NSString stringWithFormat:@"%ld",self.countyTF.tag];
     }
     UITextView *tempView = [[UITextView alloc]init];
-
+    tempView.attributedText = self.mTextV_content.attributedText;
     if([self.atAccIdsTF.text isEqualToString: @""])
     {
         for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
@@ -625,13 +625,12 @@
             NSRange range = NSMakeRange(model.cursorPosition.location, 1);
             //NSString *temp = model.originalName;
             //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-            NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: self.mTextV_content.attributedText];
+            NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: tempView.attributedText];
             [strz replaceCharactersInRange:range withString:model.url];
             tempView.attributedText = strz;
             
         }
         NSString *content = tempView.text;
-
         if (content.length>4000) {
             [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
             return;
