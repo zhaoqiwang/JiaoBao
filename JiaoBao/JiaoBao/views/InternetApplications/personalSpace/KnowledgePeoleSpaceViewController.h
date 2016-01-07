@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ELCImagePickerHeader.h"
 
 
-@interface KnowledgePeoleSpaceViewController : UIViewController
+
+@interface KnowledgePeoleSpaceViewController : UIViewController<ELCImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -191,13 +191,61 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (actionSheet.tag == 1) {//单位
-        if (buttonIndex == 0){//相册添加
-            [self getMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
-
-        }else if (buttonIndex == 1){//拍照添加
-            [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            switch (buttonIndex) {
+                    
+                case 1: //相机
+                {
+                    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+                    imagePickerController.delegate = self;
+                    imagePickerController.allowsEditing = NO;
+                    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+                        self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+                    }
+                    //                    self.tfContentTag = self.mArr_pic.count;
+                    [self presentViewController:imagePickerController animated:YES completion:^{}];
+                }
+                    break;
+                case 0: //相册
+                {
+                    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                    
+                    elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
+                    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+                    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+                    elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+                    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
+                    
+                    elcPicker.imagePickerDelegate = self;
+                    [self presentViewController:elcPicker animated:YES completion:nil];
+                }
+                    break;
+            }
         }
+        else {
+            if (buttonIndex == 0) {
+                return;
+            } else {
+                ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                
+                elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
+                elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+                elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+                elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+                elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
+                elcPicker.imagePickerDelegate = self;
+                
+                [self presentViewController:elcPicker animated:YES completion:nil];
+            }
+            
+        }
+        
+        
     }
+    
 }
 
 -(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
@@ -261,6 +309,38 @@
         [alert show];
         
     }
+    
+}
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
+{
+    if(info.count>0)
+    {
+        [MBProgressHUD showMessage:@"正在修改" toView:self.view];
+        
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        for (NSDictionary *dict in info) {
+            if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
+                if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+                    UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                    image = [self fixOrientation:image];
+                    
+                    NSData *imageData = UIImageJPEGRepresentation(image,1);
+                    if(imageData.length>10000000){
+                        [MBProgressHUD showError:@"图片大小不能超过10M"];
+                        return;
+                    }
+                    [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
+                }
+            }
+        }
+    }
+     
+     
+     ];
+}
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker{
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 

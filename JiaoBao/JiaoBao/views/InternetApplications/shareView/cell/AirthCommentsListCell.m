@@ -43,7 +43,7 @@
 }
 
 -(void)tapImgClick:(UIGestureRecognizer *)gest{
-//    [self.headDelegate AirthCommentsListCellHeadTapHeadPress:self];
+    //[self.headDelegate AirthCommentsListCellHeadTapHeadPress:self];
     [self.delegate AirthCommentsListCellHeadTapHeadPress:self];
 }
 

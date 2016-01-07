@@ -15,6 +15,8 @@
 #import "KnowledgePeoleSpaceViewController.h"
 
 
+
+
 @interface PeopleSpaceViewController ()
 {
     id  _observer1,_observer2;
@@ -395,24 +397,61 @@
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (actionSheet.tag == 1) {//单位
-        if (buttonIndex == 0){//相册添加
-            [self getMediaFromSource:UIImagePickerControllerSourceTypePhotoLibrary];
+        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        // 判断是否支持相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            switch (buttonIndex) {
 
-//            ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-//            
-//            elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至100
-//            elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
-//            elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
-//            elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
-//            //            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //支持图片和电影类型
-//            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //支持图片和电影类型
-//            elcPicker.imagePickerDelegate = self;
-//            //            [self presentViewController:elcPicker animated:YES completion:nil];
-//            [utils pushViewController1:elcPicker animated:YES];
-        }else if (buttonIndex == 1){//拍照添加
-            [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
+                case 1: //相机
+                {
+                    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+                    imagePickerController.delegate = self;
+                    imagePickerController.allowsEditing = NO;
+                    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                    if ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
+                        self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+                    }
+                    //                    self.tfContentTag = self.mArr_pic.count;
+                    [self presentViewController:imagePickerController animated:YES completion:^{}];
+                }
+                    break;
+                case 0: //相册
+                {
+                    ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                    
+                    elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
+                    elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+                    elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+                    elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+                    elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
+                    
+                    elcPicker.imagePickerDelegate = self;
+                    [self presentViewController:elcPicker animated:YES completion:nil];
+                }
+                    break;
+            }
         }
+        else {
+            if (buttonIndex == 0) {
+                return;
+            } else {
+                ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                
+                elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
+                elcPicker.returnsOriginalImage = YES; //Only return the fullScreenImage, not the fullResolutionImage
+                elcPicker.returnsImage = YES; //Return UIimage if YES. If NO, only return asset location information
+                elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
+                elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
+                elcPicker.imagePickerDelegate = self;
+                
+                [self presentViewController:elcPicker animated:YES completion:nil];
+            }
+            
+        }
+        
+        
     }
+
 }
 -(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
@@ -466,7 +505,7 @@
 
        // }
 
-        NSData *imageData = UIImageJPEGRepresentation(chosenImage,0);
+        NSData *imageData = UIImageJPEGRepresentation(chosenImage,1);
         self.tempData  = [[NSData alloc] initWithData:imageData];
         if(imageData.length>10000000){
             [MBProgressHUD showError:@"图片大小不能超过10M"];
@@ -487,6 +526,39 @@
 
 }
 
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
+{
+    if(info.count>0)
+    {
+        [MBProgressHUD showMessage:@"正在修改" toView:self.view];
+        
+    }
+    [self dismissViewControllerAnimated:YES completion:^{
+        for (NSDictionary *dict in info) {
+            if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
+                if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+                    UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                    image = [self fixOrientation:image];
+
+                    NSData *imageData = UIImageJPEGRepresentation(image,1);
+                    if(imageData.length>10000000){
+                        [MBProgressHUD showError:@"图片大小不能超过10M"];
+                        return;
+                    }
+                    [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
+                }
+        }
+            }
+        }
+        
+        
+    ];
+}
+
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0f) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
