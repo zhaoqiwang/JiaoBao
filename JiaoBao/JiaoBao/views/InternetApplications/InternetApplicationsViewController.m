@@ -45,8 +45,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"loginSuccess" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginSuccess:) name:@"loginSuccess" object:nil];
     //是否有更新
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"itunesUpdataCheck" object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itunesUpdataCheck:) name:@"itunesUpdataCheck" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"itunesUpdataCheck" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(itunesUpdataCheck:) name:@"itunesUpdataCheck" object:nil];
     //获取当前用户可以发布动态的单位列表(含班级）
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetReleaseNewsUnits" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetReleaseNewsUnits:) name:@"GetReleaseNewsUnits" object:nil];
@@ -127,9 +127,9 @@
 //是否有更新
 -(void)itunesUpdataCheck:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"新版本被发现" message: @"发现新版本，如果不更新，可能会出现未知问题，是否下载最新？" delegate:self cancelButtonTitle:@"哦，不" otherButtonTitles: @"下载", nil];
-    createUserResponseAlert.delegate = self;
-    [createUserResponseAlert show];
+//    UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"新版本被发现" message: @"发现新版本，如果不更新，可能会出现未知问题，是否下载最新？" delegate:self cancelButtonTitle:@"哦，不" otherButtonTitles: @"下载", nil];
+//    createUserResponseAlert.delegate = self;
+//    [createUserResponseAlert show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -654,6 +654,7 @@
     [dm getInstance].url = @"";
     [dm getInstance].UID = 0;
     [[dm getInstance].identity removeAllObjects];
+    [dm getInstance].jiaoBaoHao = @"";
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];

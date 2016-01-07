@@ -97,7 +97,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [[KnowledgeHttp getInstance]GetMyattCate];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+//    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 -(void)GetMyPointsDayWithAccId:(NSNotification*)sender
 {
