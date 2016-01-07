@@ -29,7 +29,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *mText_title;//标题输入框
 @property(nonatomic,assign)int imageCount,mInt_index;//拍照时用到
 @property(nonatomic,strong)NSMutableArray *mArr_pic;//图片数组
-@property(nonatomic,assign)int tfContentTag;//记录图片数量
 @property (weak, nonatomic) IBOutlet UIScrollView *mainScrollView;//
 @property (weak, nonatomic) IBOutlet UILabel *ttitleLabel;//标题
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;//描述

@@ -245,6 +245,10 @@
 
         NSData *imageData = UIImageJPEGRepresentation(chosenImage,0);
         self.tempData  = [[NSData alloc] initWithData:imageData];
+        if(imageData.length>10000000){
+            [MBProgressHUD showError:@"图片大小不能超过10M"];
+            return;
+        }
         [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
         [MBProgressHUD showMessage:@"正在修改" toView:self.view];
     }

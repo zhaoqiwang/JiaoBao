@@ -257,9 +257,7 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"NewQuestionWithCategoryId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(NewQuestionWithCategoryId:) name:@"NewQuestionWithCategoryId" object:nil];
-    
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetAccIdbyNickname" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetAccIdbyNickname:) name:@"GetAccIdbyNickname" object:nil];
+
     
     self.mText_title.layer.borderWidth = .5;
     self.mText_title.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
@@ -284,7 +282,6 @@
     
     NSMutableAttributedString *str1=[[NSMutableAttributedString alloc] initWithString:@"问题描述" attributes:nil];
     
-    //[str1 insertAttributedString:strA atIndex:4];
     self.contentLabel.attributedText = str1;
     
     NSMutableAttributedString *str2=[[NSMutableAttributedString alloc] initWithString:@"问题分类" attributes:nil];
@@ -292,45 +289,6 @@
     [str2 insertAttributedString:strA atIndex:4];
     self.categoryLabel.attributedText = str2;
 
-}
-//通过昵称获取教宝号
--(void)GetAccIdbyNickname:(id)sender
-{
-    NSDictionary *dic = [sender object];
-    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if([ResultCode integerValue] != 0)
-    {
-        [MBProgressHUD showError:ResultDesc];
-        return;
-    }
-    else
-    {
-        NSArray *arr = [dic objectForKey:@"array"];
-        if(arr.count>0)
-        {
-            self.nickNameModel = [arr objectAtIndex:0];
-            NSString *content = self.mTextV_content.text;
-            for (int i=0; i<self.mArr_pic.count; i++) {
-                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-                NSString *temp = model.originalName;
-                content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-            }
-            content = [NSString stringWithFormat:@"<p>%@</p>",content];
-            
-            NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
-            [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
-        }
-        else
-        {
-            NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.atAccIdsTF.text];
-            [MBProgressHUD showError:str];
-            [MBProgressHUD hideHUDForView:self.view];
-            self.nickNameModel = nil;
-        }
-
-
-    }
 }
 
 //邀请指定的用户回答问题
@@ -452,7 +410,6 @@
     [timer invalidate];
     timer =nil;
     [self myNavigationGoback];
-    //[utils popViewControllerAnimated:YES];
 
     
 }
@@ -515,11 +472,8 @@
     {
         [UIView animateWithDuration:0.3 animations:^{
             int h = self.mainScrollView.frame.size.height-self.selectedTF.frame.size.height-self.selectedTF.frame.origin.y;
-
-                self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
+            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
             
-
-            //self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
             
         }];
         
@@ -550,11 +504,8 @@
     {
         [UIView animateWithDuration:0.3 animations:^{
             int h = self.mainScrollView.frame.size.height-self.selectedTF.frame.size.height-self.selectedTF.frame.origin.y;
-            D("mainScrollView_height = %f selectedTF_height = %f  selectedTF_y = %f",self.mainScrollView.frame.size.height,self.selectedTF.frame.size.height,self.selectedTF.frame.origin.y);
+            self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
 
-                self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, h);
-
-           // self.mTableV_name.frame =  CGRectMake(self.selectedTF.frame.origin.x, self.selectedTF.frame.origin.y+30, 166, 44*5);
             
         }];
         
@@ -625,7 +576,6 @@
     
     sheet.tag = 255;
     [sheet showInView:self.view];
-    self.tfContentTag = self.mArr_pic.count;
 }
 
 //点击发布问题
@@ -647,13 +597,7 @@
         [MBProgressHUD showError:@"请去个人中心设置昵称" toView:self.view];
         return;
     }
-//    if([utils isBlankString:self.mTextV_content.text])
-    
-    
-//    {
-//        [MBProgressHUD showError:@"请添写问题描述"];
-//        return;
-//    }
+
     if([utils isBlankString:self.categoryTF.text])
     {
         [MBProgressHUD showError:@"请选择分类"];
@@ -661,14 +605,6 @@
     }
 
 
-//    if(self.proviceModel == nil||[self.proviceModel.CnName isEqualToString:@"请选择"])
-//    {
-//        self.AreaCode = @"";
-//    }
-//    else
-//    {
-//        self.AreaCode = self.proviceModel.CityCode;
-//    }
     if([self.provinceTF.text isEqualToString:@"请选择"]||[self.provinceTF.text isEqualToString:@""]){
         self.AreaCode = @"";
     }
@@ -680,14 +616,22 @@
     }else{
         self.AreaCode = [NSString stringWithFormat:@"%ld",self.countyTF.tag];
     }
+    UITextView *tempView = [[UITextView alloc]init];
+
     if([self.atAccIdsTF.text isEqualToString: @""])
     {
-        NSString *content = self.mTextV_content.text;
-        for (int i=0; i<self.mArr_pic.count; i++) {
+        for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
             UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-            NSString *temp = model.originalName;
-            content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+            NSRange range = NSMakeRange(model.cursorPosition.location, 1);
+            //NSString *temp = model.originalName;
+            //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+            NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: self.mTextV_content.attributedText];
+            [strz replaceCharactersInRange:range withString:model.url];
+            tempView.attributedText = strz;
+            
         }
+        NSString *content = tempView.text;
+
         if (content.length>4000) {
             [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
             return;
@@ -701,7 +645,6 @@
     }
     else
     {
-        //[[KnowledgeHttp getInstance]GetAccIdbyNickname:[NSArray arrayWithObject:self.atAccIdsTF.text]];
         [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.atAccIdsTF.text catid:self.categoryId];
         [MBProgressHUD showMessage:@"" toView:self.view];
         
@@ -716,10 +659,45 @@
     NoNickNameTextV
 
 }
+
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     //输入删除时
     if ([text isEqualToString:@""]) {
+        if([textView isEqual:self.mTextV_content]){
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(range.length==1){
+                    if(range.location < model.cursorPosition.location){
+                        model.cursorPosition = NSMakeRange(model.cursorPosition.location-1, model.cursorPosition.length);
+                    }
+                    else{
+                        if(range.location == model.cursorPosition.location ){
+                            [self.mArr_pic removeObject:model];
+                        }
+                        
+                    }
+                } else{
+                    if(range.location<=model.cursorPosition.location&&range.location+range.length>model.cursorPosition.location){
+                        [self.mArr_pic removeObject:model];
+
+                    }
+                    else if(range.location<=model.cursorPosition.location&&range.location+range.length<=model.cursorPosition.location){
+                        model.cursorPosition = NSMakeRange(model.cursorPosition.location-range.length, model.cursorPosition.length);
+
+                    }else if(range.location>model.cursorPosition.location){
+                        
+                    }
+                }
+
+
+            }
+            
+        }
+
+
+        
         return YES;
     }
 
@@ -766,6 +744,18 @@
             // Return FALSE so that the final '\n' character doesn't get added
             return NO;
         }
+    }
+    else{
+        for (int i=0; i<self.mArr_pic.count; i++) {
+            UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(range.location <= model.cursorPosition.location){
+                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+range.length, model.cursorPosition.length);
+                }
+
+
+
+        }
+        
     }
     
     return YES;
@@ -857,8 +847,6 @@
                     elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
                     
                     elcPicker.imagePickerDelegate = self;
-                    //                    self.tfContentTag= self.mArr_pic.count;
-                    
                     [self presentViewController:elcPicker animated:YES completion:nil];
                 }
                     break;
@@ -876,7 +864,6 @@
                 elcPicker.onOrder = YES; //For multiple image selection, display and return order of selected images
                 elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //Supports image and movie types
                 elcPicker.imagePickerDelegate = self;
-                //                self.tfContentTag= self.mArr_pic.count;
                 
                 [self presentViewController:elcPicker animated:YES completion:nil];
             }
@@ -895,57 +882,44 @@
     if ([flag integerValue]==0) {
         self.imageCount--;
         UploadImgModel *model = [dic objectForKey:@"model"];
-        [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
         {
-            //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSInteger index = self.cursorPosition.location;
-            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
-            [content insertString:model.originalName atIndex:index];
-            self.mTextV_content.text = content;
-            //self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model.originalName];
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+            NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index-1]];
+            UIImage *image = [UIImage imageWithContentsOfFile:imgPath];
+            NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithAttributedString:self.mTextV_content.attributedText];
+            NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+            textAttach.image = image;
+            textAttach.bounds=CGRectMake(0, 0, 30, 30);
+            model.cursorPosition = self.cursorPosition;
+            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+            [str insertAttributedString:strA atIndex:index];
+            model.attributedString = strA;
+            self.mTextV_content.attributedText = str;
+            [self.mArr_pic addObject:model];
 
-//            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-//                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-//                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-//                int p1_int = [su_p11 intValue];
-//                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-//                
-//                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-//                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-//                int p2_int = [su_p22 intValue];
-//                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-//                
-//                return [p1_num compare:p2_num];
-//            }];
-//            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-//            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
-//            {
-////                NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:@"" attributes:nil];
-////                NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
-////                textAttach.image = [UIImage imageNamed:@"buttonView3"];
-////                textAttach.bounds=CGRectMake(3, 0, 10, 10);
-////                NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
-////                [str insertAttributedString:strA atIndex:2];
-////                self.ttitleLabel.attributedText = str;
-//
-//                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
-//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
-//                
-//            }
+            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+
+                            NSNumber *p1_num = [NSNumber numberWithInteger:p1.cursorPosition.location ];
+                            NSNumber *p2_num = [NSNumber numberWithInteger:p2.cursorPosition.location ];
+
+                            return [p1_num compare:p2_num];
+            }];
+            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
             
         }
     }else{
         [MBProgressHUD showError:@"失败" toView:self.view];
     }
 }
+
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     self.imageCount = 1;
-    D("info_count = %ld",(unsigned long)info.count);
     [picker dismissViewControllerAnimated:YES completion:^{
-        
         
         
     }];
@@ -958,9 +932,13 @@
     image = [self fixOrientation:image];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     NSData *imageData = UIImageJPEGRepresentation(image,0);
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+    NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
     D("图片路径是：%@",imgPath);
     
     
@@ -994,7 +972,6 @@
     self.mInt_index ++;
     self.knContentTF.hidden = YES;
 
-    //[self.mProgressV hide:YES];
 }
 
 #pragma mark ELCImagePickerControllerDelegate Methods
@@ -1028,14 +1005,8 @@
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
-                                        // NSLog(@"%lu",(unsigned long)imageData.length);
-                    
                     NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
-                    
-                    //NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
-                    //[self.mArr_pic addObject:[NSString stringWithFormat:@"%@.png",timeSp]];
                     D("图片路径是：%@",imgPath);
-                    
                     BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
                     if (!yesNo) {//不存在，则直接写入后通知界面刷新
                         BOOL result = [imageData writeToFile:imgPath atomically:YES];
@@ -1057,9 +1028,8 @@
                             for (;;) {
                                 if (result) {
                                     NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
-                                    
                                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-                                    //                                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
+
                                     self.mInt_index ++;
                                     
                                     break;
@@ -1080,7 +1050,6 @@
         
     }];
     self.knContentTF.hidden = YES;
-    // [self.mProgressV hide:YES];
 }
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker{
