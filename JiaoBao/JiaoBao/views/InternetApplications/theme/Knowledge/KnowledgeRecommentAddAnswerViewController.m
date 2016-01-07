@@ -81,12 +81,10 @@
             tempWeb.delegate = self;
             tempWeb.tag = i;
             NSString *content = model.Abstracts;
-//            D("ShowRecomment:-=====%@",content);
             NSString *tempHtml = [utils clearHtml:content width:85];
             tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
             [tempWeb setBackgroundColor:[UIColor clearColor]];
             [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-//            [tempWeb reload];
             [self.view addSubview:tempWeb];
             [tempWeb setHidden:YES];
         }
@@ -173,7 +171,7 @@
     self.mView_titlecell.mWebV_comment.delegate = self;
     
     NSString *content = model.questionModel.KnContent;
-    NSString *tempHtml = [utils clearHtml:content width:15];
+    NSString *tempHtml = [utils clearHtml:content width:5];
     
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
@@ -188,7 +186,7 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSString *meta;
     if (webView.tag==-1) {
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-20];
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-5];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
@@ -200,6 +198,7 @@
 //    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
 //        [self webViewLoadFinish:webView.scrollView.contentSize.height];
+        D("lskdjflsjglsdjlkjlkjkjkjkjkj-====%f",webViewHeight);
         [self webViewLoadFinish:webViewHeight+10];
     }else{
         CGRect frame = webView.frame;
@@ -217,7 +216,7 @@
 }
 
 -(void)webViewLoadFinish:(float)height{
-    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width, height);
+    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-5, height);
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
@@ -321,7 +320,7 @@
     //赞
     cell.mLab_LikeCount.frame = CGRectMake(9, 10, 42, 22);
     NSString *strLike = model.LikeCount;
-    if ([model.LikeCount integerValue]>0) {
+    if ([model.LikeCount integerValue]>99) {
         strLike = @"99+";
     }
     cell.mLab_LikeCount.text = [NSString stringWithFormat:@"%@赞",strLike];
@@ -349,10 +348,11 @@
     NSString *name = [NSString stringWithFormat:@"<font size=12 color=black>%@</font>",string1];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
-    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+//    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width+5, cell.mLab_LikeCount.frame.origin.y+2, [dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, 23);
+    CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, MAXFLOAT)];
+    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width+5, cell.mLab_LikeCount.frame.origin.y+2, [dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, titleSize.height);
 
     //回答内容
     NSString *name2 = @"";
@@ -467,17 +467,12 @@
     }
     
     //回答标题
-//    NSString *string1 = model.ATitle;
-//    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-//    
-//    RCLabel *tempLab = [[RCLabel alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-65-26, 5)];
-//    NSString *name = [NSString stringWithFormat:@"</font> <font size=12 color=black>%@</font>",string1];
-//    NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
-//    [row1 setObject:name forKey:@"text"];
-//    RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
-//    tempLab.componentsAndPlainText = componentsDS;
-//    CGSize titleSize = [tempLab optimumSize];
-    tempF = tempF+10+3+23;
+    NSString *string1 = model.ATitle;
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+//    cell.answerImgV.frame = CGRectMake(60, cell.mLab_LikeCount.frame.origin.y, 26, 16);
+    CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9-10-26-60, MAXFLOAT)];
+    tempF = tempF+10+3+titleSize.height;
     if ([model.Flag integerValue]==0) {//无内容
         tempF = tempF+5+16;
     }else if ([model.Flag integerValue]==1){//有内容

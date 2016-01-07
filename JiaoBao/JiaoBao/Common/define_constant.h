@@ -40,7 +40,7 @@
 #define NoNickNameTextF if ([dm getInstance].NickName1.length==0) {[textField resignFirstResponder];[MBProgressHUD showSuccess:@"请去个人中心设置昵称" toView:self.view];return;}
 
 //握手通讯失败后，进行登录操作
-#define Login if ([code intValue] == 8) {[[LoginSendHttp getInstance] hands_login];return;}
+#define Login if ([code intValue] == 8) {[MBProgressHUD hideHUD];[[LoginSendHttp getInstance] hands_login];return;}
 
 @interface define_constant : NSObject
 

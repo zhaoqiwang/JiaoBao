@@ -720,17 +720,20 @@
                 string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
                 string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
                 CGSize nameSize = [string2 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10, MAXFLOAT)];
-                NSString *name2 = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string2];
-                cell.mLab_Abstracts.hidden = NO;
-                NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-                [row2 setObject:name2 forKey:@"text"];
-                RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-                cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
+//                NSString *name2 = [NSString stringWithFormat:@"<font size=14 color=black>%@</font>",string2];
+                cell.mLab_Abstracts.hidden = YES;
+                cell.mLab_AttCount.hidden = NO;
+//                NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
+//                [row2 setObject:name2 forKey:@"text"];
+//                RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
+//                cell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
 //                CGSize optimalSize2 = [cell.mLab_Abstracts optimumSize];
-                
-                cell.mLab_Abstracts.frame = CGRectMake(5, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+7, [dm getInstance].width-10, nameSize.height);
+                cell.mLab_AttCount.text = string2;
+                cell.mLab_AttCount.font = [UIFont systemFontOfSize:14];
+                cell.mLab_AttCount.numberOfLines = 0;
+                cell.mLab_AttCount.frame = CGRectMake(5, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height+7, [dm getInstance].width-10, nameSize.height);
                 cell.mView_background.hidden = NO;
-                cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-4, [dm getInstance].width-6, cell.mLab_Abstracts.frame.size.height+8);
+                cell.mView_background.frame = CGRectMake(cell.mLab_AttCount.frame.origin.x-2, cell.mLab_AttCount.frame.origin.y-4, [dm getInstance].width-6, cell.mLab_AttCount.frame.size.height+8);
             }
             
             cell.mLab_IdFlag.hidden = YES;
@@ -1007,6 +1010,7 @@
             cell.mLab_AttCount.frame = CGRectMake(cell.mLab_Answers.frame.origin.x-5-AttSize.width, cell.mLab_Category0.frame.origin.y, AttSize.width, cell.mLab_Category0.frame.size.height);
             cell.mLab_AttCount.text = model.AttCount;
             cell.mLab_AttCount.hidden = NO;
+            cell.mLab_AttCount.font = [UIFont systemFontOfSize:10];
             cell.mLab_Att.frame = CGRectMake(cell.mLab_AttCount.frame.origin.x-2-cell.mLab_Att.frame.size.width, cell.mLab_Category0.frame.origin.y, cell.mLab_Att.frame.size.width, cell.mLab_Att.frame.size.height);
             cell.mLab_Att.hidden = NO;
             //判断是否有回答
