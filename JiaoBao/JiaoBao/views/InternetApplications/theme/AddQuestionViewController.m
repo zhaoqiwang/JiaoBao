@@ -885,6 +885,13 @@
         {
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSInteger index = self.cursorPosition.location;
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(index <= model.cursorPosition.location){
+                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+1, model.cursorPosition.length);
+                }
+                
+            }
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
             NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
             NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index-1]];
