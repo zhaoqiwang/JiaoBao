@@ -616,6 +616,8 @@
     }else{
         self.AreaCode = [NSString stringWithFormat:@"%ld",self.countyTF.tag];
     }
+    UITextView *tempView = [[UITextView alloc]init];
+
     if([self.atAccIdsTF.text isEqualToString: @""])
     {
         for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
@@ -625,10 +627,10 @@
             //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
             NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: self.mTextV_content.attributedText];
             [strz replaceCharactersInRange:range withString:model.url];
-            self.mTextV_content.attributedText = strz;
+            tempView.attributedText = strz;
             
         }
-        NSString *content = self.mTextV_content.text;
+        NSString *content = tempView.text;
 
         if (content.length>4000) {
             [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];

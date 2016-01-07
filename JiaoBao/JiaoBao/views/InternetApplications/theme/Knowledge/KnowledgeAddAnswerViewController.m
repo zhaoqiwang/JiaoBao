@@ -513,6 +513,8 @@
     if (flag ==0) {
         name = [dm getInstance].NickName;
     }
+    UITextView *tempView = [[UITextView alloc]init];
+
     for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
         UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
         NSRange range = NSMakeRange(model.cursorPosition.location, 1);
@@ -520,10 +522,10 @@
         //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
         NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: self.mTextV_content.attributedText];
         [strz replaceCharactersInRange:range withString:model.url];
-        self.mTextV_content.attributedText = strz;
+        tempView.attributedText = strz;
         
     }
-    NSString *content = self.mTextV_content.text;
+    NSString *content = tempView.text;
 //    for (int i=0; i<self.mArr_pic.count; i++) {
 //        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
 //        NSString *temp = model.originalName;
