@@ -42,7 +42,7 @@
 //获取省份
 -(void)knowledgeHttpGetProvice:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -110,7 +110,7 @@
 //获取地区或区县
 -(void)knowledgeHttpGetCity:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -131,7 +131,7 @@
 //获取分类
 -(void)GetAllCategory:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSDictionary *dic = [sender object];
     self.mArr_AllCategory =[dic objectForKey:@"array"] ;
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
@@ -153,7 +153,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue] != 0)
     {
-        [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
         if([ResultCode integerValue]==999999){
             ResultDesc = @"不存在此邀请人";
             
@@ -183,7 +183,7 @@
         {
             NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.atAccIdsTF.text];
             [MBProgressHUD showError:str];
-            [MBProgressHUD hideHUDForView:self.view];
+            [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
             //self.nickNameModel = nil;
             self.invitationUserInfo = nil;
         }
@@ -245,7 +245,7 @@
     [self.view addSubview:self.mNav_navgationBar];
 
     [[KnowledgeHttp getInstance]knowledgeHttpGetProvice];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    [MBProgressHUD showMessage:@"" toView:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"knowledgeHttpGetProvice" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(knowledgeHttpGetProvice:) name:@"knowledgeHttpGetProvice" object:nil];
     
@@ -293,7 +293,7 @@
 
 //邀请指定的用户回答问题
 -(void)AtMeForAnswerWithAccId:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -363,7 +363,7 @@
 //发布问题回调
 -(void)NewQuestionWithCategoryId:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -525,7 +525,7 @@
     JoinUnit
     NoNickName
     [[KnowledgeHttp getInstance]GetAllCategory];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    [MBProgressHUD showMessage:@"" toView:nil];
 
 
 }
@@ -639,13 +639,13 @@
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
         content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+        [MBProgressHUD showMessage:@"" toView:nil];
         [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
     else
     {
         [[KnowledgeHttp getInstance]GetAtMeUsersWithuid:self.atAccIdsTF.text catid:self.categoryId];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+        [MBProgressHUD showMessage:@"" toView:nil];
         
     }
 
@@ -752,9 +752,6 @@
                 if(range.location <= model.cursorPosition.location){
                     model.cursorPosition = NSMakeRange(model.cursorPosition.location+range.length, model.cursorPosition.length);
                 }
-
-
-
         }
         
     }
@@ -798,9 +795,7 @@
             textView.text = [textView.text substringToIndex:100];
         }
     }
-
-
-    
+ 
 }
 
 -(void)myNavigationGoback{
@@ -877,7 +872,7 @@
 
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
@@ -931,7 +926,7 @@
         
         
     }];
-    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
+    [MBProgressHUD showMessage:@"正在上传" toView:nil];
     
     UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
     if (!image) {
@@ -989,7 +984,7 @@
     self.imageCount = info.count;
     if(info.count>0)
     {
-        [MBProgressHUD showMessage:@"正在上传图片" toView:self.view];
+        [MBProgressHUD showMessage:@"正在上传图片" toView:nil];
 
     }
     [self dismissViewControllerAnimated:YES completion:^{

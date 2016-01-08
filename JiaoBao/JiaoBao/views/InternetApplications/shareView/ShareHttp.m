@@ -425,6 +425,8 @@ static ShareHttp *shareHttp = nil;
     NSString *code = [jsonDic objectForKey:@"ResultCode"];
     if ([code intValue] == 8) {
         [[LoginSendHttp getInstance] hands_login];
+        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+
         return;
     }
     if (_request.tag == 3) {//获取本单位栏目文章
@@ -548,6 +550,7 @@ static ShareHttp *shareHttp = nil;
         //将值传到界面
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MySubUnitInfo" object:dic];
     }else if (_request.tag == 8) {//上传图片
+
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("str00===8=>>>>==%@",str000);
