@@ -64,6 +64,16 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
         self.mModel_recomment = [dic objectForKey:@"model"];
+        UIWebView *tempWeb0 = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-5, 0)];
+        tempWeb0.delegate = self;
+        tempWeb0.tag = -1;
+        NSString *content0 = self.mModel_recomment.questionModel.KnContent;
+        NSString *tempHtml0 = [utils clearHtml:content0 width:5];
+        tempWeb0.opaque = NO; //不设置这个值 页面背景始终是白色
+        [tempWeb0 setBackgroundColor:[UIColor clearColor]];
+        [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+        [self.view addSubview:tempWeb0];
+        [tempWeb0 setHidden:YES];
         
         NSMutableArray *array = self.mModel_recomment.answerArray;
         
@@ -90,14 +100,14 @@
         }
         
         [self.mTableV_answer reloadData];
-        [self addDetailCell:self.mModel_recomment];
+        [self addDetailCell:self.mModel_recomment Float:0];
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showError:ResultDesc toView:self.view];
     }
 }
 
--(void)addDetailCell:(RecommentAddAnswerModel *)model{
+-(void)addDetailCell:(RecommentAddAnswerModel *)model Float:(float)height{
     self.mView_titlecell.hidden = NO;
     self.mView_titlecell.askImgV.hidden = NO;
     self.mView_titlecell.delegate = self;
@@ -168,18 +178,15 @@
     self.mView_titlecell.mWebV_comment.hidden = NO;
     [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
     self.mView_titlecell.mWebV_comment.tag = -1;
-    self.mView_titlecell.mWebV_comment.delegate = self;
-    
+//    self.mView_titlecell.mWebV_comment.delegate = self;
     NSString *content = model.questionModel.KnContent;
     NSString *tempHtml = [utils clearHtml:content width:5];
-    
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-//    [self.mView_titlecell.mWebV_comment reload];
     
     //加载
-    [self webViewLoadFinish:0];
+    [self webViewLoadFinish:height];
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
@@ -194,18 +201,25 @@
     
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
 //    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-//    D("webViewHeight-====%f,%f,%f",webViewHeight,webView.scrollView.frame.size.height,webViewWidth);
+    D("webViewHeight-====%f",webViewHeight);
 //    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
-//        [self webViewLoadFinish:webView.scrollView.contentSize.height];
-        D("lskdjflsjglsdjlkjlkjkjkjkjkj-====%f",webViewHeight);
-        [self webViewLoadFinish:webViewHeight+10];
+        CGRect frame = webView.frame;
+        frame.size.width = [dm getInstance].width-5;
+        frame.size.height = 1;
+        webView.frame = frame;
+        frame.size.height = webView.scrollView.contentSize.height;
+        D("webViewHeight-====%f,%f",webViewHeight,frame.size.height);
+//        [self webViewLoadFinish:webViewHeight+10];
+//        [self.mTableV_answer reloadData];
+        [self addDetailCell:self.mModel_recomment Float:frame.size.height];
     }else{
         CGRect frame = webView.frame;
         frame.size.width = [dm getInstance].width-85;
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
+        D("webViewHeight-====%f,%f",webViewHeight,frame.size.height);
         [webView setBackgroundColor:[UIColor clearColor]];
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
         model.floatH = frame.size.height+20;

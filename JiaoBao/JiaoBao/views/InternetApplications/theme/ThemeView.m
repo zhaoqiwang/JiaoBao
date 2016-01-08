@@ -199,7 +199,7 @@
 }
 
 -(void)selectScrollButton:(UIButton *)btn{
-    if ([[dm getInstance].jiaoBaoHao intValue]>0) {
+    if ([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0) {
         self.mInt_index = (int)btn.tag;
         if (self.mInt_index==2) {
             [self.mTableV_knowledge removeFooter];
