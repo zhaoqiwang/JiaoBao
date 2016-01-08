@@ -85,7 +85,7 @@
 
 + (MBProgressHUD *)showMessage:(NSString *)message
 {
-    return [self showMessage:message toView:nil];
+    return [self showMessage:message toView:[[UIApplication sharedApplication].windows lastObject]];
 }
 
 + (void)hideHUDForView:(UIView *)view
@@ -95,7 +95,7 @@
 
 + (void)hideHUD
 {
-    [self hideHUDForView:nil];
+    [self hideHUDForView:[[UIApplication sharedApplication].windows lastObject]];
 }
 
 //检查当前网络是否可用

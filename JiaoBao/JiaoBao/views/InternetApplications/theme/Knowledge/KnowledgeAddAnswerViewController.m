@@ -129,7 +129,10 @@
         
         TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
         NSArray *aArray = [xpathParser searchWithXPathQuery:@"//img"];
-        
+                model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
+                model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
+        model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br>"] withString:@""];
         NSString *contentText = model.AContent;
         NSString *tempStr = model.AContent;
         for (int i =0; i < aArray.count; i++) {
@@ -137,7 +140,17 @@
             NSDictionary *aAttributeDict = [aElement attributes];
             NSString *srcStr = [aAttributeDict objectForKey:@"src"];
             UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
-            ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\" />",srcStr];
+            NSString *single = [NSString stringWithFormat:@"<img src='%@'/>",srcStr];
+            NSString *doubleStr = [NSString stringWithFormat:@"<img src=\"%@\" />",srcStr];
+            if([tempStr containsString:single]){
+                ImgModel.url = single;
+
+            }
+            else
+            {
+                ImgModel.url = doubleStr;
+
+            }
             ImgModel.originalName = @"";
             ImgModel.size = @"";
             ImgModel.type = @"";

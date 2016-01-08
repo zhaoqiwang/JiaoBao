@@ -42,7 +42,7 @@
 //获取省份
 -(void)knowledgeHttpGetProvice:(id)sender
 {
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [MBProgressHUD hideHUD];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -110,7 +110,7 @@
 //获取地区或区县
 -(void)knowledgeHttpGetCity:(id)sender
 {
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [MBProgressHUD hideHUD];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -131,7 +131,7 @@
 //获取分类
 -(void)GetAllCategory:(id)sender
 {
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [MBProgressHUD hideHUD];
     NSDictionary *dic = [sender object];
     self.mArr_AllCategory =[dic objectForKey:@"array"] ;
     CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
@@ -153,7 +153,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue] != 0)
     {
-        [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+        [MBProgressHUD hideHUD];
         if([ResultCode integerValue]==999999){
             ResultDesc = @"不存在此邀请人";
             
@@ -183,7 +183,7 @@
         {
             NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.atAccIdsTF.text];
             [MBProgressHUD showError:str];
-            [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+            [MBProgressHUD hideHUD];
             //self.nickNameModel = nil;
             self.invitationUserInfo = nil;
         }
@@ -293,7 +293,7 @@
 
 //邀请指定的用户回答问题
 -(void)AtMeForAnswerWithAccId:(NSNotification *)noti{
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [MBProgressHUD hideHUD];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -363,7 +363,7 @@
 //发布问题回调
 -(void)NewQuestionWithCategoryId:(id)sender
 {
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [MBProgressHUD hideHUD];
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -872,7 +872,7 @@
 
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [MBProgressHUD hideHUD];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
