@@ -674,12 +674,14 @@
                     else{
                         if(range.location == model.cursorPosition.location ){
                             [self.mArr_pic removeObject:model];
+                            i--;
                         }
                         
                     }
                 } else{
                     if(range.location<=model.cursorPosition.location&&range.location+range.length>model.cursorPosition.location){
                         [self.mArr_pic removeObject:model];
+                        i--;
 
                     }
                     else if(range.location<=model.cursorPosition.location&&range.location+range.length<=model.cursorPosition.location){

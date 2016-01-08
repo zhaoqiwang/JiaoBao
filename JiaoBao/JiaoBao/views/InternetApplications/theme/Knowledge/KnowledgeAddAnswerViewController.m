@@ -556,6 +556,7 @@
     //输入删除时
     if ([text isEqualToString:@""]) {
         if([textView isEqual:self.mTextV_content]){
+            NSMutableArray *picArr = [self.mArr_pic mutableCopy];
             for (int i=0; i<self.mArr_pic.count; i++) {
                 UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
                 if(range.length==1){
@@ -565,12 +566,14 @@
                     else{
                         if(range.location == model.cursorPosition.location ){
                             [self.mArr_pic removeObject:model];
+                            i--;
                         }
                         
                     }
                 } else{
                     if(range.location<=model.cursorPosition.location&&range.location+range.length>model.cursorPosition.location){
                         [self.mArr_pic removeObject:model];
+                        i--;
                         
                     }
                     else if(range.location<=model.cursorPosition.location&&range.location+range.length<=model.cursorPosition.location){
