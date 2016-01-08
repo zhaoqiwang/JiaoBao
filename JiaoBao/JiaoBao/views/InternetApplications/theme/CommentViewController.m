@@ -527,6 +527,7 @@
     //头像
     
     [cell.mImg_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.JiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
+    cell.mImg_head.userInteractionEnabled = NO;
     //人名、单位名
     if([model.UserName isEqual:[NSNull null]]||[model.UserName isEqualToString: @""])
     {
@@ -1415,6 +1416,11 @@
 //    }
     return YES;
 }
+- (void) AirthCommentsListCellHeadTapHeadPress:(AirthCommentsListCell *) airthCommentsListCell{
+    NSIndexPath *index = [self.tableView indexPathForCell:airthCommentsListCell];
+    [self tableView:self.tableView didSelectRowAtIndexPath:index];
+}
+
 
 -(void)tempViewBtnLike:(id)sender
 {

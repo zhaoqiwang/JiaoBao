@@ -514,13 +514,13 @@
         name = [dm getInstance].NickName;
     }
     UITextView *tempView = [[UITextView alloc]init];
-
+    tempView.attributedText = self.mTextV_content.attributedText;
     for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
         UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
         NSRange range = NSMakeRange(model.cursorPosition.location, 1);
         //NSString *temp = model.originalName;
         //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-        NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: self.mTextV_content.attributedText];
+        NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: tempView.attributedText];
         [strz replaceCharactersInRange:range withString:model.url];
         tempView.attributedText = strz;
         
@@ -547,11 +547,16 @@
     }
     [MBProgressHUD showMessage:@"提交中..." toView:self.view];
 }
+- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange {
+    return YES;
+}
+
 //如果输入超过规定的字数100，就不再让输入
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     //输入删除时
     if ([text isEqualToString:@""]) {
         if([textView isEqual:self.mTextV_content]){
+            NSMutableArray *picArr = [self.mArr_pic mutableCopy];
             for (int i=0; i<self.mArr_pic.count; i++) {
                 UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
                 if(range.length==1){
@@ -561,12 +566,14 @@
                     else{
                         if(range.location == model.cursorPosition.location ){
                             [self.mArr_pic removeObject:model];
+                            i--;
                         }
                         
                     }
                 } else{
                     if(range.location<=model.cursorPosition.location&&range.location+range.length>model.cursorPosition.location){
                         [self.mArr_pic removeObject:model];
+                        i--;
                         
                     }
                     else if(range.location<=model.cursorPosition.location&&range.location+range.length<=model.cursorPosition.location){
@@ -762,6 +769,15 @@
         {
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSInteger index = self.cursorPosition.location;
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(index <= model.cursorPosition.location){
+                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+1, model.cursorPosition.length);
+                }
+                
+                
+                
+            }
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
             NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
             NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index-1]];
