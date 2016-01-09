@@ -129,18 +129,47 @@
         
         TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
         NSArray *aArray = [xpathParser searchWithXPathQuery:@"//img"];
-        
+                model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
+                model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
+        model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br>"] withString:@""];
+        model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br/>"] withString:@""];
+
+
         NSString *contentText = model.AContent;
         NSString *tempStr = model.AContent;
         for (int i =0; i < aArray.count; i++) {
             TFHppleElement *aElement = [aArray objectAtIndex:i];
             NSDictionary *aAttributeDict = [aElement attributes];
             NSString *srcStr = [aAttributeDict objectForKey:@"src"];
+            NSString *_srcStr = [aAttributeDict objectForKey:@"src"];
+            contentText = [contentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src=\"%@\"",_srcStr] withString:@""];
+            contentText = [contentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src='%@'",_srcStr] withString:@""];
+            tempStr = [tempStr stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src=\"%@\"",_srcStr] withString:@""];
+            tempStr = [tempStr stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src='%@'",_srcStr] withString:@""];
             UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
-            ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\" />",srcStr];
+            if([tempStr containsString:srcStr]){
+                ImgModel.url = [NSString stringWithFormat:@"<img src='%@'/>",srcStr];
+                if(![tempStr containsString:ImgModel.url]){
+                    ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\" />",srcStr];
+
+                }
+                if(![tempStr containsString:ImgModel.url]){
+                    ImgModel.url = [NSString stringWithFormat:@"<img src='%@' />",srcStr];
+                    
+                }
+                if(![tempStr containsString:ImgModel.url]){
+                    ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\"/>",srcStr];
+                    
+                }
+
+            }
+
+
             ImgModel.originalName = @"";
             ImgModel.size = @"";
             ImgModel.type = @"";
+            
             NSRange range = [contentText rangeOfString:ImgModel.url];
             ImgModel.cursorPosition = NSMakeRange(range.location, 1);
             tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];

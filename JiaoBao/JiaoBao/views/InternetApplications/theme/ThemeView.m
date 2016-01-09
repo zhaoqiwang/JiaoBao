@@ -136,7 +136,7 @@
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
 //    [[KnowledgeHttp getInstance] GetAllCategory];
-    if([[dm getInstance].jiaoBaoHao intValue]>0){
+    if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
         CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
         detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
         detailVC.mArr_AllCategory = [[NSMutableArray alloc]initWithCapacity:0];

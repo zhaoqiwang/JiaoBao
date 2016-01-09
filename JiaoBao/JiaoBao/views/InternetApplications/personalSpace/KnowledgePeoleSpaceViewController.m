@@ -326,10 +326,6 @@
                     image = [self fixOrientation:image];
                     
                     NSData *imageData = UIImageJPEGRepresentation(image,1);
-                    if(imageData.length>10000000){
-                        [MBProgressHUD showError:@"图片大小不能超过10M"];
-                        return;
-                    }
                     [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
                 }
             }
