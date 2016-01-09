@@ -64,16 +64,6 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     if ([code integerValue] ==0) {
         self.mModel_recomment = [dic objectForKey:@"model"];
-        UIWebView *tempWeb0 = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-5, 0)];
-        tempWeb0.delegate = self;
-        tempWeb0.tag = -1;
-        NSString *content0 = self.mModel_recomment.questionModel.KnContent;
-        NSString *tempHtml0 = [utils clearHtml:content0 width:5];
-        tempWeb0.opaque = NO; //不设置这个值 页面背景始终是白色
-        [tempWeb0 setBackgroundColor:[UIColor clearColor]];
-        [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-        [self.view addSubview:tempWeb0];
-        [tempWeb0 setHidden:YES];
         
         NSMutableArray *array = self.mModel_recomment.answerArray;
         
@@ -98,6 +88,20 @@
             [self.view addSubview:tempWeb];
             [tempWeb setHidden:YES];
         }
+        
+        //延时执行
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            UIWebView *tempWeb0 = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-5, 0)];
+            tempWeb0.delegate = self;
+            tempWeb0.tag = -1;
+            NSString *content0 = self.mModel_recomment.questionModel.KnContent;
+            NSString *tempHtml0 = [utils clearHtml:content0 width:5];
+            tempWeb0.opaque = NO; //不设置这个值 页面背景始终是白色
+            [tempWeb0 setBackgroundColor:[UIColor clearColor]];
+            [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+            [self.view addSubview:tempWeb0];
+            [tempWeb0 setHidden:YES];
+        });
         
         [self.mTableV_answer reloadData];
         [self addDetailCell:self.mModel_recomment Float:0];
@@ -178,6 +182,7 @@
     self.mView_titlecell.mWebV_comment.hidden = NO;
     [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
     self.mView_titlecell.mWebV_comment.tag = -1;
+    self.mView_titlecell.mWebV_comment.userInteractionEnabled = NO;
 //    self.mView_titlecell.mWebV_comment.delegate = self;
     NSString *content = model.questionModel.KnContent;
     NSString *tempHtml = [utils clearHtml:content width:5];
@@ -190,9 +195,9 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-    [MBProgressHUD hideHUDForView:self.view];
     NSString *meta;
     if (webView.tag==-1) {
+        [MBProgressHUD hideHUDForView:self.view];
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-5];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
@@ -398,7 +403,7 @@
 //    cell.mWebV_comment.scalesPageToFit = YES;
     [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
-    
+    cell.mWebV_comment.userInteractionEnabled = NO;
     NSString *content = model.Abstracts;
     if (content.length==0&&[model.Flag integerValue]==2) {
         content = @"此答案已被修改";

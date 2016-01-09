@@ -542,6 +542,7 @@
         }
     }else{
         NSMutableArray *array = [self arrayDataSourceSum];
+        self.mLab_warn.hidden = YES;
         //先确认是有证据
         D("usdfhgdljgfflk-===%lu,%d",(unsigned long)self.mArr_AllCategory.count,self.mInt_index);
         if (self.mArr_AllCategory.count>self.mInt_index) {
