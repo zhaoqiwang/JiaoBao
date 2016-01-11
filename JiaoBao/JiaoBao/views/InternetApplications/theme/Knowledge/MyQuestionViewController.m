@@ -112,7 +112,7 @@
     cell.mLab_Abstracts.hidden = YES;
     cell.mLab_IdFlag.hidden = YES;
     cell.mLab_RecDate.hidden = YES;
-    cell.mLab_comment.hidden = YES;
+    cell.mLab_comment.hidden = NO;
     cell.mLab_commentCount.hidden = YES;
     cell.mLab_line.hidden = YES;
     cell.mView_background.hidden = YES;
@@ -132,17 +132,37 @@
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
     NSString *stateTemp = @"";
+    
+    NSString *str = @"[屏蔽]";
+    CGSize pingSize;
     if ([model.State intValue]==0) {
-        stateTemp = [NSString stringWithFormat:@"<font size=14 color=gray>[屏蔽]</font>"];
+        cell.mLab_comment.hidden = NO;
+        cell.mLab_comment.text = str;
+        cell.mLab_comment.font = [UIFont systemFontOfSize:14];
+        pingSize = [str sizeWithFont:[UIFont systemFontOfSize:14]];
+    }else{
+        cell.mLab_comment.hidden = YES;
     }
     NSString *name = [NSString stringWithFormat:@"<font size=14 color='#03AA03'>问 : </font> <font size=14 color=black>%@</font>%@",string1,stateTemp];
     NSMutableDictionary *row1 = [NSMutableDictionary dictionary];
     [row1 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
-    cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
-    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingMiddle;
+    
+    cell.mLab_ATitle.lineBreakMode = RTTextLineBreakModeTruncatingTail;
+    CGSize optimalSize2 = [cell.mLab_ATitle optimumSize];
+    if ([model.State intValue]==0) {
+        if (optimalSize2.width>[dm getInstance].width-18-pingSize.width) {
+            optimalSize2.width = [dm getInstance].width-18-pingSize.width;
+        }
+        cell.mLab_ATitle.frame = CGRectMake(12, 9, optimalSize2.width, 23);
+        cell.mLab_comment.frame = CGRectMake(cell.mLab_ATitle.frame.origin.x+cell.mLab_ATitle.frame.size.width, 9, pingSize.width, pingSize.height);
+    }else{
+        cell.mLab_ATitle.frame = CGRectMake(12, 9, [dm getInstance].width-18, 23);
+    }
+    
     cell.mLab_ATitle.hidden = NO;
+    
     //关注、答案个数
     //关注
     NSString *attStr = [NSString stringWithFormat:@"%@人关注",model.AttCount];
