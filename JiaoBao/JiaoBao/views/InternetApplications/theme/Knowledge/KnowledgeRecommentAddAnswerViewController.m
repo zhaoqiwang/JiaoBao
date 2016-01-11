@@ -180,10 +180,11 @@
     self.mView_titlecell.mLab_Abstracts.hidden = YES;
 
     self.mView_titlecell.mWebV_comment.hidden = NO;
-    [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
+    [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:YES];
     self.mView_titlecell.mWebV_comment.tag = -1;
-    self.mView_titlecell.mWebV_comment.userInteractionEnabled = NO;
+//    self.mView_titlecell.mWebV_comment.userInteractionEnabled = NO;
 //    self.mView_titlecell.mWebV_comment.delegate = self;
+    self.mView_titlecell.mWebV_comment.keyboardDisplayRequiresUserAction = NO;
     NSString *content = model.questionModel.KnContent;
     NSString *tempHtml = [utils clearHtml:content width:5];
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
@@ -195,6 +196,7 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    
     NSString *meta;
     if (webView.tag==-1) {
         [MBProgressHUD hideHUDForView:self.view];
@@ -203,9 +205,13 @@
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
     [webView stringByEvaluatingJavaScriptFromString:meta];
-    
+    webView.keyboardDisplayRequiresUserAction = NO;
+    //禁用用户选择
+    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
+    // 禁用长按弹出框
+    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
-//    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
+    CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
     D("webViewHeight-====%f",webViewHeight);
 //    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
@@ -214,9 +220,10 @@
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
-        D("webViewHeight-====%f,%f",webViewHeight,frame.size.height);
+        D("webViewHeight-====%f,%f,%f",webViewHeight,frame.size.height,webViewWidth);
 //        [self webViewLoadFinish:webViewHeight+10];
 //        [self.mTableV_answer reloadData];
+        webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
         [self addDetailCell:self.mModel_recomment Float:frame.size.height];
     }else{
         CGRect frame = webView.frame;
@@ -401,7 +408,7 @@
     cell.mWebV_comment.hidden = NO;
     cell.mWebV_comment.tag = indexPath.row;
 //    cell.mWebV_comment.scalesPageToFit = YES;
-    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
+//    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
     cell.mWebV_comment.userInteractionEnabled = NO;
     NSString *content = model.Abstracts;
