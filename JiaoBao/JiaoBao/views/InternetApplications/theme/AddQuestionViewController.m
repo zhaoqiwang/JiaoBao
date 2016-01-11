@@ -750,7 +750,7 @@
         for (int i=0; i<self.mArr_pic.count; i++) {
             UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
                 if(range.location <= model.cursorPosition.location){
-                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+range.length, model.cursorPosition.length);
+                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+text.length, model.cursorPosition.length);
                 }
         }
         
