@@ -162,7 +162,7 @@
     //倒计时
     if(self.isSubmit == NO){
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSDate *currentDate = [NSDate date];
         NSTimeZone *zone = [NSTimeZone systemTimeZone];
         NSInteger interval = [zone secondsFromGMTForDate: currentDate];
@@ -186,7 +186,7 @@
             NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
             NSInteger diffHour = [cps hour];
             NSInteger diffMin    = [cps minute];
-            if(diffMin+diffHour*60>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
+            if((diffMin+diffHour*60)>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
                 self.clockLabel.text = @"已超时";
 
             }

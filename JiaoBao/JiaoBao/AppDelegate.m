@@ -21,10 +21,7 @@
 @implementation AppDelegate
 @synthesize mInternet,mRegister_view,mInt_index;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSString *time = @"NUUxQThDNjZGNTE1RkJFMg";
-    NSString *str000 = [DESTool decryptWithText:time Key:@"jsy305"];
-    
-    D("usodoo-====%@",str000);
+
     [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //友盟统计
