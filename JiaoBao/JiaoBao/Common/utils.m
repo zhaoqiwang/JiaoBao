@@ -162,6 +162,7 @@
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<img"] withString:@"<img class=\"pic\""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"nowrap"] withString:@""];
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"white-space"] withString:@""];
+    content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"href"] withString:@""];
     
     NSString *tempHtml = [NSString stringWithFormat:@"<meta name=\"viewport\" style=width:%dpx, content=\"width=%d,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no\" /><style>.pic{max-width:%dpx; max-height: auto; width: expression(this.width >%d && this.height < this.width ? %d: true); height: expression(this.height > auto ? auto: true);}</style>%@",[dm getInstance].width-tempW,[dm getInstance].width-tempW,[dm getInstance].width-tempW,[dm getInstance].width-tempW,[dm getInstance].width-tempW,content];
     return tempHtml;

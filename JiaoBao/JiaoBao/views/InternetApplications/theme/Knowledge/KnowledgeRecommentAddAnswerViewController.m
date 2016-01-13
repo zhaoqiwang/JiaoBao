@@ -33,6 +33,7 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    self.mInt_index = 0;
     
     //
     self.mScrollV_view.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
@@ -72,36 +73,37 @@
         }
         int m=0;
         for (int i=0; i<array.count; i++) {
-            UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
+//            UIWebView *tempWeb = [[UIWebView alloc]  initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
             AnswerModel *model = [array objectAtIndex:i];
             if (m==0&&[model.TabID intValue]==0) {
                 m++;
                 [MBProgressHUD showError:@"有答案已被删除或已屏蔽!" toView:self.view];
             }
-            tempWeb.delegate = self;
-            tempWeb.tag = i;
-            NSString *content = model.Abstracts;
-            NSString *tempHtml = [utils clearHtml:content width:85];
-            tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
-            [tempWeb setBackgroundColor:[UIColor clearColor]];
-            [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-            [self.view addSubview:tempWeb];
-            [tempWeb setHidden:YES];
+//            tempWeb.delegate = self;
+//            tempWeb.tag = i;
+//            NSString *content = model.Abstracts;
+//            NSString *tempHtml = [utils clearHtml:content width:85];
+//            tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
+//            [tempWeb setBackgroundColor:[UIColor clearColor]];
+//            [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+//            [self.view addSubview:tempWeb];
+//            [tempWeb setHidden:YES];
         }
         
         //延时执行
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            UIWebView *tempWeb0 = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-5, 0)];
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            UIWebView *tempWeb0 = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-10, 0)];
             tempWeb0.delegate = self;
             tempWeb0.tag = -1;
             NSString *content0 = self.mModel_recomment.questionModel.KnContent;
-            NSString *tempHtml0 = [utils clearHtml:content0 width:5];
+            NSString *tempHtml0 = [utils clearHtml:content0 width:10];
             tempWeb0.opaque = NO; //不设置这个值 页面背景始终是白色
             [tempWeb0 setBackgroundColor:[UIColor clearColor]];
             [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
             [self.view addSubview:tempWeb0];
             [tempWeb0 setHidden:YES];
-        });
+        self.mInt_index =1;
+//        });
         
         [self.mTableV_answer reloadData];
         [self addDetailCell:self.mModel_recomment Float:0];
@@ -184,9 +186,8 @@
     self.mView_titlecell.mWebV_comment.tag = -1;
 //    self.mView_titlecell.mWebV_comment.userInteractionEnabled = NO;
 //    self.mView_titlecell.mWebV_comment.delegate = self;
-    self.mView_titlecell.mWebV_comment.keyboardDisplayRequiresUserAction = NO;
     NSString *content = model.questionModel.KnContent;
-    NSString *tempHtml = [utils clearHtml:content width:5];
+    NSString *tempHtml = [utils clearHtml:content width:10];
     self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
@@ -196,11 +197,11 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-    
+    [MBProgressHUD hideHUDForView:self.view];
     NSString *meta;
     if (webView.tag==-1) {
-        [MBProgressHUD hideHUDForView:self.view];
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-5];
+        
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
@@ -212,15 +213,15 @@
     [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-    D("webViewHeight-====%f",webViewHeight);
-//    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
+    D("webViewHeight-=000===%f",webViewHeight);
+    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
         CGRect frame = webView.frame;
         frame.size.width = [dm getInstance].width-5;
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
-        D("webViewHeight-====%f,%f,%f",webViewHeight,frame.size.height,webViewWidth);
+        D("webViewHeight-=111===%f,%f,%f",webViewHeight,frame.size.height,webViewWidth);
 //        [self webViewLoadFinish:webViewHeight+10];
 //        [self.mTableV_answer reloadData];
         webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
@@ -231,13 +232,42 @@
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
-        D("webViewHeight-====%f,%f",webViewHeight,frame.size.height);
+        D("webViewHeight-=222===%f,%f",webViewHeight,frame.size.height);
         [webView setBackgroundColor:[UIColor clearColor]];
+        webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
-        model.floatH = frame.size.height+20;
+        model.floatH = frame.size.height;
+        [webView.scrollView setScrollEnabled:NO];
         [self.mTableV_answer reloadData];
         self.mTableV_answer.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, self.mTableV_answer.contentSize.height);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_answer.frame.origin.y+self.mTableV_answer.contentSize.height);
+    }
+    //加载答案
+    if (self.mInt_index-1<(int)self.mModel_recomment.answerArray.count) {
+        NSMutableArray *array = self.mModel_recomment.answerArray;
+        AnswerModel *model = [array objectAtIndex:self.mInt_index-1];
+        if ([model.Flag integerValue]>0) {//非无内容
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        }
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
+        D("99999999999999999=333===%d,%lu",self.mInt_index,(unsigned long)self.mModel_recomment.answerArray.count);
+//            AnswerModel *model = [array objectAtIndex:self.mInt_index-1];
+            if ([model.Flag integerValue]>0) {//非无内容
+                tempWeb.delegate = self;
+                tempWeb.tag = self.mInt_index-1;
+                NSString *content = model.Abstracts;
+                NSString *tempHtml = [utils clearHtml:content width:85];
+                tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
+                [tempWeb setBackgroundColor:[UIColor clearColor]];
+                [tempWeb.scrollView setScrollEnabled:NO];
+                [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+                [self.view addSubview:tempWeb];
+                [tempWeb setHidden:YES];
+            }
+            self.mInt_index++;
+        });
     }
 }
 
@@ -408,9 +438,10 @@
     cell.mWebV_comment.hidden = NO;
     cell.mWebV_comment.tag = indexPath.row;
 //    cell.mWebV_comment.scalesPageToFit = YES;
-//    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
+    [cell.mWebV_comment.scrollView setScrollEnabled:YES];
+    cell.mWebV_comment.scrollView.bounces = NO;
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
-    cell.mWebV_comment.userInteractionEnabled = NO;
+//    cell.mWebV_comment.userInteractionEnabled = NO;
     NSString *content = model.Abstracts;
     if (content.length==0&&[model.Flag integerValue]==2) {
         content = @"此答案已被修改";
@@ -419,7 +450,6 @@
     cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
     [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-//    [cell.mWebV_comment reload];
     
     //背景色
     cell.mView_background.frame = CGRectMake(cell.mWebV_comment.frame.origin.x-2, cell.mWebV_comment.frame.origin.y-3-29, [dm getInstance].width-70, cell.mWebV_comment.frame.size.height+4+29);
@@ -485,12 +515,14 @@
     tempF1 = tempF1+10+42;
     //姓名
     CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
+    D("namesize-======%@,%f,%f",model.IdFlag,nameSize.width,nameSize.height);
     if (nameSize.height>21) {
         nameSize = CGSizeMake(nameSize.width, 30);
         tempF1 = tempF1+10+nameSize.height;
     }else{
         tempF1 = tempF1+10+21;
     }
+    tempF1 = tempF1+20;
     
     //回答标题
     NSString *string1 = model.ATitle;
@@ -514,10 +546,13 @@
     //图片
     //时间
     tempF = tempF+5+21;
+    D("tempp-=====%f,%f",tempF,tempF1);
     //计算姓名和时间的高度
     if (tempF<tempF1) {
-        return tempF1+20;
+        D("11111-===%f",tempF1);
+        return tempF1;
     }else{
+        D("11112-===%f",tempF);
         return tempF;
     }
 }

@@ -127,8 +127,9 @@
         NSString *uId = [dic objectForKey:@"uId"];//教版
         NSString *chapterid = [dic objectForKey:@"chapterid"];//章
         NSString *StuId = [dic objectForKey:@"StuId"];//学生id
-        NSString *flag = [dic objectForKey:@"flag"];//0学生id取值1教版取值2章取值
+        NSString *flag = [dic objectForKey:@"flag"];//0学生id取值 1教版取值 2章取值
         if ([flag intValue]==0) {//取教版数据
+            [self.mArr_score removeAllObjects];
             for (int i=0; i<array.count; i++) {
                 TreeJob_node *node0 = [[TreeJob_node alloc]init];
                 node0.nodeLevel = 0;//节点所处层次
@@ -145,7 +146,8 @@
             for (TreeJob_node *node in self.mArr_score) {
                 LevelModel *model = node.nodeData;
                 if ([model.StudentID intValue]==[StuId intValue]) {
-                    if ([uId intValue]==[model.ID intValue]) {//匹配教版
+                    if ([uId intValue]==[model.uId intValue]) {//匹配教版
+                        [node.sonNodes removeAllObjects];
                         for (int i=0; i<array.count; i++) {
                             TreeJob_node *node0 = [[TreeJob_node alloc]init];
                             node0.nodeLevel = 1;//节点所处层次
@@ -167,22 +169,6 @@
                 LevelModel *model = node.nodeData;
                 if ([model.StudentID intValue]==[StuId intValue]) {
                     if ([uId intValue]==[model.uId intValue]) {//匹配教版
-                        for (TreeJob_node *node1 in node.sonNodes) {
-                            LevelModel *model1 = node1.nodeData;
-                            if ([chapterid intValue]==[model1.chapterid intValue]) {//匹配章
-                                for (int i=0; i<array.count; i++) {
-                                    TreeJob_node *node0 = [[TreeJob_node alloc]init];
-                                    node0.nodeLevel = 2;//节点所处层次
-                                    node0.type = 2;//节点类型
-                                    node0.isExpanded = FALSE;//节点是否展开
-                                    LevelModel *temp0 =[array objectAtIndex:i];
-                                    temp0.uId = uId;
-                                    temp0.StudentID = StuId;
-                                    node0.nodeData = temp0;//当前节点数据
-                                    [node1.sonNodes addObject:node0];
-                                }
-                            }
-                        }
                         [self addChapterRunloop:node Array:array chapterid:chapterid uId:uId StuId:StuId index:0];
                     }
                 }
@@ -199,6 +185,7 @@
     for (TreeJob_node *node1 in node.sonNodes) {
         LevelModel *model1 = node1.nodeData;
         if ([chapterid intValue]==[model1.chapterid intValue]) {//匹配章
+            [node1.sonNodes removeAllObjects];
             for (int i=0; i<array.count; i++) {
                 TreeJob_node *node0 = [[TreeJob_node alloc]init];
                 node0.nodeLevel = 2;//节点所处层次
@@ -206,11 +193,11 @@
                 node0.isExpanded = FALSE;//节点是否展开
                 LevelModel *temp0 =[array objectAtIndex:i];
                 temp0.uId = uId;
-                if (index>0) {
-                    temp0.index = index-2;
-                }else{
-                    temp0.index = index;
-                }
+//                if (index>0) {
+                    temp0.index = model1.index+1;
+//                }else{
+//                    temp0.index = index;
+//                }
                 temp0.chapterid = temp0.ID;
                 temp0.StudentID = StuId;
                 node0.nodeData = temp0;//当前节点数据
@@ -218,7 +205,7 @@
             }
             break;
         }else{
-            index++;
+//            index++;
             [self addChapterRunloop:node1 Array:array chapterid:chapterid uId:uId StuId:StuId index:index];
         }
     }
@@ -559,8 +546,8 @@
                 titleSize.width =[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25);
             }
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, .5);
-            D("model.index=-=====%d",model.index);
-            cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25+(model.index)*20, 8, titleSize.width, cell.mLab_title.frame.size.height);
+//            D("model.index=-=====%d",model.index);
+            cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25+(model.index-1)*20, 8, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:12];
             cell.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
             cell.mImg_open.hidden = YES;
@@ -692,12 +679,6 @@
             LevelModel *model0 = node0.nodeData;
             if ([model.StudentID intValue]==[model0.StudentID intValue]) {
                 if ([model.uId intValue]==[model0.uId intValue]) {
-//                    for (TreeJob_node *node1 in node0.sonNodes) {
-//                        LevelModel *model1 = node1.nodeData;
-//                        if ([model.ID intValue]==[model1.ID intValue]) {
-//                            node1.isExpanded = !node1.isExpanded;
-//                        }
-//                    }
                     [self openOrClose:node0 Model:model];
                 }
             }
@@ -709,7 +690,7 @@
 -(void)openOrClose:(TreeJob_node *)node0 Model:(LevelModel *)model{
     for (TreeJob_node *node1 in node0.sonNodes) {
         LevelModel *model1 = node1.nodeData;
-        D("2323232232323232323-=======%@,%@",model.ID,model1.ID);
+//        D("2323232232323232323-=======%@,%@",model.ID,model1.ID);
         if ([model.ID intValue]==[model1.ID intValue]) {
             node1.isExpanded = !node1.isExpanded;
             break;
@@ -744,15 +725,16 @@
     for(TreeJob_node *node2 in node.sonNodes){
         [tmp addObject:node2];
         if (node2.isExpanded) {
-            for (TreeJob_node *node3 in node2.sonNodes) {
-                [tmp addObject:node3];
-                if (node3.isExpanded) {
-                    [self addRunloop:node3 SumArr:tmp];
-                }
-            }
-        }else{
-            [self addRunloop:node2 SumArr:tmp];
+//            for (TreeJob_node *node3 in node2.sonNodes) {
+//                [tmp addObject:node3];
+//                if (node3.isExpanded) {
+                    [self addRunloop:node2 SumArr:tmp];
+//                }
+//            }
         }
+//        else{
+//            [self addRunloop:node2 SumArr:tmp];
+//        }
     }
 }
 
