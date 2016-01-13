@@ -209,7 +209,6 @@
 
             }
             
-            
         }
         
     }
@@ -470,10 +469,14 @@
         {
             NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
             NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
-            for(int i=1;i<inputCount;i++)
+            for(int i=0;i<inputCount;i++)
             {
                 NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
                 NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if(![typeStr isEqualToString:@"text"])
+                {
+                    continue;
+                }
                 if([typeStr isEqualToString:@"text"])
                 {
                     if([self.FlagStr isEqualToString:@"1"])
@@ -504,17 +507,32 @@
             NSLog(@"textArr_num = %@",[textArr objectAtIndex:textArr.count-1]);
             NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
             NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
-            for(int i=1;i<inputCount;i++)
+            BOOL isText = NO;
+            for(int i=0;i<inputCount;i++)
             {
                 
                 NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
                 NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if(![typeStr isEqualToString:@"text"])
+                {
+                    continue;
+                }
                 if([typeStr isEqualToString:@"text"])
                 {
+                    if(i==0){
+                        isText = YES;
+                    }
                     NSString *checkStr;
                     if(i<=textArr.count)
                     {
-                        checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i-1]];
+                        if(isText == YES){
+                            checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i]];
+                            
+                        }else{
+                            checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value = '%@'",i,[textArr objectAtIndex:i-1]];
+                            
+                        }
+
                     }
                     else
                     {
@@ -779,6 +797,12 @@
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+                NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+                if(![typeStr isEqualToString:@"text"])
+                {
+                    continue;
+                }
                 NSString *content;
                 if(i == inputCount-1)
                 {
@@ -790,7 +814,7 @@
                     
                 }
                 NSLog(@"content = %@",content);
-                if(i>0&&i<inputCount-1)
+                if(i>=0&&i<inputCount-1)
                 {
                     if([content isEqualToString:@","]== NO)
                     {
@@ -1076,8 +1100,15 @@
         {
             NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+            NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
+            NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
+            if(![typeStr isEqualToString:@"text"])
+            {
+                continue;
+            }
+
             NSString *content;
-            if(i>0)
+            if(i>=0)
             {
                 if([value isEqualToString:@""]== NO)
                 {

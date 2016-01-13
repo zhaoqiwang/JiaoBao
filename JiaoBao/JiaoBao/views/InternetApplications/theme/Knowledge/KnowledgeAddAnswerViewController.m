@@ -13,6 +13,7 @@
 
 @interface KnowledgeAddAnswerViewController ()
 @property(nonatomic,assign)NSRange cursorPosition;
+@property(nonatomic,assign)NSInteger hideFlag;
 
 @end
 
@@ -44,7 +45,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mInt_index = 1;
-
+    self.hideFlag = 0;
     
     self.mArr_pic = [NSMutableArray array];
     self.mInt_flag = 0;
@@ -102,12 +103,18 @@
     //如果已经回答过，取自己回答的答案明细
     if ([self.mStr_MyAnswerId intValue]>0) {
         [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mStr_MyAnswerId];
+        self.hideFlag = 0;
+
+    }
+    else{
+        self.hideFlag = 1;
     }
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 
 //答案详情回调
 -(void)AnswerDetailWithAId:(id)sender{
+    
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -192,7 +199,6 @@
             [str insertAttributedString:imgModel.attributedString atIndex:imgModel.cursorPosition.location];
         }
         self.mTextV_content.attributedText = str;
-
         
 
         self.mLab_answer.hidden = YES;
@@ -200,6 +206,12 @@
         //切换按钮显示标题
         [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
+    }
+    if(self.hideFlag == 1){
+        [MBProgressHUD hideHUDForView:self.view];
+
+    }else{
+        self.hideFlag ++;
     }
 }
 //如果解析的网页不是utf8编码，如gbk编码，可以先将其转换为utf8编码再对其进行解析
@@ -440,7 +452,12 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
-    [MBProgressHUD hideHUDForView:self.view];
+    if(self.hideFlag == 1){
+        [MBProgressHUD hideHUDForView:self.view];
+        
+    }else{
+        self.hideFlag ++;
+    }
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
@@ -676,10 +693,8 @@
         for (int i=0; i<self.mArr_pic.count; i++) {
             UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
             if(range.location <= model.cursorPosition.location){
-                model.cursorPosition = NSMakeRange(model.cursorPosition.location+range.length, model.cursorPosition.length);
+                model.cursorPosition = NSMakeRange(model.cursorPosition.location+text.length, model.cursorPosition.length);
             }
-            
-            
             
         }
     }
