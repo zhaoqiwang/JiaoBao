@@ -269,6 +269,7 @@
 }
 
 -(void)gotoView{
+    [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
     queston.mModel_question = self.mModel_question;
     [utils pushViewController:queston animated:YES];
