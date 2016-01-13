@@ -208,7 +208,7 @@
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
     }
     if(self.hideFlag == 1){
-        [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
 
     }else{
         self.hideFlag ++;
@@ -310,6 +310,11 @@
                     self.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
 //                    self.mBtn_anSubmit.hidden = YES;
                     [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];//答案明细
+                    self.hideFlag = 0;
+                    
+                }
+                else{
+                    self.hideFlag = 1;
                 }
             }
         }
@@ -453,7 +458,7 @@
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     if(self.hideFlag == 1){
-        [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         
     }else{
         self.hideFlag ++;
