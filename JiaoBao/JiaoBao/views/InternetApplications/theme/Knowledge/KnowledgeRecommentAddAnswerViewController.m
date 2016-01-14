@@ -245,29 +245,37 @@
     //加载答案
     if (self.mInt_index-1<(int)self.mModel_recomment.answerArray.count) {
         NSMutableArray *array = self.mModel_recomment.answerArray;
-        AnswerModel *model = [array objectAtIndex:self.mInt_index-1];
-        if ([model.Flag integerValue]>0) {//非无内容
-            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        AnswerModel *model;
+        for (int i=self.mInt_index-1; i<self.mModel_recomment.answerArray.count; i++) {
+            model = [array objectAtIndex:self.mInt_index-1];
+            if ([model.Flag integerValue]==0) {
+                self.mInt_index++;
+            }else{
+                break;
+            }
         }
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
-        D("99999999999999999=333===%d,%lu",self.mInt_index,(unsigned long)self.mModel_recomment.answerArray.count);
-//            AnswerModel *model = [array objectAtIndex:self.mInt_index-1];
-            if ([model.Flag integerValue]>0) {//非无内容
-                tempWeb.delegate = self;
-                tempWeb.tag = self.mInt_index-1;
-                NSString *content = model.Abstracts;
-                NSString *tempHtml = [utils clearHtml:content width:85];
-                tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
-                [tempWeb setBackgroundColor:[UIColor clearColor]];
-                [tempWeb.scrollView setScrollEnabled:NO];
-                [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-                [self.view addSubview:tempWeb];
-                [tempWeb setHidden:YES];
-            }
-            self.mInt_index++;
-        });
+        if ([model.Flag integerValue]>0) {//非无内容
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
+                D("99999999999999999=333===%d,%lu",self.mInt_index,(unsigned long)self.mModel_recomment.answerArray.count);
+//                if ([model.Flag integerValue]>0) {//非无内容
+                    tempWeb.delegate = self;
+                    tempWeb.tag = self.mInt_index-1;
+                    NSString *content = model.Abstracts;
+                    NSString *tempHtml = [utils clearHtml:content width:85];
+                    tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
+                    [tempWeb setBackgroundColor:[UIColor clearColor]];
+                    [tempWeb.scrollView setScrollEnabled:NO];
+                    [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+                    [self.view addSubview:tempWeb];
+                    [tempWeb setHidden:YES];
+//                }
+                self.mInt_index++;
+            });
+        }
     }
 }
 
@@ -550,6 +558,7 @@
     //计算姓名和时间的高度
     if (tempF<tempF1) {
         D("11111-===%f",tempF1);
+        
         return tempF1;
     }else{
         D("11112-===%f",tempF);
