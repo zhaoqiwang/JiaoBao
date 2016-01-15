@@ -165,6 +165,7 @@
     
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">答"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white;padding:1px 2px 1px 2px;\">答"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">内容"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">内容"]mutableCopy];
+        content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">无内容"] withString:@"style = \"background:rgb(23,158,41);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">无内容"]mutableCopy];
     content = [[content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@">依据"] withString:@"style = \"background:rgb(251,68,8);border-radius:3px;color:white ;padding:1px 1px 1px 1px;\">依据"]mutableCopy];
     
     NSString *tempHtml = [utils clearHtml:content width:10];
