@@ -497,6 +497,7 @@
     self.mView_titlecell.mLab_title.lineBreakMode = RTTextLineBreakModeCharWrapping;
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     self.mView_titlecell.mLab_title.componentsAndPlainText = componentsDS;
+    self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, [dm getInstance].width-28-49, 1);
     CGSize titleSize = [self.mView_titlecell.mLab_title optimumSize];
     self.mView_titlecell.mLab_title.frame = CGRectMake(self.mView_titlecell.askImgV.frame.origin.x+self.mView_titlecell.askImgV.frame.size.width, self.mView_titlecell.askImgV.frame.origin.y, [dm getInstance].width-28-49, titleSize.height);
     //详情
@@ -554,8 +555,9 @@
     self.mView_titlecell.mLab_line2.hidden = YES;
     self.mView_titlecell.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+21);
     self.mBtnV_btn.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, 50);
-    
-//    [self.mTableV_answers reloadData];
+    self.mView_btn.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+50, [dm getInstance].width, 44);
+    self.mView_tableHead.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_btn.frame.origin.y+44);
+    [self.mTableV_answers reloadData];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{

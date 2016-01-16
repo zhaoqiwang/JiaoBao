@@ -79,15 +79,6 @@
                 m++;
                 [MBProgressHUD showError:@"有答案已被删除或已屏蔽!" toView:self.view];
             }
-//            tempWeb.delegate = self;
-//            tempWeb.tag = i;
-//            NSString *content = model.Abstracts;
-//            NSString *tempHtml = [utils clearHtml:content width:85];
-//            tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
-//            [tempWeb setBackgroundColor:[UIColor clearColor]];
-//            [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-//            [self.view addSubview:tempWeb];
-//            [tempWeb setHidden:YES];
         }
         
         //延时执行
@@ -399,7 +390,7 @@
         cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, nameSize.height);
     }else{
         cell.mLab_IdFlag.numberOfLines = 1;
-        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, cell.mLab_IdFlag.frame.size.height);
+        cell.mLab_IdFlag.frame = CGRectMake(9, cell.mImgV_head.frame.origin.y+42+10, 42, nameSize.height);
     }
     
     cell.mLab_IdFlag.text = model.IdFlag;
@@ -528,7 +519,7 @@
         nameSize = CGSizeMake(nameSize.width, 30);
         tempF1 = tempF1+10+nameSize.height;
     }else{
-        tempF1 = tempF1+10+21;
+        tempF1 = tempF1+10+nameSize.height;
     }
     tempF1 = tempF1+20;
     
