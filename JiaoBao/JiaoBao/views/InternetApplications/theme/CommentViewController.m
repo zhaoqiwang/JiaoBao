@@ -950,6 +950,7 @@
     if(self.flag == NO)
     {
         cell.mBtn_detail.hidden = YES;
+        
     }
 //    NSString *string_title = cell.model.Title;
 //    string_title = [string_title stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
@@ -975,7 +976,15 @@
     cell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [cell.mLab_title optimumSize];
    // cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
-    cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, titleSize.height);
+    if(self.flag == NO){
+            cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2- cell.answerImgV.frame.size.width, titleSize.height);
+        
+    }else{
+            cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, titleSize.height);
+        
+    }
+
+
 
     //话题
     cell.mLab_Category0.frame = CGRectMake(30, cell.mLab_title.frame.origin.y+cell.mLab_title.frame.size.height, cell.mLab_Category0.frame.size.width, cell.mLab_Category0.frame.size.height);
