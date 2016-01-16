@@ -182,8 +182,8 @@
         else
         {
             NSString *str = [NSString stringWithFormat:@"不存在邀请人%@",self.atAccIdsTF.text];
-            [MBProgressHUD showError:str];
             [MBProgressHUD hideHUD];
+            [MBProgressHUD showError:str];
             //self.nickNameModel = nil;
             self.invitationUserInfo = nil;
         }
