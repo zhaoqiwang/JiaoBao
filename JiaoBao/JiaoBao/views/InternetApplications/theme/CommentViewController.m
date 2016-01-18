@@ -596,7 +596,7 @@
                 tempBtnCai.titleLabel.font = [UIFont systemFontOfSize:12];
                 tempBtnCai.restorationIdentifier = [NSString stringWithFormat:@"%d",a ];
                 tempBtnCai.tag = -2;
-                //tempBtnCai.hidden = YES;
+                tempBtnCai.hidden = YES;
                 //边框
                 if(refModel.Caiselected == YES)
                 {
@@ -659,7 +659,7 @@
                 tempBtnLike.restorationIdentifier = [NSString stringWithFormat:@"%d",a];
                 tempBtnLike.tag = -1;
                 
-                //tempBtnLike.hidden = YES;
+                tempBtnLike.hidden = YES;
                 //边框
                 
                 //设置坐标

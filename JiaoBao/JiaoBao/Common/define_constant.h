@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-//#define ONLINEJOBURL @"http://192.168.0.172:8201/AtHWPort/"//在线作业url
-#define ONLINEJOBURL @"http://192.168.0.11:8301/AtHWPort/"//在线作业url
+#define ONLINEJOBURL @"http://192.168.0.178:8501/AtHWPort/"//在线作业url
+//#define ONLINEJOBURL @"http://192.168.0.11:8301/AtHWPort/"//在线作业url
 #define MAINURL @"http://www.jsyoa.edu8800.com/JBClient/"//网址
 //#define AAAAAAA ([[dm getInstance].MainUrl length]>0?@"11111":@"http://www.jsyoa.edu8800.com/JBClient/")
 //#define MAINURL @"http://www.jiaobao.net/JBClient/"//网址

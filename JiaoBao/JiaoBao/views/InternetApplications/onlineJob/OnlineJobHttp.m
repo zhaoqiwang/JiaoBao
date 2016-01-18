@@ -335,6 +335,9 @@ static OnlineJobHttp *onlineJobHttp = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         D("Error---------StuSubQsWithHwInfoId: %@", error);
+        StuSubModel *model;
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"StuSubQsWithHwInfoId" object:model];
+
     }];
 }
 
@@ -446,6 +449,22 @@ static OnlineJobHttp *onlineJobHttp = nil;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:@"服务器异常"];
         D("Error---------TecQswithchapterid: %@", error);
+    }];
+}
+-(void)GetSQLDateTime{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetSQLDateTime",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetSQLDateTime" object:result];
+        
+        D("JSON--------GetSQLDateTime: %@,", result);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
     }];
 }
 
