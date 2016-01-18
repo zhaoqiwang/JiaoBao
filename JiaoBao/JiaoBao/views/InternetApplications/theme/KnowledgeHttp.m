@@ -738,7 +738,7 @@
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         GetPickedByIdModel *model = [ParserJson_knowledge parserJsonGetPickedById:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetPickedById: %@,", result);
-        [tempDic setValue:code forKey:@"code"];
+        [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
         if ([flag intValue]==0) {//主页
