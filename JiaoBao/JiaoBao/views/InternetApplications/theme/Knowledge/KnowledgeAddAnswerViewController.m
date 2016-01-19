@@ -111,10 +111,47 @@
     }
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
-
+- (NSString *)getHTML {
+    NSDictionary *exportParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType};
+    NSData *htmlData = [self.mTextV_content.attributedText dataFromRange:NSMakeRange(0, self.mTextV_content.attributedText.length) documentAttributes:exportParams error:nil];
+    return [[NSString alloc] initWithData:htmlData encoding:NSUTF8StringEncoding];
+}
+- (NSMutableArray *)getRangeStr:(NSString *)text findText:(NSString *)findText
+{
+    NSMutableArray *arrayRanges = [NSMutableArray arrayWithCapacity:20];
+    if (findText == nil && [findText isEqualToString:@""]) {
+        return nil;
+    }
+    NSRange rang = [text rangeOfString:findText];
+    if (rang.location != NSNotFound && rang.length != 0) {
+        [arrayRanges addObject:[NSNumber numberWithInteger:rang.location]];
+        NSRange rang1 = {0,0};
+        NSInteger location = 0;
+        NSInteger length = 0;
+        for (int i = 0;; i++)
+        {
+            if (0 == i) {
+                location = rang.location + rang.length;
+                length = text.length - rang.location - rang.length;
+                rang1 = NSMakeRange(location, length);
+            }else
+            {
+                location = rang1.location + rang1.length;
+                length = text.length - rang1.location - rang1.length;
+                rang1 = NSMakeRange(location, length);
+            }
+            rang1 = [text rangeOfString:findText options:NSCaseInsensitiveSearch range:rang1];
+            if (rang1.location == NSNotFound && rang1.length == 0) {
+                break;
+            }else
+                [arrayRanges addObject:[NSNumber numberWithInteger:rang1.location]];
+        }
+        return arrayRanges;
+    }
+    return nil;
+}
 //答案详情回调
 -(void)AnswerDetailWithAId:(id)sender{
-    
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -123,15 +160,15 @@
     }else{
         AnswerDetailModel *model = [dic objectForKey:@"model"];
         self.mTextV_answer.text = model.ATitle;
-//        NSString *contentStr = [model.AContent stringByReplacingOccurrencesOfString:@"<img " withString:@"<img height=\"30\" width=\"30\""];
-//        NSString *content = contentStr;
-//        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
-//        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
-        //content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
+//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"<img " withString:@"<img height=\"30\" width=\"30\""];
+//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
+//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
 //        NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
-//        NSAttributedString *string = [[NSAttributedString alloc] initWithData:[content dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
-//        //textView是UITextView
+//        NSAttributedString *string = [[NSAttributedString alloc] initWithData:[model.AContent dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
+////        //textView是UITextView
 //        self.mTextV_content.attributedText = string;
+
         NSData* htmlData = [model.AContent dataUsingEncoding:NSUTF8StringEncoding];
         
         TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
@@ -141,7 +178,12 @@
         model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
         model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br>"] withString:@""];
         model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br/>"] withString:@""];
+        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
 
+//        NSMutableAttributedString *content=[[NSMutableAttributedString alloc] initWithString:model.AContent];
+//        self.mTextV_content.attributedText = content;
+//        NSString * htmlStr = [self getHTML];
+//        NSLog(@"htmlStr = %@",htmlStr);
 
         NSString *contentText = model.AContent;
         NSString *tempStr = model.AContent;
@@ -149,44 +191,48 @@
             TFHppleElement *aElement = [aArray objectAtIndex:i];
             NSDictionary *aAttributeDict = [aElement attributes];
             NSString *srcStr = [aAttributeDict objectForKey:@"src"];
-            NSString *_srcStr = [aAttributeDict objectForKey:@"src"];
-            contentText = [contentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src=\"%@\"",_srcStr] withString:@""];
-            contentText = [contentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src='%@'",_srcStr] withString:@""];
-            tempStr = [tempStr stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src=\"%@\"",_srcStr] withString:@""];
-            tempStr = [tempStr stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_src='%@'",_srcStr] withString:@""];
-            UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
-            if([tempStr containsString:srcStr]){
-                ImgModel.url = [NSString stringWithFormat:@"<img src='%@'/>",srcStr];
-                if(![tempStr containsString:ImgModel.url]){
-                    ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\" />",srcStr];
 
-                }
-                if(![tempStr containsString:ImgModel.url]){
-                    ImgModel.url = [NSString stringWithFormat:@"<img src='%@' />",srcStr];
-                    
-                }
-                if(![tempStr containsString:ImgModel.url]){
-                    ImgModel.url = [NSString stringWithFormat:@"<img src=\"%@\"/>",srcStr];
-                    
-                }
+            UploadImgModel *ImgModel = [[UploadImgModel alloc]init];
+            ImgModel.url = aElement.raw;
+
+            if([contentText containsString:ImgModel.url]){
+                ImgModel.url = aElement.raw;
+
+            }
+            else{
+                ImgModel.url = [aElement.raw stringByReplacingOccurrencesOfString:@"/>" withString:@" />"];
 
             }
 
-
+            NSLog(@"imgUrl = %@",ImgModel.url);
             ImgModel.originalName = @"";
             ImgModel.size = @"";
             ImgModel.type = @"";
-            
-            NSRange range = [contentText rangeOfString:ImgModel.url];
-            ImgModel.cursorPosition = NSMakeRange(range.location, 1);
-            tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];
-            contentText = [contentText stringByReplacingOccurrencesOfString:ImgModel.url withString:@" "];
-            NSLog(@"contentText = %@ tempStr = %@",contentText,tempStr);
+            NSMutableArray *rangeArr = [self getRangeStr:contentText findText:ImgModel.url];
+            if(rangeArr.count>0){
+                
+                ImgModel.cursorPosition = NSMakeRange([[rangeArr objectAtIndex:0]longValue], 1);
+            }
 
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:srcStr]]];
+            NSLog(@"cursorPosition = %lu",(unsigned long)ImgModel.cursorPosition.location);
+//            tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];
+//            contentText = [contentText stringByReplacingOccurrencesOfString:ImgModel.url withString:@" "];
+            NSLog(@"contentText = %@ tempStr = %@",contentText,tempStr);
+            tempStr = [tempStr stringByReplacingCharactersInRange:NSMakeRange(ImgModel.cursorPosition.location-i, ImgModel.url.length) withString:@""];
+            contentText = [contentText stringByReplacingCharactersInRange:NSMakeRange(ImgModel.cursorPosition.location, ImgModel.url.length) withString:@" "];
             NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+
+            if(![srcStr containsString:@"http"]){
+                srcStr = [srcStr stringByReplacingOccurrencesOfString:@"//" withString:@"http://www."];
+                textAttach.bounds=CGRectMake(0, 0, 20, 10);
+
+            }
+            else{
+                textAttach.bounds=CGRectMake(0, 0, 30, 30);
+
+            }
+            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:srcStr]]];
             textAttach.image = image;
-            textAttach.bounds=CGRectMake(0, 0, 30, 30);
             NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
             ImgModel.attributedString = strA;
             [self.mArr_pic addObject:ImgModel];
@@ -592,6 +638,7 @@
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
 
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
+
     if ([self.mStr_MyAnswerId intValue]>0) {
         [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];
     }else{
