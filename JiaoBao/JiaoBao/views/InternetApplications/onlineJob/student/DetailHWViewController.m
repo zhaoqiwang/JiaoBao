@@ -29,7 +29,7 @@
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;//显示题数范围
 @property(nonatomic,assign)BOOL isOpen;//是否展开
 @property(nonatomic,strong)NSTimer *timer;//计时器
-
+@property(nonatomic,strong)NSString* serverDate;
 @end
 
 @implementation DetailHWViewController
@@ -173,45 +173,21 @@
             {
                 self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
                 self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+                self.serverDate = self.stuHomeWorkModel.HWStartTime;
 
             }
 
         }else{//再次进入做作业界面 从服务器获取开始时间
-            NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
-            NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
-            
-            NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
-            NSUInteger unitFlags =
-            NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:localeCurrentDate  options:0];
-            NSInteger diffHour = [cps hour];
-            NSInteger diffMin    = [cps minute];
-            if((diffMin+diffHour*60)>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
-                self.clockLabel.text = @"已超时";
 
+            if(!self.serverDate){
+                [[OnlineJobHttp getInstance]GetSQLDateTime];
             }
-            else{
-                NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeCurrentDate  toDate:localeStartDate  options:0];
-                NSInteger diffMin    = [cps minute];
-                NSInteger diffSec   = [cps second];
-                diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
-                diffSec = 60+diffSec;
-                if(diffSec==60)
-                {
-                    diffSec = 0;
-                }
-                if(!self.timer)
-                {
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
 
-                }
-
+           
             }
             
         }
         
-    }
     else//已经提交的作业不显示倒计时
     {
         self.clockLabel.hidden = YES;
@@ -255,6 +231,11 @@
 -(void)StuSubQsWithHwInfoId:(id)sender
 {
     StuSubModel *model = [sender object];
+    if(model == nil){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:@"请求失败" toView:self.view];
+
+    }
     if([model.reNum integerValue] == 0)//提交作业
     {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -272,6 +253,8 @@
         else//获取练习成绩
         {
             self.clockLabel.text = @"已提交";
+            [self.timer invalidate];
+            self.timer = nil;
             NSString *html = [model.HWHTML stringByAppendingString:@"<p><span style = \"color:rgb(235,115,80); font-size:11px \">选择继续练习，将无法通过手机端再次查看本次的错题，请登录电脑端查看。</span></p><div div style=\"TEXT-ALIGN: center\"><script>function clicke(){}</script><input type=\"button\" onClick=\"clicke()\" style = \"font-size:12px\" value=\"继续做练习\"/></div>"];
             [self.webView loadHTMLString:html baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
         }
@@ -296,20 +279,15 @@
 }
 //计时器方法
 -(void)timerAction{
-
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *currentDate = [NSDate date];
     NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate: currentDate];
-    NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
-    NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
+    NSDate *serverDate = [dateFormatter  dateFromString:self.serverDate];
 
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-    NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeCurrentDate  toDate:localeStartDate  options:0];
+    NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverDate  toDate:startDate  options:0];
     NSInteger diffMin    = [cps minute];
     NSInteger diffSec   = [cps second];
 
@@ -327,6 +305,7 @@
         diffSec = 0;
     }
     self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+    self.serverDate = [dateFormatter stringFromDate:[ NSDate dateWithTimeInterval:1 sinceDate:serverDate]];
 }
 -(void)dealloc
 {
@@ -337,9 +316,52 @@
     [self.timer invalidate];
     self.timer = nil;
 }
+-(void)GetSQLDateTime:(id)sender{
+    NSString *serverDate = [sender object];
+    self.serverDate = serverDate;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *currentDate = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: currentDate];
+    NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
+    NSDate *localeStartDate = [startDate  dateByAddingTimeInterval: interval];
+    NSDate *serverTime = [dateFormatter dateFromString:serverDate ];
+
+        
+        NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
+        NSUInteger unitFlags =
+        NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+        NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:serverTime  options:0];
+        NSInteger diffHour = [cps hour];
+        NSInteger diffMin    = [cps minute];
+        if((diffMin+diffHour*60)>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
+            self.clockLabel.text = @"已超时";
+            
+        }
+        else{
+            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverTime  toDate:localeStartDate  options:0];
+            NSInteger diffMin    = [cps minute];
+            NSInteger diffSec   = [cps second];
+            diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
+            diffSec = 60+diffSec;
+            if(diffSec==60)
+            {
+                diffSec = 0;
+            }
+            if(!self.timer)
+            {
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                //self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+                
+            }
+            
+        }
+        
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-
 
     self.subArr = [[NSMutableArray alloc]initWithCapacity:0];
     self.errQuestionArr = [[NSMutableArray alloc]initWithCapacity:0];
@@ -361,9 +383,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
-    //获取作业信息
+    //获取服务器时间
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetSQLDateTime:) name:@"GetSQLDateTime" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
-//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(StuSubQsWithHwInfoId:) name:@"StuSubQsWithHwInfoId" object:nil];
 
     //获取作业信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWWithHwInfoId:) name:@"GetStuHWWithHwInfoId" object:nil];

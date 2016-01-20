@@ -73,6 +73,7 @@
 
 //根据章节id判断题库中是否有数据      章节id
 -(void)TecQswithchapterid:(NSString*)chapterid;
-
+//获取自动作业服务器时间
+-(void)GetSQLDateTime;
 
 @end

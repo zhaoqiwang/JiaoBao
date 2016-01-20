@@ -155,4 +155,5 @@
 -(void)AddScoreWithtabid:(NSString*)tabid tp:(NSString*)tp;
 //功能：获取我的评论列表
 -(void)GetMyCommsWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum;
+
 @end
