@@ -57,12 +57,13 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue] ==0) {
         self.mModel_getPickdById = [dic objectForKey:@"model"];
     }else{
-        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-        [MBProgressHUD showError:ResultDesc toView:self.view];
+        
     }
+    [MBProgressHUD showError:ResultDesc toView:self.view];
     [self.mTalbeV_liset reloadData];
 }
 

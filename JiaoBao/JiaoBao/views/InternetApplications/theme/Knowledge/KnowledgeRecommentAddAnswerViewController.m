@@ -456,7 +456,7 @@
     [cell.mCollectionV_pic reloadData];
     cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
     if (model.Thumbnail.count>0) {
-        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5+20, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
     }else{
         cell.mCollectionV_pic.frame = cell.mView_background.frame;
     }

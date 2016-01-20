@@ -736,10 +736,16 @@
         //长时间不操作，握手通讯失败后，进行登录操作
         Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSString *Data = [jsonDic objectForKey:@"Data"];
         GetPickedByIdModel *model = [ParserJson_knowledge parserJsonGetPickedById:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetPickedById: %@,", result);
         [tempDic setValue:code forKey:@"ResultCode"];
-        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        if (Data.length==0) {
+            [tempDic setValue:@"该精选已被屏蔽或删除" forKey:@"ResultDesc"];
+        }else{
+            [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        }
+        
         [tempDic setValue:model forKey:@"model"];
         if ([flag intValue]==0) {//主页
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];

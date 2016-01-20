@@ -93,11 +93,16 @@
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"code"];
     NSString *str = [dic objectForKey:@"str"];
+    NSString *Data = [dic objectForKey:@"Data"];
     if ([flag intValue] ==0) {//昵称可用
-        //发送修改昵称和姓名协议
-        [MBProgressHUD showText:@"修改昵称和姓名中" toView:self.view];
-        //[self ProgressViewLoad:@"修改昵称和姓名中"];
-        [[RegisterHttp getInstance] registerHttpUpateRecAcc:[dm getInstance].jiaoBaoHao NickName:self.mTextF_nickName.text TrueName:self.mTextF_trueName.text];
+        if ([Data isEqualToString:@"False"]) {
+            [MBProgressHUD showText:@"昵称不可用" toView:self.view];
+        }else{
+            //发送修改昵称和姓名协议
+            [MBProgressHUD showText:@"修改昵称和姓名中" toView:self.view];
+            //[self ProgressViewLoad:@"修改昵称和姓名中"];
+            [[RegisterHttp getInstance] registerHttpUpateRecAcc:[dm getInstance].jiaoBaoHao NickName:self.mTextF_nickName.text TrueName:self.mTextF_trueName.text];
+        }
     }else{//昵称重复
         [MBProgressHUD showText:str toView:self.view];
          //[self progressViewTishi:str];

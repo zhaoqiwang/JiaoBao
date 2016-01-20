@@ -326,8 +326,9 @@ static RegisterHttp *registerHttp = nil;
     }else if (_request.tag == 6){//检查昵称是否重复
         NSDictionary *dic = [dataString objectFromJSONString];
         NSString *str = [dic objectForKey:@"ResultDesc"];
-        D("str00=register==6=>>>>==%@",str);
+        D("str00=register==6=>>>>==%@,%@",str,dic);
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionary];
+        [dic2 setValue:[dic objectForKey:@"Data"] forKey:@"Data"];
         [dic2 setValue:code forKey:@"code"];
         [dic2 setValue:str forKey:@"str"];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"registerHttpCheckAccN" object:dic2];
