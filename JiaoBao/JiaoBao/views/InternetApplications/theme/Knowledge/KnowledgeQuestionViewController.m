@@ -359,6 +359,8 @@
         }
         if (self.mArr_answers.count==0&&array.count==0) {
             [MBProgressHUD showSuccess:@"暂无内容" toView:self.view];
+        }else if (self.mArr_answers.count>0&&array.count==0){
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
         }
     }
     [self.mTableV_answers reloadData];
@@ -406,85 +408,43 @@
     self.mView_btn.mBtn_discuss.frame = CGRectMake(self.mView_btn.mBtn_evidence.frame.origin.x+50+([dm getInstance].width-50*4)/5, 10, 50, 44-20);
     self.mView_btn.mBtn_nodiscuss.frame = CGRectMake(self.mView_btn.mBtn_discuss.frame.origin.x+50+([dm getInstance].width-50*4)/5, 10, 50, 44-20);
     if ([self.mStr_flag integerValue]==-1) {//-1全部，0无内容，2有内容，1有证据的回答
-        [self.mView_btn.mBtn_all setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_all.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-        [self.mView_btn.mBtn_all.layer setBorderWidth:1.0]; //边框宽度
-        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-        [self.mView_btn.mBtn_all.layer setBorderColor:colorref];//边框颜色
-        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:0]; //边框宽度
+        [self setValueForBtn:self.mView_btn.mBtn_all btn2:self.mView_btn.mBtn_discuss btn3:self.mView_btn.mBtn_evidence btn4:self.mView_btn.mBtn_nodiscuss];
     }else if ([self.mStr_flag integerValue]==0){//无内容
-        [self.mView_btn.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_all.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_nodiscuss.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:1.0]; //边框宽度
-        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-        [self.mView_btn.mBtn_nodiscuss.layer setBorderColor:colorref];//边框颜色
-        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
+        [self setValueForBtn:self.mView_btn.mBtn_nodiscuss btn2:self.mView_btn.mBtn_all btn3:self.mView_btn.mBtn_evidence btn4:self.mView_btn.mBtn_discuss];
     }else if ([self.mStr_flag integerValue]==1){//有证据
-        [self.mView_btn.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_all.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_evidence.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-        [self.mView_btn.mBtn_evidence.layer setBorderWidth:1.0]; //边框宽度
-        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-        [self.mView_btn.mBtn_evidence.layer setBorderColor:colorref];//边框颜色
-        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];
-        [self.mView_btn.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:0]; //边框宽度
+        [self setValueForBtn:self.mView_btn.mBtn_evidence btn2:self.mView_btn.mBtn_all btn3:self.mView_btn.mBtn_discuss btn4:self.mView_btn.mBtn_nodiscuss];
     }else if ([self.mStr_flag integerValue]==2){//有内容
-        [self.mView_btn.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_all.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_discuss setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_discuss.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-        [self.mView_btn.mBtn_discuss.layer setBorderWidth:1.0]; //边框宽度
-        CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-        [self.mView_btn.mBtn_discuss.layer setBorderColor:colorref];//边框颜色
-        [self.mView_btn.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_evidence.layer setMasksToBounds:YES];
-        [self.mView_btn.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
-        [self.mView_btn.mBtn_nodiscuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [self.mView_btn.mBtn_nodiscuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-        [self.mView_btn.mBtn_nodiscuss.layer setBorderWidth:0]; //边框宽度
+        [self setValueForBtn:self.mView_btn.mBtn_discuss btn2:self.mView_btn.mBtn_all btn3:self.mView_btn.mBtn_evidence btn4:self.mView_btn.mBtn_nodiscuss];
     }
     self.mView_btn.frame = CGRectMake(0, self.mBtnV_btn.frame.origin.y+50, [dm getInstance].width, 44);
+}
+
+//设置按钮样式
+-(void)setValueForBtn:(UIButton *)btn1 btn2:(UIButton *)btn2 btn3:(UIButton *)btn3 btn4:(UIButton *)btn4{
+    [btn1 setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+    [btn1.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    [btn1.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+    [btn1.layer setBorderWidth:1.0]; //边框宽度
+    CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+    [btn1.layer setBorderColor:colorref];//边框颜色
+    
+    [btn2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [btn2.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    [btn2.layer setBorderWidth:0]; //边框宽度
+    
+    [btn3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [btn3.layer setMasksToBounds:YES];
+    [btn3.layer setBorderWidth:0]; //边框宽度
+    
+    [btn4 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [btn4.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    [btn4.layer setBorderWidth:0]; //边框宽度
 }
 
 //设置标题栏布局
 -(void)setTitleCell:(QuestionModel *)model{
     self.mView_titlecell.askImgV.hidden = NO;
     //标题
-//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, 16);
-//    NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//    title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//    self.mView_titlecell.mLab_title.text = title1;
-//    [self.mView_titlecell.mLab_title setNumberOfLines:0];
-//    self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
-//    CGSize labelsize = [title1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2-40,99999) lineBreakMode:NSLineBreakByWordWrapping];
-//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2-40, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
     NSString *string1 = model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
@@ -706,7 +666,7 @@
     [cell.mCollectionV_pic reloadData];
     cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
     if (model.Thumbnail.count>0) {
-        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5+20, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
     }else{
         cell.mCollectionV_pic.frame = cell.mView_background.frame;
     }
