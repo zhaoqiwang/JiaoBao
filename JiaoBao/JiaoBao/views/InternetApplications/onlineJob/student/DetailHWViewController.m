@@ -332,7 +332,7 @@
         NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
         NSUInteger unitFlags =
         NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-        NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:localeStartDate  toDate:serverTime  options:0];
+        NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverTime  options:0];
         NSInteger diffHour = [cps hour];
         NSInteger diffMin    = [cps minute];
         if((diffMin+diffHour*60)>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
@@ -518,7 +518,6 @@
                     {
                             NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
-
                     }
                 }
             }
