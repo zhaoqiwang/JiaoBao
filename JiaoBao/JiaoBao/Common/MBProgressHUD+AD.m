@@ -68,6 +68,7 @@
         hud.removeFromSuperViewOnHide = YES;
         // YES代表需要蒙版效果
         hud.dimBackground = NO;
+    [hud hide:YES afterDelay:30.0];
         return hud;
 //    }
 //    return nil;
@@ -95,6 +96,7 @@
 
 + (void)hideHUD
 {
+    [self hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
     [self hideHUDForView:[[UIApplication sharedApplication].windows lastObject]];
 }
 

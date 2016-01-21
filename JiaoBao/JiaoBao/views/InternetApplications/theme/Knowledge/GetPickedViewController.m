@@ -38,14 +38,6 @@
     //
     self.mTalbeV_liset.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTalbeV_liset.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.mTalbeV_liset addHeaderWithTarget:self action:@selector(headerRereshing)];
-//    self.mTalbeV_liset.headerPullToRefreshText = @"下拉刷新";
-//    self.mTalbeV_liset.headerReleaseToRefreshText = @"松开后刷新";
-//    self.mTalbeV_liset.headerRefreshingText = @"正在刷新...";
-//    [self.mTalbeV_liset addFooterWithTarget:self action:@selector(footerRereshing)];
-//    self.mTalbeV_liset.footerPullToRefreshText = @"上拉加载更多";
-//    self.mTalbeV_liset.footerReleaseToRefreshText = @"松开加载更多数据";
-//    self.mTalbeV_liset.footerRefreshingText = @"正在加载...";
     
     //发送请求
     [[KnowledgeHttp getInstance] GetPickedByIdWithTabID:self.mModel_first.TabID flag:@"1"];
@@ -57,13 +49,14 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    
     if ([code integerValue] ==0) {
         self.mModel_getPickdById = [dic objectForKey:@"model"];
     }else{
-        
+        NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+        [MBProgressHUD showError:ResultDesc toView:self.view];
     }
-    [MBProgressHUD showError:ResultDesc toView:self.view];
+    
     [self.mTalbeV_liset reloadData];
 }
 
