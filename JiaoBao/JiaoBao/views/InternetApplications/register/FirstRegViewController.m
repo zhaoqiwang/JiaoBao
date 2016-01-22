@@ -81,6 +81,8 @@
     //加通知
     [super viewWillAppear:YES];
     [self addNotification];
+    [[RegisterHttp getInstance]registerHttpGetValidateCode];
+
     [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
@@ -115,7 +117,6 @@
     if ([self checkNetWork]) {
         return;
     }
-    [[RegisterHttp getInstance]registerHttpGetValidateCode];
 
 
     // Do any additional setup after loading the view from its nib.
@@ -198,6 +199,8 @@
         NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)//成功
            {
+               [MBProgressHUD showSuccess:@"验证码已发送"];
+
                weakSelf.identi_code_Symbol = YES;
                //成功则跳转到第二个界面
                SecondRegViewController *sec = [[SecondRegViewController alloc]init];
@@ -209,6 +212,8 @@
         else
         {
             [MBProgressHUD showText:ResultDesc toView:self.view];
+            self.urlNumTF.text = @"";
+            [[RegisterHttp getInstance]registerHttpGetValidateCode];
             //[weakSelf progressViewTishi:ResultDesc];
 
             //[SVProgressHUD showInfoWithStatus:@"请获取手机验证码"];
@@ -311,7 +316,7 @@
     }
     if(self.telSymbol == YES)
     {
-        self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
+//        self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeAction:) userInfo:nil repeats:YES];
 //        [dm getInstance].tel = self.tel.text;
 //        [dm getInstance].urlNum = self.urlNumTF.text;
         if ([self checkNetWork]) {
