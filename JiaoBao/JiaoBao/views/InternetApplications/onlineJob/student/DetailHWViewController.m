@@ -53,7 +53,9 @@
 -(void)GetStuHWWithHwInfoId:(id)sender
 {
     self.stuHomeWorkModel = [sender object];
-
+    if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
+        self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+    }
     self.questionNumLabel.text = [NSString stringWithFormat:@"共%@题",self.stuHomeWorkModel.Qsc];
     NSArray *arr = [self.stuHomeWorkModel.QsIdQId componentsSeparatedByString:@"|"];
     for(int i=0;i<arr.count;i++)
@@ -172,40 +174,8 @@
 //获取第几题的作业详情
 -(void)GetStuHWQsWithHwInfoId:(id)sender
 {
-    //倒计时
-    if(self.isSubmit == NO){
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSDate *currentDate = [NSDate date];
-        NSTimeZone *zone = [NSTimeZone systemTimeZone];
-        NSInteger interval = [zone secondsFromGMTForDate: currentDate];
-        NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
-        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
-            self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
-            if(!self.timer)
-            {
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
-                self.serverDate = self.stuHomeWorkModel.HWStartTime;
 
-            }
-
-        }else{//再次进入做作业界面 从服务器获取开始时间
-
-            if(!self.serverDate){
-                [[OnlineJobHttp getInstance]GetSQLDateTime];
-            }
-
-           
-            }
-            
-        }
         
-    else//已经提交的作业不显示倒计时
-    {
-        self.clockLabel.hidden = YES;
-        self.countdownLabel.hidden = YES;
-    }
     self.stuHWQsModel = [sender object];
     
 
@@ -426,7 +396,6 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
     if([self.stuHWQsModel.QsT isEqualToString:@"1"])
     {
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
@@ -619,6 +588,43 @@
 
         
     }
+    //倒计时
+    if(self.isSubmit == NO){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSDate *currentDate = [NSDate date];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate: currentDate];
+        NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
+        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
+            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+            self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
+            if(!self.timer)
+            {
+                self.serverDate = self.stuHomeWorkModel.HWStartTime;
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+
+                
+            }
+            
+        }else{//再次进入做作业界面 从服务器获取开始时间
+            
+            if(!self.serverDate){
+                [[OnlineJobHttp getInstance]GetSQLDateTime];
+            }
+            
+            
+        }
+        
+    }
+    else//已经提交的作业不显示倒计时
+    {
+        self.clockLabel.hidden = YES;
+        self.countdownLabel.hidden = YES;
+    }
+
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+
     JSContext *content = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     __weak DetailHWViewController *weakSelf = self;
 

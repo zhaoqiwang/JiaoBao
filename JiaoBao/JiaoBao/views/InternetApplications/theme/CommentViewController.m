@@ -679,7 +679,7 @@
                 {
                     refModel.UserName = model.JiaoBaoHao;
                 }
-                NSString *tempTitle = [NSString stringWithFormat:@"%@",@"该                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        评论已被屏蔽或删除"];
+                NSString *tempTitle = [NSString stringWithFormat:@"%@",@"该评论已被屏蔽或删除"];
                 tempLab.font = [UIFont systemFontOfSize:12];
                 tempLab.numberOfLines = 99999;
                 tempLab.lineBreakMode = NSLineBreakByWordWrapping;
