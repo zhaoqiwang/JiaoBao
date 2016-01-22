@@ -657,6 +657,7 @@
     model.PickDescipt = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"PickDescipt"]];
     model.VedioConntent = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"VedioConntent"]];
     model.baseImgUrl = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"baseImgUrl"]];
+    model.baseImgUrl = [model.baseImgUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/JBClient/"] withString:@""];
     model.RecDate = [NSString stringWithFormat:@"%@",[dic0 objectForKey:@"RecDate"]];
     NSString *str = [utils getLocalTimeDate];
     NSString *str2 = [dic0 objectForKey:@"RecDate"];
@@ -708,6 +709,7 @@
         model.TabID = [NSString stringWithFormat:@"%@",[dic objectForKey:@"TabID"]];
         model.PTitle = [dic objectForKey:@"PTitle"];
         model.baseImgUrl = [NSString stringWithFormat:@"%@",[dic objectForKey:@"baseImgUrl"]];
+        model.baseImgUrl = [model.baseImgUrl stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"/JBClient/"] withString:@""];
         model.RowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"RowCount"]];
         model.ImgContent = [[dic objectForKey:@"ImgContent"] objectFromJSONString];
         model.PickDescipt = [dic objectForKey:@"PickDescipt"];
