@@ -533,6 +533,24 @@
     return model.mArr_all;
 }
 
+//设置按钮样式
+-(void)setValueForBtn:(UIButton *)btn1 btn2:(UIButton *)btn2 btn3:(UIButton *)btn3{
+    [btn1 setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
+    [btn1.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    [btn1.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
+    [btn1.layer setBorderWidth:1.0]; //边框宽度
+    CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
+    [btn1.layer setBorderColor:colorref];//边框颜色
+    
+    [btn2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [btn2.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
+    [btn2.layer setBorderWidth:0]; //边框宽度
+    
+    [btn3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [btn3.layer setMasksToBounds:YES];
+    [btn3.layer setBorderWidth:0]; //边框宽度
+}
+
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
     if (self.mInt_index ==2) {//精选
         self.mTableV_knowledge.frame = CGRectMake(0, 48, [dm getInstance].width, self.frame.size.height-48);
@@ -844,47 +862,11 @@
             cell.mBtn_discuss.frame = CGRectMake(190, 10, 50, 44-20);
             AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
             if ([allModel.flag integerValue]==-1) {
-                [cell.mBtn_all setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-                [cell.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_all.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-                [cell.mBtn_all.layer setBorderWidth:1.0]; //边框宽度
-                CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-                
-                [cell.mBtn_all.layer setBorderColor:colorref];//边框颜色
-                [cell.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [cell.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
-                [cell.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [cell.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
+                [self setValueForBtn:cell.mBtn_all btn2:cell.mBtn_evidence btn3:cell.mBtn_discuss];
             }else if ([allModel.flag integerValue]==0){
-                [cell.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [cell.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_all.layer setBorderWidth:0]; //边框宽度
-                [cell.mBtn_evidence setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [cell.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_evidence.layer setBorderWidth:0]; //边框宽度
-                [cell.mBtn_discuss setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-                [cell.mBtn_discuss.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_discuss.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-                [cell.mBtn_discuss.layer setBorderWidth:1.0]; //边框宽度
-                CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-                
-                [cell.mBtn_discuss.layer setBorderColor:colorref];//边框颜色
+                [self setValueForBtn:cell.mBtn_discuss btn2:cell.mBtn_evidence btn3:cell.mBtn_all];
             }else if ([allModel.flag integerValue]==1){
-                [cell.mBtn_all setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [cell.mBtn_all.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_all.layer setBorderWidth:0]; //边框宽度
-                [cell.mBtn_evidence setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateNormal];
-                [cell.mBtn_evidence.layer setMasksToBounds:YES];//设置按钮的圆角半径不会被遮挡
-                [cell.mBtn_evidence.layer setCornerRadius:4.0]; //设置矩形四个圆角半径
-                [cell.mBtn_evidence.layer setBorderWidth:1.0]; //边框宽度
-                CGColorRef colorref = [UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1].CGColor;
-                
-                [cell.mBtn_evidence.layer setBorderColor:colorref];//边框颜色
-                [cell.mBtn_discuss setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                [cell.mBtn_discuss.layer setMasksToBounds:YES];
-                [cell.mBtn_discuss.layer setBorderWidth:0]; //边框宽度
+                [self setValueForBtn:cell.mBtn_evidence btn2:cell.mBtn_all btn3:cell.mBtn_discuss];
             }
         }else if (model.mInt_btn ==2){//当前的话题id
             cell.backgroundColor = [UIColor whiteColor];
@@ -1281,28 +1263,6 @@
             //和头像的y值齐平
             tempF = tempF+15+16+10;
             //回答内容
-//            if ([model.answerModel.Flag integerValue]==2){//有证据
-//                tempF = tempF+34;
-//            }else{
-//                NSString *string2 = model.answerModel.Abstracts;
-//                string2 = [string2 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//                string2 = [string2 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//                tempF = tempF+20;
-//                CGSize abSize;
-//                if ([model.answerModel.Flag intValue]==0) {//无内容
-//                    abSize = [string2 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9- 61-36, MAXFLOAT)];
-//                }else{//有内容
-//                    abSize = [string2 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9- 61-26, MAXFLOAT)];
-//                    tempF =tempF-20;
-//                }
-//                
-//                if (abSize.height==23) {
-//                    abSize = CGSizeMake(abSize.width, 25);
-//                }else if (abSize.height>21) {
-//                    abSize = CGSizeMake(abSize.width, 35);
-//                }
-//                tempF = tempF+abSize.height;
-//            }
             //背景色
             tempF = tempF+39+3;
             //图片

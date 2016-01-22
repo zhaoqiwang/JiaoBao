@@ -741,6 +741,7 @@
         D("JSON--------GetPickedById: %@,", result);
         [tempDic setValue:code forKey:@"ResultCode"];
         if (Data.length==0) {
+            [tempDic setValue:@"100" forKey:@"ResultCode"];
             [tempDic setValue:@"该精选已被屏蔽或删除" forKey:@"ResultDesc"];
         }else{
             [tempDic setValue:ResultDesc forKey:@"ResultDesc"];

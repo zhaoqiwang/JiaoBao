@@ -278,6 +278,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 }
 
 - (void)hideDelayed:(NSNumber *)animated {
+//    [MBProgressHUD showError:@"请求超时" toView:nil];
 	[self hide:[animated boolValue]];
 }
 

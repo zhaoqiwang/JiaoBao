@@ -202,17 +202,17 @@
     [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
     // 禁用长按弹出框
     [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
-    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
+//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-    D("webViewHeight-=000===%f",webViewHeight);
-    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
+//    D("webViewHeight-=000===%f",webViewHeight);
+//    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
         CGRect frame = webView.frame;
         frame.size.width = [dm getInstance].width-5;
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
-        D("webViewHeight-=111===%f,%f,%f",webViewHeight,frame.size.height,webViewWidth);
+//        D("webViewHeight-=111===%f,%f,%f",webViewHeight,frame.size.height,webViewWidth);
 //        [self webViewLoadFinish:webViewHeight+10];
 //        [self.mTableV_answer reloadData];
         webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
@@ -223,7 +223,7 @@
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
-        D("webViewHeight-=222===%f,%f",webViewHeight,frame.size.height);
+//        D("webViewHeight-=222===%f,%f",webViewHeight,frame.size.height);
         [webView setBackgroundColor:[UIColor clearColor]];
         webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
@@ -251,7 +251,7 @@
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
-                D("99999999999999999=333===%d,%lu",self.mInt_index,(unsigned long)self.mModel_recomment.answerArray.count);
+//                D("99999999999999999=333===%d,%lu",self.mInt_index,(unsigned long)self.mModel_recomment.answerArray.count);
 //                if ([model.Flag integerValue]>0) {//非无内容
                     tempWeb.delegate = self;
                     tempWeb.tag = self.mInt_index-1;
@@ -275,11 +275,7 @@
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
-    //    if (model.questionModel.Thumbnail.count>0) {
-    //        self.mView_titlecell.mCollectionV_pic.frame = CGRectMake(9, self.mView_titlecell.mLab_Abstracts.frame.origin.y+self.mView_titlecell.mLab_Abstracts.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
-    //    }else{
     self.mView_titlecell.mCollectionV_pic.frame = self.mView_titlecell.mWebV_comment.frame;
-    //    }
     //时间
     
     self.mView_titlecell.mLab_RecDate.hidden = YES;
@@ -486,15 +482,6 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    CommentViewController *commentVC = [[CommentViewController alloc]init];
-//    QuestionModel *model = [[QuestionModel alloc] init];
-//    model.TabID = self.mModel_question.TabID;
-//    model.ViewCount = self.mModel_question.ViewCount;
-//    model.AttCount = self.mModel_question.AttCount;
-//    model.AnswersCount = self.mModel_question.AnswersCount;
-//    model.Title = self.mModel_question.Title;
-//    commentVC.questionModel = model;
-//    [utils pushViewController:commentVC animated:YES];
 }
 
 -(float)cellHeight:(NSIndexPath *)indexPath{
@@ -514,7 +501,6 @@
     tempF1 = tempF1+10+42;
     //姓名
     CGSize nameSize = [model.IdFlag sizeWithFont:[UIFont systemFontOfSize:10] constrainedToSize:CGSizeMake(42, MAXFLOAT)];
-    D("namesize-======%@,%f,%f",model.IdFlag,nameSize.width,nameSize.height);
     if (nameSize.height>21) {
         nameSize = CGSizeMake(nameSize.width, 30);
         tempF1 = tempF1+10+nameSize.height;
@@ -545,14 +531,10 @@
     //图片
     //时间
     tempF = tempF+5+21;
-    D("tempp-=====%f,%f",tempF,tempF1);
     //计算姓名和时间的高度
     if (tempF<tempF1) {
-        D("11111-===%f",tempF1);
-        
         return tempF1;
     }else{
-        D("11112-===%f",tempF);
         return tempF;
     }
 }

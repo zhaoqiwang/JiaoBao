@@ -421,185 +421,27 @@
         for (int i=0; i<self.mArr_sumData.count; i++) {
             TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
             if (node0.flag == 3) {//往科目选择中插入
-                [node0.sonNodes removeAllObjects];
-                for (int m=0; m<array1.count; m++) {
-                    //第1根节点
-                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
-                    node1.nodeLevel = 1;//节点所处层次
-                    node1.type = 1;//节点类型
-                    node1.flag = 301;//标注当前是哪个节点
-                    node1.faType = node0.flag;//父节点
-                    node1.isExpanded = FALSE;//节点是否展开
-                    node1.mInt_index = self.mInt_index;//全局索引标识
-                    self.mInt_index++;
-                    SubjectModel *temp1 =[array1 objectAtIndex:m];
-                    if (m==0) {
-                        TreeJob_level0_model *nodeData = node0.nodeData;
-                        nodeData.mStr_title = temp1.subjectName;
-                        nodeData.mStr_id = temp1.subjectCode;
-                        self.publishJobModel.subjectName = temp1.subjectName;
-                        self.publishJobModel.subjectCode = temp1.subjectCode;
-                        self.publishJobModel.VersionName = @"";
-                        self.publishJobModel.VersionCode = @"0";
-                        self.publishJobModel.chapterName = @"";
-                        self.publishJobModel.chapterID = @"0";
-                        temp1.mInt_select = 1;
-                    }else{
-                        temp1.mInt_select = 0;
-                    }
-                    node1.nodeData = temp1;
-                    //塞入数据
-                    [node0.sonNodes addObject:node1];
-                }
+                [self addChapterList:node0 array:array1 flag:301 type:1];
             }else if (node0.flag == 4) {//往教版选择中插入
-                [node0.sonNodes removeAllObjects];
-                for (int m=0; m<array2.count; m++) {
-                    //第1根节点
-                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
-                    node1.nodeLevel = 1;//节点所处层次
-                    node1.type = 1;//节点类型
-                    node1.flag = 401;//标注当前是哪个节点
-                    node1.faType = node0.flag;//父节点
-                    node1.isExpanded = FALSE;//节点是否展开
-                    node1.mInt_index = self.mInt_index;//全局索引标识
-                    self.mInt_index++;
-                    VersionModel *temp1 =[array2 objectAtIndex:m];
-                    if (m==0) {
-                        TreeJob_level0_model *nodeData = node0.nodeData;
-                        nodeData.mStr_title = temp1.VersionName;
-                        nodeData.mStr_id = temp1.TabID;
-                        self.publishJobModel.VersionName = temp1.VersionName;
-                        self.publishJobModel.VersionCode = temp1.TabID;
-                        self.publishJobModel.chapterName = @"";
-                        self.publishJobModel.chapterID = @"0";
-                        temp1.mInt_select = 1;
-                    }else{
-                        temp1.mInt_select = 0;
-                    }
-                    node1.nodeData = temp1;
-                    //塞入数据
-                    [node0.sonNodes addObject:node1];
-                }
+                [self addChapterList:node0 array:array2 flag:401 type:2];
             }else if (node0.flag == 5) {//往章节选择中插入
-                [node0.sonNodes removeAllObjects];
-                for (int m=0; m<array3.count; m++) {
-                    //第1根节点
-                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
-                    node1.nodeLevel = 1;//节点所处层次
-                    node1.type = 1;//节点类型
-                    node1.flag = 501;//标注当前是哪个节点
-                    node1.faType = node0.flag;//父节点
-                    node1.isExpanded = FALSE;//节点是否展开
-                    node1.mInt_index = self.mInt_index;//全局索引标识
-                    self.mInt_index++;
-                    ChapterModel *temp1 =[array3 objectAtIndex:m];
-                    if (m==0) {
-                        TreeJob_level0_model *nodeData = node0.nodeData;
-                        nodeData.mStr_title = temp1.chapterName;
-                        nodeData.mStr_id = temp1.TabID;
-                        self.publishJobModel.chapterName = temp1.chapterName;
-                        self.publishJobModel.chapterID = temp1.TabID;
-                        temp1.mInt_select = 1;
-                    }else{
-                        temp1.mInt_select = 0;
-                    }
-                    node1.nodeData = temp1;
-                    //塞入数据
-                    [node0.sonNodes addObject:node1];
-                }
+                [self addChapterList:node0 array:array3 flag:501 type:3];
             }
         }
     }else if ([flag intValue]==1){//
         for (int i=0; i<self.mArr_sumData.count; i++) {
             TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
             if (node0.flag == 4) {//往教版选择中插入
-                [node0.sonNodes removeAllObjects];
-                for (int m=0; m<array2.count; m++) {
-                    //第1根节点
-                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
-                    node1.nodeLevel = 1;//节点所处层次
-                    node1.type = 1;//节点类型
-                    node1.flag = 401;//标注当前是哪个节点
-                    node1.faType = node0.flag;//父节点
-                    node1.isExpanded = FALSE;//节点是否展开
-                    node1.mInt_index = self.mInt_index;//全局索引标识
-                    self.mInt_index++;
-                    VersionModel *temp1 =[array2 objectAtIndex:m];
-                    if (m==0) {
-                        TreeJob_level0_model *nodeData = node0.nodeData;
-                        nodeData.mStr_title = temp1.VersionName;
-                        nodeData.mStr_id = temp1.TabID;
-                        self.publishJobModel.VersionCode = temp1.TabID;
-                        self.publishJobModel.VersionName = temp1.VersionName;
-                        self.publishJobModel.chapterName = @"";
-                        self.publishJobModel.chapterID = @"0";
-                        temp1.mInt_select = 1;
-                    }else{
-                        temp1.mInt_select = 0;
-                    }
-                    node1.nodeData = temp1;
-                    //塞入数据
-                    [node0.sonNodes addObject:node1];
-                }
+                [self addChapterList:node0 array:array2 flag:401 type:2];
             }else if (node0.flag == 5) {//往章节选择中插入
-                [node0.sonNodes removeAllObjects];
-                for (int m=0; m<array3.count; m++) {
-                    //第1根节点
-                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
-                    node1.nodeLevel = 1;//节点所处层次
-                    node1.type = 1;//节点类型
-                    node1.flag = 501;//标注当前是哪个节点
-                    node1.faType = node0.flag;//父节点
-                    node1.isExpanded = FALSE;//节点是否展开
-                    node1.mInt_index = self.mInt_index;//全局索引标识
-                    self.mInt_index++;
-                    ChapterModel *temp1 =[array3 objectAtIndex:m];
-                    if (m==0) {
-                        TreeJob_level0_model *nodeData = node0.nodeData;
-                        nodeData.mStr_title = temp1.chapterName;
-                        nodeData.mStr_id = temp1.TabID;
-                        self.publishJobModel.chapterName = temp1.chapterName;
-                        self.publishJobModel.chapterID = temp1.TabID;
-                        temp1.mInt_select = 1;
-                    }else{
-                        temp1.mInt_select = 0;
-                    }
-                    node1.nodeData = temp1;
-                    //塞入数据
-                    [node0.sonNodes addObject:node1];
-                }
+                [self addChapterList:node0 array:array3 flag:501 type:3];
             }
         }
     }else if ([flag intValue]==2){//
         for (int i=0; i<self.mArr_sumData.count; i++) {
             TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
             if (node0.flag == 5) {//往章节选择中插入
-                [node0.sonNodes removeAllObjects];
-                for (int m=0; m<array3.count; m++) {
-                    //第1根节点
-                    TreeJob_node *node1 = [[TreeJob_node alloc]init];
-                    node1.nodeLevel = 1;//节点所处层次
-                    node1.type = 1;//节点类型
-                    node1.flag = 501;//标注当前是哪个节点
-                    node1.faType = node0.flag;//父节点
-                    node1.isExpanded = FALSE;//节点是否展开
-                    node1.mInt_index = self.mInt_index;//全局索引标识
-                    self.mInt_index++;
-                    ChapterModel *temp1 =[array3 objectAtIndex:m];
-                    if (m==0) {
-                        TreeJob_level0_model *nodeData = node0.nodeData;
-                        nodeData.mStr_title = temp1.chapterName;
-                        nodeData.mStr_id = temp1.TabID;
-                        self.publishJobModel.chapterName = temp1.chapterName;
-                        self.publishJobModel.chapterID = temp1.TabID;
-                        temp1.mInt_select = 1;
-                    }else{
-                        temp1.mInt_select = 0;
-                    }
-                    node1.nodeData = temp1;
-                    //塞入数据
-                    [node0.sonNodes addObject:node1];
-                }
+                [self addChapterList:node0 array:array3 flag:501 type:3];
             }
         }
     }
@@ -615,7 +457,69 @@
             [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
         }
     }
-    
+}
+
+-(void)addChapterList:(TreeJob_node *)node0 array:(NSMutableArray *)array flag:(int)flag type:(int)type{
+    [node0.sonNodes removeAllObjects];
+    for (int m=0; m<array.count; m++) {
+        //第1根节点
+        TreeJob_node *node1 = [[TreeJob_node alloc]init];
+        node1.nodeLevel = 1;//节点所处层次
+        node1.type = 1;//节点类型
+        node1.flag = flag;//标注当前是哪个节点
+        node1.faType = node0.flag;//父节点
+        node1.isExpanded = FALSE;//节点是否展开
+        node1.mInt_index = self.mInt_index;//全局索引标识
+        self.mInt_index++;
+        if (type==1) {
+            SubjectModel *temp1 =[array objectAtIndex:m];
+            if (m==0) {
+                TreeJob_level0_model *nodeData = node0.nodeData;
+                nodeData.mStr_title = temp1.subjectName;
+                nodeData.mStr_id = temp1.subjectCode;
+                self.publishJobModel.subjectName = temp1.subjectName;
+                self.publishJobModel.subjectCode = temp1.subjectCode;
+                self.publishJobModel.VersionName = @"";
+                self.publishJobModel.VersionCode = @"0";
+                self.publishJobModel.chapterName = @"";
+                self.publishJobModel.chapterID = @"0";
+                temp1.mInt_select = 1;
+            }else{
+                temp1.mInt_select = 0;
+            }
+            node1.nodeData = temp1;
+        }else if (type==2){
+            VersionModel *temp1 =[array objectAtIndex:m];
+            if (m==0) {
+                TreeJob_level0_model *nodeData = node0.nodeData;
+                nodeData.mStr_title = temp1.VersionName;
+                nodeData.mStr_id = temp1.TabID;
+                self.publishJobModel.VersionName = temp1.VersionName;
+                self.publishJobModel.VersionCode = temp1.TabID;
+                self.publishJobModel.chapterName = @"";
+                self.publishJobModel.chapterID = @"0";
+                temp1.mInt_select = 1;
+            }else{
+                temp1.mInt_select = 0;
+            }
+            node1.nodeData = temp1;
+        }else if (type==3) {
+            ChapterModel *temp1 =[array objectAtIndex:m];
+            if (m==0) {
+                TreeJob_level0_model *nodeData = node0.nodeData;
+                nodeData.mStr_title = temp1.chapterName;
+                nodeData.mStr_id = temp1.TabID;
+                self.publishJobModel.chapterName = temp1.chapterName;
+                self.publishJobModel.chapterID = temp1.TabID;
+                temp1.mInt_select = 1;
+            }else{
+                temp1.mInt_select = 0;
+            }
+            node1.nodeData = temp1;
+        }
+        //塞入数据
+        [node0.sonNodes addObject:node1];
+    }
 }
 
 //统一作业，插入单独的难度行
@@ -1835,7 +1739,6 @@
         //去掉前后空格
         NSString *textName = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         self.publishJobModel.homeworkName = textName;
-
     }
 }
 
