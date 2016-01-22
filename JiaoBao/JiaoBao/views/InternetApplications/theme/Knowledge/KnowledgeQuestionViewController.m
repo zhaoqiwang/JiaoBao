@@ -660,13 +660,18 @@
     cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y+5, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
 //    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, optimalSize2.height);
     //背景色
-    cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.basisImagV.frame.size.height+10);
+    if ([model.Flag integerValue]==2){//有证据
+        cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.basisImagV.frame.size.height+10);
+    }else{
+        cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.mLab_Abstracts.frame.size.height+10);
+    }
+    
 //    cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-70, cell.mLab_Abstracts.frame.size.height+4);
     //图片
     [cell.mCollectionV_pic reloadData];
     cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
     if (model.Thumbnail.count>0) {
-        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5+20, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
+        cell.mCollectionV_pic.frame = CGRectMake(63, cell.mView_background.frame.origin.y+cell.mView_background.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
     }else{
         cell.mCollectionV_pic.frame = cell.mView_background.frame;
     }

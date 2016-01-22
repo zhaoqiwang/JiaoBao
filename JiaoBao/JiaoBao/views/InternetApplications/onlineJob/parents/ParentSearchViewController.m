@@ -138,6 +138,7 @@
                 LevelModel *temp0 =[array objectAtIndex:i];
                 temp0.StudentID = StuId;
                 temp0.uId = temp0.ID;
+                temp0.flag = 0;
                 node0.nodeData = temp0;//当前节点数据
 //                node0.flag = [temp0.ID intValue];//标注当前是哪个节点--给值教版
                 [self.mArr_score addObject:node0];
@@ -157,6 +158,7 @@
                             temp0.StudentID = StuId;
                             temp0.uId = uId;
                             temp0.chapterid = temp0.ID;
+                            temp0.flag = 0;
                             node0.nodeData = temp0;//当前节点数据
 //                        node0.flag = [temp0.ID intValue];//标注当前是哪个节点--给值章
                             [node.sonNodes addObject:node0];
@@ -198,6 +200,7 @@
 //                }else{
 //                    temp0.index = index;
 //                }
+                temp0.flag = 0;
                 temp0.chapterid = temp0.ID;
                 temp0.StudentID = StuId;
                 node0.nodeData = temp0;//当前节点数据
@@ -534,13 +537,13 @@
             cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 14, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:14];
             cell.mLab_title.textColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
-            cell.mImg_open.hidden = NO;
+//            cell.mImg_open.hidden = NO;
         }else if (node.type==1){
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, .5);
             cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+15, 8, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:12];
             cell.mLab_title.textColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
-            cell.mImg_open.hidden = NO;
+//            cell.mImg_open.hidden = NO;
         }else if (node.type == 2){
             if (titleSize.width>[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25)) {
                 titleSize.width =[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25);
@@ -550,9 +553,14 @@
             cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25+(model.index-1)*20, 8, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:12];
             cell.mLab_title.textColor = [UIColor colorWithRed:121/255.0 green:121/255.0 blue:121/255.0 alpha:1];
-            cell.mImg_open.hidden = YES;
+//            cell.mImg_open.hidden = YES;
         }
-        
+        //根据实际取到的值，来判断是否显示
+        if (model.flag==1&&node.sonNodes.count==0) {
+            cell.mImg_open.hidden = YES;
+        }else{
+            cell.mImg_open.hidden = NO;
+        }
         //题量
         cell.mLab_numLab.hidden = YES;
         cell.mLab_num.hidden = YES;
@@ -657,6 +665,7 @@
             if ([model.StudentID intValue]==[model0.StudentID intValue]) {
                 if ([model.ID intValue]==[model0.ID intValue]) {
                     node0.isExpanded = !node0.isExpanded;
+                    model0.flag = 1;
                 }
             }
         }
@@ -669,6 +678,7 @@
                         LevelModel *model1 = node1.nodeData;
                         if ([model.ID intValue]==[model1.ID intValue]) {
                             node1.isExpanded = !node1.isExpanded;
+                            model0.flag = 1;
                         }
                     }
                 }
@@ -693,6 +703,7 @@
 //        D("2323232232323232323-=======%@,%@",model.ID,model1.ID);
         if ([model.ID intValue]==[model1.ID intValue]) {
             node1.isExpanded = !node1.isExpanded;
+            model1.flag = 1;
             break;
         }else{
             [self openOrClose:node1 Model:model];

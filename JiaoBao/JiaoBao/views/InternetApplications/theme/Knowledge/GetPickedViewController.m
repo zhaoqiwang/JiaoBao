@@ -141,15 +141,26 @@
 //        cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-56-10, 0, 56, cell.mBtn_detail.frame.size.height);
         cell.mScrollV_pic.hidden = NO;
         cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
-        cell.mScrollV_pic.backgroundColor = [UIColor redColor];
-        UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
-        NSString *tempUrl;
+        cell.mScrollV_pic.backgroundColor = [UIColor clearColor];
+        
         if (self.mModel_getPickdById.ImgContent.count>0) {
-            tempUrl = [NSString stringWithFormat:@"%@%@%@",[dm getInstance].url,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:0]];
+            for (int i=0; i<self.mModel_getPickdById.ImgContent.count; i++) {
+                UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(i*[dm getInstance].width, 0, [dm getInstance].width, 100)];
+                NSString *tempUrl = [NSString stringWithFormat:@"%@%@%@",MAINURL,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:i]];
+                temp.contentMode = UIViewContentModeScaleAspectFit;
+                [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
+                [cell.mScrollV_pic addSubview:temp];
+            }
+            cell.mScrollV_pic.pagingEnabled = YES;
+            cell.mScrollV_pic.contentSize = CGSizeMake(self.mModel_getPickdById.ImgContent.count*[dm getInstance].width, 100);
+        }else{
+            UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
+            NSString *tempUrl = @"";
+            temp.contentMode = UIViewContentModeScaleAspectFit;
+            [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
+            [cell.mScrollV_pic addSubview:temp];
         }
-        D("dghrdk;ljg;dklj-====%@",tempUrl);
-        [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
-        [cell.mScrollV_pic addSubview:temp];
+        
         cell.mLab_comment.hidden = YES;
         cell.mLab_commentCount.hidden = YES;
         cell.mLab_line.hidden = YES;

@@ -104,9 +104,9 @@
     //图片
     NSString *tempUrl;
     if (model.ImgContent.count>0) {
-        tempUrl = [NSString stringWithFormat:@"%@%@%@",[dm getInstance].url,model.baseImgUrl,[model.ImgContent objectAtIndex:0]];
+        tempUrl = [NSString stringWithFormat:@"%@%@%@",MAINURL,model.baseImgUrl,[model.ImgContent objectAtIndex:0]];
     }
-    D("ldghjalksgjaskl-===%@",tempUrl);
+    cell.mImgV_img.contentMode = UIViewContentModeScaleAspectFit;
     [cell.mImgV_img sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
     cell.mImgV_img.frame = CGRectMake([dm getInstance].width-70-9, 10, 70, 50);
     
