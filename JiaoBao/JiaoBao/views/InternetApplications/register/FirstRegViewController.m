@@ -199,6 +199,8 @@
         NSString *ResultDesc = [dic objectForKey:str];
         if([str integerValue ] == 0)//成功
            {
+               [MBProgressHUD showSuccess:@"验证码已发送"];
+
                weakSelf.identi_code_Symbol = YES;
                //成功则跳转到第二个界面
                SecondRegViewController *sec = [[SecondRegViewController alloc]init];
