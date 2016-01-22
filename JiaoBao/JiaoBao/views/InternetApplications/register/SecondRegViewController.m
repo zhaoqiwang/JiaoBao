@@ -65,6 +65,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    [self addNotification];
+
     [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
@@ -91,7 +93,6 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
 
-    [self addNotification];
     if ([self checkNetWork]) {
         return;
     }
@@ -251,6 +252,8 @@
         //验证忘记密码的手机验证码及图片验证码和手机的请求
 
         [[RegisterHttp getInstance]registerHttpCheckMobileVcode:self.tel cCode:self.tel_identi_codeTF.text vCode:self.urlNumTF.text];
+        [MBProgressHUD showMessage:@"正在加载" toView:self.view];
+
         
     }
 

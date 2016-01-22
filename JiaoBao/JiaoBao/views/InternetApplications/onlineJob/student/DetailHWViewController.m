@@ -143,6 +143,19 @@
             [weakSelf.collectionView reloadData];
             [weakSelf.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:weakSelf.stuHomeWorkModel.hwinfoid QsId:[weakSelf.datasource objectAtIndex:index_path.row]];
+            if(indexPath.row==0){
+                self.previousBtn.enabled = NO;
+            }
+            else{
+                self.previousBtn.enabled = YES;
+            }
+            self.selectedBtnTag = index_path.row;
+            if(self.selectedBtnTag+1 == [self.stuHomeWorkModel.Qsc integerValue]){
+                [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+            }else{
+                [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
+
+            }
 
         } completion:^(BOOL finished){
 
