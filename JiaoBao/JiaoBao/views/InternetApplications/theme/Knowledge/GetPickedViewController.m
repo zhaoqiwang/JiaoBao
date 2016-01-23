@@ -11,9 +11,13 @@
 
 @interface GetPickedViewController ()
 
+@property (nonatomic,strong) UIPageControl *mPageC_cell;
+
 @end
 
 @implementation GetPickedViewController
+
+
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
@@ -52,6 +56,9 @@
     
     if ([code integerValue] ==0) {
         self.mModel_getPickdById = [dic objectForKey:@"model"];
+        if (self.mModel_getPickdById.PickContent.count==0) {
+            [MBProgressHUD showError:@"当前没有精选内容" toView:self.view];
+        }
     }else{
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showError:ResultDesc toView:self.view];
@@ -142,7 +149,7 @@
         cell.mScrollV_pic.hidden = NO;
         cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
         cell.mScrollV_pic.backgroundColor = [UIColor clearColor];
-        
+        cell.mScrollV_pic.delegate = self;
         if (self.mModel_getPickdById.ImgContent.count>0) {
             for (int i=0; i<self.mModel_getPickdById.ImgContent.count; i++) {
                 UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(i*[dm getInstance].width, 0, [dm getInstance].width, 100)];
@@ -151,6 +158,8 @@
                 [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
                 [cell.mScrollV_pic addSubview:temp];
             }
+            //隐藏指示条
+            cell.mScrollV_pic.showsHorizontalScrollIndicator = NO;
             cell.mScrollV_pic.pagingEnabled = YES;
             cell.mScrollV_pic.contentSize = CGSizeMake(self.mModel_getPickdById.ImgContent.count*[dm getInstance].width, 100);
         }else{
@@ -160,6 +169,15 @@
             [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
             [cell.mScrollV_pic addSubview:temp];
         }
+        
+        //分页
+        cell.pagControl.hidden = NO;
+        cell.pagControl.frame = CGRectMake(0, 130-20, [dm getInstance].width, 20);
+        cell.pagControl.numberOfPages = self.mModel_getPickdById.ImgContent.count;
+        //仅有一个页面的情况下隐藏指示器
+        cell.pagControl.hidesForSinglePage = YES;
+        cell.pagControl.backgroundColor = [UIColor grayColor];
+        self.mPageC_cell = cell.pagControl;
         
         cell.mLab_comment.hidden = YES;
         cell.mLab_commentCount.hidden = YES;
@@ -205,6 +223,8 @@
         cell.mLab_LikeCount.hidden = YES;
         cell.mLab_ATitle.hidden = YES;
         cell.mLab_Abstracts.hidden = NO;
+        //分页
+        cell.pagControl.hidden = YES;
         cell.mInt_flag = 3;
         cell.pickContentModel = model;
         cell.tag = indexPath.row;
@@ -305,6 +325,14 @@
     //分割线
     tempF = tempF+6;
     return tempF;
+}
+
+// scrollview滚动的时候调用
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat scrollviewW =  scrollView.frame.size.width;
+    CGFloat x = scrollView.contentOffset.x;
+    int page = (x + scrollviewW / 2) /  scrollviewW;
+    self.mPageC_cell.currentPage = page;
 }
 
 //导航条返回按钮回调

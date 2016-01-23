@@ -674,7 +674,7 @@
             cell.mScrollV_pic.hidden = NO;
             cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
             cell.mScrollV_pic.backgroundColor = [UIColor clearColor];
-            
+            cell.mScrollV_pic.delegate = self;
             if (self.mModel_getPickdById.ImgContent.count>0) {
                 for (int i=0; i<self.mModel_getPickdById.ImgContent.count; i++) {
                     UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(i*[dm getInstance].width, 0, [dm getInstance].width, 100)];
@@ -694,6 +694,15 @@
                 [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
                 [cell.mScrollV_pic addSubview:temp];
             }
+            
+            //分页
+            cell.pagControl.hidden = NO;
+            cell.pagControl.frame = CGRectMake(0, 130-20, [dm getInstance].width, 20);
+            cell.pagControl.numberOfPages = self.mModel_getPickdById.ImgContent.count;
+            //仅有一个页面的情况下隐藏指示器
+            cell.pagControl.hidesForSinglePage = YES;
+            cell.pagControl.backgroundColor = [UIColor grayColor];
+            self.mPageC_cell = cell.pagControl;
             
             cell.mLab_comment.hidden = YES;
             cell.mLab_commentCount.hidden = YES;
@@ -740,6 +749,8 @@
             cell.mLab_LikeCount.hidden = YES;
             cell.mLab_ATitle.hidden = YES;
             cell.mLab_Abstracts.hidden = NO;
+            //分页
+            cell.pagControl.hidden = YES;
             cell.mInt_flag = 3;
             cell.pickContentModel = model;
             cell.tag = indexPath.row;
@@ -834,6 +845,8 @@
         cell.delegate = self;
         [cell addTapClick];
         cell.mScrollV_pic.hidden = YES;
+        //分页
+        cell.pagControl.hidden = YES;
         //判断显示内容
         if (model.mInt_btn==1) {//三个按钮
             cell.askImgV.hidden = YES;
@@ -1330,6 +1343,14 @@
     //分割线
     tempF = tempF+6;
     return tempF;
+}
+
+// scrollview滚动的时候调用
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat scrollviewW =  scrollView.frame.size.width;
+    CGFloat x = scrollView.contentOffset.x;
+    int page = (x + scrollviewW / 2) /  scrollviewW;
+    self.mPageC_cell.currentPage = page;
 }
 
 #pragma mark 开始进入刷新状态
