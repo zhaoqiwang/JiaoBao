@@ -182,7 +182,7 @@
 
 -(void)webViewLoadFinish:(float)height Width:(float)width{
     self.KnowledgeTableViewCell.mWebV_comment.backgroundColor = [UIColor clearColor];
-    self.scrollview.bounces = NO;
+    self.scrollview.bounces = YES;
 //    self.webView.frame =  CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y+5, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
 //    if([[[UIDevice currentDevice] systemVersion] floatValue] <= 9.0f)
 //    {

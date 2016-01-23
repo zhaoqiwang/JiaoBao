@@ -30,6 +30,7 @@
 @property(nonatomic,assign)BOOL isOpen;//是否展开
 @property(nonatomic,strong)NSTimer *timer;//计时器
 @property(nonatomic,strong)NSString* serverDate;
+@property(nonatomic,assign)BOOL isOverTime;
 @end
 
 @implementation DetailHWViewController
@@ -55,6 +56,7 @@
     self.stuHomeWorkModel = [sender object];
     if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
         self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+        self.countdownLabel.text = @"倒计时:";
     }
     self.questionNumLabel.text = [NSString stringWithFormat:@"共%@题",self.stuHomeWorkModel.Qsc];
     NSArray *arr = [self.stuHomeWorkModel.QsIdQId componentsSeparatedByString:@"|"];
@@ -270,25 +272,53 @@
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-    NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverDate  toDate:startDate  options:0];
-    NSInteger diffMin    = [cps minute];
-    NSInteger diffSec   = [cps second];
+    if(self.isOverTime ==NO){
+        NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverDate  toDate:startDate  options:0];
+        NSInteger diffMin    = [cps minute];
+        NSInteger diffSec   = [cps second];
+        diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
+        if(diffMin==0){
+            self.isOverTime = YES;
+            //        self.clockLabel.text  = @"已超时";
+            //        [self.timer invalidate];
+            //        self.timer = nil;
+                    return;
+        }
+        diffSec = 60+diffSec;
+        if(diffSec==60)
+        {
+            diffMin = diffMin+1;
+            diffSec = 0;
+        }
+        self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+        self.serverDate = [dateFormatter stringFromDate:[ NSDate dateWithTimeInterval:1 sinceDate:serverDate]];
+        
+    }
+    else{
+        NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverDate  options:0];
+        NSInteger diffHour = [cps hour];
+        NSInteger diffMin    = [cps minute];
+        NSInteger diffSec   = [cps second];
+        diffMin = diffMin+diffHour*60-[self.stuHomeWorkModel.LongTime integerValue];
+//        if(diffMin==0){
+//            self.isOverTime = YES;
+//            //        self.clockLabel.text  = @"已超时";
+//            //        [self.timer invalidate];
+//            //        self.timer = nil;
+//            return;
+//        }
+        //diffSec = 60+diffSec;
+        if(diffSec==60)
+        {
+            diffMin = diffMin+1;
+            diffSec = 0;
+        }
+        self.countdownLabel.text = @"已超时:";
+        self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+        self.serverDate = [dateFormatter stringFromDate:[ NSDate dateWithTimeInterval:1 sinceDate:serverDate]];
+        
+    }
 
-    diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
-    if(diffMin<0){
-        self.clockLabel.text  = @"已超时";
-        [self.timer invalidate];
-        self.timer = nil;
-        return;
-    }
-    diffSec = 60+diffSec;
-    if(diffSec==60)
-    {
-        diffMin = diffMin+1;
-        diffSec = 0;
-    }
-    self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
-    self.serverDate = [dateFormatter stringFromDate:[ NSDate dateWithTimeInterval:1 sinceDate:serverDate]];
 }
 -(void)dealloc
 {
@@ -319,11 +349,27 @@
         NSInteger diffHour = [cps hour];
         NSInteger diffMin    = [cps minute];
         if((diffMin+diffHour*60)>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
-            self.clockLabel.text = @"已超时";
+            self.countdownLabel.text = @"已超时:";
+            NSDateComponents *cps2 = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverTime  options:0];
+            NSInteger diffHour = [cps2 hour];
+            NSInteger diffMin    = [cps2 minute];
+            NSInteger diffSec   = [cps2 second];
+            diffMin = diffMin+diffHour*60-[self.stuHomeWorkModel.LongTime integerValue];
+
+            if(diffSec==60)
+            {
+                diffMin = diffMin+1;
+                diffSec = 0;
+            }
+            self.countdownLabel.text = @"已超时:";
+            self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+            self.isOverTime = YES;
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+            [self.timer fire];
             
         }
         else{
-            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverTime  toDate:localeStartDate  options:0];
+            NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverTime  toDate:startDate  options:0];
             NSInteger diffMin    = [cps minute];
             NSInteger diffSec   = [cps second];
             diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
@@ -334,8 +380,18 @@
             }
             if(!self.timer)
             {
+                if(diffMin == [self.stuHomeWorkModel.LongTime integerValue]){
+                    self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin+1,(long)diffSec];
+                    
+                }else{
+                    self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+                    
+                }
+                sleep(0.5);
                 self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                //self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
+                [self.timer fire];
+                self.countdownLabel.text = @"倒计时:";
+
                 
             }
             
