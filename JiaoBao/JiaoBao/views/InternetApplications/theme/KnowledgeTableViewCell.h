@@ -67,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *answerImgV;
 @property (weak, nonatomic) IBOutlet UIImageView *basisImagV;
 @property (weak, nonatomic) IBOutlet UIImageView *askImgV;
+@property (weak, nonatomic) IBOutlet UIPageControl *pagControl;//分页
 
 
 //给标题和答案添加点击事件,赞

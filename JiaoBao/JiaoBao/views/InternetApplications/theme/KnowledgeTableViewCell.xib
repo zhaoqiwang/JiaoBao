@@ -251,6 +251,10 @@
                         <rect key="frame" x="155" y="74" width="19" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <pageControl hidden="YES" opaque="NO" alpha="0.5499999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="pgJ-ct-MMa">
+                        <rect key="frame" x="-3" y="433" width="323" height="37"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </pageControl>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -286,6 +290,7 @@
                 <outlet property="mScrollV_pic" destination="T3l-Th-wqS" id="1zc-dj-KZ6"/>
                 <outlet property="mView_background" destination="5Yh-Zt-ldv" id="i5l-7Z-Vie"/>
                 <outlet property="mWebV_comment" destination="iu1-Sy-7DF" id="L1M-TU-SWf"/>
+                <outlet property="pagControl" destination="pgJ-ct-MMa" id="88C-0C-yRQ"/>
             </connections>
             <point key="canvasLocation" x="398" y="663.5"/>
         </tableViewCell>
