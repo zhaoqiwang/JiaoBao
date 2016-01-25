@@ -149,15 +149,23 @@
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:weakSelf.stuHomeWorkModel.hwinfoid QsId:[weakSelf.datasource objectAtIndex:index_path.row]];
             if(indexPath.row==0){
                 self.previousBtn.enabled = NO;
+                self.nextBtn.enabled = YES;
             }
             else{
                 self.previousBtn.enabled = YES;
             }
             self.selectedBtnTag = index_path.row;
             if(self.selectedBtnTag+1 == [self.stuHomeWorkModel.Qsc integerValue]){
+                if(self.isSubmit == YES){
+                    self.nextBtn.enabled = NO;
+                }else{
+                    self.nextBtn.enabled = YES;
+                    
+                }
                 [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
             }else{
                 [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
+                self.nextBtn.enabled = YES;
 
             }
 
@@ -277,18 +285,18 @@
         NSInteger diffMin    = [cps minute];
         NSInteger diffSec   = [cps second];
         diffMin = [self.stuHomeWorkModel.LongTime integerValue]-1+diffMin;
-        if(diffMin==0){
-            self.isOverTime = YES;
-            //        self.clockLabel.text  = @"已超时";
-            //        [self.timer invalidate];
-            //        self.timer = nil;
-                    return;
-        }
+
         diffSec = 60+diffSec;
         if(diffSec==60)
         {
             diffMin = diffMin+1;
             diffSec = 0;
+        }
+        if(diffMin == 0&&diffSec == 0){
+            self.isOverTime = YES;
+            //        self.clockLabel.text  = @"已超时";
+            //        [self.timer invalidate];
+            //        self.timer = nil;
         }
         self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
         self.serverDate = [dateFormatter stringFromDate:[ NSDate dateWithTimeInterval:1 sinceDate:serverDate]];
@@ -348,8 +356,9 @@
         NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverTime  options:0];
         NSInteger diffHour = [cps hour];
         NSInteger diffMin    = [cps minute];
-        if((diffMin+diffHour*60)>[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
+        if((diffMin+diffHour*60)>=[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
             self.countdownLabel.text = @"已超时:";
+            
             NSDateComponents *cps2 = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverTime  options:0];
             NSInteger diffHour = [cps2 hour];
             NSInteger diffMin    = [cps2 minute];
@@ -361,10 +370,10 @@
                 diffMin = diffMin+1;
                 diffSec = 0;
             }
-            self.countdownLabel.text = @"已超时:";
             self.clockLabel.text = [NSString stringWithFormat:@"%02ld:%02ld",(long)diffMin,(long)diffSec];
             self.isOverTime = YES;
             self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+            [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
             [self.timer fire];
             
         }
@@ -389,6 +398,7 @@
                 }
                 sleep(0.5);
                 self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
                 [self.timer fire];
                 self.countdownLabel.text = @"倒计时:";
 
@@ -659,6 +669,7 @@
             {
                 self.serverDate = self.stuHomeWorkModel.HWStartTime;
                 self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
 
                 
             }
