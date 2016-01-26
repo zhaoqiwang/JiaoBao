@@ -682,13 +682,23 @@
             }
             
             //    是否需要支持定时循环滚动，默认为YES
-            if (tempA.count>1) {
+//            if (tempA.count>1) {
+//                cell.mScrollV_pic.isNeedCycleRoll = YES;
+//                cell.mScrollV_pic.pageControl.hidden = NO;
+//            }else{
+//                cell.mScrollV_pic.isNeedCycleRoll = NO;
+//                cell.mScrollV_pic.pageControl.hidden = YES;
+//            }
+            if (tempA.count>0) {
                 cell.mScrollV_pic.isNeedCycleRoll = YES;
                 cell.mScrollV_pic.pageControl.hidden = NO;
+                [cell.mScrollV_pic setImageLinkURL:tempA];
             }else{
                 cell.mScrollV_pic.isNeedCycleRoll = NO;
+                [cell.mScrollV_pic setImageLinkURL:nil];
                 cell.mScrollV_pic.pageControl.hidden = YES;
             }
+            cell.mScrollV_pic.pageControl.hidden = NO;
             cell.mScrollV_pic.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
             cell.mScrollV_pic.pageControl.pageIndicatorTintColor = [UIColor grayColor];
             [cell.mScrollV_pic setImageLinkURL:tempA];
