@@ -588,6 +588,10 @@
         [MBProgressHUD showError:@"请添写标题"];
         return;
     }
+    if([utils isBlankString:self.mTextV_content.text])
+    {
+        self.mTextV_content.text = @"";
+    }
     if(self.mText_title.text.length>100)
     {
         [MBProgressHUD showError:@"标题不能超过100字"];
