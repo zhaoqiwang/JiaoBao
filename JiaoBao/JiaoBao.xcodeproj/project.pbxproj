@@ -722,6 +722,7 @@
 		A78E4A2D1B0C7FD800969D8F /* PopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = A78E4A2C1B0C7FD800969D8F /* PopupWindow.m */; };
 		A78FE2361B3AA43D00C8D1FD /* MBProgressHUD+AD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */; };
 		A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */; };
+		A790217B1C561300007736E9 /* AdView.m in Sources */ = {isa = PBXBuildFile; fileRef = A790217A1C561300007736E9 /* AdView.m */; };
 		A792B8061BE07CA800B1B0C5 /* homework_down0.png in Resources */ = {isa = PBXBuildFile; fileRef = A792B7FD1BE07CA800B1B0C5 /* homework_down0.png */; };
 		A792B8071BE07CA800B1B0C5 /* homework_down0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A792B7FE1BE07CA800B1B0C5 /* homework_down0@2x.png */; };
 		A792B8081BE07CA800B1B0C5 /* homework_down0@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A792B7FF1BE07CA800B1B0C5 /* homework_down0@3x.png */; };
@@ -2090,6 +2091,8 @@
 		A78FE2351B3AA43D00C8D1FD /* MBProgressHUD+AD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "MBProgressHUD+AD.m"; path = "Common/MBProgressHUD+AD.m"; sourceTree = "<group>"; };
 		A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+HUD.h"; path = "Common/UIViewController+HUD.h"; sourceTree = "<group>"; };
 		A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+HUD.m"; path = "Common/UIViewController+HUD.m"; sourceTree = "<group>"; };
+		A79021791C561300007736E9 /* AdView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdView.h; path = "Common/广告循环AdView/AdView.h"; sourceTree = "<group>"; };
+		A790217A1C561300007736E9 /* AdView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdView.m; path = "Common/广告循环AdView/AdView.m"; sourceTree = "<group>"; };
 		A792B7FD1BE07CA800B1B0C5 /* homework_down0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homework_down0.png; sourceTree = "<group>"; };
 		A792B7FE1BE07CA800B1B0C5 /* homework_down0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homework_down0@2x.png"; sourceTree = "<group>"; };
 		A792B7FF1BE07CA800B1B0C5 /* homework_down0@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "homework_down0@3x.png"; sourceTree = "<group>"; };
@@ -3435,6 +3438,7 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				A79021781C5612A3007736E9 /* 广告循环AdView */,
 				F72385D31BE344990000015D /* WebViewJavascriptBridge.h */,
 				F72385D41BE344990000015D /* WebViewJavascriptBridge.js.txt */,
 				F72385D51BE344990000015D /* WebViewJavascriptBridge.m */,
@@ -4610,6 +4614,15 @@
 			);
 			name = Resources;
 			path = Common/IQKeyBoardManager/Resources;
+			sourceTree = "<group>";
+		};
+		A79021781C5612A3007736E9 /* 广告循环AdView */ = {
+			isa = PBXGroup;
+			children = (
+				A79021791C561300007736E9 /* AdView.h */,
+				A790217A1C561300007736E9 /* AdView.m */,
+			);
+			name = "广告循环AdView";
 			sourceTree = "<group>";
 		};
 		A796B32D1B1D98FB00FA1735 /* register */ = {
@@ -6175,6 +6188,7 @@
 				A7113F281A41661E00F927DD /* ThemeSpaceViewController.m in Sources */,
 				A77FF0281A650B3F00DB85E3 /* JSONModelArray.m in Sources */,
 				F76B64451B1EA440008F6961 /* ClassMessage.m in Sources */,
+				A790217B1C561300007736E9 /* AdView.m in Sources */,
 				A7B0F9511A47BC4300C1863A /* MJPhotoToolbar.m in Sources */,
 				F76B644D1B1EA451008F6961 /* HomeClassTopScrollView.m in Sources */,
 				F71803201AB3C46300E6167F /* JTCalendarContentView.m in Sources */,

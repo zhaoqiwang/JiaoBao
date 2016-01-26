@@ -672,37 +672,34 @@
             [cell.mBtn_detail setTitle:@"往期精选" forState:UIControlStateNormal];
             cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-56-10, 0, 56, cell.mBtn_detail.frame.size.height);
             cell.mScrollV_pic.hidden = NO;
-            cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
-            cell.mScrollV_pic.backgroundColor = [UIColor clearColor];
-            cell.mScrollV_pic.delegate = self;
-            if (self.mModel_getPickdById.ImgContent.count>0) {
-                for (int i=0; i<self.mModel_getPickdById.ImgContent.count; i++) {
-                    UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(i*[dm getInstance].width, 0, [dm getInstance].width, 100)];
-                    NSString *tempUrl = [NSString stringWithFormat:@"%@%@%@",MAINURL,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:i]];
-                    temp.contentMode = UIViewContentModeScaleAspectFit;
-                    [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
-                    [cell.mScrollV_pic addSubview:temp];
-                }
-//                隐藏指示条
-                cell.mScrollV_pic.showsHorizontalScrollIndicator = NO;
-                cell.mScrollV_pic.pagingEnabled = YES;
-                cell.mScrollV_pic.contentSize = CGSizeMake(self.mModel_getPickdById.ImgContent.count*[dm getInstance].width, 100);
-            }else{
-                UIImageView *temp = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 100)];
-                NSString *tempUrl = @"";
-                temp.contentMode = UIViewContentModeScaleAspectFit;
-                [temp sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
-                [cell.mScrollV_pic addSubview:temp];
+//            cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 100);
+//            cell.mScrollV_pic.backgroundColor = [UIColor clearColor];
+//            CGFloat width = [UIScreen mainScreen].bounds.size.width;
+            NSMutableArray *tempA = [NSMutableArray array];
+            for (int i=0; i<self.mModel_getPickdById.ImgContent.count; i++) {
+                NSString *tempUrl = [NSString stringWithFormat:@"%@%@%@",MAINURL,self.mModel_getPickdById.baseImgUrl,[self.mModel_getPickdById.ImgContent objectAtIndex:i]];
+                [tempA addObject:tempUrl];
             }
             
-            //分页
-            cell.pagControl.hidden = NO;
-            cell.pagControl.frame = CGRectMake(0, 130-20, [dm getInstance].width, 20);
-            cell.pagControl.numberOfPages = self.mModel_getPickdById.ImgContent.count;
-            //仅有一个页面的情况下隐藏指示器
-            cell.pagControl.hidesForSinglePage = YES;
-            cell.pagControl.backgroundColor = [UIColor grayColor];
-            self.mPageC_cell = cell.pagControl;
+            //    是否需要支持定时循环滚动，默认为YES
+            if (tempA.count>1) {
+                cell.mScrollV_pic.isNeedCycleRoll = YES;
+                cell.mScrollV_pic.pageControl.hidden = NO;
+            }else{
+                cell.mScrollV_pic.isNeedCycleRoll = NO;
+                cell.mScrollV_pic.pageControl.hidden = YES;
+            }
+            cell.mScrollV_pic.pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+            cell.mScrollV_pic.pageControl.pageIndicatorTintColor = [UIColor grayColor];
+            [cell.mScrollV_pic setImageLinkURL:tempA];
+            [cell.mScrollV_pic setPlaceHoldImage:[UIImage imageNamed:@"root_img"]];
+            [cell.mScrollV_pic setPageControlShowStyle:UIPageControlShowStyleLeft];
+            cell.mScrollV_pic.frame = CGRectMake(0, 30, [dm getInstance].width, 120);
+            //图片被点击后回调的方法
+//            self.adView.callBack = ^(NSInteger index,NSString * imageURL)
+//            {
+//                
+//            };
             
             cell.mLab_comment.hidden = YES;
             cell.mLab_commentCount.hidden = YES;
@@ -1206,7 +1203,7 @@
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
         if (indexPath.row==0) {
-            return 130;
+            return 150;
         }else{
             return [self cellHeightPicked:indexPath];
         }
@@ -1343,14 +1340,6 @@
     //分割线
     tempF = tempF+6;
     return tempF;
-}
-
-// scrollview滚动的时候调用
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat scrollviewW =  scrollView.frame.size.width;
-    CGFloat x = scrollView.contentOffset.x;
-    int page = (x + scrollviewW / 2) /  scrollviewW;
-    self.mPageC_cell.currentPage = page;
 }
 
 #pragma mark 开始进入刷新状态

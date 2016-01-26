@@ -14,6 +14,7 @@
 #import "AnswerDetailModel.h"
 #import "PickContentModel.h"
 #import "ShowPickedModel.h"
+#import "AdView.h"
 
 @protocol KnowledgeTableViewCellDelegate;
 
@@ -51,7 +52,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_nodiscuss;//在讨论--无内容
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory;//选择话题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_selectCategory1;//选择话题
-@property (nonatomic,strong) IBOutlet UIScrollView *mScrollV_pic;//精选图片
+@property (nonatomic,strong) IBOutlet AdView *mScrollV_pic;//精选图片
 @property (nonatomic,strong) IBOutlet UIImageView *mImgV_top;//是否置顶
 
 @property (nonatomic,strong) QuestionModel *model;

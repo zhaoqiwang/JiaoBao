@@ -22,6 +22,7 @@
 #import "HtmlString.h"
 #import "CustomTextFieldView.h"
 #import "OldChoiceViewController.h"
+#import "AdView.h"
 
 @interface ThemeView : UIView<UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,KnowledgeTableViewCellDelegate,UIScrollViewDelegate>{
     
@@ -37,7 +38,6 @@
 @property(nonatomic,strong)NSMutableArray *mArr_selectCategory;//被选择的分类 数组
 @property (nonatomic,strong) GetPickedByIdModel *mModel_getPickdById;//精选model
 @property (nonatomic,strong) UILabel *mLab_warn;//提醒有几条数据被隐藏或删除，有证据列表
-@property (nonatomic,strong) UIPageControl *mPageC_cell;
 
 
 - (id)initWithFrame1:(CGRect)frame;
