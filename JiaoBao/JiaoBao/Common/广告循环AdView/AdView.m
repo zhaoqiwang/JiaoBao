@@ -303,7 +303,7 @@
     }
     _pageControl.currentPage = 0;
     _pageControl.enabled = NO;
-    [self addSubview:_pageControl];
+//    [self addSubview:_pageControl];
 }
 
 #pragma mark - 计时器到时,系统滚动图片
