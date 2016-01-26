@@ -201,10 +201,6 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="T3l-Th-wqS">
-                        <rect key="frame" x="32" y="398" width="240" height="43"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    </scrollView>
                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="O3Z-LG-9B1">
                         <rect key="frame" x="105" y="8" width="36" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -287,7 +283,6 @@
                 <outlet property="mLab_line2" destination="DV4-Z5-RcB" id="aTd-NW-b1M"/>
                 <outlet property="mLab_selectCategory" destination="JRS-Ls-U1h" id="wuM-du-yN7"/>
                 <outlet property="mLab_selectCategory1" destination="0lh-AT-vIj" id="8cd-T6-gDc"/>
-                <outlet property="mScrollV_pic" destination="T3l-Th-wqS" id="1zc-dj-KZ6"/>
                 <outlet property="mView_background" destination="5Yh-Zt-ldv" id="i5l-7Z-Vie"/>
                 <outlet property="mWebV_comment" destination="iu1-Sy-7DF" id="L1M-TU-SWf"/>
                 <outlet property="pagControl" destination="pgJ-ct-MMa" id="88C-0C-yRQ"/>

@@ -638,7 +638,7 @@
         cell.mView_background.frame = cell.mImgV_head.frame;
         cell.basisImagV.image = [UIImage imageNamed:@"content"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 26, 16);
-        name2 = [NSString stringWithFormat:@"<font ont size=12 color=black>%@</font>", string2];
+        name2 = [NSString stringWithFormat:@"<font size=12 color=black>%@</font>", string2];
     }else if ([model.Flag integerValue]==2){//有证据
         cell.basisImagV.image = [UIImage imageNamed:@"basis"];
         cell.basisImagV.frame = CGRectMake(cell.mImgV_head.frame.origin.x+cell.mImgV_head.frame.size.width+10, cell.mImgV_head.frame.origin.y, 29, 29);

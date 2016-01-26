@@ -61,10 +61,6 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     userContentOffsetX = self.contentOffset.x;
 }
-//滑动过程中
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-}
 //滑动结束
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (userContentOffsetX < self.contentOffset.x) {

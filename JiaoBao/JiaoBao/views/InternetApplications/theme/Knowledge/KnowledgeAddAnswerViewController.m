@@ -213,9 +213,7 @@
             if(rangeArr.count>0){
                 
                 ImgModel.cursorPosition = NSMakeRange([[rangeArr objectAtIndex:0]longValue], 1);
-            }
-
-            NSLog(@"cursorPosition = %lu",(unsigned long)ImgModel.cursorPosition.location);
+            }            NSLog(@"cursorPosition = %lu",(unsigned long)ImgModel.cursorPosition.location);
 //            tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];
 //            contentText = [contentText stringByReplacingOccurrencesOfString:ImgModel.url withString:@" "];
             NSLog(@"contentText = %@ tempStr = %@",contentText,tempStr);
