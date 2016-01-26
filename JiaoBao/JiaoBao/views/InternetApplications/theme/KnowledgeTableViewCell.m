@@ -49,6 +49,7 @@
                             placeHoderImageName:@"root_img" \
                            pageControlShowStyle:UIPageControlShowStyleLeft];
     [self.contentView  addSubview:self.mScrollV_pic];
+    self.mScrollV_pic.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
