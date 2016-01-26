@@ -85,8 +85,7 @@
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
-    [[KnowledgeHttp getInstance]ShowPickedWithTabID:self.pickContentModel.TabID];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.pickContentModel.Title];
@@ -95,6 +94,8 @@
     [self.view addSubview:self.mNav_navgationBar];
     self.scrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height+self.mNav_navgationBar.frame.origin.y, [dm getInstance].width, [dm getInstance].height)];
     [self.view addSubview:self.scrollview];
+    [[KnowledgeHttp getInstance]ShowPickedWithTabID:self.pickContentModel.TabID];
+    [MBProgressHUD showMessage:@"" toView:self.view];
     // Do any additional setup after loading the view from its nib.
 }
 
