@@ -174,10 +174,11 @@
         TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
         NSArray *aArray = [xpathParser searchWithXPathQuery:@"//img"];
                 model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
-                model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+                model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@"\r"];
         model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
         model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br>"] withString:@""];
-        model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br/>"] withString:@""];
+        model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br/>"] withString:@"\r"];
+        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
         model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
 
 //        NSMutableAttributedString *content=[[NSMutableAttributedString alloc] initWithString:model.AContent];
