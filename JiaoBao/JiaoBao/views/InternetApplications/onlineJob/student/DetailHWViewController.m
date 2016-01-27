@@ -304,10 +304,11 @@
     }
     else{
         NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverDate  options:0];
+        NSInteger diffDay = [cps day];
         NSInteger diffHour = [cps hour];
         NSInteger diffMin    = [cps minute];
         NSInteger diffSec   = [cps second];
-        diffMin = diffMin+diffHour*60-[self.stuHomeWorkModel.LongTime integerValue];
+        diffMin = diffMin+diffHour*60+diffDay*24*60-[self.stuHomeWorkModel.LongTime integerValue];
 //        if(diffMin==0){
 //            self.isOverTime = YES;
 //            //        self.clockLabel.text  = @"已超时";
@@ -354,9 +355,10 @@
         NSUInteger unitFlags =
         NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
         NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverTime  options:0];
+    NSInteger diffDay = [cps day];
         NSInteger diffHour = [cps hour];
         NSInteger diffMin    = [cps minute];
-        if((diffMin+diffHour*60)>=[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
+        if((diffMin+diffHour*60+diffDay*24*60)>=[self.stuHomeWorkModel.LongTime integerValue]){//超过规定时间（如30min）显示已超时
             self.countdownLabel.text = @"已超时:";
             
             NSDateComponents *cps2 = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverTime  options:0];

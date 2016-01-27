@@ -356,7 +356,7 @@
         if([ResultCode integerValue]==999999){
             ResultDesc = @"不存在此邀请人";
         }
-        [MBProgressHUD showError:ResultDesc] ;
+        [MBProgressHUD showError:ResultDesc];
 
     }
 }
@@ -385,6 +385,7 @@
             self.atAccIdsTF.text = @"";
             self.categoryTF.text = @"";
             [MBProgressHUD showSuccess:ResultDesc];
+            self.addQuestionBtn.enabled = NO;
             [[NSNotificationCenter defaultCenter]removeObserver:self];
             [dm getInstance].addQuestionNoti = NO;
             
@@ -585,7 +586,7 @@
    [self.view endEditing:YES];
     if([utils isBlankString:self.mText_title.text])
     {
-        [MBProgressHUD showError:@"请添写标题"];
+        [MBProgressHUD showError:@"请填写标题"];
         return;
     }
     if([utils isBlankString:self.mTextV_content.text])

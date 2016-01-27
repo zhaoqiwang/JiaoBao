@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddQuestionViewController">
             <connections>
+                <outlet property="addQuestionBtn" destination="nRM-0H-oNO" id="Nvu-ld-IrN"/>
                 <outlet property="atAccIdsTF" destination="21h-Zc-fS1" id="1tD-Ja-nYi"/>
                 <outlet property="categoryLabel" destination="jnh-pr-dyu" id="7uW-xR-Cbm"/>
                 <outlet property="categoryTF" destination="EiG-IF-EX7" id="87t-pZ-Y2B"/>

@@ -213,7 +213,8 @@
             if(rangeArr.count>0){
                 
                 ImgModel.cursorPosition = NSMakeRange([[rangeArr objectAtIndex:0]longValue], 1);
-            }            NSLog(@"cursorPosition = %lu",(unsigned long)ImgModel.cursorPosition.location);
+            }
+            NSLog(@"cursorPosition = %lu",(unsigned long)ImgModel.cursorPosition.location);
 //            tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];
 //            contentText = [contentText stringByReplacingOccurrencesOfString:ImgModel.url withString:@" "];
             NSLog(@"contentText = %@ tempStr = %@",contentText,tempStr);
@@ -230,11 +231,18 @@
                 textAttach.bounds=CGRectMake(0, 0, 30, 30);
 
             }
-            UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:srcStr]]];
-            textAttach.image = image;
-            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
-            ImgModel.attributedString = strA;
-            [self.mArr_pic addObject:ImgModel];
+            if([srcStr isEqualToString:@""]){
+                
+            }
+            else{
+                UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:srcStr]]];
+                textAttach.image = image;
+                NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+                ImgModel.attributedString = strA;
+                [self.mArr_pic addObject:ImgModel];
+                
+            }
+
             
         }
         NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithString:tempStr];
