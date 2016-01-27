@@ -63,6 +63,7 @@
 -(void)ShowRecomment:(NSNotification *)noti{
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
+    [MBProgressHUD hideHUDForView:self.view];
     if ([code integerValue] ==0) {
         self.mModel_recomment = [dic objectForKey:@"model"];
         
@@ -93,6 +94,7 @@
             [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
             [self.view addSubview:tempWeb0];
             [tempWeb0 setHidden:YES];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         self.mInt_index =1;
 //        });
         

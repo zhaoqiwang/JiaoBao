@@ -218,6 +218,14 @@
                 }
             }
         }
+        //自动定位中心位置
+        if (self.mInt_index<2) {
+            [self.mScrollV_all setContentOffset:CGPointMake(0, 0) animated:YES];
+        }else if (self.mInt_index>self.mArr_AllCategory.count-3) {
+            [self.mScrollV_all setContentOffset:CGPointMake(self.mScrollV_all.contentSize.width-self.mScrollV_all.frame.size.width, 0) animated:YES];
+        }else if (self.mInt_index<self.mArr_AllCategory.count-2) {
+            [self.mScrollV_all setContentOffset:CGPointMake((self.mInt_index-2)*50, 0) animated:YES];
+        }
         AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
         if ([model.flag intValue]==-1&&model.mArr_all.count==0) {
             self.mInt_reloadData = 0;
@@ -238,6 +246,7 @@
             [self sendRequest];
         }
         [self.mTableV_knowledge reloadData];
+        
     }else{
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self];
     }
