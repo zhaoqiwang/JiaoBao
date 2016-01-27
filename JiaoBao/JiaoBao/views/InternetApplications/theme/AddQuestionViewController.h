@@ -38,6 +38,7 @@
 
 -(IBAction)mBtn_photo:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *placehold_title;
+@property (weak, nonatomic) IBOutlet UIButton *addQuestionBtn;
 
 @property (weak, nonatomic) IBOutlet UILabel *placehold_content;
 
