@@ -63,6 +63,7 @@
 -(void)ShowRecomment:(NSNotification *)noti{
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
+    [MBProgressHUD hideHUDForView:self.view];
     if ([code integerValue] ==0) {
         self.mModel_recomment = [dic objectForKey:@"model"];
         
@@ -93,6 +94,7 @@
             [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
             [self.view addSubview:tempWeb0];
             [tempWeb0 setHidden:YES];
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         self.mInt_index =1;
 //        });
         
@@ -255,7 +257,10 @@
 //                if ([model.Flag integerValue]>0) {//非无内容
                     tempWeb.delegate = self;
                     tempWeb.tag = self.mInt_index-1;
-                    NSString *content = model.Abstracts;
+                NSString *content = model.Abstracts;
+                if (content.length==0&&[model.Flag integerValue]==2) {
+                    content = @"此答案已被修改";
+                }
                     NSString *tempHtml = [utils clearHtml:content width:85];
                     tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
                     [tempWeb setBackgroundColor:[UIColor clearColor]];

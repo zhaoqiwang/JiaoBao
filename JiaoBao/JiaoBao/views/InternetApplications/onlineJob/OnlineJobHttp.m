@@ -61,8 +61,10 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSDictionary *dic = [result objectFromJSONString];
-        NSString *statusCode = [dic objectForKey:@"statusCode"];
-        if( [statusCode integerValue] == 200)
+        NSString *code = [dic objectForKey:@"statusCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
+        if( [code integerValue] == 200)
         {
 //            if([flag integerValue]== 0)//获取科目列表
 //            {
@@ -165,6 +167,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
         D("JSON--------getStuInfoWithAccID: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -200,6 +204,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
         D("JSON--------getGenInfoWithAccID: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
@@ -253,6 +259,15 @@ static OnlineJobHttp *onlineJobHttp = nil;
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    if ([StuId intValue]>0) {
+        
+    }else{
+        NSMutableDictionary *tempDic0 = [NSMutableDictionary dictionary];
+        [tempDic0 setValue:@"100" forKey:@"ResultCode"];
+        [tempDic0 setValue:@"学生信息错误" forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:tempDic0];
+        return;
+    }
     NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf};
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
