@@ -31,6 +31,7 @@
 @property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;
 @property(nonatomic,assign)NSRange cursorPosition;
 @property(nonatomic,strong)NSString *deleteStr;
+@property(nonatomic,strong)NSString *tempContentText;
 @end
 
 @implementation AddQuestionViewController
@@ -168,16 +169,9 @@
         {
             //self.nickNameModel = [arr objectAtIndex:0];
             self.invitationUserInfo = [arr objectAtIndex:0];
-            NSString *content = self.mTextV_content.text;
-            for (int i=0; i<self.mArr_pic.count; i++) {
-                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-                NSString *temp = model.originalName;
-                content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-            }
-            content = [NSString stringWithFormat:@"<p>%@</p>",content];
             
             NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
-            [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
+            [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:self.tempContentText TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
         }
         else
         {
@@ -623,29 +617,30 @@
     }
     UITextView *tempView = [[UITextView alloc]init];
     tempView.attributedText = self.mTextV_content.attributedText;
+    for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
+        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+        NSRange range = NSMakeRange(model.cursorPosition.location, 1);
+        //NSString *temp = model.originalName;
+        //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: tempView.attributedText];
+        [strz replaceCharactersInRange:range withString:model.url];
+        tempView.attributedText = strz;
+        
+    }
+    self.tempContentText = tempView.text;
+    if (self.tempContentText.length>4000) {
+        [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
+        return;
+    }
+    //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
+    self.tempContentText = [self.tempContentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+    self.tempContentText = [self.tempContentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
     if([self.atAccIdsTF.text isEqualToString: @""])
     {
-        for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
-            UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-            NSRange range = NSMakeRange(model.cursorPosition.location, 1);
-            //NSString *temp = model.originalName;
-            //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-            NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: tempView.attributedText];
-            [strz replaceCharactersInRange:range withString:model.url];
-            tempView.attributedText = strz;
-            
-        }
-        NSString *content = tempView.text;
-        if (content.length>4000) {
-            [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
-            return;
-        }
-//        content = [NSString stringWithFormat:@"<p>%@</p>",content];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
-        content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
+
         NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
         [MBProgressHUD showMessage:@"" toView:nil];
-        [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:content TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
+        [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:self.tempContentText TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
     }
     else
     {

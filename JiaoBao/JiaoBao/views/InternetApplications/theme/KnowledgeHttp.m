@@ -223,7 +223,6 @@
         Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetAllCategory:[jsonDic objectForKey:@"Data"]];
-        
         D("JSON--------GetAllCategory: %@,", result);
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
