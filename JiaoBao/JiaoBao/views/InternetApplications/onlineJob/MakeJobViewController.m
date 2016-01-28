@@ -1332,6 +1332,10 @@
             [[OnlineJobHttp getInstance]GetDesHWListWithChapterID:self.publishJobModel.chapterID teacherJiaobaohao:[dm getInstance].jiaoBaoHao];
         }
     }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+    self.publishJobModel.homeworkName = [NSString stringWithFormat:@"%@%@%@作业",dateStr,self.publishJobModel.subjectName,self.publishJobModel.chapterName];
     [self reloadDataForDisplayArray];
     //给当前的全局难度赋值
     for (TreeJob_node *node in self.mArr_sumData) {
