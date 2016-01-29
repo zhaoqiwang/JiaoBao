@@ -1540,14 +1540,17 @@
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
                         tempModel1.mStr_title = @"没有科目";
                         tempModel1.mStr_id = 0;
+                        [tempNode1.sonNodes removeAllObjects];
                         TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:4];
                         TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
                         tempModel2.mStr_title = @"没有教版";
                         tempModel2.mStr_id = 0;
+                        [tempNode2.sonNodes removeAllObjects];
                         TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
                         TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
                         tempModel3.mStr_title = @"没有章节";
                         tempModel3.mStr_id = 0;
+                        [tempNode3.sonNodes removeAllObjects];
                         self.publishJobModel.subjectName = tempModel1.mStr_title;
                         self.publishJobModel.subjectCode = tempModel1.mStr_id;
                         self.publishJobModel.VersionName = @"";
@@ -1580,10 +1583,12 @@
                         TreeJob_level0_model *tempModel2 = tempNode2.nodeData;
                         tempModel2.mStr_title = @"没有教版";
                         tempModel2.mStr_id = 0;
+                        [tempNode2.sonNodes removeAllObjects];
                         TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:5];
                         TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
                         tempModel3.mStr_title = @"没有章节";
                         tempModel3.mStr_id = 0;
+                        [tempNode3.sonNodes removeAllObjects];
                         self.publishJobModel.VersionName = @"";
                         self.publishJobModel.VersionCode = @"0";
                         self.publishJobModel.chapterName = @"";
@@ -1615,6 +1620,7 @@
                         TreeJob_level0_model *tempModel3 = tempNode3.nodeData;
                         tempModel3.mStr_title = @"没有章节";
                         tempModel3.mStr_id = 0;
+                        [tempNode3.sonNodes removeAllObjects];
                         self.publishJobModel.chapterName = @"";
                         self.publishJobModel.chapterID = @"0";
                     }else{

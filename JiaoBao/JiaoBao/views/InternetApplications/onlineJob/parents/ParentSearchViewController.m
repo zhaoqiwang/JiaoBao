@@ -533,20 +533,26 @@
         cell.mLab_title.text = model.Name;
         CGSize titleSize = [model.Name sizeWithFont:[UIFont systemFontOfSize:14]];
         if (node.type==0) {
+            if (titleSize.width>[dm getInstance].width-80) {
+                titleSize.width =[dm getInstance].width-80;
+            }
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, 5);
             cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 14, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:14];
             cell.mLab_title.textColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
 //            cell.mImg_open.hidden = NO;
         }else if (node.type==1){
+            if (titleSize.width>[dm getInstance].width-100) {
+                titleSize.width =[dm getInstance].width-100;
+            }
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, .5);
             cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+15, 8, titleSize.width, cell.mLab_title.frame.size.height);
             cell.mLab_title.font = [UIFont systemFontOfSize:12];
             cell.mLab_title.textColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
 //            cell.mImg_open.hidden = NO;
         }else if (node.type == 2){
-            if (titleSize.width>[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25)) {
-                titleSize.width =[dm getInstance].width-70-(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+25);
+            if (titleSize.width>[dm getInstance].width-100-(model.index-1)*20) {
+                titleSize.width =[dm getInstance].width-100-(model.index-1)*20;
             }
             cell.mLab_line.frame = CGRectMake(0, 0, [dm getInstance].width, .5);
 //            D("model.index=-=====%d",model.index);
@@ -678,7 +684,7 @@
                         LevelModel *model1 = node1.nodeData;
                         if ([model.ID intValue]==[model1.ID intValue]) {
                             node1.isExpanded = !node1.isExpanded;
-                            model0.flag = 1;
+                            model1.flag = 1;
                         }
                     }
                 }
