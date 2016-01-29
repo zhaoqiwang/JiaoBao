@@ -682,8 +682,6 @@
             if(!self.serverDate){
                 [[OnlineJobHttp getInstance]GetSQLDateTime];
             }
-            
-            
         }
         
     }
@@ -1353,6 +1351,10 @@
         }
  
     }
+    }
+    if(self.datasource.count ==1)
+    {
+        self.previousBtn.enabled = NO;
     }
 //    if(self.selectedBtnTag == 0)
 //    {
