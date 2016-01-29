@@ -66,6 +66,7 @@
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
         }
         [self.AllCommentListModel.mArr_CommentList addObjectsFromArray:model.mArr_CommentList];
+        self.mInt_reloadData=0;
     }
 
 //    self.tableView.frame = CGRectMake(0, self.mBtnV_btn.frame.size.height+self.mBtnV_btn.frame.origin.y, [dm  getInstance].width, [self tableViewCellHeight]);
@@ -463,6 +464,7 @@
         } else {
             [self.tableView headerEndRefreshing];
             [self.tableView footerEndRefreshing];
+            self.mInt_reloadData = 0;
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             return;
         }
