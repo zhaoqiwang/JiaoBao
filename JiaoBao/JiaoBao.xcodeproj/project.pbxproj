@@ -3428,13 +3428,6 @@
 			isa = PBXGroup;
 			children = (
 				A79021781C5612A3007736E9 /* 广告循环AdView */,
-				F72385D31BE344990000015D /* WebViewJavascriptBridge.h */,
-				F72385D41BE344990000015D /* WebViewJavascriptBridge.js.txt */,
-				F72385D51BE344990000015D /* WebViewJavascriptBridge.m */,
-				F72385D61BE344990000015D /* WebViewJavascriptBridgeBase.h */,
-				F72385D71BE344990000015D /* WebViewJavascriptBridgeBase.m */,
-				F72385D81BE344990000015D /* WKWebViewJavascriptBridge.h */,
-				F72385D91BE344990000015D /* WKWebViewJavascriptBridge.m */,
 				F71E9D641B86BE4A00D90487 /* TFHpple.h */,
 				F71E9D651B86BE4A00D90487 /* TFHpple.m */,
 				F71E9D661B86BE4A00D90487 /* TFHppleElement.h */,

@@ -226,7 +226,8 @@
     StuSubModel *model = [sender object];
     if(model == nil){
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:@"请求失败" toView:self.view];
+        [MBProgressHUD showError:@"提交失败" ];
+        return;
 
     }
     if([model.reNum integerValue] == 0)//提交作业
@@ -906,6 +907,8 @@
             {
                 NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                 NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+                value = [value stringByReplacingOccurrencesOfString:@"," withString:@" "];
+                value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"’"];
                 NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
                 NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
                 if(![typeStr isEqualToString:@"text"])
@@ -1209,6 +1212,8 @@
         {
             NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
+            value = [value stringByReplacingOccurrencesOfString:@"," withString:@" "];
+            value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"’"];
             NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
             NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
             if(![typeStr isEqualToString:@"text"])
