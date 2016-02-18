@@ -495,6 +495,12 @@
         //名称
         cell.mLab_title.text = model.Name;
         CGSize titleSize = [model.Name sizeWithFont:[UIFont systemFontOfSize:14]];
+        //学力文字长度
+        NSString *temp = [NSString stringWithFormat:@"%@/%@/%@",model.IsF,model.UnF,model.Total];
+        CGSize EduLevelSize = [temp sizeWithFont:[UIFont systemFontOfSize:12]];
+        if (titleSize.width>[dm getInstance].width-30-EduLevelSize.width) {
+            titleSize.width =[dm getInstance].width-30-EduLevelSize.width;
+        }
         cell.mLab_title.frame  = CGRectMake(cell.mImg_pic.frame.origin.x+cell.mImg_pic.frame.size.width+5, 10, titleSize.width, cell.mLab_title.frame.size.height);
         cell.mLab_title.textColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
         //题量
@@ -509,11 +515,11 @@
         cell.mLab_score.hidden = YES;
         cell.mLab_scoreLab.hidden = YES;
         //学力
-        NSString *temp = [NSString stringWithFormat:@"%@/%@/%@",model.IsF,model.UnF,model.Total];
+//        NSString *temp = [NSString stringWithFormat:@"%@/%@/%@",model.IsF,model.UnF,model.Total];
         cell.mLab_power.text = temp;
         cell.mLab_power.hidden = NO;
         cell.mLab_power.font = [UIFont systemFontOfSize:12];
-        CGSize EduLevelSize = [temp sizeWithFont:[UIFont systemFontOfSize:12]];
+//        CGSize EduLevelSize = [temp sizeWithFont:[UIFont systemFontOfSize:12]];
         cell.mLab_power.frame = CGRectMake([dm getInstance].width-9-EduLevelSize.width, cell.mLab_title.frame.origin.y, EduLevelSize.width, cell.mLab_power.frame.size.height);
         cell.mLab_powerLab.hidden = YES;
         //得分

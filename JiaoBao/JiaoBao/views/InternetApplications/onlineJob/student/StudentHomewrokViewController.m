@@ -58,6 +58,8 @@
     //单位信息获取接口
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getUnitInfoWithUID" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnitInfoWithUID:) name:@"getUnitInfoWithUID" object:nil];
+    //使用NSNotificationCenter 鍵盤隐藏時
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     
     self.mArr_homework = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
@@ -1234,6 +1236,11 @@
     return TRUE;
 }
 
+//当键盘隐藏的时候
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification{
+    self.mStr_textName = self.titleTF.text;
+}
+
 //发布练习按钮回调
 -(void)PublishJob{
     //去掉前后的空格
@@ -1241,6 +1248,9 @@
     if ([self.titleTF isFirstResponder]) {
         textName = self.titleTF.text;
     }else{
+        if ([self.titleTF.text isEqualToString:self.mStr_textName]) {
+            
+        }
         textName = self.mStr_textName;
     }
     textName = [textName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
