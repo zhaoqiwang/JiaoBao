@@ -1266,7 +1266,6 @@
     [self.mView_text addSubview:self.doneBtn];
     
     self.tableView.tableFooterView = [[UIView alloc]init];
-
         [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
         self.tableView.headerPullToRefreshText = @"下拉刷新";
         self.tableView.headerReleaseToRefreshText = @"松开后刷新";
@@ -1278,10 +1277,6 @@
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
     [MBProgressHUD hideHUDForView:self.view];
-
-
-
-
     //self.tableView.footerHidden = YES;
 
 
