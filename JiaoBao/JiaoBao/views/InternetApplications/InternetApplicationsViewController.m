@@ -183,7 +183,7 @@
         [[InternetAppTopScrollView shareInstance] sendRequest];
         //是否隐藏加号
 //        if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
-            [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
+        [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
 //        }else{
 //            [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
 //        }
