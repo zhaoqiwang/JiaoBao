@@ -126,6 +126,10 @@
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]==100){
+        [MBProgressHUD showError:ResultDesc];
+        return;
+    }
     if([ResultCode integerValue]!=0)
     {
         [MBProgressHUD showError:@"目标可能已经被删除"];
@@ -171,6 +175,7 @@
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         if([ResultCode integerValue]!=0)
         {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             [MBProgressHUD showError:ResultDesc];
         }
         else
@@ -1145,7 +1150,6 @@
                 [cell.AnswerDetailModel.Thumbnail addObject:content];
             }
         }
-
         [cell.mCollectionV_pic reloadData];
         cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
         if (self.AnswerDetailModel.Thumbnail.count>0) {
@@ -1180,7 +1184,6 @@
         }
     cell.frame = CGRectMake(0, 10, [dm getInstance].width, cell.mLab_RecDate.frame.size.height+cell.mLab_RecDate.frame.origin.y+10);
     cell.userInteractionEnabled = YES;
-
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
