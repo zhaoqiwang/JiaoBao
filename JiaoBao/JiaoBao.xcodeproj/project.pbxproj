@@ -6327,6 +6327,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -6360,6 +6361,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
