@@ -377,15 +377,11 @@
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
-
-
-
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     self.imageCount = 1;
     D("info_count = %ld",(unsigned long)info.count);
     [picker dismissViewControllerAnimated:YES completion:^{
-        
         
 
     }];
@@ -515,8 +511,6 @@
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                     
-                    
-                    
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
                     
                     // NSLog(@"%lu",(unsigned long)imageData.length);
@@ -594,6 +588,12 @@
             self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
         }
         self.tfContentTag = self.mArr_pic.count;
+        if(self.mArr_pic.count>=9)
+        {
+            UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传20张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alertview show];
+            return;
+        }
         [self presentViewController:imagePickerController animated:YES completion:^{}];
         
     }
@@ -617,6 +617,12 @@
     
     elcPicker.imagePickerDelegate = self;
     self.tfContentTag= self.mArr_pic.count;
+    if(self.mArr_pic.count>=9)
+    {
+        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传20张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alertview show];
+        return;
+    }
     
     [self presentViewController:elcPicker animated:YES completion:nil];
 }

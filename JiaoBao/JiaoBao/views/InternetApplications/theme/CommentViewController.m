@@ -257,11 +257,9 @@
 }
 
 -(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer
-
 {
     self.mView_text.hidden = YES;
     [self.view endEditing:YES];
-
     
 }
 -(void)AddScoreWithtabid:(id)sender
