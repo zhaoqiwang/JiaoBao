@@ -52,10 +52,19 @@
     //全局异常捕获,bug服务器
     InstallUncaughtExceptionHandler();
     //添加网络切换时的处理
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(checkNetworkStatus:)
+     
+                                                 name:kReachabilityChangedNotification object:nil];
+    
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    
+    [internetReachable startNotifier];
 //    Reachability *_internetReach = [Reachability reachabilityForInternetConnection];
 //    [_internetReach startNotifier];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
     
     [dm getInstance].mStr_unit = @"暂无";
     [dm getInstance].name = @"新用户";
@@ -154,7 +163,51 @@
 - (void)onlineConfigCallBack:(NSNotification *)note {
     D("online config has fininshed and note = %@", note.userInfo);
 }
-
+- (void)checkNetworkStatus:(NSNotification *)notice {
+    
+    NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
+    
+    switch (internetStatus)
+    
+    {
+            
+        case NotReachable:
+            
+        {
+            [MBProgressHUD showError:@"网络连接异常" ];
+            NSLog(@"The internet is down.");
+            
+            break;
+            
+        }
+            
+        case ReachableViaWiFi:
+            
+        {
+            [MBProgressHUD showError:@"接入wifi网络" ];
+            
+            NSLog(@"The internet is working via WIFI");
+            
+            break;
+            
+        }
+            
+        case ReachableViaWWAN:
+            
+        {
+            [MBProgressHUD showError:@"接入wwan网络" ];
+            
+            NSLog(@"The internet is working via WWAN!");
+            
+            
+            
+            break;
+            
+        }
+            
+    }
+    
+}
 - (void)reachabilityChanged: (NSNotification* )note {
     Reachability *curReach = [note object];
     NetworkStatus networkStatus = [curReach currentReachabilityStatus];

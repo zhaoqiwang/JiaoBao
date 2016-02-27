@@ -23,6 +23,8 @@
     InternetApplicationsViewController *mInternet;
     RegisterViewController *mRegister_view;
     int mInt_index;//当往数组中添加数据时，记录当前的readflag
+    Reachability *internetReachable;
+
 }
 
 //@property (nonatomic,strong) RootViewController *mRoot_view;
