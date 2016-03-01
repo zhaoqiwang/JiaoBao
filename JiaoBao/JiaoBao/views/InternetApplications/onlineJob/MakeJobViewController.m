@@ -29,6 +29,9 @@
 @property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
 @property(nonatomic,strong)CommMsgRevicerUnitListModel *mModel_unitList;
 @property(nonatomic,strong)PublishJobModel *publishJobModel;
+@property(nonatomic,assign)int publicClassNum;
+@property(nonatomic,assign)BOOL publicFlag;
+@property(nonatomic,strong)NSMutableArray *publicArr;
 
 
 @end
@@ -166,13 +169,18 @@
             D("kjlksfjdkj-=====%@,%@,%@",self.publishJobModel.HwType,self.publishJobModel.DoLv,self.publishJobModel.homeworkName);
             [[OnlineJobHttp getInstance]TecMakeHWWithPublishJobModel:self.publishJobModel];
             [MBProgressHUD showMessage:@"" toView:self.view];
+
         }
+
+
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.publicFlag = 1;
+    self.publicArr = [[NSMutableArray alloc]initWithCapacity:0];
     
 //是否有题回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
@@ -1844,15 +1852,40 @@
     NSString *result = [sender object];
     if([result isEqualToString:@"成功"])
     {
-        [MBProgressHUD  hideHUDForView:self.view animated:YES];
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
+        self.publicClassNum++;
     }
-    else
+    else if([result isEqualToString:@"失败"])
     {
-        [MBProgressHUD  hideHUDForView:self.view animated:YES];
+        self.publicClassNum++;
+        self.publicFlag = 0;
+        NSString *className= [[sender userInfo]objectForKey:@"className"];
+        [self.publicArr addObject:className];
+    }
+    else{
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        [MBProgressHUD showSuccess:@"发布作业失败" toView:self.view];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD showError:[sender object] toView:self.view];
+        self.publicClassNum =0;
+        return;
+    }
+
+    if(self.publicClassNum == self.publishJobModel.classIDArr.count ){
+        self.publicClassNum = 0;
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        if(self.publicFlag == 1){
+            [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
+
+        }else{
+            NSString *classStr = [self.publicArr componentsJoinedByString:@","];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布作业失败" message:[NSString stringWithFormat:@"%@发布作业失败,其余班级成功",classStr] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alert show];
+            alert.delegate = self;
+//            [MBProgressHUD showError:[NSString stringWithFormat:@"%@发布作业失败,其余班级成功",classStr] toView:self.view];
+
+        }
+        
+        
     }
 
     

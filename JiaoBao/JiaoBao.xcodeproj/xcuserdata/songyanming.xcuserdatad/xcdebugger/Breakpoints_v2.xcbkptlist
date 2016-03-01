@@ -19,29 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/Common/JSONModel/JSONModelNetworking/JSONHTTPClient.m"
-            timestampString = "472982413.420439"
+            filePath = "JiaoBao/Common/AFNetworking/AFURLConnectionOperation.m"
+            timestampString = "478491543.825177"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
-            landmarkName = "+JSONFromURLWithString:method:params:orBodyData:headers:completion:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/Common/IQKeyBoardManager/IQKeyboardManager.m"
-            timestampString = "473065044.273204"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
-            landmarkName = "-dealloc"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
+            landmarkName = "-responseString"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

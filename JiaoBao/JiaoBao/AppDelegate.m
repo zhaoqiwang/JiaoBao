@@ -103,7 +103,6 @@
         }
     }
     
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registeredSuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registeredSuccessfully) name:@"registeredSuccessfully" object:nil];//注册成功跳转主界面通知
     //默认登录成功则记住密码
@@ -166,7 +165,6 @@
 - (void)checkNetworkStatus:(NSNotification *)notice {
     
     NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
-    
     switch (internetStatus)
     
     {
@@ -176,7 +174,6 @@
         {
             [MBProgressHUD showError:@"网络连接异常" ];
             NSLog(@"The internet is down.");
-            
             break;
             
         }
@@ -185,9 +182,7 @@
             
         {
             [MBProgressHUD showError:@"接入wifi网络" ];
-            
             NSLog(@"The internet is working via WIFI");
-            
             break;
             
         }
@@ -198,9 +193,6 @@
             [MBProgressHUD showError:@"接入wwan网络" ];
             
             NSLog(@"The internet is working via WWAN!");
-            
-            
-            
             break;
             
         }
