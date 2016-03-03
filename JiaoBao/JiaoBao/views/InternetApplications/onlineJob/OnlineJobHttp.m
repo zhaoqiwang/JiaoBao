@@ -136,14 +136,27 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *parameters = [publishJobModel propertiesDic];
     [parameters removeObjectForKey:@"classIDArr"];
+    D("%@",publishJobModel.className);
+
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------TecMakeHWWithPublishJobModel: %@,", result);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"成功"];
+        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
+        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+        NSString *className = [httpObject objectForKey:@"className"];
+        D("JSON--------TecMakeHWWithPublishJobModel: %@, %@", result,HTTPBody);
+        
+        if([result isEqualToString:@"true"]){
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"成功" userInfo:httpObject];
+
+        }else{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:httpObject];
+
+        }
+        
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:error.description];
 
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);

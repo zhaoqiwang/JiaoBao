@@ -51,7 +51,7 @@
         D("JSON--------knowledgeHttpGetProvice: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSString *code = @"100";
-        NSString *ResultDesc = @"服务器异常" ;
+        NSString *ResultDesc = error.localizedDescription ;
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetProvice" object:dic];
         D("Error---------knowledgeHttpGetProvice: %@", error);
@@ -79,7 +79,7 @@
         D("JSON--------knowledgeHttpGetCity: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSString *code = @"100";
-        NSString *ResultDesc = @"服务器异常" ;
+        NSString *ResultDesc = error.localizedDescription ;
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetCity" object:dic];
         D("Error---------knowledgeHttpGetCity: %@", error);
@@ -110,7 +110,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAccIdbyNickname: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic];
     }];
 }
@@ -201,7 +201,7 @@
         D("JSON--------GetCategoryById: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetCategoryById: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic];
     }];
 }
@@ -230,7 +230,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAllCategory" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAllCategory: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAllCategory" object:dic];
     }];
 }
@@ -258,7 +258,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic1];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
         D("Error---------NewQuestionWithCategoryId: %@", error);
     }];
@@ -338,7 +338,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QuestionDetail" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------QuestionDetailWithQId: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"QuestionDetail" object:dic];
     }];
 }
@@ -368,7 +368,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddAnswerWithQId: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"AddAnswer" object:dic];
     }];
 }
@@ -396,7 +396,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateAnswer" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateAnswerWithTabID: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"UpdateAnswer" object:dic];
     }];
 }
@@ -427,7 +427,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAnswerById" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAnswerByIdWithNumPerPage: %@", error);
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAnswerById" object:dic];
     }];
     
@@ -457,7 +457,7 @@
         
         D("JSON--------SetYesNoWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:resultDic ];
         D("Error---------SetYesNoWithAId: %@", error);
@@ -485,7 +485,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
         D("JSON--------AddCommentWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
         D("Error---------AddCommentWithAId: %@", error);
     }];
@@ -516,7 +516,7 @@
         D("JSON--------CommentsListWithNumPerPage: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CommentsListWithNumPerPage: %@", error);
-        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
 
         [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:resultDic ];
     }];
@@ -550,7 +550,7 @@
         D("JSON--------AnswerDetailWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AnswerDetailWithAId: %@", error);
-        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"AnswerDetailWithAId" object:resultDic ];
 
@@ -588,7 +588,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UserIndexQuestionWithNumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
     }];
 }
@@ -621,7 +621,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CategoryIndexQuestionWith: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
     }];
 }
@@ -652,7 +652,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------RecommentIndex: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
     }];
 }
@@ -683,7 +683,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------ShowRecomment: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
     }];
 }
@@ -714,7 +714,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetCategoryTop: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
     }];
 }
@@ -755,7 +755,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetPickedById: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         if ([flag intValue]==0) {//主页
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetPickedById" object:tempDic];
         }else{//单个精选
@@ -791,7 +791,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------ShowPicked: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
     }];
 }
@@ -822,7 +822,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------PickedIndex: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
     }];
 }
@@ -851,7 +851,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddMyAttQWithqId: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
     }];
 }
@@ -879,7 +879,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------RemoveMyAttQWithqId: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMyAttQWithqId" object:tempDic];
     }];
 }
@@ -908,7 +908,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AtMeForAnswerWithAccId: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeForAnswerWithAccId" object:tempDic];
     }];
 }
@@ -939,7 +939,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------MyAttQIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
     }];
 }
@@ -970,7 +970,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AtMeQIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeQIndexWithnumPerPage" object:tempDic];
     }];
 }
@@ -1001,7 +1001,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------MyQuestionIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyQuestionIndexWithnumPerPage" object:tempDic];
     }];
 }
@@ -1032,7 +1032,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------MyAnswerIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAnswerIndexWithnumPerPage" object:tempDic];
     }];
     
@@ -1069,7 +1069,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyattCate: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
     }];
 }
@@ -1105,7 +1105,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddMyattCateWithuid: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         //[[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyattCateWithuid" object:tempDic];
     }];
 }
@@ -1136,7 +1136,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetAtMeUsersWithuid: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAtMeUsersWithuid" object:tempDic];
     }];
 }
@@ -1168,8 +1168,8 @@
         D("JSON--------reportanswerWithAId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------reportanswerWithAId: %@", error);
-        [MBProgressHUD showError:@"服务器异常"];
-        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [MBProgressHUD showError:error.localizedDescription];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
@@ -1191,8 +1191,8 @@
         D("JSON--------GetMyPointsDayWithAccId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyPointsDayWithAccId: %@", error);
-        [MBProgressHUD showError:@"服务器异常"];
-        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [MBProgressHUD showError:error.localizedDescription];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
@@ -1218,8 +1218,8 @@
         D("JSON--------GetMyPointsMonthWithAccId: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyPointsMonthWithAccId: %@", error);
-        [MBProgressHUD showError:@"服务器异常"];
-        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [MBProgressHUD showError:error.localizedDescription];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
@@ -1249,8 +1249,8 @@
         D("JSON--------AddScoreWithtabid: %@,", result);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddScoreWithtabid: %@", error);
-        [MBProgressHUD showError:@"服务器异常"];
-        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [MBProgressHUD showError:error.localizedDescription];
+        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }
@@ -1283,8 +1283,8 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyCommsWithNumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
-        [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyCommsWithNumPerPage" object:tempDic];        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":@"服务器异常"};
+        [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyCommsWithNumPerPage" object:tempDic];        //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         //        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:resultDic];
     }];
 }

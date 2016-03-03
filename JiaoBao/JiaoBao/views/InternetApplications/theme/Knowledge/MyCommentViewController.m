@@ -151,6 +151,7 @@
         }
 
     }else{
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }

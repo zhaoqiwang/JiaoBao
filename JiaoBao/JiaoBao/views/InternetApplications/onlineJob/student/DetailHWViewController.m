@@ -636,7 +636,6 @@
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
                             [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
                             
-                            
                         }
                         
                         else
@@ -701,8 +700,6 @@
             // 更UI
              [weakSelf.navigationController popViewControllerAnimated:YES];
         });
-       
-        
         
     };
 
@@ -750,7 +747,6 @@
             cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
 
         }
-        
         else
         {
           cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];      }
