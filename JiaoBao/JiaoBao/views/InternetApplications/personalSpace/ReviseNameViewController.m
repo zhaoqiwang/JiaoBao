@@ -72,17 +72,23 @@
     self.mTextF_trueName.frame = CGRectMake(self.mTextF_nickName.frame.origin.x, self.mLab_trueName.frame.origin.y, self.mTextF_nickName.frame.size.width, self.mTextF_nickName.frame.size.height);
     if (self.mInt_flag == 1) {
         self.mLab_nickName.text = @"昵称:";
-        self.mTextF_nickName.placeholder = @"请输入昵称";
+        self.mTextF_nickName.placeholder = @"请输入昵称,最多20个字";
         self.mLab_trueName.text = @"姓名:";
         self.mTextF_trueName.placeholder = @"请输入真实姓名";
     }else{
         self.mLab_nickName.text = @"旧密码:";
-        self.mTextF_nickName.placeholder = @"请输入旧密码";
+        self.mTextF_nickName.placeholder = @"请输入旧密码,最多20个字";
         self.mLab_trueName.text = @"新密码:";
         self.mTextF_trueName.placeholder = @"请输入新密码";
         [self.mTextF_nickName setSecureTextEntry:YES];
         [self.mTextF_trueName setSecureTextEntry:YES];
     }
+    NSString *trueName = [dm getInstance].TrueName;
+    NSString *nickName = [dm getInstance].NickName;
+    self.mTextF_nickName.text = nickName;
+    self.mTextF_nickName.tag = 10;
+    self.mTextF_trueName.text = trueName;
+    self.mTextF_trueName.tag = 11;
     //确定按钮
     self.mBtn_sure.frame = CGRectMake(20, self.mTextF_trueName.frame.origin.y+self.mTextF_trueName.frame.size.height+20, [dm getInstance].width-40, self.mBtn_sure.frame.size.height);
 }
@@ -233,6 +239,11 @@
         [textField resignFirstResponder];
         
         return NO;
+    }
+    //如果输入超过规定的字数20，就不再让输入
+    if(textField.text.length>19)
+    {
+        textField.text = [textField.text substringToIndex:19];
     }
     return YES;
 }

@@ -73,5 +73,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_readList;//当前显示详情的阅读人员
 @property (nonatomic,strong) NSString *mStr_flag;//我自己发送的信息中，未读数量
 @property (nonatomic,strong) NSMutableArray *mArr_photos;
+@property (nonatomic,assign) int mInt_fileDown;//下载附件的索引
 
 @end

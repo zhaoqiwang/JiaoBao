@@ -222,8 +222,10 @@ static LoginSendHttp *loginSendHttp = nil;
     NSString *urlString;
     if (tag == 7) {
         urlString = [NSString stringWithFormat:@"%@CommMsg/FeebackToMe",MAINURL];
+        D("oidjglkdjg");
     }else{
         urlString = [NSString stringWithFormat:@"%@CommMsg/CommListToMe",MAINURL];
+        D("dfijglkdfjgggkjdflgkjdlk");
     }
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -233,6 +235,7 @@ static LoginSendHttp *loginSendHttp = nil;
     [request setRequestMethod:@"POST"];
     [request addPostValue:page forKey:@"pageNum"];
     [request addPostValue:@"20" forKey:@"numPerPage"];
+    D("alkdjl0000====%@",page);
     if (tag == 6) {
         [request addPostValue:@"1" forKey:@"readflag"];
         request.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d",tag] forKey:@"tag"];
@@ -249,7 +252,7 @@ static LoginSendHttp *loginSendHttp = nil;
     }else if (tag == 7){
         request.tag = 11;//设置请求tag
     }else if(tag == 0){//全部
-        [request addPostValue:@"null" forKey:@"readflag"];
+//        [request addPostValue:@"null" forKey:@"readflag"];
         request.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d",tag] forKey:@"tag"];
         request.tag = 5;//设置请求tag
     }
@@ -1210,15 +1213,23 @@ static LoginSendHttp *loginSendHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCurUnit" object:time];
     }else if (_request.tag == 17){//发表交流信息,内容
         NSString *time = [jsonDic objectForKey:@"ResultCode"];
-        if ([time intValue] == 0) {
-            D("tag-=== 17=== 成功");
-            //发表消息成功推送
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"creatCommMsg" object:[jsonDic objectForKey:@"ResultDesc"]];
-        }else{
-            NSString *time = [jsonDic objectForKey:@"ResultDesc"];
-            //发表消息失败推送
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"creatCommMsg" object:time];
-        }
+        NSString *time1 = [jsonDic objectForKey:@"ResultDesc"];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setValue:time forKey:@"ResultCode"];
+        [dic setValue:time1 forKey:@"ResultDesc"];
+//        if ([time intValue] == 0) {
+//            D("tag-=== 17=== 成功");
+//            [dic setValue:time forKey:@"ResultCode"];
+//            [dic setValue:model forKey:@"model"];
+//            //发表消息成功推送
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"creatCommMsg" object:dic];
+//        }else{
+//            NSString *time1 = [jsonDic objectForKey:@"ResultDesc"];
+//            [dic setValue:time forKey:@"ResultCode"];
+//            [dic setValue:model forKey:@"model"];
+//            //发表消息失败推送
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"creatCommMsg" object:time1];
+//        }
     }else if (_request.tag == 18){//获取接收人列表或单位列表，短信直通车
         NSString *time = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:time Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
