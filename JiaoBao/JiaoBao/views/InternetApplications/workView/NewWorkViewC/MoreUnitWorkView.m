@@ -115,7 +115,7 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     NSString *message = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]!=0) {
-        [MBProgressHUD showError:message toView:self];
+        [MBProgressHUD showError:@"发送失败" toView:self];
     }else{
         [MBProgressHUD showSuccess:message toView:self];
         self.mViewTop.mTextV_input.text = @"";

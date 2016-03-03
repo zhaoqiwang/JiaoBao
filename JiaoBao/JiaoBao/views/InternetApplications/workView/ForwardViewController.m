@@ -306,7 +306,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     NSString *code = [dic objectForKey:@"ResultCode"];
     NSString *message = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]!=0) {
-        [MBProgressHUD showError:message toView:self.view];
+        [MBProgressHUD showError:@"发送失败" toView:self.view];
     }else{
         if([dm getInstance].notificationSymbol ==1 )
         {
