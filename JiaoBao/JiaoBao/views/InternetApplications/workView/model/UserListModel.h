@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSString *MCount;//本组人数
 @property (nonatomic,strong) NSMutableArray *groupselit_selit;
 @property(nonatomic,assign)int sectionSelSymbol;//0为全空；1为全选；2为非全选；
+@property(nonatomic,assign)int cellSelNum;
 //需要把GroupSelit[]中的selit以seleit为name提交给api
 
 @end
