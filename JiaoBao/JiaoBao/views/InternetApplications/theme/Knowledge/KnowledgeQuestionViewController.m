@@ -144,7 +144,7 @@
         
         [temp addObject:model];
     }
-    self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, 50) Array:temp];
+    self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, 50) Array:temp Flag:0 index:0];
     self.mBtnV_btn.delegate = self;
     [self.mView_tableHead addSubview:self.mBtnV_btn];
     self.mView_tableHead.frame = CGRectMake(0, 0, [dm getInstance].width, self.mBtnV_btn.frame.origin.y+50);
@@ -801,6 +801,10 @@
 
 //详情按钮
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     //移除部分通知
     [self removeNoti];
     KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
@@ -812,6 +816,10 @@
 
 //跳转到回答问题界面
 -(void)gotoAddAnswerVC{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
     detail.mModel_question = self.mModel_question;
     detail.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
@@ -821,6 +829,10 @@
 
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     CommentViewController *commentVC = [[CommentViewController alloc]init];
     
     commentVC.questionModel = self.mModel_question;
@@ -831,6 +843,10 @@
 
 //全部、有依据、在讨论按钮
 -(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{//全部
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     if ([self.mStr_flag integerValue]!=-1) {
         [self.mArr_answers removeAllObjects];
         self.mStr_flag = @"-1";
@@ -840,6 +856,10 @@
     [self.mTableV_answers reloadData];
 }
 -(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{//有依据
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     if ([self.mStr_flag integerValue]!=1) {
         [self.mArr_answers removeAllObjects];
         self.mStr_flag = @"1";
@@ -858,6 +878,10 @@
     [self.mTableV_answers reloadData];
 }
 -(void)KnowledgeTableVIewCellNoDiscuss:(KnowledgeTableViewCell *)knowledgeTableViewCell{//无内容
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     if ([self.mStr_flag integerValue]!=0) {
         [self.mArr_answers removeAllObjects];
         self.mStr_flag = @"0";
@@ -869,6 +893,10 @@
 
 //ButtonView回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     //先判断是否加入单位，没有，则不能进行交互
     
     D("view.tag-=====%ld",(long)view.tag);
@@ -919,6 +947,10 @@
 
 //邀请回答确定按钮
 -(void)CustomTextFieldViewSureBtn:(CustomTextFieldView *)view{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     D("Guhskjhdlkfgdflk");
 //    NSArray *arr = [self.mView_input.mTextF_input.text componentsSeparatedByString:@"@"];
 //    self.nickNameArr = [NSMutableArray arrayWithArray:arr];

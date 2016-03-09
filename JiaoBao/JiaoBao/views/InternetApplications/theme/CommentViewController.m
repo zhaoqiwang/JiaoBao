@@ -1237,7 +1237,7 @@
         }
         self.rdateLabel = [[UILabel alloc]initWithFrame:CGRectMake([dm getInstance].width-100, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, 100, 30)];
         self.rdateLabel.text = self.AnswerDetailModel.RecDate;
-        self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.rdateLabel.frame.origin.y+self.rdateLabel.frame.size.height, [dm getInstance].width, 50) Array:temp];
+        self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.rdateLabel.frame.origin.y+self.rdateLabel.frame.size.height, [dm getInstance].width, 50) Array:temp Flag:0 index:0];
 
         self.mBtnV_btn.delegate = self;
     }

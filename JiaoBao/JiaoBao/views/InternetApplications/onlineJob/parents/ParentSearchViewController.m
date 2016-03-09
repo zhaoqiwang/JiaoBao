@@ -325,6 +325,10 @@
 
 //点击切换查询
 -(void)selectScrollButton:(UIButton *)btn{
+    if (self.mArr_parent.count==0) {
+        [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
+        return;
+    }
     self.mInt_index = (int)btn.tag;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;

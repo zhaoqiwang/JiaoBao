@@ -351,16 +351,19 @@
         return;
     }
     D("self.textv.content-===%@",self.mTextV_content.text);
-//    if (self.mTextF_title.text.length==0) {
     if ([utils isBlankString:self.mTextF_title.text]){
         [MBProgressHUD showError:@"请输入标题" toView:self.view];
         return;
     }
+    
     if ([utils isBlankString:self.mTextV_content.text]){
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
-    
+    if (self.mTextF_title.text.length>50) {
+        [MBProgressHUD showError:@"标题不能大于50个字" toView:self.view];
+        return;
+    }
     NSString *content = self.mTextV_content.text;
     int m=0;
     for (int i=0; i<self.mArr_pic.count; i++) {
