@@ -29,11 +29,13 @@
 #import "OtherItemsCell.h"
 #import "IQKeyboardManager.h"
 #import "GetUnitInfoModel.h"
+#import "ButtonViewModel.h"
+#import "ButtonView.h"
 
-@interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,TreeJob_sigleSelect_TableViewCellDelegate,PublishJobDelegate,UITextFieldDelegate,UITextViewDelegate>
+@interface StudentHomewrokViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,TreeJob_sigleSelect_TableViewCellDelegate,PublishJobDelegate,UITextFieldDelegate,UITextViewDelegate,ButtonViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
-@property (nonatomic,strong) UIScrollView *mScrollV_all;//做作业、做练习显示
+@property (nonatomic,strong) ButtonView *mScrollV_all;//做作业、做练习显示
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//列表显示
 @property (nonatomic,assign) int mInt_index;//练习选择的索引
 @property (nonatomic,strong) NSMutableArray *mArr_homework;//老师布置作业列表

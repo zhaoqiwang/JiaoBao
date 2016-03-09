@@ -60,10 +60,10 @@
         //判断是否默认选中
         if (select) {
             [self.mImgV_pic setImage:[UIImage imageNamed:model.mStr_imgNow]];
-            self.mLab_title.textColor = [UIColor greenColor];
+            self.mLab_title.textColor = [UIColor colorWithRed:54/255.0 green:168/255.0 blue:12/255.0 alpha:1];
         }else{
             [self.mImgV_pic setImage:[UIImage imageNamed:model.mStr_img]];
-            self.mLab_title.textColor = [UIColor grayColor];
+            self.mLab_title.textColor = [UIColor colorWithRed:80/255.0 green:79/255.0 blue:79/255.0 alpha:1];
         }
         [self addSubview:self.mLab_title];
         

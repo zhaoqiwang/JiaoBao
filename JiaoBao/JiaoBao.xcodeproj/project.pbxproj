@@ -865,6 +865,42 @@
 		A7E93DE21B905EAE00CD7B1C /* GetPickedByIdModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE11B905EAE00CD7B1C /* GetPickedByIdModel.m */; };
 		A7E93DE51B906DBC00CD7B1C /* PickContentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */; };
 		A7E93DE81B90708A00CD7B1C /* ShowPickedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */; };
+		A7FC29E61C90176600CB38C0 /* buttonView11.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C21C90176600CB38C0 /* buttonView11.png */; };
+		A7FC29E71C90176600CB38C0 /* buttonView11@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C31C90176600CB38C0 /* buttonView11@2x.png */; };
+		A7FC29E81C90176600CB38C0 /* buttonView11@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C41C90176600CB38C0 /* buttonView11@3x.png */; };
+		A7FC29E91C90176600CB38C0 /* buttonView12.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C51C90176600CB38C0 /* buttonView12.png */; };
+		A7FC29EA1C90176600CB38C0 /* buttonView12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C61C90176600CB38C0 /* buttonView12@2x.png */; };
+		A7FC29EB1C90176600CB38C0 /* buttonView12@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C71C90176600CB38C0 /* buttonView12@3x.png */; };
+		A7FC29EC1C90176600CB38C0 /* buttonView13.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C81C90176600CB38C0 /* buttonView13.png */; };
+		A7FC29ED1C90176600CB38C0 /* buttonView13@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29C91C90176600CB38C0 /* buttonView13@2x.png */; };
+		A7FC29EE1C90176600CB38C0 /* buttonView13@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29CA1C90176600CB38C0 /* buttonView13@3x.png */; };
+		A7FC29EF1C90176600CB38C0 /* buttonView14.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29CB1C90176600CB38C0 /* buttonView14.png */; };
+		A7FC29F01C90176600CB38C0 /* buttonView14@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29CC1C90176600CB38C0 /* buttonView14@2x.png */; };
+		A7FC29F11C90176600CB38C0 /* buttonView14@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29CD1C90176600CB38C0 /* buttonView14@3x.png */; };
+		A7FC29F21C90176600CB38C0 /* buttonView15.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29CE1C90176600CB38C0 /* buttonView15.png */; };
+		A7FC29F31C90176600CB38C0 /* buttonView15@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29CF1C90176600CB38C0 /* buttonView15@2x.png */; };
+		A7FC29F41C90176600CB38C0 /* buttonView15@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D01C90176600CB38C0 /* buttonView15@3x.png */; };
+		A7FC29F51C90176600CB38C0 /* buttonView16.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D11C90176600CB38C0 /* buttonView16.png */; };
+		A7FC29F61C90176600CB38C0 /* buttonView16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D21C90176600CB38C0 /* buttonView16@2x.png */; };
+		A7FC29F71C90176600CB38C0 /* buttonView16@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D31C90176600CB38C0 /* buttonView16@3x.png */; };
+		A7FC29F81C90176600CB38C0 /* buttonView21.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D41C90176600CB38C0 /* buttonView21.png */; };
+		A7FC29F91C90176600CB38C0 /* buttonView21@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D51C90176600CB38C0 /* buttonView21@2x.png */; };
+		A7FC29FA1C90176600CB38C0 /* buttonView21@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D61C90176600CB38C0 /* buttonView21@3x.png */; };
+		A7FC29FB1C90176600CB38C0 /* buttonView22.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D71C90176600CB38C0 /* buttonView22.png */; };
+		A7FC29FC1C90176600CB38C0 /* buttonView22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D81C90176600CB38C0 /* buttonView22@2x.png */; };
+		A7FC29FD1C90176600CB38C0 /* buttonView22@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29D91C90176600CB38C0 /* buttonView22@3x.png */; };
+		A7FC29FE1C90176600CB38C0 /* buttonView23.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29DA1C90176600CB38C0 /* buttonView23.png */; };
+		A7FC29FF1C90176600CB38C0 /* buttonView23@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29DB1C90176600CB38C0 /* buttonView23@2x.png */; };
+		A7FC2A001C90176600CB38C0 /* buttonView23@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29DC1C90176600CB38C0 /* buttonView23@3x.png */; };
+		A7FC2A011C90176600CB38C0 /* buttonView24.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29DD1C90176600CB38C0 /* buttonView24.png */; };
+		A7FC2A021C90176600CB38C0 /* buttonView24@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29DE1C90176600CB38C0 /* buttonView24@2x.png */; };
+		A7FC2A031C90176600CB38C0 /* buttonView24@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29DF1C90176600CB38C0 /* buttonView24@3x.png */; };
+		A7FC2A041C90176600CB38C0 /* buttonView25.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E01C90176600CB38C0 /* buttonView25.png */; };
+		A7FC2A051C90176600CB38C0 /* buttonView25@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E11C90176600CB38C0 /* buttonView25@2x.png */; };
+		A7FC2A061C90176600CB38C0 /* buttonView25@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E21C90176600CB38C0 /* buttonView25@3x.png */; };
+		A7FC2A071C90176600CB38C0 /* buttonView26.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E31C90176600CB38C0 /* buttonView26.png */; };
+		A7FC2A081C90176600CB38C0 /* buttonView26@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E41C90176600CB38C0 /* buttonView26@2x.png */; };
+		A7FC2A091C90176600CB38C0 /* buttonView26@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E51C90176600CB38C0 /* buttonView26@3x.png */; };
 		F708617A1B38EDC90032945D /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70861791B38EDC90032945D /* BaiduMapAPI.framework */; };
 		F70C77AF1BF5BF1D007BAE2D /* DetailHWVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */; };
 		F711B6E21C23A22200FF36DF /* MyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F711B6E01C23A22200FF36DF /* MyCommentViewController.m */; };
@@ -2289,6 +2325,42 @@
 		A7E93DE41B906DBC00CD7B1C /* PickContentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PickContentModel.m; path = views/InternetApplications/theme/model/PickContentModel.m; sourceTree = "<group>"; };
 		A7E93DE61B90708A00CD7B1C /* ShowPickedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowPickedModel.h; path = views/InternetApplications/theme/model/ShowPickedModel.h; sourceTree = "<group>"; };
 		A7E93DE71B90708A00CD7B1C /* ShowPickedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowPickedModel.m; path = views/InternetApplications/theme/model/ShowPickedModel.m; sourceTree = "<group>"; };
+		A7FC29C21C90176600CB38C0 /* buttonView11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView11.png; path = buttonView/buttonView11.png; sourceTree = "<group>"; };
+		A7FC29C31C90176600CB38C0 /* buttonView11@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView11@2x.png"; path = "buttonView/buttonView11@2x.png"; sourceTree = "<group>"; };
+		A7FC29C41C90176600CB38C0 /* buttonView11@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView11@3x.png"; path = "buttonView/buttonView11@3x.png"; sourceTree = "<group>"; };
+		A7FC29C51C90176600CB38C0 /* buttonView12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView12.png; path = buttonView/buttonView12.png; sourceTree = "<group>"; };
+		A7FC29C61C90176600CB38C0 /* buttonView12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView12@2x.png"; path = "buttonView/buttonView12@2x.png"; sourceTree = "<group>"; };
+		A7FC29C71C90176600CB38C0 /* buttonView12@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView12@3x.png"; path = "buttonView/buttonView12@3x.png"; sourceTree = "<group>"; };
+		A7FC29C81C90176600CB38C0 /* buttonView13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView13.png; path = buttonView/buttonView13.png; sourceTree = "<group>"; };
+		A7FC29C91C90176600CB38C0 /* buttonView13@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView13@2x.png"; path = "buttonView/buttonView13@2x.png"; sourceTree = "<group>"; };
+		A7FC29CA1C90176600CB38C0 /* buttonView13@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView13@3x.png"; path = "buttonView/buttonView13@3x.png"; sourceTree = "<group>"; };
+		A7FC29CB1C90176600CB38C0 /* buttonView14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView14.png; path = buttonView/buttonView14.png; sourceTree = "<group>"; };
+		A7FC29CC1C90176600CB38C0 /* buttonView14@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView14@2x.png"; path = "buttonView/buttonView14@2x.png"; sourceTree = "<group>"; };
+		A7FC29CD1C90176600CB38C0 /* buttonView14@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView14@3x.png"; path = "buttonView/buttonView14@3x.png"; sourceTree = "<group>"; };
+		A7FC29CE1C90176600CB38C0 /* buttonView15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView15.png; path = buttonView/buttonView15.png; sourceTree = "<group>"; };
+		A7FC29CF1C90176600CB38C0 /* buttonView15@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView15@2x.png"; path = "buttonView/buttonView15@2x.png"; sourceTree = "<group>"; };
+		A7FC29D01C90176600CB38C0 /* buttonView15@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView15@3x.png"; path = "buttonView/buttonView15@3x.png"; sourceTree = "<group>"; };
+		A7FC29D11C90176600CB38C0 /* buttonView16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView16.png; path = buttonView/buttonView16.png; sourceTree = "<group>"; };
+		A7FC29D21C90176600CB38C0 /* buttonView16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView16@2x.png"; path = "buttonView/buttonView16@2x.png"; sourceTree = "<group>"; };
+		A7FC29D31C90176600CB38C0 /* buttonView16@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView16@3x.png"; path = "buttonView/buttonView16@3x.png"; sourceTree = "<group>"; };
+		A7FC29D41C90176600CB38C0 /* buttonView21.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView21.png; path = buttonView/buttonView21.png; sourceTree = "<group>"; };
+		A7FC29D51C90176600CB38C0 /* buttonView21@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView21@2x.png"; path = "buttonView/buttonView21@2x.png"; sourceTree = "<group>"; };
+		A7FC29D61C90176600CB38C0 /* buttonView21@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView21@3x.png"; path = "buttonView/buttonView21@3x.png"; sourceTree = "<group>"; };
+		A7FC29D71C90176600CB38C0 /* buttonView22.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView22.png; path = buttonView/buttonView22.png; sourceTree = "<group>"; };
+		A7FC29D81C90176600CB38C0 /* buttonView22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView22@2x.png"; path = "buttonView/buttonView22@2x.png"; sourceTree = "<group>"; };
+		A7FC29D91C90176600CB38C0 /* buttonView22@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView22@3x.png"; path = "buttonView/buttonView22@3x.png"; sourceTree = "<group>"; };
+		A7FC29DA1C90176600CB38C0 /* buttonView23.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView23.png; path = buttonView/buttonView23.png; sourceTree = "<group>"; };
+		A7FC29DB1C90176600CB38C0 /* buttonView23@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView23@2x.png"; path = "buttonView/buttonView23@2x.png"; sourceTree = "<group>"; };
+		A7FC29DC1C90176600CB38C0 /* buttonView23@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView23@3x.png"; path = "buttonView/buttonView23@3x.png"; sourceTree = "<group>"; };
+		A7FC29DD1C90176600CB38C0 /* buttonView24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView24.png; path = buttonView/buttonView24.png; sourceTree = "<group>"; };
+		A7FC29DE1C90176600CB38C0 /* buttonView24@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView24@2x.png"; path = "buttonView/buttonView24@2x.png"; sourceTree = "<group>"; };
+		A7FC29DF1C90176600CB38C0 /* buttonView24@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView24@3x.png"; path = "buttonView/buttonView24@3x.png"; sourceTree = "<group>"; };
+		A7FC29E01C90176600CB38C0 /* buttonView25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView25.png; path = buttonView/buttonView25.png; sourceTree = "<group>"; };
+		A7FC29E11C90176600CB38C0 /* buttonView25@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView25@2x.png"; path = "buttonView/buttonView25@2x.png"; sourceTree = "<group>"; };
+		A7FC29E21C90176600CB38C0 /* buttonView25@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView25@3x.png"; path = "buttonView/buttonView25@3x.png"; sourceTree = "<group>"; };
+		A7FC29E31C90176600CB38C0 /* buttonView26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView26.png; path = buttonView/buttonView26.png; sourceTree = "<group>"; };
+		A7FC29E41C90176600CB38C0 /* buttonView26@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView26@2x.png"; path = "buttonView/buttonView26@2x.png"; sourceTree = "<group>"; };
+		A7FC29E51C90176600CB38C0 /* buttonView26@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView26@3x.png"; path = "buttonView/buttonView26@3x.png"; sourceTree = "<group>"; };
 		F70861791B38EDC90032945D /* BaiduMapAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BaiduMapAPI.framework; sourceTree = "<group>"; };
 		F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWVc.xib; sourceTree = "<group>"; };
 		F711B6DF1C23A22200FF36DF /* MyCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCommentViewController.h; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.h; sourceTree = "<group>"; };
@@ -4713,6 +4785,7 @@
 		A7AB07E71BDDC725006163E2 /* onlineJob */ = {
 			isa = PBXGroup;
 			children = (
+				A7FC29C11C90170C00CB38C0 /* buttonView */,
 				A792B7FD1BE07CA800B1B0C5 /* homework_down0.png */,
 				A792B7FE1BE07CA800B1B0C5 /* homework_down0@2x.png */,
 				A792B7FF1BE07CA800B1B0C5 /* homework_down0@3x.png */,
@@ -4743,6 +4816,7 @@
 		A7AD8C2F19F63C8F002E65FB /* InternetApplications */ = {
 			isa = PBXGroup;
 			children = (
+				A7FC2A0A1C90242900CB38C0 /* leave */,
 				A7736DB31BCDEBB600CC39A0 /* onlineJob */,
 				A7E2E5E51B20312B003F85B5 /* personalSpace */,
 				A796B32D1B1D98FB00FA1735 /* register */,
@@ -4901,6 +4975,56 @@
 				4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */,
 			);
 			name = personalSpace;
+			sourceTree = "<group>";
+		};
+		A7FC29C11C90170C00CB38C0 /* buttonView */ = {
+			isa = PBXGroup;
+			children = (
+				A7FC29C21C90176600CB38C0 /* buttonView11.png */,
+				A7FC29C31C90176600CB38C0 /* buttonView11@2x.png */,
+				A7FC29C41C90176600CB38C0 /* buttonView11@3x.png */,
+				A7FC29C51C90176600CB38C0 /* buttonView12.png */,
+				A7FC29C61C90176600CB38C0 /* buttonView12@2x.png */,
+				A7FC29C71C90176600CB38C0 /* buttonView12@3x.png */,
+				A7FC29C81C90176600CB38C0 /* buttonView13.png */,
+				A7FC29C91C90176600CB38C0 /* buttonView13@2x.png */,
+				A7FC29CA1C90176600CB38C0 /* buttonView13@3x.png */,
+				A7FC29CB1C90176600CB38C0 /* buttonView14.png */,
+				A7FC29CC1C90176600CB38C0 /* buttonView14@2x.png */,
+				A7FC29CD1C90176600CB38C0 /* buttonView14@3x.png */,
+				A7FC29CE1C90176600CB38C0 /* buttonView15.png */,
+				A7FC29CF1C90176600CB38C0 /* buttonView15@2x.png */,
+				A7FC29D01C90176600CB38C0 /* buttonView15@3x.png */,
+				A7FC29D11C90176600CB38C0 /* buttonView16.png */,
+				A7FC29D21C90176600CB38C0 /* buttonView16@2x.png */,
+				A7FC29D31C90176600CB38C0 /* buttonView16@3x.png */,
+				A7FC29D41C90176600CB38C0 /* buttonView21.png */,
+				A7FC29D51C90176600CB38C0 /* buttonView21@2x.png */,
+				A7FC29D61C90176600CB38C0 /* buttonView21@3x.png */,
+				A7FC29D71C90176600CB38C0 /* buttonView22.png */,
+				A7FC29D81C90176600CB38C0 /* buttonView22@2x.png */,
+				A7FC29D91C90176600CB38C0 /* buttonView22@3x.png */,
+				A7FC29DA1C90176600CB38C0 /* buttonView23.png */,
+				A7FC29DB1C90176600CB38C0 /* buttonView23@2x.png */,
+				A7FC29DC1C90176600CB38C0 /* buttonView23@3x.png */,
+				A7FC29DD1C90176600CB38C0 /* buttonView24.png */,
+				A7FC29DE1C90176600CB38C0 /* buttonView24@2x.png */,
+				A7FC29DF1C90176600CB38C0 /* buttonView24@3x.png */,
+				A7FC29E01C90176600CB38C0 /* buttonView25.png */,
+				A7FC29E11C90176600CB38C0 /* buttonView25@2x.png */,
+				A7FC29E21C90176600CB38C0 /* buttonView25@3x.png */,
+				A7FC29E31C90176600CB38C0 /* buttonView26.png */,
+				A7FC29E41C90176600CB38C0 /* buttonView26@2x.png */,
+				A7FC29E51C90176600CB38C0 /* buttonView26@3x.png */,
+			);
+			name = buttonView;
+			sourceTree = "<group>";
+		};
+		A7FC2A0A1C90242900CB38C0 /* leave */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = leave;
 			sourceTree = "<group>";
 		};
 		F71803081AB3C42900E6167F /* JTCalendar */ = {
@@ -5181,6 +5305,7 @@
 				A768298F1AC69B21003B31EB /* classView_click_4@2x.png in Resources */,
 				A74D26921B58FAE200E63DFB /* record_animate_04.png in Resources */,
 				A75082721B7998E60031E7C9 /* buttonView2@2x.png in Resources */,
+				A7FC2A041C90176600CB38C0 /* buttonView25.png in Resources */,
 				A7AAC4D019F75DB200A0ED40 /* appNav_search@2x.png in Resources */,
 				A77116021A4D11930042CB91 /* noPhoto.png in Resources */,
 				A74C802B1A30466C0043D335 /* rootNav_rongYun.png in Resources */,
@@ -5195,16 +5320,19 @@
 				F76B646D1B1EA8CB008F6961 /* bj@3x.png in Resources */,
 				A782AEBF1AE9D71A00547B0F /* NewWork_photo.png in Resources */,
 				A701798C1AB91D2100E7093F /* work_accessoryPhoto@3x.png in Resources */,
+				A7FC29F71C90176600CB38C0 /* buttonView16@3x.png in Resources */,
 				A749B9D419F89A530036F480 /* root_SMS.png in Resources */,
 				A749B9D319F89A530036F480 /* root_sendNotice@2x.png in Resources */,
 				A76D74771A69095A008F5856 /* share_like_1@2x.png in Resources */,
 				A76ED5CB1AD67855006F3E0B /* workView_click_3@2x.png in Resources */,
 				A77F9F431AFCAAC90003E579 /* appNav_work.png in Resources */,
 				A749B9FF19F8F4060036F480 /* TreeView_Level2_Cell.xib in Resources */,
+				A7FC2A061C90176600CB38C0 /* buttonView25@3x.png in Resources */,
 				A7626FC81B0D7EDB006957F2 /* popupWindow_like@2x.png in Resources */,
 				A757DFDF1A80C7B9001172A4 /* appNav_changeUnit.png in Resources */,
 				A769C5FF1B7464E0006C6B76 /* topBtnSelect0@3x.png in Resources */,
 				A71D61DF1A1C96A400B8D33D /* share_education1.png in Resources */,
+				A7FC29E61C90176600CB38C0 /* buttonView11.png in Resources */,
 				A76ED5C11AD67855006F3E0B /* workView_click_0.png in Resources */,
 				A71D61E51A1C96A400B8D33D /* share_next0.png in Resources */,
 				A792B8091BE07CA800B1B0C5 /* homework_down1.png in Resources */,
@@ -5215,6 +5343,7 @@
 				A71D61EA1A1C96A400B8D33D /* share_recommend0@2x.png in Resources */,
 				F7D20E921BD1DD0900E77B00 /* OtherItemsCell.xib in Resources */,
 				A782AEC91AE9D71A00547B0F /* NewWork_unSendMsg@2x.png in Resources */,
+				A7FC29FC1C90176600CB38C0 /* buttonView22@2x.png in Resources */,
 				A76ED5C51AD67855006F3E0B /* workView_click_1@2x.png in Resources */,
 				A75082731B7998E60031E7C9 /* buttonView2@3x.png in Resources */,
 				A76ED5BA1AD67855006F3E0B /* workView_2@3x.png in Resources */,
@@ -5232,6 +5361,7 @@
 				A750827C1B7998E60031E7C9 /* buttonView5@3x.png in Resources */,
 				A792B8061BE07CA800B1B0C5 /* homework_down0.png in Resources */,
 				A73702E41A7C7A7E0020BCB4 /* rootNav_rongYun@2x.png in Resources */,
+				A7FC29EB1C90176600CB38C0 /* buttonView12@3x.png in Resources */,
 				F7502A101AEE1E50004F822F /* bTri@3x.png in Resources */,
 				A7781F4C1AE8A0F300F03AEB /* NewWorkView_click_1@2x.png in Resources */,
 				A750468D1A0A14BC00C54ECC /* forward_rightNav.png in Resources */,
@@ -5248,6 +5378,7 @@
 				A77F9F451AFCAAC90003E579 /* appNav_work@3x.png in Resources */,
 				A73D9C121A368EDF004CE4D5 /* RongYun_discussion@2x.png in Resources */,
 				A71D61E31A1C96A400B8D33D /* share_new1.png in Resources */,
+				A7FC29F61C90176600CB38C0 /* buttonView16@2x.png in Resources */,
 				F7502A281AEE1E50004F822F /* selected@2x.png in Resources */,
 				A7BB180419F4F91E00A81286 /* Regiser_login.png in Resources */,
 				A749B9C719F89A530036F480 /* root_detail@2x.png in Resources */,
@@ -5260,6 +5391,7 @@
 				A7CE673A1AA70A250038D0C5 /* showUnit@3x.png in Resources */,
 				A70179871AB91D2100E7093F /* work_accessory.png in Resources */,
 				A71D61C51A1C797800B8D33D /* share_look@2x.png in Resources */,
+				A7FC29EC1C90176600CB38C0 /* buttonView13.png in Resources */,
 				A773FC271A4B9869005F84C2 /* SelectionCell.xib in Resources */,
 				F73DDB9D1BA9600700DD8228 /* KpeopleSpaceCell.xib in Resources */,
 				A76D74731A69095A008F5856 /* share_like_0.png in Resources */,
@@ -5269,10 +5401,12 @@
 				F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */,
 				A7BB180019F4F91E00A81286 /* Regiser_bg@2x.png in Resources */,
 				A754D3301A22CBE1000E356A /* SharePostingViewController.xib in Resources */,
+				A7FC29FB1C90176600CB38C0 /* buttonView22.png in Resources */,
 				A7660A9C1B71B97C00EF0FA9 /* KnowledgeTableViewCell.xib in Resources */,
 				A7CE67321AA70A250038D0C5 /* shareArticle.png in Resources */,
 				A78459E11B7B4D1D00EA7D5D /* IQKeyboardManager.bundle in Resources */,
 				A76F216C1B7D88BB00D957E0 /* topBtnCall@3x.png in Resources */,
+				A7FC29FE1C90176600CB38C0 /* buttonView23.png in Resources */,
 				A76255DC1B5CD1E900AD8089 /* NewWork_photo1@2x.png in Resources */,
 				A74D26961B58FAE200E63DFB /* record_animate_08.png in Resources */,
 				A79C31071BCF44D6003DF7B2 /* TreeJob_default_TableViewCell.xib in Resources */,
@@ -5280,6 +5414,8 @@
 				A75E6EBC1ABACDBD00B51B18 /* classView_1@2x.png in Resources */,
 				A7AAC4D119F75DB200A0ED40 /* appNav_setting.png in Resources */,
 				A761D4031A7F697900DCAEB9 /* rootTableSelect_2@3x.png in Resources */,
+				A7FC29F11C90176600CB38C0 /* buttonView14@3x.png in Resources */,
+				A7FC2A021C90176600CB38C0 /* buttonView24@2x.png in Resources */,
 				A76ED5CD1AD67855006F3E0B /* workView_click_4.png in Resources */,
 				F7E419391BDDCC2400004BDF /* answer@2x.png in Resources */,
 				A7AD8C4019F63DA5002E65FB /* ApplicationCenterViewController.xib in Resources */,
@@ -5308,6 +5444,7 @@
 				A782AEC61AE9D71A00547B0F /* NewWork_SendMsg@2x.png in Resources */,
 				A749B9D119F89A530036F480 /* root_sendMsg@2x.png in Resources */,
 				A768297F1AC69B21003B31EB /* classView_4.png in Resources */,
+				A7FC2A031C90176600CB38C0 /* buttonView24@3x.png in Resources */,
 				F7502A1F1AEE1E50004F822F /* HomeClass_Click_4.png in Resources */,
 				A7724D5F1B5DF94C0095850A /* VideoSwitch.png in Resources */,
 				A75046911A0A14BC00C54ECC /* forward_select2.png in Resources */,
@@ -5376,6 +5513,7 @@
 				A74D269A1B58FAE200E63DFB /* record_animate_12.png in Resources */,
 				F73DDBA21BA9642D00DD8228 /* HeadCell.xib in Resources */,
 				F7502A291AEE1E50004F822F /* selected@3x.png in Resources */,
+				A7FC2A051C90176600CB38C0 /* buttonView25@2x.png in Resources */,
 				A727C7D61A6F93780019C4CD /* share_clickBig@3x.png in Resources */,
 				F7E4193A1BDDCC2400004BDF /* basis@2x.png in Resources */,
 				A77116031A4D11930042CB91 /* noPhoto@2x.png in Resources */,
@@ -5403,6 +5541,7 @@
 				A78D65E01A8A04E800BE6326 /* workDetail@2x.png in Resources */,
 				F7502A201AEE1E50004F822F /* HomeClass_Click_4@2x.png in Resources */,
 				A71D61E81A1C96A400B8D33D /* share_next1@2x.png in Resources */,
+				A7FC29FF1C90176600CB38C0 /* buttonView23@2x.png in Resources */,
 				A7AD8C5119F644A2002E65FB /* tabbar_app2@2x.png in Resources */,
 				A75046901A0A14BC00C54ECC /* forward_select1@2x.png in Resources */,
 				F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */,
@@ -5456,6 +5595,7 @@
 				A71D61E01A1C96A400B8D33D /* share_education1@2x.png in Resources */,
 				A749B9CF19F89A530036F480 /* root_processed@2x.png in Resources */,
 				A75046961A0A14BC00C54ECC /* forward_sendMsg2@2x.png in Resources */,
+				A7FC29EE1C90176600CB38C0 /* buttonView13@3x.png in Resources */,
 				A792B80A1BE07CA800B1B0C5 /* homework_down1@2x.png in Resources */,
 				A79C31121BCF87F1003DF7B2 /* TreeJob_class_TableViewCell.xib in Resources */,
 				A77F9F441AFCAAC90003E579 /* appNav_work@2x.png in Resources */,
@@ -5471,12 +5611,17 @@
 				A727C7DB1A6F93780019C4CD /* share_likeBig_1@2x.png in Resources */,
 				F7502A221AEE1E50004F822F /* plus@2x.png in Resources */,
 				A7BB180619F4F91E00A81286 /* Regiser_passwd_1.png in Resources */,
+				A7FC2A081C90176600CB38C0 /* buttonView26@2x.png in Resources */,
 				F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */,
 				A749B9E619F8A0310036F480 /* TreeView_Level0_Cell.xib in Resources */,
 				F718032F1AB3C4EF00E6167F /* kal_right_arrow@2x.png in Resources */,
+				A7FC29FA1C90176600CB38C0 /* buttonView21@3x.png in Resources */,
 				A749B9C519F89A530036F480 /* root_close@2x.png in Resources */,
 				A74D268F1B58FAE200E63DFB /* record_animate_01.png in Resources */,
 				A749B9D019F89A530036F480 /* root_sendMsg.png in Resources */,
+				A7FC29EF1C90176600CB38C0 /* buttonView14.png in Resources */,
+				A7FC29F41C90176600CB38C0 /* buttonView15@3x.png in Resources */,
+				A7FC29E81C90176600CB38C0 /* buttonView11@3x.png in Resources */,
 				A73AD8311A2076A500F68C47 /* SubUnitInfoViewController.xib in Resources */,
 				A79AD7811BAA4C2200F2CE77 /* MyAnswerViewController.xib in Resources */,
 				A72B58261A3D7D5C004D8920 /* UnitSpaceArthListViewController.xib in Resources */,
@@ -5484,6 +5629,7 @@
 				A7375F461A0B235B00B31926 /* Forward_cell.xib in Resources */,
 				F7502A181AEE1E50004F822F /* HomeClass_4@2x.png in Resources */,
 				A7BB180A19F4F91E00A81286 /* Regiser_passwd.png in Resources */,
+				A7FC29E71C90176600CB38C0 /* buttonView11@2x.png in Resources */,
 				A782AEC21AE9D71A00547B0F /* NewWork_Send.png in Resources */,
 				A773FC2F1A4BBD02005F84C2 /* UpLoadPhotoViewController.xib in Resources */,
 				A7CE67391AA70A250038D0C5 /* showUnit@2x.png in Resources */,
@@ -5528,11 +5674,13 @@
 				A7BEEA121A43D0C8003C9EAD /* UnitAlbumsViewController.xib in Resources */,
 				A771CAA81A240B85000B41F2 /* share_click@2x.png in Resources */,
 				A74D26931B58FAE200E63DFB /* record_animate_05.png in Resources */,
+				A7FC29FD1C90176600CB38C0 /* buttonView22@3x.png in Resources */,
 				A7AD8C5319F644A2002E65FB /* tabbar_center1@2x.png in Resources */,
 				A7CE67341AA70A250038D0C5 /* shareArticle@3x.png in Resources */,
 				A769C5FE1B7464E0006C6B76 /* topBtnSelect0@2x.png in Resources */,
 				A750468E1A0A14BC00C54ECC /* forward_rightNav@2x.png in Resources */,
 				A74821A419FF452200234020 /* msgDetail_send.png in Resources */,
+				A7FC29F31C90176600CB38C0 /* buttonView15@2x.png in Resources */,
 				A701798B1AB91D2100E7093F /* work_accessoryPhoto@2x.png in Resources */,
 				A7A379011B06E75F000C9DC5 /* OpenFileViewController.xib in Resources */,
 				A74C119A1A01D9FC00925230 /* icon@2x.png in Resources */,
@@ -5548,6 +5696,7 @@
 				A773FC511A4C0563005F84C2 /* ELCAssetTablePicker.xib in Resources */,
 				F72385D21BE2F74F0000015D /* DetialHWCell.xib in Resources */,
 				A76ED5CF1AD67855006F3E0B /* workView_click_4@3x.png in Resources */,
+				A7FC29F21C90176600CB38C0 /* buttonView15.png in Resources */,
 				A7BB180F19F4FB1A00A81286 /* Regiser_bg-568h@2x.png in Resources */,
 				A73CAD571A071EC200D6C5AA /* WorkDetailListViewController.xib in Resources */,
 				A71EC8BA1A11A61500422BB0 /* root_img@2x.png in Resources */,
@@ -5560,6 +5709,7 @@
 				A7626FC51B0D7EDB006957F2 /* popupWindow_like_comment@2x.png in Resources */,
 				A76ED5B61AD67855006F3E0B /* workView_1@2x.png in Resources */,
 				A727C7D81A6F93780019C4CD /* share_likeBig_0@2x.png in Resources */,
+				A7FC29EA1C90176600CB38C0 /* buttonView12@2x.png in Resources */,
 				A788C9C81B9FC94400E7BBC6 /* OldChoiceViewController.xib in Resources */,
 				F7502A0A1AEE1E50004F822F /* add@3x.png in Resources */,
 				A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */,
@@ -5570,6 +5720,7 @@
 				A76F21701B7D88BB00D957E0 /* topBtnDown1.png in Resources */,
 				A79C0F271B9C297C00F8764B /* classViewTopCell.png in Resources */,
 				A75E6EBF1ABACDBD00B51B18 /* classView_2@2x.png in Resources */,
+				A7FC29F91C90176600CB38C0 /* buttonView21@2x.png in Resources */,
 				A76ED5B51AD67855006F3E0B /* workView_1.png in Resources */,
 				A74821A719FF452200234020 /* msgDetail_textF@2x.png in Resources */,
 				A748219819FF2AE500234020 /* MsgDetailViewController.xib in Resources */,
@@ -5592,6 +5743,8 @@
 				A757DFE11A80C7B9001172A4 /* appNav_changeUnit@3x.png in Resources */,
 				A761D4021A7F697900DCAEB9 /* rootTableSelect_2@2x.png in Resources */,
 				A701798F1AB91D2100E7093F /* work_photo@3x.png in Resources */,
+				A7FC2A001C90176600CB38C0 /* buttonView23@3x.png in Resources */,
+				A7FC29E91C90176600CB38C0 /* buttonView12.png in Resources */,
 				A766B4461ACB9E1B00018D46 /* classView_more@3x.png in Resources */,
 				A7804CA21B789516007C0DC6 /* buttonView1.png in Resources */,
 				A7AD8C5719F644A2002E65FB /* tabbar_student1@2x.png in Resources */,
@@ -5665,6 +5818,7 @@
 				A7781F411AE8A0F300F03AEB /* NewWorkView_0@3x.png in Resources */,
 				A7AAC4D219F75DB200A0ED40 /* appNav_setting@2x.png in Resources */,
 				F7E419401BDDCC6300004BDF /* ask@3x.png in Resources */,
+				A7FC2A091C90176600CB38C0 /* buttonView26@3x.png in Resources */,
 				A749B9D219F89A530036F480 /* root_sendNotice.png in Resources */,
 				F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */,
 				F7E419431BDDCC6300004BDF /* content@3x.png in Resources */,
@@ -5698,9 +5852,11 @@
 				F718032E1AB3C4EF00E6167F /* kal_right_arrow.png in Resources */,
 				A773FC501A4C0563005F84C2 /* ELCAssetPicker.xib in Resources */,
 				A7BB180B19F4F91E00A81286 /* Regiser_passwd@2x.png in Resources */,
+				A7FC29ED1C90176600CB38C0 /* buttonView13@2x.png in Resources */,
 				A7CE67351AA70A250038D0C5 /* showArticle.png in Resources */,
 				A749B9C819F89A530036F480 /* root_dian.png in Resources */,
 				A757DFD41A80BDEF001172A4 /* appNav_contact@2x.png in Resources */,
+				A7FC2A071C90176600CB38C0 /* buttonView26.png in Resources */,
 				A75082771B7998E60031E7C9 /* buttonView4.png in Resources */,
 				A757DFD81A80BDEF001172A4 /* appNav_groupChat@3x.png in Resources */,
 				A763B3351BD5DCA00020A7C9 /* TreeJob_questionCount_TableViewCell.xib in Resources */,
@@ -5715,6 +5871,7 @@
 				A76ED5BF1AD67855006F3E0B /* workView_4@2x.png in Resources */,
 				A7BEEA1A1A441E10003C9EAD /* UnintAlbumsListViewController.xib in Resources */,
 				A75E6EBB1ABACDBD00B51B18 /* classView_1.png in Resources */,
+				A7FC29F01C90176600CB38C0 /* buttonView14@2x.png in Resources */,
 				A7A00BCC1B1EA9990056FE30 /* RegisterPassWViewController.xib in Resources */,
 				F79D84DF1ABD4DC000897477 /* SignInViewController.xib in Resources */,
 				F7502A231AEE1E50004F822F /* plus@3x.png in Resources */,
@@ -5741,8 +5898,10 @@
 				A79C7AE71AF22ACB00E9D30A /* newWork_reverseSelect@2x.png in Resources */,
 				F788EA711BAA589D0015965E /* categoryCell.xib in Resources */,
 				A74D26971B58FAE200E63DFB /* record_animate_09.png in Resources */,
+				A7FC2A011C90176600CB38C0 /* buttonView24.png in Resources */,
 				F786F84D1BDB156B004A8155 /* ask.png in Resources */,
 				A757DFE01A80C7B9001172A4 /* appNav_changeUnit@2x.png in Resources */,
+				A7FC29F81C90176600CB38C0 /* buttonView21.png in Resources */,
 				A757DFE21A80C7B9001172A4 /* appNav_changeUser.png in Resources */,
 				A7781F481AE8A0F300F03AEB /* NewWorkView_click_0.png in Resources */,
 				A75E6EC21ABACDBD00B51B18 /* classView_3@2x.png in Resources */,
@@ -5760,6 +5919,7 @@
 				A76ED5BB1AD67855006F3E0B /* workView_3.png in Resources */,
 				A761D3FE1A7F697900DCAEB9 /* rootTableSelect_1.png in Resources */,
 				A761D3FC1A7F697900DCAEB9 /* rootTableSelect_0@2x.png in Resources */,
+				A7FC29F51C90176600CB38C0 /* buttonView16.png in Resources */,
 				F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */,
 				A76ED5C41AD67855006F3E0B /* workView_click_1.png in Resources */,
 				F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */,

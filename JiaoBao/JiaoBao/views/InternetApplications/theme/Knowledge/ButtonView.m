@@ -18,8 +18,10 @@
         self.flag = flag;
         self.frame = CGRectMake(rect.origin.x-1, rect.origin.y, rect.size.width+2, rect.size.height);
         self.backgroundColor = [UIColor whiteColor];
-        self.layer.borderWidth = .5;
-        self.layer.borderColor = [[UIColor blackColor] CGColor];
+        if (flag==0) {
+            self.layer.borderWidth = .5;
+            self.layer.borderColor = [[UIColor blackColor] CGColor];
+        }
         float tempF = [dm getInstance].width/array.count;
         for (int i=0; i<array.count; i++) {
             ButtonViewModel *model = [array objectAtIndex:i];
