@@ -475,7 +475,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:result];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:@"服务器异常"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:error.localizedDescription];
         D("Error---------TecQswithchapterid: %@", error);
     }];
 }

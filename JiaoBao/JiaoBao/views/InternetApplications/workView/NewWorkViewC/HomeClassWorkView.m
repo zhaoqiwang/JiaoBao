@@ -28,6 +28,7 @@
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
+
     [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];

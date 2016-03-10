@@ -14,6 +14,7 @@
 #import "MobClick.h"
 #import "AddQuestionViewController.h"
 #import "MakeJobViewController.h"
+#import "TeacherViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -552,6 +553,7 @@
         if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
             [array addObject:[self addOnLineJob]];
         }
+        //[array addObject:[self addLeave]];
         NSArray *menuItems = array;
         D("iudhfgjhjh-==========%d",[dm getInstance].uType);
         [KxMenu showMenuInView:self.view
@@ -560,6 +562,16 @@
     }else{
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
+}
+-(KxMenuItem*)addLeave{
+    return [KxMenuItem menuItem:@"请假系统"
+                          image:[UIImage imageNamed:@"appNav_contact"]
+                         target:self
+                         action:@selector(leaveAction)];
+}
+-(void)leaveAction{
+    TeacherViewController *detail = [[TeacherViewController alloc] init];
+    [utils pushViewController:detail animated:YES];
 }
 -(KxMenuItem *)addOnLineJob{
     if ([dm getInstance].uType==2) {

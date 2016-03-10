@@ -894,6 +894,12 @@
 		F71E9D6A1B86BE4A00D90487 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D651B86BE4A00D90487 /* TFHpple.m */; };
 		F71E9D6B1B86BE4A00D90487 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D671B86BE4A00D90487 /* TFHppleElement.m */; };
 		F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = F71E9D691B86BE4A00D90487 /* XPathQuery.m */; };
+		F722A4401C8FB44C00408F74 /* TeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F722A43E1C8FB44C00408F74 /* TeacherViewController.m */; };
+		F722A4411C8FB44C00408F74 /* TeacherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F722A43F1C8FB44C00408F74 /* TeacherViewController.xib */; };
+		F722A4451C8FB5D100408F74 /* addDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F722A4431C8FB5D100408F74 /* addDateCell.m */; };
+		F722A4461C8FB5D100408F74 /* addDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F722A4441C8FB5D100408F74 /* addDateCell.xib */; };
+		F722A44D1C8FBD3700408F74 /* ModelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = F722A44C1C8FBD3700408F74 /* ModelDialog.xib */; };
+		F722A4501C8FC7E300408F74 /* ModelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = F722A44F1C8FC7E300408F74 /* ModelDialog.m */; };
 		F72385D11BE2F74F0000015D /* DetialHWCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F72385CF1BE2F74F0000015D /* DetialHWCell.m */; };
 		F72385D21BE2F74F0000015D /* DetialHWCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F72385D01BE2F74F0000015D /* DetialHWCell.xib */; };
 		F72385DF1BE346BC0000015D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72385DE1BE346BC0000015D /* WebKit.framework */; };
@@ -2337,6 +2343,15 @@
 		F71E9D671B86BE4A00D90487 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TFHppleElement.m; path = Common/TFHppleElement.m; sourceTree = "<group>"; };
 		F71E9D681B86BE4A00D90487 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPathQuery.h; path = Common/XPathQuery.h; sourceTree = "<group>"; };
 		F71E9D691B86BE4A00D90487 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPathQuery.m; path = Common/XPathQuery.m; sourceTree = "<group>"; };
+		F722A43D1C8FB44C00408F74 /* TeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherViewController.h; sourceTree = "<group>"; };
+		F722A43E1C8FB44C00408F74 /* TeacherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherViewController.m; sourceTree = "<group>"; };
+		F722A43F1C8FB44C00408F74 /* TeacherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeacherViewController.xib; sourceTree = "<group>"; };
+		F722A4421C8FB5D100408F74 /* addDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addDateCell.h; sourceTree = "<group>"; };
+		F722A4431C8FB5D100408F74 /* addDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addDateCell.m; sourceTree = "<group>"; };
+		F722A4441C8FB5D100408F74 /* addDateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addDateCell.xib; sourceTree = "<group>"; };
+		F722A44C1C8FBD3700408F74 /* ModelDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModelDialog.xib; sourceTree = "<group>"; };
+		F722A44E1C8FC7E300408F74 /* ModelDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelDialog.h; sourceTree = "<group>"; };
+		F722A44F1C8FC7E300408F74 /* ModelDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelDialog.m; sourceTree = "<group>"; };
 		F72385CE1BE2F74F0000015D /* DetialHWCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetialHWCell.h; path = cell/DetialHWCell.h; sourceTree = "<group>"; };
 		F72385CF1BE2F74F0000015D /* DetialHWCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetialHWCell.m; path = cell/DetialHWCell.m; sourceTree = "<group>"; };
 		F72385D01BE2F74F0000015D /* DetialHWCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetialHWCell.xib; path = cell/DetialHWCell.xib; sourceTree = "<group>"; };
@@ -4762,6 +4777,15 @@
 				A7AAC4D419F7893A00A0ED40 /* InternetAppTopScrollView.m */,
 				A7AAC4D619F7896900A0ED40 /* InternetAppRootScrollView.h */,
 				A7AAC4D719F7896900A0ED40 /* InternetAppRootScrollView.m */,
+				F722A43D1C8FB44C00408F74 /* TeacherViewController.h */,
+				F722A43E1C8FB44C00408F74 /* TeacherViewController.m */,
+				F722A43F1C8FB44C00408F74 /* TeacherViewController.xib */,
+				F722A4421C8FB5D100408F74 /* addDateCell.h */,
+				F722A4431C8FB5D100408F74 /* addDateCell.m */,
+				F722A44E1C8FC7E300408F74 /* ModelDialog.h */,
+				F722A44F1C8FC7E300408F74 /* ModelDialog.m */,
+				F722A4441C8FB5D100408F74 /* addDateCell.xib */,
+				F722A44C1C8FBD3700408F74 /* ModelDialog.xib */,
 			);
 			name = InternetApplications;
 			sourceTree = "<group>";
@@ -5263,6 +5287,7 @@
 				A773FC271A4B9869005F84C2 /* SelectionCell.xib in Resources */,
 				F73DDB9D1BA9600700DD8228 /* KpeopleSpaceCell.xib in Resources */,
 				A76D74731A69095A008F5856 /* share_like_0.png in Resources */,
+				F722A44D1C8FBD3700408F74 /* ModelDialog.xib in Resources */,
 				F79D84D51ABD4DC000897477 /* DetailSubmitViewController.xib in Resources */,
 				A7BB180719F4F91E00A81286 /* Regiser_passwd_1@2x.png in Resources */,
 				A761D3F31A7F697900DCAEB9 /* rootTable_2@2x.png in Resources */,
@@ -5282,6 +5307,7 @@
 				A761D4031A7F697900DCAEB9 /* rootTableSelect_2@3x.png in Resources */,
 				A76ED5CD1AD67855006F3E0B /* workView_click_4.png in Resources */,
 				F7E419391BDDCC2400004BDF /* answer@2x.png in Resources */,
+				F722A4411C8FB44C00408F74 /* TeacherViewController.xib in Resources */,
 				A7AD8C4019F63DA5002E65FB /* ApplicationCenterViewController.xib in Resources */,
 				A75082751B7998E60031E7C9 /* buttonView3@2x.png in Resources */,
 				A727C7D41A6F93780019C4CD /* share_clickBig.png in Resources */,
@@ -5664,6 +5690,7 @@
 				A75082741B7998E60031E7C9 /* buttonView3.png in Resources */,
 				A7781F411AE8A0F300F03AEB /* NewWorkView_0@3x.png in Resources */,
 				A7AAC4D219F75DB200A0ED40 /* appNav_setting@2x.png in Resources */,
+				F722A4461C8FB5D100408F74 /* addDateCell.xib in Resources */,
 				F7E419401BDDCC6300004BDF /* ask@3x.png in Resources */,
 				A749B9D219F89A530036F480 /* root_sendNotice.png in Resources */,
 				F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */,
@@ -5860,6 +5887,7 @@
 				A73191F81A135036008CFD53 /* SMSTreeArrayModel.m in Sources */,
 				A7595EA21A5FC2F30027848E /* PSTCollectionViewLayout.m in Sources */,
 				F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */,
+				F722A4501C8FC7E300408F74 /* ModelDialog.m in Sources */,
 				A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */,
 				A762FFFB1A282A6000A78B5C /* NoticeInfoModel.m in Sources */,
 				A72B581E1A3D70B8004D8920 /* UnitSpaceViewController.m in Sources */,
@@ -6032,6 +6060,7 @@
 				A743394D1A452B7700AFC0A5 /* NSData+ImageContentType.m in Sources */,
 				A7595EA51A5FC2F30027848E /* PSTGridLayoutItem.m in Sources */,
 				F79D84DC1ABD4DC000897477 /* SignInHttp.m in Sources */,
+				F722A4451C8FB5D100408F74 /* addDateCell.m in Sources */,
 				A75E3FB31B6F64B700284C3D /* AFSecurityPolicy.m in Sources */,
 				A755E70319F278B900BBDF3D /* ASIDataDecompressor.m in Sources */,
 				F76B64351B1EA205008F6961 /* RCLabel.m in Sources */,
@@ -6086,6 +6115,7 @@
 				A76C69991A889ABC0069BA63 /* WorkViewListCell.m in Sources */,
 				A74D127B1A3BEAE300A93CAC /* ShowHttp.m in Sources */,
 				F76B643A1B1EA3F5008F6961 /* CommentCell.m in Sources */,
+				F722A4401C8FB44C00408F74 /* TeacherViewController.m in Sources */,
 				A741AE771A66724200EA18C4 /* CommMsgUnitNotice.m in Sources */,
 				A755E71519F278B900BBDF3D /* ASIS3Request.m in Sources */,
 				A762FFF41A2804E700A78B5C /* NoticeView.m in Sources */,
