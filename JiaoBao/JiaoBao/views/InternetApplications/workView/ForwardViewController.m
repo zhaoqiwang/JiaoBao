@@ -9,6 +9,7 @@
 #import "ForwardViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "MBProgressHUD+AD.h"
 #define Margin 0//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 
@@ -310,7 +311,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     }else{
         if([dm getInstance].notificationSymbol ==1 )
         {
-            [MBProgressHUD showSuccess:message toView:self.view];
+            [MBProgressHUD showSuccess:message ];
             self.topView.mTextV_input.text = @"";
             [self.topView.mArr_accessory removeAllObjects];
             [self.topView addAccessoryPhoto];
@@ -721,9 +722,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         return;
     }
 
-    
-
-    
         //发表
             NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
             //[array1 addObjectsFromArray:self.topView.mArr_accessory];

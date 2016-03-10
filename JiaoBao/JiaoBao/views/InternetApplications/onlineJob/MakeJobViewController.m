@@ -135,8 +135,8 @@
     if([result isEqualToString:@"false"])
     {
         [MBProgressHUD showError:@"此章节没有题目"];
-    }else if ([result isEqualToString:@"服务器异常"]){
-        [MBProgressHUD showError:@"服务器异常"];
+    }else if ([result isEqualToString:@"The Internet connection appears to be offline."]){
+        [MBProgressHUD showError:@"网络连接异常"];
     }
     else
     {

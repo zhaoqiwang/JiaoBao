@@ -15,7 +15,6 @@
 #import "AllCommentListModel.h"
 #import "ButtonViewCell.h"
 #import "KnowledgeAddAnswerViewController.h"
-#import "GDataXMLNode.h"
 #import "TFHpple.h"
 #import "IQKeyboardManager.h"
 #import "AirthCommentsListCell.h"
@@ -85,6 +84,7 @@
     JoinUnit
     if(view.tag == 100)
     {
+
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
         alert.delegate = self;
@@ -161,9 +161,6 @@
         }
         
     }
-
-
-
 }
 //答案详情回调
 -(void)AnswerDetailWithAId:(id)sender

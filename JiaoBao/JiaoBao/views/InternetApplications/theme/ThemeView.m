@@ -12,6 +12,9 @@
 #import "CommentViewController.h"
 #import "CategoryViewController.h"
 #import "ChoicenessDetailViewController.h"
+#import "LeaveHttp.h"
+#import "NewLeaveModel.h"
+
 
 @implementation ThemeView
 
