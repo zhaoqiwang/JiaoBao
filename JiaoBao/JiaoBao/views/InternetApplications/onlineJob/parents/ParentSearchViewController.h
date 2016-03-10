@@ -20,11 +20,13 @@
 #import "LevelModel.h"
 #import "TableViewWithBlock.h"
 #import "MJRefresh.h"//上拉下拉刷新
+#import "ButtonViewModel.h"
+#import "ButtonView.h"
 
-@interface ParentSearchViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface ParentSearchViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
-@property (nonatomic,strong) UIScrollView *mScrollV_all;//查询分类显示
+@property (nonatomic,strong) ButtonView *mScrollV_all;//查询分类显示
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//列表显示
 @property (nonatomic,assign) int mInt_index;//查询选择的索引
 @property (nonatomic,strong) NSMutableArray *mArr_nowHomework;//当前作业查询

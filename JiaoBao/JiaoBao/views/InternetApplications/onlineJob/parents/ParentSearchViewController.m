@@ -61,37 +61,62 @@
     self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.mBtn_select.frame.origin.x, self.mBtn_select.frame.origin.y+self.mBtn_select.frame.size.height, self.mBtn_select.frame.size.width, 0)];
     
     //三种状态
-    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.mLab_select.frame.origin.y+self.mLab_select.frame.size.height, [dm getInstance].width, 48)];
-    int tempWidth = [dm getInstance].width/3;
-    for (int i=0; i<3; i++) {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
-        [btn setTag:i];
+    NSMutableArray *temp = [NSMutableArray array];
+    for (int i=0; i<4; i++) {
+        ButtonViewModel *model = [[ButtonViewModel alloc] init];
         if (i==0) {
-            btn.selected = YES;
-            self.mInt_index = 0;
-            [btn setTitle:@"当前作业" forState:UIControlStateNormal];
+            model.mStr_title = @"当前作业";
+            model.mStr_img = @"buttonView21";
+            model.mStr_imgNow = @"buttonView11";
         }else if (i==1){
-            [btn setTitle:@"作业完成情况" forState:UIControlStateNormal];
+            model.mStr_title = @"完成情况";
+            model.mStr_img = @"buttonView22";
+            model.mStr_imgNow = @"buttonView12";
         }else if (i==2){
-            [btn setTitle:@"学力" forState:UIControlStateNormal];
+            model.mStr_title = @"学历查询";
+            model.mStr_img = @"buttonView23";
+            model.mStr_imgNow = @"buttonView13";
+        }else if (i==3){
+            model.mStr_title = @"练习查询";
+            model.mStr_img = @"buttonView24";
+            model.mStr_imgNow = @"buttonView14";
         }
-        [btn setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
-        btn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
         
-        [btn setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-        [btn setBackgroundImage:[UIImage imageNamed:@"topBtnSelect0"] forState:UIControlStateSelected];
-        [btn addTarget:self action:@selector(selectScrollButton:) forControlEvents:UIControlEventTouchUpInside];
-        [self.mScrollV_all addSubview:btn];
+        [temp addObject:model];
     }
-    self.mScrollV_all.contentSize = CGSizeMake(tempWidth*3, 48);
+    self.mScrollV_all = [[ButtonView alloc] initFrame:CGRectMake(0, self.mLab_select.frame.origin.y+self.mLab_select.frame.size.height+10, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
+    self.mScrollV_all.delegate = self;
+//    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.mLab_select.frame.origin.y+self.mLab_select.frame.size.height, [dm getInstance].width, 48)];
+//    int tempWidth = [dm getInstance].width/3;
+//    for (int i=0; i<3; i++) {
+//        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [btn setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
+//        [btn setTag:i];
+//        if (i==0) {
+//            btn.selected = YES;
+//            self.mInt_index = 0;
+//            [btn setTitle:@"当前作业" forState:UIControlStateNormal];
+//        }else if (i==1){
+//            [btn setTitle:@"作业完成情况" forState:UIControlStateNormal];
+//        }else if (i==2){
+//            [btn setTitle:@"学力" forState:UIControlStateNormal];
+//        }
+//        [btn setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
+//        btn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
+//        
+//        [btn setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateSelected];
+//        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+//        [btn setBackgroundImage:[UIImage imageNamed:@"topBtnSelect0"] forState:UIControlStateSelected];
+//        [btn addTarget:self action:@selector(selectScrollButton:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.mScrollV_all addSubview:btn];
+//    }
+//    self.mScrollV_all.contentSize = CGSizeMake(tempWidth*3, 48);
     [self.view addSubview:self.mScrollV_all];
     
     self.mView_head = [[ParentSearchHeadView alloc] initFrame1];
     //
-    self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-self.mLab_select.frame.size.height-10-self.mScrollV_all.frame.size.height+[dm getInstance].statusBar);
+    self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-self.mLab_select.frame.size.height-20-self.mScrollV_all.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
     self.mTableV_list.headerPullToRefreshText = @"下拉刷新";
@@ -325,7 +350,15 @@
 
 //点击切换查询
 -(void)selectScrollButton:(UIButton *)btn{
-    self.mInt_index = (int)btn.tag;
+    
+}
+
+-(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
+    if (self.mArr_parent.count==0) {
+        [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
+        return;
+    }
+    self.mInt_index = (int)view.tag-100;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;
     } else if (self.mInt_index==1){
@@ -334,16 +367,18 @@
     }else if (self.mInt_index==2){
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"学力";
+    }else if (self.mInt_index==3){
+        
     }
-    for (UIButton *btn1 in self.mScrollV_all.subviews) {
-        if ([btn1.class isSubclassOfClass:[UIButton class]]) {
-            if ((int)btn1.tag == self.mInt_index) {
-                btn1.selected = YES;
-            }else{
-                btn1.selected = NO;
-            }
-        }
-    }
+//    for (UIButton *btn1 in self.mScrollV_all.subviews) {
+//        if ([btn1.class isSubclassOfClass:[UIButton class]]) {
+//            if ((int)btn1.tag == self.mInt_index) {
+//                btn1.selected = YES;
+//            }else{
+//                btn1.selected = NO;
+//            }
+//        }
+//    }
     //发送请求
     [self sendRequst];
 }

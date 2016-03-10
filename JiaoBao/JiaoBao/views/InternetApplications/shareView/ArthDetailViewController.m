@@ -383,20 +383,7 @@
     if ([flag integerValue]==0) {
         if (self.mInt_from == 2) {
             self.mModel_notice = [dic objectForKey:@"model"];
-            NSString *str = [self.mModel_notice.NoticMsg stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-            for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %dpx ",i] withString:@" "];
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
-            }
-            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
-            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
-            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
-            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
-            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-//            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+            NSString *str = self.mModel_notice.NoticMsg;
             //标题
             CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel_notice.Subject] sizeWithFont:[UIFont systemFontOfSize:14]];
             self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
@@ -416,21 +403,7 @@
             [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
         }else{
             self.mModel = [dic objectForKey:@"model"];
-            //        NSString *str = self.mModel.Context;
-            NSString *str = [self.mModel.Context stringByReplacingOccurrencesOfString:@"nowrap" withString:@"no wrap"];
-            for (int i=320; i<1000; i++) {
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"width: %d",i] withString:@" "];
-                str = [str stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"_width=\"%dpx\"",i] withString:@" "];
-            }
-            str = [str stringByReplacingOccurrencesOfString:@"top: -" withString:@"top: +"];
-            str = [str stringByReplacingOccurrencesOfString:@"top:-" withString:@"top:+"];
-            str = [str stringByReplacingOccurrencesOfString:@"data-src" withString:@"src"];
-            str = [str stringByReplacingOccurrencesOfString:@"width=\"auto\" _width=\"auto\"" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"width: auto" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"width:auto" withString:@""];
-            str = [str stringByReplacingOccurrencesOfString:@"\\n" withString:@"<br/>"];
-            str = [str stringByReplacingOccurrencesOfString:@"width=" withString:@""];
-//            str = [str stringByReplacingOccurrencesOfString:@"<img" withString:@"<img width=\"310\"; height\"200\"; "];
+            NSString *str = self.mModel.Context;
             
             //标题
             CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -451,34 +424,16 @@
             D("url-====%@",tempHtml);
             [self.mWebV_js loadHTMLString:tempHtml baseURL:baseURL];
         }
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
         [MBProgressHUD showError:@"获取文章详情超时" toView:self.view];
     }
 }
 
-//获取宽度已经适配于webView的html。这里的原始html也可以通过js从webView里获取
-//- (NSString *)htmlAdjustWithPageWidth:(CGFloat )pageWidth
-//                                 html:(NSString *)html
-//                              webView:(UIWebView *)webView
-//{
-//    NSMutableString *str = [NSMutableString stringWithString:html];
-//    //计算要缩放的比例
-//    CGFloat initialScale = webView.frame.size.width/pageWidth;
-//    D("initialScale-===%f,%f,%f",initialScale,pageWidth,webView.frame.size.width);
-//    //将</head>替换为meta+head
-//    NSString *stringForReplace = [NSString stringWithFormat:@"<meta name=\"viewport\" content=\" initial-scale=%f, minimum-scale=0.1, maximum-scale=2.0, user-scalable=yes\"></head>",initialScale];
-//    
-//    NSRange range =  NSMakeRange(0, str.length);
-//    //替换
-//    [str replaceOccurrencesOfString:@"</head>" withString:stringForReplace options:NSLiteralSearch range:range];
-//    D("str-==%@",str);
-//    return str;
-//}
-
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     
-    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-20];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     [MBProgressHUD hideHUDForView:self.view];
     
@@ -486,6 +441,12 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"WebKitDiskImageCacheEnabled"];//自己添加的，原文没有提到。
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"WebKitOfflineWebApplicationCacheEnabled"];//自己添加的，原文没有提到。
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [webView stringByEvaluatingJavaScriptFromString:meta];
+    webView.keyboardDisplayRequiresUserAction = NO;
+    //禁用用户选择
+    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitUserSelect='none';"];
+    // 禁用长按弹出框
+    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
     D("webViewHeight-====%f,%f,%f",webViewHeight,self.mWebV_js.scrollView.frame.size.height,webViewWidth);
@@ -504,7 +465,15 @@
     }else{
         //内容
 //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
+        
+        CGRect frame = webView.frame;
+        frame.size.width = [dm getInstance].width-5;
+        frame.size.height = 1;
+        webView.frame = frame;
+        frame.size.height = webView.scrollView.contentSize.height;
+        
+        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width,  frame.size.height+10);
+        
         [self setArthInfo];
         //设置布局
         [self setFrame];
