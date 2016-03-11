@@ -7,9 +7,15 @@
 //
 
 #import "LevelNoteModel.h"
+#import "SBJSON.h"
+#import "JSONKit.h"
+
+
 
 @implementation LevelNoteModel
--(void)dicToModel:(NSDictionary*)dic{
+-(void)dicToModel:(NSString*)dicStr{
+    NSDictionary *dic = [dicStr objectFromJSONString];
+
     NSString *Astr = [dic objectForKey:@"A"];
     if(![Astr isEqualToString:@""]||![Astr isEqual:[NSNull null]]){
         self.A = Astr;
