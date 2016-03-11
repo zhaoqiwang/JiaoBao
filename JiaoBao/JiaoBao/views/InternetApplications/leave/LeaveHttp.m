@@ -9,6 +9,8 @@
 #import "LeaveHttp.h"
 #import "define_constant.h"
 #import "ParserJson_leave.h"
+#import "MyLeaveModel.h"
+#import "LeaveDetailModel.h"
 static LeaveHttp *leaveHttp = nil;
 
 @implementation LeaveHttp
@@ -183,6 +185,9 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------GetMyLeaves: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        MyLeaveModel *model = [ParserJson_leave parserJsonMyLeaves:data];
         // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:array];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyLeaves: %@", error);
@@ -202,6 +207,9 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------GetLeaveModel: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        LeaveDetailModel *model = [ParserJson_leave parserJsonleaveDetail:data];
         // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:array];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetLeaveModel: %@", error);

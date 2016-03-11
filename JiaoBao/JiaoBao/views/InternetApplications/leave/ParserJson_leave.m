@@ -16,17 +16,18 @@
     LeaveSettingModel *model = [[LeaveSettingModel alloc ]init];
     model.StatusStd = [NSString stringWithFormat:@"%@",[dic objectForKey:@"StatusStd"]];
         model.StatusTea = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Status"]];
+    
     model.ApproveLevelStd = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ApproveLevelStd"]];
     model.ApproveLevelTea = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ApproveLevel"]];
+    
         model.GateGuardList = [NSString stringWithFormat:@"%@",[dic objectForKey:@"GateGuardList"]];
+    
     if([model.StatusStd integerValue]!=0){
-
-        NSDictionary *ApproveListStdDic = [dic objectForKey:@"ApproveListStd"];
-
-        model.ApproveListStd = [dic objectForKey:@"ApproveListStd"];
-        NSDictionary *levelNoteStdDic = [dic objectForKey:@"LevelNoteStd"];
-        [model.LevelNoteStd dicToModel:levelNoteStdDic];
-        [model.ApproveListStd dicToModel:ApproveListStdDic];
+        NSString*ApproveListStd =[dic objectForKey:@"ApproveListStd"];
+        NSString*levelNoteStd =[dic objectForKey:@"LevelNoteStd"];
+        
+        [model.LevelNoteStd dicToModel:ApproveListStd];
+        [model.ApproveListStd dicToModel:levelNoteStd];
 
 
 
@@ -36,11 +37,11 @@
         
     }
     if([model.StatusTea integerValue]!=0){
-        model.ApproveListTea = [dic objectForKey:@"ApproveList"];
-        NSDictionary *levelNoteTeaDic = [dic objectForKey:@"LevelNote"];
-        NSDictionary *ApproveListTeaDic = [dic objectForKey:@"ApproveList"];
-        [model.LevelNoteTea dicToModel:levelNoteTeaDic];
-        [model.LevelNoteTea dicToModel:ApproveListTeaDic];
+        NSString *levelNoteTea = [dic objectForKey:@"LevelNote"];
+        NSString *ApproveListTea = [dic objectForKey:@"ApproveList"];
+        
+        [model.LevelNoteTea dicToModel:levelNoteTea];
+        [model.ApproveListTea dicToModel:ApproveListTea];
     }else{
         
     }

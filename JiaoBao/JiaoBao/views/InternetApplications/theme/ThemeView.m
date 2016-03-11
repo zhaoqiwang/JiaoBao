@@ -14,6 +14,7 @@
 #import "ChoicenessDetailViewController.h"
 #import "LeaveHttp.h"
 #import "NewLeaveModel.h"
+#import "leaveRecordModel.h"
 
 
 @implementation ThemeView
@@ -138,6 +139,30 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
+    [[LeaveHttp getInstance]GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+//    NewLeaveModel *model = [[NewLeaveModel alloc]init];
+//    model.UnitId =[NSString stringWithFormat:@"%d",[dm getInstance].UID];
+//    model.manId = @"3851578";
+//    model.manName = @"001学生";
+//    model.writerId = [dm getInstance].jiaoBaoHao;
+//    model.writer = [dm getInstance].name;
+//    model.unitClassId  =@"72202";
+//    model.manType = @"0";
+//    model.leaveType = @"病假";
+//    model.leaveReason = @"感冒发烧";
+//    model.sDateTime = @"2016-3-11 5:00:00";
+//    model.eDateTime = @"2016-3-13 5:00:00";
+
+    //[[LeaveHttp getInstance]NewLeaveModel:model];
+//    leaveRecordModel *model = [[leaveRecordModel alloc]init];
+//    model.numPerPage = @"20";
+//    model.RowCount = @"0";
+//    model.accId = [dm getInstance].jiaoBaoHao;
+//    model.sDateTime = @"2016-3-1";
+//    model.manType = @"0";
+//    [[LeaveHttp getInstance]GetMyLeaves:model];
+    [[LeaveHttp getInstance]GetLeaveModel:@"4"];
+    return;
 //    [[KnowledgeHttp getInstance] GetAllCategory];
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
         CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];

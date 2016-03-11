@@ -14,7 +14,7 @@
 @property(nonatomic,strong)NSString *C;
 @property(nonatomic,strong)NSString *D;
 @property(nonatomic,strong)NSString *E;
--(void)dicToModel:(NSDictionary*)dic;
+-(void)dicToModel:(NSString*)dicStr;
 
 
 
