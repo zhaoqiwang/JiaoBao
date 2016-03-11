@@ -61,7 +61,14 @@
     }
     return mArr;
 
-    
+}
+
+//取一个假条的明细信息
++(LeaveDetailModel*)parserJsonleaveDetail:(NSString*)json{
+    NSDictionary *dic = [json objectFromJSONString];
+    LeaveDetailModel *model = [[LeaveDetailModel alloc ]init];
+    [model dicToModel:dic];
+    return model;
 }
 
 @end

@@ -4,7 +4,7 @@
 //
 //  Created by SongYanming on 16/3/10.
 //  Copyright © 2016年 JSY. All rights reserved.
-//
+//请假设置子model
 
 #import <Foundation/Foundation.h>
 

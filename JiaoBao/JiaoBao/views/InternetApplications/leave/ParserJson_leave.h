@@ -11,6 +11,7 @@
 #import "LeaveSettingModel.h"
 #import "LevelNoteModel.h"
 #import "MyLeaveModel.h"
+#import "LeaveDetailModel.h"
 
 
 @interface ParserJson_leave : NSObject
@@ -19,5 +20,6 @@
 +(LeaveSettingModel *)parserJsonGetLeaveSetting:(NSString *)json;
 //获得我提出申请的请假记录
 +(NSMutableArray*)parserJsonMyLeaves:(NSString*)json;
-
+//取一个假条的明细信息
++(LeaveDetailModel*)parserJsonleaveDetail:(NSString*)json;
 @end
