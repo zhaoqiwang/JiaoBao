@@ -15,6 +15,7 @@
 #import "AddQuestionViewController.h"
 #import "MakeJobViewController.h"
 #import "TeacherViewController.h"
+#import "LeaveViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -547,6 +548,10 @@
                          image:[UIImage imageNamed:@"appNav_contact"]
                         target:self
                         action:@selector(pushMenuItemSchedule:)],
+          [KxMenuItem menuItem:@"请假"
+                         image:[UIImage imageNamed:@"appNav_contact"]
+                        target:self
+                        action:@selector(pushMenuItemLeave:)],
           
           ];
         NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
@@ -606,6 +611,12 @@
 
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
+}
+
+//请假
+- (void) pushMenuItemLeave:(id)sender{
+    LeaveViewController *leave = [[LeaveViewController alloc] init];
+    [utils pushViewController:leave animated:YES];
 }
 
 //我的作业

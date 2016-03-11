@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		432ECD8B1C92A4330098184F /* LeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD891C92A4330098184F /* LeaveViewController.m */; };
+		432ECD8C1C92A4330098184F /* LeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 432ECD8A1C92A4330098184F /* LeaveViewController.xib */; };
+		432ECD951C92AD500098184F /* LeaveTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD941C92AD500098184F /* LeaveTopScrollView.m */; };
+		432ECD9B1C92AFAE0098184F /* LeaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD9A1C92AFAE0098184F /* LeaveView.m */; };
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
@@ -1124,6 +1128,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		432ECD881C92A4330098184F /* LeaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveViewController.h; sourceTree = "<group>"; };
+		432ECD891C92A4330098184F /* LeaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveViewController.m; sourceTree = "<group>"; };
+		432ECD8A1C92A4330098184F /* LeaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeaveViewController.xib; sourceTree = "<group>"; };
+		432ECD931C92AD500098184F /* LeaveTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveTopScrollView.h; sourceTree = "<group>"; };
+		432ECD941C92AD500098184F /* LeaveTopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTopScrollView.m; sourceTree = "<group>"; };
+		432ECD991C92AFAE0098184F /* LeaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveView.h; sourceTree = "<group>"; };
+		432ECD9A1C92AFAE0098184F /* LeaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveView.m; sourceTree = "<group>"; };
 		4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviseNameViewController.h; path = views/InternetApplications/personalSpace/ReviseNameViewController.h; sourceTree = "<group>"; };
 		4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviseNameViewController.m; path = views/InternetApplications/personalSpace/ReviseNameViewController.m; sourceTree = "<group>"; };
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
@@ -5068,6 +5079,13 @@
 				F70B96471C90F8880001D696 /* TeacherViewController.h */,
 				F70B96481C90F8880001D696 /* TeacherViewController.m */,
 				F70B96491C90F8880001D696 /* TeacherViewController.xib */,
+				432ECD881C92A4330098184F /* LeaveViewController.h */,
+				432ECD891C92A4330098184F /* LeaveViewController.m */,
+				432ECD8A1C92A4330098184F /* LeaveViewController.xib */,
+				432ECD931C92AD500098184F /* LeaveTopScrollView.h */,
+				432ECD941C92AD500098184F /* LeaveTopScrollView.m */,
+				432ECD991C92AFAE0098184F /* LeaveView.h */,
+				432ECD9A1C92AFAE0098184F /* LeaveView.m */,
 			);
 			name = leave;
 			path = views/InternetApplications/leave;
@@ -5914,6 +5932,7 @@
 				A749B9C919F89A530036F480 /* root_dian@2x.png in Resources */,
 				A77F9F3D1AFCAAC90003E579 /* appNav_dongtai.png in Resources */,
 				A746CB691A4AAD600003657A /* CreatAlbumsViewController.xib in Resources */,
+				432ECD8C1C92A4330098184F /* LeaveViewController.xib in Resources */,
 				A75082781B7998E60031E7C9 /* buttonView4@2x.png in Resources */,
 				A77E91741BD77E1300488815 /* sigleSelect1@2x.png in Resources */,
 				A76976A41A8372C3002A4FB3 /* message.wav in Resources */,
@@ -6340,6 +6359,7 @@
 				A76C69991A889ABC0069BA63 /* WorkViewListCell.m in Sources */,
 				A74D127B1A3BEAE300A93CAC /* ShowHttp.m in Sources */,
 				F76B643A1B1EA3F5008F6961 /* CommentCell.m in Sources */,
+				432ECD951C92AD500098184F /* LeaveTopScrollView.m in Sources */,
 				A741AE771A66724200EA18C4 /* CommMsgUnitNotice.m in Sources */,
 				A755E71519F278B900BBDF3D /* ASIS3Request.m in Sources */,
 				A762FFF41A2804E700A78B5C /* NoticeView.m in Sources */,
@@ -6391,6 +6411,7 @@
 				A785F71C1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m in Sources */,
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
+				432ECD8B1C92A4330098184F /* LeaveViewController.m in Sources */,
 				F70B964A1C90F8880001D696 /* addDateCell.m in Sources */,
 				F76B64631B1EA6DB008F6961 /* FirstRegViewController.m in Sources */,
 				A78459951B7B302300EA7D5D /* NullSafe.m in Sources */,
@@ -6418,6 +6439,7 @@
 				A7B0F94E1A47BC4300C1863A /* MJPhotoBrowser.m in Sources */,
 				F79D84DD1ABD4DC000897477 /* SignInModel.m in Sources */,
 				A755E70519F278B900BBDF3D /* ASIFormDataRequest.m in Sources */,
+				432ECD9B1C92AFAE0098184F /* LeaveView.m in Sources */,
 				A73CAD731A07755B00D6C5AA /* UIView+MJExtension.m in Sources */,
 				A7113F281A41661E00F927DD /* ThemeSpaceViewController.m in Sources */,
 				A77FF0281A650B3F00DB85E3 /* JSONModelArray.m in Sources */,
