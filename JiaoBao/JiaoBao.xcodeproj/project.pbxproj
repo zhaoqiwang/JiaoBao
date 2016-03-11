@@ -1114,6 +1114,9 @@
 		F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */; };
 		F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */; };
 		F7F7D72A1BD6433800D8B856 /* HomeworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7291BD6433700D8B856 /* HomeworkModel.m */; };
+		F7F870041C92571500A75520 /* leaveRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870031C92571500A75520 /* leaveRecordModel.m */; };
+		F7F870071C9258B400A75520 /* MyLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870061C9258B400A75520 /* MyLeaveModel.m */; };
+		F7F8700A1C925E0900A75520 /* LeaveDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870091C925E0900A75520 /* LeaveDetailModel.m */; };
 		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; };
 		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; };
 		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; };
@@ -2754,6 +2757,12 @@
 		F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishJobCellTableViewCell.xib; sourceTree = "<group>"; };
 		F7F7D7281BD6433700D8B856 /* HomeworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeworkModel.h; sourceTree = "<group>"; };
 		F7F7D7291BD6433700D8B856 /* HomeworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkModel.m; sourceTree = "<group>"; };
+		F7F870021C92571500A75520 /* leaveRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leaveRecordModel.h; sourceTree = "<group>"; };
+		F7F870031C92571500A75520 /* leaveRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = leaveRecordModel.m; sourceTree = "<group>"; };
+		F7F870051C9258B400A75520 /* MyLeaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLeaveModel.h; path = model/MyLeaveModel.h; sourceTree = "<group>"; };
+		F7F870061C9258B400A75520 /* MyLeaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyLeaveModel.m; path = model/MyLeaveModel.m; sourceTree = "<group>"; };
+		F7F870081C925E0900A75520 /* LeaveDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailModel.h; path = model/LeaveDetailModel.h; sourceTree = "<group>"; };
+		F7F870091C925E0900A75520 /* LeaveDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveDetailModel.m; path = model/LeaveDetailModel.m; sourceTree = "<group>"; };
 		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
 		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
 		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
@@ -5088,6 +5097,12 @@
 				F70B96AD1C910A8A0001D696 /* LevelNoteModel.m */,
 				F7023A891C914EB3002F0CF0 /* NewLeaveModel.h */,
 				F7023A8A1C914EB3002F0CF0 /* NewLeaveModel.m */,
+				F7F870021C92571500A75520 /* leaveRecordModel.h */,
+				F7F870031C92571500A75520 /* leaveRecordModel.m */,
+				F7F870051C9258B400A75520 /* MyLeaveModel.h */,
+				F7F870061C9258B400A75520 /* MyLeaveModel.m */,
+				F7F870081C925E0900A75520 /* LeaveDetailModel.h */,
+				F7F870091C925E0900A75520 /* LeaveDetailModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -6090,6 +6105,7 @@
 				F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */,
 				A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */,
 				A762FFFB1A282A6000A78B5C /* NoticeInfoModel.m in Sources */,
+				F7F870041C92571500A75520 /* leaveRecordModel.m in Sources */,
 				A72B581E1A3D70B8004D8920 /* UnitSpaceViewController.m in Sources */,
 				A77FF0361A6511AB00DB85E3 /* UnitClassModel.m in Sources */,
 				A7AD8C2E19F60E97002E65FB /* TabbarItem.m in Sources */,
@@ -6183,6 +6199,7 @@
 				A773FC4D1A4C0563005F84C2 /* ELCImagePickerController.m in Sources */,
 				F70B96791C90FAF60001D696 /* AllcategoryCollectionViewCell.m in Sources */,
 				A75A37411A08C01F009D2464 /* unitClassAdminRevicerModel.m in Sources */,
+				F7F8700A1C925E0900A75520 /* LeaveDetailModel.m in Sources */,
 				A7375F401A0B233A00B31926 /* Forward_section.m in Sources */,
 				F76B64511B1EA4CE008F6961 /* CustomCell.m in Sources */,
 				A79C20791A2DB60A00D0AA27 /* ExchangeHttp.m in Sources */,
@@ -6418,6 +6435,7 @@
 				A773FC4A1A4C0563005F84C2 /* ELCAssetCell.m in Sources */,
 				A755E72A19F27C8E00BBDF3D /* NSData+CommonCrypto.m in Sources */,
 				F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */,
+				F7F870071C9258B400A75520 /* MyLeaveModel.m in Sources */,
 				A755E71219F278B900BBDF3D /* ASIS3BucketObject.m in Sources */,
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
 				A7E93DE21B905EAE00CD7B1C /* GetPickedByIdModel.m in Sources */,

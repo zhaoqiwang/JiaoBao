@@ -21,13 +21,29 @@
 #import "VlorNetWorkAPI.h"
 #import "NewLeaveModel.h"
 #import "ParserJson_knowledge.h"
+#import "leaveRecordModel.h"
 
 @interface LeaveHttp : NSObject<ASIHTTPRequestDelegate>
 +(LeaveHttp *)getInstance;
 //取指定单位的请假设置（包括当前登录用户的在该单位的审核权限，门卫权限
 -(void)GetLeaveSettingWithUnitId:(NSString*)unitId;
-//保存一条新增加的请假记录
+//生成一条请假条记录
 -(void)NewLeaveModel:(NewLeaveModel*)model;
 //更新一条请假条记录
 -(void)UpdateLeaveModel:(NewLeaveModel*)model;
+//给一个假条新增加一个时间段
+-(void)AddLeaveTime:(NewLeaveModel*)model;
+//更新假条的一个时间段
+-(void)UpdateLeaveTime:(NewLeaveModel*)model;
+//删除假条的一个时间段
+-(void)DeleteLeaveTime:(NewLeaveModel*)model;
+//删除假条
+-(void)DeleteLeaveModel:(NewLeaveModel*)model;
+//获得我提出申请的请假记录
+-(void)GetMyLeaves:(leaveRecordModel*)model;
+//取一个假条的明细信息
+-(void)GetLeaveModel:(NSString*)tabId;
+
+
+
 @end

@@ -18,6 +18,7 @@
 @property(nonatomic,strong)NSString *writer;//发起人姓名
 @property(nonatomic,strong)NSString *gradeStr;//年级名称
 @property(nonatomic,strong)NSString *classStr;//班级名称
+@property(nonatomic,strong)NSString *unitClassId;//班级Id,学生请假须提供，老师请假可以为0
 @property(nonatomic,strong)NSString *manType;//人员类型，0为学生，1为老师
 @property(nonatomic,strong)NSString *leaveType;//请假类型，如：补课，病假
 @property(nonatomic,strong)NSString *leaveReason;//请假理由

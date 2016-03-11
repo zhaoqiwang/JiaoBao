@@ -10,10 +10,14 @@
 #import "JSONKit.h"
 #import "LeaveSettingModel.h"
 #import "LevelNoteModel.h"
+#import "MyLeaveModel.h"
 
 
 @interface ParserJson_leave : NSObject
 
 //取指定单位的请假设置
 +(LeaveSettingModel *)parserJsonGetLeaveSetting:(NSString *)json;
+//获得我提出申请的请假记录
++(NSMutableArray*)parserJsonMyLeaves:(NSString*)json;
+
 @end

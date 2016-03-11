@@ -46,12 +46,22 @@
     }
 
 
-
-
-
-
-
     return model;
+}
+//获得我提出申请的请假记录
++(NSMutableArray*)parserJsonMyLeaves:(NSString*)json{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        MyLeaveModel *model = [[MyLeaveModel alloc]init];
+        [model dicToModel:dic];
+        [mArr addObject:model];
+        
+    }
+    return mArr;
+
+    
 }
 
 @end
