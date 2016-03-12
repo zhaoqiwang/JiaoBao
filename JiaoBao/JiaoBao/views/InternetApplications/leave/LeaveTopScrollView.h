@@ -7,29 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LeaveView.h"
+#import "LeaveViewCell.h"
 #import "ButtonViewModel.h"
 #import "dm.h"
 #import "Loger.h"
 
-@protocol LeaveViewDelegate;
+@protocol LeaveViewCellDelegate;
 
 @interface LeaveTopScrollView : UIScrollView
 
 @property (nonatomic,strong) NSMutableArray *mArr_data;
-@property (weak,nonatomic) id<LeaveViewDelegate> delegate;
+@property (weak,nonatomic) id<LeaveViewCellDelegate> delegate;
 @property (nonatomic,assign) int flag;//上下排列1，还是左右排序0区分
 
 -(id)initFrame:(CGRect)rect Array:(NSMutableArray*)array Flag:(int)flag index:(int)index;
 
 @end
 
-@protocol LeaveViewDelegate <NSObject>
+@protocol LeaveViewCellDelegate <NSObject>
 
 @optional
 
 //点击
--(void) LeaveViewTitleBtn:(LeaveView *) view;
+-(void) LeaveViewCellTitleBtn:(LeaveViewCell *) view;
 
 @end
 

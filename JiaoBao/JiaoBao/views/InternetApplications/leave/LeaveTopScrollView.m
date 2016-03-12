@@ -24,12 +24,12 @@
         float tempF = [dm getInstance].width/array.count;
         for (int i=0; i<array.count; i++) {
             ButtonViewModel *model = [array objectAtIndex:i];
-            LeaveView *btn;
+            LeaveViewCell *btn;
                 //当前的是否需要高亮显示
                 if (index==i) {
-                    btn = [[LeaveView alloc] initWithFrame1:CGRectMake(tempF*i, 0, tempF, rect.size.height) Model:model Flag:(int)array.count-i select:YES];
+                    btn = [[LeaveViewCell alloc] initWithFrame1:CGRectMake(tempF*i, 0, tempF, rect.size.height) Model:model Flag:(int)array.count-i select:YES];
                 }else{
-                    btn = [[LeaveView alloc] initWithFrame1:CGRectMake(tempF*i, 0, tempF, rect.size.height) Model:model Flag:(int)array.count-i select:NO];
+                    btn = [[LeaveViewCell alloc] initWithFrame1:CGRectMake(tempF*i, 0, tempF, rect.size.height) Model:model Flag:(int)array.count-i select:NO];
                 }
             
             btn.tag = i+100;
@@ -50,9 +50,9 @@
 
 -(void)buttonViewClick:(UIGestureRecognizer *)gest{
     if (self.flag == 1) {
-        LeaveView *btn = (LeaveView *)gest.view;
-        for (LeaveView *btn1 in self.subviews) {
-            if ([btn1.class isSubclassOfClass:[LeaveView class]]) {
+        LeaveViewCell *btn = (LeaveViewCell *)gest.view;
+        for (LeaveViewCell *btn1 in self.subviews) {
+            if ([btn1.class isSubclassOfClass:[LeaveViewCell class]]) {
                 if ((int)btn1.tag == btn.tag) {
                     btn1.mLab_title.textColor = [UIColor colorWithRed:54/255.0 green:168/255.0 blue:12/255.0 alpha:1];
                     btn1.mLab_line.hidden = NO;
@@ -63,8 +63,8 @@
             }
         }
     }
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveViewTitleBtn:)]) {
-        [self.delegate LeaveViewTitleBtn:(LeaveView *)gest.view];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveViewCellTitleBtn:)]) {
+        [self.delegate LeaveViewCellTitleBtn:(LeaveViewCell *)gest.view];
     }
     D("idsjgldjgl;kjsl;d-=====%ld",(long)gest.view.tag);
 }

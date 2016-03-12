@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		430716591C93A5D2008D3382 /* LeaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 430716581C93A5D2008D3382 /* LeaveView.m */; };
+		4307165C1C93C56F008D3382 /* LeaveNowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165B1C93C56F008D3382 /* LeaveNowModel.m */; };
+		430716611C93C6F3008D3382 /* LeaveNowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */; };
+		430716621C93C6F3008D3382 /* LeaveNowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */; };
 		432ECD8B1C92A4330098184F /* LeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD891C92A4330098184F /* LeaveViewController.m */; };
 		432ECD8C1C92A4330098184F /* LeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 432ECD8A1C92A4330098184F /* LeaveViewController.xib */; };
 		432ECD951C92AD500098184F /* LeaveTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD941C92AD500098184F /* LeaveTopScrollView.m */; };
-		432ECD9B1C92AFAE0098184F /* LeaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD9A1C92AFAE0098184F /* LeaveView.m */; };
+		432ECD9B1C92AFAE0098184F /* LeaveViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */; };
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
@@ -1128,13 +1132,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		430716571C93A5D2008D3382 /* LeaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveView.h; sourceTree = "<group>"; };
+		430716581C93A5D2008D3382 /* LeaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveView.m; sourceTree = "<group>"; };
+		4307165A1C93C56F008D3382 /* LeaveNowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveNowModel.h; path = model/LeaveNowModel.h; sourceTree = "<group>"; };
+		4307165B1C93C56F008D3382 /* LeaveNowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveNowModel.m; path = model/LeaveNowModel.m; sourceTree = "<group>"; };
+		4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveNowTableViewCell.h; path = cell/LeaveNowTableViewCell.h; sourceTree = "<group>"; };
+		4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveNowTableViewCell.m; path = cell/LeaveNowTableViewCell.m; sourceTree = "<group>"; };
+		430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveNowTableViewCell.xib; path = cell/LeaveNowTableViewCell.xib; sourceTree = "<group>"; };
 		432ECD881C92A4330098184F /* LeaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveViewController.h; sourceTree = "<group>"; };
 		432ECD891C92A4330098184F /* LeaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveViewController.m; sourceTree = "<group>"; };
 		432ECD8A1C92A4330098184F /* LeaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeaveViewController.xib; sourceTree = "<group>"; };
 		432ECD931C92AD500098184F /* LeaveTopScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveTopScrollView.h; sourceTree = "<group>"; };
 		432ECD941C92AD500098184F /* LeaveTopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTopScrollView.m; sourceTree = "<group>"; };
-		432ECD991C92AFAE0098184F /* LeaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveView.h; sourceTree = "<group>"; };
-		432ECD9A1C92AFAE0098184F /* LeaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveView.m; sourceTree = "<group>"; };
+		432ECD991C92AFAE0098184F /* LeaveViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveViewCell.h; sourceTree = "<group>"; };
+		432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveViewCell.m; sourceTree = "<group>"; };
 		4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviseNameViewController.h; path = views/InternetApplications/personalSpace/ReviseNameViewController.h; sourceTree = "<group>"; };
 		4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviseNameViewController.m; path = views/InternetApplications/personalSpace/ReviseNameViewController.m; sourceTree = "<group>"; };
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
@@ -2830,6 +2841,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4307165D1C93C6A0008D3382 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */,
+				4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */,
+				430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */,
+			);
+			name = cell;
+			sourceTree = "<group>";
+		};
 		A7141DBD1A16F34500940A3E /* share */ = {
 			isa = PBXGroup;
 			children = (
@@ -5068,6 +5089,7 @@
 		F70B96401C90F8880001D696 /* leave */ = {
 			isa = PBXGroup;
 			children = (
+				4307165D1C93C6A0008D3382 /* cell */,
 				F70B96A81C91078A0001D696 /* model */,
 				F70B96A11C90FEAC0001D696 /* leaveHttp */,
 				F70B96411C90F8880001D696 /* addDateCell.h */,
@@ -5084,8 +5106,10 @@
 				432ECD8A1C92A4330098184F /* LeaveViewController.xib */,
 				432ECD931C92AD500098184F /* LeaveTopScrollView.h */,
 				432ECD941C92AD500098184F /* LeaveTopScrollView.m */,
-				432ECD991C92AFAE0098184F /* LeaveView.h */,
-				432ECD9A1C92AFAE0098184F /* LeaveView.m */,
+				432ECD991C92AFAE0098184F /* LeaveViewCell.h */,
+				432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */,
+				430716571C93A5D2008D3382 /* LeaveView.h */,
+				430716581C93A5D2008D3382 /* LeaveView.m */,
 			);
 			name = leave;
 			path = views/InternetApplications/leave;
@@ -5117,6 +5141,8 @@
 				F7F870061C9258B400A75520 /* MyLeaveModel.m */,
 				F7F870081C925E0900A75520 /* LeaveDetailModel.h */,
 				F7F870091C925E0900A75520 /* LeaveDetailModel.m */,
+				4307165A1C93C56F008D3382 /* LeaveNowModel.h */,
+				4307165B1C93C56F008D3382 /* LeaveNowModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -5572,6 +5598,7 @@
 				A76ED5B21AD67855006F3E0B /* workView_0.png in Resources */,
 				F7502A211AEE1E50004F822F /* plus.png in Resources */,
 				A79C7AE51AF22ACB00E9D30A /* newWork_allSelect@3x.png in Resources */,
+				430716621C93C6F3008D3382 /* LeaveNowTableViewCell.xib in Resources */,
 				A7AB07EB1BDDC748006163E2 /* studentHaveAdd.png in Resources */,
 				A70179881AB91D2100E7093F /* work_accessory@2x.png in Resources */,
 				F7502A0F1AEE1E50004F822F /* bTri@2x.png in Resources */,
@@ -6132,6 +6159,7 @@
 				A72B581E1A3D70B8004D8920 /* UnitSpaceViewController.m in Sources */,
 				A77FF0361A6511AB00DB85E3 /* UnitClassModel.m in Sources */,
 				A7AD8C2E19F60E97002E65FB /* TabbarItem.m in Sources */,
+				430716611C93C6F3008D3382 /* LeaveNowTableViewCell.m in Sources */,
 				A7BB17EB19F4B33100A81286 /* DESTool.m in Sources */,
 				A73AD8281A20271600F68C47 /* ArthLIstViewController.m in Sources */,
 				F70B96971C90FC830001D696 /* HeadCell.m in Sources */,
@@ -6140,6 +6168,7 @@
 				A755E70419F278B900BBDF3D /* ASIDownloadCache.m in Sources */,
 				A7E2E5FC1B204ED4003F85B5 /* PeopleSpaceTableViewCell.m in Sources */,
 				A7255F8E1A19878C005F9CCE /* ParserJson_share.m in Sources */,
+				430716591C93A5D2008D3382 /* LeaveView.m in Sources */,
 				F787CFFC1B70566400E8A31B /* UserInformationModel.m in Sources */,
 				A771CAAF1A2430CD000B41F2 /* Loger.mm in Sources */,
 				F7023A8B1C914EB3002F0CF0 /* NewLeaveModel.m in Sources */,
@@ -6325,6 +6354,7 @@
 				A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */,
 				F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */,
 				A755E71A19F278B900BBDF3D /* SBJsonBase.m in Sources */,
+				4307165C1C93C56F008D3382 /* LeaveNowModel.m in Sources */,
 				A7781F221AE889E100F03AEB /* NewWorkRootScrollView.m in Sources */,
 				A73789291A2F177900DF8882 /* RongYunTokenModel.m in Sources */,
 				A7B0F94F1A47BC4300C1863A /* MJPhotoLoadingView.m in Sources */,
@@ -6439,7 +6469,7 @@
 				A7B0F94E1A47BC4300C1863A /* MJPhotoBrowser.m in Sources */,
 				F79D84DD1ABD4DC000897477 /* SignInModel.m in Sources */,
 				A755E70519F278B900BBDF3D /* ASIFormDataRequest.m in Sources */,
-				432ECD9B1C92AFAE0098184F /* LeaveView.m in Sources */,
+				432ECD9B1C92AFAE0098184F /* LeaveViewCell.m in Sources */,
 				A73CAD731A07755B00D6C5AA /* UIView+MJExtension.m in Sources */,
 				A7113F281A41661E00F927DD /* ThemeSpaceViewController.m in Sources */,
 				A77FF0281A650B3F00DB85E3 /* JSONModelArray.m in Sources */,

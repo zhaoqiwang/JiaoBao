@@ -48,6 +48,27 @@
     self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
     [self.view addSubview:self.mScrollV_all];
+    
+    //请假表格
+    self.mView_root = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height)];
+    [self.view addSubview:self.mView_root];
+}
+
+-(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
+    self.mInt_flag = (int)view.tag -100;
+    if (self.mInt_flag == 0) {
+        self.mView_root.hidden = NO;
+    }else if (self.mInt_flag == 1){
+        self.mView_root.hidden = YES;
+    }else if (self.mInt_flag == 2){
+        self.mView_root.hidden = YES;
+    }
+}
+
+//导航条返回按钮回调
+-(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [utils popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

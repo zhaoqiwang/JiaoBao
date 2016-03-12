@@ -2,21 +2,18 @@
 //  LeaveView.h
 //  JiaoBao
 //
-//  Created by Zqw on 16/3/11.
+//  Created by Zqw on 16/3/12.
 //  Copyright © 2016年 JSY. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "ButtonViewModel.h"
 
-@interface LeaveView : UIView
+@interface LeaveView : UIView<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) UIImageView *mImgV_pic;
-@property (nonatomic,strong) UILabel *mLab_title;
-@property (nonatomic,strong) UILabel *mLab_line;
-@property (nonatomic,strong) ButtonViewModel *bModel;//
+@property (nonatomic,strong) UITableView *mTableV_leave;//
+@property (nonatomic,assign) NSInteger mInt_flag;//判断身份，班主任0，普通老师1，家长2
+@property (nonatomic,strong) NSMutableArray *mArr_leave;//
 
-//上下
--(instancetype)initWithFrame1:(CGRect)frame Model:(ButtonViewModel *)model Flag:(int)flag select:(BOOL)select;
+- (id)initWithFrame1:(CGRect)frame;
 
 @end
