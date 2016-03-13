@@ -216,6 +216,9 @@ static LeaveHttp *leaveHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:nil];
     }];
 }
+-(void)GetClassLeaves{
+    
+}
 
 
 

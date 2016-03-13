@@ -43,6 +43,8 @@
 -(void)GetMyLeaves:(leaveRecordModel*)model;
 //取一个假条的明细信息
 -(void)GetLeaveModel:(NSString*)tabId;
+//班主任身份获取本班学生请假的审批记录
+-(void)GetClassLeaves;
 
 
 

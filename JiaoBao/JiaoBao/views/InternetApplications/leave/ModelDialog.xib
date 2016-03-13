@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ModelDialog"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ModelDialog">
             <rect key="frame" x="0.0" y="0.0" width="288" height="118"/>
@@ -15,11 +15,17 @@
                     <rect key="frame" x="23" y="12" width="257" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="uis-qy-sG9"/>
+                    </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="结束时间:2016年3月9号 8:30:00" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ri0-lo-yVD">
                     <rect key="frame" x="23" y="50" width="257" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Nud-F7-zE8"/>
+                    </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cX-d1-soS">
                     <rect key="frame" x="66" y="88" width="30" height="30"/>
@@ -40,10 +46,40 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="datePicker" destination="hGj-Qg-OQw" id="ux7-HN-KdB"/>
                 <outlet property="endDateTF" destination="Ri0-lo-yVD" id="PDT-bR-YtS"/>
                 <outlet property="startDateTF" destination="E1M-bu-r7b" id="sxy-TV-xL4"/>
+                <outlet property="toolBar" destination="2Zp-4W-6cl" id="QAy-6x-lfl"/>
             </connections>
             <point key="canvasLocation" x="261" y="153"/>
         </view>
+        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="hGj-Qg-OQw">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <date key="date" timeIntervalSinceReferenceDate="479445508.88027698">
+                <!--2016-03-12 03:18:28 +0000-->
+            </date>
+            <locale key="locale" localeIdentifier="zh_CN"/>
+            <point key="canvasLocation" x="378" y="444"/>
+        </datePicker>
+        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="2Zp-4W-6cl">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <items>
+                <barButtonItem title="取消" id="6ME-lE-uOC">
+                    <connections>
+                        <action selector="cancelToolAction:" destination="iN0-l3-epB" id="4Wx-qb-doQ"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="plain" systemItem="flexibleSpace" id="OUp-ha-gQQ"/>
+                <barButtonItem title="确定" id="acC-Sx-IvC">
+                    <connections>
+                        <action selector="doneToolAction:" destination="iN0-l3-epB" id="5qc-tU-jV4"/>
+                    </connections>
+                </barButtonItem>
+            </items>
+            <point key="canvasLocation" x="378" y="614"/>
+        </toolbar>
     </objects>
 </document>
