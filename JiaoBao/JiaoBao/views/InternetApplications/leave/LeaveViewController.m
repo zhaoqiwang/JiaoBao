@@ -50,18 +50,27 @@
     [self.view addSubview:self.mScrollV_all];
     
     //请假表格
-    self.mView_root = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height)];
-    [self.view addSubview:self.mView_root];
+    self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:0];
+    self.mView_root0.hidden = NO;
+    
+    self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:0 flagID:2];
+    self.mView_root1.hidden = NO;
+    
+    [self.view addSubview:self.mView_root0];
+    [self.view addSubview:self.mView_root1];
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
     if (self.mInt_flag == 0) {
-        self.mView_root.hidden = NO;
+        self.mView_root0.hidden = NO;
+        self.mView_root1.hidden = YES;
     }else if (self.mInt_flag == 1){
-        self.mView_root.hidden = YES;
+        self.mView_root0.hidden = YES;
+        self.mView_root1.hidden = NO;
     }else if (self.mInt_flag == 2){
-        self.mView_root.hidden = YES;
+        self.mView_root0.hidden = YES;
+        self.mView_root1.hidden = YES;
     }
 }
 

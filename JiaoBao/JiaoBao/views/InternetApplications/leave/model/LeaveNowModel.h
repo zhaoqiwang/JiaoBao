@@ -12,7 +12,8 @@
 
 @property (nonatomic,assign) int mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间，4添加时间段，5提交
 @property (nonatomic,strong) NSString *mStr_name;//名称
-@property (nonatomic,strong) NSString *mStr_value;//选择的值，开始时间
-@property (nonatomic,strong) NSString *mStr_value1;//选择的值，结束时间
+@property (nonatomic,strong) NSString *mStr_value;//显示具体名称
+@property (nonatomic,strong) NSString *mStr_startTime;//选择的值，开始时间
+@property (nonatomic,strong) NSString *mStr_endTime;//选择的值，结束时间
 
 @end

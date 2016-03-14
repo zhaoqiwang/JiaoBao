@@ -20,7 +20,8 @@
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称
-@property (nonatomic,strong) LeaveView *mView_root;//请假表格
+@property (nonatomic,strong) LeaveView *mView_root0;//请假表格,自己请假
+@property (nonatomic,strong) LeaveView *mView_root1;//请假表格,代请
 @property (nonatomic,assign) int mInt_flag;//区分是是请假还是查询
 
 @end
