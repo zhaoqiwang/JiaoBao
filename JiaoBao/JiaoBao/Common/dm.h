@@ -62,6 +62,7 @@
 @property (nonatomic,assign) int uType;//用户身份ID
 @property (nonatomic,strong) NSString *mStr_unit;//当前登录单位的名字
 @property (nonatomic,strong) NSString *mStr_tableID;//当前所在单位的加密ID
+@property (nonatomic,strong) NSString *mainID;//当前用户id
 @property (nonatomic,strong) UserInfoModel *userInfo;//个人信息
 @property (nonatomic,assign) int mImt_shareUnRead;//分享未读数量
 @property (nonatomic,assign) int mImt_showUnRead;//展示未读数量
