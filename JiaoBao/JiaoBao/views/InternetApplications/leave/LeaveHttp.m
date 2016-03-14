@@ -281,7 +281,7 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetGateLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonGateLeaves:data];
         // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGateLeaves" object:array];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetGateLeaves: %@", error);
@@ -289,7 +289,48 @@ static LeaveHttp *leaveHttp = nil;
     }];
     
 }
+//审批人审批假条，并做批注。
+-(void)CheckLeaveModel:(CheckLeaveModel*)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Leave/CheckLeaveModel",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *parameters = [model propertiesDic];
+    
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        D("JSON--------CheckLeaveModel: %@,", result);
 
+        // [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:array];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------CheckLeaveModel: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:nil];
+    }];
+    
+}
+//门卫登记离校返校时间 参数：请假时间记录ID - 登记人姓名 - 0离校，1返校
+-(void)UpdateGateInfo:(NSString*)tabid userName:(NSString*)userName
+                 flag:(NSString*)flag{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Leave/UpdateGateInfo",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"tabid":tabid,@"userName":userName,@"flag":flag,};
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        D("JSON--------UpdateGateInfo: %@,", result);
+        
+        // [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:array];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------UpdateGateInfo: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:nil];
+    }];
+    
+}
 //取得我的教宝号所关联的学生列表(家长身份）
 -(void)GetMyStdInfo:(NSString *)accId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Account/GetMyStdInfo",MAINURL];

@@ -1029,6 +1029,7 @@
 		F75757441BA16B7700AA4267 /* ChoicenessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */; };
 		F75D38B01C9647CA00B71B1E /* MyAdminClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D38AF1C9647CA00B71B1E /* MyAdminClass.m */; };
 		F75D38B31C96542000B71B1E /* ClassLeavesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D38B21C96542000B71B1E /* ClassLeavesModel.m */; };
+		F75D38B61C965E9700B71B1E /* CheckLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D38B51C965E9700B71B1E /* CheckLeaveModel.m */; };
 		F764F48B1BD4D1070077F55A /* PublishJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F764F48A1BD4D1070077F55A /* PublishJobModel.m */; };
 		F76988A01C3A02610052DE77 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769889F1C3A02610052DE77 /* Photos.framework */; };
 		F76B64351B1EA205008F6961 /* RCLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64321B1EA205008F6961 /* RCLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2564,6 +2565,8 @@
 		F75D38AF1C9647CA00B71B1E /* MyAdminClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAdminClass.m; path = model/MyAdminClass.m; sourceTree = "<group>"; };
 		F75D38B11C96542000B71B1E /* ClassLeavesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassLeavesModel.h; path = model/ClassLeavesModel.h; sourceTree = "<group>"; };
 		F75D38B21C96542000B71B1E /* ClassLeavesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassLeavesModel.m; path = model/ClassLeavesModel.m; sourceTree = "<group>"; };
+		F75D38B41C965E9700B71B1E /* CheckLeaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckLeaveModel.h; path = model/CheckLeaveModel.h; sourceTree = "<group>"; };
+		F75D38B51C965E9700B71B1E /* CheckLeaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckLeaveModel.m; path = model/CheckLeaveModel.m; sourceTree = "<group>"; };
 		F764F4891BD4D1070077F55A /* PublishJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishJobModel.h; sourceTree = "<group>"; };
 		F764F48A1BD4D1070077F55A /* PublishJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishJobModel.m; sourceTree = "<group>"; };
 		F769889F1C3A02610052DE77 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -5158,6 +5161,8 @@
 				F75D38AF1C9647CA00B71B1E /* MyAdminClass.m */,
 				F75D38B11C96542000B71B1E /* ClassLeavesModel.h */,
 				F75D38B21C96542000B71B1E /* ClassLeavesModel.m */,
+				F75D38B41C965E9700B71B1E /* CheckLeaveModel.h */,
+				F75D38B51C965E9700B71B1E /* CheckLeaveModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -6420,6 +6425,7 @@
 				A73CAD6D1A07755B00D6C5AA /* MJRefreshBaseView.m in Sources */,
 				A7781F1B1AE888F800F03AEB /* NewWorkViewController.m in Sources */,
 				F7C4D7291BD0E557008B8924 /* ChapterModel.m in Sources */,
+				F75D38B61C965E9700B71B1E /* CheckLeaveModel.m in Sources */,
 				F79D84D61ABD4DC000897477 /* ParserJson_SignIn.m in Sources */,
 				A73CAD721A07755B00D6C5AA /* UIScrollView+MJRefresh.m in Sources */,
 				A75A77961B03368800E06440 /* GetmyUserClassModel.m in Sources */,

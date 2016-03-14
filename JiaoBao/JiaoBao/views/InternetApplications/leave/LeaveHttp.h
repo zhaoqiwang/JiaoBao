@@ -22,6 +22,7 @@
 #import "NewLeaveModel.h"
 #import "ParserJson_knowledge.h"
 #import "leaveRecordModel.h"
+#import "CheckLeaveModel.h"
 
 
 @interface LeaveHttp : NSObject<ASIHTTPRequestDelegate>
@@ -58,7 +59,11 @@
 //请假的开始时间小于当前日期时间
 //当前日期时间小于请假的结束时间当天的24点
 -(void)GetGateLeaves:(leaveRecordModel*)model;
-
+//审批人审批假条，并做批注。
+-(void)CheckLeaveModel:(CheckLeaveModel*)model;
+//门卫登记离校返校时间 参数：请假时间记录ID - 登记人姓名 - 0离校，1返校
+-(void)UpdateGateInfo:(NSString*)tabid userName:(NSString*)userName
+                 flag:(NSString*)flag;
 
 
 

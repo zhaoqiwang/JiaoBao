@@ -48,8 +48,6 @@
     }else{
         
     }
-
-
     return model;
 }
 //获得我提出申请的请假记录
@@ -83,7 +81,6 @@
         MyStdInfo *model = [[MyStdInfo alloc]init];
         [model dicToModel:dic];
         [mArr addObject:model];
-        
     }
     return mArr;
     

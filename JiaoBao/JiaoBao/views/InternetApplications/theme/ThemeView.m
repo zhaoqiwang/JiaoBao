@@ -139,7 +139,7 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
-    [[LeaveHttp getInstance]GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+//    [[LeaveHttp getInstance]GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
 //    NewLeaveModel *model = [[NewLeaveModel alloc]init];
 //    model.UnitId =[NSString stringWithFormat:@"%d",[dm getInstance].UID];
 //    model.manId = @"3851578";
@@ -161,7 +161,9 @@
 //    model.sDateTime = @"2016-3-1";
 //    model.manType = @"0";
 //    [[LeaveHttp getInstance]GetMyLeaves:model];
-    [[LeaveHttp getInstance]GetLeaveModel:@"4"];
+   // [[LeaveHttp getInstance]GetLeaveModel:@"4"];
+    //[[LeaveHttp getInstance]GetMyStdInfo:[dm getInstance].jiaoBaoHao];
+    [[LeaveHttp getInstance]GetMyAdminClass:[dm getInstance].jiaoBaoHao];
     return;
 //    [[KnowledgeHttp getInstance] GetAllCategory];
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
