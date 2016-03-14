@@ -948,6 +948,7 @@
 		F70B96AB1C9107BA0001D696 /* LeaveSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B96AA1C9107BA0001D696 /* LeaveSettingModel.m */; };
 		F70B96AE1C910A8A0001D696 /* LevelNoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B96AD1C910A8A0001D696 /* LevelNoteModel.m */; };
 		F70C77AF1BF5BF1D007BAE2D /* DetailHWVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */; };
+		F7119FD11C9642F800A7F8FB /* MyStdInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F7119FD01C9642F800A7F8FB /* MyStdInfo.m */; };
 		F711B6E21C23A22200FF36DF /* MyCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F711B6E01C23A22200FF36DF /* MyCommentViewController.m */; };
 		F711B6E31C23A22200FF36DF /* MyCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F711B6E11C23A22200FF36DF /* MyCommentViewController.xib */; };
 		F711B6E71C23ED2F00FF36DF /* MyComentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F711B6E51C23ED2F00FF36DF /* MyComentCell.m */; };
@@ -1026,6 +1027,8 @@
 		F7502A291AEE1E50004F822F /* selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7502A071AEE1E50004F822F /* selected@3x.png */; };
 		F75757431BA16B7700AA4267 /* ChoicenessDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */; };
 		F75757441BA16B7700AA4267 /* ChoicenessDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */; };
+		F75D38B01C9647CA00B71B1E /* MyAdminClass.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D38AF1C9647CA00B71B1E /* MyAdminClass.m */; };
+		F75D38B31C96542000B71B1E /* ClassLeavesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F75D38B21C96542000B71B1E /* ClassLeavesModel.m */; };
 		F764F48B1BD4D1070077F55A /* PublishJobModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F764F48A1BD4D1070077F55A /* PublishJobModel.m */; };
 		F76988A01C3A02610052DE77 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F769889F1C3A02610052DE77 /* Photos.framework */; };
 		F76B64351B1EA205008F6961 /* RCLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F76B64321B1EA205008F6961 /* RCLabel.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2449,6 +2452,8 @@
 		F70B96AC1C910A8A0001D696 /* LevelNoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelNoteModel.h; sourceTree = "<group>"; };
 		F70B96AD1C910A8A0001D696 /* LevelNoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelNoteModel.m; sourceTree = "<group>"; };
 		F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailHWVc.xib; sourceTree = "<group>"; };
+		F7119FCF1C9642F800A7F8FB /* MyStdInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyStdInfo.h; path = model/MyStdInfo.h; sourceTree = "<group>"; };
+		F7119FD01C9642F800A7F8FB /* MyStdInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyStdInfo.m; path = model/MyStdInfo.m; sourceTree = "<group>"; };
 		F711B6DF1C23A22200FF36DF /* MyCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCommentViewController.h; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.h; sourceTree = "<group>"; };
 		F711B6E01C23A22200FF36DF /* MyCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCommentViewController.m; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.m; sourceTree = "<group>"; };
 		F711B6E11C23A22200FF36DF /* MyCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyCommentViewController.xib; path = views/InternetApplications/theme/Knowledge/MyCommentViewController.xib; sourceTree = "<group>"; };
@@ -2555,6 +2560,10 @@
 		F75757401BA16B7700AA4267 /* ChoicenessDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChoicenessDetailViewController.h; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.h; sourceTree = "<group>"; };
 		F75757411BA16B7700AA4267 /* ChoicenessDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChoicenessDetailViewController.m; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.m; sourceTree = "<group>"; };
 		F75757421BA16B7700AA4267 /* ChoicenessDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChoicenessDetailViewController.xib; path = views/InternetApplications/theme/Knowledge/ChoicenessDetailViewController.xib; sourceTree = "<group>"; };
+		F75D38AE1C9647CA00B71B1E /* MyAdminClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyAdminClass.h; path = model/MyAdminClass.h; sourceTree = "<group>"; };
+		F75D38AF1C9647CA00B71B1E /* MyAdminClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyAdminClass.m; path = model/MyAdminClass.m; sourceTree = "<group>"; };
+		F75D38B11C96542000B71B1E /* ClassLeavesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassLeavesModel.h; path = model/ClassLeavesModel.h; sourceTree = "<group>"; };
+		F75D38B21C96542000B71B1E /* ClassLeavesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassLeavesModel.m; path = model/ClassLeavesModel.m; sourceTree = "<group>"; };
 		F764F4891BD4D1070077F55A /* PublishJobModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishJobModel.h; sourceTree = "<group>"; };
 		F764F48A1BD4D1070077F55A /* PublishJobModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishJobModel.m; sourceTree = "<group>"; };
 		F769889F1C3A02610052DE77 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -5143,6 +5152,12 @@
 				F7F870091C925E0900A75520 /* LeaveDetailModel.m */,
 				4307165A1C93C56F008D3382 /* LeaveNowModel.h */,
 				4307165B1C93C56F008D3382 /* LeaveNowModel.m */,
+				F7119FCF1C9642F800A7F8FB /* MyStdInfo.h */,
+				F7119FD01C9642F800A7F8FB /* MyStdInfo.m */,
+				F75D38AE1C9647CA00B71B1E /* MyAdminClass.h */,
+				F75D38AF1C9647CA00B71B1E /* MyAdminClass.m */,
+				F75D38B11C96542000B71B1E /* ClassLeavesModel.h */,
+				F75D38B21C96542000B71B1E /* ClassLeavesModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -6185,6 +6200,7 @@
 				F71E9D6A1B86BE4A00D90487 /* TFHpple.m in Sources */,
 				A7595E941A5FC2F30027848E /* MWPhotoBrowser.m in Sources */,
 				A77FF02F1A650B3F00DB85E3 /* JSONKeyMapper.m in Sources */,
+				F75D38B31C96542000B71B1E /* ClassLeavesModel.m in Sources */,
 				A7A15CC31AF08DC700843CB3 /* NewWorkTree_model.m in Sources */,
 				A72B582A1A3D867A004D8920 /* UnitDetailViewController.m in Sources */,
 				A7595EA91A5FC2F30027848E /* README.md in Sources */,
@@ -6347,6 +6363,7 @@
 				F79D84DE1ABD4DC000897477 /* SignInViewController.m in Sources */,
 				F71803211AB3C46300E6167F /* JTCalendarDayView.m in Sources */,
 				A763A5401A49663C008365B5 /* PersonPhotoModel.m in Sources */,
+				F7119FD11C9642F800A7F8FB /* MyStdInfo.m in Sources */,
 				A749B9FE19F8F4060036F480 /* TreeView_Level2_Cell.m in Sources */,
 				A7AAC4D519F7893A00A0ED40 /* InternetAppTopScrollView.m in Sources */,
 				F70B964E1C90F8880001D696 /* TeacherViewController.m in Sources */,
@@ -6442,6 +6459,7 @@
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				432ECD8B1C92A4330098184F /* LeaveViewController.m in Sources */,
+				F75D38B01C9647CA00B71B1E /* MyAdminClass.m in Sources */,
 				F70B964A1C90F8880001D696 /* addDateCell.m in Sources */,
 				F76B64631B1EA6DB008F6961 /* FirstRegViewController.m in Sources */,
 				A78459951B7B302300EA7D5D /* NullSafe.m in Sources */,
