@@ -558,7 +558,7 @@
         if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
             [array addObject:[self addOnLineJob]];
         }
-        //[array addObject:[self addLeave]];
+        [array addObject:[self addLeave]];
         NSArray *menuItems = array;
         D("iudhfgjhjh-==========%d",[dm getInstance].uType);
         [KxMenu showMenuInView:self.view
