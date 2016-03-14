@@ -903,8 +903,6 @@
 		A7FC2A081C90176600CB38C0 /* buttonView26@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E41C90176600CB38C0 /* buttonView26@2x.png */; };
 		A7FC2A091C90176600CB38C0 /* buttonView26@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7FC29E51C90176600CB38C0 /* buttonView26@3x.png */; };
 		F7023A8B1C914EB3002F0CF0 /* NewLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7023A8A1C914EB3002F0CF0 /* NewLeaveModel.m */; };
-		F70B964A1C90F8880001D696 /* addDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B96421C90F8880001D696 /* addDateCell.m */; };
-		F70B964B1C90F8880001D696 /* addDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B96431C90F8880001D696 /* addDateCell.xib */; };
 		F70B964C1C90F8880001D696 /* ModelDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B96451C90F8880001D696 /* ModelDialog.m */; };
 		F70B964D1C90F8880001D696 /* ModelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70B96461C90F8880001D696 /* ModelDialog.xib */; };
 		F70B964E1C90F8880001D696 /* TeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B96481C90F8880001D696 /* TeacherViewController.m */; };
@@ -1093,6 +1091,9 @@
 		F7B271991B6F151F00DA3FE4 /* PhotoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */; };
 		F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */; };
 		F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */; };
+		F7B816521C9698B500EDFEAA /* leaveRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B816511C9698B500EDFEAA /* leaveRecordModel.m */; };
+		F7B816561C9698D700EDFEAA /* addDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B816541C9698D700EDFEAA /* addDateCell.m */; };
+		F7B816571C9698D700EDFEAA /* addDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B816551C9698D700EDFEAA /* addDateCell.xib */; };
 		F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C4D7121BD08CB3008B8924 /* CoreData.framework */; };
 		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; };
 		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; };
@@ -1124,7 +1125,6 @@
 		F7F7D7261BD622B900D8B856 /* PublishJobCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7241BD622B900D8B856 /* PublishJobCellTableViewCell.m */; };
 		F7F7D7271BD622B900D8B856 /* PublishJobCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */; };
 		F7F7D72A1BD6433800D8B856 /* HomeworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7291BD6433700D8B856 /* HomeworkModel.m */; };
-		F7F870041C92571500A75520 /* leaveRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870031C92571500A75520 /* leaveRecordModel.m */; };
 		F7F870071C9258B400A75520 /* MyLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870061C9258B400A75520 /* MyLeaveModel.m */; };
 		F7F8700A1C925E0900A75520 /* LeaveDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870091C925E0900A75520 /* LeaveDetailModel.m */; };
 		F7F8700E1C92798A00A75520 /* BaiduMapAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7F8700D1C92798A00A75520 /* BaiduMapAPI.framework */; };
@@ -2395,9 +2395,6 @@
 		A7FC29E51C90176600CB38C0 /* buttonView26@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView26@3x.png"; path = "buttonView/buttonView26@3x.png"; sourceTree = "<group>"; };
 		F7023A891C914EB3002F0CF0 /* NewLeaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewLeaveModel.h; path = model/NewLeaveModel.h; sourceTree = "<group>"; };
 		F7023A8A1C914EB3002F0CF0 /* NewLeaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewLeaveModel.m; path = model/NewLeaveModel.m; sourceTree = "<group>"; };
-		F70B96411C90F8880001D696 /* addDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addDateCell.h; sourceTree = "<group>"; };
-		F70B96421C90F8880001D696 /* addDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addDateCell.m; sourceTree = "<group>"; };
-		F70B96431C90F8880001D696 /* addDateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addDateCell.xib; sourceTree = "<group>"; };
 		F70B96441C90F8880001D696 /* ModelDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelDialog.h; sourceTree = "<group>"; };
 		F70B96451C90F8880001D696 /* ModelDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelDialog.m; sourceTree = "<group>"; };
 		F70B96461C90F8880001D696 /* ModelDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModelDialog.xib; sourceTree = "<group>"; };
@@ -2737,6 +2734,11 @@
 		F7B271971B6F151F00DA3FE4 /* PhotoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCollectionCell.m; path = views/InternetApplications/show/PhotoCollectionCell.m; sourceTree = "<group>"; };
 		F7B271981B6F151F00DA3FE4 /* PhotoCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PhotoCollectionCell.xib; path = views/InternetApplications/show/PhotoCollectionCell.xib; sourceTree = "<group>"; };
 		F7B2719B1B6F154C00DA3FE4 /* 删除键@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "删除键@2x.png"; path = "Image/InternetApp/删除键@2x.png"; sourceTree = "<group>"; };
+		F7B816501C9698B500EDFEAA /* leaveRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = leaveRecordModel.h; path = model/leaveRecordModel.h; sourceTree = "<group>"; };
+		F7B816511C9698B500EDFEAA /* leaveRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = leaveRecordModel.m; path = model/leaveRecordModel.m; sourceTree = "<group>"; };
+		F7B816531C9698D700EDFEAA /* addDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = addDateCell.h; path = cell/addDateCell.h; sourceTree = "<group>"; };
+		F7B816541C9698D700EDFEAA /* addDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = addDateCell.m; path = cell/addDateCell.m; sourceTree = "<group>"; };
+		F7B816551C9698D700EDFEAA /* addDateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = addDateCell.xib; path = cell/addDateCell.xib; sourceTree = "<group>"; };
 		F7C4D7121BD08CB3008B8924 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F7C4D71E1BD0E176008B8924 /* GradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeModel.h; sourceTree = "<group>"; };
 		F7C4D71F1BD0E176008B8924 /* GradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeModel.m; sourceTree = "<group>"; };
@@ -2788,8 +2790,6 @@
 		F7F7D7251BD622B900D8B856 /* PublishJobCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublishJobCellTableViewCell.xib; sourceTree = "<group>"; };
 		F7F7D7281BD6433700D8B856 /* HomeworkModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeworkModel.h; sourceTree = "<group>"; };
 		F7F7D7291BD6433700D8B856 /* HomeworkModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeworkModel.m; sourceTree = "<group>"; };
-		F7F870021C92571500A75520 /* leaveRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leaveRecordModel.h; sourceTree = "<group>"; };
-		F7F870031C92571500A75520 /* leaveRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = leaveRecordModel.m; sourceTree = "<group>"; };
 		F7F870051C9258B400A75520 /* MyLeaveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLeaveModel.h; path = model/MyLeaveModel.h; sourceTree = "<group>"; };
 		F7F870061C9258B400A75520 /* MyLeaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyLeaveModel.m; path = model/MyLeaveModel.m; sourceTree = "<group>"; };
 		F7F870081C925E0900A75520 /* LeaveDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailModel.h; path = model/LeaveDetailModel.h; sourceTree = "<group>"; };
@@ -2856,6 +2856,9 @@
 		4307165D1C93C6A0008D3382 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				F7B816531C9698D700EDFEAA /* addDateCell.h */,
+				F7B816541C9698D700EDFEAA /* addDateCell.m */,
+				F7B816551C9698D700EDFEAA /* addDateCell.xib */,
 				4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */,
 				4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */,
 				430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */,
@@ -5104,9 +5107,6 @@
 				4307165D1C93C6A0008D3382 /* cell */,
 				F70B96A81C91078A0001D696 /* model */,
 				F70B96A11C90FEAC0001D696 /* leaveHttp */,
-				F70B96411C90F8880001D696 /* addDateCell.h */,
-				F70B96421C90F8880001D696 /* addDateCell.m */,
-				F70B96431C90F8880001D696 /* addDateCell.xib */,
 				F70B96441C90F8880001D696 /* ModelDialog.h */,
 				F70B96451C90F8880001D696 /* ModelDialog.m */,
 				F70B96461C90F8880001D696 /* ModelDialog.xib */,
@@ -5147,8 +5147,8 @@
 				F70B96AD1C910A8A0001D696 /* LevelNoteModel.m */,
 				F7023A891C914EB3002F0CF0 /* NewLeaveModel.h */,
 				F7023A8A1C914EB3002F0CF0 /* NewLeaveModel.m */,
-				F7F870021C92571500A75520 /* leaveRecordModel.h */,
-				F7F870031C92571500A75520 /* leaveRecordModel.m */,
+				F7B816501C9698B500EDFEAA /* leaveRecordModel.h */,
+				F7B816511C9698B500EDFEAA /* leaveRecordModel.m */,
 				F7F870051C9258B400A75520 /* MyLeaveModel.h */,
 				F7F870061C9258B400A75520 /* MyLeaveModel.m */,
 				F7F870081C925E0900A75520 /* LeaveDetailModel.h */,
@@ -5638,6 +5638,7 @@
 				A76E67811BA9599F00CCC79C /* MyQuestionViewController.xib in Resources */,
 				A768298A1AC69B21003B31EB /* classView_click_2@3x.png in Resources */,
 				A749B9CB19F89A530036F480 /* root_forwardNotice@2x.png in Resources */,
+				F7B816571C9698D700EDFEAA /* addDateCell.xib in Resources */,
 				A75046941A0A14BC00C54ECC /* forward_sendMsg1@2x.png in Resources */,
 				A74821A919FF452200234020 /* nav_return@2x.png in Resources */,
 				A7AD8C5619F644A2002E65FB /* tabbar_student1.png in Resources */,
@@ -5765,7 +5766,6 @@
 				A727C7DB1A6F93780019C4CD /* share_likeBig_1@2x.png in Resources */,
 				F7502A221AEE1E50004F822F /* plus@2x.png in Resources */,
 				A7BB180619F4F91E00A81286 /* Regiser_passwd_1.png in Resources */,
-				F70B964B1C90F8880001D696 /* addDateCell.xib in Resources */,
 				A7FC2A081C90176600CB38C0 /* buttonView26@2x.png in Resources */,
 				F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */,
 				A749B9E619F8A0310036F480 /* TreeView_Level0_Cell.xib in Resources */,
@@ -6175,7 +6175,6 @@
 				F77B42681BD47A17006CF240 /* OtherItemsModel.m in Sources */,
 				A7E2E5EE1B2035FE003F85B5 /* PersonalSpaceModel.m in Sources */,
 				A762FFFB1A282A6000A78B5C /* NoticeInfoModel.m in Sources */,
-				F7F870041C92571500A75520 /* leaveRecordModel.m in Sources */,
 				A72B581E1A3D70B8004D8920 /* UnitSpaceViewController.m in Sources */,
 				A77FF0361A6511AB00DB85E3 /* UnitClassModel.m in Sources */,
 				A7AD8C2E19F60E97002E65FB /* TabbarItem.m in Sources */,
@@ -6317,6 +6316,7 @@
 				A749B9ED19F8F19F0036F480 /* TreeView_Level1_Model.m in Sources */,
 				A78459E01B7B4D1D00EA7D5D /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				F79D84D71ABD4DC000897477 /* RecordCell.m in Sources */,
+				F7B816561C9698D700EDFEAA /* addDateCell.m in Sources */,
 				F76B64471B1EA440008F6961 /* SchoolMessage.m in Sources */,
 				F70B967B1C90FAF60001D696 /* CategorySection.m in Sources */,
 				A755E70A19F278B900BBDF3D /* ASICloudFilesCDNRequest.m in Sources */,
@@ -6368,6 +6368,7 @@
 				F79D84DE1ABD4DC000897477 /* SignInViewController.m in Sources */,
 				F71803211AB3C46300E6167F /* JTCalendarDayView.m in Sources */,
 				A763A5401A49663C008365B5 /* PersonPhotoModel.m in Sources */,
+				F7B816521C9698B500EDFEAA /* leaveRecordModel.m in Sources */,
 				F7119FD11C9642F800A7F8FB /* MyStdInfo.m in Sources */,
 				A749B9FE19F8F4060036F480 /* TreeView_Level2_Cell.m in Sources */,
 				A7AAC4D519F7893A00A0ED40 /* InternetAppTopScrollView.m in Sources */,
@@ -6466,7 +6467,6 @@
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				432ECD8B1C92A4330098184F /* LeaveViewController.m in Sources */,
 				F75D38B01C9647CA00B71B1E /* MyAdminClass.m in Sources */,
-				F70B964A1C90F8880001D696 /* addDateCell.m in Sources */,
 				F76B64631B1EA6DB008F6961 /* FirstRegViewController.m in Sources */,
 				A78459951B7B302300EA7D5D /* NullSafe.m in Sources */,
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,
