@@ -1287,6 +1287,7 @@ static LoginSendHttp *loginSendHttp = nil;
             [dm getInstance].name = model.UserName;
             name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,model.UserName];
         }
+        [dm getInstance].mainID = model.UserID;
         CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
         [Nav_internetAppView getInstance].mLab_name.text = name;
         [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
