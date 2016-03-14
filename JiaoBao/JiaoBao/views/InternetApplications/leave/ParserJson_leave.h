@@ -22,4 +22,15 @@
 +(NSMutableArray*)parserJsonMyLeaves:(NSString*)json;
 //取一个假条的明细信息
 +(LeaveDetailModel*)parserJsonleaveDetail:(NSString*)json;
+//取得我的教宝号所关联的学生列表(家长身份)
++(NSMutableArray*)parserJsonMyStdInfo:(NSString *)json;
+//作为班主任身份,取得我所管理的班级列表
++(NSMutableArray*)parserJsonMyAdminClass:(NSString *)json;
+//班主任身份获取本班学生请假的审批记录
++(NSMutableArray*)parserJsonClassLeaves:(NSString *)json;
+//门卫取请假记录
++(NSMutableArray*)parserJsonGateLeaves:(NSString *)json;
+
+
+
 @end

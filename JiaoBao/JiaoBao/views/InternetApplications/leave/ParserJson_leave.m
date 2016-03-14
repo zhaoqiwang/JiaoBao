@@ -7,6 +7,9 @@
 //
 
 #import "ParserJson_leave.h"
+#import "MyStdInfo.h"
+#import "MyAdminClass.h"
+#import "ClassLeavesModel.h"
 
 
 @implementation ParserJson_leave
@@ -45,8 +48,6 @@
     }else{
         
     }
-
-
     return model;
 }
 //获得我提出申请的请假记录
@@ -71,5 +72,61 @@
     [model dicToModel:dic];
     return model;
 }
+//取得我的教宝号所关联的学生列表(家长身份)
++(NSMutableArray*)parserJsonMyStdInfo:(NSString *)json{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        MyStdInfo *model = [[MyStdInfo alloc]init];
+        [model dicToModel:dic];
+        [mArr addObject:model];
+    }
+    return mArr;
+    
+}
+//作为班主任身份,取得我所管理的班级列表
++(NSMutableArray*)parserJsonMyAdminClass:(NSString *)json{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        MyAdminClass *model = [[MyAdminClass alloc]init];
+        [model dicToModel:dic];
+        [mArr addObject:model];
+        
+    }
+    return mArr;
+    
+}
+//班主任身份获取本班学生请假的审批记录
++(NSMutableArray*)parserJsonClassLeaves:(NSString *)json{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        ClassLeavesModel *model = [[ClassLeavesModel alloc]init];
+        [model dicToModel:dic];
+        [mArr addObject:model];
+        
+    }
+    return mArr;
+    
+}
+//门卫取请假记录
++(NSMutableArray*)parserJsonGateLeaves:(NSString *)json{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        ClassLeavesModel *model = [[ClassLeavesModel alloc]init];
+        [model dicToGateModel:dic];
+        [mArr addObject:model];
+        
+    }
+    return mArr;
+    
+}
+
 
 @end
