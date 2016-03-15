@@ -23,9 +23,16 @@
 }
 -(void )setUp{
     if(self.flag==0){
+        self.startDateTF.text = self.model.mStr_startTime;
+        self.endDateTF.text = self.model.mStr_endTime;
         
     }
     else{
+        NSDate *date = [NSDate date];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-mm-dd"];
+        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@ 8:30:00",[formatter stringFromDate:date]];
+self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[formatter stringFromDate:date]];
         
     }
     
@@ -36,7 +43,9 @@
 }
 
 - (IBAction)doneAction:(id)sender {
-    [self.delegate startText:self.startDateTF.text endText:self.endDateTF.text];
+    self.model.mStr_startTime = self.startDateTF.text;
+    self.model.mStr_endTime = self.endDateTF.text;
+    [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
     [[self.window viewWithTag:9999]removeFromSuperview];
 
 }
@@ -53,7 +62,13 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-mm-dd HH:mm:ss"];
     [self.selectedTF resignFirstResponder];
-    self.selectedTF.text = [formatter stringFromDate:self.datePicker.date];
+    if([self.selectedTF.text isEqual:self.startDateTF]){
+           self.selectedTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];
+    }else{
+        self.selectedTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:self.datePicker.date]];
+
+    }
+
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     self.selectedTF = textField;

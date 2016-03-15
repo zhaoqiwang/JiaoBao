@@ -70,6 +70,8 @@
         customView.layer.cornerRadius=6;
         customView.layer.borderColor = [UIColor clearColor].CGColor;
         customView.delegate = self;
+        customView.row = indexPath.row;
+        customView.flag = 0;
         [customView setUp];
         [vwFullScreenView addSubview:customView];
 
@@ -77,8 +79,11 @@
 
 }
 
-- (void)startText:(NSString*)startText endText:(NSString*)endText{
-    addDateCell *cell = [self.tableview cellForRowAtIndexPath:self.tableview.indexPathForSelectedRow];
+//- (void)startText:(NSString*)startText endText:(NSString*)endText{
+//    addDateCell *cell = [self.tableview cellForRowAtIndexPath:self.tableview.indexPathForSelectedRow];
+//}
+-(void)LeaveNowModel:(LeaveNowModel*)model flag:(int)flag row:(NSInteger)row{
+    
 }
 
 
