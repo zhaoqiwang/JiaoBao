@@ -15,6 +15,8 @@
 		432ECD8C1C92A4330098184F /* LeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 432ECD8A1C92A4330098184F /* LeaveViewController.xib */; };
 		432ECD951C92AD500098184F /* LeaveTopScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD941C92AD500098184F /* LeaveTopScrollView.m */; };
 		432ECD9B1C92AFAE0098184F /* LeaveViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */; };
+		439194AF1C97A4C000921F51 /* ChooseStudentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 439194AD1C97A4C000921F51 /* ChooseStudentViewController.m */; };
+		439194B01C97A4C000921F51 /* ChooseStudentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 439194AE1C97A4C000921F51 /* ChooseStudentViewController.xib */; };
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
@@ -1150,6 +1152,9 @@
 		432ECD941C92AD500098184F /* LeaveTopScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveTopScrollView.m; sourceTree = "<group>"; };
 		432ECD991C92AFAE0098184F /* LeaveViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaveViewCell.h; sourceTree = "<group>"; };
 		432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaveViewCell.m; sourceTree = "<group>"; };
+		439194AC1C97A4C000921F51 /* ChooseStudentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseStudentViewController.h; sourceTree = "<group>"; };
+		439194AD1C97A4C000921F51 /* ChooseStudentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseStudentViewController.m; sourceTree = "<group>"; };
+		439194AE1C97A4C000921F51 /* ChooseStudentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseStudentViewController.xib; sourceTree = "<group>"; };
 		4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviseNameViewController.h; path = views/InternetApplications/personalSpace/ReviseNameViewController.h; sourceTree = "<group>"; };
 		4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviseNameViewController.m; path = views/InternetApplications/personalSpace/ReviseNameViewController.m; sourceTree = "<group>"; };
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
@@ -5122,6 +5127,9 @@
 				432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */,
 				430716571C93A5D2008D3382 /* LeaveView.h */,
 				430716581C93A5D2008D3382 /* LeaveView.m */,
+				439194AC1C97A4C000921F51 /* ChooseStudentViewController.h */,
+				439194AD1C97A4C000921F51 /* ChooseStudentViewController.m */,
+				439194AE1C97A4C000921F51 /* ChooseStudentViewController.xib */,
 			);
 			name = leave;
 			path = views/InternetApplications/leave;
@@ -5517,6 +5525,7 @@
 				A7781F4C1AE8A0F300F03AEB /* NewWorkView_click_1@2x.png in Resources */,
 				A750468D1A0A14BC00C54ECC /* forward_rightNav.png in Resources */,
 				A76ED5BD1AD67855006F3E0B /* workView_3@3x.png in Resources */,
+				439194B01C97A4C000921F51 /* ChooseStudentViewController.xib in Resources */,
 				A7781F421AE8A0F300F03AEB /* NewWorkView_1.png in Resources */,
 				A76829811AC69B21003B31EB /* classView_4@3x.png in Resources */,
 				A7AD8C4E19F644A2002E65FB /* tabbar_app1.png in Resources */,
@@ -6470,6 +6479,7 @@
 				F76B64631B1EA6DB008F6961 /* FirstRegViewController.m in Sources */,
 				A78459951B7B302300EA7D5D /* NullSafe.m in Sources */,
 				A75E6EA91ABA75D000B51B18 /* ClassView.m in Sources */,
+				439194AF1C97A4C000921F51 /* ChooseStudentViewController.m in Sources */,
 				A755E70119F278B900BBDF3D /* ASIAuthenticationDialog.m in Sources */,
 				F718031F1AB3C46300E6167F /* JTCalendarAppearance.m in Sources */,
 				F7C8AB631B72EF4200E829A4 /* QuestionDetailModel.m in Sources */,
