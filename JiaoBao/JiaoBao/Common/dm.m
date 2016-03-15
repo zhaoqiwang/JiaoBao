@@ -29,6 +29,8 @@ static dm* dmone = nil;
         self.mArr_unit_member = [[NSMutableArray alloc] init];
         self.mArr_myFriends = [[NSMutableArray alloc] init];
         self.mStr_unit = @"";
+        self.mArr_leaveClass = [[NSMutableArray alloc] init];
+        self.mArr_leaveStudent = [[NSMutableArray alloc] init];
     }
     return self;
 }

@@ -7,6 +7,7 @@
 //
 
 #import "LeaveView.h"
+#import "IQKeyboardManager.h"
 
 @implementation LeaveView
 
@@ -17,6 +18,7 @@
         // Initialization code
         self.frame = frame;
         self.mInt_flag = flag;
+        self.mInt_flagID = flagID;
         self.mArr_leave = [NSMutableArray array];
         if (self.mInt_flag == 1) {//自己请假
             
@@ -50,6 +52,13 @@
         self.mTableV_leave.dataSource = self;
         [self addSubview:self.mTableV_leave];
         [self.mTableV_leave reloadData];
+        
+        //输入框弹出键盘问题
+        IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+        manager.enable = YES;//控制整个功能是否启用
+        manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+        manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+        manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     }
     return self;
 }
@@ -159,6 +168,20 @@
  --------------------------------------- */
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    LeaveNowModel *model = [self.mArr_leave objectAtIndex:indexPath.row];
+    if (model.mInt_flag == 0) {//选择学生
+        
+    }else if (model.mInt_flag == 1){//理由选择
+        
+    }else if (model.mInt_flag == 2){//理由填写
+        
+    }else if (model.mInt_flag == 3){//时间段显示
+        
+    }else if (model.mInt_flag == 4){//时间段添加
+        
+    }else if (model.mInt_flag == 5){//提交
+        
+    }
 }
 
 /*

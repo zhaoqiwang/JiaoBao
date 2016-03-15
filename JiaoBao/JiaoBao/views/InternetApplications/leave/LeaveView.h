@@ -15,7 +15,7 @@
 
 @property (nonatomic,strong) UITableView *mTableV_leave;//
 @property (nonatomic,assign) NSInteger mInt_flag;//判断身份，班主任代请0，普通老师、班主任自己请假1，家长代请2
-@property (nonatomic,assign) NSInteger mInt_flagID;//判断身份，班主任0，普通老师1，家长2
+@property (nonatomic,assign) NSInteger mInt_flagID;//区分身份，门卫0，班主任1，普通老师2，家长3
 @property (nonatomic,strong) NSMutableArray *mArr_leave;//
 
 - (id)initWithFrame1:(CGRect)frame flag:(int)flag flagID:(int)flagID;
