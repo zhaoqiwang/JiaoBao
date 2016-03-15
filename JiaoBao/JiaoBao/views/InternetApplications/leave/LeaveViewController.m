@@ -7,6 +7,7 @@
 //
 
 #import "LeaveViewController.h"
+#import "dm.h"
 
 @interface LeaveViewController ()
 
@@ -65,21 +66,32 @@
     }
     [self.view addSubview:self.mView_root0];
     [self.view addSubview:self.mView_root1];
+
+    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+    [self addChildViewController:self.queryVC];
+    [self.queryVC didMoveToParentViewController:self];
+    [self addChild:self.queryVC withChildToRemove:nil];
+    self.queryVC.view.hidden = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
+    
     //先判断身份，班主任有3个，其他为两个
     if (self.mInt_leaveID == 1) {
         if (self.mInt_flag == 0) {
             self.mView_root0.hidden = NO;
             self.mView_root1.hidden = YES;
+            self.queryVC.view.hidden = YES;
         }else if (self.mInt_flag == 1){
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = NO;
+            self.queryVC.view.hidden = YES;
         }else if (self.mInt_flag == 2){
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = YES;
+            self.queryVC.view.hidden = NO;
         }
     }else{
         //判断是不是家长
@@ -87,22 +99,42 @@
             if (self.mInt_flag == 0) {
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = NO;
+                self.queryVC.view.hidden = YES;
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
+                self.queryVC.view.hidden = NO;
             }
         }else{
             if (self.mInt_flag == 0) {
                 self.mView_root0.hidden = NO;
                 self.mView_root1.hidden = YES;
+                self.queryVC.view.hidden = YES;
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
+                self.queryVC.view.hidden = NO;
             }
         }
     }
 }
-
+-(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+{
+    assert(childToAdd != nil);
+    
+    if (childToRemove != nil)
+    {
+        [childToRemove.view removeFromSuperview];
+    }
+    
+    // match the child size to its parent
+    CGRect frame = childToAdd.view.frame;
+    frame.origin.y = CGRectGetMaxY(self.mScrollV_all.frame);
+    frame.size.height = CGRectGetHeight(self.view.frame)-self.mScrollV_all.frame.origin.y-self.mScrollV_all.frame.size.height;
+    frame.size.width = CGRectGetWidth(self.view.frame);
+    childToAdd.view.frame = frame;
+    [self.view addSubview:childToAdd.view];
+}
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];

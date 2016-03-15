@@ -14,8 +14,10 @@
 #import "utils.h"
 #import "define_constant.h"
 #import "LeaveView.h"
+#import "QueryViewController.h"
 
 @interface LeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate>
+- (IBAction)btnAction:(id)sender;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示
@@ -23,6 +25,7 @@
 @property (nonatomic,strong) LeaveView *mView_root0;//请假表格,自己请假
 @property (nonatomic,strong) LeaveView *mView_root1;//请假表格,代请
 @property (nonatomic,assign) int mInt_flag;//区分是是请假还是查询
+@property(nonatomic,strong)QueryViewController *queryVC;
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
 
 @end
