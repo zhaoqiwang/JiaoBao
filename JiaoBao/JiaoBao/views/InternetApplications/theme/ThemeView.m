@@ -165,6 +165,7 @@
     //[[LeaveHttp getInstance]GetMyStdInfo:[dm getInstance].jiaoBaoHao];
     //[[LeaveHttp getInstance]GetMyAdminClass:[dm getInstance].jiaoBaoHao];
     //[LeaveHttp getInstance]getClassStdInfoWithUID:<#(NSString *)#>
+    //[LeaveHttp getInstance]getClassStdInfoWithUID:<#(NSString *)#>];
     //return;
 //    [[KnowledgeHttp getInstance] GetAllCategory];
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
