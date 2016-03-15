@@ -10,6 +10,7 @@
 #import "MyStdInfo.h"
 #import "MyAdminClass.h"
 #import "ClassLeavesModel.h"
+#import "StuInfoModel.h"
 
 
 @implementation ParserJson_leave
@@ -127,6 +128,32 @@
     return mArr;
     
 }
++(NSMutableArray *)parserJsonStuInfoArr:(NSString*)json//解析学生信息
+{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        StuInfoModel *model = [[StuInfoModel alloc] init];
+        model.StudentID = [dic objectForKey:@"StudentID"];
+        model.StdName = [dic objectForKey:@"StdName"];
+        model.Sex = [dic objectForKey:@"Sex"];
+        model.SchoolType = [dic objectForKey:@"SchoolType"];
+        model.GradeYear = [dic objectForKey:@"GradeYear"];
+        model.GradeName = [dic objectForKey:@"GradeName"];
+        model.ClassNo = [dic objectForKey:@"ClassNo"];
+        model.ClassName = [dic objectForKey:@"ClassName"];
+        model.UnitClassID = [dic objectForKey:@"UnitClassID"];
+        model.SchoolID = [dic objectForKey:@"SchoolID"];
+        [mArr addObject:model];
+        
+    }
+
+    
+    return mArr;
+    
+}
+
 
 
 @end
