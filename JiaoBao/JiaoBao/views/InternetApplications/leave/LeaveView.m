@@ -172,28 +172,76 @@
     if (model.mInt_flag == 0) {//选择学生
         ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
         chooseStu.delegate = self;
+        if (self.mInt_flagID == 1) {//班主任
+            chooseStu.mInt_flagID = 1;
+        }else if (self.mInt_flagID == 3){//家长
+            chooseStu.mInt_flagID = 0;
+        }
+        chooseStu.mInt_flag = 0;
+        chooseStu.mStr_navName = @"选择学生";
         [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 1){//理由选择
-        
+        ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
+        chooseStu.delegate = self;
+        chooseStu.mInt_flag = 1;
+        chooseStu.mStr_navName = @"选择理由";
+        [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 2){//理由填写
         
     }else if (model.mInt_flag == 3){//时间段显示
         
     }else if (model.mInt_flag == 4){//时间段添加
-        
+        UIView* vwFullScreenView = [[UIView alloc]init];
+        vwFullScreenView.tag=9999;
+        vwFullScreenView.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:0.5];
+        vwFullScreenView.frame=self.window.frame;
+        [self.window addSubview:vwFullScreenView];
+        //    UIView* vwDialog = [[UIView alloc] init];
+        //    vwDialog.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
+        //    vwDialog.backgroundColor=[UIColor whiteColor];
+        //    vwDialog.layer.borderColor=[UIColor grayColor].CGColor;
+        //    vwDialog.layer.borderWidth=0.6;
+        //    vwDialog.layer.cornerRadius=6;
+        //    vwDialog.center=vwFullScreenView.center;
+        //    [vwFullScreenView addSubview:vwDialog];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ModelDialog" owner:self options:nil];
+        //这时myCell对象已经通过自定义xib文件生成了
+        if ([nib count]>0) {
+            ModelDialog *customView = [nib objectAtIndex:0];
+            customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
+            customView.center=vwFullScreenView.center;
+            customView.layer.borderWidth=0.6;
+            customView.layer.cornerRadius=6;
+            customView.layer.borderColor = [UIColor clearColor].CGColor;
+            customView.delegate = self;
+            [vwFullScreenView addSubview:customView];
+            
+        }
     }else if (model.mInt_flag == 5){//提交
         
     }
 }
 
 //选择人员后的回调
--(void)ChooseStudentViewCSelect:(id)student{
-    if (self.mInt_flagID == 3) {//家长
-        self.mModel_student = student;
-        LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
-        model.mStr_value = self.mModel_student.StdName;
-    }else if (self.mInt_flagID == 1){//班主任
-        
+-(void)ChooseStudentViewCSelect:(id)student flag:(int)flag flagID:(int)flagID{
+    if (flag == 1) {//请假理由
+//        if (flagID == 0||flagID == 1) {//家长请假0，班主任代请1
+            for (LeaveNowModel *model in self.mArr_leave) {
+                if (model.mInt_flag==1) {
+                    model.mStr_value = ((MyStdInfo *)student).StdName;
+                }
+            }
+//        }else if (self.mInt_flagID == 1){//班主任、老师、门卫自己请假2
+//            
+//        }
+    }else{//选择学生
+        if (self.mInt_flagID == 3) {//家长
+            self.mModel_student = student;
+            LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
+            model.mStr_value = self.mModel_student.StdName;
+        }else if (self.mInt_flagID == 1){//班主任
+            
+        }
     }
     [self.mTableV_leave reloadData];
 }

@@ -648,7 +648,7 @@
     }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
         leave.mStr_navName = @"门卫";
         leave.mInt_leaveID = 0;
-    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2){
+    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
         leave.mStr_navName = @"班主任";
         leave.mInt_leaveID = 1;
     }else{

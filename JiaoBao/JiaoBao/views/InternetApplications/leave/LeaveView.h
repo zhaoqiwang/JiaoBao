@@ -11,8 +11,9 @@
 #import "LeaveNowTableViewCell.h"
 #import "dm.h"
 #import "ChooseStudentViewController.h"
+#import "ModelDialog.h"
 
-@interface LeaveView : UIView<UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate>
+@interface LeaveView : UIView<UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,ModelDialogDelegate>
 
 @property (nonatomic,strong) UITableView *mTableV_leave;//
 @property (nonatomic,assign) NSInteger mInt_flag;//判断身份，班主任代请0，普通老师、班主任自己请假1，家长代请2
