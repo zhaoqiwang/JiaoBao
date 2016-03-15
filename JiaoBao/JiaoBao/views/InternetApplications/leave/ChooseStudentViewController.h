@@ -18,9 +18,11 @@
 @interface ChooseStudentViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
+@property (nonatomic,strong) NSString *mStr_navName;//导航条名称
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//
 @property (nonatomic,strong) NSMutableArray *mArr_student;//学生列表
 @property (weak,nonatomic) id<ChooseStudentViewCDelegate> delegate;
+@property (nonatomic,assign) int mInt_flag;//家长请假0，班主任代请1，请假理由2
 
 @end
 

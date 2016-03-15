@@ -18,9 +18,29 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mArr_student = [NSMutableArray array];
-    self.mArr_student = [dm getInstance].mArr_leaveStudent;
+    //根据类型，判断是那种情况
+    if (self.mInt_flag == 0) {//家长
+        self.mArr_student = [dm getInstance].mArr_leaveStudent;
+    }else if (self.mInt_flag == 1){//班主任
+        
+    }else if (self.mInt_flag == 2){//请假理由
+        //用学生信息model代替，只为传值
+        for (int i=0; i<4; i++) {
+            MyStdInfo *model = [[MyStdInfo alloc] init];
+            if (i==0) {
+                model.StdName = @"补课";
+            }else if (i==1){
+                model.StdName = @"病假";
+            }else if (i==2){
+                model.StdName = @"事假";
+            }else if (i==3){
+                model.StdName = @"其他";
+            }
+        }
+    }
+    
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"选择学生"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
