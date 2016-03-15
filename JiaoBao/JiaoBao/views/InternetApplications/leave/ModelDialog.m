@@ -28,6 +28,7 @@
 }
 
 - (IBAction)doneAction:(id)sender {
+    [self.delegate startText:self.startDateTF.text endText:self.endDateTF.text];
     [[self.window viewWithTag:9999]removeFromSuperview];
 
 }
