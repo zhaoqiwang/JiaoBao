@@ -170,7 +170,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     LeaveNowModel *model = [self.mArr_leave objectAtIndex:indexPath.row];
     if (model.mInt_flag == 0) {//选择学生
-        
+        ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
+        chooseStu.delegate = self;
+        [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 1){//理由选择
         
     }else if (model.mInt_flag == 2){//理由填写
@@ -182,6 +184,18 @@
     }else if (model.mInt_flag == 5){//提交
         
     }
+}
+
+//选择人员后的回调
+-(void)ChooseStudentViewCSelect:(id)student{
+    if (self.mInt_flagID == 3) {//家长
+        self.mModel_student = student;
+        LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
+        model.mStr_value = self.mModel_student.StdName;
+    }else if (self.mInt_flagID == 1){//班主任
+        
+    }
+    [self.mTableV_leave reloadData];
 }
 
 /*
