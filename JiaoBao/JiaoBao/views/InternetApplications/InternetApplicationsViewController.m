@@ -16,6 +16,7 @@
 #import "MakeJobViewController.h"
 #import "TeacherViewController.h"
 #import "LeaveViewController.h"
+#import "LeaveHttp.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -58,9 +59,27 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    //取指定单位的请假设置
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetLeaveSettingWithUnitId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetLeaveSettingWithUnitId:) name:@"GetLeaveSettingWithUnitId" object:nil];
     
      [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
+}
+
+//取指定单位的请假设置
+-(void)GetLeaveSettingWithUnitId:(NSNotification *)noti{
+    D("请假系统的权限问题:%@，%@",[dm getInstance].leaveModel.StatusStd,[dm getInstance].leaveModel.StatusTea);
+    //判断是否开启了学生请假系统
+    if ([[dm getInstance].leaveModel.StatusStd intValue]==1) {
+        //获取家长关联的学生
+        [[LeaveHttp getInstance] GetMyStdInfo:[dm getInstance].jiaoBaoHao];
+    }
+    //判断是否开启了老师请假系统
+    if ([[dm getInstance].leaveModel.StatusTea intValue]==1) {
+        //获取班主任管理的班级
+        [[LeaveHttp getInstance] GetMyAdminClass:[dm getInstance].jiaoBaoHao];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -169,6 +188,9 @@
     NSString *str = noti.object;
     if ([str intValue] ==0) {//成功
         [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+        if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
+            [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        }
     }else{
         [MBProgressHUD showError:@"切换失败" toView:self.view];
     }
@@ -290,6 +312,10 @@
     [[LoginSendHttp getInstance] login_itunesUpdataCheck];
     //获取求知中的个人信息
     [[KnowledgeHttp getInstance] GetUserInfo];
+    //老师或家长身份时，判断有没有开启请假系统
+    if ([dm getInstance].uType==2||[dm getInstance].uType==3) {
+        [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    }
 }
 
 //获取求知中的个人信息
@@ -531,6 +557,8 @@
         self.mView_all.hidden = YES;
         self.mTableV_right.hidden = YES;
         self.mTableV_left.hidden = YES;
+        [[dm getInstance].mArr_leaveClass removeAllObjects];
+        [[dm getInstance].mArr_leaveStudent removeAllObjects];
     }
 }
 
@@ -548,17 +576,21 @@
                          image:[UIImage imageNamed:@"appNav_contact"]
                         target:self
                         action:@selector(pushMenuItemSchedule:)],
-          [KxMenuItem menuItem:@"请假"
-                         image:[UIImage imageNamed:@"appNav_contact"]
-                        target:self
-                        action:@selector(pushMenuItemLeave:)],
           
           ];
+        //在线作业
         NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
         if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
             [array addObject:[self addOnLineJob]];
         }
-        [array addObject:[self addLeave]];
+        //请假
+        if ([dm getInstance].mArr_leaveStudent.count>0||[dm getInstance].uType==2) {
+            [array addObject:[KxMenuItem menuItem:@"请假"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemLeave:)]];
+        }
+        
         NSArray *menuItems = array;
         D("iudhfgjhjh-==========%d",[dm getInstance].uType);
         [KxMenu showMenuInView:self.view
@@ -567,12 +599,6 @@
     }else{
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
-}
--(KxMenuItem*)addLeave{
-    return [KxMenuItem menuItem:@"请假系统"
-                          image:[UIImage imageNamed:@"appNav_contact"]
-                         target:self
-                         action:@selector(leaveAction)];
 }
 -(void)leaveAction{
     LeaveViewController *detail = [[LeaveViewController alloc] init];
@@ -616,6 +642,19 @@
 //请假
 - (void) pushMenuItemLeave:(id)sender{
     LeaveViewController *leave = [[LeaveViewController alloc] init];
+    if ([dm getInstance].uType==3) {
+        leave.mStr_navName = @"家长";
+        leave.mInt_leaveID = 3;
+    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+        leave.mStr_navName = @"门卫";
+        leave.mInt_leaveID = 0;
+    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2){
+        leave.mStr_navName = @"班主任";
+        leave.mInt_leaveID = 1;
+    }else{
+        leave.mStr_navName = @"老师";
+        leave.mInt_leaveID = 2;
+    }
     [utils pushViewController:leave animated:YES];
 }
 

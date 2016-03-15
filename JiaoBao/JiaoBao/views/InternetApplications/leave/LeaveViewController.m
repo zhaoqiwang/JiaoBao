@@ -34,58 +34,89 @@
     
     //三种状态
     NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<2; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
         if (i==0) {
             model.mStr_title = @"请假";
         }else if (i==1){
-            model.mStr_title = @"代请";
-        }else if (i==2){
             model.mStr_title = @"查询";
         }
-        
         [temp addObject:model];
+    }
+    //添加班主任的代请
+    if (self.mInt_leaveID == 1) {
+        ButtonViewModel *model = [[ButtonViewModel alloc] init];
+        model.mStr_title = @"代请";
+        [temp insertObject:model atIndex:1];
     }
     self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
     [self.view addSubview:self.mScrollV_all];
-
-
-    //请假表格
-    self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:0];
-    self.mView_root0.hidden = NO;
     
-    self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:0 flagID:2];
-    self.mView_root1.hidden = YES;
+    //请假表格，门卫，班主任自己，普通老师
+    self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:self.mInt_leaveID];
+    //代请，班主任，家长
+    self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:0 flagID:self.mInt_leaveID];
+    if (self.mInt_leaveID==3) {
+        self.mView_root0.hidden = YES;
+        self.mView_root1.hidden = NO;
+    }else{
+        self.mView_root0.hidden = NO;
+        self.mView_root1.hidden = YES;
+    }
+    [self.view addSubview:self.mView_root0];
+    [self.view addSubview:self.mView_root1];
+
     self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
     [self addChildViewController:self.queryVC];
     [self.queryVC didMoveToParentViewController:self];
     [self addChild:self.queryVC withChildToRemove:nil];
     self.queryVC.view.hidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
-
-    [self.view addSubview:self.mView_root1];
-
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
-    if (self.mInt_flag == 0) {
-        self.mView_root0.hidden = NO;
-        self.mView_root1.hidden = YES;
-        self.queryVC.view.hidden = YES;
-
-    }else if (self.mInt_flag == 1){
-        self.mView_root0.hidden = YES;
-        self.mView_root1.hidden = NO;
-        self.queryVC.view.hidden = YES;
-    }else if (self.mInt_flag == 2){
-        self.mView_root0.hidden = YES;
-        self.mView_root1.hidden = YES;
-        self.queryVC.view.hidden = NO;
-
-
-}
+    
+    //先判断身份，班主任有3个，其他为两个
+    if (self.mInt_leaveID == 1) {
+        if (self.mInt_flag == 0) {
+            self.mView_root0.hidden = NO;
+            self.mView_root1.hidden = YES;
+            self.queryVC.view.hidden = YES;
+        }else if (self.mInt_flag == 1){
+            self.mView_root0.hidden = YES;
+            self.mView_root1.hidden = NO;
+            self.queryVC.view.hidden = YES;
+        }else if (self.mInt_flag == 2){
+            self.mView_root0.hidden = YES;
+            self.mView_root1.hidden = YES;
+            self.queryVC.view.hidden = NO;
+        }
+    }else{
+        //判断是不是家长
+        if (self.mInt_leaveID == 3) {
+            if (self.mInt_flag == 0) {
+                self.mView_root0.hidden = YES;
+                self.mView_root1.hidden = NO;
+                self.queryVC.view.hidden = YES;
+            }else if (self.mInt_flag == 1){
+                self.mView_root0.hidden = YES;
+                self.mView_root1.hidden = YES;
+                self.queryVC.view.hidden = NO;
+            }
+        }else{
+            if (self.mInt_flag == 0) {
+                self.mView_root0.hidden = NO;
+                self.mView_root1.hidden = YES;
+                self.queryVC.view.hidden = YES;
+            }else if (self.mInt_flag == 1){
+                self.mView_root0.hidden = YES;
+                self.mView_root1.hidden = YES;
+                self.queryVC.view.hidden = NO;
+            }
+        }
+    }
 }
 -(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
 {

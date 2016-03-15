@@ -41,10 +41,10 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        [ParserJson_leave parserJsonGetLeaveSetting:data];
-        
+        LeaveSettingModel *model = [ParserJson_leave parserJsonGetLeaveSetting:data];
+        [dm getInstance].leaveModel = model;
         D("JSON--------GetLeaveSettingWithUnitId: %@,", result);
-       // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveSettingWithUnitId" object:array];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveSettingWithUnitId" object:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetLeaveSettingWithUnitId: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveSettingWithUnitId" object:nil];
@@ -346,6 +346,7 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonMyStdInfo:data];
+        [dm getInstance].mArr_leaveStudent = mArr;
         // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyStdInfo" object:array];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetMyStdInfo: %@", error);
@@ -369,6 +370,7 @@ static LeaveHttp *leaveHttp = nil;
             NSMutableDictionary *jsonDic = [result objectFromJSONString];
             NSString *data = [jsonDic objectForKey:@"Data"];
             NSMutableArray *mArr = [ParserJson_leave parserJsonMyAdminClass:data];
+            [dm getInstance].mArr_leaveClass = mArr;
             // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyAdminClass" object:array];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             D("Error---------GetMyAdminClass: %@", error);
