@@ -1059,6 +1059,8 @@
 		F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF17B1B2150CB003B6603 /* UnitTableViewCell.m */; };
 		F78EF17E1B2150CB003B6603 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */; };
 		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
+		F792C9E81C97980D00CE5FD0 /* QueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F792C9E61C97980D00CE5FD0 /* QueryViewController.m */; };
+		F792C9E91C97980D00CE5FD0 /* QueryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F792C9E71C97980D00CE5FD0 /* QueryViewController.xib */; };
 		F7935A5D1BD9CBB90021A048 /* StuInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */; };
 		F7935A601BDA0A6E0021A048 /* GenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A5F1BDA0A6E0021A048 /* GenInfo.m */; };
 		F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A621BDA0EE00021A048 /* StuHWModel.m */; };
@@ -1094,6 +1096,8 @@
 		F7B816521C9698B500EDFEAA /* leaveRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B816511C9698B500EDFEAA /* leaveRecordModel.m */; };
 		F7B816561C9698D700EDFEAA /* addDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B816541C9698D700EDFEAA /* addDateCell.m */; };
 		F7B816571C9698D700EDFEAA /* addDateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B816551C9698D700EDFEAA /* addDateCell.xib */; };
+		F7B816641C96AE7400EDFEAA /* QueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7B816621C96AE7400EDFEAA /* QueryCell.m */; };
+		F7B816651C96AE7400EDFEAA /* QueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7B816631C96AE7400EDFEAA /* QueryCell.xib */; };
 		F7C4D7131BD08CB3008B8924 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C4D7121BD08CB3008B8924 /* CoreData.framework */; };
 		F7C4D7201BD0E176008B8924 /* GradeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D71F1BD0E176008B8924 /* GradeModel.m */; };
 		F7C4D7231BD0E382008B8924 /* SubjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C4D7221BD0E382008B8924 /* SubjectModel.m */; };
@@ -2617,6 +2621,9 @@
 		F78EF17C1B2150CB003B6603 /* UnitTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UnitTableViewCell.xib; path = views/InternetApplications/personalSpace/UnitTableViewCell.xib; sourceTree = "<group>"; };
 		F78EF1801B215681003B6603 /* unitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unitModel.h; path = views/InternetApplications/personalSpace/unitModel.h; sourceTree = "<group>"; };
 		F78EF1811B215681003B6603 /* unitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = unitModel.m; path = views/InternetApplications/personalSpace/unitModel.m; sourceTree = "<group>"; };
+		F792C9E51C97980D00CE5FD0 /* QueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryViewController.h; sourceTree = "<group>"; };
+		F792C9E61C97980D00CE5FD0 /* QueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryViewController.m; sourceTree = "<group>"; };
+		F792C9E71C97980D00CE5FD0 /* QueryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueryViewController.xib; sourceTree = "<group>"; };
 		F7935A5B1BD9CBB90021A048 /* StuInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuInfoModel.h; sourceTree = "<group>"; };
 		F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuInfoModel.m; sourceTree = "<group>"; };
 		F7935A5E1BDA0A6D0021A048 /* GenInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenInfo.h; sourceTree = "<group>"; };
@@ -2739,6 +2746,9 @@
 		F7B816531C9698D700EDFEAA /* addDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = addDateCell.h; path = cell/addDateCell.h; sourceTree = "<group>"; };
 		F7B816541C9698D700EDFEAA /* addDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = addDateCell.m; path = cell/addDateCell.m; sourceTree = "<group>"; };
 		F7B816551C9698D700EDFEAA /* addDateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = addDateCell.xib; path = cell/addDateCell.xib; sourceTree = "<group>"; };
+		F7B816611C96AE7400EDFEAA /* QueryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryCell.h; sourceTree = "<group>"; };
+		F7B816621C96AE7400EDFEAA /* QueryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryCell.m; sourceTree = "<group>"; };
+		F7B816631C96AE7400EDFEAA /* QueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueryCell.xib; sourceTree = "<group>"; };
 		F7C4D7121BD08CB3008B8924 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		F7C4D71E1BD0E176008B8924 /* GradeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradeModel.h; sourceTree = "<group>"; };
 		F7C4D71F1BD0E176008B8924 /* GradeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradeModel.m; sourceTree = "<group>"; };
@@ -5122,6 +5132,12 @@
 				432ECD9A1C92AFAE0098184F /* LeaveViewCell.m */,
 				430716571C93A5D2008D3382 /* LeaveView.h */,
 				430716581C93A5D2008D3382 /* LeaveView.m */,
+				F792C9E51C97980D00CE5FD0 /* QueryViewController.h */,
+				F792C9E61C97980D00CE5FD0 /* QueryViewController.m */,
+				F792C9E71C97980D00CE5FD0 /* QueryViewController.xib */,
+				F7B816611C96AE7400EDFEAA /* QueryCell.h */,
+				F7B816621C96AE7400EDFEAA /* QueryCell.m */,
+				F7B816631C96AE7400EDFEAA /* QueryCell.xib */,
 			);
 			name = leave;
 			path = views/InternetApplications/leave;
@@ -5419,7 +5435,7 @@
 				TargetAttributes = {
 					A755E66C19F2492700BBDF3D = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 68R8QP4X33;
+						DevelopmentTeam = P2RQYN42FH;
 					};
 				};
 			};
@@ -5721,6 +5737,8 @@
 				F7E981081B79F6FE008B42E9 /* AddQuestionViewController.xib in Resources */,
 				A78D65D21A89B35500BE6326 /* WorkMsgListViewController.xib in Resources */,
 				F70B966D1C90F99B0001D696 /* noContent@3x.png in Resources */,
+				F7B816651C96AE7400EDFEAA /* QueryCell.xib in Resources */,
+				F792C9E91C97980D00CE5FD0 /* QueryViewController.xib in Resources */,
 				F7502A251AEE1E50004F822F /* rTri@2x.png in Resources */,
 				A7AD8C5419F644A2002E65FB /* tabbar_center2.png in Resources */,
 				F70B96931C90FC510001D696 /* DetailQueryCell.xib in Resources */,
@@ -6123,6 +6141,7 @@
 				F76B64441B1EA440008F6961 /* CharacterView.m in Sources */,
 				F788EA6B1BAA57120015965E /* AttentionCategoryVCViewController.m in Sources */,
 				A7700A941A26D3F6003B532A /* ShowView.m in Sources */,
+				F792C9E81C97980D00CE5FD0 /* QueryViewController.m in Sources */,
 				A7595E901A5FC2F30027848E /* MWCaptionView.m in Sources */,
 				F75757431BA16B7700AA4267 /* ChoicenessDetailViewController.m in Sources */,
 				A7595E9D1A5FC2F30027848E /* PSTCollectionViewCell.m in Sources */,
@@ -6520,6 +6539,7 @@
 				F79D84E31ABD4E1100897477 /* CheckingInViewController.mm in Sources */,
 				A7E93DE21B905EAE00CD7B1C /* GetPickedByIdModel.m in Sources */,
 				A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */,
+				F7B816641C96AE7400EDFEAA /* QueryCell.m in Sources */,
 				A773FC261A4B9869005F84C2 /* SelectionCell.m in Sources */,
 				A754D32F1A22CBE1000E356A /* SharePostingViewController.m in Sources */,
 				A79C310C1BCF44EC003DF7B2 /* TreeJob_level0_model.m in Sources */,
@@ -6661,7 +6681,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
+				PRODUCT_BUNDLE_IDENTIFIER = SYMJiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -6696,7 +6716,7 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
+				PRODUCT_BUNDLE_IDENTIFIER = SYMJiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

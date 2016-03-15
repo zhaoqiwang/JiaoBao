@@ -7,6 +7,7 @@
 //
 
 #import "LeaveViewController.h"
+#import "dm.h"
 
 @interface LeaveViewController ()
 
@@ -48,16 +49,23 @@
     self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
     [self.view addSubview:self.mScrollV_all];
-    
+
+
     //请假表格
     self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:0];
     self.mView_root0.hidden = NO;
     
     self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:0 flagID:2];
-    self.mView_root1.hidden = NO;
-    
-    [self.view addSubview:self.mView_root0];
+    self.mView_root1.hidden = YES;
+    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+    [self addChildViewController:self.queryVC];
+    [self.queryVC didMoveToParentViewController:self];
+    [self addChild:self.queryVC withChildToRemove:nil];
+    self.queryVC.view.hidden = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
     [self.view addSubview:self.mView_root1];
+
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
@@ -65,15 +73,37 @@
     if (self.mInt_flag == 0) {
         self.mView_root0.hidden = NO;
         self.mView_root1.hidden = YES;
+        self.queryVC.view.hidden = YES;
+
     }else if (self.mInt_flag == 1){
         self.mView_root0.hidden = YES;
         self.mView_root1.hidden = NO;
+        self.queryVC.view.hidden = YES;
     }else if (self.mInt_flag == 2){
         self.mView_root0.hidden = YES;
         self.mView_root1.hidden = YES;
-    }
-}
+        self.queryVC.view.hidden = NO;
 
+
+}
+}
+-(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+{
+    assert(childToAdd != nil);
+    
+    if (childToRemove != nil)
+    {
+        [childToRemove.view removeFromSuperview];
+    }
+    
+    // match the child size to its parent
+    CGRect frame = childToAdd.view.frame;
+    frame.origin.y = CGRectGetMaxY(self.mScrollV_all.frame);
+    frame.size.height = CGRectGetHeight(self.view.frame)-self.mScrollV_all.frame.origin.y-self.mScrollV_all.frame.size.height;
+    frame.size.width = CGRectGetWidth(self.view.frame);
+    childToAdd.view.frame = frame;
+    [self.view addSubview:childToAdd.view];
+}
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
