@@ -8,6 +8,8 @@
 
 #import "QueryViewController.h"
 #import "QueryCell.h"
+#import "dm.h"
+
 
 @interface QueryViewController ()
 
@@ -17,8 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.tableHeaderView = self.tableHeadView;
-    self.tableView.tableHeaderView.backgroundColor = [UIColor redColor];
+    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 80)];
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+//    btn.frame = CGRectMake(10, 10, 100, 30);
+//    view.backgroundColor = [UIColor redColor];
+//    [btn setTitle:@"123" forState:UIControlStateNormal];
+    [headView addSubview:self.tableHeadView];
+    self.tableView.tableHeaderView = headView;
 
 }
 
@@ -38,7 +45,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *indentifier = @"QueryCell";
+    static NSString *indentifier = @"QueryCell2";
     QueryCell *cell = (QueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     
     if (cell == nil) {
@@ -46,7 +53,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"QueryCell" owner:self options:nil];
         //这时myCell对象已经通过自定义xib文件生成了
         if ([nib count]>0) {
-            cell = (QueryCell *)[nib objectAtIndex:0];
+            cell = (QueryCell *)[nib objectAtIndex:1];
             //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
         }
         //添加图片点击事件
@@ -64,11 +71,7 @@
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     return 32;
 }
-- (IBAction)buttonSelectionAction:(id)sender {
-    UIButton *btn = sender;
-    btn.selected = !btn.selected;
 
-}
 
 /*
 // Override to support conditional editing of the table view.
@@ -130,4 +133,16 @@
 }
 */
 
+- (IBAction)selectionBtnAction:(id)sender {
+    UIButton *btn = sender;
+    if([btn isEqual:self.myBtn]){
+        self.myBtn.selected = YES;
+        self.stdBtn.selected = NO;
+    }else{
+        self.myBtn.selected = NO;
+        self.stdBtn.selected = YES;
+        
+    }
+    
+}
 @end

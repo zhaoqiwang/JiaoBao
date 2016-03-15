@@ -64,6 +64,8 @@
 //门卫登记离校返校时间 参数：请假时间记录ID - 登记人姓名 - 0离校，1返校
 -(void)UpdateGateInfo:(NSString*)tabid userName:(NSString*)userName
                  flag:(NSString*)flag;
+//获取指定班级的所有学生数据列表
+-(void)getClassStdInfoWithUID:(NSString*)UID;
 
 
 
