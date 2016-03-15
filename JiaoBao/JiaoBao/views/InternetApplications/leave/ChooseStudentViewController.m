@@ -18,12 +18,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.mArr_student = [NSMutableArray array];
-    //根据类型，判断是那种情况
-    if (self.mInt_flag == 0) {//家长
-        self.mArr_student = [dm getInstance].mArr_leaveStudent;
-    }else if (self.mInt_flag == 1){//班主任
-        
-    }else if (self.mInt_flag == 2){//请假理由
+    //获取指定班级的所有学生数据列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getClassStdInfoWithUID" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getClassStdInfoWithUID:) name:@"getClassStdInfoWithUID" object:nil];
+    //根据类型，判断是那种情况,先判断是请假理由还是选择学生
+    if (self.mInt_flag == 0) {//选择请假学生0
+        if (self.mInt_flag == 0) {//家长
+            self.mArr_student = [dm getInstance].mArr_leaveStudent;
+        }else if (self.mInt_flag == 1){//班主任
+            if ([dm getInstance].mArr_leaveClass.count>0) {
+                MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+                //获取当前班级中的学生
+                [[LeaveHttp getInstance] getClassStdInfoWithUID:model.TabID];
+                [MBProgressHUD showMessage:@"" toView:self.view];
+            }
+        }
+    }else{//选择请假理由
         //用学生信息model代替，只为传值
         for (int i=0; i<4; i++) {
             MyStdInfo *model = [[MyStdInfo alloc] init];
@@ -36,6 +46,7 @@
             }else if (i==3){
                 model.StdName = @"其他";
             }
+            [self.mArr_student addObject:model];
         }
     }
     
@@ -46,6 +57,12 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     self.mTableV_list.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+    
+}
+
+//获取指定班级的所有学生数据列表
+-(void)getClassStdInfoWithUID:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
     
 }
 
@@ -79,8 +96,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     MyStdInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(ChooseStudentViewCSelect:)]) {
-        [self.delegate ChooseStudentViewCSelect:model];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(ChooseStudentViewCSelect:flag:flagID:)]) {
+        [self.delegate ChooseStudentViewCSelect:model flag:self.mInt_flag flagID:self.mInt_flagID];
     }
     [utils popViewControllerAnimated:YES];
 }

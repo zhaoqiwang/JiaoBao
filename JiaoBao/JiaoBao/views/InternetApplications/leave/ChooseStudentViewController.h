@@ -12,6 +12,8 @@
 #import "utils.h"
 #import "define_constant.h"
 #import "MyStdInfo.h"
+#import "MyAdminClass.h"
+#import "LeaveHttp.h"
 
 @protocol ChooseStudentViewCDelegate;
 
@@ -22,12 +24,13 @@
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_list;//
 @property (nonatomic,strong) NSMutableArray *mArr_student;//学生列表
 @property (weak,nonatomic) id<ChooseStudentViewCDelegate> delegate;
-@property (nonatomic,assign) int mInt_flag;//家长请假0，班主任代请1，请假理由2
+@property (nonatomic,assign) int mInt_flag;//选择请假学生0，选择请假理由1
+@property (nonatomic,assign) int mInt_flagID;//家长请假0，班主任代请1，班主任、老师、门卫自己请假2
 
 @end
 
 @protocol ChooseStudentViewCDelegate <NSObject>
 //向cell中添加长按手势
-- (void) ChooseStudentViewCSelect:(id) student;
+- (void) ChooseStudentViewCSelect:(id) student flag:(int)flag flagID:(int)flagID;
 
 @end
