@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ModelDialog.h"
 
-@interface TeacherViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface TeacherViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ModelDialogDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 
 @end

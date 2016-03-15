@@ -21,7 +21,15 @@
     self.startDateTF.inputAccessoryView = self.toolBar;
     self.endDateTF.inputAccessoryView = self.toolBar;
 }
-
+-(void )setUp{
+    if(self.flag==0){
+        
+    }
+    else{
+        
+    }
+    
+}
 
 - (IBAction)cancelAction:(id)sender {
     [self _doClickCloseDialog];

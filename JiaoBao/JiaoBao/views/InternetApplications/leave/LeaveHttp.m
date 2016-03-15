@@ -397,7 +397,9 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------getClassStdInfoWithUID: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        StuInfoModel *model = [ParserJson_OnlineJob parserJsonStuInfo:data];
+        NSString *str000 = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonStuInfoArr:str000];
+        
 //        NSMutableArray *mArr = [ParserJson_leave parserJsonMyAdminClass:data];
 //        [dm getInstance].mArr_leaveClass = mArr;
         // [[NSNotificationCenter defaultCenter] postNotificationName:@"getClassStdInfoWithUID" object:array];

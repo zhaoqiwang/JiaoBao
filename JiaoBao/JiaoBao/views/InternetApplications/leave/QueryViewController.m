@@ -19,12 +19,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 80)];
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
-//    btn.frame = CGRectMake(10, 10, 100, 30);
-//    view.backgroundColor = [UIColor redColor];
-//    [btn setTitle:@"123" forState:UIControlStateNormal];
-    [headView addSubview:self.tableHeadView];
+
+    UIView *headView = [[UIView alloc]init ];
+    if(self.mInt_leaveID ==1){
+        headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.tableHeadView.frame));
+        [headView addSubview:self.tableHeadView];
+
+    }
+    else if (self.mInt_leaveID ==2){
+        headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
+        [headView addSubview:self.teaHeadView];
+
+    }
+    else if (self.mInt_leaveID == 3){
+        [headView addSubview:self.tableHeadView];
+
+    }
+    else{
+        [headView addSubview:self.tableHeadView];
+
+        
+    }
+
     self.tableView.tableHeaderView = headView;
 
 }

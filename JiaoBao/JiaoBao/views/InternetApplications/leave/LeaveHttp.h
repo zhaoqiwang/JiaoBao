@@ -25,7 +25,7 @@
 #import "CheckLeaveModel.h"
 
 
-@interface LeaveHttp : NSObject<ASIHTTPRequestDelegate>
+@interface LeaveHttp: NSObject<ASIHTTPRequestDelegate>
 +(LeaveHttp *)getInstance;
 
 //取指定单位的请假设置（包括当前登录用户的在该单位的审核权限，门卫权限

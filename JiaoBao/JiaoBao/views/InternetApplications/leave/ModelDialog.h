@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeaveNowModel.h"
 @protocol ModelDialogDelegate;
 @interface ModelDialog : UIView<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField* selectedTF;
@@ -19,7 +20,8 @@
 - (IBAction)cancelToolAction:(id)sender;
 - (IBAction)doneToolAction:(id)sender;
 @property (weak,nonatomic) id<ModelDialogDelegate> delegate;
-
+-(void )setUp;
+@property(nonatomic,assign)int flag;
 
 
 @end

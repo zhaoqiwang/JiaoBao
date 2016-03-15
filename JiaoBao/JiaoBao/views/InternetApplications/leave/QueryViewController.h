@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *stdBtn;
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
+@property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
 - (IBAction)selectionBtnAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIView *teaHeadView;
 
 @end

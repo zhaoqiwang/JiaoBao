@@ -59,30 +59,27 @@
     vwFullScreenView.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:0.5];
     vwFullScreenView.frame=self.view.window.frame;
     [self.view.window addSubview:vwFullScreenView];
-    
-//    UIView* vwDialog = [[UIView alloc] init];
-//    vwDialog.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
-//    vwDialog.backgroundColor=[UIColor whiteColor];
-//    vwDialog.layer.borderColor=[UIColor grayColor].CGColor;
-//    vwDialog.layer.borderWidth=0.6;
-//    vwDialog.layer.cornerRadius=6;
-//    vwDialog.center=vwFullScreenView.center;
-//    [vwFullScreenView addSubview:vwDialog];
+
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ModelDialog" owner:self options:nil];
     //这时myCell对象已经通过自定义xib文件生成了
     if ([nib count]>0) {
-        UIView *customView = [nib objectAtIndex:0];
+        ModelDialog *customView = (ModelDialog*)[nib objectAtIndex:0];
         customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
         customView.center=vwFullScreenView.center;
         customView.layer.borderWidth=0.6;
         customView.layer.cornerRadius=6;
         customView.layer.borderColor = [UIColor clearColor].CGColor;
+        customView.delegate = self;
+        [customView setUp];
         [vwFullScreenView addSubview:customView];
 
     }
 
 }
 
+- (void)startText:(NSString*)startText endText:(NSString*)endText{
+    addDateCell *cell = [self.tableview cellForRowAtIndexPath:self.tableview.indexPathForSelectedRow];
+}
 
 
 - (void)didReceiveMemoryWarning {

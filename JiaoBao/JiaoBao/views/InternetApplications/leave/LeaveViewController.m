@@ -57,6 +57,17 @@
     self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:self.mInt_leaveID];
     //代请，班主任，家长
     self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:0 flagID:self.mInt_leaveID];
+
+    [self.view addSubview:self.mView_root0];
+    [self.view addSubview:self.mView_root1];
+
+    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+    self.queryVC.mInt_leaveID = self.mInt_leaveID;
+    [self addChildViewController:self.queryVC];
+    [self.queryVC didMoveToParentViewController:self];
+    [self addChild:self.queryVC withChildToRemove:nil];
+    self.queryVC.view.hidden = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     if (self.mInt_leaveID==3) {
         self.mView_root0.hidden = YES;
         self.mView_root1.hidden = NO;
@@ -64,15 +75,6 @@
         self.mView_root0.hidden = NO;
         self.mView_root1.hidden = YES;
     }
-    [self.view addSubview:self.mView_root0];
-    [self.view addSubview:self.mView_root1];
-
-    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
-    [self addChildViewController:self.queryVC];
-    [self.queryVC didMoveToParentViewController:self];
-    [self addChild:self.queryVC withChildToRemove:nil];
-    self.queryVC.view.hidden = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
