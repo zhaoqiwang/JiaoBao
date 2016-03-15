@@ -10,7 +10,10 @@
 
 @interface QueryViewController : UITableViewController<UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *tableHeadView;
-- (IBAction)buttonSelectionAction:(id)sender ;
+@property (weak, nonatomic) IBOutlet UIButton *myBtn;
+@property (weak, nonatomic) IBOutlet UIButton *stdBtn;
+
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
+- (IBAction)selectionBtnAction:(id)sender;
 
 @end

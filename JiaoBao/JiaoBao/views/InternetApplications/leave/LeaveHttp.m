@@ -12,6 +12,8 @@
 #import "MyLeaveModel.h"
 #import "LeaveDetailModel.h"
 #import "ClassLeavesModel.h"
+#import "StuInfoModel.h"
+#import "ParserJson_OnlineJob.h"
 static LeaveHttp *leaveHttp = nil;
 
 @implementation LeaveHttp
@@ -381,6 +383,30 @@ static LeaveHttp *leaveHttp = nil;
     
 }
 
+//获取指定班级的所有学生数据列表
+-(void)getClassStdInfoWithUID:(NSString*)UID{
+    NSString *urlString = [NSString stringWithFormat:@"%@/basic/getClassStdInfo",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"UID":UID};
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        D("JSON--------getClassStdInfoWithUID: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        StuInfoModel *model = [ParserJson_OnlineJob parserJsonStuInfo:data];
+//        NSMutableArray *mArr = [ParserJson_leave parserJsonMyAdminClass:data];
+//        [dm getInstance].mArr_leaveClass = mArr;
+        // [[NSNotificationCenter defaultCenter] postNotificationName:@"getClassStdInfoWithUID" object:array];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------getClassStdInfoWithUID: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getClassStdInfoWithUID" object:nil];
+    }];
+    
+}
 
 
 

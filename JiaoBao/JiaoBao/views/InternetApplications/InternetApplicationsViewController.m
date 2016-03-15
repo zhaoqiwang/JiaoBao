@@ -601,7 +601,7 @@
     }
 }
 -(void)leaveAction{
-    LeaveViewController *detail = [[LeaveViewController alloc] init];
+    TeacherViewController *detail = [[TeacherViewController alloc] init];
     [utils pushViewController:detail animated:YES];
 }
 -(KxMenuItem *)addOnLineJob{

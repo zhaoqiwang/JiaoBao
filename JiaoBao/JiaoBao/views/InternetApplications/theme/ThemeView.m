@@ -163,8 +163,9 @@
 //    [[LeaveHttp getInstance]GetMyLeaves:model];
    // [[LeaveHttp getInstance]GetLeaveModel:@"4"];
     //[[LeaveHttp getInstance]GetMyStdInfo:[dm getInstance].jiaoBaoHao];
-    [[LeaveHttp getInstance]GetMyAdminClass:[dm getInstance].jiaoBaoHao];
-    return;
+    //[[LeaveHttp getInstance]GetMyAdminClass:[dm getInstance].jiaoBaoHao];
+    //[LeaveHttp getInstance]getClassStdInfoWithUID:<#(NSString *)#>
+    //return;
 //    [[KnowledgeHttp getInstance] GetAllCategory];
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
         CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];

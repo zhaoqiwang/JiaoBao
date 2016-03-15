@@ -47,11 +47,11 @@
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self _doClickShowModalDialog:nil];
+    [self _doClickShowModalDialog:indexPath];
     //[self _doClickCloseDialog:nil];
     
 }
--(void) _doClickShowModalDialog : (UIButton*) sender {
+-(void) _doClickShowModalDialog : (NSIndexPath*) indexPath {
     NSLog(@"_doClickShowModalDialog");
     
     UIView* vwFullScreenView = [[UIView alloc]init];
@@ -74,7 +74,6 @@
         UIView *customView = [nib objectAtIndex:0];
         customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
         customView.center=vwFullScreenView.center;
-
         customView.layer.borderWidth=0.6;
         customView.layer.cornerRadius=6;
         customView.layer.borderColor = [UIColor clearColor].CGColor;
