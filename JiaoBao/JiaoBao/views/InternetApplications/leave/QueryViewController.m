@@ -45,7 +45,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *indentifier = @"QueryCell2";
+    static NSString *indentifier = @"QueryCell";
     QueryCell *cell = (QueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
     
     if (cell == nil) {
@@ -53,7 +53,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"QueryCell" owner:self options:nil];
         //这时myCell对象已经通过自定义xib文件生成了
         if ([nib count]>0) {
-            cell = (QueryCell *)[nib objectAtIndex:1];
+            cell = (QueryCell *)[nib objectAtIndex:0];
             //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
         }
         //添加图片点击事件
