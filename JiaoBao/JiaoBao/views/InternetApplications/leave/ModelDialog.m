@@ -31,7 +31,7 @@
     else{
         NSDate *date = [NSDate date];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
+        [formatter setDateFormat:@"yyyy年MM月dd"];
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@ 8:30:00",[formatter stringFromDate:date]];
 self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[formatter stringFromDate:date]];
         
@@ -45,7 +45,7 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
 
 - (IBAction)doneAction:(id)sender {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd HH:mm:ss"];
     NSDate *nowDate = [NSDate date];
     NSArray *startArr = [self.startDateTF.text componentsSeparatedByString:@"间:"];
         NSArray *endArr = [self.endDateTF.text componentsSeparatedByString:@"间:"];
@@ -77,8 +77,8 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
         [MBProgressHUD showError:@"结束时间不能小于开始时间"];
         return;
     }
-    self.model.mStr_startTime = self.startDateTF.text;
-    self.model.mStr_endTime = self.endDateTF.text;
+    self.model.mStr_startTime = startStr;
+    self.model.mStr_endTime = endStr;
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveNowModel:flag:row:)]) {
     [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
     }
@@ -98,7 +98,7 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
 
 
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy年MM月dd HH:mm:ss"];
     [self.selectedTF resignFirstResponder];
     if([self.selectedTF isEqual:self.startDateTF]){
            self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];

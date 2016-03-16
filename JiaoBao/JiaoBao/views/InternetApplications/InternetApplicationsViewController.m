@@ -641,22 +641,23 @@
 
 //请假
 - (void) pushMenuItemLeave:(id)sender{
-
-    LeaveViewController *leave = [[LeaveViewController alloc] init];
-    if ([dm getInstance].uType==3) {
-        leave.mStr_navName = @"家长";
-        leave.mInt_leaveID = 3;
-    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
-        leave.mStr_navName = @"门卫";
-        leave.mInt_leaveID = 0;
-    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
-        leave.mStr_navName = @"班主任";
-        leave.mInt_leaveID = 1;
-    }else{
-        leave.mStr_navName = @"老师";
-        leave.mInt_leaveID = 2;
-    }
-    [utils pushViewController:leave animated:YES];
+    TeacherViewController *detail = [[TeacherViewController alloc] init];
+    [utils pushViewController:detail animated:YES];
+//    LeaveViewController *leave = [[LeaveViewController alloc] init];
+//    if ([dm getInstance].uType==3) {
+//        leave.mStr_navName = @"家长";
+//        leave.mInt_leaveID = 3;
+//    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+//        leave.mStr_navName = @"门卫";
+//        leave.mInt_leaveID = 0;
+//    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
+//        leave.mStr_navName = @"班主任";
+//        leave.mInt_leaveID = 1;
+//    }else{
+//        leave.mStr_navName = @"老师";
+//        leave.mInt_leaveID = 2;
+//    }
+//    [utils pushViewController:leave animated:YES];
 }
 
 //我的作业
