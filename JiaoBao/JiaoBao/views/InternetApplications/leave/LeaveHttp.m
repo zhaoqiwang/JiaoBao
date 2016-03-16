@@ -394,15 +394,15 @@ static LeaveHttp *leaveHttp = nil;
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
-        D("JSON--------getClassStdInfoWithUID: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        D("JSON--------getClassStdInfoWithUID: %@,", str000);
         NSMutableArray *mArr = [ParserJson_leave parserJsonStuInfoArr:str000];
         
 //        NSMutableArray *mArr = [ParserJson_leave parserJsonMyAdminClass:data];
 //        [dm getInstance].mArr_leaveClass = mArr;
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"getClassStdInfoWithUID" object:array];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"getClassStdInfoWithUID" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------getClassStdInfoWithUID: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getClassStdInfoWithUID" object:nil];

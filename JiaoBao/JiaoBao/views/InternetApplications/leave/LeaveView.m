@@ -69,10 +69,34 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *LeaveNow_indentifier = @"LeaveNowTableViewCell";
-    
+    static NSString *addDateCell_indentifier = @"addDateCell";
     LeaveNowModel *model = [self.mArr_leave objectAtIndex:indexPath.row];
     if (model.mInt_flag==3) {
-        
+        addDateCell *cell = (addDateCell *)[tableView dequeueReusableCellWithIdentifier:addDateCell_indentifier];
+        if (cell == nil) {
+            cell = [[addDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addDateCell_indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"addDateCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (addDateCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"addDateCell" bundle:[NSBundle mainBundle]];
+            [self.mTableV_leave registerNib:n forCellReuseIdentifier:addDateCell_indentifier];
+        }
+        //删除按钮
+        cell.mBtn_delete.frame = CGRectMake(14, (80-cell.mBtn_delete.frame.size.height)/2, cell.mBtn_delete.frame.size.width, cell.mBtn_delete.frame.size.height);
+        //时间显示
+        cell.mLab_start.frame = CGRectMake(cell.mBtn_delete.frame.origin.x+cell.mBtn_delete.frame.size.width+10, 10, cell.mLab_start.frame.size.width, cell.mLab_start.frame.size.height);
+        cell.mLab_end.frame = cell.mLab_start.frame;
+        cell.mLab_startNow.frame = CGRectMake(cell.mLab_start.frame.origin.x+cell.mLab_start.frame.size.width+10, cell.mLab_start.frame.origin.y, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
+        cell.mLab_endNow.frame = cell.mLab_startNow.frame;
+        cell.mLab_startNow.text = model.mStr_startTime;
+        cell.mLab_endNow.text = model.mStr_endTime;
+        return cell;
     }else{
         LeaveNowTableViewCell *cell = (LeaveNowTableViewCell *)[tableView dequeueReusableCellWithIdentifier:LeaveNow_indentifier];
         if (cell == nil) {
@@ -156,7 +180,7 @@
     if (model.mInt_flag == 0||model.mInt_flag==1) {//选择学生,理由选择
         return 44;
     }else if (model.mInt_flag == 3){//时间段显示
-        return 70;
+        return 80;
     }else if (model.mInt_flag == 5){//提交
         return 50;
     }
@@ -196,14 +220,7 @@
         vwFullScreenView.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:0.5];
         vwFullScreenView.frame=self.window.frame;
         [self.window addSubview:vwFullScreenView];
-        //    UIView* vwDialog = [[UIView alloc] init];
-        //    vwDialog.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
-        //    vwDialog.backgroundColor=[UIColor whiteColor];
-        //    vwDialog.layer.borderColor=[UIColor grayColor].CGColor;
-        //    vwDialog.layer.borderWidth=0.6;
-        //    vwDialog.layer.cornerRadius=6;
-        //    vwDialog.center=vwFullScreenView.center;
-        //    [vwFullScreenView addSubview:vwDialog];
+
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ModelDialog" owner:self options:nil];
         //这时myCell对象已经通过自定义xib文件生成了
         if ([nib count]>0) {
@@ -240,7 +257,9 @@
             LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
             model.mStr_value = self.mModel_student.StdName;
         }else if (self.mInt_flagID == 1){//班主任
-            
+            self.mModel_studentInfo = student;
+            LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
+            model.mStr_value = self.mModel_studentInfo.StdName;
         }
     }
     [self.mTableV_leave reloadData];

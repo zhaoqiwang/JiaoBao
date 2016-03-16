@@ -12,6 +12,8 @@
 #import "dm.h"
 #import "ChooseStudentViewController.h"
 #import "ModelDialog.h"
+#import "StuInfoModel.h"
+#import "addDateCell.h"
 
 @interface LeaveView : UIView<UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,ModelDialogDelegate>
 
@@ -20,6 +22,7 @@
 @property (nonatomic,assign) NSInteger mInt_flagID;//区分身份，门卫0，班主任1，普通老师2，家长3
 @property (nonatomic,strong) NSMutableArray *mArr_leave;//
 @property (nonatomic,strong) MyStdInfo *mModel_student;//家长身份时，选择学生的信息
+@property (nonatomic,strong) StuInfoModel *mModel_studentInfo;//班主任身份时，选择学生的信息
 
 - (id)initWithFrame1:(CGRect)frame flag:(int)flag flagID:(int)flagID;
 

@@ -23,9 +23,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getClassStdInfoWithUID:) name:@"getClassStdInfoWithUID" object:nil];
     //根据类型，判断是那种情况,先判断是请假理由还是选择学生
     if (self.mInt_flag == 0) {//选择请假学生0
-        if (self.mInt_flag == 0) {//家长
+        if (self.mInt_flagID == 0) {//家长
             self.mArr_student = [dm getInstance].mArr_leaveStudent;
-        }else if (self.mInt_flag == 1){//班主任
+        }else if (self.mInt_flagID == 1){//班主任
             if ([dm getInstance].mArr_leaveClass.count>0) {
                 MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
                 //获取当前班级中的学生
@@ -63,7 +63,9 @@
 //获取指定班级的所有学生数据列表
 -(void)getClassStdInfoWithUID:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    
+    NSMutableArray *array = noti.object;
+    self.mArr_student = array;
+    [self.mTableV_list reloadData];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -71,14 +73,20 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MyStdInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
     static NSString *simpleIdentify = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleIdentify];
     if(cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleIdentify];
     }
-    cell.textLabel.text = model.StdName;
+    if (self.mInt_flagID == 0) {//家长
+        MyStdInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
+        cell.textLabel.text = model.StdName;
+    }else if (self.mInt_flagID == 1){//班主任
+        StuInfoModel *model = [self.mArr_student objectAtIndex:indexPath.row];
+        cell.textLabel.text = model.StdName;
+    }
+    
     return cell;
 }
 
@@ -95,7 +103,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MyStdInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
+    id model = [self.mArr_student objectAtIndex:indexPath.row];
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(ChooseStudentViewCSelect:flag:flagID:)]) {
         [self.delegate ChooseStudentViewCSelect:model flag:self.mInt_flag flagID:self.mInt_flagID];
     }

@@ -14,6 +14,7 @@
 #import "MyStdInfo.h"
 #import "MyAdminClass.h"
 #import "LeaveHttp.h"
+#import "StuInfoModel.h"
 
 @protocol ChooseStudentViewCDelegate;
 
