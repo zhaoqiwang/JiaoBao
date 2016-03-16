@@ -17,6 +17,7 @@
 #import "TeacherViewController.h"
 #import "LeaveViewController.h"
 #import "LeaveHttp.h"
+#import "CheckLeaveViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -188,6 +189,7 @@
     NSString *str = noti.object;
     if ([str intValue] ==0) {//成功
         [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+        [dm getInstance].leaveModel = nil;
         if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
             [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         }
@@ -590,6 +592,13 @@
                                            target:self
                                            action:@selector(pushMenuItemLeave:)]];
         }
+        //审核
+        if ([dm getInstance].leaveModel.ApproveListStd.A||[dm getInstance].leaveModel.ApproveListStd.B||[dm getInstance].leaveModel.ApproveListStd.C||[dm getInstance].leaveModel.ApproveListStd.D||[dm getInstance].leaveModel.ApproveListStd.E||[dm getInstance].leaveModel.ApproveListTea.A||[dm getInstance].leaveModel.ApproveListTea.B||[dm getInstance].leaveModel.ApproveListTea.C||[dm getInstance].leaveModel.ApproveListTea.D||[dm getInstance].leaveModel.ApproveListTea.E) {
+            [array addObject:[KxMenuItem menuItem:@"审核"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemCheckLeave:)]];
+        }
         
         NSArray *menuItems = array;
         D("iudhfgjhjh-==========%d",[dm getInstance].uType);
@@ -641,23 +650,30 @@
 
 //请假
 - (void) pushMenuItemLeave:(id)sender{
-    TeacherViewController *detail = [[TeacherViewController alloc] init];
-    [utils pushViewController:detail animated:YES];
-//    LeaveViewController *leave = [[LeaveViewController alloc] init];
-//    if ([dm getInstance].uType==3) {
-//        leave.mStr_navName = @"家长";
-//        leave.mInt_leaveID = 3;
-//    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
-//        leave.mStr_navName = @"门卫";
-//        leave.mInt_leaveID = 0;
-//    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
-//        leave.mStr_navName = @"班主任";
-//        leave.mInt_leaveID = 1;
-//    }else{
-//        leave.mStr_navName = @"老师";
-//        leave.mInt_leaveID = 2;
-//    }
-//    [utils pushViewController:leave animated:YES];
+//    TeacherViewController *detail = [[TeacherViewController alloc] init];
+//    [utils pushViewController:detail animated:YES];
+    LeaveViewController *leave = [[LeaveViewController alloc] init];
+    if ([dm getInstance].uType==3) {
+        leave.mStr_navName = @"家长";
+        leave.mInt_leaveID = 3;
+    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+        leave.mStr_navName = @"门卫";
+        leave.mInt_leaveID = 0;
+    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
+        leave.mStr_navName = @"班主任";
+        leave.mInt_leaveID = 1;
+    }else{
+        leave.mStr_navName = @"老师";
+        leave.mInt_leaveID = 2;
+    }
+    [utils pushViewController:leave animated:YES];
+}
+
+//审核
+-(void) pushMenuItemCheckLeave:(id)sender{
+    CheckLeaveViewController *checkLeave = [[CheckLeaveViewController alloc] init];
+    checkLeave.mStr_navName = @"审核";
+    [utils pushViewController:checkLeave animated:YES];
 }
 
 //我的作业

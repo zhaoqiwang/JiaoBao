@@ -17,6 +17,12 @@
     // Initialization code
 }
 
+-(IBAction)deleteBtn:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(addDateCellDeleteBtn:)]) {
+        [self.delegate addDateCellDeleteBtn:self];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
