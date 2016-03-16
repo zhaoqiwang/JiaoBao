@@ -77,6 +77,7 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
         [MBProgressHUD showError:@"结束时间不能小于开始时间"];
         return;
     }
+    self.model.mInt_flag = 3;
     self.model.mStr_startTime = startStr;
     self.model.mStr_endTime = endStr;
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveNowModel:flag:row:)]) {
