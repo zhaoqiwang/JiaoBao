@@ -21,11 +21,15 @@
 - (IBAction)doneToolAction:(id)sender;
 @property (weak,nonatomic) id<ModelDialogDelegate> delegate;
 -(void )setUp;
-@property(nonatomic,assign)int flag;
+@property(nonatomic,assign)int flag;//0是修改 1是添加
+@property(nonatomic,assign)NSUInteger row;
+@property(nonatomic,strong)LeaveNowModel *model;
+
 
 
 @end
 @protocol ModelDialogDelegate <NSObject>
 - (void)startText:(NSString*)startText endText:(NSString*)endText;
+-(void)LeaveNowModel:(LeaveNowModel*)model flag:(int)flag row:(NSInteger)row;
 
 @end

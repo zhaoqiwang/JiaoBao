@@ -100,12 +100,12 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Documents/JiaoBao/JiaoBao/JiaoBao/views/InternetApplications/leave/LeaveHttp.m"
-                  timestampString = "479722717.323051"
+                  timestampString = "479786346.7943"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "406"
                   endingLineNumber = "406"
-                  offsetFromSymbolStart = "484">
+                  offsetFromSymbolStart = "415">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -115,12 +115,12 @@
                   moduleName = "JiaoBao"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/songyanming/Documents/JiaoBao/JiaoBao/JiaoBao/views/InternetApplications/leave/LeaveHttp.m"
-                  timestampString = "479722717.323339"
+                  timestampString = "479786346.79485"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "406"
                   endingLineNumber = "406"
-                  offsetFromSymbolStart = "72">
+                  offsetFromSymbolStart = "74">
                </Location>
             </Locations>
          </BreakpointContent>

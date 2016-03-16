@@ -641,6 +641,7 @@
 
 //请假
 - (void) pushMenuItemLeave:(id)sender{
+
     LeaveViewController *leave = [[LeaveViewController alloc] init];
     if ([dm getInstance].uType==3) {
         leave.mStr_navName = @"家长";
