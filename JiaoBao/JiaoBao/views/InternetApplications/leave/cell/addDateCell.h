@@ -15,5 +15,6 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_end;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_startNow;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_endNow;//
+- (IBAction)deleteCellAction:(id)sender;
 
 @end
