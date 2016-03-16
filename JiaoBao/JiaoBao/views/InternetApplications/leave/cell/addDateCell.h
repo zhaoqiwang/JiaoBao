@@ -10,4 +10,10 @@
 
 @interface addDateCell : UITableViewCell
 
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_delete;//删除
+@property (nonatomic,strong) IBOutlet UILabel *mLab_start;//
+@property (nonatomic,strong) IBOutlet UILabel *mLab_end;//
+@property (nonatomic,strong) IBOutlet UILabel *mLab_startNow;//
+@property (nonatomic,strong) IBOutlet UILabel *mLab_endNow;//
+
 @end
