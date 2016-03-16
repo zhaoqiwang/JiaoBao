@@ -64,14 +64,14 @@
     //这时myCell对象已经通过自定义xib文件生成了
     if ([nib count]>0) {
         ModelDialog *customView = (ModelDialog*)[nib objectAtIndex:0];
-        customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
-        customView.center=vwFullScreenView.center;
+        customView.frame=CGRectMake(10, 190, [dm getInstance].width-20, 135);
+        //customView.center=vwFullScreenView.center;
         customView.layer.borderWidth=0.6;
         customView.layer.cornerRadius=6;
         customView.layer.borderColor = [UIColor clearColor].CGColor;
         customView.delegate = self;
         customView.row = indexPath.row;
-        customView.flag = 0;
+        customView.flag = 1;
         [customView setUp];
         [vwFullScreenView addSubview:customView];
 
