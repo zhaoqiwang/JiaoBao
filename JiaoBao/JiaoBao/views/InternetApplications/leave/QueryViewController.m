@@ -8,6 +8,7 @@
 
 #import "QueryViewController.h"
 #import "QueryCell.h"
+#import "CustomQueryCell.h"
 #import "dm.h"
 
 
@@ -19,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.cellFlag = YES;
     UIView *headView = [[UIView alloc]init ];
     if(self.mInt_leaveID ==1){
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.tableHeadView.frame));
@@ -32,12 +33,13 @@
 
     }
     else if (self.mInt_leaveID == 3){
-        [headView addSubview:self.tableHeadView];
+        headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.ParentsHeadView.frame));
+        [headView addSubview:self.ParentsHeadView];
 
     }
     else{
-        [headView addSubview:self.tableHeadView];
-
+        headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
+        [headView addSubview:self.teaHeadView];
         
     }
 
@@ -61,28 +63,60 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *indentifier = @"QueryCell";
-    QueryCell *cell = (QueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-    
-    if (cell == nil) {
-        cell = [[QueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"QueryCell" owner:self options:nil];
-        //这时myCell对象已经通过自定义xib文件生成了
-        if ([nib count]>0) {
-            cell = (QueryCell *)[nib objectAtIndex:0];
-            //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+    if(self.cellFlag == NO){
+        static NSString *indentifier = @"QueryCell";
+        QueryCell *cell = (QueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+        
+        if (cell == nil) {
+            cell = [[QueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"QueryCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (QueryCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"QueryCell" bundle:[NSBundle mainBundle]];
+            [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
         }
-        //添加图片点击事件
-        //若是需要重用，需要写上以下两句代码
-        UINib * n= [UINib nibWithNibName:@"QueryCell" bundle:[NSBundle mainBundle]];
-        [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
+        return cell;
+        
     }
+    else{
+        static NSString *indentifier = @"CustomQueryCell";
+        CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+        
+        if (cell == nil) {
+            cell = [[CustomQueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomQueryCell" owner:self options:nil];
+            //这时myCell对象已经通过自定义xib文件生成了
+            if ([nib count]>0) {
+                cell = (CustomQueryCell *)[nib objectAtIndex:0];
+                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+            }
+            //添加图片点击事件
+            //若是需要重用，需要写上以下两句代码
+            UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
+            [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
+        }
+        return cell;
+        
+    }
+
     
     
-    return cell;
+    return nil;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    return self.sectionView;
+    if(self.cellFlag == YES){
+        return self.stuSection;
+    }
+    else{
+        return self.sectionView;
+        
+    }
+    return nil;
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     return 32;
@@ -154,9 +188,13 @@
     if([btn isEqual:self.myBtn]){
         self.myBtn.selected = YES;
         self.stdBtn.selected = NO;
+        self.cellFlag = YES;
+        [self.tableView reloadData];
     }else{
         self.myBtn.selected = NO;
         self.stdBtn.selected = YES;
+        self.cellFlag = NO;
+        [self.tableView reloadData];
         
     }
     

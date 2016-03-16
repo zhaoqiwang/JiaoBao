@@ -17,5 +17,8 @@
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
 - (IBAction)selectionBtnAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *teaHeadView;
+@property (strong, nonatomic) IBOutlet UIView *ParentsHeadView;
+@property(nonatomic,assign)BOOL cellFlag;
+@property (strong, nonatomic) IBOutlet UIView *stuSection;
 
 @end

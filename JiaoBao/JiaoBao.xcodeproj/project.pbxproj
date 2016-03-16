@@ -1063,6 +1063,8 @@
 		F78EF1821B215681003B6603 /* unitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F78EF1811B215681003B6603 /* unitModel.m */; };
 		F792C9E81C97980D00CE5FD0 /* QueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F792C9E61C97980D00CE5FD0 /* QueryViewController.m */; };
 		F792C9E91C97980D00CE5FD0 /* QueryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F792C9E71C97980D00CE5FD0 /* QueryViewController.xib */; };
+		F792C9ED1C98FCF100CE5FD0 /* CustomQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F792C9EB1C98FCF100CE5FD0 /* CustomQueryCell.m */; };
+		F792C9EE1C98FCF100CE5FD0 /* CustomQueryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F792C9EC1C98FCF100CE5FD0 /* CustomQueryCell.xib */; };
 		F7935A5D1BD9CBB90021A048 /* StuInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */; };
 		F7935A601BDA0A6E0021A048 /* GenInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A5F1BDA0A6E0021A048 /* GenInfo.m */; };
 		F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A621BDA0EE00021A048 /* StuHWModel.m */; };
@@ -2629,6 +2631,9 @@
 		F792C9E51C97980D00CE5FD0 /* QueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryViewController.h; sourceTree = "<group>"; };
 		F792C9E61C97980D00CE5FD0 /* QueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryViewController.m; sourceTree = "<group>"; };
 		F792C9E71C97980D00CE5FD0 /* QueryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueryViewController.xib; sourceTree = "<group>"; };
+		F792C9EA1C98FCF100CE5FD0 /* CustomQueryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomQueryCell.h; path = cell/CustomQueryCell.h; sourceTree = "<group>"; };
+		F792C9EB1C98FCF100CE5FD0 /* CustomQueryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomQueryCell.m; path = cell/CustomQueryCell.m; sourceTree = "<group>"; };
+		F792C9EC1C98FCF100CE5FD0 /* CustomQueryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomQueryCell.xib; path = cell/CustomQueryCell.xib; sourceTree = "<group>"; };
 		F7935A5B1BD9CBB90021A048 /* StuInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuInfoModel.h; sourceTree = "<group>"; };
 		F7935A5C1BD9CBB90021A048 /* StuInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuInfoModel.m; sourceTree = "<group>"; };
 		F7935A5E1BDA0A6D0021A048 /* GenInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenInfo.h; sourceTree = "<group>"; };
@@ -2877,6 +2882,9 @@
 				4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */,
 				4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */,
 				430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */,
+				F792C9EA1C98FCF100CE5FD0 /* CustomQueryCell.h */,
+				F792C9EB1C98FCF100CE5FD0 /* CustomQueryCell.m */,
+				F792C9EC1C98FCF100CE5FD0 /* CustomQueryCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -5715,6 +5723,7 @@
 				F7502A121AEE1E50004F822F /* HomeClass_1@2x.png in Resources */,
 				A7724D5A1B5DF94C0095850A /* VideoShot0@2x.png in Resources */,
 				F7F460B61AE891C70069820F /* triangle.png in Resources */,
+				F792C9EE1C98FCF100CE5FD0 /* CustomQueryCell.xib in Resources */,
 				F79D84DB1ABD4DC000897477 /* sectionView.xib in Resources */,
 				F7502A1E1AEE1E50004F822F /* HomeClass_Click_3@2x.png in Resources */,
 				F7B2719C1B6F154C00DA3FE4 /* 删除键@2x.png in Resources */,
@@ -6261,6 +6270,7 @@
 				A7AD8C3919F63D58002E65FB /* StudentFileViewController.m in Sources */,
 				F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */,
 				A7595EA41A5FC2F30027848E /* PSTGridLayoutInfo.m in Sources */,
+				F792C9ED1C98FCF100CE5FD0 /* CustomQueryCell.m in Sources */,
 				A79AD78A1BAA5FE800F2CE77 /* MyAttQViewController.m in Sources */,
 				A78D65D11A89B35500BE6326 /* WorkMsgListViewController.m in Sources */,
 				A755E72B19F27C8E00BBDF3D /* NSString+Base64.m in Sources */,

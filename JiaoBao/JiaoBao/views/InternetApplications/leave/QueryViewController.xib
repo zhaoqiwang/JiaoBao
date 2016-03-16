@@ -7,9 +7,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueryViewController">
             <connections>
+                <outlet property="ParentsHeadView" destination="TWA-eg-yod" id="NIE-sd-cnO"/>
                 <outlet property="myBtn" destination="i1R-2o-OPz" id="Ltx-6r-xIe"/>
                 <outlet property="sectionView" destination="B9m-8A-A4C" id="u7d-aH-qqg"/>
                 <outlet property="stdBtn" destination="c2H-pw-WGo" id="P0q-fm-BS9"/>
+                <outlet property="stuSection" destination="7ao-sw-VkT" id="L2a-Bl-iSJ"/>
                 <outlet property="tableHeadView" destination="Gfc-3R-7tJ" id="lFs-vp-9Qx"/>
                 <outlet property="teaHeadView" destination="jKw-78-cbT" id="DUW-7G-Lf7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -64,7 +66,7 @@
                         <action selector="selectionBtnAction:" destination="-1" eventType="touchUpInside" id="j0m-Gv-GZ8"/>
                     </connections>
                 </button>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1R-2o-OPz">
+                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1R-2o-OPz">
                     <rect key="frame" x="14" y="3" width="54" height="38"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
@@ -131,7 +133,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="183.5" y="-455"/>
@@ -147,7 +149,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="理由" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQB-CW-cK4">
-                    <rect key="frame" x="170" y="7" width="34" height="21"/>
+                    <rect key="frame" x="149" y="5" width="34" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -160,16 +162,16 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="状态" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3N-Fr-ufs">
-                    <rect key="frame" x="292" y="7" width="34" height="21"/>
+                    <rect key="frame" x="259" y="5" width="34" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="183.5" y="-229"/>
+            <point key="canvasLocation" x="194.5" y="-245"/>
         </view>
         <view contentMode="scaleToFill" id="TWA-eg-yod">
             <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
@@ -226,7 +228,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="183.5" y="-137"/>
+            <point key="canvasLocation" x="194.5" y="-140"/>
         </view>
         <view contentMode="scaleToFill" id="jKw-78-cbT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
