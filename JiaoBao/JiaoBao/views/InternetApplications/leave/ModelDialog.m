@@ -79,7 +79,9 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
     }
     self.model.mStr_startTime = self.startDateTF.text;
     self.model.mStr_endTime = self.endDateTF.text;
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveNowModel:flag:row:)]) {
     [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
+    }
     [[self.window viewWithTag:9999]removeFromSuperview];
 
 }
