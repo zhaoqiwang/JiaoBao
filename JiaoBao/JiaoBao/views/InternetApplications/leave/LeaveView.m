@@ -91,9 +91,9 @@
         cell.mBtn_delete.frame = CGRectMake(14, (80-cell.mBtn_delete.frame.size.height)/2, cell.mBtn_delete.frame.size.width, cell.mBtn_delete.frame.size.height);
         //时间显示
         cell.mLab_start.frame = CGRectMake(cell.mBtn_delete.frame.origin.x+cell.mBtn_delete.frame.size.width+10, 10, cell.mLab_start.frame.size.width, cell.mLab_start.frame.size.height);
-        cell.mLab_end.frame = cell.mLab_start.frame;
+        cell.mLab_end.frame = CGRectMake(cell.mLab_start.frame.origin.x, cell.mLab_start.frame.origin.y+40, cell.mLab_start.frame.size.width, cell.mLab_start.frame.size.height);
         cell.mLab_startNow.frame = CGRectMake(cell.mLab_start.frame.origin.x+cell.mLab_start.frame.size.width+10, cell.mLab_start.frame.origin.y, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
-        cell.mLab_endNow.frame = cell.mLab_startNow.frame;
+        cell.mLab_endNow.frame = CGRectMake(cell.mLab_startNow.frame.origin.x, cell.mLab_startNow.frame.origin.y+40, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
         cell.mLab_startNow.text = model.mStr_startTime;
         cell.mLab_endNow.text = model.mStr_endTime;
         return cell;
@@ -213,30 +213,60 @@
     }else if (model.mInt_flag == 2){//理由填写
         
     }else if (model.mInt_flag == 3){//时间段显示
-        
+        [self addDialog:0 row:(int)indexPath.row Model:model];
     }else if (model.mInt_flag == 4){//时间段添加
-        UIView* vwFullScreenView = [[UIView alloc]init];
-        vwFullScreenView.tag=9999;
-        vwFullScreenView.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:0.5];
-        vwFullScreenView.frame=self.window.frame;
-        [self.window addSubview:vwFullScreenView];
-
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ModelDialog" owner:self options:nil];
-        //这时myCell对象已经通过自定义xib文件生成了
-        if ([nib count]>0) {
-            ModelDialog *customView = [nib objectAtIndex:0];
-            customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
-            customView.center=vwFullScreenView.center;
-            customView.layer.borderWidth=0.6;
-            customView.layer.cornerRadius=6;
-            customView.layer.borderColor = [UIColor clearColor].CGColor;
-            customView.delegate = self;
-            [vwFullScreenView addSubview:customView];
-            
+        //先判断当前有几个时间，不能大于5个
+        int a=0;
+        for (LeaveNowModel *tempModel in self.mArr_leave) {
+            if (tempModel.mInt_flag==3) {
+                a++;
+            }
+        }
+        if (a>=5) {
+            [MBProgressHUD showError:@"最多可以有5个时间段" toView:self];
+        }else{
+            LeaveNowModel *model1 = [[LeaveNowModel alloc] init];
+            [self addDialog:1 row:0 Model:model1];
         }
     }else if (model.mInt_flag == 5){//提交
         
     }
+}
+
+-(void)addDialog:(int)flag row:(int)row Model:(LeaveNowModel *)model{
+    UIView* vwFullScreenView = [[UIView alloc]init];
+    vwFullScreenView.tag=9999;
+    vwFullScreenView.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:0.5];
+    vwFullScreenView.frame=self.window.frame;
+    [self.window addSubview:vwFullScreenView];
+    
+    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ModelDialog" owner:self options:nil];
+    //这时myCell对象已经通过自定义xib文件生成了
+    if ([nib count]>0) {
+        ModelDialog *customView = [nib objectAtIndex:0];
+        customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
+        customView.center=vwFullScreenView.center;
+        customView.layer.borderWidth=0.6;
+        customView.layer.cornerRadius=6;
+        customView.layer.borderColor = [UIColor clearColor].CGColor;
+        customView.delegate = self;
+        customView.flag = flag;//0是修改 1是添加
+        customView.row = row;
+        customView.model = model;
+        
+        [vwFullScreenView addSubview:customView];
+    }
+}
+
+//时间dialog点击确定后的回调
+-(void)LeaveNowModel:(LeaveNowModel *)model flag:(int)flag row:(NSInteger)row{
+    //判断是新增的1，还是修改的0
+    if (flag == 0) {
+        [self.mArr_leave replaceObjectAtIndex:row withObject:model];
+    }else{
+        [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
+    }
+    [self.mTableV_leave reloadData];
 }
 
 //选择人员后的回调
