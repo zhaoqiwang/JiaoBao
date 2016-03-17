@@ -87,6 +87,8 @@
             UINib * n= [UINib nibWithNibName:@"addDateCell" bundle:[NSBundle mainBundle]];
             [self.mTableV_leave registerNib:n forCellReuseIdentifier:addDateCell_indentifier];
         }
+        cell.tag = indexPath.row;
+        cell.delegate = self;
         //删除按钮
         cell.mBtn_delete.frame = CGRectMake(14, (80-cell.mBtn_delete.frame.size.height)/2, cell.mBtn_delete.frame.size.width, cell.mBtn_delete.frame.size.height);
         //时间显示
@@ -124,9 +126,17 @@
             cell.mLab_name.frame = CGRectMake(14, (44-cell.mLab_name.frame.size.height)/2, cell.mLab_name.frame.size.width, cell.mLab_name.frame.size.height);
             cell.mLab_name.text = model.mStr_name;
             //内容显示
-            CGSize valueSize = [model.mStr_value sizeWithFont:[UIFont systemFontOfSize:14]];
+            if (model.mStr_value.length>0) {
+                cell.mLab_value.text = model.mStr_value;
+            }else{
+                if (model.mInt_flag==0) {
+                    cell.mLab_value.text = @"请选择学生";
+                }else{
+                    cell.mLab_value.text = @"请选择理由";
+                }
+            }
+            CGSize valueSize = [cell.mLab_value.text sizeWithFont:[UIFont systemFontOfSize:14]];
             cell.mLab_value.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, valueSize.width, cell.mLab_name.frame.size.height);
-            cell.mLab_value.text = model.mStr_value;
         }else if (model.mInt_flag == 1){//理由选择
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = NO;
@@ -229,10 +239,95 @@
             [self addDialog:1 row:0 Model:model1];
         }
     }else if (model.mInt_flag == 5){//提交
-        
+        [self addLeave];
     }
 }
 
+//提交按钮事件
+-(void)addLeave{
+    //先判断是否是家长或者班主任代请
+    if (self.mInt_flag==0||self.mInt_flag==2) {
+        if (self.mInt_select0==0) {//没有选择人员
+            [MBProgressHUD showError:@"请选择请假人" toView:self];
+            return;
+        }
+    }
+    //请假理由
+    if (self.mInt_select1==0) {
+        [MBProgressHUD showError:@"请选择请假理由" toView:self];
+        return;
+    }
+    //判断有没有添加时间段
+    //循环计算添加的时间段
+    NSMutableArray *tempArr = [NSMutableArray array];
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==3) {
+            [tempArr addObject:tempModel];
+        }
+    }
+    if (tempArr.count==0) {
+        [MBProgressHUD showError:@"请添加请假时间" toView:self];
+    }
+    
+    NewLeaveModel *model = [[NewLeaveModel alloc] init];
+    model.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    //判断是否是家长或者班主任代请
+    if (self.mInt_flag==0) {//班主任代请0
+        model.manId = self.mModel_studentInfo.StudentID;
+        model.manName = self.mModel_studentInfo.StdName;
+        model.gradeStr = self.mModel_studentInfo.GradeName;
+        model.classStr = self.mModel_studentInfo.ClassName;
+        model.unitClassId = self.mModel_studentInfo.UnitClassID;
+        model.manType = @"0";
+    }else if (self.mInt_flag ==2){//家长代请2
+        model.manId = self.mModel_student.TabID;
+        model.manName = self.mModel_student.StdName;
+        model.gradeStr = self.mModel_student.GradeName;
+        model.classStr = self.mModel_student.ClsName;
+        model.unitClassId = self.mModel_student.ClassId;
+        model.manType = @"0";
+    }else{//普通老师、班主任自己请假
+        model.manId = [dm getInstance].userInfo.UserID;
+        model.manType = @"1";
+        model.manName = [dm getInstance].userInfo.UserName;
+    }
+    model.writerId = [dm getInstance].jiaoBaoHao;
+    model.writer = [dm getInstance].userInfo.UserName;
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==1) {
+            model.leaveType = tempModel.mStr_value;
+        }else if (tempModel.mInt_flag ==2){
+            model.leaveReason = tempModel.mStr_value;
+        }
+    }
+
+    //循环赋值时间段
+    for (int i=0; i<tempArr.count; i++) {
+        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
+        if (i==0) {
+            model.sDateTime = tempNowModel.mStr_startTime;
+            model.eDateTime = tempNowModel.mStr_endTime;
+        }else if (i==1){
+            model.sDateTime1 = tempNowModel.mStr_startTime;
+            model.eDateTime1 = tempNowModel.mStr_endTime;
+        }else if (i==2){
+            model.sDateTime2 = tempNowModel.mStr_startTime;
+            model.eDateTime2 = tempNowModel.mStr_endTime;
+        }else if (i==3){
+            model.sDateTime3 = tempNowModel.mStr_startTime;
+            model.eDateTime3 = tempNowModel.mStr_endTime;
+        }else if (i==4){
+            model.sDateTime4 = tempNowModel.mStr_startTime;
+            model.eDateTime4 = tempNowModel.mStr_endTime;
+        }
+    }
+    model.sDateTime = @"2016-03-17 15:20:04";
+    model.eDateTime = @"2016-03-18 15:20:04";
+    [[LeaveHttp getInstance] NewLeaveModel:model];
+    [MBProgressHUD showMessage:@"" toView:self];
+}
+
+//弹出时间选择框
 -(void)addDialog:(int)flag row:(int)row Model:(LeaveNowModel *)model{
     UIView* vwFullScreenView = [[UIView alloc]init];
     vwFullScreenView.tag=9999;
@@ -269,9 +364,16 @@
     [self.mTableV_leave reloadData];
 }
 
+//删除时间段按钮的回调
+-(void)addDateCellDeleteBtn:(addDateCell *)view{
+    [self.mArr_leave removeObjectAtIndex:view.tag];
+    [self.mTableV_leave reloadData];
+}
+
 //选择人员后的回调
 -(void)ChooseStudentViewCSelect:(id)student flag:(int)flag flagID:(int)flagID{
     if (flag == 1) {//请假理由
+        self.mInt_select1 = 1;
 //        if (flagID == 0||flagID == 1) {//家长请假0，班主任代请1
             for (LeaveNowModel *model in self.mArr_leave) {
                 if (model.mInt_flag==1) {
@@ -282,6 +384,7 @@
 //            
 //        }
     }else{//选择学生
+        self.mInt_select0 = 1;
         if (self.mInt_flagID == 3) {//家长
             self.mModel_student = student;
             LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];

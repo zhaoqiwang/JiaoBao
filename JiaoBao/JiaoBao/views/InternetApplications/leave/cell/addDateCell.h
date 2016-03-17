@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol addDateCellDelegate;
+
 @interface addDateCell : UITableViewCell
 
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_delete;//删除
@@ -15,6 +17,17 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_end;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_startNow;//
 @property (nonatomic,strong) IBOutlet UILabel *mLab_endNow;//
-- (IBAction)deleteCellAction:(id)sender;
+@property (weak,nonatomic) id<addDateCellDelegate> delegate;
+
+-(IBAction)deleteBtn:(id)sender;
+
+@end
+
+@protocol addDateCellDelegate <NSObject>
+
+@optional
+
+//点击
+-(void) addDateCellDeleteBtn:(addDateCell *) view;
 
 @end
