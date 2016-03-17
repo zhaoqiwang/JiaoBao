@@ -8,12 +8,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueryViewController">
             <connections>
                 <outlet property="ParentsHeadView" destination="TWA-eg-yod" id="NIE-sd-cnO"/>
+                <outlet property="datePicker" destination="D0H-24-ksg" id="MFO-LT-Pce"/>
                 <outlet property="myBtn" destination="i1R-2o-OPz" id="Ltx-6r-xIe"/>
                 <outlet property="sectionView" destination="B9m-8A-A4C" id="u7d-aH-qqg"/>
                 <outlet property="stdBtn" destination="c2H-pw-WGo" id="P0q-fm-BS9"/>
                 <outlet property="stuSection" destination="7ao-sw-VkT" id="L2a-Bl-iSJ"/>
                 <outlet property="tableHeadView" destination="Gfc-3R-7tJ" id="lFs-vp-9Qx"/>
                 <outlet property="teaHeadView" destination="jKw-78-cbT" id="DUW-7G-Lf7"/>
+                <outlet property="toolBar" destination="Xk6-PG-kcR" id="GXk-Xh-GGw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -90,6 +92,9 @@
                     <state key="normal" title="2016年1月">
                         <color key="titleColor" red="0.3529411764705882" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="datePickAction:" destination="-1" eventType="touchUpInside" id="YT7-Aq-Age"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -210,6 +215,9 @@
                     <state key="normal" title="2016年1月">
                         <color key="titleColor" red="0.35294117650000001" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="datePickAction:" destination="-1" eventType="touchUpInside" id="1kj-WY-6Ws"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="学生" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGF-gP-81L">
                     <rect key="frame" x="20" y="11" width="42" height="21"/>
@@ -267,6 +275,9 @@
                     <state key="normal" title="2016年1月">
                         <color key="titleColor" red="0.35294117650000001" green="0.34509803919999998" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="datePickAction:" destination="-1" eventType="touchUpInside" id="lhB-zp-gs8"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -274,6 +285,34 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="208.5" y="-32"/>
         </view>
+        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Xk6-PG-kcR">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <items>
+                <barButtonItem title="取消" id="dsU-4X-myG">
+                    <connections>
+                        <action selector="cancelToolAction:" destination="-1" id="7Kz-dj-bFR"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="plain" systemItem="flexibleSpace" id="ZdV-XM-T51"/>
+                <barButtonItem title="确定" id="gVn-U6-g2q">
+                    <connections>
+                        <action selector="doneToolAction:" destination="-1" id="PUg-rr-TYz"/>
+                    </connections>
+                </barButtonItem>
+            </items>
+            <point key="canvasLocation" x="378" y="614"/>
+        </toolbar>
+        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="D0H-24-ksg">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <date key="date" timeIntervalSinceReferenceDate="479445508.88027698">
+                <!--2016-03-12 03:18:28 +0000-->
+            </date>
+            <locale key="locale" localeIdentifier="zh_CN"/>
+            <point key="canvasLocation" x="378" y="444"/>
+        </datePicker>
     </objects>
     <resources>
         <image name="sigleSelect0.png" width="14" height="14"/>

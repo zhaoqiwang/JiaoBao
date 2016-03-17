@@ -7,9 +7,7 @@
 //
 
 #import "LeaveViewCell.h"
-
 @implementation LeaveViewCell
-
 -(instancetype)initWithFrame1:(CGRect)frame Model:(ButtonViewModel *)model Flag:(int)flag select:(BOOL)select{
     self = [super init];
     if (self) {

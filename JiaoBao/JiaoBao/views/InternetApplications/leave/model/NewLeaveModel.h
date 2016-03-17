@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NewLeaveModel : NSObject
-@property(nonatomic,strong)NSString *tabId;
+@property(nonatomic,strong)NSString *tabId;//请假记录Id或时间段记录Id
 
 @property(nonatomic,strong)NSString *UnitId;//单位Id
 @property(nonatomic,strong)NSString *manId;//请假人的人员Id，学生ID或老师Id,非教宝号

@@ -20,5 +20,10 @@
 @property (strong, nonatomic) IBOutlet UIView *ParentsHeadView;
 @property(nonatomic,assign)BOOL cellFlag;
 @property (strong, nonatomic) IBOutlet UIView *stuSection;
+- (IBAction)datePickAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+- (IBAction)cancelToolAction:(id)sender;
+- (IBAction)doneToolAction:(id)sender;
 
 @end
