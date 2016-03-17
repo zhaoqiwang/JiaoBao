@@ -233,7 +233,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bj9-R1-obk">
-                    <rect key="frame" x="84" y="7" width="219" height="30"/>
+                    <rect key="frame" x="59" y="7" width="127" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="马文斌">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>

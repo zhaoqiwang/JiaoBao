@@ -242,11 +242,19 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetClassLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
         NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:array];
+        NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
         D("Error---------GetClassLeaves: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:dic];
     }];
     
 }

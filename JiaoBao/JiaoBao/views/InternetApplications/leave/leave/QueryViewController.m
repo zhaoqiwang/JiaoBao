@@ -12,6 +12,7 @@
 #import "dm.h"
 #import "LeaveHttp.h"
 #import "MBProgressHUD+AD.h"
+#import "MyAdminClass.h"
 
 
 @interface QueryViewController ()
@@ -29,11 +30,32 @@
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if(ResultCode==0){
+    if([ResultCode integerValue]==0){
         NSArray *arr = [dic objectForKey:@"data"];
         self.myDataSource = arr;
         self.dataSource = self.myDataSource;
+        [self.tableView reloadData];
 
+        
+    }
+    else
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
+}
+
+-(void)GetClassLeaves:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if([ResultCode integerValue]==0){
+        NSArray *arr = [dic objectForKey:@"data"];
+        self.stuDataSource = arr;
+        self.dataSource = self.myDataSource;
+        [self.tableView reloadData];
+        
         
     }
     else
@@ -46,6 +68,9 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetClassLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetClassLeaves" object:nil];
     self.dateTF.inputAccessoryView = self.toolBar;
     self.dateTF.inputView = self.datePicker;
     self.cellFlag = YES;
@@ -208,12 +233,14 @@
         recordModel.numPerPage = @"20";
         recordModel.pageNum = @"1";
         recordModel.RowCount = @"0";
-        recordModel.sDateTime = @"2016-03";
-        recordModel.unitClassId = @"72202";
+        recordModel.sDateTime = @"2016-03-11";
+        if ([dm getInstance].mArr_leaveClass.count>0) {
+            MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+            recordModel.unitClassId = model.TabID;
+        }
         recordModel.checkFlag = @"0";
         //[MBProgressHUD showMessage:@"" toView:self.view];
         [[LeaveHttp getInstance]GetClassLeaves:recordModel];
-        [self.tableView reloadData];
         [self.tableView reloadData];
         
     }

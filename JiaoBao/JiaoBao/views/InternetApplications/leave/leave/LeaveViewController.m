@@ -56,17 +56,18 @@
     //请假表格，门卫，班主任自己，普通老师
     self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:self.mInt_leaveID];
     //代请，班主任，家长
-    self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:0 flagID:self.mInt_leaveID];
+    int a=0;
+    if (self.mInt_leaveID==1) {
+        a=0;
+    }else if (self.mInt_leaveID ==3){
+        a=2;
+    }
+    self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:a flagID:self.mInt_leaveID];
 
     [self.view addSubview:self.mView_root0];
     [self.view addSubview:self.mView_root1];
 
-    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
-    self.queryVC.mInt_leaveID = self.mInt_leaveID;
-    [self addChildViewController:self.queryVC];
-    [self.queryVC didMoveToParentViewController:self];
-    [self addChild:self.queryVC withChildToRemove:nil];
-    self.queryVC.view.hidden = YES;
+
     self.automaticallyAdjustsScrollViewInsets = NO;
     if (self.mInt_leaveID==3) {
         self.mView_root0.hidden = YES;
@@ -93,6 +94,13 @@
         }else if (self.mInt_flag == 2){
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = YES;
+            if(!self.queryVC){
+                self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+                self.queryVC.mInt_leaveID = self.mInt_leaveID;
+                [self addChildViewController:self.queryVC];
+                [self.queryVC didMoveToParentViewController:self];
+                [self addChild:self.queryVC withChildToRemove:nil];
+            }
             self.queryVC.view.hidden = NO;
         }
     }else{
@@ -105,6 +113,13 @@
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
+                if(!self.queryVC){
+                    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+                    self.queryVC.mInt_leaveID = self.mInt_leaveID;
+                    [self addChildViewController:self.queryVC];
+                    [self.queryVC didMoveToParentViewController:self];
+                    [self addChild:self.queryVC withChildToRemove:nil];
+                }
                 self.queryVC.view.hidden = NO;
             }
         }else{
@@ -115,6 +130,13 @@
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
+                if(!self.queryVC){
+                    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+                    self.queryVC.mInt_leaveID = self.mInt_leaveID;
+                    [self addChildViewController:self.queryVC];
+                    [self.queryVC didMoveToParentViewController:self];
+                    [self addChild:self.queryVC withChildToRemove:nil];
+                }
                 self.queryVC.view.hidden = NO;
             }
         }

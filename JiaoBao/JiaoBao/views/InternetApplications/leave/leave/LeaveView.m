@@ -302,27 +302,27 @@
     }
 
     //循环赋值时间段
-    for (int i=0; i<tempArr.count; i++) {
-        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
-        if (i==0) {
-            model.sDateTime = tempNowModel.mStr_startTime;
-            model.eDateTime = tempNowModel.mStr_endTime;
-        }else if (i==1){
-            model.sDateTime1 = tempNowModel.mStr_startTime;
-            model.eDateTime1 = tempNowModel.mStr_endTime;
-        }else if (i==2){
-            model.sDateTime2 = tempNowModel.mStr_startTime;
-            model.eDateTime2 = tempNowModel.mStr_endTime;
-        }else if (i==3){
-            model.sDateTime3 = tempNowModel.mStr_startTime;
-            model.eDateTime3 = tempNowModel.mStr_endTime;
-        }else if (i==4){
-            model.sDateTime4 = tempNowModel.mStr_startTime;
-            model.eDateTime4 = tempNowModel.mStr_endTime;
-        }
-    }
-    model.sDateTime = @"2016-03-17 15:20:04";
-    model.eDateTime = @"2016-03-18 15:20:04";
+//    for (int i=0; i<tempArr.count; i++) {
+//        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
+//        if (i==0) {
+//            model.sDateTime = tempNowModel.mStr_startTime;
+//            model.eDateTime = tempNowModel.mStr_endTime;
+//        }else if (i==1){
+//            model.sDateTime1 = tempNowModel.mStr_startTime;
+//            model.eDateTime1 = tempNowModel.mStr_endTime;
+//        }else if (i==2){
+//            model.sDateTime2 = tempNowModel.mStr_startTime;
+//            model.eDateTime2 = tempNowModel.mStr_endTime;
+//        }else if (i==3){
+//            model.sDateTime3 = tempNowModel.mStr_startTime;
+//            model.eDateTime3 = tempNowModel.mStr_endTime;
+//        }else if (i==4){
+//            model.sDateTime4 = tempNowModel.mStr_startTime;
+//            model.eDateTime4 = tempNowModel.mStr_endTime;
+//        }
+//    }
+    model.sDateTime = @"2016-03-18 15:20:04";
+    model.eDateTime = @"2016-03-19 15:21:04";
     [[LeaveHttp getInstance] NewLeaveModel:model];
     [MBProgressHUD showMessage:@"" toView:self];
 }
