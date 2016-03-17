@@ -53,8 +53,7 @@
 -(void)GetMyLeaves:(leaveRecordModel*)model;
 
 //取一个假条的明细信息
--(void)GetClassLeaves;
-
+-(void)GetLeaveModel:(NSString*)tabId;
 //取得我的教宝号所关联的学生列表(家长身份）
 -(void)GetMyStdInfo:(NSString *)accId;
 
