@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyLeaveModel.h"
 
 @interface QueryCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
+@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
+-(void)setCellData:(MyLeaveModel*)model;
 
 @end

@@ -31,7 +31,7 @@
     else{
         NSDate *date = [NSDate date];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy年MM月dd号"];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@ 8:30:00",[formatter stringFromDate:date]];
 self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[formatter stringFromDate:date]];
         
@@ -45,7 +45,7 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
 
 - (IBAction)doneAction:(id)sender {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy年MM月dd号 HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *nowDate = [NSDate date];
     NSArray *startArr = [self.startDateTF.text componentsSeparatedByString:@"间:"];
         NSArray *endArr = [self.endDateTF.text componentsSeparatedByString:@"间:"];
@@ -99,7 +99,7 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
 
 
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy年MM月dd号 HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     [self.selectedTF resignFirstResponder];
     if([self.selectedTF isEqual:self.startDateTF]){
            self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];

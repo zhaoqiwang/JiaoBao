@@ -40,6 +40,12 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="vvd-dx-t8y" id="UjW-CK-mhq"/>
+                <outlet property="nameLabel" destination="siz-5v-LiB" id="hDA-2Z-tWl"/>
+                <outlet property="reasonLabel" destination="e7q-yz-Jsz" id="PZu-1e-jiT"/>
+                <outlet property="stateLabel" destination="79U-qI-Oes" id="WAo-vZ-zTL"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

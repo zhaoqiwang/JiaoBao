@@ -190,11 +190,19 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetMyLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
         NSMutableArray *mArr = [ParserJson_leave parserJsonMyLeaves:data];
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:array];
+        NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+
         D("Error---------GetMyLeaves: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     }];
     
 }

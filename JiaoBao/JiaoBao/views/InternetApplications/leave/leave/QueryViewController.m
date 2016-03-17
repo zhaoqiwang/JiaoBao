@@ -10,16 +10,44 @@
 #import "QueryCell.h"
 #import "CustomQueryCell.h"
 #import "dm.h"
+#import "LeaveHttp.h"
+#import "MBProgressHUD+AD.h"
 
 
 @interface QueryViewController ()
+@property(nonatomic,strong)NSArray *dataSource;
+@property(nonatomic,strong)NSArray *myDataSource;
+@property(nonatomic,strong)NSArray *stuDataSource;
+
 
 @end
 
 @implementation QueryViewController
+-(void)GetMyLeaves:(id)sender
+{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    NSDictionary *dic = [sender object];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if(ResultCode==0){
+        NSArray *arr = [dic objectForKey:@"data"];
+        self.myDataSource = arr;
+        self.dataSource = self.myDataSource;
+
+        
+    }
+    else
+    {
+        [MBProgressHUD showError:ResultDesc];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
+    self.dateTF.inputAccessoryView = self.toolBar;
+    self.dateTF.inputView = self.datePicker;
     self.cellFlag = YES;
     UIView *headView = [[UIView alloc]init ];
     if(self.mInt_leaveID ==1){
@@ -44,6 +72,16 @@
     }
 
     self.tableView.tableHeaderView = headView;
+    leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
+    recordModel.numPerPage = @"20";
+    recordModel.pageNum = @"1";
+    recordModel.RowCount = @"0";
+    recordModel.accId = [dm getInstance].jiaoBaoHao;
+    recordModel.sDateTime = @"2016-03";
+    recordModel.manType = @"1";
+    recordModel.mName = @"";
+    [MBProgressHUD showMessage:@"" toView:self.view];
+    [[LeaveHttp getInstance]GetMyLeaves:recordModel];
 
 }
 
@@ -58,7 +96,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataSource.count;
 }
 
 
@@ -80,6 +118,8 @@
             UINib * n= [UINib nibWithNibName:@"QueryCell" bundle:[NSBundle mainBundle]];
             [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
         }
+        [cell setCellData:[self.dataSource objectAtIndex:indexPath.row]];
+
         return cell;
         
     }
@@ -100,6 +140,7 @@
             UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
             [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
         }
+        [cell setCellData:[self.dataSource objectAtIndex:indexPath.row]];
         return cell;
         
     }
@@ -123,39 +164,6 @@
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Table view delegate
@@ -173,15 +181,7 @@
 }
 */
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)selectionBtnAction:(id)sender {
     UIButton *btn = sender;
@@ -189,16 +189,53 @@
         self.myBtn.selected = YES;
         self.stdBtn.selected = NO;
         self.cellFlag = YES;
+        leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
+        recordModel.numPerPage = @"20";
+        recordModel.pageNum = @"1";
+        recordModel.RowCount = @"0";
+        recordModel.accId = [dm getInstance].jiaoBaoHao;
+        recordModel.sDateTime = @"2016-03";
+        recordModel.manType = @"1";
+        recordModel.mName = @"";
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        [[LeaveHttp getInstance]GetMyLeaves:recordModel];
         [self.tableView reloadData];
     }else{
         self.myBtn.selected = NO;
         self.stdBtn.selected = YES;
         self.cellFlag = NO;
+        leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
+        recordModel.numPerPage = @"20";
+        recordModel.pageNum = @"1";
+        recordModel.RowCount = @"0";
+        recordModel.sDateTime = @"2016-03";
+        recordModel.unitClassId = @"72202";
+        recordModel.checkFlag = @"0";
+        //[MBProgressHUD showMessage:@"" toView:self.view];
+        [[LeaveHttp getInstance]GetClassLeaves:recordModel];
+        [self.tableView reloadData];
         [self.tableView reloadData];
         
     }
     
 }
 - (IBAction)datePickAction:(id)sender {
+    [self.dateTF becomeFirstResponder];
+
+
+}
+- (IBAction)cancelToolAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+
+}
+
+- (IBAction)doneToolAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy年MM月"];
+    [self.dateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
+    
+
+    
 }
 @end

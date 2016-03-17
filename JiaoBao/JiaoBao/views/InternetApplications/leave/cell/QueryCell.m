@@ -19,5 +19,12 @@
 
     // Configure the view for the selected state
 }
+-(void)setCellData:(MyLeaveModel*)model{
+    self.dateLabel.text = model.WriteDate;
+    self.stateLabel.text = model.StatusStr;
+    self.reasonLabel.text = model.LeaveType;
+
+    
+}
 
 @end

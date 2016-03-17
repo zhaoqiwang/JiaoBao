@@ -34,6 +34,11 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="rU3-3w-cOg" id="fTl-9s-AbE"/>
+                <outlet property="reasonLabel" destination="G1O-tI-aGM" id="Pyf-1W-Msr"/>
+                <outlet property="stateLabel" destination="ZOk-Ja-T5f" id="ZoP-8X-9Yz"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
