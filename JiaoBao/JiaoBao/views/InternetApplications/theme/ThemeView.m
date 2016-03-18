@@ -15,6 +15,7 @@
 #import "LeaveHttp.h"
 #import "NewLeaveModel.h"
 #import "leaveRecordModel.h"
+#import "OnlineJobHttp.h"
 
 
 @implementation ThemeView
@@ -139,6 +140,14 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
+//    StuErrModel *model = [[StuErrModel alloc]init];
+//    model.StuId = @"3851578";
+//    model.IsSelf = @"1";
+//    model.PageIndex = @"1";
+//    model.PageSize = @"20";
+//    
+//    [[OnlineJobHttp getInstance]GetStuErr:model];
+//    [[OnlineJobHttp getInstance]GetStuHWListPageWithStuId:@"3851578" IsSelf:@"1" PageIndex:@"1" PageSize:@"20"];
 //    [[LeaveHttp getInstance]GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
 //    NewLeaveModel *model = [[NewLeaveModel alloc]init];
 //    model.UnitId =[NSString stringWithFormat:@"%d",[dm getInstance].UID];

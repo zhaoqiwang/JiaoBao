@@ -1080,6 +1080,7 @@
 		F79B613A1B7202A5005FEA44 /* QuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61341B7202A5005FEA44 /* QuestionModel.m */; };
 		F79B613B1B7202A5005FEA44 /* SubItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61361B7202A5005FEA44 /* SubItemModel.m */; };
 		F79B61411B72068A005FEA44 /* QuestionIndexModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61401B72068A005FEA44 /* QuestionIndexModel.m */; };
+		F79CF1D31C9AA3B9003DBBD0 /* StuErrModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79CF1D21C9AA3B9003DBBD0 /* StuErrModel.m */; };
 		F79D84871ABD4A1D00897477 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F79D84851ABD4A1D00897477 /* mapapi.bundle */; };
 		F79D84D11ABD4DC000897477 /* DetailQueryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BA1ABD4DC000897477 /* DetailQueryCell.m */; };
 		F79D84D21ABD4DC000897477 /* DetailQueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79D84BC1ABD4DC000897477 /* DetailQueryViewController.m */; };
@@ -2666,6 +2667,8 @@
 		F79B61361B7202A5005FEA44 /* SubItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubItemModel.m; path = views/InternetApplications/theme/SubItemModel.m; sourceTree = "<group>"; };
 		F79B613F1B72068A005FEA44 /* QuestionIndexModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestionIndexModel.h; path = views/InternetApplications/theme/QuestionIndexModel.h; sourceTree = "<group>"; };
 		F79B61401B72068A005FEA44 /* QuestionIndexModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestionIndexModel.m; path = views/InternetApplications/theme/QuestionIndexModel.m; sourceTree = "<group>"; };
+		F79CF1D11C9AA3B9003DBBD0 /* StuErrModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuErrModel.h; sourceTree = "<group>"; };
+		F79CF1D21C9AA3B9003DBBD0 /* StuErrModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuErrModel.m; sourceTree = "<group>"; };
 		F79D84471ABD4A1D00897477 /* BMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMapKit.h; sourceTree = "<group>"; };
 		F79D84481ABD4A1D00897477 /* BMKActionPaopaoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKActionPaopaoView.h; sourceTree = "<group>"; };
 		F79D84491ABD4A1D00897477 /* BMKAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKAnnotation.h; sourceTree = "<group>"; };
@@ -4438,6 +4441,8 @@
 				F731079A1BE74DC00023BD49 /* CompleteStatusModel.m */,
 				A7A3346D1C11701E00EDDBA5 /* GetUnitInfoModel.h */,
 				A7A3346E1C11701E00EDDBA5 /* GetUnitInfoModel.m */,
+				F79CF1D11C9AA3B9003DBBD0 /* StuErrModel.h */,
+				F79CF1D21C9AA3B9003DBBD0 /* StuErrModel.m */,
 			);
 			name = model;
 			path = views/InternetApplications/onlineJob/model;
@@ -6544,6 +6549,7 @@
 				A74736F41A78C2F90042F110 /* UncaughtExceptionHandler.m in Sources */,
 				A78459DB1B7B4D1D00EA7D5D /* IQSegmentedNextPrevious.m in Sources */,
 				A755E71119F278B900BBDF3D /* ASIS3Bucket.m in Sources */,
+				F79CF1D31C9AA3B9003DBBD0 /* StuErrModel.m in Sources */,
 				A7595E921A5FC2F30027848E /* MWGridViewController.m in Sources */,
 				A78FE2391B3AAFAC00C8D1FD /* UIViewController+HUD.m in Sources */,
 				A74D12861A3C45DE00A93CAC /* UpdateUnitListViewController.m in Sources */,
