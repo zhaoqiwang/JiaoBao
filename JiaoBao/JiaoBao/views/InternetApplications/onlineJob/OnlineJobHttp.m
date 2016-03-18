@@ -518,22 +518,40 @@ static OnlineJobHttp *onlineJobHttp = nil;
 }
 // 根据学生ID分页获取作业或练习列表 参数：学生ID - （0作业,1练习）- 页码 - 页记录数
 -(void)GetStuHWListPageWithStuId:(NSString*)StuId IsSelf:(NSString*)IsSelf PageIndex:(NSString*)PageIndex PageSize:(NSString*)PageSize{
-    NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWListPage",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer.timeoutInterval = TIMEOUT;
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf,@"PageIndex":PageIndex,@"PageSize":PageSize,};
-    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------GetStuHWListPageWithStuId: %@,", result);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWListPageWithStuId" object:result];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWListPageWithStuId" object:error.localizedDescription];
-        D("Error---------GetStuHWListPageWithStuId: %@", error);
-    }];
+
+    
+        NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWListPage",ONLINEJOBURL];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer.timeoutInterval = TIMEOUT;
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        if ([StuId intValue]>0) {
+            
+        }else{
+            NSMutableDictionary *tempDic0 = [NSMutableDictionary dictionary];
+            [tempDic0 setValue:@"100" forKey:@"ResultCode"];
+            [tempDic0 setValue:@"学生信息错误" forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic0];
+            return;
+        }
+        NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf,@"PageIndex":PageIndex,@"PageSize":PageSize,};
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+        [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            D("JSON--------GetStuHWListPageWithStuId: %@,", result);
+            NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
+            [tempDic setValue:@"0" forKey:@"ResultCode"];
+            [tempDic setValue:arr forKey:@"array"];
+            [tempDic setValue:IsSelf forKey:@"IsSelf"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [tempDic setValue:@"100" forKey:@"ResultCode"];
+            [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic];
+            D("Error---------GetStuHWListPageWithStuId: %@", error);
+        }];
+    
 }
 
 

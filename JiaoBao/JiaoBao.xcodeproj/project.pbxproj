@@ -1125,6 +1125,10 @@
 		F7E981081B79F6FE008B42E9 /* AddQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7E981061B79F6FE008B42E9 /* AddQuestionViewController.xib */; };
 		F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */; };
 		F7EC84AB1B1FE08A00CBE0C1 /* SecondRegViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */; };
+		F7ED6F661C9B9BEA001A559E /* StuErrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7ED6F641C9B9BEA001A559E /* StuErrViewController.m */; };
+		F7ED6F671C9B9BEA001A559E /* StuErrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7ED6F651C9B9BEA001A559E /* StuErrViewController.xib */; };
+		F7ED6F6B1C9B9C90001A559E /* StuErrCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7ED6F691C9B9C90001A559E /* StuErrCell.m */; };
+		F7ED6F6C1C9B9C90001A559E /* StuErrCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7ED6F6A1C9B9C90001A559E /* StuErrCell.xib */; };
 		F7EE1A0A1B78896000B31D79 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EE1A081B78896000B31D79 /* CommentViewController.m */; };
 		F7EE1A0B1B78896000B31D79 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7EE1A091B78896000B31D79 /* CommentViewController.xib */; };
 		F7EE1A0F1B789CD200B31D79 /* CommentListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7EE1A0D1B789CD200B31D79 /* CommentListTableViewCell.m */; };
@@ -2805,6 +2809,12 @@
 		F7EC84A71B1FE08A00CBE0C1 /* SecondRegViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SecondRegViewController.h; path = views/InternetApplications/register/SecondRegViewController.h; sourceTree = "<group>"; };
 		F7EC84A81B1FE08A00CBE0C1 /* SecondRegViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SecondRegViewController.m; path = views/InternetApplications/register/SecondRegViewController.m; sourceTree = "<group>"; };
 		F7EC84A91B1FE08A00CBE0C1 /* SecondRegViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SecondRegViewController.xib; path = views/InternetApplications/register/SecondRegViewController.xib; sourceTree = "<group>"; };
+		F7ED6F631C9B9BEA001A559E /* StuErrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuErrViewController.h; sourceTree = "<group>"; };
+		F7ED6F641C9B9BEA001A559E /* StuErrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuErrViewController.m; sourceTree = "<group>"; };
+		F7ED6F651C9B9BEA001A559E /* StuErrViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StuErrViewController.xib; sourceTree = "<group>"; };
+		F7ED6F681C9B9C90001A559E /* StuErrCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StuErrCell.h; sourceTree = "<group>"; };
+		F7ED6F691C9B9C90001A559E /* StuErrCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuErrCell.m; sourceTree = "<group>"; };
+		F7ED6F6A1C9B9C90001A559E /* StuErrCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StuErrCell.xib; sourceTree = "<group>"; };
 		F7EE1A071B78896000B31D79 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentViewController.h; path = views/InternetApplications/theme/CommentViewController.h; sourceTree = "<group>"; };
 		F7EE1A081B78896000B31D79 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentViewController.m; path = views/InternetApplications/theme/CommentViewController.m; sourceTree = "<group>"; };
 		F7EE1A091B78896000B31D79 /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentViewController.xib; path = views/InternetApplications/theme/CommentViewController.xib; sourceTree = "<group>"; };
@@ -4287,6 +4297,12 @@
 				F712837E1BE1ADD100074B72 /* DetailHWViewController.h */,
 				F712837F1BE1ADD100074B72 /* DetailHWViewController.m */,
 				F71283801BE1ADD100074B72 /* DetailHWViewController.xib */,
+				F7ED6F631C9B9BEA001A559E /* StuErrViewController.h */,
+				F7ED6F641C9B9BEA001A559E /* StuErrViewController.m */,
+				F7ED6F651C9B9BEA001A559E /* StuErrViewController.xib */,
+				F7ED6F681C9B9C90001A559E /* StuErrCell.h */,
+				F7ED6F691C9B9C90001A559E /* StuErrCell.m */,
+				F7ED6F6A1C9B9C90001A559E /* StuErrCell.xib */,
 				F70C77AE1BF5BF1D007BAE2D /* DetailHWVc.xib */,
 				F72385CE1BE2F74F0000015D /* DetialHWCell.h */,
 				F72385CF1BE2F74F0000015D /* DetialHWCell.m */,
@@ -5679,6 +5695,7 @@
 				A7CE67381AA70A250038D0C5 /* showUnit.png in Resources */,
 				A769C6001B7464E0006C6B76 /* topBtnSelect1.png in Resources */,
 				A7BB180319F4F91E00A81286 /* Regiser_jiaobao@2x.png in Resources */,
+				F7ED6F6C1C9B9C90001A559E /* StuErrCell.xib in Resources */,
 				A70E3CA31A1EECB700E6D0EC /* ArthDetailViewController.xib in Resources */,
 				A72B581F1A3D70B8004D8920 /* UnitSpaceViewController.xib in Resources */,
 				A753FAEF1A1DDC0300AB5F22 /* share_tableV_more.png in Resources */,
@@ -6062,6 +6079,7 @@
 				A749B9D919F89A530036F480 /* top_dian@2x.png in Resources */,
 				A72B58301A3D8EEE004D8920 /* UnitPeopleViewController.xib in Resources */,
 				A76D74751A69095A008F5856 /* share_like_0@3x.png in Resources */,
+				F7ED6F671C9B9BEA001A559E /* StuErrViewController.xib in Resources */,
 				A70179891AB91D2100E7093F /* work_accessory@3x.png in Resources */,
 				A7724D5D1B5DF94C0095850A /* VideoShot1@2x.png in Resources */,
 				A78D65D81A89E41400BE6326 /* WorkMsgListCell.xib in Resources */,
@@ -6172,6 +6190,7 @@
 				A77FF02D1A650B3F00DB85E3 /* JSONHTTPClient.m in Sources */,
 				F71E9D6C1B86BE4A00D90487 /* XPathQuery.m in Sources */,
 				A763B3341BD5DC9F0020A7C9 /* TreeJob_questionCount_TableViewCell.m in Sources */,
+				F7ED6F661C9B9BEA001A559E /* StuErrViewController.m in Sources */,
 				A755E67619F2492800BBDF3D /* AppDelegate.m in Sources */,
 				A743395B1A452B7700AFC0A5 /* UIView+WebCacheOperation.m in Sources */,
 				F7EC84AA1B1FE08A00CBE0C1 /* SecondRegViewController.m in Sources */,
@@ -6539,6 +6558,7 @@
 				A755E70B19F278B900BBDF3D /* ASICloudFilesContainer.m in Sources */,
 				A7882E5F1B871C9C007CAA0A /* HtmlString.m in Sources */,
 				A7781F281AE88F0100F03AEB /* HomeClassWorkView.m in Sources */,
+				F7ED6F6B1C9B9C90001A559E /* StuErrCell.m in Sources */,
 				F71803251AB3C46300E6167F /* JTCalendarMonthWeekDaysView.m in Sources */,
 				A76D746B1A68F11A008F5856 /* CommentsListObjModel.m in Sources */,
 				F7935A661BDA136C0021A048 /* StuHomeWorkModel.m in Sources */,
