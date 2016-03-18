@@ -233,7 +233,7 @@
         recordModel.numPerPage = @"20";
         recordModel.pageNum = @"1";
         recordModel.RowCount = @"0";
-        recordModel.sDateTime = @"2016-03-11";
+        recordModel.sDateTime = @"2016-03";
         if ([dm getInstance].mArr_leaveClass.count>0) {
             MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
             recordModel.unitClassId = model.TabID;

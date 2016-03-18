@@ -708,6 +708,7 @@
     self.mView_all.hidden = NO;
     self.mTableV_left.hidden = NO;
     self.mTableV_right.hidden = NO;
+    [dm getInstance].leaveModel = nil;
     //self.mView_all.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.mView_all];
     [self.mTableV_left reloadData];
@@ -735,6 +736,7 @@
     [dm getInstance].UID = 0;
     [[dm getInstance].identity removeAllObjects];
     [dm getInstance].jiaoBaoHao = @"";
+    [dm getInstance].leaveModel = nil;
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
