@@ -32,6 +32,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_nowHomework;//当前作业查询
 @property (nonatomic,strong) NSMutableArray *mArr_overHomework;//完成情况查询
 @property (nonatomic,strong) NSMutableArray *mArr_score;///学力查询
+@property (nonatomic,strong) NSMutableArray *mArr_practice;//练习列表查询
 @property (nonatomic,strong) NSArray *mArr_disScore;///学力查询,显示数据
 @property (nonatomic,strong) NSMutableArray *mArr_parent;//家长信息数组，其中包括学生id
 @property (nonatomic,strong) ParentSearchHeadView *mView_head;//表头

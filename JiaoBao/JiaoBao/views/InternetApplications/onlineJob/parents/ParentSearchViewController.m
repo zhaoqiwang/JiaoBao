@@ -45,6 +45,7 @@
     self.mArr_score = [NSMutableArray array];
     self.mArr_parent = [NSMutableArray array];
     self.mArr_disScore = [NSMutableArray array];
+    self.mArr_practice = [NSMutableArray array];
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"家长查询"];
@@ -339,9 +340,15 @@
     if ([ResultCode intValue]==0) {
         NSMutableArray *array = [dic objectForKey:@"array"];
         NSString *IsSelf = [dic objectForKey:@"IsSelf"];
-        if ([IsSelf intValue]==0) {
+        if ([IsSelf intValue]==0) {//作业
             if (array.count>0) {
                 self.mArr_nowHomework = array;
+            }else{
+                [MBProgressHUD showError:@"无数据" toView:self.view];
+            }
+        }else{//练习
+            if (array.count>0) {
+                self.mArr_practice = array;
             }else{
                 [MBProgressHUD showError:@"无数据" toView:self.view];
             }
@@ -362,6 +369,7 @@
         [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
         return;
     }
+    self.mTableV_list.hidden = NO;
     self.mInt_index = (int)view.tag-100;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;
@@ -372,9 +380,9 @@
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"学力";
     }else if (self.mInt_index==3){
-        
+        self.mTableV_list.tableHeaderView = nil;
     }else if (self.mInt_index==4){
-        
+        self.mTableV_list.hidden = YES;
     }
 //    for (UIButton *btn1 in self.mScrollV_all.subviews) {
 //        if ([btn1.class isSubclassOfClass:[UIButton class]]) {
@@ -409,6 +417,12 @@
             [[OnlineJobHttp getInstance] GetStuEduLevelWithStuId:self.mModel_gen.StudentID uId:@"" chapterid:@"" flag:@"0"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
+    }else if (self.mInt_index==3) {//获取练习列表
+        //判断是否有值
+        if (self.mArr_practice.count==0) {
+            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_gen.StudentID IsSelf:@"1"];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+        }
     }
     [self.mTableV_list reloadData];
 }
@@ -419,8 +433,10 @@
         [self.mArr_nowHomework removeAllObjects];
     }else if (self.mInt_index ==1){//获取练习列表
         [self.mArr_overHomework removeAllObjects];
-    }else{
+    }else if (self.mInt_index ==2){//获取学力
         [self.mArr_score removeAllObjects];
+    }else if (self.mInt_index==3) {//获取练习列表
+        [self.mArr_practice removeAllObjects];
     }
     [self sendRequst];
 }
@@ -430,8 +446,10 @@
         return self.mArr_nowHomework.count;
     } else if (self.mInt_index==1){
         return self.mArr_overHomework.count;
-    }else if (self.mInt_index==2){
+    }else if (self.mInt_index==2){//获取学力
         return self.mArr_disScore.count;
+    }else if (self.mInt_index==3) {//获取练习列表
+        return self.mArr_practice.count;
     }
     return 0;
 }
@@ -453,8 +471,13 @@
         [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
     }
     
-    if (self.mInt_index == 0) {
-        StuHWModel *model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
+    if (self.mInt_index == 0||self.mInt_index == 3) {
+        StuHWModel *model;
+        if (self.mInt_index == 0) {
+            model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
+        }else{
+            model = [self.mArr_practice objectAtIndex:indexPath.row];
+        }
         
         if ([model.isHaveAdd intValue]==1) {//主观题
             cell.mImg_pic.frame = CGRectMake(8, 10, 14, 14);
@@ -651,7 +674,7 @@
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    if (self.mInt_index == 0) {
+    if (self.mInt_index == 0||self.mInt_index ==3) {
         return 56;
     }else if (self.mInt_index == 1){
         return 44;
@@ -670,14 +693,19 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.mInt_index ==0) {//当前作业查询
+    if (self.mInt_index ==0||self.mInt_index ==3) {//当前作业查询、练习
         StuHWModel *model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
             DetailHWViewController *detail;
             detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
             detail.TabID = model.TabID;
             detail.isSubmit = [model.isHWFinish integerValue];
             detail.hwName = model.homeworkName;
+        if (self.mInt_index==0) {
             detail.navBarName = @"做作业";
+        }else{
+            detail.navBarName = @"做练习";
+        }
+        
             detail.FlagStr = @"2";
             [self.navigationController pushViewController:detail animated:YES];
     }else if (self.mInt_index == 2){

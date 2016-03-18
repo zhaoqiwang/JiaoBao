@@ -30,6 +30,8 @@
 		4307165C1C93C56F008D3382 /* LeaveNowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165B1C93C56F008D3382 /* LeaveNowModel.m */; };
 		430716611C93C6F3008D3382 /* LeaveNowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */; };
 		430716621C93C6F3008D3382 /* LeaveNowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */; };
+		438F176C1C9BDE5A002AA0DA /* SelectChapteridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */; };
+		438F176D1C9BDE5A002AA0DA /* SelectChapteridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */; };
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
@@ -1185,6 +1187,9 @@
 		4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveNowTableViewCell.h; path = cell/LeaveNowTableViewCell.h; sourceTree = "<group>"; };
 		4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveNowTableViewCell.m; path = cell/LeaveNowTableViewCell.m; sourceTree = "<group>"; };
 		430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveNowTableViewCell.xib; path = cell/LeaveNowTableViewCell.xib; sourceTree = "<group>"; };
+		438F17691C9BDE5A002AA0DA /* SelectChapteridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectChapteridViewController.h; path = views/InternetApplications/onlineJob/SelectChapteridViewController.h; sourceTree = "<group>"; };
+		438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectChapteridViewController.m; path = views/InternetApplications/onlineJob/SelectChapteridViewController.m; sourceTree = "<group>"; };
+		438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectChapteridViewController.xib; path = views/InternetApplications/onlineJob/SelectChapteridViewController.xib; sourceTree = "<group>"; };
 		4392A5BA1B2067F600C5878D /* ReviseNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReviseNameViewController.h; path = views/InternetApplications/personalSpace/ReviseNameViewController.h; sourceTree = "<group>"; };
 		4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReviseNameViewController.m; path = views/InternetApplications/personalSpace/ReviseNameViewController.m; sourceTree = "<group>"; };
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
@@ -4397,6 +4402,9 @@
 				A7736DB41BCDEC9300CC39A0 /* MakeJobViewController.h */,
 				A7736DB51BCDEC9300CC39A0 /* MakeJobViewController.m */,
 				A7736DB61BCDEC9300CC39A0 /* MakeJobViewController.xib */,
+				438F17691C9BDE5A002AA0DA /* SelectChapteridViewController.h */,
+				438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */,
+				438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */,
 			);
 			name = onlineJob;
 			sourceTree = "<group>";
@@ -5833,6 +5841,7 @@
 				A7FC2A081C90176600CB38C0 /* buttonView26@2x.png in Resources */,
 				F7B2719A1B6F151F00DA3FE4 /* PhotoCollectionCell.xib in Resources */,
 				A749B9E619F8A0310036F480 /* TreeView_Level0_Cell.xib in Resources */,
+				438F176D1C9BDE5A002AA0DA /* SelectChapteridViewController.xib in Resources */,
 				F718032F1AB3C4EF00E6167F /* kal_right_arrow@2x.png in Resources */,
 				A7FC29FA1C90176600CB38C0 /* buttonView21@3x.png in Resources */,
 				A749B9C519F89A530036F480 /* root_close@2x.png in Resources */,
@@ -6535,6 +6544,7 @@
 				F7935A661BDA136C0021A048 /* StuHomeWorkModel.m in Sources */,
 				A71C797D1A14B4E1003022DF /* UserInfoModel.m in Sources */,
 				A785F71C1BD4858300B83960 /* TreeJob_sigleSelect_TableViewCell.m in Sources */,
+				438F176C1C9BDE5A002AA0DA /* SelectChapteridViewController.m in Sources */,
 				F76B644C1B1EA451008F6961 /* HomeClassRootScrollView.m in Sources */,
 				A73CAD711A07755B00D6C5AA /* UIScrollView+MJExtension.m in Sources */,
 				F75D38B01C9647CA00B71B1E /* MyAdminClass.m in Sources */,
@@ -6662,7 +6672,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d80f6e00-0a2f-439a-a7e1-079738b5611a";
+				PROVISIONING_PROFILE = "762ebfd6-7eb0-4d44-8ead-d9229e59d70b";
 				SDKROOT = iphoneos8.2;
 			};
 			name = Debug;
@@ -6699,7 +6709,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "d80f6e00-0a2f-439a-a7e1-079738b5611a";
+				PROVISIONING_PROFILE = "762ebfd6-7eb0-4d44-8ead-d9229e59d70b";
 				SDKROOT = iphoneos8.2;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -82,7 +82,7 @@
     
     //三种状态
     NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<4; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
         if (i==0) {
             model.mStr_title = @"做作业";
@@ -94,6 +94,10 @@
             model.mStr_imgNow = @"buttonView16";
         }else if (i==2){
             model.mStr_title = @"练习查询";
+            model.mStr_img = @"buttonView24";
+            model.mStr_imgNow = @"buttonView14";
+        }else if (i==3){
+            model.mStr_title = @"错题本";
             model.mStr_img = @"buttonView24";
             model.mStr_imgNow = @"buttonView14";
         }
@@ -260,9 +264,9 @@
 }
 
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)btn{
-    btn.tag = btn.tag-100;
+   self.mInt_index = (int)btn.tag;
     //如果点击练习，
-    if (btn.tag==1) {
+    if (self.mInt_index==1) {
         //先判断作业列表，是否有没有完成的
         int a=0;
         for (int i=0; i<self.mArr_homework.count; i++) {
@@ -278,22 +282,22 @@
         //再发送获取练习列表，然后根据返回的数据，做界面显示
         
     }
-    self.mInt_index = (int)btn.tag;
-    if (btn.tag==0) {//获取作业列表
+    
+    if (self.mInt_index==0) {//获取作业列表
         self.mInt_index = 0;
         //判断是否有值
         if (self.mArr_homework.count==0) {
             [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if (btn.tag==1){//获取练习列表
+    }else if (self.mInt_index==1){//获取练习列表
         self.mInt_index = 1;
         //判断是否有值
         if (self.mArr_practice.count==0) {
             [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if (btn.tag==2){//练习查询
+    }else if (self.mInt_index==2){//练习查询
         self.mInt_index = 2;
         //判断是否有值
 //        if (self.mArr_practice.count==0) {
