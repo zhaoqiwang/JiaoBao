@@ -25,6 +25,7 @@
 #import "StuInfoModel.h"
 #import "GenInfo.h"
 #import "ChapterModel.h"
+#import "StuErrModel.h"
 
 @interface OnlineJobHttp : NSObject<ASIHTTPRequestDelegate>
 //单
@@ -75,5 +76,9 @@
 -(void)TecQswithchapterid:(NSString*)chapterid;
 //获取自动作业服务器时间
 -(void)GetSQLDateTime;
+// 错题表
+-(void)GetStuErr:(StuErrModel*)model;
+// 根据学生ID分页获取作业或练习列表 参数：学生ID - （0作业,1练习）- 页码 - 页记录数
+-(void)GetStuHWListPageWithStuId:(NSString*)StuId IsSelf:(NSString*)IsSelf PageIndex:(NSString*)PageIndex PageSize:(NSString*)PageSize;
 
 @end

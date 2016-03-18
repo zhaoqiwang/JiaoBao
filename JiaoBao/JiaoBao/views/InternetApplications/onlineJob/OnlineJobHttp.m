@@ -495,5 +495,46 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
     }];
 }
+// 错题表
+-(void)GetStuErr:(StuErrModel*)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuErr",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *parameters = [model propertiesDic];
+    
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        D("JSON--------GetStuErr: %@,", result);
+        
+        // [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:array];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetStuErr: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:nil];
+    }];
+    
+}
+// 根据学生ID分页获取作业或练习列表 参数：学生ID - （0作业,1练习）- 页码 - 页记录数
+-(void)GetStuHWListPageWithStuId:(NSString*)StuId IsSelf:(NSString*)IsSelf PageIndex:(NSString*)PageIndex PageSize:(NSString*)PageSize{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWListPage",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf,@"PageIndex":PageIndex,@"PageSize":PageSize,};
+    [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuHWListPageWithStuId: %@,", result);
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWListPageWithStuId" object:result];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWListPageWithStuId" object:error.localizedDescription];
+        D("Error---------GetStuHWListPageWithStuId: %@", error);
+    }];
+}
+
 
 @end

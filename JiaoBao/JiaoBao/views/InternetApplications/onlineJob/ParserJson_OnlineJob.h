@@ -18,6 +18,7 @@
 #import "StuSubModel.h"
 #import "TreeJob_node.h"
 #import "GetUnitInfoModel.h"
+#import "StuErrModel.h"
 
 
 @interface ParserJson_OnlineJob : NSObject
@@ -35,6 +36,8 @@
 +(NSMutableArray *)parserJsonCompleteStatusHWWith:(NSString*)json;//解析学生作业完成情况
 +(StuSubModel *)parserJsonStuSubModel:(NSString*)json;//解析提交答案model
 +(GetUnitInfoModel *)parserJsonGetUnitInfoModel:(NSString *)json;//解析单位信息获取接口
++(NSMutableArray *)parserJsonStuErr:(NSString*)json;//错题表
+
 
 
 
