@@ -267,6 +267,7 @@
     }
     if (tempArr.count==0) {
         [MBProgressHUD showError:@"请添加请假时间" toView:self];
+        return;
     }
     
     NewLeaveModel *model = [[NewLeaveModel alloc] init];
@@ -324,7 +325,7 @@
     model.sDateTime = @"2016-03-18 15:20:04";
     model.eDateTime = @"2016-03-19 15:21:04";
     [[LeaveHttp getInstance] NewLeaveModel:model];
-    [MBProgressHUD showMessage:@"" toView:self];
+//    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //弹出时间选择框

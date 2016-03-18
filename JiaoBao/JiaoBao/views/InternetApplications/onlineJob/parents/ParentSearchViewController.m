@@ -62,7 +62,7 @@
     
     //三种状态
     NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<5; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
         if (i==0) {
             model.mStr_title = @"当前作业";
@@ -78,6 +78,10 @@
             model.mStr_imgNow = @"buttonView13";
         }else if (i==3){
             model.mStr_title = @"练习查询";
+            model.mStr_img = @"buttonView24";
+            model.mStr_imgNow = @"buttonView14";
+        }else if (i==4){
+            model.mStr_title = @"错题本";
             model.mStr_img = @"buttonView24";
             model.mStr_imgNow = @"buttonView14";
         }
@@ -368,6 +372,8 @@
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"学力";
     }else if (self.mInt_index==3){
+        
+    }else if (self.mInt_index==4){
         
     }
 //    for (UIButton *btn1 in self.mScrollV_all.subviews) {
