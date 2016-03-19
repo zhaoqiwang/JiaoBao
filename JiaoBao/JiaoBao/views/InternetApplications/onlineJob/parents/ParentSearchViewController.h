@@ -40,6 +40,7 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_select;//学生选择下拉按钮
 @property (nonatomic,strong) TableViewWithBlock *mTableV_name;//下拉列表
 @property (nonatomic,strong) GenInfo *mModel_gen;//当前选择的学生
+@property (nonatomic,assign) int mInt_parctice;//练习查询的页码
 
 //点击学生下拉选择
 - (IBAction)selectStuBtnAction:(id)sender;

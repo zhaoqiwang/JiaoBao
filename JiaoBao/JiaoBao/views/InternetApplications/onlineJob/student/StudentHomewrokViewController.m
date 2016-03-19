@@ -60,12 +60,18 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnitInfoWithUID:) name:@"getUnitInfoWithUID" object:nil];
     //使用NSNotificationCenter 鍵盤隐藏時
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    //获取练习查询列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWListPageWithStuId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetStuHWListPageWithStuId:) name:@"GetStuHWListPageWithStuId" object:nil];
     
     self.mArr_homework = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
     self.mArr_sumData = [NSMutableArray array];
     self.mArr_display = [NSMutableArray array];
     self.mInt_index = 0;
+    self.mInt_flag = 0;
+    self.mArr_practiceTotal = [NSMutableArray array];
+    self.mInt_parctice = 1;
     
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
@@ -162,6 +168,26 @@
     }
     //添加默认数据
     [self addDefaultData];
+}
+
+//获取练习查询列表
+-(void)GetStuHWListPageWithStuId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSMutableArray *array = [dic objectForKey:@"array"];
+    if ([ResultCode intValue]==0) {
+        if (array.count>0) {
+            [self.mArr_practiceTotal addObjectsFromArray:array];
+        }else if(self.mArr_practiceTotal.count==0){
+            [MBProgressHUD showError:@"无数据" toView:self.view];
+        }else{
+            [MBProgressHUD showError:@"没有更多" toView:self.view];
+        }
+    }else{
+        [MBProgressHUD showError:@"服务器异常"];
+    }
+    [self.mTableV_list reloadData];
 }
 
 //单位信息获取接口
@@ -264,9 +290,9 @@
 }
 
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)btn{
-   self.mInt_index = (int)btn.tag;
+   self.mInt_flag = (int)btn.tag-100;
     //如果点击练习，
-    if (self.mInt_index==1) {
+    if (self.mInt_flag==1) {
         //先判断作业列表，是否有没有完成的
         int a=0;
         for (int i=0; i<self.mArr_homework.count; i++) {
@@ -282,28 +308,29 @@
         //再发送获取练习列表，然后根据返回的数据，做界面显示
         
     }
-    
-    if (self.mInt_index==0) {//获取作业列表
-        self.mInt_index = 0;
+    [self.mTableV_list removeFooter];
+    if (self.mInt_flag==0) {//获取作业列表
         //判断是否有值
         if (self.mArr_homework.count==0) {
             [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if (self.mInt_index==1){//获取练习列表
-        self.mInt_index = 1;
+    }else if (self.mInt_flag==1){//获取练习列表
         //判断是否有值
         if (self.mArr_practice.count==0) {
             [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if (self.mInt_index==2){//练习查询
-        self.mInt_index = 2;
+    }else if (self.mInt_flag==2){//练习查询
+        [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+        self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+        self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+        self.mTableV_list.footerRefreshingText = @"正在加载...";
         //判断是否有值
-//        if (self.mArr_practice.count==0) {
-//            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
-//            [MBProgressHUD showMessage:@"" toView:self.view];
-//        }
+        if (self.mArr_practiceTotal.count==0) {
+            [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+        }
     }
     [self.mTableV_list reloadData];
 }
@@ -579,14 +606,17 @@
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
-    if (self.mInt_index==0) {
+    if (self.mInt_flag==0) {
         return self.mArr_homework.count;
-    } else {
+    } else if (self.mInt_flag==1) {
         if (self.mArr_practice.count>0) {
             return self.mArr_practice.count;
         }
         return self.mArr_display.count;
+    }else if (self.mInt_flag==2){
+        return self.mArr_practiceTotal.count;
     }
+    return 0;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -595,7 +625,7 @@
     static NSString *TreeJob_sigleSelect_indentifier = @"TreeJob_sigleSelect_TableViewCell";//年级、科目、教版、章节的单选cell
     static NSString *PublishJobIdentifier = @"PublishJobIdentifier";//作业发布cell
     static NSString *OtherItemIdentifer = @"OtherItemIdentifer";//其他项目cell重用标志
-    if (self.mInt_index ==0||self.mArr_practice.count>0) {
+    if (self.mInt_flag ==0||self.mArr_practice.count>0||self.mInt_flag==2) {//作业、练习列表
         StudentHomework_TableViewCell *cell = (StudentHomework_TableViewCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         if (cell == nil) {
             cell = [[StudentHomework_TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
@@ -611,10 +641,12 @@
             [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
         }
         StuHWModel *model;
-        if (self.mInt_index == 0) {
+        if (self.mInt_flag == 0) {
             model = [self.mArr_homework objectAtIndex:indexPath.row];
-        }else{
+        }else if (self.mInt_flag == 1) {
             model = [self.mArr_practice objectAtIndex:indexPath.row];
+        }else if (self.mInt_flag == 2) {
+            model = [self.mArr_practiceTotal objectAtIndex:indexPath.row];
         }
         if ([model.isHaveAdd intValue]==1) {//主观题
             cell.mImg_pic.frame = CGRectMake(8, 12, 14, 14);
@@ -630,7 +662,7 @@
         CGSize numSize = [model.itemNumber sizeWithFont:[UIFont systemFontOfSize:10]];
         cell.mLab_num.frame = CGRectMake(cell.mLab_numLab.frame.origin.x+cell.mLab_numLab.frame.size.width, cell.mLab_numLab.frame.origin.y, numSize.width, cell.mLab_num.frame.size.height);
         //过期时间
-        if (self.mInt_index == 0) {
+        if (self.mInt_flag == 0) {
             cell.mLab_time.hidden = NO;
             cell.mLab_timeLab.hidden = NO;
             cell.mLab_timeLab.frame = CGRectMake(cell.mLab_num.frame.origin.x+cell.mLab_num.frame.size.width+6, cell.mLab_numLab.frame.origin.y, cell.mLab_timeLab.frame.size.width, cell.mLab_timeLab.frame.size.height);
@@ -666,13 +698,13 @@
             cell.mLab_scoreLab.hidden = YES;
             cell.mLab_goto.frame = CGRectMake([dm getInstance].width-9-cell.mLab_goto.frame.size.width, cell.mLab_numLab.frame.origin.y, cell.mLab_goto.frame.size.width, cell.mLab_goto.frame.size.height);
             if ([model.HWStartTime isEqual:@"1970-01-01T00:00:00"]) {
-                if (self.mInt_index == 0) {
+                if (self.mInt_flag == 0) {
                     cell.mLab_goto.text = @"开始作业";
                 }else{
                     cell.mLab_goto.text = @"开始练习";
                 }
             }else{
-                if (self.mInt_index == 0) {
+                if (self.mInt_flag == 0) {
                     cell.mLab_goto.text = @"继续作业";
                 }else{
                     cell.mLab_goto.text = @"继续练习";
@@ -806,9 +838,9 @@
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
 //    return 66;
-    if (self.mInt_index==0) {
+    if (self.mInt_flag==0) {
         return 66;
-    } else {
+    } else if (self.mInt_flag==1) {
         if (self.mArr_practice.count>0) {
             return 66;
         }else{
@@ -824,12 +856,20 @@
             }
         }
         return 35;
+    } else if (self.mInt_flag==2) {
+        return 66;
     }
+    return 0;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (self.mInt_index==0) {
-        StuHWModel *model = [self.mArr_homework objectAtIndex:indexPath.row];
+    if (self.mInt_flag==0||self.mInt_flag==2) {
+        StuHWModel *model;
+        if (self.mInt_flag==0) {
+            model = [self.mArr_homework objectAtIndex:indexPath.row];
+        }else{
+            model = [self.mArr_practiceTotal objectAtIndex:indexPath.row];
+        }
         DetailHWViewController *detail;
         if([model.isHWFinish integerValue] == 0)
         {
@@ -1357,16 +1397,23 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
-    if (self.mInt_index==0) {//获取作业列表
-        [self.mArr_homework removeAllObjects];
+    if (self.mInt_flag==0||self.mInt_flag==2) {//获取作业列表
+        
         //获取
         if ([self.mModel_stuInf.StudentID intValue]>0) {
-            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
+            if (self.mInt_flag==0) {
+                [self.mArr_homework removeAllObjects];
+                [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
+            }else{
+                self.mInt_parctice = 1;
+                [self.mArr_practiceTotal removeAllObjects];
+                [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
+            }
             [MBProgressHUD showMessage:@"" toView:self.view];
         }else{
             [MBProgressHUD showMessage:@"获取学生信息错误" toView:self.view];
         }
-    }else{//获取练习列表
+    }else if (self.mInt_flag==0) {//获取练习列表
         //先判断是现实练习列表，还是布置练习
         if (self.mArr_practice.count>0) {
             [self.mArr_practice removeAllObjects];
@@ -1392,7 +1439,9 @@
 }
 
 - (void)footerRereshing{
-    
+    self.mInt_parctice++;
+    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //导航条返回按钮回调

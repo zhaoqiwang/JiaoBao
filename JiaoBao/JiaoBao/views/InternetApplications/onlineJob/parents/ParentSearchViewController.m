@@ -39,6 +39,9 @@
     //获取某学生学力值
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuEduLevel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetStuEduLevel:) name:@"GetStuEduLevel" object:nil];
+    //获取练习查询列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWListPageWithStuId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetStuHWListPageWithStuId:) name:@"GetStuHWListPageWithStuId" object:nil];
     
     self.mArr_nowHomework = [NSMutableArray array];
     self.mArr_overHomework = [NSMutableArray array];
@@ -46,6 +49,7 @@
     self.mArr_parent = [NSMutableArray array];
     self.mArr_disScore = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
+    self.mInt_parctice = 1;
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"家长查询"];
@@ -140,6 +144,26 @@
         }
     }
     [self.view addSubview:self.mTableV_name];
+}
+
+//获取练习查询列表
+-(void)GetStuHWListPageWithStuId:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSMutableArray *array = [dic objectForKey:@"array"];
+    if ([ResultCode intValue]==0) {
+        if (array.count>0) {
+            [self.mArr_practice addObjectsFromArray:array];
+        }else if(self.mArr_practice.count==0){
+            [MBProgressHUD showError:@"无数据" toView:self.view];
+        }else{
+            [MBProgressHUD showError:@"没有更多" toView:self.view];
+        }
+    }else{
+        [MBProgressHUD showError:@"服务器异常"];
+    }
+    [self.mTableV_list reloadData];
 }
 
 //获取某学生学力值
@@ -346,12 +370,6 @@
             }else{
                 [MBProgressHUD showError:@"无数据" toView:self.view];
             }
-        }else{//练习
-            if (array.count>0) {
-                self.mArr_practice = array;
-            }else{
-                [MBProgressHUD showError:@"无数据" toView:self.view];
-            }
         }
         [self.mTableV_list reloadData];
     }else{
@@ -370,6 +388,7 @@
         return;
     }
     self.mTableV_list.hidden = NO;
+    [self.mTableV_list removeFooter];
     self.mInt_index = (int)view.tag-100;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;
@@ -380,6 +399,10 @@
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"学力";
     }else if (self.mInt_index==3){
+        [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
+        self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
+        self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
+        self.mTableV_list.footerRefreshingText = @"正在加载...";
         self.mTableV_list.tableHeaderView = nil;
     }else if (self.mInt_index==4){
         self.mTableV_list.hidden = YES;
@@ -420,7 +443,8 @@
     }else if (self.mInt_index==3) {//获取练习列表
         //判断是否有值
         if (self.mArr_practice.count==0) {
-            [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_gen.StudentID IsSelf:@"1"];
+            self.mInt_parctice = 1;
+            [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
     }
@@ -439,6 +463,12 @@
         [self.mArr_practice removeAllObjects];
     }
     [self sendRequst];
+}
+
+- (void)footerRereshing{
+    self.mInt_parctice++;
+    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -694,7 +724,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (self.mInt_index ==0||self.mInt_index ==3) {//当前作业查询、练习
-        StuHWModel *model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
+        StuHWModel *model;
+        if (self.mInt_index == 0) {
+            model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
+        }else{
+            model = [self.mArr_practice objectAtIndex:indexPath.row];
+        }
             DetailHWViewController *detail;
             detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
             detail.TabID = model.TabID;
