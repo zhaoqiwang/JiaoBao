@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StuErrViewController : UIViewController
+@interface StuErrViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 
 @end

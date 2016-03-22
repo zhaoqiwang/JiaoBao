@@ -10,5 +10,9 @@
 
 @interface StuErrCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
+//@property (weak, nonatomic) IBOutlet UITextView *textview;
+
+@property (weak, nonatomic) IBOutlet UILabel *htmlLabel;
 
 @end
+
