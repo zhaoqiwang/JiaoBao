@@ -40,10 +40,13 @@
 @property (nonatomic,assign) int mInt_index;//练习选择的索引
 @property (nonatomic,strong) NSMutableArray *mArr_homework;//老师布置作业列表
 @property (nonatomic,strong) NSMutableArray *mArr_practice;//做练习列表
+@property (nonatomic,strong) NSMutableArray *mArr_practiceTotal;//做练习查询总列表
 @property (nonatomic,strong) StuInfoModel *mModel_stuInf;//学生信息，包含id
 @property (strong,nonatomic) NSMutableArray *mArr_sumData;//保存全部数据的数组--发布练习
 @property (strong,nonatomic) NSArray *mArr_display;//保存要显示在界面上的数据的数组--发布练习
 @property (strong,nonatomic) NSString *mStr_textName;//练习名称
 @property (strong,nonatomic) GetUnitInfoModel *mModel_unitInfo;//获取到的单位信息
+@property (nonatomic,assign) int mInt_parctice;//练习查询的页码
+@property (nonatomic,assign) int mInt_flag;//buttonview上，选择的索引
 
 @end
