@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (nonatomic,strong) StuInfoModel *mModel_stuInf;//学生信息，包含id
 @property (nonatomic,strong) GenInfo *mModel_gen;//当前选择的学生
+@property(nonatomic,strong)NSMutableArray *webDataArr;
+-(void)sendRequest;
 
 - (IBAction)conditionAction:(id)sender;
 

@@ -15,7 +15,6 @@
 int cellRefreshCount, newHeight;
 @interface StuErrViewController ()
 @property(nonatomic,strong)NSMutableArray *datasource;
-@property(nonatomic,strong)NSMutableArray *webDataArr;
 @property(nonatomic,assign)NSInteger flag;
 @property(nonatomic,assign)NSInteger mInt_index;
 @property(nonatomic,assign)int mInt_reloadData;
@@ -163,24 +162,12 @@ int cellRefreshCount, newHeight;
     self.webDataArr = [NSMutableArray array];
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
 
-        StuErrModel *model = [[StuErrModel alloc]init];
-    if(self.mModel_stuInf){
-        model.StuId = self.mModel_stuInf.StudentID;
 
-    }
-    else {
-        model.StuId = self.mModel_gen.StudentID;
-
-    }
-        model.IsSelf = @"1";
-        model.PageIndex = @"1";
-        model.PageSize = @"20";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
 
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
-    [MBProgressHUD showMessage:@"" toView:self.view];
-        [[OnlineJobHttp getInstance]GetStuErr:model];
+    [self sendRequest];
     // Do any additional setup after loading the view from its nib.
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -271,8 +258,6 @@ int cellRefreshCount, newHeight;
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
-    [self.webDataArr removeAllObjects];
-    self.mInt_index =0;
     self.mInt_reloadData = 0;
     [self sendRequest];
 }
@@ -284,6 +269,8 @@ int cellRefreshCount, newHeight;
 -(void)sendRequest{
     NSString *page = @"";
     if (self.mInt_reloadData == 0) {
+        [self.webDataArr removeAllObjects];
+        self.mInt_index =0;
         page = @"1";
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{

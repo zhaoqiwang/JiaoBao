@@ -297,6 +297,7 @@
                     [weakSelf.mArr_nowHomework removeAllObjects];
                     [weakSelf.mArr_overHomework removeAllObjects];
                     [weakSelf.mArr_score removeAllObjects];
+                    [weakSelf.mArr_practice removeAllObjects];
                     //重新获取数据
                     [weakSelf sendRequst];
                 }
@@ -463,6 +464,9 @@
             [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
+    }else if (self.mInt_index==4){
+        self.stuErrVC.mModel_gen = self.mModel_gen;
+        [self.stuErrVC sendRequest];
     }
     [self.mTableV_list reloadData];
 }
