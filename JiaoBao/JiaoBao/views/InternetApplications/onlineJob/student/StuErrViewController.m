@@ -179,7 +179,7 @@ int cellRefreshCount, newHeight;
 
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
-    //[MBProgressHUD showMessage:@"" toView:self.view];
+    [MBProgressHUD showMessage:@"" toView:self.view];
         [[OnlineJobHttp getInstance]GetStuErr:model];
     // Do any additional setup after loading the view from its nib.
 }
