@@ -24,7 +24,7 @@
 #import "ButtonView.h"
 
 @interface ParentSearchViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ButtonViewDelegate>
-@property (strong, nonatomic) IBOutlet UIView *containerView;
+@property (strong, nonatomic) UIView *containerView;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) ButtonView *mScrollV_all;//查询分类显示

@@ -27,7 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
+
     //self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view from its nib.
     //获取到学生id
@@ -123,7 +123,9 @@
     
      
     self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mScrollV_all.frame), [dm getInstance].width, [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame)+50)];
+    self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
     [self.view addSubview:self.containerView];
+    self.containerView.hidden = YES;
     [self.view addSubview:self.mTableV_name];
 }
 
@@ -368,30 +370,27 @@
         [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
         return;
     }
-    self.mTableV_list.hidden = NO;
+    //self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
     self.mInt_index = (int)view.tag-100;
     [self.stuErrVC removeFromParentViewController];
     self.containerView.hidden = YES;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;
-        self.stuErrVC.view.hidden = YES;
     } else if (self.mInt_index==1){
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"完成/缺交/总数";
-        self.stuErrVC.view.hidden = YES;
     }else if (self.mInt_index==2){
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"学力";
-        self.stuErrVC.view.hidden = YES;
     }else if (self.mInt_index==3){
         [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
         self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         self.mTableV_list.tableHeaderView = nil;
-        self.stuErrVC.view.hidden = YES;
-    }else if (self.mInt_index==4){
+    }else
+    if (self.mInt_index==4){
         self.mTableV_list.hidden = YES;
         self.containerView.hidden = NO;
         self.mTableV_list.tableHeaderView=nil;
