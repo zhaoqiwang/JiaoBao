@@ -80,7 +80,8 @@
 
 //获取指定班级的所有学生数据列表
 -(void)getClassStdInfoWithUID:(NSString*)UID;
-
+//应用系统通过单位ID，获取学校所有班级
+-(void)getunitclassWithUID:(NSString*)UID;
 
 
 @end

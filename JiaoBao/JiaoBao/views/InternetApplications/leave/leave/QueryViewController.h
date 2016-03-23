@@ -15,17 +15,20 @@
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
-- (IBAction)selectionBtnAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIView *teaHeadView;
 @property (strong, nonatomic) IBOutlet UIView *ParentsHeadView;
 @property(nonatomic,assign)BOOL cellFlag;
 @property (strong, nonatomic) IBOutlet UIView *stuSection;
-- (IBAction)datePickAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
-- (IBAction)cancelToolAction:(id)sender;
-- (IBAction)doneToolAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *dateTF;
 @property (weak, nonatomic) IBOutlet UIButton *dateBtn;
+- (IBAction)cancelToolAction:(id)sender;
+- (IBAction)doneToolAction:(id)sender;
+- (IBAction)datePickAction:(id)sender;
+- (IBAction)selectionBtnAction:(id)sender;
+
+
+
 
 @end

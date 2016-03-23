@@ -53,7 +53,7 @@
     if([ResultCode integerValue]==0){
         NSArray *arr = [dic objectForKey:@"data"];
         self.stuDataSource = arr;
-        self.dataSource = self.myDataSource;
+        self.dataSource = self.stuDataSource;
         [self.tableView reloadData];
         
         
@@ -170,8 +170,6 @@
         
     }
 
-    
-    
     return nil;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -187,6 +185,11 @@
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     return 32;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    leaveRecordModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    
+}
+
 
 
 
