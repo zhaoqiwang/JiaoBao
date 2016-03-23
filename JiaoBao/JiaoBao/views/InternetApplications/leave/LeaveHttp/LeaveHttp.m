@@ -436,6 +436,34 @@ static LeaveHttp *leaveHttp = nil;
     }];
     
 }
+//应用系统通过单位ID，获取学校所有班级
+-(void)getunitclassWithUID:(NSString*)UID{
+    NSString *urlString = [NSString stringWithFormat:@"%@/basic/getunitclass",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"UID":UID};
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *str000 = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        D("JSON--------getunitclassWithUID: %@,", str000);
+        NSMutableArray *mArr = [ParserJson_leave parserJsonUserClassInfoArr:str000];
+        
+        //        NSMutableArray *mArr = [ParserJson_leave parserJsonMyAdminClass:data];
+        //        [dm getInstance].mArr_leaveClass = mArr;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getunitclassWithUID" object:mArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------getunitclassWithUID: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getunitclassWithUID" object:nil];
+    }];
+    
+}
+    
+
 
 
 

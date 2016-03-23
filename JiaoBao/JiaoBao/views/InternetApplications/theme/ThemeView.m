@@ -140,43 +140,6 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
-//    StuErrModel *model = [[StuErrModel alloc]init];
-//    model.StuId = @"3851578";
-//    model.IsSelf = @"1";
-//    model.PageIndex = @"1";
-//    model.PageSize = @"20";
-//    
-//    [[OnlineJobHttp getInstance]GetStuErr:model];
-//    [[OnlineJobHttp getInstance]GetStuHWListPageWithStuId:@"3851578" IsSelf:@"1" PageIndex:@"1" PageSize:@"20"];
-//    [[LeaveHttp getInstance]GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
-//    NewLeaveModel *model = [[NewLeaveModel alloc]init];
-//    model.UnitId =[NSString stringWithFormat:@"%d",[dm getInstance].UID];
-//    model.manId = @"3851578";
-//    model.manName = @"001学生";
-//    model.writerId = [dm getInstance].jiaoBaoHao;
-//    model.writer = [dm getInstance].name;
-//    model.unitClassId  =@"72202";
-//    model.manType = @"0";
-//    model.leaveType = @"病假";
-//    model.leaveReason = @"感冒发烧";
-//    model.sDateTime = @"2016-3-11 5:00:00";
-//    model.eDateTime = @"2016-3-13 5:00:00";
-
-    //[[LeaveHttp getInstance]NewLeaveModel:model];
-//    leaveRecordModel *model = [[leaveRecordModel alloc]init];
-//    model.numPerPage = @"20";
-//    model.RowCount = @"0";
-//    model.accId = [dm getInstance].jiaoBaoHao;
-//    model.sDateTime = @"2016-3-1";
-//    model.manType = @"0";
-//    [[LeaveHttp getInstance]GetMyLeaves:model];
-   // [[LeaveHttp getInstance]GetLeaveModel:@"4"];
-    //[[LeaveHttp getInstance]GetMyStdInfo:[dm getInstance].jiaoBaoHao];
-    //[[LeaveHttp getInstance]GetMyAdminClass:[dm getInstance].jiaoBaoHao];
-    //[LeaveHttp getInstance]getClassStdInfoWithUID:<#(NSString *)#>
-    //[LeaveHttp getInstance]getClassStdInfoWithUID:<#(NSString *)#>];
-    //return;
-//    [[KnowledgeHttp getInstance] GetAllCategory];
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
         CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
         detailVC.modalPresentationStyle = UIModalPresentationFullScreen;

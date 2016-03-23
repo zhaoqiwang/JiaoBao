@@ -10,6 +10,7 @@
 #import "MyStdInfo.h"
 #import "MyAdminClass.h"
 #import "ClassLeavesModel.h"
+#import "UserClassInfo.h"
 #import "StuInfoModel.h"
 
 
@@ -148,10 +149,30 @@
         [mArr addObject:model];
         
     }
-
-    
     return mArr;
     
+}
++(NSMutableArray *)parserJsonUserClassInfoArr:(NSString*)json//解析学校所有班级
+{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        UserClassInfo *model = [[UserClassInfo alloc] init];
+        model.ClassID = [dic objectForKey:@"ClassID"];
+        model.ClassNo = [dic objectForKey:@"ClassNo"];
+        model.ClassName = [dic objectForKey:@"ClassName"];
+        model.GradeYear = [dic objectForKey:@"GradeYear"];
+        model.GradeName = [dic objectForKey:@"GradeName"];
+        model.State = [dic objectForKey:@"State"];
+        model.SchoolID = [dic objectForKey:@"SchoolID"];
+
+        [mArr addObject:model];
+        
+    }
+    
+    
+    return mArr;
 }
 
 

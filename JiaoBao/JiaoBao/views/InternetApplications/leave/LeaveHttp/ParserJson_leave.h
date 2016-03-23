@@ -31,6 +31,8 @@
 //门卫取请假记录
 +(NSMutableArray*)parserJsonGateLeaves:(NSString *)json;
 +(NSMutableArray *)parserJsonStuInfoArr:(NSString*)json;//解析学生信息
++(NSMutableArray *)parserJsonUserClassInfoArr:(NSString*)json;//解析学校所有班级
+
 
 
 

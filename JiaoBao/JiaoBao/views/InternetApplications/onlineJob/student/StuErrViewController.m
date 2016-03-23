@@ -50,7 +50,7 @@ int cellRefreshCount, newHeight;
 
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     StuHWQsModel *model = [sender object];
-    model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br />%@</p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
+    model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
     }
     else{
@@ -76,29 +76,9 @@ int cellRefreshCount, newHeight;
         [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:errModel.HwID QsId:errModel.QsID];
     }
     else{
-//        self.mInt_index=0;
-//        for(int i=0;i<self.webDataArr.count;i++){
-//            StuHWQsModel *subModel = [self.webDataArr objectAtIndex:i];
-//            NSLog(@"%d------nwoefiwenfewn = %@",i,subModel.QsCon);
-//        }
-//        [self.tableVIew headerEndRefreshing];
-//        [self.tableVIew footerEndRefreshing];
-//        [self.tableVIew reloadData];
+
     }
 
-//    if(self.webDataArr.count == self.datasource.count){
-//        NSArray *arr = [self.webDataArr sortedArrayUsingComparator:^NSComparisonResult(StuHWQsModel *p1, StuHWQsModel *p2){
-//            int p1_int = [p1.QsId intValue];
-//            NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-//            int p2_int = [p2.QsId intValue];
-//            NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-//            return [p1_num compare:p2_num];
-//        }];
-//        self.webDataArr =[NSMutableArray arrayWithArray:arr];
- 
-        
-
-    //}
     
 }
 -(void)GetStuErr:(id)sender{
@@ -246,7 +226,7 @@ int cellRefreshCount, newHeight;
         errModel.StuId = self.mModel_gen.StudentID;
         
     }
-    errModel.IsSelf = @"1";
+    errModel.IsSelf = @"0";
     errModel.PageIndex = @"1";
     errModel.PageSize = @"20";
     errModel.chapterID = model.chapterID;
@@ -295,7 +275,7 @@ int cellRefreshCount, newHeight;
         errModel.StuId = self.mModel_gen.StudentID;
         
     }
-    errModel.IsSelf = @"1";
+    errModel.IsSelf = @"0";
     errModel.PageIndex = page;
     errModel.PageSize = @"20";
     [[OnlineJobHttp getInstance]GetStuErr:errModel];
