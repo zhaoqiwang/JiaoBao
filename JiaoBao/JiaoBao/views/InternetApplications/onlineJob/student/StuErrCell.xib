@@ -7,32 +7,29 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="132" id="KGk-i7-Jjw" customClass="StuErrCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="132"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="114" id="KGk-i7-Jjw" customClass="StuErrCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="114"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="113"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Foq-lA-MA4">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="131"/>
+                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sm7-6T-lfu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="113"/>
                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                        <connections>
-                            <outlet property="delegate" destination="-1" id="u2N-5b-Uig"/>
-                        </connections>
                     </webView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="Foq-lA-MA4" secondAttribute="bottom" id="4rI-Uc-aOZ"/>
-                    <constraint firstItem="Foq-lA-MA4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="xBW-iT-3fl"/>
-                    <constraint firstItem="Foq-lA-MA4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xJn-yq-VLE"/>
-                    <constraint firstAttribute="trailing" secondItem="Foq-lA-MA4" secondAttribute="trailing" id="xUM-xZ-4WF"/>
+                    <constraint firstItem="Sm7-6T-lfu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4tN-2a-Aph"/>
+                    <constraint firstItem="Sm7-6T-lfu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="KY7-kV-38Y"/>
+                    <constraint firstAttribute="trailing" secondItem="Sm7-6T-lfu" secondAttribute="trailing" id="dqU-Tn-fZ2"/>
+                    <constraint firstAttribute="bottom" secondItem="Sm7-6T-lfu" secondAttribute="bottom" id="y3j-bb-syY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="webView" destination="Foq-lA-MA4" id="yZk-j3-Jyp"/>
+                <outlet property="webView" destination="Sm7-6T-lfu" id="dfc-bH-H0A"/>
             </connections>
-            <point key="canvasLocation" x="390" y="391"/>
+            <point key="canvasLocation" x="375" y="391"/>
         </tableViewCell>
     </objects>
 </document>

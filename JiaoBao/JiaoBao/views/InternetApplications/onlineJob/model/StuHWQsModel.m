@@ -9,6 +9,12 @@
 #import "StuHWQsModel.h"
 
 @implementation StuHWQsModel
+-(instancetype)init{
+    self = [super init];
+    self.cellHeight = 1;
+    self.webFlag = NO;
+    return self;
+}
 
 
 @end

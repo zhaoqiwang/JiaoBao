@@ -337,7 +337,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
         NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
         
-        D("JSON--------GetStuHWQsWithHwInfoId: %@,", str2);
+        //D("JSON--------GetStuHWQsWithHwInfoId: %@,", str2);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -506,10 +506,9 @@ static OnlineJobHttp *onlineJobHttp = nil;
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
-        D("JSON--------GetStuErr: %@,", result);
-        
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:array];
+        //D("JSON--------GetStuErr: %@,", result);
+        NSMutableArray *mArr = [ParserJson_OnlineJob parserJsonStuErr:result];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetStuErr: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:nil];

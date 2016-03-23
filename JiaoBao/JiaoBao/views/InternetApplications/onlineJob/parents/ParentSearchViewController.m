@@ -10,9 +10,10 @@
 #import "OnlineJobHttp.h"
 #import "StuInfoModel.h"
 #import "DetailHWViewController.h"
+#import "StuErrViewController.h"
 
 @interface ParentSearchViewController ()
-
+@property(nonatomic,strong)StuErrViewController *stuErrVC;
 @end
 
 @implementation ParentSearchViewController
@@ -26,6 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    //self.automaticallyAdjustsScrollViewInsets = NO;
     // Do any additional setup after loading the view from its nib.
     //获取到学生id
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getGenInfoWithAccID" object:nil];
@@ -95,32 +98,6 @@
     }
     self.mScrollV_all = [[ButtonView alloc] initFrame:CGRectMake(0, self.mLab_select.frame.origin.y+self.mLab_select.frame.size.height+10, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
-//    self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.mLab_select.frame.origin.y+self.mLab_select.frame.size.height, [dm getInstance].width, 48)];
-//    int tempWidth = [dm getInstance].width/3;
-//    for (int i=0; i<3; i++) {
-//        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [btn setFrame:CGRectMake(tempWidth*i, 1, tempWidth, 47)];
-//        [btn setTag:i];
-//        if (i==0) {
-//            btn.selected = YES;
-//            self.mInt_index = 0;
-//            [btn setTitle:@"当前作业" forState:UIControlStateNormal];
-//        }else if (i==1){
-//            [btn setTitle:@"作业完成情况" forState:UIControlStateNormal];
-//        }else if (i==2){
-//            [btn setTitle:@"学力" forState:UIControlStateNormal];
-//        }
-//        [btn setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
-//        btn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
-//        
-//        [btn setTitleColor:[UIColor colorWithRed:3/255.0 green:170/255.0 blue:54/255.0 alpha:1] forState:UIControlStateSelected];
-//        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//        [btn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-//        [btn setBackgroundImage:[UIImage imageNamed:@"topBtnSelect0"] forState:UIControlStateSelected];
-//        [btn addTarget:self action:@selector(selectScrollButton:) forControlEvents:UIControlEventTouchUpInside];
-//        [self.mScrollV_all addSubview:btn];
-//    }
-//    self.mScrollV_all.contentSize = CGSizeMake(tempWidth*3, 48);
     [self.view addSubview:self.mScrollV_all];
     
     self.mView_head = [[ParentSearchHeadView alloc] initFrame1];
@@ -143,6 +120,12 @@
             }
         }
     }
+    
+     
+    self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mScrollV_all.frame), [dm getInstance].width, [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame)+50)];
+    self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
+    [self.view addSubview:self.containerView];
+    self.containerView.hidden = YES;
     [self.view addSubview:self.mTableV_name];
 }
 
@@ -288,34 +271,35 @@
     if ([ResultCode intValue]==0) {
         GenInfo *model = [dic objectForKey:@"model"];
         [self.mArr_parent addObject:model];
-        
+        __weak ParentSearchViewController *weakSelf = self;
         [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
-            return self.mArr_parent.count;
+            return weakSelf.mArr_parent.count;
         } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
             UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
             if (!cell) {
                 cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectionCell"];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
             }
-            GenInfo *model = [self.mArr_parent objectAtIndex:indexPath.row];
+            GenInfo *model = [weakSelf.mArr_parent objectAtIndex:indexPath.row];
             cell.textLabel.text = model.StdName;
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             return cell;
         } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
             [UIView animateWithDuration:0.3 animations:^{
-                self.mTableV_name.frame =  CGRectMake(self.mTableV_name.frame.origin.x, self.mTableV_name.frame.origin.y, self.mTableV_name.frame.size.width, 0);
+                weakSelf.mTableV_name.frame =  CGRectMake(weakSelf.mTableV_name.frame.origin.x, weakSelf.mTableV_name.frame.origin.y, weakSelf.mTableV_name.frame.size.width, 0);
             } completion:^(BOOL finished){
-                GenInfo *model = [self.mArr_parent objectAtIndex:indexPath.row];
-                [self.mBtn_select setTitle:model.StdName forState:UIControlStateNormal];
-                if ([self.mModel_gen.StudentID intValue] == [model.StudentID intValue]) {
+                GenInfo *model = [weakSelf.mArr_parent objectAtIndex:indexPath.row];
+                [weakSelf.mBtn_select setTitle:model.StdName forState:UIControlStateNormal];
+                if ([weakSelf.mModel_gen.StudentID intValue] == [model.StudentID intValue]) {
                     
                 }else{
-                    self.mModel_gen = model;
-                    [self.mArr_nowHomework removeAllObjects];
-                    [self.mArr_overHomework removeAllObjects];
-                    [self.mArr_score removeAllObjects];
+                    weakSelf.mModel_gen = model;
+                    [weakSelf.mArr_nowHomework removeAllObjects];
+                    [weakSelf.mArr_overHomework removeAllObjects];
+                    [weakSelf.mArr_score removeAllObjects];
+                    [weakSelf.mArr_practice removeAllObjects];
                     //重新获取数据
-                    [self sendRequst];
+                    [weakSelf sendRequst];
                 }
             }];
         }];
@@ -387,9 +371,11 @@
         [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
         return;
     }
-    self.mTableV_list.hidden = NO;
+    //self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
     self.mInt_index = (int)view.tag-100;
+    [self.stuErrVC removeFromParentViewController];
+    self.containerView.hidden = YES;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;
     } else if (self.mInt_index==1){
@@ -404,8 +390,19 @@
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         self.mTableV_list.tableHeaderView = nil;
-    }else if (self.mInt_index==4){
+    }else
+    if (self.mInt_index==4){
         self.mTableV_list.hidden = YES;
+        self.containerView.hidden = NO;
+        self.mTableV_list.tableHeaderView=nil;
+        
+
+        [self addChildViewController:self.stuErrVC];
+        self.stuErrVC.mModel_gen = self.mModel_gen;
+        [self.stuErrVC didMoveToParentViewController:self];
+        [self addChild:self.stuErrVC withChildToRemove:nil];
+        
+        
     }
 //    for (UIButton *btn1 in self.mScrollV_all.subviews) {
 //        if ([btn1.class isSubclassOfClass:[UIButton class]]) {
@@ -418,6 +415,26 @@
 //    }
     //发送请求
     [self sendRequst];
+}
+-(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+{
+    assert(childToAdd != nil);
+    
+    if (childToRemove != nil)
+    {
+        [childToRemove.view removeFromSuperview];
+    }
+    
+    // match the child size to its parent
+    CGRect frame = childToAdd.view.frame;
+    frame.origin.y = 0;
+    frame.size.height = [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame);
+    frame.size.width =[dm getInstance].width;
+    childToAdd.view.frame = frame;
+    
+    //containerView.backgroundColor = [UIColor clearColor];
+    NSLog(@"frame =%@",NSStringFromCGRect(childToAdd.view.frame));
+    [self.containerView addSubview:childToAdd.view];
 }
 
 //发送请求
@@ -447,6 +464,9 @@
             [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
+    }else if (self.mInt_index==4){
+        self.stuErrVC.mModel_gen = self.mModel_gen;
+        [self.stuErrVC sendRequest];
     }
     [self.mTableV_list reloadData];
 }
@@ -874,6 +894,15 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
+    //[self.stuErrVC.view removeFromSuperview ];
+    
+}
+-(void)dealloc{
+    [self.stuErrVC removeFromParentViewController];
+
 }
 
 /*

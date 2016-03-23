@@ -11,6 +11,8 @@
 @implementation StuErrCell
 
 - (void)awakeFromNib {
+    self.webView.scrollView.scrollEnabled = NO;
+    //self.webView.scalesPageToFit = YES;
     // Initialization code
 }
 

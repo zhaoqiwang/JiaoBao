@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/Common/AFNetworking/AFURLConnectionOperation.m"
-            timestampString = "478491543.825177"
+            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeRecommentAddAnswerViewController.m"
+            timestampString = "480216295.227277"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
-            landmarkName = "-responseString"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "-ShowRecomment:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -35,61 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/Common/MBProgressHUD+Add.m"
-            timestampString = "479094123.49919"
+            filePath = "JiaoBao/views/InternetApplications/theme/Knowledge/KnowledgeRecommentAddAnswerViewController.m"
+            timestampString = "480216302.923526"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "+showMessag:toView:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/Common/MBProgressHUD+Add.m"
-            timestampString = "479094151.933745"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "+showSuccess:toView:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/Common/MBProgressHUD+Add.m"
-            timestampString = "479094366.314466"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "+show:icon:view:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/leave/leave/LeaveView.m"
-            timestampString = "479895993.413814"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
-            landmarkName = "-addLeave"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "-ShowRecomment:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

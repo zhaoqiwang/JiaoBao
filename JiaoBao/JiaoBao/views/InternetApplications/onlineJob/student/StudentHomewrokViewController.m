@@ -10,9 +10,13 @@
 #import "define_constant.h"
 #import "DetailHWViewController.h"
 #import "GetUnitInfoModel.h"
+#import "StuErrViewController.h"
 
 @interface StudentHomewrokViewController ()
 @property(nonatomic,strong)UITextField *titleTF;//标题更改输入框
+@property(nonatomic,strong)StuErrViewController *stuErrVC;
+@property (strong, nonatomic) IBOutlet UIView *containerView;
+
 
 @end
 
@@ -168,6 +172,9 @@
     }
     //添加默认数据
     [self addDefaultData];
+    self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
+    self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mScrollV_all.frame), [dm getInstance].width, [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame))];
+    [self.view addSubview:self.containerView];
 }
 
 //获取练习查询列表
@@ -308,7 +315,10 @@
         //再发送获取练习列表，然后根据返回的数据，做界面显示
         
     }
+    self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
+    [self.stuErrVC removeFromParentViewController];
+    self.containerView.hidden = YES;
     if (self.mInt_flag==0) {//获取作业列表
         //判断是否有值
         if (self.mArr_homework.count==0) {
@@ -331,10 +341,41 @@
             [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
+    }else if(self.mInt_flag==3){
+        self.mTableV_list.hidden = YES;
+        self.containerView.hidden = NO;
+        self.mTableV_list.tableHeaderView=nil;
+        
+        
+        [self addChildViewController:self.stuErrVC];
+        [self.stuErrVC didMoveToParentViewController:self];
+        self.stuErrVC.mModel_stuInf = self.mModel_stuInf;
+        [self addChild:self.stuErrVC withChildToRemove:nil];
+        
     }
+    
     [self.mTableV_list reloadData];
 }
-
+-(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+{
+    assert(childToAdd != nil);
+    
+    if (childToRemove != nil)
+    {
+        [childToRemove.view removeFromSuperview];
+    }
+    
+    // match the child size to its parent
+    CGRect frame = childToAdd.view.frame;
+    frame.origin.y = 0;
+    frame.size.height = [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame);
+    frame.size.width =[dm getInstance].width;
+    childToAdd.view.frame = frame;
+    
+    //containerView.backgroundColor = [UIColor clearColor];
+    NSLog(@"frame =%@",NSStringFromCGRect(childToAdd.view.frame));
+    [self.containerView addSubview:childToAdd.view];
+}
 //获取年级列表
 -(void)GetGradeList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
