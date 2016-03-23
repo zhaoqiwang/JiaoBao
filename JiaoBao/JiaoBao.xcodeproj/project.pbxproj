@@ -30,6 +30,11 @@
 		4307165C1C93C56F008D3382 /* LeaveNowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165B1C93C56F008D3382 /* LeaveNowModel.m */; };
 		430716611C93C6F3008D3382 /* LeaveNowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */; };
 		430716621C93C6F3008D3382 /* LeaveNowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */; };
+		437E2D7C1C9F805C0074F2ED /* LeaveDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 437E2D7A1C9F805C0074F2ED /* LeaveDetailTableViewCell.m */; };
+		437E2D7D1C9F805C0074F2ED /* LeaveDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437E2D7B1C9F805C0074F2ED /* LeaveDetailTableViewCell.xib */; };
+		437E2D811C9F9B600074F2ED /* LeaveDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 437E2D7F1C9F9B600074F2ED /* LeaveDetailViewController.m */; };
+		437E2D821C9F9B600074F2ED /* LeaveDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */; };
+		437E2D851C9FA2220074F2ED /* LeaveDetailShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 437E2D841C9FA2220074F2ED /* LeaveDetailShowModel.m */; };
 		438F176C1C9BDE5A002AA0DA /* SelectChapteridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */; };
 		438F176D1C9BDE5A002AA0DA /* SelectChapteridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */; };
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
@@ -1191,6 +1196,14 @@
 		4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveNowTableViewCell.h; path = cell/LeaveNowTableViewCell.h; sourceTree = "<group>"; };
 		4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveNowTableViewCell.m; path = cell/LeaveNowTableViewCell.m; sourceTree = "<group>"; };
 		430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveNowTableViewCell.xib; path = cell/LeaveNowTableViewCell.xib; sourceTree = "<group>"; };
+		437E2D791C9F805C0074F2ED /* LeaveDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailTableViewCell.h; path = cell/LeaveDetailTableViewCell.h; sourceTree = "<group>"; };
+		437E2D7A1C9F805C0074F2ED /* LeaveDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveDetailTableViewCell.m; path = cell/LeaveDetailTableViewCell.m; sourceTree = "<group>"; };
+		437E2D7B1C9F805C0074F2ED /* LeaveDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveDetailTableViewCell.xib; path = cell/LeaveDetailTableViewCell.xib; sourceTree = "<group>"; };
+		437E2D7E1C9F9B600074F2ED /* LeaveDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailViewController.h; path = check/LeaveDetailViewController.h; sourceTree = "<group>"; };
+		437E2D7F1C9F9B600074F2ED /* LeaveDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveDetailViewController.m; path = check/LeaveDetailViewController.m; sourceTree = "<group>"; };
+		437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveDetailViewController.xib; path = check/LeaveDetailViewController.xib; sourceTree = "<group>"; };
+		437E2D831C9FA2220074F2ED /* LeaveDetailShowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailShowModel.h; path = model/LeaveDetailShowModel.h; sourceTree = "<group>"; };
+		437E2D841C9FA2220074F2ED /* LeaveDetailShowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveDetailShowModel.m; path = model/LeaveDetailShowModel.m; sourceTree = "<group>"; };
 		438F17691C9BDE5A002AA0DA /* SelectChapteridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectChapteridViewController.h; path = views/InternetApplications/onlineJob/SelectChapteridViewController.h; sourceTree = "<group>"; };
 		438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectChapteridViewController.m; path = views/InternetApplications/onlineJob/SelectChapteridViewController.m; sourceTree = "<group>"; };
 		438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectChapteridViewController.xib; path = views/InternetApplications/onlineJob/SelectChapteridViewController.xib; sourceTree = "<group>"; };
@@ -2930,6 +2943,9 @@
 				430279951C995845003546E9 /* CheckLeaveViewController.h */,
 				430279961C995845003546E9 /* CheckLeaveViewController.m */,
 				430279971C995845003546E9 /* CheckLeaveViewController.xib */,
+				437E2D7E1C9F9B600074F2ED /* LeaveDetailViewController.h */,
+				437E2D7F1C9F9B600074F2ED /* LeaveDetailViewController.m */,
+				437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */,
 			);
 			name = check;
 			sourceTree = "<group>";
@@ -2949,6 +2965,9 @@
 				F792C9EA1C98FCF100CE5FD0 /* CustomQueryCell.h */,
 				F792C9EB1C98FCF100CE5FD0 /* CustomQueryCell.m */,
 				F792C9EC1C98FCF100CE5FD0 /* CustomQueryCell.xib */,
+				437E2D791C9F805C0074F2ED /* LeaveDetailTableViewCell.h */,
+				437E2D7A1C9F805C0074F2ED /* LeaveDetailTableViewCell.m */,
+				437E2D7B1C9F805C0074F2ED /* LeaveDetailTableViewCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -5248,6 +5267,8 @@
 				F75D38B21C96542000B71B1E /* ClassLeavesModel.m */,
 				F75D38B41C965E9700B71B1E /* CheckLeaveModel.h */,
 				F75D38B51C965E9700B71B1E /* CheckLeaveModel.m */,
+				437E2D831C9FA2220074F2ED /* LeaveDetailShowModel.h */,
+				437E2D841C9FA2220074F2ED /* LeaveDetailShowModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -5715,6 +5736,7 @@
 				F70B96871C90FB650001D696 /* icon_ios7.png in Resources */,
 				A73DD81E19FE4D5E00BF0C97 /* root_open@2x.png in Resources */,
 				A761D3FB1A7F697900DCAEB9 /* rootTableSelect_0.png in Resources */,
+				437E2D821C9F9B600074F2ED /* LeaveDetailViewController.xib in Resources */,
 				A727C7D51A6F93780019C4CD /* share_clickBig@2x.png in Resources */,
 				A761D3ED1A7F697900DCAEB9 /* rootTable_0@2x.png in Resources */,
 				A768298E1AC69B21003B31EB /* classView_click_4.png in Resources */,
@@ -6131,6 +6153,7 @@
 				A7781F461AE8A0F300F03AEB /* NewWorkView_2@2x.png in Resources */,
 				A75046921A0A14BC00C54ECC /* forward_select2@2x.png in Resources */,
 				A7CE67361AA70A250038D0C5 /* showArticle@2x.png in Resources */,
+				437E2D7D1C9F805C0074F2ED /* LeaveDetailTableViewCell.xib in Resources */,
 				A761D3F21A7F697900DCAEB9 /* rootTable_2.png in Resources */,
 				A7CE67331AA70A250038D0C5 /* shareArticle@2x.png in Resources */,
 				A79C7AE61AF22ACB00E9D30A /* newWork_reverseSelect.png in Resources */,
@@ -6357,6 +6380,7 @@
 				F79B613B1B7202A5005FEA44 /* SubItemModel.m in Sources */,
 				A75E3FB41B6F64B700284C3D /* AFURLConnectionOperation.m in Sources */,
 				A7AD8C2B19F60CAC002E65FB /* TabbarView.m in Sources */,
+				437E2D811C9F9B600074F2ED /* LeaveDetailViewController.m in Sources */,
 				A773FC2A1A4B9869005F84C2 /* UITableView+DelegateBlocks.m in Sources */,
 				F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */,
 				430279861C995618003546E9 /* LeaveTopScrollView.m in Sources */,
@@ -6472,6 +6496,7 @@
 				F7119FD11C9642F800A7F8FB /* MyStdInfo.m in Sources */,
 				A749B9FE19F8F4060036F480 /* TreeView_Level2_Cell.m in Sources */,
 				A7AAC4D519F7893A00A0ED40 /* InternetAppTopScrollView.m in Sources */,
+				437E2D7C1C9F805C0074F2ED /* LeaveDetailTableViewCell.m in Sources */,
 				A753E5271A1B2C79005A8EED /* ShareCollectionViewCell.m in Sources */,
 				A7A8CDDE1A232CCD00A96453 /* UploadImgModel.m in Sources */,
 				F78EF17D1B2150CB003B6603 /* UnitTableViewCell.m in Sources */,
@@ -6539,6 +6564,7 @@
 				F7C8AB691B72FD5900E829A4 /* AnswerByIdModel.m in Sources */,
 				A7781F1F1AE889B400F03AEB /* NewWorkTopScrollView.m in Sources */,
 				A7BB17E519F4AB4600A81286 /* LoginSendHttp.m in Sources */,
+				437E2D851C9FA2220074F2ED /* LeaveDetailShowModel.m in Sources */,
 				A7B0F9581A47C37D00C1863A /* MBProgressHUD+Add.m in Sources */,
 				A75E3FB01B6F64B700284C3D /* AFHTTPRequestOperationManager.m in Sources */,
 				A75E3FB51B6F64B700284C3D /* AFURLRequestSerialization.m in Sources */,

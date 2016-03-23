@@ -15,6 +15,9 @@
     self = [super init];
     if (self)
     {
+        //生成一条请假条记录
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewLeaveModel" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NewLeaveModel:) name:@"NewLeaveModel" object:nil];
         // Initialization code
         self.frame = frame;
         self.mInt_flag = flag;
@@ -61,6 +64,27 @@
         manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     }
     return self;
+}
+
+//生成一条请假条记录
+-(void)NewLeaveModel:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode intValue]==0) {
+        //清空选项
+        for (int i=(int)self.mArr_leave.count-1;i>=0;i--) {
+            LeaveNowModel *tempModel = [self.mArr_leave objectAtIndex:i];
+            if (tempModel.mInt_flag==0||tempModel.mInt_flag==1||tempModel.mInt_flag==2) {
+                tempModel.mStr_value = @"";
+            }else if (tempModel.mInt_flag==3) {
+                [self.mArr_leave removeObjectAtIndex:i];
+            }
+        }
+        [self.mTableV_leave reloadData];
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -293,7 +317,7 @@
         model.manName = [dm getInstance].userInfo.UserName;
     }
     model.writerId = [dm getInstance].jiaoBaoHao;
-    model.writer = [dm getInstance].userInfo.UserName;
+    model.writer = [dm getInstance].TrueName;
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==1) {
             model.leaveType = tempModel.mStr_value;
@@ -325,7 +349,7 @@
     model.sDateTime = @"2016-03-18 15:20:04";
     model.eDateTime = @"2016-03-19 15:21:04";
     [[LeaveHttp getInstance] NewLeaveModel:model];
-//    [MBProgressHUD showMessage:@"" toView:self];
+    [MBProgressHUD showMessage:@"" toView:self];
 }
 
 //弹出时间选择框
