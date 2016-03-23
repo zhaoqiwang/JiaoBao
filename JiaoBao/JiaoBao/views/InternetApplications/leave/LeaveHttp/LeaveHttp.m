@@ -60,17 +60,22 @@ static LeaveHttp *leaveHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *parameters = [model propertiesDic];
-    
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
         D("JSON--------NewLeaveModel: %@,", result);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:array];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------NewLeaveModel: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:dic];
     }];
-    
 }
 //更新一条请假条记录
 -(void)UpdateLeaveModel:(NewLeaveModel*)model{
@@ -221,10 +226,16 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         LeaveDetailModel *model = [ParserJson_leave parserJsonleaveDetail:data];
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:array];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        NSDictionary *dic = @{@"model":model,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetLeaveModel: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:dic];
     }];
 }
 //班主任身份获取本班学生请假的审批记录
