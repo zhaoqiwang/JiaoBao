@@ -50,8 +50,10 @@ int cellRefreshCount, newHeight;
 
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     StuHWQsModel *model = [sender object];
+    NSLog(@"content = %@",model.QsCon);
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
+        
     }
     else{
        [self.webDataArr addObject:model];
@@ -147,7 +149,6 @@ int cellRefreshCount, newHeight;
 
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
-    [self sendRequest];
     // Do any additional setup after loading the view from its nib.
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

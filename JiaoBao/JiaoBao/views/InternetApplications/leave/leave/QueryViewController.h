@@ -28,6 +28,7 @@
 - (IBAction)datePickAction:(id)sender;
 - (IBAction)selectionBtnAction:(id)sender;
 
+- (IBAction)Stu_SelectionAction:(id)sender;
 
 
 

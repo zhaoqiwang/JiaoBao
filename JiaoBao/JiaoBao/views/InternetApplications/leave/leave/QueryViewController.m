@@ -13,9 +13,10 @@
 #import "LeaveHttp.h"
 #import "MBProgressHUD+AD.h"
 #import "MyAdminClass.h"
+#import "ChooseStudentViewController.h"
 
 
-@interface QueryViewController ()
+@interface QueryViewController ()<ChooseStudentViewCDelegate>
 @property(nonatomic,strong)NSArray *dataSource;
 @property(nonatomic,strong)NSArray *myDataSource;
 @property(nonatomic,strong)NSArray *stuDataSource;
@@ -63,14 +64,30 @@
         [MBProgressHUD showError:ResultDesc];
     }
 }
-
+-(void)GetMyStdInfo:(NSNotification*)sender{
+    leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
+    recordModel.numPerPage = @"20";
+    recordModel.pageNum = @"1";
+    recordModel.RowCount = @"0";
+    recordModel.accId = [dm getInstance].jiaoBaoHao;
+    recordModel.sDateTime = @"2016-03";
+    recordModel.manType = @"1";
+    recordModel.mName = @"";
+    [MBProgressHUD showMessage:@"" toView:self.view];
+    [[LeaveHttp getInstance]GetMyLeaves:recordModel];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //获得我提出申请的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
-    
+    //班主任取审批的记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetClassLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetClassLeaves" object:nil];
+    //取得我的教宝号所关联的学生列表(家长身份
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyStdInfo" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyStdInfo:) name:@"GetMyStdInfo" object:nil];
     self.dateTF.inputAccessoryView = self.toolBar;
     self.dateTF.inputView = self.datePicker;
     self.cellFlag = YES;
@@ -97,19 +114,30 @@
     }
 
     self.tableView.tableHeaderView = headView;
+    [self sendRequest];
+
+
+}
+-(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
     leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
     recordModel.numPerPage = @"20";
     recordModel.pageNum = @"1";
     recordModel.RowCount = @"0";
     recordModel.accId = [dm getInstance].jiaoBaoHao;
     recordModel.sDateTime = @"2016-03";
-    recordModel.manType = @"1";
-    recordModel.mName = @"";
-    [MBProgressHUD showMessage:@"" toView:self.view];
-    [[LeaveHttp getInstance]GetMyLeaves:recordModel];
+    if(self.mInt_leaveID == 3){
+        recordModel.manType = @"0";
+        recordModel.mName = @"";
+    }else{
 
+        recordModel.manType = @"1";
+        recordModel.mName = @"";
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        [[LeaveHttp getInstance]GetMyLeaves:recordModel];
+    }
+
+    
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -167,9 +195,7 @@
         }
         [cell setCellData:[self.dataSource objectAtIndex:indexPath.row]];
         return cell;
-        
     }
-
     return nil;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -249,6 +275,17 @@
     }
     
 }
+
+- (IBAction)Stu_SelectionAction:(id)sender {
+    ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
+    chooseStu.delegate = self;
+    chooseStu.mInt_flagID = 0;
+    chooseStu.mInt_flag = 0;
+    chooseStu.mStr_navName = @"选择学生";
+    
+
+
+}
 - (IBAction)datePickAction:(id)sender {
     [self.dateTF becomeFirstResponder];
 
@@ -268,4 +305,12 @@
 
     
 }
+//- (void) ChooseStudentViewCSelect:(id) student flag:(int)flag flagID:(int)flagID{
+//
+//            self.mModel_student = student;
+//            LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
+//            model.mStr_value = self.mModel_student.StdName;
+//    
+//}
+
 @end
