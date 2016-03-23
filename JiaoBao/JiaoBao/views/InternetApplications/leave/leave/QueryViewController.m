@@ -20,6 +20,8 @@
 @property(nonatomic,strong)NSArray *dataSource;
 @property(nonatomic,strong)NSArray *myDataSource;
 @property(nonatomic,strong)NSArray *stuDataSource;
+@property(nonatomic,strong)leaveRecordModel *recordModel;
+@property(nonatomic,strong)NSDate *currentDate;
 
 
 @end
@@ -79,6 +81,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.recordModel = [[leaveRecordModel alloc]init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy年MM月"];
+    self.currentDate = [NSDate date];
+    self.recordModel.sDateTime = [formatter stringFromDate:self.currentDate];
+
     //获得我提出申请的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
@@ -88,54 +96,53 @@
     //取得我的教宝号所关联的学生列表(家长身份
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyStdInfo" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyStdInfo:) name:@"GetMyStdInfo" object:nil];
-    self.dateTF.inputAccessoryView = self.toolBar;
-    self.dateTF.inputView = self.datePicker;
+    
     self.cellFlag = YES;
     UIView *headView = [[UIView alloc]init ];
-    if(self.mInt_leaveID ==1){
-        headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.tableHeadView.frame));
-        [headView addSubview:self.tableHeadView];
-
-    }
-    else if (self.mInt_leaveID ==2){
+    if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2，家长3
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
         [headView addSubview:self.teaHeadView];
+        self.teaDateTF.inputAccessoryView = self.toolBar;
+        self.teaDateTF.inputView = self.datePicker;
+        self.dateTf = self.teaDateTF;
+        [self.dateBtn setTitle:self.recordModel.sDateTime forState:UIControlStateNormal];
 
-    }
-    else if (self.mInt_leaveID == 3){
+    }else if (self.mInt_leaveID == 3){
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.ParentsHeadView.frame));
         [headView addSubview:self.ParentsHeadView];
-
-    }
-    else{
-        headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
-        [headView addSubview:self.teaHeadView];
-        
+        self.dateTF.inputAccessoryView = self.toolBar;
+        self.dateTF.inputView = self.datePicker;
+        self.dateTf = self.dateTF;
+        [self.parentDateBtn setTitle:self.recordModel.sDateTime forState:UIControlStateNormal];
     }
 
     self.tableView.tableHeaderView = headView;
+    if([dm getInstance].mArr_leaveStudent.count>0){
+        self.mModel_student = [[dm getInstance].mArr_leaveStudent objectAtIndex:0];
+        [self.stuBtn setTitle:self.mModel_student.StdName forState:UIControlStateNormal];
+
+    }
     [self sendRequest];
 
 
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
-    leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
-    recordModel.numPerPage = @"20";
-    recordModel.pageNum = @"1";
-    recordModel.RowCount = @"0";
-    recordModel.accId = [dm getInstance].jiaoBaoHao;
-    recordModel.sDateTime = @"2016-03";
+
+    self.recordModel.numPerPage = @"20";
+    self.recordModel.pageNum = @"1";
+    self.recordModel.RowCount = @"0";
+    self.recordModel.accId = [dm getInstance].jiaoBaoHao;
     if(self.mInt_leaveID == 3){
-        recordModel.manType = @"0";
-        recordModel.mName = @"";
+        self.recordModel.manType = @"0";
+        self.recordModel.mName = self.mModel_student.StdName;
     }else{
 
-        recordModel.manType = @"1";
-        recordModel.mName = @"";
-        [MBProgressHUD showMessage:@"" toView:self.view];
-        [[LeaveHttp getInstance]GetMyLeaves:recordModel];
-    }
+        self.recordModel.manType = @"1";
+        self.recordModel.mName = @"";
 
+    }
+    [MBProgressHUD showMessage:@"" toView:self.view];
+    [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
     
 }
 - (void)didReceiveMemoryWarning {
@@ -282,35 +289,39 @@
     chooseStu.mInt_flagID = 0;
     chooseStu.mInt_flag = 0;
     chooseStu.mStr_navName = @"选择学生";
+    [self.navigationController pushViewController:chooseStu animated:YES];
     
 
 
 }
 - (IBAction)datePickAction:(id)sender {
-    [self.dateTF becomeFirstResponder];
+    [self.dateTf becomeFirstResponder];
 
 
 }
 - (IBAction)cancelToolAction:(id)sender {
-    [self.dateTF resignFirstResponder];
+    [self.dateTf resignFirstResponder];
 
 }
 
 - (IBAction)doneToolAction:(id)sender {
-    [self.dateTF resignFirstResponder];
+    [self.dateTf resignFirstResponder];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy年MM月"];
+    [self.parentDateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
     [self.dateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
+    self.recordModel.sDateTime = [formatter stringFromDate:self.datePicker.date];
+    [self sendRequest];
     
 
     
 }
-//- (void) ChooseStudentViewCSelect:(id) student flag:(int)flag flagID:(int)flagID{
-//
-//            self.mModel_student = student;
-//            LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
-//            model.mStr_value = self.mModel_student.StdName;
-//    
-//}
+- (void) ChooseStudentViewCSelect:(id) student flag:(int)flag flagID:(int)flagID{
+
+    self.mModel_student = student;
+    [self.stuBtn setTitle:self.mModel_student.StdName forState:UIControlStateNormal];
+    [self sendRequest];
+    
+}
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyStdInfo.h"
 
 @interface QueryViewController : UITableViewController<UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *tableHeadView;
@@ -22,7 +23,13 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UITextField *dateTF;
+@property (weak, nonatomic) IBOutlet UITextField *teaDateTF;
 @property (weak, nonatomic) IBOutlet UIButton *dateBtn;
+@property(strong,nonatomic)UITextField *dateTf;
+@property (nonatomic,strong) MyStdInfo *mModel_student;//家长身份时，选择学生的信息
+@property (weak, nonatomic) IBOutlet UIButton *stuBtn;
+@property (weak, nonatomic) IBOutlet UIButton *parentDateBtn;
+
 - (IBAction)cancelToolAction:(id)sender;
 - (IBAction)doneToolAction:(id)sender;
 - (IBAction)datePickAction:(id)sender;
