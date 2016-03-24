@@ -98,6 +98,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyStdInfo:) name:@"GetMyStdInfo" object:nil];
     
     self.cellFlag = YES;
+    self.datePicker.backgroundColor =[UIColor whiteColor];
     UIView *headView = [[UIView alloc]init ];
     if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2，家长3
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
