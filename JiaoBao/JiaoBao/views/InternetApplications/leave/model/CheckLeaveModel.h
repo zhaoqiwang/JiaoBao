@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface CheckLeaveModel : NSObject
-@property (nonatomic,strong) NSString *TabID;//假条记录ID
+@property (nonatomic,strong) NSString *tabid;//假条记录ID
 @property (nonatomic,strong) NSString *level;//审批级别，1-5（一级到五级）
 @property (nonatomic,strong) NSString *userName;//审批人姓名
 @property (nonatomic,strong) NSString *note;//批注

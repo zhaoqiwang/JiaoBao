@@ -7,12 +7,20 @@
 //
 
 #import "ClassLeavesModel.h"
+#import "utils.h"
 
 @implementation ClassLeavesModel
 -(void)dicToModel:(NSDictionary*)dic{
     self.TabID = [dic objectForKey:@"TabID"];//假条记录ID
     self.ManName = [dic objectForKey:@"ManName"];//请假人姓名
-    self.WriteDate = [dic objectForKey:@"WriteDate"];//发起日期
+    NSString *str = [utils getLocalTimeDate];
+    NSString *str2 = [dic objectForKey:@"WriteDate"];
+    NSRange range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        self.WriteDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringFromIndex:10];
+    }else{
+        self.WriteDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+    }
     self.LeaveType = [dic objectForKey:@"LeaveType"];//请假类型
     self.StatusStr = [dic objectForKey:@"StatusStr"];//状态
     self.RowCount = [dic objectForKey:@"RowCount"];// 记录数量

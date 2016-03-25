@@ -23,6 +23,7 @@
     self.dateLabel.text = model.WriteDate;
     self.stateLabel.text = model.StatusStr;
     self.reasonLabel.text = model.LeaveType;
+    self.nameLabel.text = model.ManName;
 
     
 }

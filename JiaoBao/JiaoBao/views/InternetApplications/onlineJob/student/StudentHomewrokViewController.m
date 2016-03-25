@@ -351,6 +351,9 @@
         [self.stuErrVC didMoveToParentViewController:self];
         self.stuErrVC.mModel_stuInf = self.mModel_stuInf;
         [self addChild:self.stuErrVC withChildToRemove:nil];
+        if(self.stuErrVC.webDataArr.count==0){
+            [self.stuErrVC sendRequest];
+        }
         
     }
     

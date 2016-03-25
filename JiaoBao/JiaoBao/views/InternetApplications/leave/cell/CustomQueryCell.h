@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 -(void)setCellData:(MyLeaveModel*)model;
+-(void)setStatisticsData:(MyLeaveModel*)model;
 
 @end

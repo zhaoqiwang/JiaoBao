@@ -13,6 +13,12 @@
 #import "dm.h"
 #import "utils.h"
 #import "define_constant.h"
+#import "leaveRecordModel.h"
+#import "MBProgressHUD+AD.h"
+#import "LeaveHttp.h"
+#import "leaveRecordModel.h"
+#import "QueryCell.h"
+#import "CustomQueryCell.h"
 
 @interface CheckLeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate>
 
@@ -20,5 +26,11 @@
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称
 @property (nonatomic,assign) int mInt_flag;//区分当前选择的是第几个
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIButton *headView;
+@property(nonatomic,strong)UIView *tableHeadView;
+@property (strong, nonatomic) IBOutlet UIView *sectionView;
+@property (strong, nonatomic) IBOutlet UIView *stuSection;
+- (IBAction)conditionAction:(id)sender;
 
 @end

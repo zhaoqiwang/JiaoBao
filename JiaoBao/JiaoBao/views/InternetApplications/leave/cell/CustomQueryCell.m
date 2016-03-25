@@ -25,5 +25,15 @@
     self.reasonLabel.text = model.LeaveType;
     
 }
+-(void)setStatisticsData:(MyLeaveModel*)model{
+    self.dateLabel.text = model.ManName;
+    self.reasonLabel.text = @"3";
+    self.reasonLabel.textAlignment = NSTextAlignmentRight;
+    self.stateLabel.text = @"2";
+    self.stateLabel.textAlignment = NSTextAlignmentCenter;
+
+
+    
+}
 
 @end

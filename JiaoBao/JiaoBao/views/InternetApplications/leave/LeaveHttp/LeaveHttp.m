@@ -285,7 +285,7 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:array];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitLeaves" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetUnitLeaves: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitLeaves" object:nil];
@@ -329,13 +329,17 @@ static LeaveHttp *leaveHttp = nil;
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
-        D("JSON--------CheckLeaveModel: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
 
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:array];
+        D("JSON--------CheckLeaveModel: %@,", result);
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:ResultCode];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CheckLeaveModel: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:nil];
+        NSString *ResultCode = @"100";
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:ResultCode];
     }];
     
 }

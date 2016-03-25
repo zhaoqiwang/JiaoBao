@@ -14,14 +14,17 @@
 #import "MBProgressHUD+AD.h"
 #import "MyAdminClass.h"
 #import "ChooseStudentViewController.h"
+#import "MJRefresh.h"//上拉下拉刷新
+
 
 
 @interface QueryViewController ()<ChooseStudentViewCDelegate>
-@property(nonatomic,strong)NSArray *dataSource;
-@property(nonatomic,strong)NSArray *myDataSource;
-@property(nonatomic,strong)NSArray *stuDataSource;
+@property(nonatomic,strong)NSMutableArray *dataSource;
+@property(nonatomic,strong)NSMutableArray *myDataSource;
+@property(nonatomic,strong)NSMutableArray *stuDataSource;
 @property(nonatomic,strong)leaveRecordModel *recordModel;
 @property(nonatomic,strong)NSDate *currentDate;
+@property(nonatomic,assign)int mInt_reloadData;
 
 
 @end
@@ -35,9 +38,30 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]==0){
         NSArray *arr = [dic objectForKey:@"data"];
-        self.myDataSource = arr;
-        self.dataSource = self.myDataSource;
-        [self.tableView reloadData];
+        if(self.mInt_reloadData==0){
+            self.dataSource = [NSMutableArray arrayWithArray:arr];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            [self.tableView reloadData];
+            
+        }else{
+            if(arr.count==0){
+                [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+            }
+            else{
+                [self.dataSource addObjectsFromArray:arr];
+
+                [self.tableView reloadData];
+                
+            }
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            self.mInt_reloadData=0;
+
+
+
+        }
+
 
         
     }
@@ -55,7 +79,7 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]==0){
         NSArray *arr = [dic objectForKey:@"data"];
-        self.stuDataSource = arr;
+        self.stuDataSource = [NSMutableArray arrayWithArray:arr];
         self.dataSource = self.stuDataSource;
         [self.tableView reloadData];
         
@@ -86,7 +110,17 @@
     [formatter setDateFormat:@"yyyy年MM月"];
     self.currentDate = [NSDate date];
     self.recordModel.sDateTime = [formatter stringFromDate:self.currentDate];
-
+    self.tableView.tableFooterView = [[UIView alloc]init];
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.tableView.headerPullToRefreshText = @"下拉刷新";
+    self.tableView.headerReleaseToRefreshText = @"松开后刷新";
+    self.tableView.headerRefreshingText = @"正在刷新...";
+    [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    self.tableView.footerPullToRefreshText = @"上拉加载更多";
+    self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
+    self.tableView.footerRefreshingText = @"正在加载...";
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     //获得我提出申请的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
@@ -127,20 +161,47 @@
 
 
 }
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_reloadData = 0;
+    [self sendRequest];
+}
+
+- (void)footerRereshing{
+    self.mInt_reloadData = 1;
+    [self sendRequest];
+}
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
 
+
+    NSString *page = @"";
+    if (self.mInt_reloadData == 0) {
+        page = @"1";
+    }else{
+        NSMutableArray *array = self.dataSource;
+        if (array.count>=20&&array.count%20==0) {
+            page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
+        } else {
+            self.mInt_reloadData = 0;
+            [MBProgressHUD showSuccess:@"没有更多了" ];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+
+            return;
+        }
+    }
     self.recordModel.numPerPage = @"20";
-    self.recordModel.pageNum = @"1";
+    self.recordModel.pageNum = page;
     self.recordModel.RowCount = @"0";
     self.recordModel.accId = [dm getInstance].jiaoBaoHao;
     if(self.mInt_leaveID == 3){
         self.recordModel.manType = @"0";
         self.recordModel.mName = self.mModel_student.StdName;
     }else{
-
+        
         self.recordModel.manType = @"1";
         self.recordModel.mName = @"";
-
+        
     }
     [MBProgressHUD showMessage:@"" toView:self.view];
     [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];

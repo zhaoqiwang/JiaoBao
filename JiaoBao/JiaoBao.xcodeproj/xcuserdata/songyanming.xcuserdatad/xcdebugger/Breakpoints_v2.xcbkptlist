@@ -64,16 +64,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/onlineJob/student/StuErrViewController.m"
-            timestampString = "480397574.794532"
+            filePath = "JiaoBao/views/InternetApplications/leave/leave/QueryViewController.m"
+            timestampString = "480499797.78884"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "-GetStuHWQsWithHwInfoId:"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
