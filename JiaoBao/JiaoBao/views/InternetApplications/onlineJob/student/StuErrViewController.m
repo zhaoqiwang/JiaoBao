@@ -21,6 +21,18 @@ int cellRefreshCount, newHeight;
 @end
 
 @implementation StuErrViewController
+-(void)viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStuHWQsWithHwInfoId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStuErr" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+
+    
+}
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     NSLog(@"web_tag = %ld mInt_index = %ld" ,(long)webView.tag,self.mInt_index);
     NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
@@ -38,7 +50,8 @@ int cellRefreshCount, newHeight;
 
     
     //}
-    if(self.mInt_index==self.webDataArr.count){
+
+    if(self.mInt_index==self.datasource.count){
         [MBProgressHUD hideHUDForView:self.view];
         [self.tableVIew headerEndRefreshing];
         [self.tableVIew footerEndRefreshing];
@@ -51,7 +64,6 @@ int cellRefreshCount, newHeight;
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
-    NSLog(@"content = %@",model.QsCon);
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
         
@@ -150,6 +162,7 @@ int cellRefreshCount, newHeight;
     self.webDataArr = [NSMutableArray array];
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
 
+
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
 
@@ -172,7 +185,7 @@ int cellRefreshCount, newHeight;
         return model.cellHeight;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"Cell----indexPath====%ld",(long)indexPath.row);
+    //NSLog(@"Cell----indexPath====%ld",(long)indexPath.row);
         static NSString *indentifier = @"StuErrCell";
         StuErrCell *cell = (StuErrCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         if (cell == nil) {

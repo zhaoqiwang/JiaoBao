@@ -31,8 +31,8 @@
         NSString*ApproveListStd =[dic objectForKey:@"ApproveListStd"];
         NSString*levelNoteStd =[dic objectForKey:@"LevelNoteStd"];
         
-        [model.LevelNoteStd dicToModel:ApproveListStd];
-        [model.ApproveListStd dicToModel:levelNoteStd];
+        //[model.LevelNoteStd dicToModel:levelNoteStd];
+        [model.ApproveListStd dicToModel:ApproveListStd];
 
 
 

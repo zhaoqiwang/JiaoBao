@@ -14,6 +14,8 @@
 @property(nonatomic,strong)NSString *LeaveType;//请假类型
 @property(nonatomic,strong)NSString *StatusStr;//理由
 @property(nonatomic,strong)NSString *RowCount;//记录总数
+@property(nonatomic,strong)NSString *ManName;//请假人姓名
+
 -(void)dicToModel:(NSDictionary*)dic;
 
 

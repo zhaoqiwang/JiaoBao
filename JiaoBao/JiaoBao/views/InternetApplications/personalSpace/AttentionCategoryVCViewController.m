@@ -12,42 +12,31 @@
 #import "KnowledgeHttp.h"
 #import "CategoryModel.h"
 #import "UIImageView+WebCache.h"
-
-
-
 @interface AttentionCategoryVCViewController ()<MyNavigationDelegate>
 @property(nonatomic,strong)NSMutableArray *datasource;
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
-
-
 @end
-
 @implementation AttentionCategoryVCViewController
 -(void)GetCategoryById:(id)sender
 {
     NSNotification *note = sender;
-    
-    NSString *code = [note.object objectForKey:@"ResultCode"];
+        NSString *code = [note.object objectForKey:@"ResultCode"];
     if([code integerValue]==0)
     {
         CategoryModel *model = [note.object objectForKey:@"model"];
         [self.datasource addObject:model];
-        if(self.datasource.count == self.categoryArr.count )
+        if(self.datasource.count == self.categoryArr.count)
         {
             [MBProgressHUD hideHUDForView:self.view];
             NSArray *arr = [self.datasource sortedArrayUsingComparator:^NSComparisonResult(CategoryModel *p1, CategoryModel *p2){
                 int p1_int = [p1.TabID intValue];
                 NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-                
-
                 int p2_int = [p2.TabID intValue];
                 NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-                
                 return [p1_num compare:p2_num];
             }];
             self.datasource =[NSMutableArray arrayWithArray:arr];
             [self.tableView reloadData];
-
         }
 
     }
@@ -91,7 +80,6 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     self.tableView.tableFooterView = [[UIView alloc]init];
-    
     // Do any additional setup after loading the view from its nib.
 }
 

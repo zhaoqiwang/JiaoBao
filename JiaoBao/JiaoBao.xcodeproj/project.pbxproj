@@ -1086,6 +1086,8 @@
 		F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A621BDA0EE00021A048 /* StuHWModel.m */; };
 		F7935A661BDA136C0021A048 /* StuHomeWorkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A651BDA136C0021A048 /* StuHomeWorkModel.m */; };
 		F7935A691BDA1BEF0021A048 /* StuHWQsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7935A681BDA1BEF0021A048 /* StuHWQsModel.m */; };
+		F79ABD111CA3DA6700AAC310 /* CheckSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F79ABD0F1CA3DA6700AAC310 /* CheckSubViewController.m */; };
+		F79ABD121CA3DA6700AAC310 /* CheckSubViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F79ABD101CA3DA6700AAC310 /* CheckSubViewController.xib */; };
 		F79B61371B7202A5005FEA44 /* AllCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B612E1B7202A5005FEA44 /* AllCategoryModel.m */; };
 		F79B61381B7202A5005FEA44 /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61301B7202A5005FEA44 /* AnswerModel.m */; };
 		F79B61391B7202A5005FEA44 /* ItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F79B61321B7202A5005FEA44 /* ItemModel.m */; };
@@ -2691,6 +2693,9 @@
 		F7935A681BDA1BEF0021A048 /* StuHWQsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StuHWQsModel.m; sourceTree = "<group>"; };
 		F79897B11B1571C500A4277F /* bj@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj@2x.png"; sourceTree = "<group>"; };
 		F79897B41B1571CD00A4277F /* bj@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bj@3x.png"; sourceTree = "<group>"; };
+		F79ABD0E1CA3DA6700AAC310 /* CheckSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckSubViewController.h; sourceTree = "<group>"; };
+		F79ABD0F1CA3DA6700AAC310 /* CheckSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckSubViewController.m; sourceTree = "<group>"; };
+		F79ABD101CA3DA6700AAC310 /* CheckSubViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckSubViewController.xib; sourceTree = "<group>"; };
 		F79B612D1B7202A5005FEA44 /* AllCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllCategoryModel.h; path = views/InternetApplications/theme/AllCategoryModel.h; sourceTree = "<group>"; };
 		F79B612E1B7202A5005FEA44 /* AllCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AllCategoryModel.m; path = views/InternetApplications/theme/AllCategoryModel.m; sourceTree = "<group>"; };
 		F79B612F1B7202A5005FEA44 /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnswerModel.h; path = views/InternetApplications/theme/AnswerModel.h; sourceTree = "<group>"; };
@@ -2962,6 +2967,9 @@
 				437E2D7E1C9F9B600074F2ED /* LeaveDetailViewController.h */,
 				437E2D7F1C9F9B600074F2ED /* LeaveDetailViewController.m */,
 				437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */,
+				F79ABD0E1CA3DA6700AAC310 /* CheckSubViewController.h */,
+				F79ABD0F1CA3DA6700AAC310 /* CheckSubViewController.m */,
+				F79ABD101CA3DA6700AAC310 /* CheckSubViewController.xib */,
 				437D33A71CA380B7001B5CB3 /* CheckSelectViewController.h */,
 				437D33A81CA380B7001B5CB3 /* CheckSelectViewController.m */,
 				437D33A91CA380B7001B5CB3 /* CheckSelectViewController.xib */,
@@ -5837,6 +5845,7 @@
 				A75046901A0A14BC00C54ECC /* forward_select1@2x.png in Resources */,
 				F76B646C1B1EA8CB008F6961 /* bj@2x.png in Resources */,
 				A773FC531A4C0563005F84C2 /* Overlay@2x.png in Resources */,
+				F79ABD121CA3DA6700AAC310 /* CheckSubViewController.xib in Resources */,
 				A73702E51A7C7A7E0020BCB4 /* rootNav_rongYun@3x.png in Resources */,
 				A7626FC71B0D7EDB006957F2 /* popupWindow_like.png in Resources */,
 				A71D61EC1A1C96A400B8D33D /* share_recommend1@2x.png in Resources */,
@@ -6309,6 +6318,7 @@
 				F71803261AB3C46300E6167F /* JTCalendarWeekView.m in Sources */,
 				A748219C19FF304F00234020 /* MyNavigationBar.m in Sources */,
 				430279881C995618003546E9 /* LeaveViewCell.m in Sources */,
+				F79ABD111CA3DA6700AAC310 /* CheckSubViewController.m in Sources */,
 				A755E67319F2492700BBDF3D /* main.m in Sources */,
 				A79C31151BCF8898003DF7B2 /* TreeJob_class_model.m in Sources */,
 				A748219719FF2AE500234020 /* MsgDetailViewController.m in Sources */,
