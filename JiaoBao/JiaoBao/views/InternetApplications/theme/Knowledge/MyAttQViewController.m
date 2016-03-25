@@ -246,6 +246,7 @@
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     QuestionModel *model = [self.mArr_list objectAtIndex:knowledgeTableViewCell.tag];
     [[KnowledgeHttp getInstance] RemoveMyAttQWithqId:model.TabID];
+    self.mInt_deleteCell = (int)knowledgeTableViewCell.tag;
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
 }
 
@@ -258,12 +259,21 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode integerValue] ==0) {
+        
+        [self.mArr_list removeObjectAtIndex:self.mInt_deleteCell];
+        [self.mTalbeV_liset reloadData];
+        
         //修改model中的值，和界面显示
         //重新获取
-        self.mInt_reloadData = 0;
-        self.mInt_load = 1;
-        [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
-        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        self.mInt_reloadData = 1;
+//        self.mInt_load = 1;
+        self.mInt_rowcount--;
+        self.mInt_list--;
+        if (self.mInt_rowcount>self.mArr_list.count) {
+            [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"1" pageNum:[NSString stringWithFormat:@"%lu",(unsigned long)self.mInt_list+1] RowCount:[NSString stringWithFormat:@"%d",self.mInt_rowcount]];
+            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+        }
+        
         //关注问题，只增不减，----
         //        self.mModel_question.AttCount = [NSString stringWithFormat:@"%d",[self.mModel_question.AttCount intValue]-1];
         //        //设置布局

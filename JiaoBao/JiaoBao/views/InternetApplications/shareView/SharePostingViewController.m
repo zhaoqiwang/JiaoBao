@@ -351,18 +351,32 @@
         return;
     }
     D("self.textv.content-===%@",self.mTextV_content.text);
-    if (self.mTextF_title.text.length==0) {
+    if ([utils isBlankString:self.mTextF_title.text]){
         [MBProgressHUD showError:@"请输入标题" toView:self.view];
         return;
-    }else if ([utils isBlankString:self.mTextV_content.text]){
+    }
+    
+    if ([utils isBlankString:self.mTextV_content.text]){
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    if (self.mTextF_title.text.length>50) {
+        [MBProgressHUD showError:@"标题不能大于50个字" toView:self.view];
+        return;
+    }
     NSString *content = self.mTextV_content.text;
+    int m=0;
     for (int i=0; i<self.mArr_pic.count; i++) {
         UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
         NSString *temp = model.originalName;
+        if ([content rangeOfString:temp].location != NSNotFound) {
+            m++;
+        }
         content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+    }
+    if (m>9) {
+        [MBProgressHUD showError:@"照片最多为9张" toView:self.view];
+        return;
     }
     content = [NSString stringWithFormat:@"<p>%@</p>",content];
     D("content--------%@",content);

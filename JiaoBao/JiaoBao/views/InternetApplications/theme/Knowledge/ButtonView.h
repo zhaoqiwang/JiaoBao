@@ -16,8 +16,9 @@
 
 @property (nonatomic,strong) NSMutableArray *mArr_data;
 @property (weak,nonatomic) id<ButtonViewDelegate> delegate;
+@property (nonatomic,assign) int flag;//上下排列1，还是左右排序0区分
 
--(id)initFrame:(CGRect)rect Array:(NSMutableArray*)array;
+-(id)initFrame:(CGRect)rect Array:(NSMutableArray*)array Flag:(int)flag index:(int)index;
 
 @end
 

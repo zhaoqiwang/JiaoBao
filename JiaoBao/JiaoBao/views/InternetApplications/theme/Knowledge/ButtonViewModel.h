@@ -11,6 +11,7 @@
 @interface ButtonViewModel : NSObject
 
 @property (nonatomic,copy) NSString *mStr_img;//图片
+@property (nonatomic,copy) NSString *mStr_imgNow;//当前选择图片
 @property (nonatomic,copy) NSString *mStr_title;//标题
 
 @end

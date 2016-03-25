@@ -341,5 +341,28 @@
     
     return model;
 }
++(NSMutableArray *)parserJsonStuErr:(NSString*)json//错题表
+{
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *arrList = [json objectFromJSONString];
+    for (int i=0; i<arrList.count; i++) {
+        StuErrModel *model = [[StuErrModel alloc] init];
+        NSDictionary *dic = [arrList objectAtIndex:i];
+        NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+        model.Tabid = [numberFormatter stringFromNumber:[dic objectForKey:@"Tabid" ]];
+        model.QsLv = [dic objectForKey:@"QsLv" ] ;
+        model.StuID = [numberFormatter stringFromNumber:[dic objectForKey:@"StuID"]];
+        model.HwID = [numberFormatter stringFromNumber:[dic objectForKey:@"HwID"]];
+        model.chapterID = [numberFormatter stringFromNumber:[dic objectForKey:@"chapterID"]];
+        model.QsID = [numberFormatter stringFromNumber:[dic objectForKey:@"QsID"]];
+        model.QsType = [numberFormatter stringFromNumber:[dic objectForKey:@"QsType"]];
+                      model.Answer = [dic objectForKey:@"Answer" ] ;
+                      model.DoDate = [dic objectForKey:@"DoDate" ] ;
+                      model.DoC = [dic objectForKey:@"DoC" ] ;
+        
+        [array addObject:model];
+    }
+    return array;
+}
 
 @end

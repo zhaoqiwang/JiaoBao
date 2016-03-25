@@ -262,6 +262,30 @@
     }
 }
 
+//如果输入超过规定的字数1000，就不再让输入
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    // Any new character added is passed in as the "text" parameter
+    //输入删除时
+    if ([text isEqualToString:@""]) {
+        self.mTextV_input.text = textView.text;
+        return YES;
+    }
+    if ([text isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textView resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    if(textView.text.length>999)
+    {
+        textView.text = [textView.text substringToIndex:999];
+        self.mTextV_input.text = textView.text;
+    }
+    return TRUE;
+}
+
 #pragma mark ELCImagePickerControllerDelegate Methods
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info{
     //    [self dismissViewControllerAnimated:YES completion:nil];
@@ -438,20 +462,6 @@
     }
     //添加显示附件
     [self addAccessoryPhoto];
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    // Any new character added is passed in as the "text" parameter
-    if ([text isEqualToString:@"\n"]) {
-        // Be sure to test for equality using the "isEqualToString" message
-        [textView resignFirstResponder];
-        
-        // Return FALSE so that the final '\n' character doesn't get added
-        return FALSE;
-    }
-    // For any other character return TRUE so that the text gets added to the view
-    return TRUE;
 }
 
 - (void)playRecordSound:(NSString *)path

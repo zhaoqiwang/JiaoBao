@@ -27,6 +27,7 @@
 @property (nonatomic,assign) int mInt_reloadData;//记录是刷新0还是加载更多1
 @property (nonatomic,assign) int mInt_load;//加载数据页码page
 @property (nonatomic,assign) int mInt_list;//总数组，包括隐藏的
-@property (nonatomic,assign) int mInt_rowcount;//
+@property (nonatomic,assign) int mInt_rowcount;//后台服务器存在数据总数
+@property (nonatomic,assign) int mInt_deleteCell;//取消关注的行
 
 @end

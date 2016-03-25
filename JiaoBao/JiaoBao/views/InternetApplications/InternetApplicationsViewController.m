@@ -14,6 +14,11 @@
 #import "MobClick.h"
 #import "AddQuestionViewController.h"
 #import "MakeJobViewController.h"
+#import "TeacherViewController.h"
+#import "LeaveViewController.h"
+#import "LeaveHttp.h"
+#import "CheckLeaveViewController.h"
+#import "CheckSelectViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -56,9 +61,27 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    //取指定单位的请假设置
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetLeaveSettingWithUnitId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetLeaveSettingWithUnitId:) name:@"GetLeaveSettingWithUnitId" object:nil];
     
      [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
+}
+
+//取指定单位的请假设置
+-(void)GetLeaveSettingWithUnitId:(NSNotification *)noti{
+    D("请假系统的权限问题:%@，%@",[dm getInstance].leaveModel.StatusStd,[dm getInstance].leaveModel.StatusTea);
+    //判断是否开启了学生请假系统
+    if ([[dm getInstance].leaveModel.StatusStd intValue]==1) {
+        //获取家长关联的学生
+        [[LeaveHttp getInstance] GetMyStdInfo:[dm getInstance].jiaoBaoHao];
+    }
+    //判断是否开启了老师请假系统
+    if ([[dm getInstance].leaveModel.StatusTea intValue]==1) {
+        //获取班主任管理的班级
+        [[LeaveHttp getInstance] GetMyAdminClass:[dm getInstance].jiaoBaoHao];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -167,6 +190,10 @@
     NSString *str = noti.object;
     if ([str intValue] ==0) {//成功
         [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+        [dm getInstance].leaveModel = nil;
+        if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
+            [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        }
     }else{
         [MBProgressHUD showError:@"切换失败" toView:self.view];
     }
@@ -288,6 +315,10 @@
     [[LoginSendHttp getInstance] login_itunesUpdataCheck];
     //获取求知中的个人信息
     [[KnowledgeHttp getInstance] GetUserInfo];
+    //老师或家长身份时，判断有没有开启请假系统
+    if ([dm getInstance].uType==2||[dm getInstance].uType==3) {
+        [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    }
 }
 
 //获取求知中的个人信息
@@ -529,6 +560,8 @@
         self.mView_all.hidden = YES;
         self.mTableV_right.hidden = YES;
         self.mTableV_left.hidden = YES;
+        [[dm getInstance].mArr_leaveClass removeAllObjects];
+        [[dm getInstance].mArr_leaveStudent removeAllObjects];
     }
 }
 
@@ -548,10 +581,26 @@
                         action:@selector(pushMenuItemSchedule:)],
           
           ];
+        //在线作业
         NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
         if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
             [array addObject:[self addOnLineJob]];
         }
+        //请假
+        if ([dm getInstance].mArr_leaveStudent.count>0||[dm getInstance].uType==2) {
+            [array addObject:[KxMenuItem menuItem:@"请假"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemLeave:)]];
+        }
+        //审核
+        if ([dm getInstance].leaveModel.ApproveListStd.A||[dm getInstance].leaveModel.ApproveListStd.B||[dm getInstance].leaveModel.ApproveListStd.C||[dm getInstance].leaveModel.ApproveListStd.D||[dm getInstance].leaveModel.ApproveListStd.E||[dm getInstance].leaveModel.ApproveListTea.A||[dm getInstance].leaveModel.ApproveListTea.B||[dm getInstance].leaveModel.ApproveListTea.C||[dm getInstance].leaveModel.ApproveListTea.D||[dm getInstance].leaveModel.ApproveListTea.E) {
+            [array addObject:[KxMenuItem menuItem:@"审核"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemCheckLeave:)]];
+        }
+        
         NSArray *menuItems = array;
         D("iudhfgjhjh-==========%d",[dm getInstance].uType);
         [KxMenu showMenuInView:self.view
@@ -560,6 +609,10 @@
     }else{
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
+}
+-(void)leaveAction{
+    TeacherViewController *detail = [[TeacherViewController alloc] init];
+    [utils pushViewController:detail animated:YES];
 }
 -(KxMenuItem *)addOnLineJob{
     if ([dm getInstance].uType==2) {
@@ -581,12 +634,15 @@
     return nil;
 }
 - (void) pushMenuItemSignIn:(id)sender{
-    [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
-    CheckingInViewController *check = [[CheckingInViewController alloc]init];
-    check.mView_all = self.mView_all;
-    check.mTableV_left = self.mTableV_left;
-    check.mTableV_right = self.mTableV_right;
+    CheckSelectViewController *check = [[CheckSelectViewController alloc] init];
+    check.mInt_flag=0;
     [utils pushViewController:check animated:YES];
+//    [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
+//    CheckingInViewController *check = [[CheckingInViewController alloc]init];
+//    check.mView_all = self.mView_all;
+//    check.mTableV_left = self.mTableV_left;
+//    check.mTableV_right = self.mTableV_right;
+//    [utils pushViewController:check animated:YES];
 }
 
 - (void) pushMenuItemSchedule:(id)sender{
@@ -594,6 +650,34 @@
 
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
+}
+
+//请假
+- (void) pushMenuItemLeave:(id)sender{
+//    TeacherViewController *detail = [[TeacherViewController alloc] init];
+//    [utils pushViewController:detail animated:YES];
+    LeaveViewController *leave = [[LeaveViewController alloc] init];
+    if ([dm getInstance].uType==3) {
+        leave.mStr_navName = @"家长";
+        leave.mInt_leaveID = 3;
+    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+        leave.mStr_navName = @"门卫";
+        leave.mInt_leaveID = 0;
+    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
+        leave.mStr_navName = @"班主任";
+        leave.mInt_leaveID = 1;
+    }else{
+        leave.mStr_navName = @"老师";
+        leave.mInt_leaveID = 2;
+    }
+    [utils pushViewController:leave animated:YES];
+}
+
+//审核
+-(void) pushMenuItemCheckLeave:(id)sender{
+    CheckLeaveViewController *checkLeave = [[CheckLeaveViewController alloc] init];
+    checkLeave.mStr_navName = @"审核";
+    [utils pushViewController:checkLeave animated:YES];
 }
 
 //我的作业
@@ -628,6 +712,7 @@
     self.mView_all.hidden = NO;
     self.mTableV_left.hidden = NO;
     self.mTableV_right.hidden = NO;
+    [dm getInstance].leaveModel = nil;
     //self.mView_all.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.mView_all];
     [self.mTableV_left reloadData];
@@ -655,6 +740,7 @@
     [dm getInstance].UID = 0;
     [[dm getInstance].identity removeAllObjects];
     [dm getInstance].jiaoBaoHao = @"";
+    [dm getInstance].leaveModel = nil;
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];

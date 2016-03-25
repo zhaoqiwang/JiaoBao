@@ -11,6 +11,7 @@
 #import "RongYunTokenModel.h"
 #import "CommMsgRevicerUnitListModel.h"
 #import "MBProgressHUD.h"
+#import "LeaveSettingModel.h"
 
 @interface dm : NSObject{
     int width;//界面宽度
@@ -62,6 +63,7 @@
 @property (nonatomic,assign) int uType;//用户身份ID
 @property (nonatomic,strong) NSString *mStr_unit;//当前登录单位的名字
 @property (nonatomic,strong) NSString *mStr_tableID;//当前所在单位的加密ID
+@property (nonatomic,strong) NSString *mainID;//当前用户id
 @property (nonatomic,strong) UserInfoModel *userInfo;//个人信息
 @property (nonatomic,assign) int mImt_shareUnRead;//分享未读数量
 @property (nonatomic,assign) int mImt_showUnRead;//展示未读数量
@@ -87,6 +89,9 @@
 @property(nonatomic,assign)BOOL addQuestionNoti;
 @property(nonatomic,assign) int joinUnit;//判断自己是否加入单位，求知是否可以有操作判定，0无
 @property(nonatomic,assign) int isCanUser;//判断自己是否被封号，求知是否可以有操作判定，0无
+@property(nonatomic,strong) LeaveSettingModel *leaveModel;//请假系统权限model
+@property (nonatomic,strong) NSMutableArray *mArr_leaveStudent;//请假系统中，家长关联的学生
+@property (nonatomic,strong) NSMutableArray *mArr_leaveClass;//请假系统中，班主任管理的班级
 + (dm*) getInstance;
 
 

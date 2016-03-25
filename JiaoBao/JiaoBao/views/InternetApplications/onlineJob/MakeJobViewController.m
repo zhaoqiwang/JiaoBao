@@ -135,8 +135,8 @@
     if([result isEqualToString:@"false"])
     {
         [MBProgressHUD showError:@"此章节没有题目"];
-    }else if ([result isEqualToString:@"服务器异常"]){
-        [MBProgressHUD showError:@"服务器异常"];
+    }else if ([result isEqualToString:@"The Internet connection appears to be offline."]){
+        [MBProgressHUD showError:@"网络连接异常"];
     }
     else
     {
@@ -272,7 +272,7 @@
 //添加默认数据
 -(void)addDefaultData{
     //第0根节点
-    NSMutableArray *tempArr = [NSMutableArray arrayWithObjects:@"模式选择",@"班级选择",@"年级选择",@"科目选择",@"教版选择",@"章节选择",@"选择题",@"填空题",@"自定义",@"其他项目",@"短信勾选",@"作业发布", nil];
+    NSMutableArray *tempArr = [NSMutableArray arrayWithObjects:@"模式选择",@"目标班级",@"题目年级",@"科目选择",@"教版选择",@"章节选择",@"选择题",@"填空题",@"自定义",@"其他项目",@"短信勾选",@"作业发布", nil];
     for (int i=0; i<tempArr.count; i++) {
         TreeJob_node *node0 = [[TreeJob_node alloc]init];
         node0.nodeLevel = 0;//节点所处层次

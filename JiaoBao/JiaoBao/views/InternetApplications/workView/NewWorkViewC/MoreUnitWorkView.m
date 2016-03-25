@@ -111,11 +111,13 @@
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
-    NSString *str = noti.object;
-    if ([str integerValue]==1) {
-        [MBProgressHUD showError:@"超时" toView:self];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"ResultCode"];
+    NSString *message = [dic objectForKey:@"ResultDesc"];
+    if ([code integerValue]!=0) {
+        [MBProgressHUD showError:@"发送失败" toView:self];
     }else{
-        [MBProgressHUD showSuccess:str toView:self];
+        [MBProgressHUD showSuccess:message toView:self];
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
         //[self.mArr_photo removeAllObjects];

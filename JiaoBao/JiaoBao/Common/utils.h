@@ -39,6 +39,7 @@
 
 //判断字符串是否为空、是否都是空格
 + (BOOL)isBlankString:(NSString *)string;
+//
 + (void)logDic:(NSDictionary *)dic;
 
 //去掉html中的无用标签，适配手机

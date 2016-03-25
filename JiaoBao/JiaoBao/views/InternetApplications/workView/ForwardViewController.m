@@ -9,6 +9,7 @@
 #import "ForwardViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "MBProgressHUD+AD.h"
 #define Margin 0//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 
@@ -302,17 +303,15 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    NSString *str = noti.object;
-    if ([str integerValue]==1) {
-        [MBProgressHUD showError:@"超时" toView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *code = [dic objectForKey:@"ResultCode"];
+    NSString *message = [dic objectForKey:@"ResultDesc"];
+    if ([code integerValue]!=0) {
+        [MBProgressHUD showError:@"发送失败" toView:self.view];
     }else{
         if([dm getInstance].notificationSymbol ==1 )
         {
-            if(str.length == 0)
-            {
-                str = @"成功";
-            }
-            [MBProgressHUD showSuccess:str toView:self.view];
+            [MBProgressHUD showSuccess:message ];
             self.topView.mTextV_input.text = @"";
             [self.topView.mArr_accessory removeAllObjects];
             [self.topView addAccessoryPhoto];
@@ -723,9 +722,6 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
         return;
     }
 
-    
-
-    
         //发表
             NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
             //[array1 addObjectsFromArray:self.topView.mArr_accessory];

@@ -90,6 +90,10 @@
     return self;
 }
 
+-(void)dealloc{
+    _adScrollView.delegate = nil;
+}
+
 //这个方法会在子视图添加到父视图或者离开父视图时调用
 - (void)willMoveToSuperview:(UIView *)newSuperview
 {

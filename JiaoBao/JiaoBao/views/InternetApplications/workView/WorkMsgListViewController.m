@@ -725,6 +725,13 @@
     self.mProgressV.labelText = [NSString stringWithFormat:@"已经下载：%0.f%%",newProgress*100];
     if (newProgress>=1) {
         [self.mProgressV hide:YES];
+        //下载成功后，自动打开
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.tag = self.mInt_file;
+            [self clickAttListBtn:btn];
+        });
+        
     }
     
 }

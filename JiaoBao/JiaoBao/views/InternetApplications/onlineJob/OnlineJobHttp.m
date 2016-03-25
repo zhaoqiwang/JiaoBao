@@ -475,7 +475,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:result];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:@"服务器异常"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:error.localizedDescription];
         D("Error---------TecQswithchapterid: %@", error);
     }];
 }
@@ -495,5 +495,63 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
     }];
 }
+// 错题表
+-(void)GetStuErr:(StuErrModel*)model{
+    NSString *urlString = [NSString stringWithFormat:@"%@GetStuErr",ONLINEJOBURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSMutableDictionary *parameters = [model propertiesDic];
+    
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        D("JSON--------GetStuErr: %@,", result);
+        NSMutableArray *mArr = [ParserJson_OnlineJob parserJsonStuErr:result];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:mArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetStuErr: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:nil];
+    }];
+    
+}
+// 根据学生ID分页获取作业或练习列表 参数：学生ID - （0作业,1练习）- 页码 - 页记录数
+-(void)GetStuHWListPageWithStuId:(NSString*)StuId IsSelf:(NSString*)IsSelf PageIndex:(NSString*)PageIndex PageSize:(NSString*)PageSize{
+
+    
+        NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWListPage",ONLINEJOBURL];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer.timeoutInterval = TIMEOUT;
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        if ([StuId intValue]>0) {
+            
+        }else{
+            NSMutableDictionary *tempDic0 = [NSMutableDictionary dictionary];
+            [tempDic0 setValue:@"100" forKey:@"ResultCode"];
+            [tempDic0 setValue:@"学生信息错误" forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic0];
+            return;
+        }
+        NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf,@"PageIndex":PageIndex,@"PageSize":PageSize,};
+        NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
+        [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+        [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+            D("JSON--------GetStuHWListPageWithStuId: %@,", result);
+            NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
+            [tempDic setValue:@"0" forKey:@"ResultCode"];
+            [tempDic setValue:arr forKey:@"array"];
+            [tempDic setValue:IsSelf forKey:@"IsSelf"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [tempDic setValue:@"100" forKey:@"ResultCode"];
+            [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic];
+            D("Error---------GetStuHWListPageWithStuId: %@", error);
+        }];
+    
+}
+
 
 @end

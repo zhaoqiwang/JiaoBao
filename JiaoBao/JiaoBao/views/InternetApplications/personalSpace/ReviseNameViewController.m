@@ -72,17 +72,23 @@
     self.mTextF_trueName.frame = CGRectMake(self.mTextF_nickName.frame.origin.x, self.mLab_trueName.frame.origin.y, self.mTextF_nickName.frame.size.width, self.mTextF_nickName.frame.size.height);
     if (self.mInt_flag == 1) {
         self.mLab_nickName.text = @"昵称:";
-        self.mTextF_nickName.placeholder = @"请输入昵称";
+        self.mTextF_nickName.placeholder = @"请输入昵称,最多20个字";
         self.mLab_trueName.text = @"姓名:";
         self.mTextF_trueName.placeholder = @"请输入真实姓名";
     }else{
         self.mLab_nickName.text = @"旧密码:";
-        self.mTextF_nickName.placeholder = @"请输入旧密码";
+        self.mTextF_nickName.placeholder = @"请输入旧密码,最多20个字";
         self.mLab_trueName.text = @"新密码:";
         self.mTextF_trueName.placeholder = @"请输入新密码";
         [self.mTextF_nickName setSecureTextEntry:YES];
         [self.mTextF_trueName setSecureTextEntry:YES];
     }
+    NSString *trueName = [dm getInstance].TrueName;
+    NSString *nickName = [dm getInstance].NickName;
+    self.mTextF_nickName.text = nickName;
+    self.mTextF_nickName.tag = 10;
+    self.mTextF_trueName.text = trueName;
+    self.mTextF_trueName.tag = 11;
     //确定按钮
     self.mBtn_sure.frame = CGRectMake(20, self.mTextF_trueName.frame.origin.y+self.mTextF_trueName.frame.size.height+20, [dm getInstance].width-40, self.mBtn_sure.frame.size.height);
 }
@@ -116,10 +122,15 @@
     NSString *flag = [dic objectForKey:@"code"];
     NSString *str = [dic objectForKey:@"str"];
     if ([flag intValue] ==0) {//修改成功
+        [MBProgressHUD showText:str toView:self.view];
         //发送修改昵称和姓名协议
         [dm getInstance].NickName = self.mTextF_nickName.text;
         [dm getInstance].TrueName = self.mTextF_trueName.text;
-        [utils popViewControllerAnimated:YES];
+        //延迟执行
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [utils popViewControllerAnimated:YES];
+        });
     }else{//修改失败
         [MBProgressHUD showText:str toView:self.view];
     }
@@ -146,24 +157,33 @@
         return;
     }
     if (self.mInt_flag == 1) {
-        if (self.mTextF_nickName.text.length==0) {
+//        if ([utils isBlankString:self.mTextF_title.text]){
+//            [MBProgressHUD showError:@"请输入标题" toView:self.view];
+//            return;
+//        }
+//        if (self.mTextF_nickName.text.length==0) {
+        if ([utils isBlankString:self.mTextF_nickName.text]){
             [self progressViewTishi:@"请输入昵称"];
             return;
-        }else if (self.mTextF_trueName.text.length==0) {
+//        }else if (self.mTextF_trueName.text.length==0) {
+        }else if ([utils isBlankString:self.mTextF_trueName.text]){
             [self progressViewTishi:@"请输入真实姓名"];
             return;
         }else if (self.mTextF_trueName.text.length>20){
             [self progressViewTishi:@"真实姓名长度不能大于20个字符"];
+            return;
         }
         
         //判断昵称格式是否正确
         if ([self isPureInt:self.mTextF_nickName.text]) {//纯数字
             [self progressViewTishi:@"昵称不能全部为数字"];
+            return;
         }else{
             //判断是否包含@
             NSRange range = [self.mTextF_nickName.text rangeOfString:@"@"];
             if (range.length > 0){//包含
                 [self progressViewTishi:@"昵称不能有“@“字符"];
+                return;
             }else{
                 //发送请求，判断昵称是否重复
                 [self ProgressViewLoad:@"判断昵称是否可用"];
@@ -171,7 +191,8 @@
             }
         }
     }else{
-        if (self.mTextF_nickName.text.length==0||self.mTextF_trueName.text.length==0) {
+//        if (self.mTextF_nickName.text.length==0||self.mTextF_trueName.text.length==0) {
+        if ([utils isBlankString:self.mTextF_nickName.text]||[utils isBlankString:self.mTextF_trueName.text]){
             [self progressViewTishi:@"请输入密码"];
             return;
         }
@@ -233,6 +254,11 @@
         [textField resignFirstResponder];
         
         return NO;
+    }
+    //如果输入超过规定的字数20，就不再让输入
+    if(textField.text.length>19)
+    {
+        textField.text = [textField.text substringToIndex:19];
     }
     return YES;
 }

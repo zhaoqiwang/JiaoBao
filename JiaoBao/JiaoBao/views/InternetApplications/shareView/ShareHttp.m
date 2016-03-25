@@ -568,8 +568,9 @@ static ShareHttp *shareHttp = nil;
             //通知界面发表文章成功
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SavePublishArticle" object:@"成功"];
         }else{
-            NSString *time1 = [jsonDic objectForKey:@"ResultDesc"];
-            NSString *str0002 = [DESTool decryptWithText:time1 Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+//            NSString *time1 = [jsonDic objectForKey:@"ResultDesc"];
+//            NSString *str0002 = [DESTool decryptWithText:time1 Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+            NSString *str0002 = [jsonDic objectForKey:@"ResultDesc"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SavePublishArticle" object:str0002];
         }
     }else if (_request.tag == 10) {//获取栏目最新和推荐文章的未读数量

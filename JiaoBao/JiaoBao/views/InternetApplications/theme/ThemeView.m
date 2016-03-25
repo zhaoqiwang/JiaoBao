@@ -12,6 +12,12 @@
 #import "CommentViewController.h"
 #import "CategoryViewController.h"
 #import "ChoicenessDetailViewController.h"
+#import "LeaveHttp.h"
+#import "NewLeaveModel.h"
+#import "leaveRecordModel.h"
+#import "OnlineJobHttp.h"
+#import "CheckSubViewController.h"
+
 
 @implementation ThemeView
 
@@ -135,7 +141,6 @@
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
     D("点击下拉选择按钮");
-//    [[KnowledgeHttp getInstance] GetAllCategory];
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
         CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
         detailVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -1428,6 +1433,10 @@
 
 //cell的点击事件---答案
 -(void)KnowledgeTableViewCellAnswers:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     if (self.mInt_index ==2) {//精选
         if ([knowledgeTableViewCell.pickContentModel.TabID intValue]>0) {
             PickContentModel *model = knowledgeTableViewCell.pickContentModel;
@@ -1446,6 +1455,10 @@
 
 //cell的点击事件---标题
 -(void)KnowledgeTableViewCellTitleBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     if (self.mInt_index ==2) {//精选
         if ([knowledgeTableViewCell.pickContentModel.TabID intValue]>0) {
             ChoicenessDetailViewController *detail = [[ChoicenessDetailViewController alloc]init];
@@ -1468,6 +1481,10 @@
 
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     if (self.mInt_index ==2) {//精选
         OldChoiceViewController *oldView = [[OldChoiceViewController alloc] init];
         [utils pushViewController:oldView animated:YES];
@@ -1488,6 +1505,10 @@
 
 //全部、有依据、在讨论按钮
 -(void)KnowledgeTableVIewCellAllBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
     if ([model.flag integerValue]!=-1) {
         [model.mArr_discuss removeAllObjects];
@@ -1500,6 +1521,10 @@
     [self.mTableV_knowledge reloadData];
 }
 -(void)KnowledgeTableVIewCellEvidenceBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
     if ([model.flag integerValue]!=1) {
         [model.mArr_discuss removeAllObjects];
@@ -1512,6 +1537,10 @@
     [self.mTableV_knowledge reloadData];
 }
 -(void)KnowledgeTableVIewCellDiscussBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     AllCategoryModel *model = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
     if ([model.flag integerValue]!=0) {
         [model.mArr_discuss removeAllObjects];
