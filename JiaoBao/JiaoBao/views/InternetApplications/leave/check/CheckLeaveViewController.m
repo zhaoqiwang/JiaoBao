@@ -25,15 +25,13 @@
     
     //4种状态
     NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<4; i++) {
+    for (int i=0; i<3; i++) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
-        if (i==0) {
-            model.mStr_title = @"已提交";
-        }else if (i==1){
+        if (i==0){
             model.mStr_title = @"待审核";
-        }else if (i==2){
+        }else if (i==1){
             model.mStr_title = @"已审核";
-        }else if (i==3){
+        }else if (i==2){
             model.mStr_title = @"统计查询";
         }
         [temp addObject:model];

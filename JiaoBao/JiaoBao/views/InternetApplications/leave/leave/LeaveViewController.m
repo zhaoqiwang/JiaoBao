@@ -39,7 +39,11 @@
         if (i==0) {
             model.mStr_title = @"请假";
         }else if (i==1){
-            model.mStr_title = @"查询";
+            if (self.mInt_leaveID == 1) {//班主任
+                model.mStr_title = @"个人查询";
+            }else{
+                model.mStr_title = @"查询";
+            }
         }
         [temp addObject:model];
     }
@@ -49,6 +53,12 @@
         model.mStr_title = @"代请";
         [temp insertObject:model atIndex:1];
     }
+    //班主任时，添加班级查询
+    if (self.mInt_leaveID == 1) {
+        ButtonViewModel *model = [[ButtonViewModel alloc] init];
+        model.mStr_title = @"班级查询";
+        [temp addObject:model];
+    }
     self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
     [self.view addSubview:self.mScrollV_all];
@@ -57,9 +67,9 @@
     self.mView_root0 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:1 flagID:self.mInt_leaveID];
     //代请，班主任，家长
     int a=0;
-    if (self.mInt_leaveID==1) {
+    if (self.mInt_leaveID==1) {//班主任
         a=0;
-    }else if (self.mInt_leaveID ==3){
+    }else if (self.mInt_leaveID ==3){//家长
         a=2;
     }
     self.mView_root1 = [[LeaveView alloc] initWithFrame1:CGRectMake(0, self.mScrollV_all.frame.origin.y+self.mScrollV_all.frame.size.height, [dm getInstance].width, [dm getInstance].height-48-self.mNav_navgationBar.frame.size.height) flag:a flagID:self.mInt_leaveID];
@@ -69,7 +79,8 @@
 
 
     self.automaticallyAdjustsScrollViewInsets = NO;
-    if (self.mInt_leaveID==3) {
+    //家长或别的身份时，判断哪个该优先显示
+    if (self.mInt_leaveID ==3){//家长
         self.mView_root0.hidden = YES;
         self.mView_root1.hidden = NO;
     }else{
@@ -81,7 +92,7 @@
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
     
-    //先判断身份，班主任有3个，其他为两个
+    //先判断身份，班主任有4个，其他为两个
     if (self.mInt_leaveID == 1) {
         if (self.mInt_flag == 0) {
             self.mView_root0.hidden = NO;

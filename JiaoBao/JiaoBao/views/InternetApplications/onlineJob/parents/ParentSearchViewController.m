@@ -298,6 +298,7 @@
                     [weakSelf.mArr_overHomework removeAllObjects];
                     [weakSelf.mArr_score removeAllObjects];
                     [weakSelf.mArr_practice removeAllObjects];
+                    [weakSelf.stuErrVC.webDataArr removeAllObjects];
                     //重新获取数据
                     [weakSelf sendRequst];
                 }
@@ -371,7 +372,7 @@
         [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
         return;
     }
-    //self.mTableV_list.hidden = NO;
+    self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
     self.mInt_index = (int)view.tag-100;
     [self.stuErrVC removeFromParentViewController];
@@ -466,7 +467,9 @@
         }
     }else if (self.mInt_index==4){
         self.stuErrVC.mModel_gen = self.mModel_gen;
-        [self.stuErrVC sendRequest];
+        if (self.stuErrVC.webDataArr.count==0) {
+             [self.stuErrVC sendRequest];
+        }
     }
     [self.mTableV_list reloadData];
 }
