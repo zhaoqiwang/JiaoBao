@@ -277,7 +277,7 @@
         cell.mLab_leaveValue.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, cell.mLab_leave.frame.origin.y, valueSize.width, valueSize.height);
         cell.mLab_leaveValue.numberOfLines = 0;
         cell.mLab_leaveValue.text = tempValue;
-    }else if (model.mInt_flag == 5){//审核
+    }else if (model.mInt_flag == 5){//撤销，修改
         cell.mLab_leave.hidden = YES;
         cell.mLab_leaveValue.hidden = YES;
         cell.mLab_go.hidden = YES;

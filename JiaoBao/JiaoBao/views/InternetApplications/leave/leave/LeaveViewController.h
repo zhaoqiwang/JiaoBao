@@ -17,7 +17,6 @@
 #import "QueryViewController.h"
 
 @interface LeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate>
-- (IBAction)btnAction:(id)sender;
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示

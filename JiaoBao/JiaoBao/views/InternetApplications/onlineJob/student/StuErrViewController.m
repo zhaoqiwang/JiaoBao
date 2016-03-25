@@ -50,8 +50,9 @@ int cellRefreshCount, newHeight;
 
     
     //}
+
     if(self.mInt_index==self.datasource.count){
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [MBProgressHUD hideHUDForView:self.view];
         [self.tableVIew headerEndRefreshing];
         [self.tableVIew footerEndRefreshing];
         [self.tableVIew reloadData];
@@ -61,6 +62,7 @@ int cellRefreshCount, newHeight;
 }
 
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
+    [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
@@ -87,6 +89,7 @@ int cellRefreshCount, newHeight;
     if(self.mInt_index<self.datasource.count){
         StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
         [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:errModel.HwID QsId:errModel.QsID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }
     else{
 
@@ -95,16 +98,19 @@ int cellRefreshCount, newHeight;
     
 }
 -(void)GetStuErr:(id)sender{
+    
     if (self.mInt_reloadData ==0)
     {
         self.datasource = [sender object];
         if(self.datasource.count>0){
             StuErrModel *model = [self.datasource objectAtIndex:0];
+            [MBProgressHUD showMessage:@"" toView:self.view];
             [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:model.HwID QsId:model.QsID];
             
         }
         else{
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [MBProgressHUD hideHUDForView:self.view];
+            [MBProgressHUD showSuccess:@"无数据" toView:self.view];
         }
         
     }
@@ -113,14 +119,15 @@ int cellRefreshCount, newHeight;
         NSArray *arr = [sender object];
         if(arr.count == 0)
         {
-            
+            [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             return;
         }
         [self.datasource addObjectsFromArray:arr];
         if(arr.count>0){
             StuErrModel *model = [arr objectAtIndex:0];
-            [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:model.HwID QsId:model.QsID];
+            [MBProgressHUD showMessage:@"" toView:self.view];
+            [[OnlineJobHttp getInstance] GetStuHWQsWithHwInfoId:model.HwID QsId:model.QsID];
             
         }
         else{
@@ -156,6 +163,11 @@ int cellRefreshCount, newHeight;
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
 
 
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWQsWithHwInfoId" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuErr" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
     // Do any additional setup after loading the view from its nib.
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

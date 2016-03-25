@@ -25,7 +25,7 @@
         self.mArr_leave = [NSMutableArray array];
         if (self.mInt_flag == 1) {//自己请假
             
-        }else{//班主任或者家长请假
+        }else{//班主任代请或者家长代假
             LeaveNowModel *model = [[LeaveNowModel alloc] init];
             model.mInt_flag = 0 ;//选择学生
             model.mStr_name = @"学生";
@@ -33,7 +33,7 @@
         }
         for (int i=0; i<4; i++) {
             LeaveNowModel *model = [[LeaveNowModel alloc] init];
-//            mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间，4添加时间段，5提交
+//            mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间显示，4添加时间段，5提交
             if (i==0) {
                 model.mInt_flag = 1 ;//1理由选择
                 model.mStr_name = @"理由";
