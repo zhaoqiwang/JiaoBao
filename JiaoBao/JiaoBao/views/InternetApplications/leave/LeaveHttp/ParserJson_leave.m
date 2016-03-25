@@ -170,7 +170,22 @@
         [mArr addObject:model];
         
     }
-    
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<mArr.count; i++) {
+        UserClassInfo *model = [mArr objectAtIndex:i];
+        int a=0;
+        for (UserClassInfo *tempModel in array) {
+            if ([model.GradeName isEqual:tempModel.GradeName]) {
+//                a++;
+                [tempModel.mArr_class addObject:model];
+            }else{
+                [array addObject:model];
+            }
+        }
+        if (a==0) {
+            [array addObject:model];
+        }
+    }
     
     return mArr;
 }

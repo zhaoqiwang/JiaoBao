@@ -1,7 +1,7 @@
 //
 //  UserClassInfo.h
 //  JiaoBao
-//
+//  学校所有班级
 //  Created by SongYanming on 16/3/23.
 //  Copyright © 2016年 JSY. All rights reserved.
 //
@@ -17,5 +17,6 @@
 @property(nonatomic,strong)NSString*GradeName;		//年级名称
 @property(nonatomic,strong)NSString*State;		//状态，0禁用，1正常
 @property(nonatomic,strong)NSString*SchoolID;		//学校ID
+@property(nonatomic,strong) NSMutableArray *mArr_class;//年级和班级的多级列表用
 
 @end
