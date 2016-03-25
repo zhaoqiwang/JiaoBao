@@ -8,14 +8,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QueryViewController">
             <connections>
                 <outlet property="ParentsHeadView" destination="TWA-eg-yod" id="NIE-sd-cnO"/>
-                <outlet property="dateBtn" destination="OUK-WE-eGZ" id="FYo-7V-Pgb"/>
+                <outlet property="dateBtn" destination="3ts-k3-Vsg" id="SFU-FG-SZF"/>
                 <outlet property="datePicker" destination="D0H-24-ksg" id="MFO-LT-Pce"/>
-                <outlet property="dateTF" destination="3wJ-bV-Fw9" id="Ng9-yA-tZ6"/>
+                <outlet property="dateTF" destination="rOl-CY-g7c" id="6Zd-yP-FaT"/>
                 <outlet property="myBtn" destination="i1R-2o-OPz" id="Ltx-6r-xIe"/>
+                <outlet property="parentDateBtn" destination="dEf-ZH-zMp" id="zZW-DV-7UX"/>
                 <outlet property="sectionView" destination="B9m-8A-A4C" id="u7d-aH-qqg"/>
                 <outlet property="stdBtn" destination="c2H-pw-WGo" id="P0q-fm-BS9"/>
+                <outlet property="stuBtn" destination="bj9-R1-obk" id="kXI-8u-eam"/>
                 <outlet property="stuSection" destination="7ao-sw-VkT" id="L2a-Bl-iSJ"/>
                 <outlet property="tableHeadView" destination="Gfc-3R-7tJ" id="lFs-vp-9Qx"/>
+                <outlet property="teaDateTF" destination="Zig-ZG-9dn" id="vze-dD-LCn"/>
                 <outlet property="teaHeadView" destination="jKw-78-cbT" id="DUW-7G-Lf7"/>
                 <outlet property="toolBar" destination="Xk6-PG-kcR" id="GXk-Xh-GGw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -233,12 +236,21 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bj9-R1-obk">
-                    <rect key="frame" x="59" y="7" width="127" height="30"/>
+                    <rect key="frame" x="59" y="7" width="308" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="200" maxY="0.0"/>
                     <state key="normal" title="马文斌">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="Stu_SelectionAction:" destination="-1" eventType="touchUpInside" id="YM6-l4-63f"/>
+                    </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rOl-CY-g7c">
+                    <rect key="frame" x="231" y="49" width="0.0" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -286,6 +298,11 @@
                         <action selector="datePickAction:" destination="-1" eventType="touchUpInside" id="lhB-zp-gs8"/>
                     </connections>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zig-ZG-9dn">
+                    <rect key="frame" x="254" y="4" width="0.0" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
@@ -310,7 +327,7 @@
             </items>
             <point key="canvasLocation" x="378" y="614"/>
         </toolbar>
-        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" id="D0H-24-ksg">
+        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="D0H-24-ksg">
             <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

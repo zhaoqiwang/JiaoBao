@@ -87,6 +87,8 @@
         self.mView_root0.hidden = NO;
         self.mView_root1.hidden = YES;
     }
+    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
@@ -105,13 +107,10 @@
         }else if (self.mInt_flag == 2){
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = YES;
-            if(!self.queryVC){
-                self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
                 self.queryVC.mInt_leaveID = self.mInt_leaveID;
                 [self addChildViewController:self.queryVC];
                 [self.queryVC didMoveToParentViewController:self];
                 [self addChild:self.queryVC withChildToRemove:nil];
-            }
             self.queryVC.view.hidden = NO;
         }
     }else{
@@ -124,13 +123,11 @@
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
-                if(!self.queryVC){
-                    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+
                     self.queryVC.mInt_leaveID = self.mInt_leaveID;
                     [self addChildViewController:self.queryVC];
                     [self.queryVC didMoveToParentViewController:self];
                     [self addChild:self.queryVC withChildToRemove:nil];
-                }
                 self.queryVC.view.hidden = NO;
             }
         }else{
@@ -141,13 +138,10 @@
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
-                if(!self.queryVC){
-                    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
                     self.queryVC.mInt_leaveID = self.mInt_leaveID;
                     [self addChildViewController:self.queryVC];
                     [self.queryVC didMoveToParentViewController:self];
                     [self addChild:self.queryVC withChildToRemove:nil];
-                }
                 self.queryVC.view.hidden = NO;
             }
         }
