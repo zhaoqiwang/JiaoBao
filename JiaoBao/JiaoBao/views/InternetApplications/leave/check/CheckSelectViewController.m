@@ -345,6 +345,44 @@
  --------------------------------------- */
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CheckSelectModel *model = [self.mArr_dispaly objectAtIndex:indexPath.row];
+    if (model.mInt_flag == 2) {//时间
+        
+    }else if (model.mInt_flag == 3){//年级
+        ChooseStudentViewController *choose = [[ChooseStudentViewController alloc] init];
+        choose.delegate = self;
+        choose.mStr_navName = @"选择年级";
+        choose.mInt_flag = 2;
+        choose.mInt_flagID = 3;
+        choose.mArr_student = [dm getInstance].mArr_listClass;
+        [utils pushViewController:choose animated:YES];
+    }else if (model.mInt_flag == 4){//班级
+        CheckSelectModel *model1 = [self.mArr_list objectAtIndex:3];
+        ChooseStudentViewController *choose = [[ChooseStudentViewController alloc] init];
+        choose.delegate = self;
+        choose.mStr_navName = @"选择班级";
+        choose.mInt_flag = 3;
+        choose.mInt_flagID = 4;
+        for (UserClassInfo *model in [dm getInstance].mArr_listClass) {
+            if ([model.GradeName isEqual:model1.mStr_value]) {
+                choose.mArr_student = model.mArr_class;
+            }
+        }
+        [utils pushViewController:choose animated:YES];
+    }
+}
+
+//选择班级、年级的回调
+-(void)ChooseStudentViewCSelect:(id)student flag:(int)flag flagID:(int)flagID{
+    UserClassInfo *model = student;
+    if (flag == 2) {//年级
+        CheckSelectModel *model1 = [self.mArr_list objectAtIndex:3];
+        model1.mStr_value = model.GradeName;
+    }else{//班级
+        CheckSelectModel *model1 = [self.mArr_list objectAtIndex:4];
+        model1.mStr_value = model.ClassName;
+    }
+    [self setValueDisplayArray];
 }
 
 //cell中，button的点击回调方法

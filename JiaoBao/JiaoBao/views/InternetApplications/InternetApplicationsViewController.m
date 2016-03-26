@@ -194,6 +194,8 @@
         if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
             [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         }
+        //应用系统通过单位ID，获取学校所有班级
+        [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     }else{
         [MBProgressHUD showError:@"切换失败" toView:self.view];
     }
@@ -319,6 +321,8 @@
     if ([dm getInstance].uType==2||[dm getInstance].uType==3) {
         [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     }
+    //应用系统通过单位ID，获取学校所有班级
+    [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
 }
 
 //获取求知中的个人信息

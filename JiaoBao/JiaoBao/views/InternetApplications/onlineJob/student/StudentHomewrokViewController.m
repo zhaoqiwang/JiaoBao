@@ -180,6 +180,8 @@
 //获取练习查询列表
 -(void)GetStuHWListPageWithStuId:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSMutableArray *array = [dic objectForKey:@"array"];

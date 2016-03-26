@@ -92,6 +92,8 @@
 @property(nonatomic,strong) LeaveSettingModel *leaveModel;//请假系统权限model
 @property (nonatomic,strong) NSMutableArray *mArr_leaveStudent;//请假系统中，家长关联的学生
 @property (nonatomic,strong) NSMutableArray *mArr_leaveClass;//请假系统中，班主任管理的班级
+@property (nonatomic,strong) NSMutableArray *mArr_allClass;//所有班级
+@property (nonatomic,strong) NSMutableArray *mArr_listClass;//所有班级的二级列表格式
 + (dm*) getInstance;
 
 

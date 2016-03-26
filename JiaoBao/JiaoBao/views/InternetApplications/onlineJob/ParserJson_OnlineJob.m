@@ -209,7 +209,7 @@
         model.HWScore = [numberFormatter stringFromNumber:[dic objectForKey:@"HWScore"]];
         model.EduLevel = [numberFormatter stringFromNumber:[dic objectForKey:@"EduLevel"]];
         model.HWEndTime = [dic objectForKey:@"HWEndTime"];
-        model.EXPIRYDATE = [[dic objectForKey:@"EXPIRYDATE"] stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+        model.EXPIRYDATE = [[[dic objectForKey:@"EXPIRYDATE"] stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:19];
         model.isHaveAdd = [numberFormatter stringFromNumber:[dic objectForKey:@"isHaveAdd"]];
         model.HWStartTime = [dic objectForKey:@"HWStartTime"];
         

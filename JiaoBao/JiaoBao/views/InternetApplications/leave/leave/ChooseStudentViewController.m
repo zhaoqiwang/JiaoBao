@@ -14,10 +14,16 @@
 
 @implementation ChooseStudentViewController
 
+-(instancetype)init{
+    self = [super init];
+    self.mArr_student = [NSMutableArray array];
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.mArr_student = [NSMutableArray array];
+    
     //获取指定班级的所有学生数据列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getClassStdInfoWithUID" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getClassStdInfoWithUID:) name:@"getClassStdInfoWithUID" object:nil];
@@ -33,7 +39,7 @@
                 [MBProgressHUD showMessage:@"" toView:self.view];
             }
         }
-    }else{//选择请假理由
+    }else if (self.mInt_flag == 1) {//选择请假理由
         //用学生信息model代替，只为传值
         for (int i=0; i<4; i++) {
             MyStdInfo *model = [[MyStdInfo alloc] init];
@@ -48,6 +54,10 @@
             }
             [self.mArr_student addObject:model];
         }
+    }else if (self.mInt_flag == 2) {//选择年级
+        
+    }else if (self.mInt_flag == 3) {//选择班级
+        
     }
     
     //添加导航条
@@ -56,7 +66,7 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
-    self.mTableV_list.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+    self.mTableV_list.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
 }
 
@@ -85,6 +95,12 @@
     }else if (self.mInt_flagID == 1){//班主任
         StuInfoModel *model = [self.mArr_student objectAtIndex:indexPath.row];
         cell.textLabel.text = model.StdName;
+    }else if (self.mInt_flagID == 3){//年级
+        UserClassInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
+        cell.textLabel.text = model.GradeName;
+    }else if (self.mInt_flagID == 4){//班级
+        UserClassInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
+        cell.textLabel.text = model.ClassName;
     }
     
     return cell;
