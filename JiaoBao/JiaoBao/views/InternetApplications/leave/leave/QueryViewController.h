@@ -16,6 +16,8 @@
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
+@property (nonatomic,assign) int mInt_flag;//区分是是请假还是查询
+
 @property (strong, nonatomic) IBOutlet UIView *teaHeadView;//老师表头
 @property (strong, nonatomic) IBOutlet UIView *ParentsHeadView;//家长表头
 @property(nonatomic,assign)BOOL cellFlag;//1：有学生cell 0：没有学生cell

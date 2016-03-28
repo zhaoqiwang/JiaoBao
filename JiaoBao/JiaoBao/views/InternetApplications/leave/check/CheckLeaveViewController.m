@@ -7,26 +7,58 @@
 //
 
 #import "CheckLeaveViewController.h"
-
-
+#import "LeaveDetailViewController.h"
+#import "CheckSelectViewController.h"
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
+@property(nonatomic,strong)NSMutableArray *mArr1;//待审核数组
+@property(nonatomic,strong)NSMutableArray *mArr2;//已审核数组
+@property(nonatomic,strong)NSMutableArray *mArr3;//统计查询数组
+
 @property(nonatomic,strong)leaveRecordModel *recordModel;
 
 @property(nonatomic,assign)BOOL cellFlag;//0：有学生cell 1：没有学生cell
 @end
 
 @implementation CheckLeaveViewController
+-(void)updateCheckCell:(NSNotification*)sender{
+    CheckLeaveModel *model = [sender object];
+    NSIndexPath *indexP = [NSIndexPath indexPathForRow:model.cellFlag inSection:0];
+    self.recordModel.numPerPage = @"1";
+    NSInteger pageNum = [self.recordModel.pageNum integerValue];
+    self.recordModel.pageNum = [NSString stringWithFormat:@"%ld",pageNum+1];
+    
+    NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
+    [self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+    
+    
+}
 -(void)GetUnitLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.dataSource = [sender object];
+    if(self.mInt_flag == 0){
+        self.mArr1 = self.dataSource;
+    }
+    else if (self.mInt_flag == 1){
+        self.mArr2 = self.dataSource;
+        
+    }
+    else{
+        self.mArr3 = self.dataSource;
+    }
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mArr1 = [NSMutableArray array];
+    self.mArr2 = [NSMutableArray array];
+    self.mArr3 = [NSMutableArray array];
     //审核人员取单位的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetUnitLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetUnitLeaves:) name:@"GetUnitLeaves" object:nil];
+    //审核完毕后的通知
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateCheckCell" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetUnitLeaves:) name:@"updateCheckCell" object:nil];
     self.dataSource = [NSMutableArray array];
     self.recordModel = [[leaveRecordModel alloc]init];
     self.recordModel.checkFlag = @"0";
@@ -57,6 +89,13 @@
     [self.view addSubview:self.mScrollV_all];
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
+    if(self.mInt_flag==0){
+        
+    }else if (self.mInt_flag==1){
+        
+    }else{
+        
+    }
     self.recordModel.numPerPage = @"20";
     self.recordModel.pageNum = @"1";
     self.recordModel.RowCount = @"0";
@@ -65,6 +104,7 @@
     self.recordModel.sDateTime = @"2016-03";
     self.recordModel.level = @"1";
     [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
+    
     [MBProgressHUD showMessage:@"" toView:self.view];
     
 }
@@ -139,26 +179,40 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     leaveRecordModel *model = [self.dataSource objectAtIndex:indexPath.row];
-    
+    LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
+    [self.navigationController pushViewController:selectVC animated:YES];
 }
 
 //分类状态的回调
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
-    if(self.mInt_flag ==2){
+    NSMutableArray *tempMArr;
+    if(self.mInt_flag ==0){
+        self.recordModel.checkFlag = @"0";
+        self.cellFlag = YES;
+        tempMArr = self.mArr1;
+    }
+    else if(self.mInt_flag ==1){
         self.recordModel.checkFlag = @"1";
+        self.cellFlag = YES;
+        tempMArr = self.mArr2;
     }
     else{
-        self.recordModel.checkFlag = @"0";
-    }
-    if(self.mInt_flag == 3){
         self.cellFlag = NO;
-    }else{
-        self.cellFlag = YES;
+        tempMArr = self.mArr3;
     }
-    [self sendRequest];
+    if(tempMArr.count==0){
+        [self sendRequest];
+    }
+    else{
+        self.dataSource = tempMArr;
+        [self.tableView reloadData];
+    }
+    
 }
 - (IBAction)conditionAction:(id)sender{
+    CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
+    [self.navigationController pushViewController:selectVC animated:YES];
     
 }
 

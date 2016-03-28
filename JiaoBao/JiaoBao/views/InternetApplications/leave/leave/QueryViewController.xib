@@ -11,13 +11,10 @@
                 <outlet property="dateBtn" destination="3ts-k3-Vsg" id="SFU-FG-SZF"/>
                 <outlet property="datePicker" destination="D0H-24-ksg" id="MFO-LT-Pce"/>
                 <outlet property="dateTF" destination="rOl-CY-g7c" id="6Zd-yP-FaT"/>
-                <outlet property="myBtn" destination="i1R-2o-OPz" id="Ltx-6r-xIe"/>
                 <outlet property="parentDateBtn" destination="dEf-ZH-zMp" id="zZW-DV-7UX"/>
                 <outlet property="sectionView" destination="B9m-8A-A4C" id="u7d-aH-qqg"/>
-                <outlet property="stdBtn" destination="c2H-pw-WGo" id="P0q-fm-BS9"/>
                 <outlet property="stuBtn" destination="bj9-R1-obk" id="kXI-8u-eam"/>
                 <outlet property="stuSection" destination="7ao-sw-VkT" id="L2a-Bl-iSJ"/>
-                <outlet property="tableHeadView" destination="Gfc-3R-7tJ" id="lFs-vp-9Qx"/>
                 <outlet property="teaDateTF" destination="Zig-ZG-9dn" id="vze-dD-LCn"/>
                 <outlet property="teaHeadView" destination="jKw-78-cbT" id="DUW-7G-Lf7"/>
                 <outlet property="toolBar" destination="Xk6-PG-kcR" id="GXk-Xh-GGw"/>
@@ -36,92 +33,10 @@
             </connections>
             <point key="canvasLocation" x="194.5" y="382.5"/>
         </tableView>
-        <view contentMode="scaleToFill" id="Gfc-3R-7tJ">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFd-5u-X5f">
-                    <rect key="frame" x="0.0" y="40" width="374" height="1"/>
-                    <color key="backgroundColor" red="0.87450980392156863" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lh6-Cm-DB3">
-                    <rect key="frame" x="0.0" y="79" width="374" height="1"/>
-                    <color key="backgroundColor" red="0.87450980392156863" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHR-qN-Piq">
-                    <rect key="frame" x="0.0" y="0.0" width="374" height="1"/>
-                    <color key="backgroundColor" red="0.87450980392156863" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2H-pw-WGo">
-                    <rect key="frame" x="76" y="3" width="54" height="38"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                    <state key="normal" title="学生" image="sigleSelect0.png">
-                        <color key="titleColor" red="0.3529411764705882" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <state key="selected" image="sigleSelect1.png"/>
-                    <connections>
-                        <action selector="selectionBtnAction:" destination="-1" eventType="touchUpInside" id="j0m-Gv-GZ8"/>
-                    </connections>
-                </button>
-                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i1R-2o-OPz">
-                    <rect key="frame" x="14" y="3" width="54" height="38"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
-                    <state key="normal" title="本人" image="sigleSelect0.png">
-                        <color key="titleColor" red="0.3529411764705882" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <state key="selected" image="sigleSelect1.png"/>
-                    <connections>
-                        <action selector="selectionBtnAction:" destination="-1" eventType="touchUpInside" id="OPW-GE-wZj"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="时间:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vO2-1N-5JZ">
-                    <rect key="frame" x="20" y="50" width="40" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.3529411764705882" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OUK-WE-eGZ">
-                    <rect key="frame" x="59" y="46" width="86" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="2016年1月">
-                        <color key="titleColor" red="0.3529411764705882" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="datePickAction:" destination="-1" eventType="touchUpInside" id="YT7-Aq-Age"/>
-                    </connections>
-                </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3wJ-bV-Fw9">
-                    <rect key="frame" x="153" y="44" width="0.0" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
-            </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <nil key="simulatedStatusBarMetrics"/>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="183.5" y="-339"/>
-        </view>
         <view contentMode="scaleToFill" id="B9m-8A-A4C">
             <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FTy-xS-ffX">
-                    <rect key="frame" x="16" y="5" width="34" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLg-dm-bK1">
                     <rect key="frame" x="0.0" y="31" width="374" height="1"/>
                     <color key="backgroundColor" red="0.87450980392156863" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
@@ -136,13 +51,19 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="理由" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exN-OY-ZJN">
-                    <rect key="frame" x="210" y="5" width="34" height="21"/>
+                    <rect key="frame" x="202" y="5" width="34" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="状态" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWJ-em-zFQ">
-                    <rect key="frame" x="281" y="5" width="34" height="21"/>
+                    <rect key="frame" x="276" y="5" width="34" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FTy-xS-ffX">
+                    <rect key="frame" x="32" y="5" width="34" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -338,8 +259,4 @@
             <point key="canvasLocation" x="378" y="444"/>
         </datePicker>
     </objects>
-    <resources>
-        <image name="sigleSelect0.png" width="14" height="14"/>
-        <image name="sigleSelect1.png" width="14" height="14"/>
-    </resources>
 </document>
