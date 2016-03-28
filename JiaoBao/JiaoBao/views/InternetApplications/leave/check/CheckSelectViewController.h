@@ -25,6 +25,11 @@
 @property (nonatomic,strong) NSMutableArray *mArr_dispaly;//显示列表
 @property (nonatomic,assign) int mInt_flag;//0待审、已审，1统计查询
 @property (weak,nonatomic) id<CheckSelectViewCDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UITextField *dateTF;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+- (IBAction)cancelToolAction:(id)sender;
+- (IBAction)doneToolAction:(id)sender;
 
 @end
 

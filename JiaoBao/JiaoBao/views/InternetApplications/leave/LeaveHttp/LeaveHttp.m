@@ -470,7 +470,7 @@ static LeaveHttp *leaveHttp = nil;
 }
 //学校班级请假查询统计
 -(void)GetClassSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime gradeStr:(NSString*)gradeStr{
-    NSString *urlString = [NSString stringWithFormat:@"%@/basic/GetClassSumLeaves",MAINURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/Leave/GetClassSumLeaves",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -481,7 +481,7 @@ static LeaveHttp *leaveHttp = nil;
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        D("JSON--------GetClassSumLeaves: %@,", data);
+        D("JSON--------GetClassSumLeaves: %@,", result);
         NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassSumLeaves" object:mArr];
@@ -491,20 +491,20 @@ static LeaveHttp *leaveHttp = nil;
     }];
 }
 //班级学生查询统计
--(void)GetStudentSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime{
-    NSString *urlString = [NSString stringWithFormat:@"%@/basic/GetStudentSumLeaves",MAINURL];
+-(void)GetStudentSumLeavesWithUnitId:(NSString*)unitClassId sDateTime:(NSString*)sDateTime{
+    NSString *urlString = [NSString stringWithFormat:@"%@/Leave/GetStudentSumLeaves",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *parameters = @{@"unitId":unitId,@"sDateTime":sDateTime};
+    NSDictionary *parameters = @{@"unitClassId":unitClassId,@"sDateTime":sDateTime};
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
-        D("JSON--------GetStudentSumLeaves: %@,", data);
+        D("JSON--------GetStudentSumLeaves: %@,", result);
         
         
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStudentSumLeaves" object:mArr];
@@ -516,7 +516,7 @@ static LeaveHttp *leaveHttp = nil;
 
 //教职工请假查询统计
 -(void)GetManSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime{
-    NSString *urlString = [NSString stringWithFormat:@"%@/basic/GetManSumLeaves",MAINURL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/Leave/GetManSumLeaves",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -527,7 +527,7 @@ static LeaveHttp *leaveHttp = nil;
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        D("JSON--------GetManSumLeaves: %@,", data);
+        D("JSON--------GetManSumLeaves: %@,", result);
         NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
         
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetManSumLeaves" object:mArr];

@@ -140,9 +140,9 @@
 }
 //下拉选择按钮
 -(void)clickDownBtn:(UIButton *)btn{
-    CheckSubViewController *sub = [[CheckSubViewController alloc]init];
-    [utils pushViewController:sub animated:YES];
-    return;
+//    CheckSubViewController *sub = [[CheckSubViewController alloc]init];
+//    [utils pushViewController:sub animated:YES];
+//    return;
     D("点击下拉选择按钮");
     if([[dm getInstance].jiaoBaoHao intValue]>0&&self.mArr_AllCategory.count>0){
         CategoryViewController *detailVC = [[CategoryViewController alloc]initWithNibName:@"CategoryViewController" bundle:nil];
