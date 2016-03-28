@@ -211,6 +211,7 @@
         CheckSelectModel *model1 = [self.mArr_list objectAtIndex:0];
         float mFloag_width = 14.0;//判断坐标位置
         if (model1.mInt_id ==0) {//当前选择是教职工
+            
             //一审
             if ([dm getInstance].leaveModel.ApproveListTea.A) {
                 cell.mBtn_one.frame = CGRectMake(mFloag_width, 10, cell.mBtn_one.frame.size.width, cell.mBtn_one.frame.size.height);
