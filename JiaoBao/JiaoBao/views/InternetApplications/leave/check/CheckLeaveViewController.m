@@ -101,11 +101,13 @@
     if(self.mInt_flag==0||self.mInt_flag==1){
         [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
     }else{
-//        if([self.recordModel.manType isEqualToString:@"0"])
-//        {
-//            
-//        }
-//        [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId:<#(NSString *)#> sDateTime:<#(NSString *)#>]
+        if([self.recordModel.manType isEqualToString:@"0"])
+        {
+            [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId:[dm getInstance].mStr_unit sDateTime:self.recordModel.sDateTime];
+        }else{
+            [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[dm getInstance].mStr_unit sDateTime:self.recordModel.sDateTime];
+        }
+        
     }
 
 
