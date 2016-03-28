@@ -23,6 +23,7 @@
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"筛选条件"];
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
+    [self.mNav_navgationBar setRightBtnTitle:@"确定"];
     [self.view addSubview:self.mNav_navgationBar];
     
     //表格
@@ -434,6 +435,39 @@
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [utils popViewControllerAnimated:YES];
+}
+//确定按钮
+-(void)navigationRightAction:(UIButton *)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:)]) {
+        leaveRecordModel *selectModel = [[leaveRecordModel alloc] init];
+        CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
+        CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+        CheckSelectModel *model2 = [self.mArr_list objectAtIndex:2];
+        CheckSelectModel *model3 = [self.mArr_list objectAtIndex:3];
+        CheckSelectModel *model4 = [self.mArr_list objectAtIndex:4];
+//        0待审、已审，1统计查询
+        if (self.mInt_flag ==0) {//审核
+            selectModel.level = [NSString stringWithFormat:@"%d",model1.mInt_check+1];
+            selectModel.sDateTime = model2.mStr_value;
+            if (model.mInt_id == 0) {//老师
+                selectModel.manType = @"1";
+            }else{//学生
+                selectModel.manType = @"0";
+                selectModel.gradeStr = model3.mStr_value;
+                selectModel.classStr = model4.mStr_value;
+            }
+        }else{//统计查询
+            selectModel.sDateTime = model2.mStr_value;
+            if (model.mInt_id == 0) {//老师
+                selectModel.manType = @"1";
+            }else{//学生
+                selectModel.manType = @"0";
+                selectModel.gradeStr = model3.mStr_value;
+            }
+        }
+        [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag];
+        [self myNavigationGoback];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -32,6 +32,9 @@
 @end
 
 @protocol ChooseStudentViewCDelegate <NSObject>
+
+@optional
+
 //向cell中
 - (void) ChooseStudentViewCSelect:(id) student flag:(int)flag flagID:(int)flagID;
 
