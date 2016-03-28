@@ -12,7 +12,7 @@
 #import "ClassLeavesModel.h"
 #import "UserClassInfo.h"
 #import "StuInfoModel.h"
-
+#import "dm.h"
 
 @implementation ParserJson_leave
 //取指定单位的请假设置
@@ -171,6 +171,38 @@
         
     }
     
+    //二级数组格式
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<mArr.count; i++) {
+        UserClassInfo *model = [mArr objectAtIndex:i];
+        if (array.count==0) {
+            [array addObject:model];
+        }
+        for (UserClassInfo *tempModel in array) {
+            if ([model.GradeName isEqual:tempModel.GradeName]) {
+                [tempModel.mArr_class addObject:model];
+            }else{
+                [array addObject:model];
+            }
+        }
+    }
+    for (int i=0; i<array.count; i++) {
+        UserClassInfo *model = [array objectAtIndex:i];
+        UserClassInfo *model1 = [[UserClassInfo alloc] init];
+        model1.ClassName = @"全部";
+        [model.mArr_class insertObject:model1 atIndex:0];
+    }
+    //插入默认的“全部”
+    UserClassInfo *model = [[UserClassInfo alloc] init];
+    model.GradeName = @"全部";
+    model.mArr_class = mArr;
+    UserClassInfo *model1 = [[UserClassInfo alloc] init];
+    model1.ClassName = @"全部";
+    [model.mArr_class insertObject:model1 atIndex:0];
+    [array insertObject:model atIndex:0];
+    
+    [dm getInstance].mArr_listClass = array;
+    [dm getInstance].mArr_allClass = mArr;
     
     return mArr;
 }

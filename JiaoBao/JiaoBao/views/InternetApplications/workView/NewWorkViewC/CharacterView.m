@@ -151,6 +151,27 @@ NSString *kSection = @"Forward_section3";
         
     }
     myUnit *unit = [self.datasource objectAtIndex:indexPath.section];
+    
+    UserListModel *model;
+    if(unit.list.count == 1)
+    {
+        model = [unit.list objectAtIndex:0];
+        
+    }
+    if(unit.list.count>1)
+    {
+        model = [unit.list objectAtIndex:1];
+        
+        
+    }
+    if(model.cellSelNum == model.groupselit_selit.count){
+        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
+
+
+    }else {
+        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
+
+    }
    // UserListModel *model = [unit.list objectAtIndex:indexPath.section];
 //    if(myunit.isSelected == YES)
 //    {
@@ -165,8 +186,8 @@ NSString *kSection = @"Forward_section3";
     view.tag = indexPath.section;
     view.mLab_name.text = unit.UintName ;
 
-    view.rightBtn.hidden = YES;
-    view.mBtn_all.hidden = YES;
+    //view.rightBtn.hidden = YES;
+    //view.mBtn_all.hidden = YES;
     CGSize size = [view.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
     
     view.addBtn.frame = CGRectMake(view.mLab_name.frame.origin.x+size.width, 5, 30, 30);
@@ -198,16 +219,19 @@ NSString *kSection = @"Forward_section3";
         model = [unit.list objectAtIndex:1];
         
         
-    }    groupselit_selitModel *groupModel ;
+    }    groupselit_selitModel *groupModel;
     groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
     if(groupModel.mInt_select == 1)
     {
         groupModel.mInt_select = 0;
+        model.cellSelNum--;
     }
     else
     {
         groupModel.mInt_select = 1;
+        model.cellSelNum++;
     }
+
 
     
         [self.mCollectionV_list reloadData];
@@ -260,7 +284,37 @@ NSString *kSection = @"Forward_section3";
 
             
         }
+        model.cellSelNum = (int)model.groupselit_selit.count-model.cellSelNum;
+        [self.mCollectionV_list reloadData];
+        
+        
+    }
+    
+    if(btn.tag == 7)
+    {
+        groupselit_selitModel *groupModel ;
+        myUnit *unit = [self.datasource objectAtIndex:section.tag];
+        
+        UserListModel *model;
+        if(unit.list.count == 1)
+        {
+            model = [unit.list objectAtIndex:0];
+            
+        }
+        if(unit.list.count>1)
+        {
+            model = [unit.list objectAtIndex:1];
+            
+            
+        }
+        for(int i=0;i<model.groupselit_selit.count;i++)
+        {
+            groupModel = [model.groupselit_selit objectAtIndex:i];
+            groupModel.mInt_select = 1;
 
+            
+        }
+        model.cellSelNum = (int)model.groupselit_selit.count;
         [self.mCollectionV_list reloadData];
         
         
@@ -300,6 +354,8 @@ NSString *kSection = @"Forward_section3";
         [self.mCollectionV_list reloadData];
         
     }
+    
+    
     HomeClassWorkView *home = (HomeClassWorkView*)[[[self superview]superview]superview];
     [home setFrame];
     

@@ -13,8 +13,9 @@
 #import "define_constant.h"
 #import "CheckSelectModel.h"
 #import "CheckSelectTableViewCell.h"
+#import "ChooseStudentViewController.h"
 
-@interface CheckSelectViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,CheckSelectTableViewCellDelegate>
+@interface CheckSelectViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,CheckSelectTableViewCellDelegate,ChooseStudentViewCDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_select;//筛选列表

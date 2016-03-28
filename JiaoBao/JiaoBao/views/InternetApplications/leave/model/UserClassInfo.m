@@ -10,5 +10,10 @@
 
 @implementation UserClassInfo
 
+-(instancetype)init{
+    self = [super init];
+    self.mArr_class = [NSMutableArray array];
+    return self;
+}
 
 @end

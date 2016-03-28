@@ -14,6 +14,8 @@
 -(id)init{
     self = [super init];
     self.groupselit_selit = [[NSMutableArray alloc] init];
+    self.sectionSelSymbol = 0;
+    self.cellSelNum = 0;
     return self;
 }
 
