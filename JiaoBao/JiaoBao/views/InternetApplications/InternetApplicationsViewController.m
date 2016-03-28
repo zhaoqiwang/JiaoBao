@@ -590,14 +590,16 @@
             [array addObject:[self addOnLineJob]];
         }
         //请假
-        if ([dm getInstance].mArr_leaveStudent.count>0||[dm getInstance].uType==2) {
-            [array addObject:[KxMenuItem menuItem:@"请假"
-                                            image:[UIImage imageNamed:@"appNav_contact"]
-                                           target:self
-                                           action:@selector(pushMenuItemLeave:)]];
+        if ([[dm getInstance].leaveModel.StatusStd intValue]==1||[[dm getInstance].leaveModel.StatusTea intValue]==1) {
+            if ([dm getInstance].mArr_leaveStudent.count>0||[dm getInstance].uType==2) {
+                [array addObject:[KxMenuItem menuItem:@"请假"
+                                                image:[UIImage imageNamed:@"appNav_contact"]
+                                               target:self
+                                               action:@selector(pushMenuItemLeave:)]];
+            }
         }
         //审核
-        if ([dm getInstance].leaveModel.ApproveListStd.A||[dm getInstance].leaveModel.ApproveListStd.B||[dm getInstance].leaveModel.ApproveListStd.C||[dm getInstance].leaveModel.ApproveListStd.D||[dm getInstance].leaveModel.ApproveListStd.E||[dm getInstance].leaveModel.ApproveListTea.A||[dm getInstance].leaveModel.ApproveListTea.B||[dm getInstance].leaveModel.ApproveListTea.C||[dm getInstance].leaveModel.ApproveListTea.D||[dm getInstance].leaveModel.ApproveListTea.E||[[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+        if ([[dm getInstance].leaveModel.ApproveListStd.A intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.C intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.D intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.E intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.A intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.B intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.C intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.D intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.E intValue]==1||[[dm getInstance].leaveModel.GateGuardList intValue]==1||[[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3) {
             [array addObject:[KxMenuItem menuItem:@"审核"
                                             image:[UIImage imageNamed:@"appNav_contact"]
                                            target:self

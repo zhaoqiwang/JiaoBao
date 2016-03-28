@@ -188,17 +188,20 @@
 //                [array addObject:model];
 //            }
 //        }
+        __block int a=0;
         [array enumerateObjectsUsingBlock:^(UserClassInfo *tempModel, NSUInteger idx, BOOL *stop) {
             if ([model.GradeName isEqual:tempModel.GradeName]) {
                 *stop = YES;
                 if (*stop == YES) {
                     [tempModel.mArr_class addObject:model];
+                    a++;
                 }
             }
-            if (*stop) {
-                
-            }
         }];
+        if (a==0) {
+            [model.mArr_class addObject:model];
+            [array addObject:model];
+        }
     }
     for (int i=0; i<array.count; i++) {
         UserClassInfo *model = [array objectAtIndex:i];
