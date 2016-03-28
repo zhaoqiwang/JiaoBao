@@ -110,19 +110,19 @@
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     if (model.mInt_id ==0) {//当前选择是教职工
         //一审
-        if ([dm getInstance].leaveModel.ApproveListTea.A) {
+        if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1) {
             model1.mInt_check = 0;
         }else{
-            if ([dm getInstance].leaveModel.ApproveListTea.B) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1) {
                 model1.mInt_check = 1;
             }else{
-                if ([dm getInstance].leaveModel.ApproveListTea.C) {
+                if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1) {
                     model1.mInt_check = 2;
                 }else{
-                    if ([dm getInstance].leaveModel.ApproveListTea.D) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1) {
                         model1.mInt_check = 3;
                     }else{
-                        if ([dm getInstance].leaveModel.ApproveListTea.E) {
+                        if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1) {
                             model1.mInt_check = 4;
                         }
                     }
@@ -133,16 +133,16 @@
         if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
             model1.mInt_check = 0;
         }else{
-            if ([dm getInstance].leaveModel.ApproveListStd.B) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
                 model1.mInt_check = 1;
             }else{
-                if ([dm getInstance].leaveModel.ApproveListStd.C) {
+                if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
                     model1.mInt_check = 2;
                 }else{
-                    if ([dm getInstance].leaveModel.ApproveListStd.D) {
+                    if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
                         model1.mInt_check = 3;
                     }else{
-                        if ([dm getInstance].leaveModel.ApproveListStd.E) {
+                        if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
                             model1.mInt_check = 4;
                         }
                     }
@@ -213,35 +213,35 @@
         if (model1.mInt_id ==0) {//当前选择是教职工
             
             //一审
-            if ([dm getInstance].leaveModel.ApproveListTea.A) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1) {
                 cell.mBtn_one.frame = CGRectMake(mFloag_width, 10, cell.mBtn_one.frame.size.width, cell.mBtn_one.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_one.frame.size.width+10;
             }else{
                 cell.mBtn_one.hidden = YES;
             }
             //二审
-            if ([dm getInstance].leaveModel.ApproveListTea.B) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1) {
                 cell.mBtn_two.frame = CGRectMake(mFloag_width, 10, cell.mBtn_two.frame.size.width, cell.mBtn_two.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_two.frame.size.width+10;
             }else{
                 cell.mBtn_two.hidden = YES;
             }
             //三审
-            if ([dm getInstance].leaveModel.ApproveListTea.C) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1) {
                 cell.mBtn_three.frame = CGRectMake(mFloag_width, 10, cell.mBtn_three.frame.size.width, cell.mBtn_three.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_three.frame.size.width+10;
             }else{
                 cell.mBtn_three.hidden = YES;
             }
             //四审
-            if ([dm getInstance].leaveModel.ApproveListTea.D) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1) {
                 cell.mBtn_four.frame = CGRectMake(mFloag_width, 10, cell.mBtn_four.frame.size.width, cell.mBtn_four.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_four.frame.size.width+10;
             }else{
                 cell.mBtn_four.hidden = YES;
             }
             //五审
-            if ([dm getInstance].leaveModel.ApproveListTea.E) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1) {
                 cell.mBtn_five.frame = CGRectMake(mFloag_width, 10, cell.mBtn_five.frame.size.width, cell.mBtn_five.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_five.frame.size.width+10;
             }else{
@@ -255,28 +255,28 @@
                 cell.mBtn_one.hidden = YES;
             }
             //二审
-            if ([dm getInstance].leaveModel.ApproveListStd.B) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
                 cell.mBtn_two.frame = CGRectMake(mFloag_width, 10, cell.mBtn_two.frame.size.width, cell.mBtn_two.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_two.frame.size.width+10;
             }else{
                 cell.mBtn_two.hidden = YES;
             }
             //三审
-            if ([dm getInstance].leaveModel.ApproveListStd.C) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
                 cell.mBtn_three.frame = CGRectMake(mFloag_width, 10, cell.mBtn_three.frame.size.width, cell.mBtn_three.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_three.frame.size.width+10;
             }else{
                 cell.mBtn_three.hidden = YES;
             }
             //四审
-            if ([dm getInstance].leaveModel.ApproveListStd.D) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
                 cell.mBtn_four.frame = CGRectMake(mFloag_width, 10, cell.mBtn_four.frame.size.width, cell.mBtn_four.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_four.frame.size.width+10;
             }else{
                 cell.mBtn_four.hidden = YES;
             }
             //五审
-            if ([dm getInstance].leaveModel.ApproveListStd.E) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
                 cell.mBtn_five.frame = CGRectMake(mFloag_width, 10, cell.mBtn_five.frame.size.width, cell.mBtn_five.frame.size.height);
                 mFloag_width = mFloag_width+cell.mBtn_five.frame.size.width+10;
             }else{

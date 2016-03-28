@@ -597,7 +597,7 @@
                                            action:@selector(pushMenuItemLeave:)]];
         }
         //审核
-        if ([dm getInstance].leaveModel.ApproveListStd.A||[dm getInstance].leaveModel.ApproveListStd.B||[dm getInstance].leaveModel.ApproveListStd.C||[dm getInstance].leaveModel.ApproveListStd.D||[dm getInstance].leaveModel.ApproveListStd.E||[dm getInstance].leaveModel.ApproveListTea.A||[dm getInstance].leaveModel.ApproveListTea.B||[dm getInstance].leaveModel.ApproveListTea.C||[dm getInstance].leaveModel.ApproveListTea.D||[dm getInstance].leaveModel.ApproveListTea.E) {
+        if ([dm getInstance].leaveModel.ApproveListStd.A||[dm getInstance].leaveModel.ApproveListStd.B||[dm getInstance].leaveModel.ApproveListStd.C||[dm getInstance].leaveModel.ApproveListStd.D||[dm getInstance].leaveModel.ApproveListStd.E||[dm getInstance].leaveModel.ApproveListTea.A||[dm getInstance].leaveModel.ApproveListTea.B||[dm getInstance].leaveModel.ApproveListTea.C||[dm getInstance].leaveModel.ApproveListTea.D||[dm getInstance].leaveModel.ApproveListTea.E||[[dm getInstance].leaveModel.GateGuardList intValue]==1) {
             [array addObject:[KxMenuItem menuItem:@"审核"
                                             image:[UIImage imageNamed:@"appNav_contact"]
                                            target:self

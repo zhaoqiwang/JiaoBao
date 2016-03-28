@@ -179,13 +179,24 @@
         if (array.count==0) {
             [array addObject:model];
         }
-        for (UserClassInfo *tempModel in array) {
+//        for (UserClassInfo *tempModel in array) {
+//            if ([model.GradeName isEqual:tempModel.GradeName]) {
+//                [tempModel.mArr_class addObject:model];
+//            }else{
+//                [array addObject:model];
+//            }
+//        }
+        [array enumerateObjectsUsingBlock:^(UserClassInfo *tempModel, NSUInteger idx, BOOL *stop) {
             if ([model.GradeName isEqual:tempModel.GradeName]) {
-                [tempModel.mArr_class addObject:model];
-            }else{
-                [array addObject:model];
+                *stop = YES;
+                if (*stop == YES) {
+                    [tempModel.mArr_class addObject:model];
+                }
             }
-        }
+            if (*stop) {
+                
+            }
+        }];
     }
     for (int i=0; i<array.count; i++) {
         UserClassInfo *model = [array objectAtIndex:i];
