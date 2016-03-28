@@ -19,12 +19,14 @@
 //取指定单位的请假设置
 +(LeaveSettingModel *)parserJsonGetLeaveSetting:(NSString *)json{
     NSDictionary *dic = [json objectFromJSONString];
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
+
     LeaveSettingModel *model = [[LeaveSettingModel alloc ]init];
-    model.StatusStd = [NSString stringWithFormat:@"%@",[dic objectForKey:@"StatusStd"]];
+    model.StatusStd = [numberFormatter stringFromNumber:[dic objectForKey:@"StatusStd"]];
         model.StatusTea = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Status"]];
     
-    model.ApproveLevelStd = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ApproveLevelStd"]];
-    model.ApproveLevelTea = [NSString stringWithFormat:@"%@",[dic objectForKey:@"ApproveLevel"]];
+    model.ApproveLevelStd = [numberFormatter stringFromNumber:[dic objectForKey:@"ApproveLevelStd"]];
+    model.ApproveLevelTea = [numberFormatter stringFromNumber:[dic objectForKey:@"ApproveLevel"]];
     
         model.GateGuardList = [NSString stringWithFormat:@"%@",[dic objectForKey:@"GateGuardList"]];
     
@@ -32,7 +34,7 @@
         NSString*ApproveListStd =[dic objectForKey:@"ApproveListStd"];
         NSString*levelNoteStd =[dic objectForKey:@"LevelNoteStd"];
         
-        //[model.LevelNoteStd dicToModel:levelNoteStd];
+        [model.LevelNoteStd dicToModel:levelNoteStd];
         [model.ApproveListStd dicToModel:ApproveListStd];
 
 
