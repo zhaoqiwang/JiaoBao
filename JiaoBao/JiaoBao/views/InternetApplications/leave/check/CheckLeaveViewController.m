@@ -10,6 +10,7 @@
 #import "LeaveDetailViewController.h"
 #import "CheckSelectViewController.h"
 #import "ClassLeavesModel.h"
+#import "MyAdminClass.h"
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
 @property(nonatomic,strong)NSMutableArray *mArr1;//待审核数组
@@ -49,6 +50,37 @@
     }
     [self.tableView reloadData];
 }
+-(void)GetManSumLeaves:(NSNotification*)sender{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.dataSource = [sender object];
+    if(self.mInt_flag == 0){
+        self.mArr1 = self.dataSource;
+    }
+    else if (self.mInt_flag == 1){
+        self.mArr2 = self.dataSource;
+        
+    }
+    else{
+        self.mArr3 = self.dataSource;
+    }
+    [self.tableView reloadData];
+    
+}
+-(void)GetStudentSumLeaves:(NSNotification*)sender{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.dataSource = [sender object];
+    if(self.mInt_flag == 0){
+        self.mArr1 = self.dataSource;
+    }
+    else if (self.mInt_flag == 1){
+        self.mArr2 = self.dataSource;
+        
+    }
+    else{
+        self.mArr3 = self.dataSource;
+    }
+    [self.tableView reloadData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mArr1 = [NSMutableArray array];
@@ -60,6 +92,12 @@
     //审核完毕后的通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateCheckCell" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetUnitLeaves:) name:@"updateCheckCell" object:nil];
+    //学生统计查询后的通知
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStudentSumLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStudentSumLeaves:) name:@"GetStudentSumLeaves" object:nil];
+    //教职工统计查询后的通知
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetManSumLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetManSumLeaves:) name:@"GetManSumLeaves" object:nil];
     self.dataSource = [NSMutableArray array];
     self.recordModel = [[leaveRecordModel alloc]init];
     self.recordModel.checkFlag = @"0";
@@ -103,9 +141,13 @@
     }else{
         if([self.recordModel.manType isEqualToString:@"0"])
         {
-            [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId:[dm getInstance].mStr_unit sDateTime:self.recordModel.sDateTime];
+            if([dm getInstance].mArr_leaveClass.count>0){
+                MyAdminClass *classModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+                [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: classModel.TabID sDateTime:self.recordModel.sDateTime];
+            }
+            
         }else{
-            [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[dm getInstance].mStr_unit sDateTime:self.recordModel.sDateTime];
+            [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime];
         }
         
     }
@@ -233,16 +275,12 @@ selectVC.mStr_navName = @"审核";
 }
 
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
-    if(flag == 0){
         self.recordModel.manType = model.manType;
         self.recordModel.level = model.level;
         self.recordModel.gradeStr = model.gradeStr;
         self.recordModel.classStr = model.classStr;
         self.recordModel.sDateTime = model.sDateTime;
-    }
-    else{
-        
-    }
+
 
     [self sendRequest];
     

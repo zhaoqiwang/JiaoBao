@@ -88,7 +88,7 @@
 
         
     }
-    else
+    else if([ResultCode integerValue]!=0)
     {
         [MBProgressHUD showError:ResultDesc];
     }

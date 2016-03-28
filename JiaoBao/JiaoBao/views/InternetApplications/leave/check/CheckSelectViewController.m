@@ -16,6 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.dateTF.inputAccessoryView = self.toolBar;
+    self.dateTF.inputView = self.datePicker;
     // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mArr_dispaly = [NSMutableArray array];
@@ -349,6 +351,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CheckSelectModel *model = [self.mArr_dispaly objectAtIndex:indexPath.row];
     if (model.mInt_flag == 2) {//时间
+        [self.dateTF becomeFirstResponder];
         
     }else if (model.mInt_flag == 3){//年级
         ChooseStudentViewController *choose = [[ChooseStudentViewController alloc] init];
@@ -430,6 +433,20 @@
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 4;
     [self setValueDisplayArray];
+}
+
+- (IBAction)cancelToolAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+    
+}
+- (IBAction)doneToolAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy年MM月"];
+    CheckSelectModel *model = [self.mArr_dispaly objectAtIndex:2];
+    model.mStr_value = [formatter stringFromDate:self.datePicker.date];
+    [self setValueDisplayArray];
+    
 }
 
 //导航条返回按钮回调

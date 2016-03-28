@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckSelectViewController">
             <connections>
+                <outlet property="datePicker" destination="6Bc-Os-gcX" id="uMO-2l-meg"/>
+                <outlet property="dateTF" destination="fBY-uL-tkL" id="Gme-WJ-4Dl"/>
                 <outlet property="mTableV_select" destination="JeT-TS-tRG" id="JfC-ns-xOL"/>
+                <outlet property="toolBar" destination="Anb-wa-Dfv" id="VtM-Ks-Tkd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,9 +28,43 @@
                         <outlet property="delegate" destination="-1" id="qa6-CZ-gGR"/>
                     </connections>
                 </tableView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" id="fBY-uL-tkL">
+                    <rect key="frame" x="40" y="32" width="0.0" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="682" y="276"/>
         </view>
+        <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Anb-wa-Dfv">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <items>
+                <barButtonItem title="取消" id="aoi-Lk-3TV">
+                    <connections>
+                        <action selector="cancelToolAction:" destination="-1" id="aiK-iT-sAs"/>
+                    </connections>
+                </barButtonItem>
+                <barButtonItem style="plain" systemItem="flexibleSpace" id="3RU-Lu-DuM"/>
+                <barButtonItem title="确定" id="7bj-ka-og5">
+                    <connections>
+                        <action selector="doneToolAction:" destination="-1" id="MEq-O1-lvi"/>
+                    </connections>
+                </barButtonItem>
+            </items>
+            <point key="canvasLocation" x="378" y="614"/>
+        </toolbar>
+        <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="6Bc-Os-gcX">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <date key="date" timeIntervalSinceReferenceDate="479445508.88027698">
+                <!--2016-03-12 03:18:28 +0000-->
+            </date>
+            <locale key="locale" localeIdentifier="zh_CN"/>
+            <point key="canvasLocation" x="378" y="444"/>
+        </datePicker>
     </objects>
 </document>
