@@ -28,7 +28,7 @@
     model.ApproveLevelStd = [numberFormatter stringFromNumber:[dic objectForKey:@"ApproveLevelStd"]];
     model.ApproveLevelTea = [numberFormatter stringFromNumber:[dic objectForKey:@"ApproveLevel"]];
     
-        model.GateGuardList = [NSString stringWithFormat:@"%@",[dic objectForKey:@"GateGuardList"]];
+        model.GateGuardList = [numberFormatter stringFromNumber:[dic objectForKey:@"GateGuardList"]];
     
     if([model.StatusStd integerValue]!=0){
         NSString*ApproveListStd =[dic objectForKey:@"ApproveListStd"];
