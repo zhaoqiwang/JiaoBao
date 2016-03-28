@@ -19,8 +19,9 @@
 #import "leaveRecordModel.h"
 #import "QueryCell.h"
 #import "CustomQueryCell.h"
+#import "CheckSelectViewController.h"
 
-@interface CheckLeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate>
+@interface CheckLeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate,CheckSelectViewCDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示

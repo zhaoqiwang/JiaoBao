@@ -17,6 +17,7 @@
 #import "MJRefresh.h"//上拉下拉刷新
 #import "ClassLeavesModel.h"
 #import "LeaveDetailViewController.h"
+#import "LeaveViewController.h"
 
 
 
@@ -34,15 +35,9 @@
 @implementation QueryViewController
 -(void)viewWillAppear:(BOOL)animated{
     //获得我提出申请的请假记录
-    if(self.cellFlag == YES){
         [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
-    }else{
-        //班主任取审批的记录
-        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetClassLeaves" object:nil];
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetClassLeaves:) name:@"GetClassLeaves" object:nil];
-        
-    }
+
 
 
 }
@@ -56,7 +51,15 @@
     NSDictionary *dic = [sender object];
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if([ResultCode integerValue]==0){
+    NSString *manType = [dic objectForKey:@"manType"];
+    BOOL notiFlag = NO;
+    if((self.mInt_flag==2&&[manType isEqualToString:@"1"])){
+        notiFlag = YES;
+    }
+    if((self.mInt_flag==3&&[manType isEqualToString:@"0"])){
+        notiFlag = YES;
+    }
+    if([ResultCode integerValue]==0&&notiFlag == YES){
         NSArray *arr = [dic objectForKey:@"data"];
         if(self.mInt_reloadData==0){
             self.dataSource = [NSMutableArray arrayWithArray:arr];
@@ -219,27 +222,21 @@
     if(self.mInt_leaveID == 3){
         self.recordModel.manType = @"0";
         self.recordModel.mName = self.mModel_student.StdName;
-    }else{
+    }else if(self.mInt_leaveID == 1){
+        if(self.mInt_flag == 2){
+            self.recordModel.manType = @"1";
+            self.recordModel.mName = @"";
+        }
+        else{
+            self.recordModel.manType = @"0";
+            self.recordModel.mName = @"";
+        }
         
-        self.recordModel.manType = @"1";
-        self.recordModel.mName = @"";
         
     }
     [MBProgressHUD showMessage:@"" toView:self.view];
-    if(self.mInt_flag == 2){
         [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
 
-    }
-    else{
-        if ([dm getInstance].mArr_leaveClass.count>0) {
-            MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
-            self.recordModel.unitClassId = model.TabID;
-        }
-        self.recordModel.checkFlag = @"0";
-        //[MBProgressHUD showMessage:@"" toView:self.view];
-        [[LeaveHttp getInstance]GetClassLeaves:self.recordModel];
-    }
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -315,9 +312,13 @@
     return 32;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
      ClassLeavesModel*model = [self.dataSource objectAtIndex:indexPath.row];
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
     selectVC.mModel_classLeaves = model;
+    LeaveViewController *parentVC =(LeaveViewController*)self.parentViewController;
+    selectVC.mStr_navName = parentVC.mStr_navName;
+
     [self.navigationController pushViewController:selectVC animated:YES];
     
 }

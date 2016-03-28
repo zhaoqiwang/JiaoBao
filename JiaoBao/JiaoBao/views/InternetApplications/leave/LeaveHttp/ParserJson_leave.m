@@ -13,7 +13,7 @@
 #import "UserClassInfo.h"
 #import "StuInfoModel.h"
 #import "dm.h"
-#import "ClassSumLeaves.h"
+#import "SumLeavesModel.h"
 
 @implementation ParserJson_leave
 //取指定单位的请假设置
@@ -213,10 +213,11 @@
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<arr.count;i++){
         NSDictionary *dic = [arr objectAtIndex:i];
-        ClassSumLeaves *model = [[ClassSumLeaves alloc] init];
+        SumLeavesModel *model = [[SumLeavesModel alloc] init];
         model.UnitClassId = [dic objectForKey:@"UnitClassId"];
         model.ClassStr = [dic objectForKey:@"ClassStr"];
         model.GradeStr = [dic objectForKey:@"GradeStr"];
+        model.ManName = [dic objectForKey:@"ManName"];
         model.Amount = [dic objectForKey:@"Amount"];
         model.Amount2 = [dic objectForKey:@"Amount2"];
         [mArr addObject:model];

@@ -63,6 +63,13 @@
     self.dataSource = [NSMutableArray array];
     self.recordModel = [[leaveRecordModel alloc]init];
     self.recordModel.checkFlag = @"0";
+    self.recordModel.numPerPage = @"20";
+    self.recordModel.pageNum = @"1";
+    self.recordModel.RowCount = @"0";
+    self.recordModel.manType = @"1";
+    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    self.recordModel.sDateTime = @"2016-03";
+    self.recordModel.level = @"1";
     [self sendRequest];
 
     // Do any additional setup after loading the view from its nib.
@@ -90,23 +97,18 @@
     [self.view addSubview:self.mScrollV_all];
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
-    if(self.mInt_flag==0){
-        
-    }else if (self.mInt_flag==1){
-        
-    }else{
-        
-    }
-    self.recordModel.numPerPage = @"20";
-    self.recordModel.pageNum = @"1";
-    self.recordModel.RowCount = @"0";
-    self.recordModel.manType = @"1";
-    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
-    self.recordModel.sDateTime = @"2016-03";
-    self.recordModel.level = @"1";
-    [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
-    
     [MBProgressHUD showMessage:@"" toView:self.view];
+    if(self.mInt_flag==0||self.mInt_flag==1){
+        [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
+    }else{
+//        if([self.recordModel.manType isEqualToString:@"0"])
+//        {
+//            
+//        }
+//        [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId:<#(NSString *)#> sDateTime:<#(NSString *)#>]
+    }
+
+
     
 }
 #pragma mark - Table view data source
@@ -179,9 +181,11 @@
     return 32;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
     selectVC.mModel_classLeaves = model;
+selectVC.mStr_navName = @"审核";
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 
@@ -214,11 +218,33 @@
 }
 - (IBAction)conditionAction:(id)sender{
     CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
+    if(self.mInt_flag==0||self.mInt_flag==1){
+        selectVC.mInt_flag = 0;
+    }
+
+    else{
+        selectVC.mInt_flag = 1;
+    }
+    selectVC.delegate = self;
     [self.navigationController pushViewController:selectVC animated:YES];
     
 }
 
+-(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
+    if(flag == 0){
+        self.recordModel.manType = model.manType;
+        self.recordModel.level = model.level;
+        self.recordModel.gradeStr = model.gradeStr;
+        self.recordModel.classStr = model.classStr;
+        self.recordModel.sDateTime = model.sDateTime;
+    }
+    else{
+        
+    }
 
+    [self sendRequest];
+    
+}
 //导航条返回按钮回调
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];

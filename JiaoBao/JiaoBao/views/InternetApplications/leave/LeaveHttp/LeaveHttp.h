@@ -84,5 +84,8 @@
 -(void)getunitclassWithUID:(NSString*)UID;
 //学校班级请假查询统计
 -(void)GetClassSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime gradeStr:(NSString*)gradeStr;
-
+//班级学生查询统计
+-(void)GetStudentSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime;
+//教职工请假查询统计
+-(void)GetManSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime;
 @end

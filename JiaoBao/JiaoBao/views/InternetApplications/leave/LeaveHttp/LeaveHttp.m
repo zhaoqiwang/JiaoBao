@@ -191,15 +191,17 @@ static LeaveHttp *leaveHttp = nil;
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
+        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
+        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+        NSString *manType = [httpObject objectForKey:@"manType"];
         D("JSON--------GetMyLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
 
-        NSMutableArray *mArr = [ParserJson_leave parserJsonMyLeaves:data];
-        NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
+        NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc,@"manType":manType};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSString *ResultCode= @"100";
@@ -480,16 +482,61 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         D("JSON--------GetClassSumLeaves: %@,", data);
+        NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
 
-
-       // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassSumLeaves" object:mArr];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassSumLeaves" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetClassSumLeaves: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassSumLeaves" object:nil];
     }];
 }
+//班级学生查询统计
+-(void)GetStudentSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime{
+    NSString *urlString = [NSString stringWithFormat:@"%@/basic/GetStudentSumLeaves",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"unitId":unitId,@"sDateTime":sDateTime};
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
+        D("JSON--------GetStudentSumLeaves: %@,", data);
+        
+        
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStudentSumLeaves" object:mArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetStudentSumLeaves: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStudentSumLeaves" object:nil];
+    }];
+}
 
-
+//教职工请假查询统计
+-(void)GetManSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime{
+    NSString *urlString = [NSString stringWithFormat:@"%@/basic/GetManSumLeaves",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"unitId":unitId,@"sDateTime":sDateTime};
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        D("JSON--------GetManSumLeaves: %@,", data);
+        NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
+        
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetManSumLeaves" object:mArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetManSumLeaves: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetManSumLeaves" object:nil];
+    }];
+    
+}
 
 
 @end

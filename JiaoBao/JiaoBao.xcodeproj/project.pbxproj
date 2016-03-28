@@ -997,7 +997,7 @@
 		F72385D11BE2F74F0000015D /* DetialHWCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F72385CF1BE2F74F0000015D /* DetialHWCell.m */; };
 		F72385D21BE2F74F0000015D /* DetialHWCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F72385D01BE2F74F0000015D /* DetialHWCell.xib */; };
 		F72385DF1BE346BC0000015D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F72385DE1BE346BC0000015D /* WebKit.framework */; };
-		F72564E51CA8C37F00D24172 /* ClassSumLeaves.m in Sources */ = {isa = PBXBuildFile; fileRef = F72564E41CA8C37F00D24172 /* ClassSumLeaves.m */; };
+		F72564EB1CA8D11000D24172 /* SumLeavesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72564EA1CA8D11000D24172 /* SumLeavesModel.m */; };
 		F72A726C1B2BBCFC00378C95 /* RightModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F72A726B1B2BBCFC00378C95 /* RightModel.m */; };
 		F72D74BB1AE0EC0E00189057 /* MHImagePickerMutilSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = F72D74BA1AE0EC0E00189057 /* MHImagePickerMutilSelector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F73107981BE743EB0023BD49 /* LevelModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F73107971BE743EB0023BD49 /* LevelModel.m */; };
@@ -2564,8 +2564,8 @@
 		F72385CF1BE2F74F0000015D /* DetialHWCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetialHWCell.m; path = cell/DetialHWCell.m; sourceTree = "<group>"; };
 		F72385D01BE2F74F0000015D /* DetialHWCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetialHWCell.xib; path = cell/DetialHWCell.xib; sourceTree = "<group>"; };
 		F72385DE1BE346BC0000015D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		F72564E31CA8C37F00D24172 /* ClassSumLeaves.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClassSumLeaves.h; path = model/ClassSumLeaves.h; sourceTree = "<group>"; };
-		F72564E41CA8C37F00D24172 /* ClassSumLeaves.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClassSumLeaves.m; path = model/ClassSumLeaves.m; sourceTree = "<group>"; };
+		F72564E91CA8D11000D24172 /* SumLeavesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SumLeavesModel.h; sourceTree = "<group>"; };
+		F72564EA1CA8D11000D24172 /* SumLeavesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SumLeavesModel.m; sourceTree = "<group>"; };
 		F72A726A1B2BBCFC00378C95 /* RightModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RightModel.h; path = views/InternetApplications/workView/NewWorkViewC/RightModel.h; sourceTree = "<group>"; };
 		F72A726B1B2BBCFC00378C95 /* RightModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RightModel.m; path = views/InternetApplications/workView/NewWorkViewC/RightModel.m; sourceTree = "<group>"; };
 		F72D74B91AE0EC0E00189057 /* MHImagePickerMutilSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MHImagePickerMutilSelector.h; path = Common/MHImagePick/MHImagePickerMutilSelector.h; sourceTree = "<group>"; };
@@ -5306,8 +5306,8 @@
 				437D33AD1CA38FDF001B5CB3 /* CheckSelectModel.m */,
 				F7C8ADBF1CA22E3200C1DFB0 /* UserClassInfo.h */,
 				F7C8ADC01CA22E3200C1DFB0 /* UserClassInfo.m */,
-				F72564E31CA8C37F00D24172 /* ClassSumLeaves.h */,
-				F72564E41CA8C37F00D24172 /* ClassSumLeaves.m */,
+				F72564E91CA8D11000D24172 /* SumLeavesModel.h */,
+				F72564EA1CA8D11000D24172 /* SumLeavesModel.m */,
 			);
 			name = model;
 			sourceTree = "<group>";
@@ -6431,7 +6431,6 @@
 				430279861C995618003546E9 /* LeaveTopScrollView.m in Sources */,
 				A78459DD1B7B4D1D00EA7D5D /* IQBarButtonItem.m in Sources */,
 				A79AD7801BAA4C2200F2CE77 /* MyAnswerViewController.m in Sources */,
-				F72564E51CA8C37F00D24172 /* ClassSumLeaves.m in Sources */,
 				A755E70619F278B900BBDF3D /* ASIHTTPRequest.m in Sources */,
 				A74339541A452B7700AFC0A5 /* SDWebImagePrefetcher.m in Sources */,
 				F70B96711C90FAC00001D696 /* categoryCell.m in Sources */,
@@ -6499,6 +6498,7 @@
 				A78459D91B7B4D1D00EA7D5D /* IQKeyboardManager.m in Sources */,
 				A7595EA61A5FC2F30027848E /* PSTGridLayoutRow.m in Sources */,
 				A749B9F619F8F2060036F480 /* TreeView_Level1_Cell.m in Sources */,
+				F72564EB1CA8D11000D24172 /* SumLeavesModel.m in Sources */,
 				F7C8AB6C1B73102400E829A4 /* AnswerDetailModel.m in Sources */,
 				A77FF02E1A650B3F00DB85E3 /* JSONModel+networking.m in Sources */,
 				A7375F451A0B235B00B31926 /* Forward_cell.m in Sources */,
