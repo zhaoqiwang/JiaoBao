@@ -32,6 +32,8 @@
 +(NSMutableArray*)parserJsonGateLeaves:(NSString *)json;
 +(NSMutableArray *)parserJsonStuInfoArr:(NSString*)json;//解析学生信息
 +(NSMutableArray *)parserJsonUserClassInfoArr:(NSString*)json;//解析学校所有班级
++(NSMutableArray *)parserJsonGetClassSumLeaves:(NSString*)json;//解析学校班级请假查询统计
+
 
 
 

@@ -33,7 +33,7 @@
     self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     
     //获取假条明细
-    [[LeaveHttp getInstance] GetLeaveModel:@"6"];
+    [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
     
 }
 

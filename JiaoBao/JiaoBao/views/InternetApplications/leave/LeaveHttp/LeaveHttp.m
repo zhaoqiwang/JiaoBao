@@ -466,7 +466,28 @@ static LeaveHttp *leaveHttp = nil;
     }];
     
 }
-    
+//学校班级请假查询统计
+-(void)GetClassSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime gradeStr:(NSString*)gradeStr{
+    NSString *urlString = [NSString stringWithFormat:@"%@/basic/GetClassSumLeaves",MAINURL];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer.timeoutInterval = TIMEOUT;
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    NSDictionary *parameters = @{@"unitId":unitId,@"sDateTime":sDateTime,@"gradeStr":gradeStr};
+    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        D("JSON--------GetClassSumLeaves: %@,", data);
+
+
+       // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassSumLeaves" object:mArr];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        D("Error---------GetClassSumLeaves: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassSumLeaves" object:nil];
+    }];
+}
 
 
 

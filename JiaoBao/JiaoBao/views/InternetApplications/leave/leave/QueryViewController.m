@@ -15,6 +15,8 @@
 #import "MyAdminClass.h"
 #import "ChooseStudentViewController.h"
 #import "MJRefresh.h"//上拉下拉刷新
+#import "ClassLeavesModel.h"
+#import "LeaveDetailViewController.h"
 
 
 
@@ -313,7 +315,10 @@
     return 32;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    leaveRecordModel *model = [self.dataSource objectAtIndex:indexPath.row];
+     ClassLeavesModel*model = [self.dataSource objectAtIndex:indexPath.row];
+    LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
+    selectVC.mModel_classLeaves = model;
+    [self.navigationController pushViewController:selectVC animated:YES];
     
 }
 

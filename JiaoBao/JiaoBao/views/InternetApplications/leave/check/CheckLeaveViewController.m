@@ -9,6 +9,7 @@
 #import "CheckLeaveViewController.h"
 #import "LeaveDetailViewController.h"
 #import "CheckSelectViewController.h"
+#import "ClassLeavesModel.h"
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
 @property(nonatomic,strong)NSMutableArray *mArr1;//待审核数组
@@ -178,8 +179,9 @@
     return 32;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    leaveRecordModel *model = [self.dataSource objectAtIndex:indexPath.row];
+    ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
+    selectVC.mModel_classLeaves = model;
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 

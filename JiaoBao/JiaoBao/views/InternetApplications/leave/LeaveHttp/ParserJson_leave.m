@@ -13,6 +13,7 @@
 #import "UserClassInfo.h"
 #import "StuInfoModel.h"
 #import "dm.h"
+#import "ClassSumLeaves.h"
 
 @implementation ParserJson_leave
 //取指定单位的请假设置
@@ -58,7 +59,7 @@
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<arr.count;i++){
         NSDictionary *dic = [arr objectAtIndex:i];
-        MyLeaveModel *model = [[MyLeaveModel alloc]init];
+        ClassLeavesModel *model = [[ClassLeavesModel alloc]init];
         [model dicToModel:dic];
         [mArr addObject:model];
         
@@ -204,6 +205,22 @@
     [dm getInstance].mArr_listClass = array;
     [dm getInstance].mArr_allClass = mArr;
     
+    return mArr;
+}
++(NSMutableArray *)parserJsonGetClassSumLeaves:(NSString*)json//解析学校班级请假查询统计
+{
+    NSMutableArray *arr = [json objectFromJSONString];
+    NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<arr.count;i++){
+        NSDictionary *dic = [arr objectAtIndex:i];
+        ClassSumLeaves *model = [[ClassSumLeaves alloc] init];
+        model.UnitClassId = [dic objectForKey:@"UnitClassId"];
+        model.ClassStr = [dic objectForKey:@"ClassStr"];
+        model.GradeStr = [dic objectForKey:@"GradeStr"];
+        model.Amount = [dic objectForKey:@"Amount"];
+        model.Amount2 = [dic objectForKey:@"Amount2"];
+        [mArr addObject:model];
+    }
     return mArr;
 }
 

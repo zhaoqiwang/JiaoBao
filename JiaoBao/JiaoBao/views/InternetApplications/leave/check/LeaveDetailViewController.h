@@ -16,6 +16,7 @@
 #import "LeaveDetailTableViewCell.h"
 #import "LeaveHttp.h"
 #import "LeaveDetailModel.h"
+#import "ClassLeavesModel.h"
 
 @interface LeaveDetailViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -25,5 +26,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_list;//详情显示列表
 @property (nonatomic,strong) LeaveDetailModel *mModel_detail;//请假详情
 @property (nonatomic,assign) int mInt_falg;//0学生，1老师
+@property(nonatomic,strong)ClassLeavesModel *mModel_classLeaves;//审核或请假查询列表中的model
 
 @end

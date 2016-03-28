@@ -82,6 +82,7 @@
 -(void)getClassStdInfoWithUID:(NSString*)UID;
 //应用系统通过单位ID，获取学校所有班级
 -(void)getunitclassWithUID:(NSString*)UID;
-
+//学校班级请假查询统计
+-(void)GetClassSumLeavesWithUnitId:(NSString*)unitId sDateTime:(NSString*)sDateTime gradeStr:(NSString*)gradeStr;
 
 @end
