@@ -24,6 +24,7 @@
         [MBProgressHUD showError:@"成功"];
 //        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(changeCheckState:)]) {
 //            [self.delegate changeCheckState:@""];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCheckCell" object:self.model];
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
         //}
     }else{
@@ -34,7 +35,8 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CheckLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CheckLeaveModel:) name:@"CheckLeaveModel" object:nil];
-    CheckLeaveModel *model = [[CheckLeaveModel alloc]init];
+    self.model = [[CheckLeaveModel alloc]init];
+    self.model.checkFlag = @"0";
 
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.textView.layer.borderWidth = 1;
@@ -86,10 +88,11 @@
 }
 
 - (IBAction)submitBtnAction:(id)sender {
-    self.model.tabid = @"11";
+    self.model.tabid = @"6";
     self.model.level = @"1";
-    self.model.userName = @"103学生";
+    self.model.userName = @"于伟伟";
     self.model.note = self.textView.text;
+    self.model.cellFlag = 40;
     [MBProgressHUD showMessage:@"" toView:self.view];
     [[LeaveHttp getInstance]CheckLeaveModel:self.model];
 }

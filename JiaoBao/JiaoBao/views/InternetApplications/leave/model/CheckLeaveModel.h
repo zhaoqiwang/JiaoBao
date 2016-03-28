@@ -14,6 +14,7 @@
 @property (nonatomic,strong) NSString *userName;//审批人姓名
 @property (nonatomic,strong) NSString *note;//批注
 @property (nonatomic,strong) NSString *checkFlag;//1通过，2拒绝
+@property(nonatomic,assign) int cellFlag;
 - (NSMutableDictionary *)propertiesDic;
 
 

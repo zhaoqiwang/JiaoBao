@@ -30,6 +30,24 @@
 @end
 
 @implementation QueryViewController
+-(void)viewWillAppear:(BOOL)animated{
+    //获得我提出申请的请假记录
+    if(self.cellFlag == YES){
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
+    }else{
+        //班主任取审批的记录
+        [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetClassLeaves" object:nil];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetClassLeaves:) name:@"GetClassLeaves" object:nil];
+        
+    }
+
+
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    
+}
 -(void)GetMyLeaves:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -79,9 +97,30 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if([ResultCode integerValue]==0){
         NSArray *arr = [dic objectForKey:@"data"];
-        self.stuDataSource = [NSMutableArray arrayWithArray:arr];
-        self.dataSource = self.stuDataSource;
-        [self.tableView reloadData];
+        if(self.mInt_reloadData==0){
+            self.dataSource = [NSMutableArray arrayWithArray:arr];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            [self.tableView reloadData];
+            
+        }else{
+            if(arr.count==0){
+                [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+            }
+            else{
+                [self.dataSource addObjectsFromArray:arr];
+                
+                [self.tableView reloadData];
+                
+            }
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            self.mInt_reloadData=0;
+            
+            
+            
+        }
+        
         
         
     }
@@ -89,19 +128,6 @@
     {
         [MBProgressHUD showError:ResultDesc];
     }
-}
--(void)GetMyStdInfo:(NSNotification*)sender{
-    leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
-    recordModel.numPerPage = @"20";
-    recordModel.pageNum = @"1";
-    recordModel.RowCount = @"0";
-    recordModel.accId = [dm getInstance].jiaoBaoHao;
-    recordModel.sDateTime = @"2016-03";
-    recordModel.manType = @"1";
-    recordModel.mName = @"";
-    [MBProgressHUD showMessage:@"" toView:self.view];
-    [[LeaveHttp getInstance]GetMyLeaves:recordModel];
-    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -121,17 +147,10 @@
     self.tableView.footerRefreshingText = @"正在加载...";
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
-    //获得我提出申请的请假记录
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
-    //班主任取审批的记录
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetClassLeaves" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetClassLeaves" object:nil];
-    //取得我的教宝号所关联的学生列表(家长身份
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyStdInfo" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyStdInfo:) name:@"GetMyStdInfo" object:nil];
+
+
     
-    self.cellFlag = YES;
+    
     self.datePicker.backgroundColor =[UIColor whiteColor];
     UIView *headView = [[UIView alloc]init ];
     if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2，家长3
@@ -190,6 +209,7 @@
             return;
         }
     }
+
     self.recordModel.numPerPage = @"20";
     self.recordModel.pageNum = page;
     self.recordModel.RowCount = @"0";
@@ -204,7 +224,19 @@
         
     }
     [MBProgressHUD showMessage:@"" toView:self.view];
-    [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
+    if(self.mInt_flag == 2){
+        [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
+
+    }
+    else{
+        if ([dm getInstance].mArr_leaveClass.count>0) {
+            MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+            self.recordModel.unitClassId = model.TabID;
+        }
+        self.recordModel.checkFlag = @"0";
+        //[MBProgressHUD showMessage:@"" toView:self.view];
+        [[LeaveHttp getInstance]GetClassLeaves:self.recordModel];
+    }
     
 }
 - (void)didReceiveMemoryWarning {
@@ -288,63 +320,6 @@
 
 
 
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
-*/
-
-
-
-- (IBAction)selectionBtnAction:(id)sender {
-    UIButton *btn = sender;
-    if([btn isEqual:self.myBtn]){
-        self.myBtn.selected = YES;
-        self.stdBtn.selected = NO;
-        self.cellFlag = YES;
-        leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
-        recordModel.numPerPage = @"20";
-        recordModel.pageNum = @"1";
-        recordModel.RowCount = @"0";
-        recordModel.accId = [dm getInstance].jiaoBaoHao;
-        recordModel.sDateTime = @"2016-03";
-        recordModel.manType = @"1";
-        recordModel.mName = @"";
-        [MBProgressHUD showMessage:@"" toView:self.view];
-        [[LeaveHttp getInstance]GetMyLeaves:recordModel];
-        [self.tableView reloadData];
-    }else{
-        self.myBtn.selected = NO;
-        self.stdBtn.selected = YES;
-        self.cellFlag = NO;
-        leaveRecordModel *recordModel = [[leaveRecordModel alloc]init];
-        recordModel.numPerPage = @"20";
-        recordModel.pageNum = @"1";
-        recordModel.RowCount = @"0";
-        recordModel.sDateTime = @"2016-03";
-        if ([dm getInstance].mArr_leaveClass.count>0) {
-            MyAdminClass *model = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
-            recordModel.unitClassId = model.TabID;
-        }
-        recordModel.checkFlag = @"0";
-        //[MBProgressHUD showMessage:@"" toView:self.view];
-        [[LeaveHttp getInstance]GetClassLeaves:recordModel];
-        [self.tableView reloadData];
-        
-    }
-    
-}
-
 - (IBAction)Stu_SelectionAction:(id)sender {
     ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
     chooseStu.delegate = self;
@@ -383,6 +358,9 @@
     self.mModel_student = student;
     [self.stuBtn setTitle:self.mModel_student.StdName forState:UIControlStateNormal];
     [self sendRequest];
+    
+}
+-(void)dealloc{
     
 }
 

@@ -87,31 +87,53 @@
         self.mView_root0.hidden = NO;
         self.mView_root1.hidden = YES;
     }
-    self.queryVC = [[QueryViewController alloc]initWithNibName:@"QueryViewController" bundle:nil];
+    self.myQueryVC = [[QueryViewController alloc]init];
+    [self addChildViewController:self.myQueryVC];
+    [self.myQueryVC didMoveToParentViewController:self];
+    self.myQueryVC.cellFlag = YES;
+    self.myQueryVC.mInt_flag = 2;
+    self.myQueryVC.mInt_leaveID = self.mInt_leaveID;
+
+    self.classQueryVC = [[QueryViewController alloc]init];
+    [self addChildViewController:self.classQueryVC];
+    self.classQueryVC.cellFlag = NO;
+    self.classQueryVC.mInt_flag = 3;
+    self.classQueryVC.mInt_leaveID = self.mInt_leaveID;
+
+    [self.classQueryVC didMoveToParentViewController:self];
+    [self addChildViewController:self.myQueryVC];
+    [self addChild:self.myQueryVC ];
+    [self addChild:self.classQueryVC];
 
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
-    
     //先判断身份，班主任有4个，其他为两个
     if (self.mInt_leaveID == 1) {
         if (self.mInt_flag == 0) {
             self.mView_root0.hidden = NO;
             self.mView_root1.hidden = YES;
-            self.queryVC.view.hidden = YES;
+            self.myQueryVC.view.hidden = YES;
+            self.classQueryVC.view.hidden = YES;
+
         }else if (self.mInt_flag == 1){
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = NO;
-            self.queryVC.view.hidden = YES;
+            self.myQueryVC.view.hidden = YES;
+            self.classQueryVC.view.hidden = YES;
+
         }else if (self.mInt_flag == 2){
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = YES;
-                self.queryVC.mInt_leaveID = self.mInt_leaveID;
-                [self addChildViewController:self.queryVC];
-                [self.queryVC didMoveToParentViewController:self];
-                [self addChild:self.queryVC withChildToRemove:nil];
-            self.queryVC.view.hidden = NO;
+            self.myQueryVC.view.hidden = NO;
+            self.classQueryVC.view.hidden = YES;
+
+        }else if (self.mInt_flag == 3){
+            self.mView_root0.hidden = YES;
+            self.mView_root1.hidden = YES;
+            self.myQueryVC.view.hidden = YES;
+            self.classQueryVC.view.hidden = NO;
         }
     }else{
         //判断是不是家长
@@ -119,50 +141,38 @@
             if (self.mInt_flag == 0) {
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = NO;
-                self.queryVC.view.hidden = YES;
+                self.myQueryVC.view.hidden = YES;
+                self.classQueryVC.view.hidden = YES;
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
+                self.myQueryVC.view.hidden = NO;
 
-                    self.queryVC.mInt_leaveID = self.mInt_leaveID;
-                    [self addChildViewController:self.queryVC];
-                    [self.queryVC didMoveToParentViewController:self];
-                    [self addChild:self.queryVC withChildToRemove:nil];
-                self.queryVC.view.hidden = NO;
             }
         }else{
             if (self.mInt_flag == 0) {
                 self.mView_root0.hidden = NO;
                 self.mView_root1.hidden = YES;
-                self.queryVC.view.hidden = YES;
+                self.myQueryVC.view.hidden = YES;
+                self.classQueryVC.view.hidden = YES;
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
-                    self.queryVC.mInt_leaveID = self.mInt_leaveID;
-                    [self addChildViewController:self.queryVC];
-                    [self.queryVC didMoveToParentViewController:self];
-                    [self addChild:self.queryVC withChildToRemove:nil];
-                self.queryVC.view.hidden = NO;
+                self.myQueryVC.view.hidden = YES;
+                self.classQueryVC.view.hidden = YES;
             }
         }
     }
 }
--(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+-(void)addChild:(UIViewController *)childToAdd
 {
-    assert(childToAdd != nil);
-    
-    if (childToRemove != nil)
-    {
-        [childToRemove.view removeFromSuperview];
-    }
-    
-    // match the child size to its parent
     CGRect frame = childToAdd.view.frame;
     frame.origin.y = CGRectGetMaxY(self.mScrollV_all.frame);
     frame.size.height = CGRectGetHeight(self.view.frame)-self.mScrollV_all.frame.origin.y-self.mScrollV_all.frame.size.height;
     frame.size.width = CGRectGetWidth(self.view.frame);
     childToAdd.view.frame = frame;
     [self.view addSubview:childToAdd.view];
+    childToAdd.view.hidden = YES;
 }
 //导航条返回按钮回调
 -(void)myNavigationGoback{
@@ -173,6 +183,9 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)dealloc{
+    
 }
 
 /*
