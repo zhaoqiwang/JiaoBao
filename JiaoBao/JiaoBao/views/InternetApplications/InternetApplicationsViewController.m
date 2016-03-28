@@ -18,7 +18,6 @@
 #import "LeaveViewController.h"
 #import "LeaveHttp.h"
 #import "CheckLeaveViewController.h"
-#import "CheckSelectViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -638,15 +637,12 @@
     return nil;
 }
 - (void) pushMenuItemSignIn:(id)sender{
-    CheckSelectViewController *check = [[CheckSelectViewController alloc] init];
-    check.mInt_flag=0;
+    [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
+    CheckingInViewController *check = [[CheckingInViewController alloc]init];
+    check.mView_all = self.mView_all;
+    check.mTableV_left = self.mTableV_left;
+    check.mTableV_right = self.mTableV_right;
     [utils pushViewController:check animated:YES];
-//    [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
-//    CheckingInViewController *check = [[CheckingInViewController alloc]init];
-//    check.mView_all = self.mView_all;
-//    check.mTableV_left = self.mTableV_left;
-//    check.mTableV_right = self.mTableV_right;
-//    [utils pushViewController:check animated:YES];
 }
 
 - (void) pushMenuItemSchedule:(id)sender{
