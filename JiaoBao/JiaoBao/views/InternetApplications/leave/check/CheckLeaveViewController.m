@@ -228,6 +228,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
+    if (self.mInt_flag ==0) {
+        selectVC.mInt_from = 1;
+    }else if (self.mInt_flag == 1){
+        selectVC.mInt_from = 2;
+    }
     selectVC.mModel_classLeaves = model;
 selectVC.mStr_navName = @"审核";
     [self.navigationController pushViewController:selectVC animated:YES];

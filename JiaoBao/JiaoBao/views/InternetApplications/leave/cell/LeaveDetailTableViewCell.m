@@ -14,6 +14,24 @@
     // Initialization code
 }
 
+-(IBAction)mBtn_check:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveDetailTableViewCellCheckBtn:)]) {
+        [self.delegate LeaveDetailTableViewCellCheckBtn:self];
+    }
+}
+
+-(IBAction)mBtn_delete:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveDetailTableViewCellDeleteBtn:)]) {
+        [self.delegate LeaveDetailTableViewCellDeleteBtn:self];
+    }
+}
+
+-(IBAction)mBtn_update:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveDetailTableViewCellUpdateBtn:)]) {
+        [self.delegate LeaveDetailTableViewCellUpdateBtn:self];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

@@ -132,9 +132,9 @@
         [self.mArr_list addObject:model5];
     }
     //撤回、修改，先判断假条发起人是否是当前账户
-    if ([self.mModel_detail.Writer isEqual:[dm getInstance].TrueName]) {
+    if ([self.mModel_detail.Writer isEqual:[dm getInstance].TrueName]&&self.mInt_from==0) {
         //判断是否有审核状态
-        if (self.mModel_detail.ApproveStatus==0) {//待审核，可以撤回
+        if ([self.mModel_detail.ApproveStatus intValue]==0) {//待审核，可以撤回
             LeaveDetailShowModel *model6 = [[LeaveDetailShowModel alloc] init];
             model6.mInt_flag = 6;
             [self.mArr_list addObject:model6];
@@ -277,7 +277,7 @@
         cell.mLab_leaveValue.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, cell.mLab_leave.frame.origin.y, valueSize.width, valueSize.height);
         cell.mLab_leaveValue.numberOfLines = 0;
         cell.mLab_leaveValue.text = tempValue;
-    }else if (model.mInt_flag == 5){//撤销，修改
+    }else if (model.mInt_flag == 6){//撤销，修改
         cell.mLab_leave.hidden = YES;
         cell.mLab_leaveValue.hidden = YES;
         cell.mLab_go.hidden = YES;
@@ -293,6 +293,7 @@
         cell.mBtn_check.hidden = YES;
         cell.mBtn_delete.hidden = NO;
         cell.mBtn_update.hidden = NO;
+        cell.delegate = self;
         float tempF = ([dm getInstance].width-cell.mBtn_delete.frame.size.width*2)/3;
         cell.mBtn_delete.frame = CGRectMake(tempF, 10, cell.mBtn_delete.frame.size.width, cell.mBtn_delete.frame.size.height);
         cell.mBtn_update.frame = CGRectMake(tempF*2+cell.mBtn_delete.frame.size.width, 10, cell.mBtn_update.frame.size.width, cell.mBtn_update.frame.size.height);
@@ -318,6 +319,30 @@
  --------------------------------------- */
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+//cell的回调
+//审核
+-(void)LeaveDetailTableViewCellCheckBtn:(LeaveDetailTableViewCell *)cell{
+    
+}
+//删除
+-(void)LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *)cell{
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定撤回？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    [sheet showInView:self.view];
+}
+//修改
+-(void)LeaveDetailTableViewCellUpdateBtn:(LeaveDetailTableViewCell *)cell{
+    
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
+    if (buttonIndex == 0) {//确定
+        
+    }else if (buttonIndex == 1) {//取消
+        
+    }
 }
 
 //导航条返回按钮回调

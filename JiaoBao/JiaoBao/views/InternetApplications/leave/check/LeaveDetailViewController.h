@@ -18,7 +18,7 @@
 #import "LeaveDetailModel.h"
 #import "ClassLeavesModel.h"
 
-@interface LeaveDetailViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface LeaveDetailViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,LeaveDetailTableViewCellDelegate,UIActionSheetDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称
@@ -27,5 +27,6 @@
 @property (nonatomic,strong) LeaveDetailModel *mModel_detail;//请假详情
 @property (nonatomic,assign) int mInt_falg;//0学生，1老师
 @property(nonatomic,strong)ClassLeavesModel *mModel_classLeaves;//审核或请假查询列表中的model
+@property (nonatomic,assign) int mInt_from;//从哪个界面来的，0请假查询，1待审核，2已审核
 
 @end
