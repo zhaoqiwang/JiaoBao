@@ -11,11 +11,14 @@
 #import "CheckSelectViewController.h"
 #import "ClassLeavesModel.h"
 #import "MyAdminClass.h"
+#import "MJRefresh.h"//上拉下拉刷新
+
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
 @property(nonatomic,strong)NSMutableArray *mArr1;//待审核数组
 @property(nonatomic,strong)NSMutableArray *mArr2;//已审核数组
 @property(nonatomic,strong)NSMutableArray *mArr3;//统计查询数组
+@property(nonatomic,assign)int mInt_reloadData;
 
 @property(nonatomic,strong)leaveRecordModel *recordModel;
 
@@ -37,7 +40,28 @@
 }
 -(void)GetUnitLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    self.dataSource = [sender object];
+    NSArray *arr = [sender object];
+    if(self.mInt_reloadData == 0){
+        self.dataSource = [NSMutableArray arrayWithArray:arr];
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
+        [self.tableView reloadData];
+
+    }
+    else{
+        if(arr.count==0){
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+        }
+        else{
+            [self.dataSource addObjectsFromArray:arr];
+            
+            [self.tableView reloadData];
+            
+        }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
+        self.mInt_reloadData=0;
+    }
     if(self.mInt_flag == 0){
         self.mArr1 = self.dataSource;
     }
@@ -63,6 +87,8 @@
     else{
         self.mArr3 = self.dataSource;
     }
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self.tableView reloadData];
     
 }
@@ -79,6 +105,8 @@
     else{
         self.mArr3 = self.dataSource;
     }
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
@@ -108,6 +136,17 @@
     self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
     self.recordModel.sDateTime = @"2016-03";
     self.recordModel.level = @"1";
+    self.tableView.tableFooterView = [[UIView alloc]init];
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.tableView.headerPullToRefreshText = @"下拉刷新";
+    self.tableView.headerReleaseToRefreshText = @"松开后刷新";
+    self.tableView.headerRefreshingText = @"正在刷新...";
+    [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    self.tableView.footerPullToRefreshText = @"上拉加载更多";
+    self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
+    self.tableView.footerRefreshingText = @"正在加载...";
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self sendRequest];
 
     // Do any additional setup after loading the view from its nib.
@@ -135,20 +174,46 @@
     [self.view addSubview:self.mScrollV_all];
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
+    NSString *page = @"";
+    if (self.mInt_reloadData == 0) {
+        page = @"1";
+    }else{
+        NSMutableArray *array = self.dataSource;
+        if (array.count>=20&&array.count%20==0) {
+            page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
+        } else {
+            self.mInt_reloadData = 0;
+            [MBProgressHUD showSuccess:@"没有更多了" ];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            
+            return;
+        }
+    }
     [MBProgressHUD showMessage:@"" toView:self.view];
     if(self.mInt_flag==0||self.mInt_flag==1){
+        self.recordModel.pageNum = page;
         [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
     }else{
-        if([self.recordModel.manType isEqualToString:@"0"])
-        {
-            if([dm getInstance].mArr_leaveClass.count>0){
-                MyAdminClass *classModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
-                [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: classModel.TabID sDateTime:self.recordModel.sDateTime];
+        if(self.mInt_reloadData == 0){
+            if([self.recordModel.manType isEqualToString:@"0"])
+            {
+                if([dm getInstance].mArr_leaveClass.count>0){
+                    MyAdminClass *classModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+                    [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: classModel.TabID sDateTime:self.recordModel.sDateTime];
+                }
+                
+            }else{
+                [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime];
             }
-            
-        }else{
-            [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime];
         }
+        else{
+            self.mInt_reloadData = 0;
+            [MBProgressHUD showSuccess:@"没有更多了" ];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+        }
+
         
     }
 
@@ -284,6 +349,16 @@ selectVC.mStr_navName = @"审核";
 
     [self sendRequest];
     
+}
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_reloadData = 0;
+    [self sendRequest];
+}
+
+- (void)footerRereshing{
+    self.mInt_reloadData = 1;
+    [self sendRequest];
 }
 //导航条返回按钮回调
 -(void)myNavigationGoback{

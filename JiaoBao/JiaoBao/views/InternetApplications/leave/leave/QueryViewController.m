@@ -138,7 +138,7 @@
     [super viewDidLoad];
     self.recordModel = [[leaveRecordModel alloc]init];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy年MM月"];
+    [formatter setDateFormat:@"yyyy-MM"];
     self.currentDate = [NSDate date];
     self.recordModel.sDateTime = [formatter stringFromDate:self.currentDate];
     self.tableView.tableFooterView = [[UIView alloc]init];
@@ -350,7 +350,7 @@
 - (IBAction)doneToolAction:(id)sender {
     [self.dateTf resignFirstResponder];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy年MM月"];
+    [formatter setDateFormat:@"yyyy-MM"];
     [self.parentDateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
     [self.dateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
     self.recordModel.sDateTime = [formatter stringFromDate:self.datePicker.date];
