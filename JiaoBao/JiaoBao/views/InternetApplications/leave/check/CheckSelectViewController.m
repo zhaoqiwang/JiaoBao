@@ -520,8 +520,10 @@
                 selectModel.gradeStr = model3.mStr_value;
             }
         }
-        [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag];
-        [self myNavigationGoback];
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:)]) {
+            [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag];
+            [self myNavigationGoback];
+        }
     }
 }
 

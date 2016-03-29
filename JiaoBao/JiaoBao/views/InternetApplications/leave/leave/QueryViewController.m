@@ -317,6 +317,7 @@
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
     selectVC.mModel_classLeaves = model;
     selectVC.mInt_from = 0;
+    selectVC.mInt_index = (int)indexPath.row;
     LeaveViewController *parentVC =(LeaveViewController*)self.parentViewController;
     selectVC.mStr_navName = parentVC.mStr_navName;
 

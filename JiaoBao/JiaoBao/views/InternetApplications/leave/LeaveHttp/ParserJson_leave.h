@@ -27,7 +27,7 @@
 //作为班主任身份,取得我所管理的班级列表
 +(NSMutableArray*)parserJsonMyAdminClass:(NSString *)json;
 //班主任身份获取本班学生请假的审批记录
-+(NSMutableArray*)parserJsonClassLeaves:(NSString *)json;
++(NSMutableArray*)parserJsonClassLeaves:(NSString *)json mantype:(NSString *)mantype;
 //门卫取请假记录
 +(NSMutableArray*)parserJsonGateLeaves:(NSString *)json;
 +(NSMutableArray *)parserJsonStuInfoArr:(NSString*)json;//解析学生信息

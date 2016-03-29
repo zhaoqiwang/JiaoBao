@@ -105,12 +105,13 @@
     
 }
 //班主任身份获取本班学生请假的审批记录
-+(NSMutableArray*)parserJsonClassLeaves:(NSString *)json{
++(NSMutableArray*)parserJsonClassLeaves:(NSString *)json mantype:(NSString *)mantype{
     NSMutableArray *arr = [json objectFromJSONString];
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<arr.count;i++){
         NSDictionary *dic = [arr objectAtIndex:i];
         ClassLeavesModel *model = [[ClassLeavesModel alloc]init];
+        model.manType = mantype;
         [model dicToModel:dic];
         [mArr addObject:model];
         
