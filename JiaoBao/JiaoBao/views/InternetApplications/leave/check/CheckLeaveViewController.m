@@ -27,14 +27,16 @@
 
 @implementation CheckLeaveViewController
 -(void)updateCheckCell:(NSNotification*)sender{
-    CheckLeaveModel *model = [sender object];
-    NSIndexPath *indexP = [NSIndexPath indexPathForRow:model.cellFlag inSection:0];
-    self.recordModel.numPerPage = @"1";
-    NSInteger pageNum = [self.recordModel.pageNum integerValue];
-    self.recordModel.pageNum = [NSString stringWithFormat:@"%ld",pageNum+1];
-    
+    //CheckLeaveModel *model = [sender object];
+    NSIndexPath *indexP = [NSIndexPath indexPathForRow:0 inSection:0];
     NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
-    [self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+   [self.tableView deleteRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+    [self.dataSource removeObjectAtIndex:0];
+    self.recordModel.numPerPage = @"1";
+    self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count];
+    self.mInt_reloadData = 3;
+    [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
+    //[self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
     
     
 }
@@ -48,7 +50,7 @@
         [self.tableView reloadData];
 
     }
-    else{
+    else if(self.mInt_reloadData == 1){
         if(arr.count==0){
             [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
         }
@@ -60,6 +62,17 @@
         }
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
+        self.mInt_reloadData=0;
+    }
+    else{
+        if(arr.count==0){
+            //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+        }
+        else{
+            [self.dataSource addObjectsFromArray:arr];
+            [self.tableView reloadData];
+            
+        }
         self.mInt_reloadData=0;
     }
     if(self.mInt_flag == 0){
@@ -134,7 +147,10 @@
     self.recordModel.RowCount = @"0";
     self.recordModel.manType = @"1";
     self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
-    self.recordModel.sDateTime = @"2016-03";
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM"];
+    NSDate *currentDate =[NSDate date];
+    self.recordModel.sDateTime = [formatter stringFromDate:currentDate];
     self.recordModel.level = @"1";
     self.tableView.tableFooterView = [[UIView alloc]init];
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
@@ -299,7 +315,7 @@
         selectVC.mInt_from = 2;
     }
     selectVC.mModel_classLeaves = model;
-selectVC.mStr_navName = @"审核";
+    selectVC.mStr_navName = @"审核";
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 

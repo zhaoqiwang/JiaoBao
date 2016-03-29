@@ -7,13 +7,10 @@
 //
 
 #import "CheckSubViewController.h"
-#import "MyNavigationBar.h"
-#import "utils.h"
-#import "LeaveHttp.h"
+
 
 @interface CheckSubViewController ()<MyNavigationDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
-@property(nonatomic,strong)CheckLeaveModel *model;
 @end
 
 @implementation CheckSubViewController

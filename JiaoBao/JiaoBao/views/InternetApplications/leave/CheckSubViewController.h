@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyNavigationBar.h"
+#import "utils.h"
+#import "LeaveHttp.h"
 @protocol CheckSubVCDelegate;
 
 @interface CheckSubViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *refuseBtn;
+@property(nonatomic,strong)CheckLeaveModel *model;
+
 @property (weak,nonatomic) id<CheckSubVCDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
