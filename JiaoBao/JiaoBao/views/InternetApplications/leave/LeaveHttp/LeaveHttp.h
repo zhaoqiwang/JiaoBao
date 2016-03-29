@@ -43,11 +43,11 @@
 //更新假条的一个时间段
 -(void)UpdateLeaveTime:(NewLeaveModel*)model;
 
-//删除假条的一个时间段
--(void)DeleteLeaveTime:(NewLeaveModel*)model;
+//删除假条的一个时间段 参数：时间段记录Id
+-(void)DeleteLeaveTime:(NSString*)tabId;
 
-//删除假条
--(void)DeleteLeaveModel:(NewLeaveModel*)model;
+//删除假条 参数：请假记录Id
+-(void)DeleteLeaveModel:(NSString*)tabId;
 
 //获得我提出申请的请假记录
 -(void)GetMyLeaves:(leaveRecordModel*)model;

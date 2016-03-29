@@ -140,14 +140,14 @@ static LeaveHttp *leaveHttp = nil;
     
     
 }
-//删除假条的一个时间段
--(void)DeleteLeaveTime:(NewLeaveModel*)model{
+//删除假条的一个时间段 参数：时间段记录Id
+-(void)DeleteLeaveTime:(NSString*)tabId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Leave/DeleteLeaveTime",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSMutableDictionary *parameters = [model propertiesDic];
+    NSDictionary *parameters = @{@"tabId":tabId};
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -160,14 +160,14 @@ static LeaveHttp *leaveHttp = nil;
     }];
     
 }
-//删除假条
--(void)DeleteLeaveModel:(NewLeaveModel*)model{
+//删除假条 参数：请假记录Id
+-(void)DeleteLeaveModel:(NSString*)tabId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Leave/DeleteLeaveModel",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSMutableDictionary *parameters = [model propertiesDic];
+    NSDictionary *parameters = @{@"tabId":tabId};
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];

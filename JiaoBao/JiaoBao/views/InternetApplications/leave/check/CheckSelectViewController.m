@@ -479,7 +479,7 @@
 - (IBAction)doneToolAction:(id)sender {
     [self.dateTF resignFirstResponder];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy年MM月"];
+    [formatter setDateFormat:@"yyyy-MM"];
     CheckSelectModel *model = [self.mArr_dispaly objectAtIndex:2];
     model.mStr_value = [formatter stringFromDate:self.datePicker.date];
     [self setValueDisplayArray];
