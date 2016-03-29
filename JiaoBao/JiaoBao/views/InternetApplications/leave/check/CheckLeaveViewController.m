@@ -349,9 +349,17 @@ selectVC.mStr_navName = @"审核";
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
         self.recordModel.manType = model.manType;
         self.recordModel.level = model.level;
-        self.recordModel.gradeStr = model.gradeStr;
-        self.recordModel.classStr = model.classStr;
         self.recordModel.sDateTime = model.sDateTime;
+    if ([model.gradeStr isEqual:@"全部"]) {
+        self.recordModel.gradeStr = @"";
+    }else{
+        self.recordModel.gradeStr = model.gradeStr;
+    }
+    if ([model.classStr isEqual:@"全部"]) {
+        self.recordModel.classStr = @"";
+    }else{
+        self.recordModel.classStr = model.classStr;
+    }
 
 
     [self sendRequest];
