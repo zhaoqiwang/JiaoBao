@@ -145,7 +145,7 @@
     self.recordModel.numPerPage = @"20";
     self.recordModel.pageNum = @"1";
     self.recordModel.RowCount = @"0";
-    self.recordModel.manType = @"1";
+    self.recordModel.manType = @"0";
     self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
@@ -314,6 +314,8 @@
     }else if (self.mInt_flag == 1){
         selectVC.mInt_from = 2;
     }
+    selectVC.mInt_falg = [model.manType intValue];
+    selectVC.mInt_index = (int)indexPath.row;
     selectVC.mModel_classLeaves = model;
     selectVC.mStr_navName = @"审核";
     [self.navigationController pushViewController:selectVC animated:YES];

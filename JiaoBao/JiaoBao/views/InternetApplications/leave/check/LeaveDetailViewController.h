@@ -18,6 +18,8 @@
 #import "LeaveDetailModel.h"
 #import "ClassLeavesModel.h"
 
+@protocol LeaveDetailViewCDelegate;
+
 @interface LeaveDetailViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,LeaveDetailTableViewCellDelegate,UIActionSheetDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
@@ -28,5 +30,16 @@
 @property (nonatomic,assign) int mInt_falg;//0学生，1老师
 @property(nonatomic,strong)ClassLeavesModel *mModel_classLeaves;//审核或请假查询列表中的model
 @property (nonatomic,assign) int mInt_from;//从哪个界面来的，0请假查询，1待审核，2已审核
+@property (nonatomic,assign) int mInt_index;//当前数据，在表格数组中的索引
+@property (weak,nonatomic) id<LeaveDetailViewCDelegate> delegate;
+
+@end
+
+@protocol LeaveDetailViewCDelegate <NSObject>
+
+@optional
+
+//点击确定后，返回              表格数组中的索引    0撤回，1修改，2老师审核，3门卫审核
+- (void) LeaveDetailViewCDeleteLeave:(int)index action:(int)action;
 
 @end
