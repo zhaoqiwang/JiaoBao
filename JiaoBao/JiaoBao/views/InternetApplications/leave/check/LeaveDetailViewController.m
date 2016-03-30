@@ -286,42 +286,38 @@
         //0等待中;//1通过;//2拒绝
         if ([model.mStr_status intValue]==0) {
             cell.mLab_leaveValue.hidden = YES;
-            cell.mBtn_check.hidden = NO;
+            cell.mBtn_check.hidden = YES;
             cell.mBtn_check.tag = indexPath.row;
+            cell.delegate = self;
             if (self.mInt_falg == 0) {//学生
                 if (model.mInt_check ==0) {
                     if (([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3)&&self.mInt_check ==1){//是否是班主任，班主任必有1审
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 1&&self.mInt_check ==2){
                     //二审
                     if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 2&&self.mInt_check ==3){
                     //三审
                     if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 3&&self.mInt_check ==4){
                     //四审
                     if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 4&&self.mInt_check ==5){
                     //五审
                     if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }
             }else{//老师
@@ -329,36 +325,31 @@
                     //一审
                     if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1&&self.mInt_check ==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 1){
                     //二审
                     if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1&&self.mInt_check ==2) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 2){
                     //三审
                     if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1&&self.mInt_check ==3) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 3){
                     //四审
                     if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1&&self.mInt_check ==4) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 4){
                     //五审
                     if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1&&self.mInt_check ==5) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
-                    }else{
-                        cell.mBtn_check.hidden = YES;
+                        cell.mBtn_check.hidden = NO;
                     }
                 }
             }
@@ -426,7 +417,11 @@
 //cell的回调
 //审核
 -(void)LeaveDetailTableViewCellCheckBtn:(LeaveDetailTableViewCell *)cell{
-    
+    CheckSubViewController *check = [[CheckSubViewController alloc] init];
+    self.mModel_detail.cellFlag = self.mInt_index;
+    self.mModel_detail.level = [NSString stringWithFormat:@"%d",self.mInt_check];
+    check.mModel_LeaveDetail = self.mModel_detail;
+    [utils pushViewController:check animated:YES];
 }
 //删除
 -(void)LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *)cell{

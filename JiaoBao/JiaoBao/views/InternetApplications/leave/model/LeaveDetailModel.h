@@ -37,6 +37,10 @@
 @property(nonatomic,strong)NSString *ApproveDate4;//五审日期
 @property(nonatomic,strong)NSString *ApproveNote4;//五审批注
 @property(nonatomic,strong)NSMutableArray *TimeList;
+
+@property(nonatomic,assign) int cellFlag;//cell当前的索引
+@property(nonatomic,strong) NSString *level;//审核级别
+
 -(void)dicToModel:(NSDictionary*)dic;
 
 @end
