@@ -85,11 +85,11 @@
 }
 
 - (IBAction)submitBtnAction:(id)sender {
-    self.model.tabid = @"6";
+    self.model.tabid = self.mModel_LeaveDetail.TabID;
     self.model.level = @"1";
-    self.model.userName = @"于伟伟";
+    self.model.userName = self.mModel_LeaveDetail.ManName;
     self.model.note = self.textView.text;
-    self.model.cellFlag = 40;
+    self.model.cellFlag = 0;
     [MBProgressHUD showMessage:@"" toView:self.view];
     [[LeaveHttp getInstance]CheckLeaveModel:self.model];
 }

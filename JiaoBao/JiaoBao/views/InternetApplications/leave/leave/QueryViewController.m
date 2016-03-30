@@ -67,7 +67,7 @@
             [self.tableView footerEndRefreshing];
             [self.tableView reloadData];
             
-        }else{
+        }else if(self.mInt_reloadData == 1){
             if(arr.count==0){
                 [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             }
@@ -83,6 +83,17 @@
 
 
 
+        }
+        else{
+            if(arr.count==0){
+                //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+            }
+            else{
+                [self.dataSource replaceObjectAtIndex:[self.recordModel.pageNum intValue]-1 withObject:[arr objectAtIndex:0]];
+                [self.tableView reloadData];
+                
+            }
+            self.mInt_reloadData=0;
         }
 
 
@@ -94,46 +105,7 @@
     }
 }
 
--(void)GetClassLeaves:(id)sender
-{
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    NSDictionary *dic = [sender object];
-    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if([ResultCode integerValue]==0){
-        NSArray *arr = [dic objectForKey:@"data"];
-        if(self.mInt_reloadData==0){
-            self.dataSource = [NSMutableArray arrayWithArray:arr];
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
-            [self.tableView reloadData];
-            
-        }else{
-            if(arr.count==0){
-                [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
-            }
-            else{
-                [self.dataSource addObjectsFromArray:arr];
-                
-                [self.tableView reloadData];
-                
-            }
-            [self.tableView headerEndRefreshing];
-            [self.tableView footerEndRefreshing];
-            self.mInt_reloadData=0;
-            
-            
-            
-        }
-        
-        
-        
-    }
-    else
-    {
-        [MBProgressHUD showError:ResultDesc];
-    }
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.recordModel = [[leaveRecordModel alloc]init];
@@ -319,6 +291,7 @@
     selectVC.mInt_from = 0;
     selectVC.mInt_check = model.mInt_check;
     selectVC.mInt_index = (int)indexPath.row;
+    selectVC.delegate = self;
     LeaveViewController *parentVC =(LeaveViewController*)self.parentViewController;
     selectVC.mStr_navName = parentVC.mStr_navName;
 
@@ -367,6 +340,34 @@
     self.mModel_student = student;
     [self.stuBtn setTitle:self.mModel_student.StdName forState:UIControlStateNormal];
     [self sendRequest];
+    
+}
+- (void) LeaveDetailViewCDeleteLeave:(int)index action:(int)action{
+    if(action == 0){
+        NSIndexPath *indexP = [NSIndexPath indexPathForRow:index inSection:0];
+        NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
+        [self.dataSource removeObjectAtIndex:index];
+        [self.tableView deleteRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+        self.recordModel.numPerPage = @"1";
+        self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count+1];
+        self.mInt_reloadData = 3;
+        [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
+    }
+    else if (action == 1){
+        self.recordModel.numPerPage = @"1";
+        self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)(index+1)];
+        self.mInt_reloadData = 3;
+        [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
+        
+    }
+    else if (action == 2){
+        
+    }
+    else{
+        
+    }
+    
+    
     
 }
 -(void)dealloc{

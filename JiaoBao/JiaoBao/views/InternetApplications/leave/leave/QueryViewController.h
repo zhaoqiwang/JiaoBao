@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MyStdInfo.h"
+#import "LeaveDetailViewController.h"
 
-@interface QueryViewController : UITableViewController<UITableViewDelegate>
+@interface QueryViewController : UITableViewController<UITableViewDelegate,LeaveDetailViewCDelegate>
 @property (strong, nonatomic) IBOutlet UIView *tableHeadView;
 @property (weak, nonatomic) IBOutlet UIButton *myBtn;//本人
 @property (weak, nonatomic) IBOutlet UIButton *stdBtn;//学生

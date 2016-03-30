@@ -27,13 +27,13 @@
 
 @implementation CheckLeaveViewController
 -(void)updateCheckCell:(NSNotification*)sender{
-    //CheckLeaveModel *model = [sender object];
-    NSIndexPath *indexP = [NSIndexPath indexPathForRow:0 inSection:0];
+    CheckLeaveModel *model = [sender object];
+    NSIndexPath *indexP = [NSIndexPath indexPathForRow:model.cellFlag inSection:0];
     NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
+    [self.dataSource removeObjectAtIndex:model.cellFlag];
    [self.tableView deleteRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
-    [self.dataSource removeObjectAtIndex:0];
     self.recordModel.numPerPage = @"1";
-    self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count];
+    self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count+1];
     self.mInt_reloadData = 3;
     [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
     //[self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
@@ -44,7 +44,10 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSArray *arr = [sender object];
     if(self.mInt_reloadData == 0){
-        self.dataSource = [NSMutableArray arrayWithArray:arr];
+        if(arr.count>0){
+            self.dataSource = [NSMutableArray arrayWithArray:arr];
+
+        }
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
         [self.tableView reloadData];
@@ -319,6 +322,7 @@
     selectVC.mInt_index = (int)indexPath.row;
     selectVC.mModel_classLeaves = model;
     selectVC.mStr_navName = @"审核";
+    selectVC.delegate = self;
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 
@@ -381,6 +385,31 @@
 
     [self sendRequest];
     
+}
+//点击确定后，返回              表格数组中的索引    0撤回，1修改，2老师审核，3门卫审核
+- (void) LeaveDetailViewCDeleteLeave:(int)index action:(int)action{
+    if(action == 0){
+        NSIndexPath *indexP = [NSIndexPath indexPathForRow:index inSection:0];
+        NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
+        [self.tableView deleteRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+        [self.dataSource removeObjectAtIndex:0];
+        self.recordModel.numPerPage = @"1";
+        self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count];
+        self.mInt_reloadData = 3;
+        [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
+    }
+    else if (action == 1){
+        
+    }
+    else if (action == 2){
+        
+    }
+    else{
+        
+    }
+
+    
+
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
