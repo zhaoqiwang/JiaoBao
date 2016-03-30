@@ -247,7 +247,7 @@
     }else if (model.mInt_flag == 2){//理由填写
         
     }else if (model.mInt_flag == 3){//时间段显示
-        [self addDialog:0 row:(int)indexPath.row Model:model];
+        [self addDialog:1 row:(int)indexPath.row Model:model];
     }else if (model.mInt_flag == 4){//时间段添加
         //先判断当前有几个时间，不能大于5个
         int a=0;
@@ -327,27 +327,27 @@
     }
 
     //循环赋值时间段
-//    for (int i=0; i<tempArr.count; i++) {
-//        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
-//        if (i==0) {
-//            model.sDateTime = tempNowModel.mStr_startTime;
-//            model.eDateTime = tempNowModel.mStr_endTime;
-//        }else if (i==1){
-//            model.sDateTime1 = tempNowModel.mStr_startTime;
-//            model.eDateTime1 = tempNowModel.mStr_endTime;
-//        }else if (i==2){
-//            model.sDateTime2 = tempNowModel.mStr_startTime;
-//            model.eDateTime2 = tempNowModel.mStr_endTime;
-//        }else if (i==3){
-//            model.sDateTime3 = tempNowModel.mStr_startTime;
-//            model.eDateTime3 = tempNowModel.mStr_endTime;
-//        }else if (i==4){
-//            model.sDateTime4 = tempNowModel.mStr_startTime;
-//            model.eDateTime4 = tempNowModel.mStr_endTime;
-//        }
-//    }
-    model.sDateTime = @"2016-03-18 15:20:04";
-    model.eDateTime = @"2016-03-19 15:21:04";
+    for (int i=0; i<tempArr.count; i++) {
+        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
+        if (i==0) {
+            model.sDateTime = tempNowModel.mStr_startTime;
+            model.eDateTime = tempNowModel.mStr_endTime;
+        }else if (i==1){
+            model.sDateTime1 = tempNowModel.mStr_startTime;
+            model.eDateTime1 = tempNowModel.mStr_endTime;
+        }else if (i==2){
+            model.sDateTime2 = tempNowModel.mStr_startTime;
+            model.eDateTime2 = tempNowModel.mStr_endTime;
+        }else if (i==3){
+            model.sDateTime3 = tempNowModel.mStr_startTime;
+            model.eDateTime3 = tempNowModel.mStr_endTime;
+        }else if (i==4){
+            model.sDateTime4 = tempNowModel.mStr_startTime;
+            model.eDateTime4 = tempNowModel.mStr_endTime;
+        }
+    }
+//    model.sDateTime = @"2016-03-18 15:20:04";
+//    model.eDateTime = @"2016-03-19 15:21:04";
     [[LeaveHttp getInstance] NewLeaveModel:model];
     [MBProgressHUD showMessage:@"" toView:self];
 }
@@ -364,6 +364,7 @@
     //这时myCell对象已经通过自定义xib文件生成了
     if ([nib count]>0) {
         ModelDialog *customView = [nib objectAtIndex:0];
+        
         customView.frame=CGRectMake(10, 0, [dm getInstance].width-20, 135);
         customView.center=vwFullScreenView.center;
         customView.layer.borderWidth=0.6;
@@ -373,7 +374,7 @@
         customView.flag = flag;//0是修改 1是添加
         customView.row = row;
         customView.model = model;
-        
+        [customView setUp];
         [vwFullScreenView addSubview:customView];
     }
 }

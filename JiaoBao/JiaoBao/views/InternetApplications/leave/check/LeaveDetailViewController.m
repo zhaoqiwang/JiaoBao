@@ -20,6 +20,9 @@
     //获取假条明细
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetLeaveModel:) name:@"GetLeaveModel" object:nil];
+    //删除假条
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DeleteLeaveModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DeleteLeaveModel:) name:@"DeleteLeaveModel" object:nil];
     
     self.mArr_list = [NSMutableArray array];
     self.mModel_detail = [[LeaveDetailModel alloc] init];
@@ -35,6 +38,24 @@
     //获取假条明细
     [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
     
+}
+//删除假条
+-(void)DeleteLeaveModel:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    if ([ResultCode intValue]==0) {
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveDetailViewCDeleteLeave:action:)]) {
+            [self.delegate LeaveDetailViewCDeleteLeave:self.mInt_index action:0];
+        }
+        //延迟执行
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [self myNavigationGoback];
+        });
+    }
 }
 
 //获取假条明细
@@ -108,6 +129,7 @@
     for (int i=0; i<a; i++) {
         LeaveDetailShowModel *model5 = [[LeaveDetailShowModel alloc] init];
         model5.mInt_flag = 5;
+        model5.mInt_check = i;
         if (i==0) {
             model5.mStr_name = @"一审:";
             model5.mStr_status = self.mModel_detail.ApproveStatus;
@@ -132,9 +154,9 @@
         [self.mArr_list addObject:model5];
     }
     //撤回、修改，先判断假条发起人是否是当前账户
-    if ([self.mModel_detail.Writer isEqual:[dm getInstance].TrueName]) {
+    if ([self.mModel_detail.Writer isEqual:[dm getInstance].TrueName]&&self.mInt_from==0) {
         //判断是否有审核状态
-        if (self.mModel_detail.ApproveStatus==0) {//待审核，可以撤回
+        if ([self.mModel_detail.ApproveStatus intValue]==0) {//待审核，可以撤回
             LeaveDetailShowModel *model6 = [[LeaveDetailShowModel alloc] init];
             model6.mInt_flag = 6;
             [self.mArr_list addObject:model6];
@@ -261,23 +283,103 @@
         cell.mLab_leave.text = model.mStr_name;
         //内容显示
         NSString *tempValue = @"";
-        //            0等待中;//1通过;//2拒绝
-        if ([model.mStr_status intValue]==1) {
-            tempValue = @"同意。";
-        }else if ([model.mStr_status intValue]==2){
-            tempValue = @"拒绝";
+        //0等待中;//1通过;//2拒绝
+        if ([model.mStr_status intValue]==0) {
+            cell.mLab_leaveValue.hidden = YES;
+            cell.mBtn_check.hidden = NO;
+            cell.mBtn_check.tag = indexPath.row;
+            if (self.mInt_falg == 0) {//学生
+                if (model.mInt_check ==0) {
+                    if (([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3)&&self.mInt_check ==1){//是否是班主任，班主任必有1审
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 1&&self.mInt_check ==2){
+                    //二审
+                    if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 2&&self.mInt_check ==3){
+                    //三审
+                    if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 3&&self.mInt_check ==4){
+                    //四审
+                    if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 4&&self.mInt_check ==5){
+                    //五审
+                    if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }
+            }else{//老师
+                if (model.mInt_check ==0) {
+                    //一审
+                    if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1&&self.mInt_check ==1) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 1){
+                    //二审
+                    if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1&&self.mInt_check ==2) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 2){
+                    //三审
+                    if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1&&self.mInt_check ==3) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 3){
+                    //四审
+                    if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1&&self.mInt_check ==4) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }else if (model.mInt_check == 4){
+                    //五审
+                    if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1&&self.mInt_check ==5) {
+                        cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
+                    }else{
+                        cell.mBtn_check.hidden = YES;
+                    }
+                }
+            }
+        }else {
+            if ([model.mStr_status intValue]==1) {
+                tempValue = @"同意。";
+            }else if ([model.mStr_status intValue]==2){
+                tempValue = @"拒绝";
+            }
+            tempValue = [NSString stringWithFormat:@"%@%@",tempValue,model.mStr_node];
+            if ([tempValue isKindOfClass:[NSNull class]]||[tempValue isEqual:@"null"]||[tempValue isEqual:@"<null>"]) {
+                tempValue = @"";
+            }else{
+                
+            }
+            CGSize valueSize = [tempValue sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10-14*2, MAXFLOAT)];
+            cell.mLab_leaveValue.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, cell.mLab_leave.frame.origin.y, valueSize.width, valueSize.height);
+            cell.mLab_leaveValue.numberOfLines = 0;
+            cell.mLab_leaveValue.text = tempValue;
         }
-        tempValue = [NSString stringWithFormat:@"%@%@",tempValue,model.mStr_node];
-        if ([tempValue isKindOfClass:[NSNull class]]||[tempValue isEqual:@"null"]||[tempValue isEqual:@"<null>"]) {
-            tempValue = @"";
-        }else{
-            
-        }
-        CGSize valueSize = [tempValue sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10-14*2, MAXFLOAT)];
-        cell.mLab_leaveValue.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, cell.mLab_leave.frame.origin.y, valueSize.width, valueSize.height);
-        cell.mLab_leaveValue.numberOfLines = 0;
-        cell.mLab_leaveValue.text = tempValue;
-    }else if (model.mInt_flag == 5){//撤销，修改
+    }else if (model.mInt_flag == 6){//撤销，修改
         cell.mLab_leave.hidden = YES;
         cell.mLab_leaveValue.hidden = YES;
         cell.mLab_go.hidden = YES;
@@ -293,6 +395,7 @@
         cell.mBtn_check.hidden = YES;
         cell.mBtn_delete.hidden = NO;
         cell.mBtn_update.hidden = NO;
+        cell.delegate = self;
         float tempF = ([dm getInstance].width-cell.mBtn_delete.frame.size.width*2)/3;
         cell.mBtn_delete.frame = CGRectMake(tempF, 10, cell.mBtn_delete.frame.size.width, cell.mBtn_delete.frame.size.height);
         cell.mBtn_update.frame = CGRectMake(tempF*2+cell.mBtn_delete.frame.size.width, 10, cell.mBtn_update.frame.size.width, cell.mBtn_update.frame.size.height);
@@ -318,6 +421,31 @@
  --------------------------------------- */
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+//cell的回调
+//审核
+-(void)LeaveDetailTableViewCellCheckBtn:(LeaveDetailTableViewCell *)cell{
+    
+}
+//删除
+-(void)LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *)cell{
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定撤回？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    [sheet showInView:self.view];
+}
+//修改
+-(void)LeaveDetailTableViewCellUpdateBtn:(LeaveDetailTableViewCell *)cell{
+    
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
+    if (buttonIndex == 0) {//确定,删除假条
+        [[LeaveHttp getInstance] DeleteLeaveModel:self.mModel_detail.TabID];
+//        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else if (buttonIndex == 1) {//取消
+        
+    }
 }
 
 //导航条返回按钮回调

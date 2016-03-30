@@ -140,14 +140,14 @@ static LeaveHttp *leaveHttp = nil;
     
     
 }
-//删除假条的一个时间段
--(void)DeleteLeaveTime:(NewLeaveModel*)model{
+//删除假条的一个时间段 参数：时间段记录Id
+-(void)DeleteLeaveTime:(NSString*)tabId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Leave/DeleteLeaveTime",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSMutableDictionary *parameters = [model propertiesDic];
+    NSDictionary *parameters = @{@"tabId":tabId};
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -160,23 +160,31 @@ static LeaveHttp *leaveHttp = nil;
     }];
     
 }
-//删除假条
--(void)DeleteLeaveModel:(NewLeaveModel*)model{
+//删除假条 参数：请假记录Id
+-(void)DeleteLeaveModel:(NSString*)tabId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Leave/DeleteLeaveModel",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSMutableDictionary *parameters = [model propertiesDic];
+    NSDictionary *parameters = @{@"tabId":tabId};
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------DeleteLeaveModel: %@,", result);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveModel" object:array];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------DeleteLeaveModel: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveModel" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveModel" object:dic];
     }];
     
 }
@@ -200,7 +208,7 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
 
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
         NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc,@"manType":manType};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -258,7 +266,7 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
         NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
 
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:dic];
@@ -286,7 +294,7 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetUnitLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:model.manType level:model.level];
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitLeaves" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetUnitLeaves: %@", error);

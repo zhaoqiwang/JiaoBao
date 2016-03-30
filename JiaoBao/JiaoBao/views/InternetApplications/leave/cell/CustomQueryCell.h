@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "MyLeaveModel.h"
+#import "SumLeavesModel.h"
 
 @interface CustomQueryCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 -(void)setCellData:(MyLeaveModel*)model;
--(void)setStatisticsData:(MyLeaveModel*)model;
+-(void)setStatisticsData:(SumLeavesModel*)model;
 
 @end

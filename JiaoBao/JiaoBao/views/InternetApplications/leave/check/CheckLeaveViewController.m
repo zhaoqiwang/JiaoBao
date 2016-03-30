@@ -11,11 +11,14 @@
 #import "CheckSelectViewController.h"
 #import "ClassLeavesModel.h"
 #import "MyAdminClass.h"
+#import "MJRefresh.h"//上拉下拉刷新
+
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
 @property(nonatomic,strong)NSMutableArray *mArr1;//待审核数组
 @property(nonatomic,strong)NSMutableArray *mArr2;//已审核数组
 @property(nonatomic,strong)NSMutableArray *mArr3;//统计查询数组
+@property(nonatomic,assign)int mInt_reloadData;
 
 @property(nonatomic,strong)leaveRecordModel *recordModel;
 
@@ -24,20 +27,54 @@
 
 @implementation CheckLeaveViewController
 -(void)updateCheckCell:(NSNotification*)sender{
-    CheckLeaveModel *model = [sender object];
-    NSIndexPath *indexP = [NSIndexPath indexPathForRow:model.cellFlag inSection:0];
-    self.recordModel.numPerPage = @"1";
-    NSInteger pageNum = [self.recordModel.pageNum integerValue];
-    self.recordModel.pageNum = [NSString stringWithFormat:@"%ld",pageNum+1];
-    
+    //CheckLeaveModel *model = [sender object];
+    NSIndexPath *indexP = [NSIndexPath indexPathForRow:0 inSection:0];
     NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
-    [self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+   [self.tableView deleteRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
+    [self.dataSource removeObjectAtIndex:0];
+    self.recordModel.numPerPage = @"1";
+    self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count];
+    self.mInt_reloadData = 3;
+    [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
+    //[self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
     
     
 }
 -(void)GetUnitLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    self.dataSource = [sender object];
+    NSArray *arr = [sender object];
+    if(self.mInt_reloadData == 0){
+        self.dataSource = [NSMutableArray arrayWithArray:arr];
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
+        [self.tableView reloadData];
+
+    }
+    else if(self.mInt_reloadData == 1){
+        if(arr.count==0){
+            [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+        }
+        else{
+            [self.dataSource addObjectsFromArray:arr];
+            
+            [self.tableView reloadData];
+            
+        }
+        [self.tableView headerEndRefreshing];
+        [self.tableView footerEndRefreshing];
+        self.mInt_reloadData=0;
+    }
+    else{
+        if(arr.count==0){
+            //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+        }
+        else{
+            [self.dataSource addObjectsFromArray:arr];
+            [self.tableView reloadData];
+            
+        }
+        self.mInt_reloadData=0;
+    }
     if(self.mInt_flag == 0){
         self.mArr1 = self.dataSource;
     }
@@ -63,6 +100,8 @@
     else{
         self.mArr3 = self.dataSource;
     }
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self.tableView reloadData];
     
 }
@@ -79,6 +118,8 @@
     else{
         self.mArr3 = self.dataSource;
     }
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
@@ -104,10 +145,24 @@
     self.recordModel.numPerPage = @"20";
     self.recordModel.pageNum = @"1";
     self.recordModel.RowCount = @"0";
-    self.recordModel.manType = @"1";
+    self.recordModel.manType = @"0";
     self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
-    self.recordModel.sDateTime = @"2016-03";
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM"];
+    NSDate *currentDate =[NSDate date];
+    self.recordModel.sDateTime = [formatter stringFromDate:currentDate];
     self.recordModel.level = @"1";
+    self.tableView.tableFooterView = [[UIView alloc]init];
+    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.tableView.headerPullToRefreshText = @"下拉刷新";
+    self.tableView.headerReleaseToRefreshText = @"松开后刷新";
+    self.tableView.headerRefreshingText = @"正在刷新...";
+    [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    self.tableView.footerPullToRefreshText = @"上拉加载更多";
+    self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
+    self.tableView.footerRefreshingText = @"正在加载...";
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
     [self sendRequest];
 
     // Do any additional setup after loading the view from its nib.
@@ -135,20 +190,46 @@
     [self.view addSubview:self.mScrollV_all];
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
+    NSString *page = @"";
+    if (self.mInt_reloadData == 0) {
+        page = @"1";
+    }else{
+        NSMutableArray *array = self.dataSource;
+        if (array.count>=20&&array.count%20==0) {
+            page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
+        } else {
+            self.mInt_reloadData = 0;
+            [MBProgressHUD showSuccess:@"没有更多了" ];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+            
+            return;
+        }
+    }
     [MBProgressHUD showMessage:@"" toView:self.view];
     if(self.mInt_flag==0||self.mInt_flag==1){
+        self.recordModel.pageNum = page;
         [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
     }else{
-        if([self.recordModel.manType isEqualToString:@"0"])
-        {
-            if([dm getInstance].mArr_leaveClass.count>0){
-                MyAdminClass *classModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
-                [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: classModel.TabID sDateTime:self.recordModel.sDateTime];
+        if(self.mInt_reloadData == 0){
+            if([self.recordModel.manType isEqualToString:@"0"])
+            {
+                if([dm getInstance].mArr_leaveClass.count>0){
+                    MyAdminClass *classModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+                    [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: classModel.TabID sDateTime:self.recordModel.sDateTime];
+                }
+                
+            }else{
+                [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime];
             }
-            
-        }else{
-            [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime];
         }
+        else{
+            self.mInt_reloadData = 0;
+            [MBProgressHUD showSuccess:@"没有更多了" ];
+            [self.tableView headerEndRefreshing];
+            [self.tableView footerEndRefreshing];
+        }
+
         
     }
 
@@ -228,8 +309,16 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
+    if (self.mInt_flag ==0) {
+        selectVC.mInt_from = 1;
+    }else if (self.mInt_flag == 1){
+        selectVC.mInt_from = 2;
+    }
+    selectVC.mInt_check = model.mInt_check;
+    selectVC.mInt_falg = [model.manType intValue];
+    selectVC.mInt_index = (int)indexPath.row;
     selectVC.mModel_classLeaves = model;
-selectVC.mStr_navName = @"审核";
+    selectVC.mStr_navName = @"审核";
     [self.navigationController pushViewController:selectVC animated:YES];
 }
 
@@ -277,13 +366,31 @@ selectVC.mStr_navName = @"审核";
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
         self.recordModel.manType = model.manType;
         self.recordModel.level = model.level;
-        self.recordModel.gradeStr = model.gradeStr;
-        self.recordModel.classStr = model.classStr;
         self.recordModel.sDateTime = model.sDateTime;
+    if ([model.gradeStr isEqual:@"全部"]) {
+        self.recordModel.gradeStr = @"";
+    }else{
+        self.recordModel.gradeStr = model.gradeStr;
+    }
+    if ([model.classStr isEqual:@"全部"]) {
+        self.recordModel.classStr = @"";
+    }else{
+        self.recordModel.classStr = model.classStr;
+    }
 
 
     [self sendRequest];
     
+}
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_reloadData = 0;
+    [self sendRequest];
+}
+
+- (void)footerRereshing{
+    self.mInt_reloadData = 1;
+    [self sendRequest];
 }
 //导航条返回按钮回调
 -(void)myNavigationGoback{

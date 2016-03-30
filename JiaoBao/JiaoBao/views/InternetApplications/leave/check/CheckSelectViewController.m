@@ -54,7 +54,10 @@
         }else if (i==2){//时间
             model.mInt_flag = 2;
             model.mStr_name = @"时间";
-            model.mStr_value = @"2016-03";
+            NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+            [formatter setDateFormat:@"yyyy-MM"];
+            NSDate *currentDate =[NSDate date];
+            model.mStr_value = [formatter stringFromDate:currentDate];
             model.mInt_checkTeacher = 1;
             model.mInt_allTeacher = 1;
             model.mInt_allStudent = 1;
@@ -479,7 +482,7 @@
 - (IBAction)doneToolAction:(id)sender {
     [self.dateTF resignFirstResponder];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy年MM月"];
+    [formatter setDateFormat:@"yyyy-MM"];
     CheckSelectModel *model = [self.mArr_dispaly objectAtIndex:2];
     model.mStr_value = [formatter stringFromDate:self.datePicker.date];
     [self setValueDisplayArray];
@@ -520,8 +523,10 @@
                 selectModel.gradeStr = model3.mStr_value;
             }
         }
-        [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag];
-        [self myNavigationGoback];
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:)]) {
+            [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag];
+            [self myNavigationGoback];
+        }
     }
 }
 

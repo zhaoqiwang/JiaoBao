@@ -29,5 +29,6 @@
 
 @property (nonatomic,strong) NSString *mStr_status;//审核状态,0等待中;//1通过;//2拒绝
 @property (nonatomic,strong) NSString *mStr_node;//审核批注
+@property (nonatomic,assign) int mInt_check;//当前为几审的显示
 
 @end
