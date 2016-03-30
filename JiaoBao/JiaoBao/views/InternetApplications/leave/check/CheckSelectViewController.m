@@ -200,14 +200,14 @@
         cell.mLab_value.hidden = YES;
         float mFloag_width = 14.0;//判断坐标位置
         //判断是否有权限,老师审核
-        if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.B intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.C intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.D intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.E intValue]==1) {
+        if ([[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
             //教职工
             cell.mBtn_teacher.frame = CGRectMake(mFloag_width, 10, 70, cell.mBtn_teacher.frame.size.height);
             mFloag_width = mFloag_width+cell.mBtn_teacher.frame.size.width+10;
         }else{
             cell.mBtn_teacher.hidden = YES;
         }
-        if ([[dm getInstance].leaveModel.ApproveListStd.A intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.C intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.D intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.E intValue]==1||[[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3) {
+        if ([[dm getInstance].leaveModel.ApproveListStd.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]||[[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3) {
             //学生
             cell.mBtn_student.frame = CGRectMake(mFloag_width, 10, 70, cell.mBtn_student.frame.size.height);
         }else{
