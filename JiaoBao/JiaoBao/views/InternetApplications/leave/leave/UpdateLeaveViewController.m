@@ -1,91 +1,85 @@
 //
-//  LeaveView.m
+//  UpdateLeaveViewController.m
 //  JiaoBao
 //
-//  Created by Zqw on 16/3/12.
+//  Created by Zqw on 16/3/30.
 //  Copyright © 2016年 JSY. All rights reserved.
 //
 
-#import "LeaveView.h"
-#import "IQKeyboardManager.h"
+#import "UpdateLeaveViewController.h"
 
-@implementation LeaveView
+@interface UpdateLeaveViewController ()
 
-- (id)initWithFrame1:(CGRect)frame flag:(int)flag flagID:(int)flagID{
+@end
+
+@implementation UpdateLeaveViewController
+
+-(instancetype)init{
     self = [super init];
-    if (self)
-    {
-        //生成一条请假条记录
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewLeaveModel" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NewLeaveModel:) name:@"NewLeaveModel" object:nil];
-        // Initialization code
-        self.frame = frame;
-        self.mInt_flag = flag;
-        self.mInt_flagID = flagID;
-        self.mArr_leave = [NSMutableArray array];
-        if (self.mInt_flag == 1) {//自己请假
-            
-        }else{//班主任代请或者家长代假
-            LeaveNowModel *model = [[LeaveNowModel alloc] init];
-            model.mInt_flag = 0 ;//选择学生
-            model.mStr_name = @"学生";
-            [self.mArr_leave addObject:model];
-        }
-        for (int i=0; i<4; i++) {
-            LeaveNowModel *model = [[LeaveNowModel alloc] init];
-//            mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间显示，4添加时间段，5提交
-            if (i==0) {
-                model.mInt_flag = 1 ;//1理由选择
-                model.mStr_name = @"理由";
-            }else if (i==1){
-                model.mInt_flag = 2 ;//2理由填写
-                model.mStr_name = @"理由";
-            }else if (i==2){
-                model.mInt_flag = 4 ;//4添加时间段
-                model.mStr_name = @"添加时间段";
-            }else if (i==3){
-                model.mInt_flag = 5 ;//5提交
-                model.mStr_name = @"学生";
-            }
-            [self.mArr_leave addObject:model];
-        }
-        //表格
-        self.mTableV_leave = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, self.frame.size.height)];
-        self.mTableV_leave.delegate = self;
-        self.mTableV_leave.dataSource = self;
-        self.mTableV_leave.tableFooterView = [[UIView alloc]init];
-        [self addSubview:self.mTableV_leave];
-        [self.mTableV_leave reloadData];
-        
-        //输入框弹出键盘问题
-        IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-        manager.enable = YES;//控制整个功能是否启用
-        manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-        manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
-        manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
-    }
+    self.mArr_leave = [NSMutableArray array];
+    self.mModel_detail = [[LeaveDetailModel alloc] init];
     return self;
 }
 
-//生成一条请假条记录
--(void)NewLeaveModel:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self];
-    NSMutableDictionary *dic = noti.object;
-    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
-    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if ([ResultCode intValue]==0) {
-        //清空选项
-        for (int i=(int)self.mArr_leave.count-1;i>=0;i--) {
-            LeaveNowModel *tempModel = [self.mArr_leave objectAtIndex:i];
-            if (tempModel.mInt_flag==0||tempModel.mInt_flag==1||tempModel.mInt_flag==2) {
-                tempModel.mStr_value = @"";
-            }else if (tempModel.mInt_flag==3) {
-                [self.mArr_leave removeObjectAtIndex:i];
-            }
-        }
-        [self.mTableV_leave reloadData];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    //添加导航条
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
+    self.mNav_navgationBar.delegate = self;
+    [self.mNav_navgationBar setGoBack];
+    [self.view addSubview:self.mNav_navgationBar];
+    
+    self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    self.mTableV_leave.tableFooterView = [[UIView alloc]init];
+    //初始化数据
+    [self initDetailLeave];
+}
+
+//初始化数据
+-(void)initDetailLeave{
+    if (self.mInt_flag == 1) {//自己请假
+        
+    }else{//班主任代请或者家长代假
+        LeaveNowModel *model = [[LeaveNowModel alloc] init];
+        model.mInt_flag = 0 ;//选择学生
+        model.mStr_name = @"学生";
+        model.mStr_value = self.mModel_detail.ManName;
+        [self.mArr_leave addObject:model];
     }
-    [MBProgressHUD showSuccess:ResultDesc toView:self];
+    for (int i=0; i<4; i++) {
+        LeaveNowModel *model = [[LeaveNowModel alloc] init];
+//          mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间显示，4添加时间段，5提交
+        if (i==0) {
+            model.mInt_flag = 1 ;//1理由选择
+            model.mStr_name = @"理由";
+            model.mStr_value = self.mModel_detail.LeaveType;
+        }else if (i==1){
+            model.mInt_flag = 2 ;//2理由填写
+            model.mStr_name = @"理由";
+            if ([self.mModel_detail.LeaveReason isEqual:@"<null>"]||[self.mModel_detail.LeaveReason isKindOfClass:[NSNull class]]) {
+                model.mStr_value = @"";
+            }else{
+                model.mStr_value = self.mModel_detail.LeaveReason;
+            }
+        }else if (i==2){
+            model.mInt_flag = 4 ;//4添加时间段
+            model.mStr_name = @"添加时间段";
+        }else if (i==3){
+            model.mInt_flag = 5 ;//5提交
+            model.mStr_name = @"学生";
+        }
+        [self.mArr_leave addObject:model];
+    }
+    for (int i=0; i<self.mModel_detail.TimeList.count; i++) {
+        TimeListModel *tempModel = [self.mModel_detail.TimeList objectAtIndex:i];
+        LeaveNowModel *model = [[LeaveNowModel alloc] init];
+        model.mInt_flag = 3 ;//3具体时间段
+        model.mStr_startTime = tempModel.Sdate;
+        model.mStr_startTime = tempModel.Edate;
+        [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
+    }
+    [self.mTableV_leave reloadData];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
@@ -229,16 +223,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     LeaveNowModel *model = [self.mArr_leave objectAtIndex:indexPath.row];
     if (model.mInt_flag == 0) {//选择学生
-        ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
-        chooseStu.delegate = self;
-        if (self.mInt_flagID == 1) {//班主任
-            chooseStu.mInt_flagID = 1;
-        }else if (self.mInt_flagID == 3){//家长
-            chooseStu.mInt_flagID = 0;
-        }
-        chooseStu.mInt_flag = 0;
-        chooseStu.mStr_navName = @"选择学生";
-        [utils pushViewController:chooseStu animated:YES];
+        
     }else if (model.mInt_flag == 1){//理由选择
         ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
         chooseStu.delegate = self;
@@ -258,7 +243,7 @@
             }
         }
         if (a>=5) {
-            [MBProgressHUD showError:@"最多可以有5个时间段" toView:self];
+            [MBProgressHUD showError:@"最多可以有5个时间段" toView:self.view];
         }else{
             LeaveNowModel *model1 = [[LeaveNowModel alloc] init];
             [self addDialog:1 row:0 Model:model1];
@@ -271,86 +256,84 @@
 //提交按钮事件
 -(void)addLeave{
     //先判断是否是家长或者班主任代请
-    if (self.mInt_flag==0||self.mInt_flag==2) {
-        if (self.mInt_select0==0) {//没有选择人员
-            [MBProgressHUD showError:@"请选择请假人" toView:self];
-            return;
-        }
-    }
-    //请假理由
-    if (self.mInt_select1==0) {
-        [MBProgressHUD showError:@"请选择请假理由" toView:self];
-        return;
-    }
-    //判断有没有添加时间段
-    //循环计算添加的时间段
-    NSMutableArray *tempArr = [NSMutableArray array];
-    for (LeaveNowModel *tempModel in self.mArr_leave) {
-        if (tempModel.mInt_flag==3) {
-            [tempArr addObject:tempModel];
-        }
-    }
-    if (tempArr.count==0) {
-        [MBProgressHUD showError:@"请添加请假时间" toView:self];
-        return;
-    }
-    
-    NewLeaveModel *model = [[NewLeaveModel alloc] init];
-    model.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
-    //判断是否是家长或者班主任代请
-    if (self.mInt_flag==0) {//班主任代请0
-        model.manId = self.mModel_studentInfo.StudentID;
-        model.manName = self.mModel_studentInfo.StdName;
-        model.gradeStr = self.mModel_studentInfo.GradeName;
-        model.classStr = self.mModel_studentInfo.ClassName;
-        model.unitClassId = self.mModel_studentInfo.UnitClassID;
-        model.manType = @"0";
-    }else if (self.mInt_flag ==2){//家长代请2
-        model.manId = self.mModel_student.TabID;
-        model.manName = self.mModel_student.StdName;
-        model.gradeStr = self.mModel_student.GradeName;
-        model.classStr = self.mModel_student.ClsName;
-        model.unitClassId = self.mModel_student.ClassId;
-        model.manType = @"0";
-    }else{//普通老师、班主任自己请假
-        model.manId = [dm getInstance].userInfo.UserID;
-        model.manType = @"1";
-        model.manName = [dm getInstance].userInfo.UserName;
-    }
-    model.writerId = [dm getInstance].jiaoBaoHao;
-    model.writer = [dm getInstance].TrueName;
-    for (LeaveNowModel *tempModel in self.mArr_leave) {
-        if (tempModel.mInt_flag==1) {
-            model.leaveType = tempModel.mStr_value;
-        }else if (tempModel.mInt_flag ==2){
-            model.leaveReason = tempModel.mStr_value;
-        }
-    }
-
-    //循环赋值时间段
-    for (int i=0; i<tempArr.count; i++) {
-        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
-        if (i==0) {
-            model.sDateTime = tempNowModel.mStr_startTime;
-            model.eDateTime = tempNowModel.mStr_endTime;
-        }else if (i==1){
-            model.sDateTime1 = tempNowModel.mStr_startTime;
-            model.eDateTime1 = tempNowModel.mStr_endTime;
-        }else if (i==2){
-            model.sDateTime2 = tempNowModel.mStr_startTime;
-            model.eDateTime2 = tempNowModel.mStr_endTime;
-        }else if (i==3){
-            model.sDateTime3 = tempNowModel.mStr_startTime;
-            model.eDateTime3 = tempNowModel.mStr_endTime;
-        }else if (i==4){
-            model.sDateTime4 = tempNowModel.mStr_startTime;
-            model.eDateTime4 = tempNowModel.mStr_endTime;
-        }
-    }
-//    model.sDateTime = @"2016-03-18 15:20:04";
-//    model.eDateTime = @"2016-03-19 15:21:04";
-    [[LeaveHttp getInstance] NewLeaveModel:model];
-    [MBProgressHUD showMessage:@"" toView:self];
+//    if (self.mInt_flag==0||self.mInt_flag==2) {
+//        if (self.mInt_select0==0) {//没有选择人员
+//            [MBProgressHUD showError:@"请选择请假人" toView:self];
+//            return;
+//        }
+//    }
+//    //请假理由
+//    if (self.mInt_select1==0) {
+//        [MBProgressHUD showError:@"请选择请假理由" toView:self];
+//        return;
+//    }
+//    //判断有没有添加时间段
+//    //循环计算添加的时间段
+//    NSMutableArray *tempArr = [NSMutableArray array];
+//    for (LeaveNowModel *tempModel in self.mArr_leave) {
+//        if (tempModel.mInt_flag==3) {
+//            [tempArr addObject:tempModel];
+//        }
+//    }
+//    if (tempArr.count==0) {
+//        [MBProgressHUD showError:@"请添加请假时间" toView:self];
+//        return;
+//    }
+//    
+//    NewLeaveModel *model = [[NewLeaveModel alloc] init];
+//    model.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+//    //判断是否是家长或者班主任代请
+//    if (self.mInt_flag==0) {//班主任代请0
+//        model.manId = self.mModel_studentInfo.StudentID;
+//        model.manName = self.mModel_studentInfo.StdName;
+//        model.gradeStr = self.mModel_studentInfo.GradeName;
+//        model.classStr = self.mModel_studentInfo.ClassName;
+//        model.unitClassId = self.mModel_studentInfo.UnitClassID;
+//        model.manType = @"0";
+//    }else if (self.mInt_flag ==2){//家长代请2
+//        model.manId = self.mModel_student.TabID;
+//        model.manName = self.mModel_student.StdName;
+//        model.gradeStr = self.mModel_student.GradeName;
+//        model.classStr = self.mModel_student.ClsName;
+//        model.unitClassId = self.mModel_student.ClassId;
+//        model.manType = @"0";
+//    }else{//普通老师、班主任自己请假
+//        model.manId = [dm getInstance].userInfo.UserID;
+//        model.manType = @"1";
+//        model.manName = [dm getInstance].userInfo.UserName;
+//    }
+//    model.writerId = [dm getInstance].jiaoBaoHao;
+//    model.writer = [dm getInstance].TrueName;
+//    for (LeaveNowModel *tempModel in self.mArr_leave) {
+//        if (tempModel.mInt_flag==1) {
+//            model.leaveType = tempModel.mStr_value;
+//        }else if (tempModel.mInt_flag ==2){
+//            model.leaveReason = tempModel.mStr_value;
+//        }
+//    }
+//    
+//    //循环赋值时间段
+//    for (int i=0; i<tempArr.count; i++) {
+//        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
+//        if (i==0) {
+//            model.sDateTime = tempNowModel.mStr_startTime;
+//            model.eDateTime = tempNowModel.mStr_endTime;
+//        }else if (i==1){
+//            model.sDateTime1 = tempNowModel.mStr_startTime;
+//            model.eDateTime1 = tempNowModel.mStr_endTime;
+//        }else if (i==2){
+//            model.sDateTime2 = tempNowModel.mStr_startTime;
+//            model.eDateTime2 = tempNowModel.mStr_endTime;
+//        }else if (i==3){
+//            model.sDateTime3 = tempNowModel.mStr_startTime;
+//            model.eDateTime3 = tempNowModel.mStr_endTime;
+//        }else if (i==4){
+//            model.sDateTime4 = tempNowModel.mStr_startTime;
+//            model.eDateTime4 = tempNowModel.mStr_endTime;
+//        }
+//    }
+//    [[LeaveHttp getInstance] NewLeaveModel:model];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //弹出时间选择框
@@ -358,8 +341,8 @@
     UIView* vwFullScreenView = [[UIView alloc]init];
     vwFullScreenView.tag=9999;
     vwFullScreenView.backgroundColor=[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:0.5];
-    vwFullScreenView.frame=self.window.frame;
-    [self.window addSubview:vwFullScreenView];
+    vwFullScreenView.frame=self.view.frame;
+    [self.view addSubview:vwFullScreenView];
     
     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"ModelDialog" owner:self options:nil];
     //这时myCell对象已经通过自定义xib文件生成了
@@ -397,39 +380,24 @@
     [self.mTableV_leave reloadData];
 }
 
-//选择人员后的回调
--(void)ChooseStudentViewCSelect:(id)student flag:(int)flag flagID:(int)flagID{
-    if (flag == 1) {//请假理由
-        self.mInt_select1 = 1;
-//        if (flagID == 0||flagID == 1) {//家长请假0，班主任代请1
-            for (LeaveNowModel *model in self.mArr_leave) {
-                if (model.mInt_flag==1) {
-                    model.mStr_value = ((MyStdInfo *)student).StdName;
-                }
-            }
-//        }else if (self.mInt_flagID == 1){//班主任、老师、门卫自己请假2
-//            
-//        }
-    }else{//选择学生
-        self.mInt_select0 = 1;
-        if (self.mInt_flagID == 3) {//家长
-            self.mModel_student = student;
-            LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
-            model.mStr_value = self.mModel_student.StdName;
-        }else if (self.mInt_flagID == 1){//班主任
-            self.mModel_studentInfo = student;
-            LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
-            model.mStr_value = self.mModel_studentInfo.StdName;
-        }
-    }
-    [self.mTableV_leave reloadData];
+//导航条返回按钮回调
+-(void)myNavigationGoback{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [utils popViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
 */
 

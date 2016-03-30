@@ -67,7 +67,7 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     self.mTableV_list.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
-    
+    self.mTableV_list.tableFooterView = [[UIView alloc]init];
 }
 
 //获取指定班级的所有学生数据列表

@@ -34,7 +34,7 @@
     
     //表格
     self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
-    
+    self.mTableV_leave.tableFooterView = [[UIView alloc]init];
     //获取假条明细
     [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
     
@@ -430,7 +430,11 @@
 }
 //修改
 -(void)LeaveDetailTableViewCellUpdateBtn:(LeaveDetailTableViewCell *)cell{
-    
+    UpdateLeaveViewController *update = [[UpdateLeaveViewController alloc] init];
+    self.mModel_detail.cellFlag = self.mInt_index;
+    update.mModel_detail = self.mModel_detail;
+    update.mInt_flag = self.mInt_falg;
+    [utils pushViewController:update animated:YES];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{

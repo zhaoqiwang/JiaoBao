@@ -29,6 +29,7 @@
 
 @end
 @protocol ModelDialogDelegate <NSObject>
+@optional
 - (void)startText:(NSString*)startText endText:(NSString*)endText;
 -(void)LeaveNowModel:(LeaveNowModel*)model flag:(int)flag row:(NSInteger)row;
 

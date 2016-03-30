@@ -30,6 +30,7 @@
     
     //表格
     self.mTableV_select.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    self.mTableV_select.tableFooterView = [[UIView alloc]init];
     //默认数组
     [self addValueToArray];
     [self setCheckValue];
@@ -235,7 +236,7 @@
         if (model1.mInt_id ==0) {//当前选择是教职工
             
             //一审
-            if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteTea.A sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_one.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_one.frame.size.height);
                 [cell.mBtn_one setTitle:[dm getInstance].leaveModel.LevelNoteTea.A forState:UIControlStateNormal];
@@ -244,7 +245,7 @@
                 cell.mBtn_one.hidden = YES;
             }
             //二审
-            if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteTea.B sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_two.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_two.frame.size.height);
                 [cell.mBtn_two setTitle:[dm getInstance].leaveModel.LevelNoteTea.B forState:UIControlStateNormal];
@@ -253,7 +254,7 @@
                 cell.mBtn_two.hidden = YES;
             }
             //三审
-            if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteTea.C sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_three.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_three.frame.size.height);
                 [cell.mBtn_three setTitle:[dm getInstance].leaveModel.LevelNoteTea.C forState:UIControlStateNormal];
@@ -262,7 +263,7 @@
                 cell.mBtn_three.hidden = YES;
             }
             //四审
-            if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteTea.D sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_four.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_four.frame.size.height);
                 [cell.mBtn_four setTitle:[dm getInstance].leaveModel.LevelNoteTea.D forState:UIControlStateNormal];
@@ -271,7 +272,7 @@
                 cell.mBtn_four.hidden = YES;
             }
             //五审
-            if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteTea.E sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_five.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_five.frame.size.height);
                 [cell.mBtn_five setTitle:[dm getInstance].leaveModel.LevelNoteTea.E forState:UIControlStateNormal];
@@ -289,7 +290,7 @@
                 cell.mBtn_one.hidden = YES;
             }
             //二审
-            if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteStd.B sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_two.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_two.frame.size.height);
                 [cell.mBtn_two setTitle:[dm getInstance].leaveModel.LevelNoteStd.B forState:UIControlStateNormal];
@@ -298,7 +299,7 @@
                 cell.mBtn_two.hidden = YES;
             }
             //三审
-            if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteStd.C sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_three.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_three.frame.size.height);
                 [cell.mBtn_three setTitle:[dm getInstance].leaveModel.LevelNoteStd.C forState:UIControlStateNormal];
@@ -307,7 +308,7 @@
                 cell.mBtn_three.hidden = YES;
             }
             //四审
-            if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteStd.D sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_four.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_four.frame.size.height);
                 [cell.mBtn_four setTitle:[dm getInstance].leaveModel.LevelNoteStd.D forState:UIControlStateNormal];
@@ -316,7 +317,7 @@
                 cell.mBtn_four.hidden = YES;
             }
             //五审
-            if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
+            if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
                 CGSize nameSize = [[dm getInstance].leaveModel.LevelNoteStd.E sizeWithFont:[UIFont systemFontOfSize:14]];
                 cell.mBtn_five.frame = CGRectMake(mFloag_width, 10, nameSize.width+20, cell.mBtn_five.frame.size.height);
                 [cell.mBtn_five setTitle:[dm getInstance].leaveModel.LevelNoteStd.E forState:UIControlStateNormal];

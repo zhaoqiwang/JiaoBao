@@ -45,6 +45,8 @@
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
+		43EE457B1CAB6F88006F7A5E /* UpdateLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */; };
+		43EE457C1CAB6F88006F7A5E /* UpdateLeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */; };
 		A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179771AB914D900E7093F /* work_deleteAccessory.png */; };
 		A701797B1AB914D900E7093F /* work_deleteAccessory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */; };
 		A701797C1AB914D900E7093F /* work_deleteAccessory@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179791AB914D900E7093F /* work_deleteAccessory@3x.png */; };
@@ -1229,6 +1231,9 @@
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
 		439313081B1DBE6E00169F30 /* RegisterHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterHttp.h; path = views/InternetApplications/register/RegisterHttp.h; sourceTree = "<group>"; };
 		439313091B1DBE6E00169F30 /* RegisterHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterHttp.m; path = views/InternetApplications/register/RegisterHttp.m; sourceTree = "<group>"; };
+		43EE45781CAB6F88006F7A5E /* UpdateLeaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateLeaveViewController.h; path = leave/UpdateLeaveViewController.h; sourceTree = "<group>"; };
+		43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateLeaveViewController.m; path = leave/UpdateLeaveViewController.m; sourceTree = "<group>"; };
+		43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdateLeaveViewController.xib; path = leave/UpdateLeaveViewController.xib; sourceTree = "<group>"; };
 		A70179771AB914D900E7093F /* work_deleteAccessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = work_deleteAccessory.png; path = Image/InternetApp/workView/work_deleteAccessory.png; sourceTree = "<group>"; };
 		A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "work_deleteAccessory@2x.png"; path = "Image/InternetApp/workView/work_deleteAccessory@2x.png"; sourceTree = "<group>"; };
 		A70179791AB914D900E7093F /* work_deleteAccessory@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "work_deleteAccessory@3x.png"; path = "Image/InternetApp/workView/work_deleteAccessory@3x.png"; sourceTree = "<group>"; };
@@ -2957,6 +2962,9 @@
 				430279811C995618003546E9 /* TeacherViewController.h */,
 				430279821C995618003546E9 /* TeacherViewController.m */,
 				430279831C995618003546E9 /* TeacherViewController.xib */,
+				43EE45781CAB6F88006F7A5E /* UpdateLeaveViewController.h */,
+				43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */,
+				43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */,
 			);
 			name = leave;
 			sourceTree = "<group>";
@@ -5734,6 +5742,7 @@
 				A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */,
 				A7724D5B1B5DF94C0095850A /* VideoShot0@3x.png in Resources */,
 				A750827F1B7998E60031E7C9 /* buttonView6@3x.png in Resources */,
+				43EE457C1CAB6F88006F7A5E /* UpdateLeaveViewController.xib in Resources */,
 				F70B96891C90FB650001D696 /* icon@2x.png in Resources */,
 				A757DFD61A80BDEF001172A4 /* appNav_groupChat.png in Resources */,
 				A7781F451AE8A0F300F03AEB /* NewWorkView_2.png in Resources */,
@@ -6671,6 +6680,7 @@
 				F79D84DD1ABD4DC000897477 /* SignInModel.m in Sources */,
 				A755E70519F278B900BBDF3D /* ASIFormDataRequest.m in Sources */,
 				A73CAD731A07755B00D6C5AA /* UIView+MJExtension.m in Sources */,
+				43EE457B1CAB6F88006F7A5E /* UpdateLeaveViewController.m in Sources */,
 				A7113F281A41661E00F927DD /* ThemeSpaceViewController.m in Sources */,
 				A77FF0281A650B3F00DB85E3 /* JSONModelArray.m in Sources */,
 				F76B64451B1EA440008F6961 /* ClassMessage.m in Sources */,
