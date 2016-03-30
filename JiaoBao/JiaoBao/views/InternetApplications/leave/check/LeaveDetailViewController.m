@@ -129,31 +129,27 @@
     for (int i=0; i<a; i++) {
         LeaveDetailShowModel *model5 = [[LeaveDetailShowModel alloc] init];
         model5.mInt_flag = 5;
+        model5.mInt_check = i;
         if (i==0) {
             model5.mStr_name = @"一审:";
             model5.mStr_status = self.mModel_detail.ApproveStatus;
             model5.mStr_node = self.mModel_detail.ApproveNote;
-            model.mInt_check = 0;
         }else if (i==1){
             model5.mStr_name = @"二审:";
             model5.mStr_status = self.mModel_detail.ApproveStatus1;
             model5.mStr_node = self.mModel_detail.ApproveNote1;
-            model.mInt_check = 1;
         }else if (i==2){
             model5.mStr_name = @"三审:";
             model5.mStr_status = self.mModel_detail.ApproveStatus2;
             model5.mStr_node = self.mModel_detail.ApproveNote2;
-            model.mInt_check = 2;
         }else if (i==3){
             model5.mStr_name = @"四审:";
             model5.mStr_status = self.mModel_detail.ApproveStatus3;
             model5.mStr_node = self.mModel_detail.ApproveNote3;
-            model.mInt_check = 3;
         }else if (i==4){
             model5.mStr_name = @"五审:";
             model5.mStr_status = self.mModel_detail.ApproveStatus4;
             model5.mStr_node = self.mModel_detail.ApproveNote4;
-            model.mInt_check = 4;
         }
         [self.mArr_list addObject:model5];
     }
@@ -294,33 +290,33 @@
             cell.mBtn_check.tag = indexPath.row;
             if (self.mInt_falg == 0) {//学生
                 if (model.mInt_check ==0) {
-                    if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
+                    if (([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3)&&self.mInt_check ==1){//是否是班主任，班主任必有1审
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
-                }else if (model.mInt_check == 1){
+                }else if (model.mInt_check == 1&&self.mInt_check ==2){
                     //二审
                     if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
-                }else if (model.mInt_check == 2){
+                }else if (model.mInt_check == 2&&self.mInt_check ==3){
                     //三审
                     if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
-                }else if (model.mInt_check == 3){
+                }else if (model.mInt_check == 3&&self.mInt_check ==4){
                     //四审
                     if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
-                }else if (model.mInt_check == 4){
+                }else if (model.mInt_check == 4&&self.mInt_check ==5){
                     //五审
                     if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
@@ -331,35 +327,35 @@
             }else{//老师
                 if (model.mInt_check ==0) {
                     //一审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1&&self.mInt_check ==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
                 }else if (model.mInt_check == 1){
                     //二审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1&&self.mInt_check ==2) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
                 }else if (model.mInt_check == 2){
                     //三审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1&&self.mInt_check ==3) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
                 }else if (model.mInt_check == 3){
                     //四审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1&&self.mInt_check ==4) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;
                     }
                 }else if (model.mInt_check == 4){
                     //五审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1&&self.mInt_check ==5) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                     }else{
                         cell.mBtn_check.hidden = YES;

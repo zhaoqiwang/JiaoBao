@@ -208,7 +208,7 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
 
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@""];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
         NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc,@"manType":manType};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -266,7 +266,7 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@""];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
         NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
 
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:dic];
@@ -294,7 +294,7 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetUnitLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:model.manType];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:model.manType level:model.level];
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitLeaves" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetUnitLeaves: %@", error);

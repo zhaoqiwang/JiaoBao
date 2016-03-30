@@ -31,6 +31,7 @@
 @property(nonatomic,strong)ClassLeavesModel *mModel_classLeaves;//审核或请假查询列表中的model
 @property (nonatomic,assign) int mInt_from;//从哪个界面来的，0请假查询，1待审核，2已审核
 @property (nonatomic,assign) int mInt_index;//当前数据，在表格数组中的索引
+@property (nonatomic,assign) int mInt_check;//当前为第几审的数据
 @property (weak,nonatomic) id<LeaveDetailViewCDelegate> delegate;
 
 @end

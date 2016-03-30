@@ -25,7 +25,7 @@
 @property (nonatomic,strong) NSString *ComeTime;//返校时间
 
 @property(nonatomic,strong)NSString *manType;//人员类型，0学生1老师
-
+@property(nonatomic,assign)int mInt_check;//当前为几审的查询
 
 
 -(void)dicToModel:(NSDictionary*)dic;

@@ -314,6 +314,7 @@
     }else if (self.mInt_flag == 1){
         selectVC.mInt_from = 2;
     }
+    selectVC.mInt_check = model.mInt_check;
     selectVC.mInt_falg = [model.manType intValue];
     selectVC.mInt_index = (int)indexPath.row;
     selectVC.mModel_classLeaves = model;
