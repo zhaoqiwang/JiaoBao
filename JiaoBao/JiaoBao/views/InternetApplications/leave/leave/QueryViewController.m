@@ -205,6 +205,9 @@
         }
         
         
+    }else{
+        self.recordModel.manType = @"1";
+        self.recordModel.mName = @"";
     }
     [MBProgressHUD showMessage:@"" toView:self.view];
         [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];

@@ -297,25 +297,25 @@
                     }
                 }else if (model.mInt_check == 1&&self.mInt_check ==2){
                     //二审
-                    if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 2&&self.mInt_check ==3){
                     //三审
-                    if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 3&&self.mInt_check ==4){
                     //四审
-                    if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 4&&self.mInt_check ==5){
                     //五审
-                    if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
@@ -323,31 +323,31 @@
             }else{//老师
                 if (model.mInt_check ==0) {
                     //一审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1&&self.mInt_check ==1) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]&&self.mInt_check ==1) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 1){
                     //二审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1&&self.mInt_check ==2) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]&&self.mInt_check ==2) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 2){
                     //三审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1&&self.mInt_check ==3) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]&&self.mInt_check ==3) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 3){
                     //四审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1&&self.mInt_check ==4) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]&&self.mInt_check ==4) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
                 }else if (model.mInt_check == 4){
                     //五审
-                    if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1&&self.mInt_check ==5) {
+                    if ([[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]&&self.mInt_check ==5) {
                         cell.mBtn_check.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, 10, cell.mBtn_check.frame.size.width, cell.mBtn_check.frame.size.height);
                         cell.mBtn_check.hidden = NO;
                     }
