@@ -266,7 +266,7 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:model.manType level:model.level];
         NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
 
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:dic];

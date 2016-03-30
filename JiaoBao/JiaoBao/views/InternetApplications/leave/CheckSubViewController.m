@@ -19,11 +19,9 @@
     NSString *resultCode = [sender object];
     if([resultCode integerValue]==0){
         [MBProgressHUD showError:@"成功"];
-//        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(changeCheckState:)]) {
-//            [self.delegate changeCheckState:@""];
+
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCheckCell" object:self.model];
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
-        //}
     }else{
         [MBProgressHUD showError:@"失败"];
     }
@@ -33,7 +31,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CheckLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CheckLeaveModel:) name:@"CheckLeaveModel" object:nil];
     self.model = [[CheckLeaveModel alloc]init];
-    self.model.checkFlag = @"0";
+    self.model.checkFlag = @"1";
 
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.textView.layer.borderWidth = 1;
@@ -81,13 +79,13 @@
     currentBtn.selected = YES;
     UIButton *anotherBtn = (UIButton*)[self.view viewWithTag:1];
     anotherBtn.selected = NO;
-    self.model.checkFlag = @"0";
+    self.model.checkFlag = @"2";
 }
 
 - (IBAction)submitBtnAction:(id)sender {
     self.model.tabid = self.mModel_LeaveDetail.TabID;
     self.model.level = self.mModel_LeaveDetail.level;
-    self.model.userName = self.mModel_LeaveDetail.ManName;
+    self.model.userName = [dm getInstance].TrueName;
     self.model.note = self.textView.text;
     self.model.cellFlag = self.mModel_LeaveDetail.cellFlag;
     [MBProgressHUD showMessage:@"" toView:self.view];

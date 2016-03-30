@@ -44,10 +44,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSArray *arr = [sender object];
     if(self.mInt_reloadData == 0){
-        if(arr.count>0){
-            self.dataSource = [NSMutableArray arrayWithArray:arr];
-
-        }
+        self.dataSource = [NSMutableArray arrayWithArray:arr];
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
         [self.tableView reloadData];
@@ -74,8 +71,10 @@
         else{
             [self.dataSource addObjectsFromArray:arr];
             [self.tableView reloadData];
+
             
         }
+        self.recordModel.numPerPage = @"20";
         self.mInt_reloadData=0;
     }
     if(self.mInt_flag == 0){
@@ -130,12 +129,13 @@
     self.mArr1 = [NSMutableArray array];
     self.mArr2 = [NSMutableArray array];
     self.mArr3 = [NSMutableArray array];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     //审核人员取单位的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetUnitLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetUnitLeaves:) name:@"GetUnitLeaves" object:nil];
     //审核完毕后的通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateCheckCell" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetUnitLeaves:) name:@"updateCheckCell" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateCheckCell:) name:@"updateCheckCell" object:nil];
     //学生统计查询后的通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStudentSumLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStudentSumLeaves:) name:@"GetStudentSumLeaves" object:nil];
