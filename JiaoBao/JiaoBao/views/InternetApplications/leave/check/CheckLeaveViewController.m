@@ -143,18 +143,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetManSumLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetManSumLeaves:) name:@"GetManSumLeaves" object:nil];
     self.dataSource = [NSMutableArray array];
-    self.recordModel = [[leaveRecordModel alloc]init];
-    self.recordModel.checkFlag = @"0";
-    self.recordModel.numPerPage = @"20";
-    self.recordModel.pageNum = @"1";
-    self.recordModel.RowCount = @"0";
-    self.recordModel.manType = @"0";
-    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM"];
-    NSDate *currentDate =[NSDate date];
-    self.recordModel.sDateTime = [formatter stringFromDate:currentDate];
-    self.recordModel.level = @"1";
+
     self.tableView.tableFooterView = [[UIView alloc]init];
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     self.tableView.headerPullToRefreshText = @"下拉刷新";
@@ -166,8 +155,20 @@
     self.tableView.footerRefreshingText = @"正在加载...";
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
-    [self sendRequest];
-
+    
+    self.recordModel = [[leaveRecordModel alloc]init];
+    self.recordModel.checkFlag = @"0";
+    self.recordModel.numPerPage = @"20";
+    self.recordModel.pageNum = @"1";
+    self.recordModel.RowCount = @"0";
+    //self.recordModel.manType = @"0";
+    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM"];
+    NSDate *currentDate =[NSDate date];
+    self.recordModel.sDateTime = [formatter stringFromDate:currentDate];
+    //self.recordModel.level = @"1";
+    [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
     // Do any additional setup after loading the view from its nib.
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
