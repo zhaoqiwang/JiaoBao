@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckLeaveViewController">
             <connections>
                 <outlet property="sectionView" destination="VQh-4V-w7s" id="RZ2-rc-5nr"/>
+                <outlet property="stuOrTeaLabel" destination="Pf2-s8-rzq" id="zco-HN-jWS"/>
                 <outlet property="stuSection" destination="ZCM-k4-Seb" id="xUu-fS-9Qd"/>
                 <outlet property="tableView" destination="Fwd-Vf-9j3" id="Sue-Ls-hJF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
