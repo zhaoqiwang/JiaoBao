@@ -17,6 +17,7 @@
 #import "LeaveHttp.h"
 #import "LeaveDetailModel.h"
 #import "ClassLeavesModel.h"
+#import "CheckSubViewController.h"
 
 @protocol LeaveDetailViewCDelegate;
 
