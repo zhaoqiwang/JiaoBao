@@ -76,7 +76,8 @@
         LeaveNowModel *model = [[LeaveNowModel alloc] init];
         model.mInt_flag = 3 ;//3具体时间段
         model.mStr_startTime = tempModel.Sdate;
-        model.mStr_startTime = tempModel.Edate;
+        model.mStr_endTime = tempModel.Edate;
+        model.mStr_value = tempModel.TabID;
         [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
     }
     [self.mTableV_leave reloadData];
@@ -233,7 +234,7 @@
     }else if (model.mInt_flag == 2){//理由填写
         
     }else if (model.mInt_flag == 3){//时间段显示
-        [self addDialog:1 row:(int)indexPath.row Model:model];
+        [self addDialog:0 row:(int)indexPath.row Model:model];
     }else if (model.mInt_flag == 4){//时间段添加
         //先判断当前有几个时间，不能大于5个
         int a=0;
@@ -255,84 +256,21 @@
 
 //提交按钮事件
 -(void)addLeave{
-    //先判断是否是家长或者班主任代请
-//    if (self.mInt_flag==0||self.mInt_flag==2) {
-//        if (self.mInt_select0==0) {//没有选择人员
-//            [MBProgressHUD showError:@"请选择请假人" toView:self];
-//            return;
-//        }
-//    }
-//    //请假理由
-//    if (self.mInt_select1==0) {
-//        [MBProgressHUD showError:@"请选择请假理由" toView:self];
-//        return;
-//    }
-//    //判断有没有添加时间段
-//    //循环计算添加的时间段
-//    NSMutableArray *tempArr = [NSMutableArray array];
-//    for (LeaveNowModel *tempModel in self.mArr_leave) {
-//        if (tempModel.mInt_flag==3) {
-//            [tempArr addObject:tempModel];
-//        }
-//    }
-//    if (tempArr.count==0) {
-//        [MBProgressHUD showError:@"请添加请假时间" toView:self];
-//        return;
-//    }
-//    
-//    NewLeaveModel *model = [[NewLeaveModel alloc] init];
-//    model.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
-//    //判断是否是家长或者班主任代请
-//    if (self.mInt_flag==0) {//班主任代请0
-//        model.manId = self.mModel_studentInfo.StudentID;
-//        model.manName = self.mModel_studentInfo.StdName;
-//        model.gradeStr = self.mModel_studentInfo.GradeName;
-//        model.classStr = self.mModel_studentInfo.ClassName;
-//        model.unitClassId = self.mModel_studentInfo.UnitClassID;
-//        model.manType = @"0";
-//    }else if (self.mInt_flag ==2){//家长代请2
-//        model.manId = self.mModel_student.TabID;
-//        model.manName = self.mModel_student.StdName;
-//        model.gradeStr = self.mModel_student.GradeName;
-//        model.classStr = self.mModel_student.ClsName;
-//        model.unitClassId = self.mModel_student.ClassId;
-//        model.manType = @"0";
-//    }else{//普通老师、班主任自己请假
-//        model.manId = [dm getInstance].userInfo.UserID;
-//        model.manType = @"1";
-//        model.manName = [dm getInstance].userInfo.UserName;
-//    }
-//    model.writerId = [dm getInstance].jiaoBaoHao;
-//    model.writer = [dm getInstance].TrueName;
-//    for (LeaveNowModel *tempModel in self.mArr_leave) {
-//        if (tempModel.mInt_flag==1) {
-//            model.leaveType = tempModel.mStr_value;
-//        }else if (tempModel.mInt_flag ==2){
-//            model.leaveReason = tempModel.mStr_value;
-//        }
-//    }
-//    
-//    //循环赋值时间段
-//    for (int i=0; i<tempArr.count; i++) {
-//        LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
-//        if (i==0) {
-//            model.sDateTime = tempNowModel.mStr_startTime;
-//            model.eDateTime = tempNowModel.mStr_endTime;
-//        }else if (i==1){
-//            model.sDateTime1 = tempNowModel.mStr_startTime;
-//            model.eDateTime1 = tempNowModel.mStr_endTime;
-//        }else if (i==2){
-//            model.sDateTime2 = tempNowModel.mStr_startTime;
-//            model.eDateTime2 = tempNowModel.mStr_endTime;
-//        }else if (i==3){
-//            model.sDateTime3 = tempNowModel.mStr_startTime;
-//            model.eDateTime3 = tempNowModel.mStr_endTime;
-//        }else if (i==4){
-//            model.sDateTime4 = tempNowModel.mStr_startTime;
-//            model.eDateTime4 = tempNowModel.mStr_endTime;
-//        }
-//    }
-//    [[LeaveHttp getInstance] NewLeaveModel:model];
+    NewLeaveModel *model = [[NewLeaveModel alloc] init];
+    
+    model.tabId = self.mModel_detail.TabID;
+    model.manId = self.mModel_detail.TabID;
+    model.manName = self.mModel_detail.ManName;
+    model.manType = [NSString stringWithFormat:@"%d",self.mInt_flag];
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==1) {
+            model.leaveType = tempModel.mStr_value;
+        }else if (tempModel.mInt_flag ==2){
+            model.leaveReason = tempModel.mStr_value;
+        }
+    }
+    
+    [[LeaveHttp getInstance] UpdateLeaveModel:model];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
@@ -365,10 +303,20 @@
 
 //时间dialog点击确定后的回调
 -(void)LeaveNowModel:(LeaveNowModel *)model flag:(int)flag row:(NSInteger)row{
+    NewLeaveModel *tempModel = [[NewLeaveModel alloc] init];
+    
+    tempModel.sDateTime = model.mStr_startTime;
+    tempModel.eDateTime = model.mStr_endTime;
     //判断是新增的1，还是修改的0
     if (flag == 0) {
+        LeaveNowModel *model1 = [self.mArr_leave objectAtIndex:row];
+        tempModel.tabId = model1.mStr_value;
+        [[LeaveHttp getInstance] UpdateLeaveTime:tempModel];
         [self.mArr_leave replaceObjectAtIndex:row withObject:model];
     }else{
+        tempModel.leaveId = self.mModel_detail.TabID;
+        tempModel.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+        [[LeaveHttp getInstance] AddLeaveTime:tempModel];
         [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
     }
     [self.mTableV_leave reloadData];
@@ -376,6 +324,19 @@
 
 //删除时间段按钮的回调
 -(void)addDateCellDeleteBtn:(addDateCell *)view{
+    //循环计算添加的时间段
+    NSMutableArray *tempArr = [NSMutableArray array];
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==3) {
+            [tempArr addObject:tempModel];
+        }
+    }
+    if (tempArr.count==1) {
+        [MBProgressHUD showError:@"最少得有一个时间段" toView:self.view];
+        return;
+    }
+    LeaveNowModel *model = [self.mArr_leave objectAtIndex:view.tag];
+    [[LeaveHttp getInstance] DeleteLeaveTime:model.mStr_value];
     [self.mArr_leave removeObjectAtIndex:view.tag];
     [self.mTableV_leave reloadData];
 }
