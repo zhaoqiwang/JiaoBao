@@ -321,7 +321,7 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonGateLeaves:data];
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGateLeaves" object:array];
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGateLeaves" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetGateLeaves: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGateLeaves" object:nil];

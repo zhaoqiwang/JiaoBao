@@ -24,6 +24,8 @@
 
 @interface CheckLeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate,CheckSelectViewCDelegate,LeaveDetailViewCDelegate>
 
+@property (strong, nonatomic)UITextField *dateTF;
+
 @property (weak, nonatomic) IBOutlet UILabel *stuOrTeaLabel;
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示
@@ -35,5 +37,11 @@
 @property (strong, nonatomic) IBOutlet UIView *sectionView;
 @property (strong, nonatomic) IBOutlet UIView *stuSection;
 - (IBAction)conditionAction:(id)sender;
+- (IBAction)cancelAction:(id)sender;
+- (IBAction)doneAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIButton *conditionBtn;
+@property (strong, nonatomic) IBOutlet UIView *manSection;
 
 @end

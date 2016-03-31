@@ -18,6 +18,7 @@
 @property(nonatomic,strong)NSMutableArray *mArr1;//待审核数组
 @property(nonatomic,strong)NSMutableArray *mArr2;//已审核数组
 @property(nonatomic,strong)NSMutableArray *mArr3;//统计查询数组
+@property(nonatomic,strong)NSMutableArray *mArr4;//门卫查询数组
 @property(nonatomic,assign)int mInt_reloadData;
 
 @property(nonatomic,strong)leaveRecordModel *recordModel;
@@ -39,6 +40,16 @@
     //[self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
     
     
+}
+-(void)GetGateLeaves:(NSNotification*)sender{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.dataSource = [sender object];
+    self.mArr4 = self.dataSource;
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
+    [self.tableView reloadData];
+
 }
 -(void)GetUnitLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -129,7 +140,11 @@
     self.mArr1 = [NSMutableArray array];
     self.mArr2 = [NSMutableArray array];
     self.mArr3 = [NSMutableArray array];
+    self.mArr4 = [NSMutableArray array];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    //门卫取请假记录
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetGateLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetGateLeaves:) name:@"GetGateLeaves" object:nil];
     //审核人员取单位的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetUnitLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetUnitLeaves:) name:@"GetUnitLeaves" object:nil];
@@ -198,6 +213,10 @@
     self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
     [self.view addSubview:self.mScrollV_all];
+    self.dateTF = [[UITextField alloc]initWithFrame:CGRectZero];
+    [self.view addSubview:self.dateTF];
+    self.dateTF.inputAccessoryView = self.toolBar;
+    self.dateTF.inputView = self.datePicker;
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
     NSString *page = @"";
@@ -220,7 +239,7 @@
     if(self.mInt_flag==0||self.mInt_flag==1){
         self.recordModel.pageNum = page;
         [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
-    }else{
+    }else if(self.mInt_flag == 2){
         if(self.mInt_reloadData == 0){
             if([self.recordModel.manType isEqualToString:@"0"])
             {
@@ -240,6 +259,9 @@
             [self.tableView footerEndRefreshing];
         }
 
+        
+    }else if(self.mInt_flag == 3){
+        [[LeaveHttp getInstance]GetGateLeaves:self.recordModel];
         
     }
 
@@ -281,34 +303,62 @@
         
     }
     else{
-        static NSString *indentifier = @"CustomQueryCell";
-        CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-        
-        if (cell == nil) {
-            cell = [[CustomQueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomQueryCell" owner:self options:nil];
-            //这时myCell对象已经通过自定义xib文件生成了
-            if ([nib count]>0) {
-                cell = (CustomQueryCell *)[nib objectAtIndex:0];
-                //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+        if(self.mInt_flag == 2){
+            static NSString *indentifier = @"CustomQueryCell";
+            CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+            
+            if (cell == nil) {
+                cell = [[CustomQueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomQueryCell" owner:self options:nil];
+                //这时myCell对象已经通过自定义xib文件生成了
+                if ([nib count]>0) {
+                    cell = (CustomQueryCell *)[nib objectAtIndex:0];
+                    //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                }
+                //添加图片点击事件
+                //若是需要重用，需要写上以下两句代码
+                UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
+                [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
             }
-            //添加图片点击事件
-            //若是需要重用，需要写上以下两句代码
-            UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
-            [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
+            [cell setStatisticsData:[self.dataSource objectAtIndex:indexPath.row]];
+            return cell;
         }
-        [cell setStatisticsData:[self.dataSource objectAtIndex:indexPath.row]];
-        return cell;
-    }
+        else{
+            {
+                static NSString *indentifier = @"CustomQueryCell";
+                CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
+                
+                if (cell == nil) {
+                    cell = [[CustomQueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+                    NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomQueryCell" owner:self options:nil];
+                    //这时myCell对象已经通过自定义xib文件生成了
+                    if ([nib count]>0) {
+                        cell = (CustomQueryCell *)[nib objectAtIndex:0];
+                        //加判断看是否成功实例化该cell，成功的话赋给cell用来返回。
+                    }
+                    //添加图片点击事件
+                    //若是需要重用，需要写上以下两句代码
+                    UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
+                    [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
+                }
+                [cell setCellData:[self.dataSource objectAtIndex:indexPath.row]];
+                return cell;
+            }
+            
+        }
+        }
+
     return nil;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if(self.cellFlag == YES){
+    if(self.mInt_flag == 0||self.mInt_flag==1){
         return self.stuSection;
     }
-    else{
+    else if(self.mInt_flag == 2){
         return self.sectionView;
         
+    }else{
+        return self.manSection;
     }
     return nil;
 }
@@ -323,6 +373,9 @@
         selectVC.mInt_from = 1;
     }else if (self.mInt_flag == 1){
         selectVC.mInt_from = 2;
+    }else if (self.mInt_flag == 3)
+    {
+        
     }
     selectVC.mInt_check = model.mInt_check;
     selectVC.mInt_falg = [model.manType intValue];
@@ -335,12 +388,12 @@
 
 //分类状态的回调
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
-    if(!self.recordModel.level){
-        [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
-        return;
-    }
+
     self.mInt_flag = (int)view.tag -100;
+
     NSMutableArray *tempMArr;
+    self.conditionBtn.selected = NO;
+    self.conditionBtn.tintColor = [UIColor lightGrayColor];
     if(self.mInt_flag ==0){
         self.recordModel.checkFlag = @"0";
         self.cellFlag = YES;
@@ -351,9 +404,24 @@
         self.cellFlag = YES;
         tempMArr = self.mArr2;
     }
-    else{
+    else if(self.mInt_flag ==2){
         self.cellFlag = NO;
         tempMArr = self.mArr3;
+    }else{
+        self.cellFlag = NO;
+        self.conditionBtn.selected = YES;
+        self.conditionBtn.tintColor = [UIColor whiteColor];
+        tempMArr = self.mArr4;
+        //return;
+
+    }
+    if(!self.recordModel.level){
+        if(self.mInt_flag != 3){
+            [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
+            [self.tableView reloadData];
+            return;
+        }
+        
     }
     if(tempMArr.count==0){
         [self sendRequest];
@@ -365,17 +433,36 @@
     
 }
 - (IBAction)conditionAction:(id)sender{
-    CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
-    if(self.mInt_flag==0||self.mInt_flag==1){
-        selectVC.mInt_flag = 0;
+    if(self.conditionBtn.selected == YES){
+        [self.dateTF becomeFirstResponder];
+    }
+    else{
+        CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
+        if(self.mInt_flag==0||self.mInt_flag==1){
+            selectVC.mInt_flag = 0;
+        }
+        
+        else{
+            selectVC.mInt_flag = 1;
+        }
+        selectVC.delegate = self;
+        [self.navigationController pushViewController:selectVC animated:YES];
     }
 
-    else{
-        selectVC.mInt_flag = 1;
-    }
-    selectVC.delegate = self;
-    [self.navigationController pushViewController:selectVC animated:YES];
     
+}
+
+- (IBAction)cancelAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+}
+
+- (IBAction)doneAction:(id)sender {
+    [self.dateTF resignFirstResponder];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM"];
+    [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:self.datePicker.date]] forState:UIControlStateSelected];
+    self.recordModel.sDateTime = [formatter stringFromDate:self.datePicker.date];
+    [self sendRequest];
 }
 
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
@@ -458,4 +545,7 @@
 }
 */
 
+- (IBAction)dateBtnAction:(id)sender {
+    [self.dateTF becomeFirstResponder];
+}
 @end
