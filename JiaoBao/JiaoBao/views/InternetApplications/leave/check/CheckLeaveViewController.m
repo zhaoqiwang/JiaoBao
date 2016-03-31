@@ -371,11 +371,13 @@
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
     if (self.mInt_flag ==0) {
         selectVC.mInt_from = 1;
+        selectVC.mInt_checkOver = 0;
     }else if (self.mInt_flag == 1){
         selectVC.mInt_from = 2;
+        selectVC.mInt_checkOver = 0;
     }else if (self.mInt_flag == 3)
     {
-        
+        selectVC.mInt_checkOver = 1;
     }
     selectVC.mInt_check = model.mInt_check;
     selectVC.mInt_falg = [model.manType intValue];
