@@ -19,6 +19,7 @@
 #import "ClassLeavesModel.h"
 #import "CheckSubViewController.h"
 #import "UpdateLeaveViewController.h"
+#import "ClassLeavesModel.h"
 
 @protocol LeaveDetailViewCDelegate;
 
@@ -34,6 +35,7 @@
 @property (nonatomic,assign) int mInt_from;//从哪个界面来的，0请假查询，1待审核，2已审核
 @property (nonatomic,assign) int mInt_index;//当前数据，在表格数组中的索引
 @property (nonatomic,assign) int mInt_check;//当前为第几审的数据
+@property (nonatomic,assign) int mInt_checkOver;//假条为门卫审核1，普通查询0
 @property (weak,nonatomic) id<LeaveDetailViewCDelegate> delegate;
 
 @end
