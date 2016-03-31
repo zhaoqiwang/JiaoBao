@@ -31,6 +31,10 @@
 @property(nonatomic,strong)NSString *level;//1-5，审批级别一级到五级
 @property(nonatomic,strong)NSString *gradeStr;//年级名称
 @property(nonatomic,strong)NSString *classStr;//班级名称
+//门卫取请假记录
+//@property(nonatomic,strong)NSString *unitId;//单位ID
+
+
 
 
 - (NSMutableDictionary *)propertiesDic;
