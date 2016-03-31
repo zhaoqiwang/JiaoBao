@@ -335,6 +335,10 @@
 
 //分类状态的回调
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
+    if(!self.recordModel.level){
+        [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
+        return;
+    }
     self.mInt_flag = (int)view.tag -100;
     NSMutableArray *tempMArr;
     if(self.mInt_flag ==0){

@@ -21,10 +21,10 @@
     return self;
 }
 -(void)dicToModel:(NSDictionary*)dic{
-
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     NSString *str = [utils getLocalTimeDate];
 
-    self.TabID = [dic objectForKey:@"TabID"];
+    self.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
     self.ManName = [dic objectForKey:@"ManName"];
     self.Writer = [dic objectForKey:@"Writer"];
     NSString *str2 = [dic objectForKey:@"WriteDate"];
@@ -71,6 +71,13 @@
     range = [str2 rangeOfString:str];
     self.ApproveDate4 = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     self.ApproveNote4 = [dic objectForKey:@"ApproveNote4"];
+    self.ManId = [numberFormatter stringFromNumber:[dic objectForKey:@"ManId"]];
+    self.ManType = [dic objectForKey:@"ManType"];
+    self.UnitClassId = [numberFormatter stringFromNumber:[dic objectForKey:@"UnitClassId"]];
+    self.ClassStr = [dic objectForKey:@"ClassStr"];
+    self.GradeStr = [dic objectForKey:@"GradeStr"];
+    self.UnitId = [numberFormatter stringFromNumber:[dic objectForKey:@"UnitId"]];
+
     NSMutableArray *mArr = [dic objectForKey:@"TimeList"];
     for(int i=0;i<mArr.count;i++){
         NSMutableDictionary *mDic = [mArr objectAtIndex:i];
@@ -85,10 +92,10 @@
 @end
 @implementation TimeListModel
 -(void)dicToModel:(NSDictionary*)dic{
-
+    NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     NSString *str = [utils getLocalTimeDate];
     
-    self.TabID = [dic objectForKey:@"TabID"];
+    self.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
     self.Sdate = [dic objectForKey:@"Sdate"];
     NSString *str2 = [dic objectForKey:@"Sdate"];
     NSRange range = [str2 rangeOfString:str];
