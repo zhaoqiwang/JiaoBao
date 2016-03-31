@@ -32,6 +32,18 @@
     }
 }
 
+-(IBAction)mBtn_checkDoor:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveDetailTableViewCellCheckDoorBtn:)]) {
+        [self.delegate LeaveDetailTableViewCellCheckDoorBtn:self];
+    }
+}
+
+-(IBAction)mBtn_checkDoor2:(id)sender{
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveDetailTableViewCellCheckDoor2Btn:)]) {
+        [self.delegate LeaveDetailTableViewCellCheckDoor2Btn:self];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
