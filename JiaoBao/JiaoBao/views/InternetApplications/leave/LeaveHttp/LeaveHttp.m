@@ -90,10 +90,18 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------UpdateLeaveModel: %@,", result);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveModel" object:array];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateLeaveModel: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveModel" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveModel" object:dic];
     }];
 
     
@@ -111,10 +119,18 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------AddLeaveTime: %@,", result);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"AddLeaveTime" object:array];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddLeaveTime" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddLeaveTime: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddLeaveTime" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddLeaveTime" object:dic];
     }];
     
     
@@ -132,10 +148,18 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------UpdateLeaveTime: %@,", result);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveTime" object:array];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveTime" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateLeaveTime: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveTime" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveTime" object:dic];
     }];
     
     
@@ -153,10 +177,18 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------DeleteLeaveTime: %@,", result);
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveTime" object:array];
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+        
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveTime" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------DeleteLeaveTime: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveTime" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveTime" object:dic];
     }];
     
 }
@@ -366,11 +398,18 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         D("JSON--------UpdateGateInfo: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        // [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:array];
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateGateInfo: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:nil];
+        NSString *ResultCode= @"100";
+        NSString *ResultDesc= error.localizedDescription;
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:dic];
     }];
     
 }

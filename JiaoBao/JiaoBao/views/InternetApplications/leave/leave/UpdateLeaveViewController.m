@@ -24,6 +24,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //删除假条的一个时间段
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DeleteLeaveTime" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DeleteLeaveTime:) name:@"DeleteLeaveTime" object:nil];
+    //更新假条的一个时间段
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpdateLeaveTime" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateLeaveTime:) name:@"UpdateLeaveTime" object:nil];
+    //给一个假条新增加一个时间段
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddLeaveTime" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddLeaveTime:) name:@"AddLeaveTime" object:nil];
+    //更新一条请假条记录
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpdateLeaveModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateLeaveModel:) name:@"UpdateLeaveModel" object:nil];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
@@ -34,6 +46,42 @@
     self.mTableV_leave.tableFooterView = [[UIView alloc]init];
     //初始化数据
     [self initDetailLeave];
+}
+
+//删除假条的一个时间段
+-(void)DeleteLeaveTime:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+//    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
+//更新假条的一个时间段
+-(void)UpdateLeaveTime:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
+//给一个假条新增加一个时间段
+-(void)AddLeaveTime:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
+//更新一条请假条记录
+-(void)UpdateLeaveModel:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
 }
 
 //初始化数据
@@ -256,10 +304,14 @@
 
 //提交按钮事件
 -(void)addLeave{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     NewLeaveModel *model = [[NewLeaveModel alloc] init];
     
     model.tabId = self.mModel_detail.TabID;
-    model.manId = self.mModel_detail.TabID;
+    model.manId = self.mModel_detail.ManId;
     model.manName = self.mModel_detail.ManName;
     model.manType = [NSString stringWithFormat:@"%d",self.mInt_flag];
     for (LeaveNowModel *tempModel in self.mArr_leave) {
@@ -303,6 +355,10 @@
 
 //时间dialog点击确定后的回调
 -(void)LeaveNowModel:(LeaveNowModel *)model flag:(int)flag row:(NSInteger)row{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     NewLeaveModel *tempModel = [[NewLeaveModel alloc] init];
     
     tempModel.sDateTime = model.mStr_startTime;
@@ -319,11 +375,16 @@
         [[LeaveHttp getInstance] AddLeaveTime:tempModel];
         [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
     }
+    [MBProgressHUD showMessage:@"" toView:self.view];
     [self.mTableV_leave reloadData];
 }
 
 //删除时间段按钮的回调
 -(void)addDateCellDeleteBtn:(addDateCell *)view{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     //循环计算添加的时间段
     NSMutableArray *tempArr = [NSMutableArray array];
     for (LeaveNowModel *tempModel in self.mArr_leave) {
@@ -337,8 +398,32 @@
     }
     LeaveNowModel *model = [self.mArr_leave objectAtIndex:view.tag];
     [[LeaveHttp getInstance] DeleteLeaveTime:model.mStr_value];
+    [MBProgressHUD showMessage:@"" toView:self.view];
     [self.mArr_leave removeObjectAtIndex:view.tag];
     [self.mTableV_leave reloadData];
+}
+
+//选择人员后的回调
+-(void)ChooseStudentViewCSelect:(id)student flag:(int)flag flagID:(int)flagID{
+    if (flag == 1) {//请假理由
+//        self.mInt_select1 = 1;
+        for (LeaveNowModel *model in self.mArr_leave) {
+            if (model.mInt_flag==1) {
+                model.mStr_value = ((MyStdInfo *)student).StdName;
+            }
+        }
+    }
+    [self.mTableV_leave reloadData];
+}
+
+//检查当前网络是否可用
+-(BOOL)checkNetWork{
+    if([Reachability isEnableNetwork]==NO){
+        [MBProgressHUD showError:NETWORKENABLE toView:self.view];
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 //导航条返回按钮回调

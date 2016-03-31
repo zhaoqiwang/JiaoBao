@@ -23,7 +23,9 @@
     //删除假条
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DeleteLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(DeleteLeaveModel:) name:@"DeleteLeaveModel" object:nil];
-    
+    //门卫登记离校返校时间
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpdateGateInfo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateGateInfo:) name:@"UpdateGateInfo" object:nil];
     self.mArr_list = [NSMutableArray array];
     self.mModel_detail = [[LeaveDetailModel alloc] init];
     //添加导航条
@@ -35,9 +37,29 @@
     //表格
     self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_leave.tableFooterView = [[UIView alloc]init];
-    //获取假条明细
-    [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
-    
+    //普通审核
+    if (self.mInt_checkOver ==0) {
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else if (self.mInt_checkOver == 1){//门卫审核
+        
+    }
+}
+//门卫登记离校返校时间
+-(void)UpdateGateInfo:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    if ([ResultCode intValue]==0) {
+        //重新获取假条明细
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
 }
 //删除假条
 -(void)DeleteLeaveModel:(NSNotification *)noti{
@@ -60,6 +82,7 @@
 
 //获取假条明细
 -(void)GetLeaveModel:(NSNotification *)noti{
+    [self.mArr_list removeAllObjects];
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
@@ -71,6 +94,45 @@
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
+    [self.mTableV_leave reloadData];
+}
+
+//加载门卫审核数据
+-(void)loadClassLeaveDoor{
+    //请假人
+    LeaveDetailShowModel *model = [[LeaveDetailShowModel alloc] init];
+    model.mInt_flag = 0;
+    model.mStr_name = @"请假人:";
+    model.mStr_value = self.mModel_classLeaves.ManName;
+    [self.mArr_list addObject:model];
+    //发起时间
+    LeaveDetailShowModel *model2 = [[LeaveDetailShowModel alloc] init];
+    model2.mInt_flag = 2;
+    model2.mStr_name = @"发起时间:";
+    model2.mStr_value = self.mModel_classLeaves.WriteDate;
+    [self.mArr_list addObject:model2];
+    //理由
+    LeaveDetailShowModel *model3 = [[LeaveDetailShowModel alloc] init];
+    model3.mInt_flag = 3;
+    model3.mStr_name = @"理由:";
+    model3.mStr_value = self.mModel_classLeaves.LeaveType;
+    [self.mArr_list addObject:model3];
+    //开始结束时间
+    LeaveDetailShowModel *model4 = [[LeaveDetailShowModel alloc] init];
+    model4.mInt_flag = 4;
+    model4.mStr_startTime = @"开始时间:";
+    model4.mStr_startTimeValue = self.mModel_classLeaves.Sdate;
+    model4.mStr_goTime = @"离校时间:";
+    model4.mStr_goTimeValue = self.mModel_classLeaves.LeaveTime;
+    model4.mStr_door = @"值班门卫:";
+    model4.mStr_doorValue = self.mModel_classLeaves.LWriterName;
+    model4.mStr_endTime = @"结束时间:";
+    model4.mStr_endTimeValue = self.mModel_classLeaves.Edate;
+    model4.mStr_comeTime = @"回校时间:";
+    model4.mStr_comeTimeValue = self.mModel_classLeaves.ComeTime;
+    model4.mStr_door2 = @"值班门卫:";
+    model4.mStr_door2Value = self.mModel_classLeaves.CWriterName;
+    [self.mArr_list addObject:model4];
     [self.mTableV_leave reloadData];
 }
 
@@ -187,6 +249,7 @@
         UINib * n= [UINib nibWithNibName:@"LeaveDetailTableViewCell" bundle:[NSBundle mainBundle]];
         [self.mTableV_leave registerNib:n forCellReuseIdentifier:LeaveDetailTableViewCell_indentifier];
     }
+    cell.tag = indexPath.row;
     cell.mBtn_delete.hidden = YES;
     cell.mBtn_update.hidden = YES;
     cell.mBtn_checkDoor.hidden = YES;
@@ -266,8 +329,16 @@
         cell.mLab_door2Value.frame = CGRectMake(cell.mLab_leave.frame.origin.x+nameSize.width+10, cell.mLab_door2.frame.origin.y, door2SizeValue.width, cell.mLab_leave.frame.size.height);
         cell.mLab_door2Value.text = model.mStr_door2Value;
         //根据整个假条是否通过审核，然后有门卫权限，来做判断
-        if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {//有门卫权限
-            
+        if (self.mInt_checkOver == 1) {//有门卫权限，并且来自门卫审核数组
+            if (model.mStr_doorValue.length==0) {//没有签字过
+                cell.mBtn_checkDoor.frame = CGRectMake(cell.mLab_door.frame.origin.x+cell.mLab_door.frame.size.width+10, 10, cell.mBtn_checkDoor.frame.size.width, cell.mBtn_checkDoor.frame.size.height);
+                cell.mBtn_checkDoor.hidden = NO;
+            }
+            if (model.mStr_door2Value.length==0) {//没有签字过
+                cell.mBtn_checkDoor2.frame = CGRectMake(cell.mLab_door2.frame.origin.x+cell.mLab_door2.frame.size.width+10, 10, cell.mBtn_checkDoor2.frame.size.width, cell.mBtn_checkDoor2.frame.size.height);
+                cell.mBtn_checkDoor2.hidden = NO;
+            }
+            cell.delegate = self;
         }
     }else if (model.mInt_flag == 5){//审核
         cell.mLab_leave.hidden = NO;
@@ -437,17 +508,28 @@
 //修改
 -(void)LeaveDetailTableViewCellUpdateBtn:(LeaveDetailTableViewCell *)cell{
     UpdateLeaveViewController *update = [[UpdateLeaveViewController alloc] init];
+    update.mStr_navName = @"修改假条";
     self.mModel_detail.cellFlag = self.mInt_index;
     update.mModel_detail = self.mModel_detail;
     update.mInt_flag = self.mInt_falg;
     [utils pushViewController:update animated:YES];
+}
+//门卫离校签字
+-(void)LeaveDetailTableViewCellCheckDoorBtn:(LeaveDetailTableViewCell *)cell{
+    [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"0"];
+    [MBProgressHUD showMessage:@"" toView:self.view];
+}
+//门卫回校签字
+-(void)LeaveDetailTableViewCellCheckDoor2Btn:(LeaveDetailTableViewCell *)cell{
+    [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"1"];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
     if (buttonIndex == 0) {//确定,删除假条
         [[LeaveHttp getInstance] DeleteLeaveModel:self.mModel_detail.TabID];
-//        [MBProgressHUD showMessage:@"" toView:self.view];
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }else if (buttonIndex == 1) {//取消
         
     }
