@@ -146,7 +146,8 @@
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
-                self.myQueryVC.view.hidden = NO;
+                self.myQueryVC.view.hidden = YES;
+                self.classQueryVC.view.hidden = NO;
 
             }
         }else{
@@ -158,7 +159,7 @@
             }else if (self.mInt_flag == 1){
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
-                self.myQueryVC.view.hidden = YES;
+                self.myQueryVC.view.hidden = NO;
                 self.classQueryVC.view.hidden = YES;
             }
         }

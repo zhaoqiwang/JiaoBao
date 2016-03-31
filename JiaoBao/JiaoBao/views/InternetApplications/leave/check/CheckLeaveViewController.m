@@ -370,6 +370,11 @@
 
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
         self.recordModel.manType = model.manType;
+    if([model.manType isEqualToString:@"0"]){
+        self.stuOrTeaLabel.text = @"学生";
+    }else{
+        self.stuOrTeaLabel.text = @"教职工";
+    }
         self.recordModel.level = model.level;
         self.recordModel.sDateTime = model.sDateTime;
     if ([model.gradeStr isEqual:@"全部"]) {

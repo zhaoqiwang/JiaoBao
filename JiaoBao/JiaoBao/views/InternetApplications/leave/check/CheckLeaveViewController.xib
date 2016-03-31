@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckLeaveViewController">
             <connections>
                 <outlet property="sectionView" destination="VQh-4V-w7s" id="RZ2-rc-5nr"/>
+                <outlet property="stuOrTeaLabel" destination="Pf2-s8-rzq" id="zco-HN-jWS"/>
                 <outlet property="stuSection" destination="ZCM-k4-Seb" id="xUu-fS-9Qd"/>
                 <outlet property="tableView" destination="Fwd-Vf-9j3" id="Sue-Ls-hJF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -56,7 +57,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="学生" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pf2-s8-rzq">
-                    <rect key="frame" x="128" y="5" width="34" height="21"/>
+                    <rect key="frame" x="128" y="5" width="56" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
