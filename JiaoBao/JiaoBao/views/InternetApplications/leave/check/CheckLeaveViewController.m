@@ -430,6 +430,15 @@
     }
     else{
         self.dataSource = tempMArr;
+        if(self.mInt_flag == 0||self.mInt_flag == 1){
+            ClassLeavesModel *model = [self.dataSource objectAtIndex:0];
+            if([model.manType isEqualToString: @"0"]){
+                self.stuOrTeaLabel.text = @"学生";
+
+            }else{
+                self.stuOrTeaLabel.text = @"教职工";
+            }
+        }
         [self.tableView reloadData];
     }
     

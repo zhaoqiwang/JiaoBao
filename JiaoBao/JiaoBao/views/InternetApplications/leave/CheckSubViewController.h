@@ -11,6 +11,8 @@
 #import "utils.h"
 #import "LeaveHttp.h"
 #import "LeaveDetailModel.h"
+#import "IQKeyboardManager.h"
+
 
 @interface CheckSubViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
