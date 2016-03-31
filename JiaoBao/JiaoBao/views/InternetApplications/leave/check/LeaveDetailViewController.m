@@ -189,6 +189,8 @@
     }
     cell.mBtn_delete.hidden = YES;
     cell.mBtn_update.hidden = YES;
+    cell.mBtn_checkDoor.hidden = YES;
+    cell.mBtn_checkDoor2.hidden = YES;
     if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2||model.mInt_flag==3) {//请假人、发起人、发起时间，理由
         cell.mLab_leave.hidden = NO;
         cell.mLab_leaveValue.hidden = NO;
@@ -263,6 +265,10 @@
         CGSize door2SizeValue = [model.mStr_door2Value sizeWithFont:[UIFont systemFontOfSize:14]];
         cell.mLab_door2Value.frame = CGRectMake(cell.mLab_leave.frame.origin.x+nameSize.width+10, cell.mLab_door2.frame.origin.y, door2SizeValue.width, cell.mLab_leave.frame.size.height);
         cell.mLab_door2Value.text = model.mStr_door2Value;
+        //根据整个假条是否通过审核，然后有门卫权限，来做判断
+        if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {//有门卫权限
+            
+        }
     }else if (model.mInt_flag == 5){//审核
         cell.mLab_leave.hidden = NO;
         cell.mLab_leaveValue.hidden = NO;

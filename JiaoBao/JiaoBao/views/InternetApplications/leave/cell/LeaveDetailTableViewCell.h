@@ -27,11 +27,15 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_check;//审核
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_delete;//撤回
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_update;//修改
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_checkDoor;//门卫离校签字
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_checkDoor2;//门卫回校签字
 @property (weak,nonatomic) id<LeaveDetailTableViewCellDelegate> delegate;
 
 -(IBAction)mBtn_check:(id)sender;
 -(IBAction)mBtn_delete:(id)sender;
 -(IBAction)mBtn_update:(id)sender;
+-(IBAction)mBtn_checkDoor:(id)sender;
+-(IBAction)mBtn_checkDoor2:(id)sender;
 
 @end
 
@@ -43,9 +47,7 @@
 -(void) LeaveDetailTableViewCellCheckBtn:(LeaveDetailTableViewCell *) cell;
 -(void) LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *) cell;
 -(void) LeaveDetailTableViewCellUpdateBtn:(LeaveDetailTableViewCell *) cell;
-//-(void) LeaveDetailTableViewCellTwoBtn:(LeaveDetailTableViewCell *) cell;
-//-(void) CheckSelectTableViewCellThreeBtn:(LeaveDetailTableViewCell *) cell;
-//-(void) CheckSelectTableViewCellFourBtn:(LeaveDetailTableViewCell *) cell;
-//-(void) CheckSelectTableViewCellFiveBtn:(LeaveDetailTableViewCell *) cell;
+-(void) LeaveDetailTableViewCellCheckDoorBtn:(LeaveDetailTableViewCell *) cell;
+-(void) LeaveDetailTableViewCellCheckDoor2Btn:(LeaveDetailTableViewCell *) cell;
 
 @end

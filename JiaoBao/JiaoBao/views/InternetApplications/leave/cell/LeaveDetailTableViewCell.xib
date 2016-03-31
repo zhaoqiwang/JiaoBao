@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="324" id="KGk-i7-Jjw" customClass="LeaveDetailTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="324"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="354" id="KGk-i7-Jjw" customClass="LeaveDetailTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="354"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="324"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="353"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b7c-Dp-tig">
@@ -56,18 +56,6 @@
                         <color key="textColor" red="0.12941176470588234" green="0.12156862745098039" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wsk-eb-LXx">
-                        <rect key="frame" x="28" y="255" width="70" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.77254901960784317" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="审核">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="mBtn_check:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="AuI-gU-prg"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wz0-Ne-hnG">
                         <rect key="frame" x="30" y="108" width="42" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -134,10 +122,48 @@
                             <action selector="mBtn_update:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ow2-Cx-hOz"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="l0o-mC-HT8">
+                        <rect key="frame" x="42" y="305" width="80" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.7725490196" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="门卫签字">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="mBtn_checkDoor:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ENT-6D-6jg"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yua-yh-Zkl">
+                        <rect key="frame" x="191" y="305" width="80" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.7725490196" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="门卫签字">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="mBtn_checkDoor2:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="jLb-QG-Jfz"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wsk-eb-LXx">
+                        <rect key="frame" x="30" y="255" width="70" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.77254901960784317" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="审核">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="mBtn_check:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="AuI-gU-prg"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="mBtn_check" destination="wsk-eb-LXx" id="VKZ-hF-LTi"/>
+                <outlet property="mBtn_checkDoor" destination="l0o-mC-HT8" id="7Ct-JS-miF"/>
+                <outlet property="mBtn_checkDoor2" destination="Yua-yh-Zkl" id="qi8-QS-tS1"/>
                 <outlet property="mBtn_delete" destination="Mq5-WS-xga" id="TrD-6e-GOb"/>
                 <outlet property="mBtn_update" destination="EgK-Kn-kUC" id="FI4-Ja-D4Q"/>
                 <outlet property="mLab_comeTime" destination="C43-eU-IDo" id="K1K-KD-VQC"/>
@@ -153,7 +179,7 @@
                 <outlet property="mLab_leave" destination="b7c-Dp-tig" id="8SF-ur-2jM"/>
                 <outlet property="mLab_leaveValue" destination="lQ6-bh-NVp" id="AHL-FF-CgC"/>
             </connections>
-            <point key="canvasLocation" x="215" y="424"/>
+            <point key="canvasLocation" x="215" y="439"/>
         </tableViewCell>
     </objects>
 </document>
