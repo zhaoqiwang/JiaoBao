@@ -361,7 +361,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
         StuSubModel *model = [ParserJson_OnlineJob parserJsonStuSubModel:result];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"StuSubQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
         D("Error---------StuSubQsWithHwInfoId: %@", error);
         StuSubModel *model;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"StuSubQsWithHwInfoId" object:model];

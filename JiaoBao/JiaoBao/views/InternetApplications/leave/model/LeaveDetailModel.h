@@ -11,6 +11,14 @@
 @interface LeaveDetailModel : NSObject
 @property(nonatomic,strong)NSString *TabID;// 记录ID
 @property(nonatomic,strong)NSString *ManName;//请假人姓名
+@property(nonatomic,strong)NSString *ManId;//请假人的人员Id，学生ID或老师Id,非教宝号
+@property(nonatomic,strong)NSString *ManType;//人员类型，0学生1老师
+@property(nonatomic,strong)NSString *UnitClassId;//班级Id,学生请假须提供，老师请假可以为0
+@property(nonatomic,strong)NSString *ClassStr;//班级名称
+@property(nonatomic,strong)NSString *GradeStr;//年级名称
+@property(nonatomic,strong)NSString *UnitId;//单位Id
+
+
 @property(nonatomic,strong)NSString *Writer;////发起人姓名
 @property(nonatomic,strong)NSString *WriteDate;//发起日期
 @property(nonatomic,strong)NSString *LeaveType;//请假类型
