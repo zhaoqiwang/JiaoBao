@@ -21,6 +21,7 @@
 #import "addDateCell.h"
 #import "LeaveNowTableViewCell.h"
 #import "LeaveDetailModel.h"
+#import "LeaveHttp.h"
 
 @interface UpdateLeaveViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,addDateCellDelegate,ModelDialogDelegate>
 

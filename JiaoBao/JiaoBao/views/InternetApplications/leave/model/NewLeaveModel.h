@@ -44,6 +44,7 @@
 
 //给一个假条新增加一个时间段
 //@property(nonatomic,strong)NSString *tabId;//请假记录Id
+@property(nonatomic,strong)NSString *leaveId;//---添加时间
 //@property(nonatomic,strong)NSString *UnitId;//单位Id
 //@property(nonatomic,strong)NSString *sDateTime;//请假时间段开始时间
 //@property(nonatomic,strong)NSString *eDateTime;//请假时间段结束时间
