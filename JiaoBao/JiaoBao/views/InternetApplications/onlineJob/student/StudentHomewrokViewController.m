@@ -174,6 +174,7 @@
     [self addDefaultData];
     self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
     self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mScrollV_all.frame), [dm getInstance].width, [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame))];
+    self.containerView.hidden = YES;
     [self.view addSubview:self.containerView];
 }
 
@@ -926,10 +927,18 @@
         {
             detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
         }
-        detail.navBarName = @"做作业";
+        if(self.mInt_flag ==0){
+            detail.navBarName = @"做作业";
+            detail.isSubmit = [model.isHWFinish integerValue];
+
+        }else{
+            detail.navBarName = @"练习详情";
+            detail.isSubmit = 1;
+
+        }
+        
         detail.FlagStr = @"1";
         detail.TabID = model.TabID;
-        detail.isSubmit = [model.isHWFinish integerValue];
         detail.hwName = model.homeworkName;
         [self.navigationController pushViewController:detail animated:YES];
     }else{
