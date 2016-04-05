@@ -11,18 +11,15 @@
 #import "LeaveDetailViewController.h"
 
 @interface QueryViewController : UITableViewController<UITableViewDelegate,LeaveDetailViewCDelegate>
-@property (strong, nonatomic) IBOutlet UIView *tableHeadView;
-@property (weak, nonatomic) IBOutlet UIButton *myBtn;//本人
-@property (weak, nonatomic) IBOutlet UIButton *stdBtn;//学生
 
-@property (strong, nonatomic) IBOutlet UIView *sectionView;
+@property (strong, nonatomic) IBOutlet UIView *sectionView;//班级查询列表section
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
 @property (nonatomic,assign) int mInt_flag;//区分是是请假还是查询
 
 @property (strong, nonatomic) IBOutlet UIView *teaHeadView;//老师表头
 @property (strong, nonatomic) IBOutlet UIView *ParentsHeadView;//家长表头
 @property(nonatomic,assign)BOOL cellFlag;//1：有学生cell 0：没有学生cell
-@property (strong, nonatomic) IBOutlet UIView *stuSection;
+@property (strong, nonatomic) IBOutlet UIView *stuSection;//个人查询
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UITextField *dateTF;//家长选择时间输入框
@@ -36,9 +33,8 @@
 - (IBAction)cancelToolAction:(id)sender;
 - (IBAction)doneToolAction:(id)sender;
 - (IBAction)datePickAction:(id)sender;
-- (IBAction)selectionBtnAction:(id)sender;
 
-- (IBAction)Stu_SelectionAction:(id)sender;
+- (IBAction)Stu_SelectionAction:(id)sender;//家长身份选择学生
 
 
 

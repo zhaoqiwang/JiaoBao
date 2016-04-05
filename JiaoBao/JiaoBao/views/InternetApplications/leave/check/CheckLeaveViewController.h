@@ -26,7 +26,7 @@
 
 @property (strong, nonatomic)UITextField *dateTF;
 
-@property (weak, nonatomic) IBOutlet UILabel *stuOrTeaLabel;
+@property (weak, nonatomic) IBOutlet UILabel *stuOrTeaLabel;//section中的学生或教职工
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称

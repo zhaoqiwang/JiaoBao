@@ -297,7 +297,6 @@
     selectVC.delegate = self;
     LeaveViewController *parentVC =(LeaveViewController*)self.parentViewController;
     selectVC.mStr_navName = parentVC.mStr_navName;
-
     [self.navigationController pushViewController:selectVC animated:YES];
     
 }
@@ -312,7 +311,6 @@
     chooseStu.mInt_flag = 0;
     chooseStu.mStr_navName = @"选择学生";
     [self.navigationController pushViewController:chooseStu animated:YES];
-    
 
 
 }
