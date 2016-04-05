@@ -81,7 +81,7 @@
             model.mStr_img = @"buttonView22";
             model.mStr_imgNow = @"buttonView12";
         }else if (i==2){
-            model.mStr_title = @"学历查询";
+            model.mStr_title = @"学力查询";
             model.mStr_img = @"buttonView23";
             model.mStr_imgNow = @"buttonView13";
         }else if (i==3){

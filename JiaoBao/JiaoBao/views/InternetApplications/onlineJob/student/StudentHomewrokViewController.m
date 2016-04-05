@@ -207,6 +207,8 @@
 
 //根据章节id判断题库中是否有数据
 -(void)TecQswithchapterid:(NSNotification *)noti{
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSString *result = [noti object];
     if([result isEqualToString:@"false"]){
         [MBProgressHUD hideHUDForView:self.view];
@@ -222,6 +224,8 @@
 //学生发布练习
 -(void)StuMakeSelf:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
@@ -385,6 +389,8 @@
 //获取年级列表
 -(void)GetGradeList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableArray *array = noti.object;
     for (int i=0; i<self.mArr_sumData.count; i++) {
         TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
@@ -422,6 +428,8 @@
 //获取联动列表
 -(void)GetUnionChapterList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    [self.mTableV_list headerEndRefreshing];
+    [self.mTableV_list footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     NSMutableArray *array1 = [dic objectForKey:@"args1"];//科目列表
@@ -1458,10 +1466,12 @@
         if ([self.mModel_stuInf.StudentID intValue]>0) {
             if (self.mInt_flag==0) {
                 [self.mArr_homework removeAllObjects];
+                [self.mTableV_list reloadData];
                 [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"0"];
             }else{
                 self.mInt_parctice = 1;
                 [self.mArr_practiceTotal removeAllObjects];
+                [self.mTableV_list reloadData];
                 [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             }
             [MBProgressHUD showMessage:@"" toView:self.view];
@@ -1472,6 +1482,7 @@
         //先判断是现实练习列表，还是布置练习
         if (self.mArr_practice.count>0) {
             [self.mArr_practice removeAllObjects];
+            [self.mTableV_list reloadData];
             //获取
             [[OnlineJobHttp getInstance] GetStuHWListWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1"];
             [MBProgressHUD showMessage:@"" toView:self.view];
