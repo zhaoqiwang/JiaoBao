@@ -29,7 +29,7 @@
     self.publishJobModel = [[PublishJobModel alloc] init];
     
     //添加导航条
-    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"布置作业"];
+    self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"筛选条件"];
     [self.mNav_navgationBar setGoBack];
     [self.mNav_navgationBar setRightBtnTitle:@"确定"];
     self.mNav_navgationBar.delegate = self;
@@ -467,12 +467,12 @@
 -(void)loadDataForSigleSelectTreeViewCell1:(UITableViewCell*)cell with:(ChapterModel*)model flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
-    if (flag==301){//章节
+//    if (flag==301){//章节
         //        ChapterModel *model = node.nodeData;
         cell0.sigleBtn.mLab_title.text = model.chapterName;
         cell0.sigleBtn.mInt_flag = model.mInt_select;//是否选择
         name = model.chapterName;
-    }
+//    }
     
     if (cell0.sigleBtn.mInt_flag ==1) {
         [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"sigleSelect1"]];

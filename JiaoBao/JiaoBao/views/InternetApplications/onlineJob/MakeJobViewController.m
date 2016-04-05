@@ -59,7 +59,9 @@
         if (index == 1) {//关联的班级
             for (int i=0; i<self.mArr_sumData.count; i++) {
                 TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+                
                 if (node0.flag == 1) {
+                    [node0.sonNodes removeAllObjects];
                     for (int m=0; m<array.count; m++) {
                         //第1根节点
                         TreeJob_node *node1 = [[TreeJob_node alloc]init];
@@ -85,27 +87,6 @@
                                 }
                             }
                         }
-//                        if(self.saveJobModel.saveClass)
-//                        {
-//                            NSPredicate *predicate = [NSPredicate predicateWithFormat:@" classID == %@", model.ClassID];
-//                            NSSet *filteredSet= [self.saveJobModel.saveClass filteredSetUsingPredicate:predicate];
-//                            if(filteredSet.count>0)
-//                            {
-//                                SaveClassModel *classModel = [filteredSet anyObject];
-//                                temp1.mInt_difficulty = [[NSString stringWithFormat:@"%@",classModel.doLv ]intValue];//难度
-//                                temp1.mInt_class = [classModel.isSelected intValue];//是否选中
-//                                temp1.mStr_tableId = model.ClassID;
-//  
-//                                
-//                            }
-//
-//                            
-//                        }
-//                        else
-//                        {
-
-
-                        //}
                         temp1.mInt_difficulty = 2;//难度
                         temp1.mInt_class = 0;//是否选中
                         temp1.mStr_tableId = model.ClassID;
@@ -182,10 +163,10 @@
     self.publicFlag = 1;
     self.publicArr = [[NSMutableArray alloc]initWithCapacity:0];
     
-//是否有题回调
+    //是否有题回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecQswithchapterid:) name:@"TecQswithchapterid" object:nil];
-//发布作业回调
+    //发布作业回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
     
