@@ -13,6 +13,7 @@
 @property(nonatomic,strong)NSString *hwinfoid;//作业分发ID
 @property(nonatomic,strong)NSString *QsId;//题目ID
 @property(nonatomic,strong)NSString *QId;//题目题库ID
+@property(nonatomic,strong)NSString *errQId;//错题ID
 @property(nonatomic,strong)NSString *QsT;//题型
 @property(nonatomic,strong)NSString *QsCon;// 题目
 @property(nonatomic,strong)NSString *QsAns;//当前答案  多个答案时用 “，”分隔，作答内容不允许出现“，”

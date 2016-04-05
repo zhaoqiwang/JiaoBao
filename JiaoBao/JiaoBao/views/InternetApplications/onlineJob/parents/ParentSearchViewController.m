@@ -761,9 +761,9 @@
             detail.isSubmit = [model.isHWFinish integerValue];
             detail.hwName = model.homeworkName;
         if (self.mInt_index==0) {
-            detail.navBarName = @"做作业";
+            detail.navBarName = @"作业详情";
         }else{
-            detail.navBarName = @"做练习";
+            detail.navBarName = @"练习详情";
         }
         
             detail.FlagStr = @"2";

@@ -64,6 +64,14 @@ int cellRefreshCount, newHeight;
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
+    StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
+
+    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
+            model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"<span style=\"font-family:微软雅黑;\">" withString:[NSString  stringWithFormat:@"%@、",errModel.Tabid]];
+    }else{
+        model.QsCon = [NSString stringWithFormat:@"%@、%@",errModel.Tabid,model.QsCon];
+    }
+
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
         
@@ -85,7 +93,6 @@ int cellRefreshCount, newHeight;
     [self.view addSubview:tempWeb];
     [tempWeb setHidden:YES];
     self.mInt_index++;
-    
     if(self.mInt_index<self.datasource.count){
         StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
         [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:errModel.HwID QsId:errModel.QsID];
