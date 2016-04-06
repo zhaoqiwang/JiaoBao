@@ -53,6 +53,7 @@ int cellRefreshCount, newHeight;
 
     if(self.mInt_index==self.datasource.count){
         [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [self.tableVIew headerEndRefreshing];
         [self.tableVIew footerEndRefreshing];
         [self.tableVIew reloadData];
@@ -65,14 +66,22 @@ int cellRefreshCount, newHeight;
     [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
     StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
-
-    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
-            model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"<span style=\"font-family:微软雅黑;\">" withString:[NSString  stringWithFormat:@"%@、",errModel.Tabid]];
-    }else{
-        model.QsCon = [NSString stringWithFormat:@"%@、%@",errModel.Tabid,model.QsCon];
+    NSString *errNum;
+    if([errModel.DoC integerValue]==1){
+        errNum = @" *";
+    }else if ([errModel.DoC integerValue]==2){
+        errNum = @" * *";
+    }else if ([errModel.DoC integerValue]==3){
+       errNum = @" * * *";
     }
+    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240)\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
+//    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
+//            model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"<span style=\"font-family:微软雅黑;\">" withString:[NSString  stringWithFormat:@"%@<br/>、",errModel.Tabid]];
+//    }else{
+//        model.QsCon = [NSString stringWithFormat:@"%@<br/>、%@",errModel.Tabid,model.QsCon];
+//    }
 
-    model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p><hr style=\"height:30px;border:none;border-top:1px solid #555555;\" />",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
+    model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p>",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
         
     }
