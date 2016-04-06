@@ -94,6 +94,7 @@
 @property (nonatomic,strong) NSMutableArray *mArr_leaveClass;//请假系统中，班主任管理的班级
 @property (nonatomic,strong) NSMutableArray *mArr_allClass;//所有班级
 @property (nonatomic,strong) NSMutableArray *mArr_listClass;//所有班级的二级列表格式
+@property (nonatomic,assign) int mInt_addView;//防止重新登录时，重复加载
 + (dm*) getInstance;
 
 

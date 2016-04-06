@@ -134,6 +134,10 @@
     }else{//修改失败
         [MBProgressHUD showText:str toView:self.view];
     }
+    NSString *tempName = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].TrueName];
+    CGSize newSize = [tempName sizeWithFont:[UIFont systemFontOfSize:16]];
+    [Nav_internetAppView getInstance].mLab_name.text = tempName;
+    [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
 }
 
 //修改密码

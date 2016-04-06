@@ -450,6 +450,12 @@
 
 -(void)addChapterList:(TreeJob_node *)node0 array:(NSMutableArray *)array flag:(int)flag type:(int)type{
     [node0.sonNodes removeAllObjects];
+    if (type==3) {
+        TreeJob_level0_model *nodeData = node0.nodeData;
+        if (array.count==0) {
+            nodeData.mStr_title = @"没有章节";
+        }
+    }
     for (int m=0; m<array.count; m++) {
         //第1根节点
         TreeJob_node *node1 = [[TreeJob_node alloc]init];

@@ -103,14 +103,14 @@
         self.mViewC_appcation = [[InternetApplicationsViewController alloc] init];
         [self.mArr_views addObject:self.mViewC_appcation];
     }
-    if (self.mViewC_studentFile == nil) {
-        self.mViewC_studentFile = [[StudentFileViewController alloc] init];
-        [self.mArr_views addObject:self.mViewC_studentFile];
-    }
-    if (self.mViewC_center == nil) {
-        self.mViewC_center = [[ApplicationCenterViewController alloc] init];
-        [self.mArr_views addObject:self.mViewC_center];
-    }
+//    if (self.mViewC_studentFile == nil) {
+//        self.mViewC_studentFile = [[StudentFileViewController alloc] init];
+//        [self.mArr_views addObject:self.mViewC_studentFile];
+//    }
+//    if (self.mViewC_center == nil) {
+//        self.mViewC_center = [[ApplicationCenterViewController alloc] init];
+//        [self.mArr_views addObject:self.mViewC_center];
+//    }
     
     self.mViewC_appcation.view.tag = SELECTED_VIEW_CONTROLLER_TAG;
     [self.view insertSubview:self.mViewC_appcation.view belowSubview:self.mTabbar_view];

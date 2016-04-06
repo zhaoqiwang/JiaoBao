@@ -147,6 +147,12 @@
 
 -(void)addChapterList:(TreeJob_node *)node0 array:(NSMutableArray *)array flag:(int)flag type:(int)type{
     [node0.sonNodes removeAllObjects];
+    if (type==3) {
+        TreeJob_level0_model *nodeData = node0.nodeData;
+        if (array.count==0) {
+            nodeData.mStr_title = @"没有章节";
+        }
+    }
     for (int m=0; m<array.count; m++) {
         //第1根节点
         TreeJob_node *node1 = [[TreeJob_node alloc]init];
@@ -265,7 +271,7 @@
         }
         cell.delegate = self;
         cell.model = model;
-        [self loadDataForSigleSelectTreeViewCell1:cell with:model flag:501];//重新给cell装载数据
+        [self loadDataForSigleSelectTreeViewCell1:cell with:model flag:301];//重新给cell装载数据
         [cell setNeedsDisplay]; //重新描绘cell
         
         return cell;

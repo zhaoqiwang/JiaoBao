@@ -107,9 +107,11 @@
         }
     }
     //导航条
-    self.nav_internetAppView = [[Nav_internetAppView getInstance] initWithName:@"                                            "];
-    self.nav_internetAppView.delegate = self;
-    [self.view addSubview:self.nav_internetAppView];
+    if (self.nav_internetAppView == nil) {
+        self.nav_internetAppView = [Nav_internetAppView getInstance];
+        self.nav_internetAppView.delegate = self;
+        [self.view addSubview:self.nav_internetAppView];
+    }
     //top
     [self.view addSubview:[InternetAppTopScrollView shareInstance]];
     //root
@@ -240,7 +242,7 @@
                 Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
                 D("Identity_UserUnits_mode.ljl-====%@,%@",userUnitsModel.UnitID,str_default);
                 if ([userUnitsModel.UnitID intValue] == [str_default intValue]) {
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].TrueName];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
@@ -254,7 +256,7 @@
             for (int m=0; m<array.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
                 if ([userUnitsModel.ClassID intValue]==[str_default intValue]) {
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].TrueName];
                     [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
@@ -283,7 +285,7 @@
                 array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                 if (array.count>0) {
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].TrueName];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
@@ -294,7 +296,7 @@
                 array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                 if (array.count>0) {
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].TrueName];
                     [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
@@ -749,6 +751,7 @@
     //通知界面，更新数据
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegisterView" object:nil];
     [Nav_internetAppView getInstance].mLab_name.text = @"";
+    [self.nav_internetAppView removeFromSuperview];
     [utils pushViewController:mRegister_view animated:NO];
 }
 
