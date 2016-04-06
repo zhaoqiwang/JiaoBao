@@ -148,24 +148,24 @@
             [weakSelf.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:weakSelf.stuHomeWorkModel.hwinfoid QsId:[weakSelf.datasource objectAtIndex:index_path.row]];
             if(indexPath.row==0){
-                self.previousBtn.enabled = NO;
-                self.nextBtn.enabled = YES;
+                weakSelf.previousBtn.enabled = NO;
+                weakSelf.nextBtn.enabled = YES;
             }
             else{
-                self.previousBtn.enabled = YES;
+                weakSelf.previousBtn.enabled = YES;
             }
-            self.selectedBtnTag = index_path.row;
-            if(self.selectedBtnTag+1 == [self.stuHomeWorkModel.Qsc integerValue]){
-                if(self.isSubmit == YES){
-                    self.nextBtn.enabled = NO;
+            weakSelf.selectedBtnTag = index_path.row;
+            if(weakSelf.selectedBtnTag+1 == [weakSelf.stuHomeWorkModel.Qsc integerValue]){
+                if(weakSelf.isSubmit == YES){
+                    weakSelf.nextBtn.enabled = NO;
                 }else{
-                    self.nextBtn.enabled = YES;
+                    weakSelf.nextBtn.enabled = YES;
                     
                 }
-                [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+                [weakSelf.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
             }else{
-                [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
-                self.nextBtn.enabled = YES;
+                [weakSelf.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
+                weakSelf.nextBtn.enabled = YES;
 
             }
 
@@ -662,24 +662,31 @@
         NSTimeZone *zone = [NSTimeZone systemTimeZone];
         NSInteger interval = [zone secondsFromGMTForDate: currentDate];
         NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
-        if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
-            self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
-            self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
-            if(!self.timer)
-            {
-                self.serverDate = self.stuHomeWorkModel.HWStartTime;
-                self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-                [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        if([self.FlagStr isEqualToString:@"1"]){
+            if([self.navBarName isEqualToString:@"做练习"]){
+            }else{
+                if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
+                    self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
+                    self.stuHomeWorkModel.HWStartTime = [dateFormatter stringFromDate:currentDate];
+                    if(!self.timer)
+                    {
+                        self.serverDate = self.stuHomeWorkModel.HWStartTime;
+                        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+                        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+                        
+                        
+                    }
+                    
+                }else{//再次进入做作业界面 从服务器获取开始时间
+                    
+                    if(!self.serverDate){
+                        [[OnlineJobHttp getInstance]GetSQLDateTime];
+                    }
+                }
+            }
 
-                
-            }
-            
-        }else{//再次进入做作业界面 从服务器获取开始时间
-            
-            if(!self.serverDate){
-                [[OnlineJobHttp getInstance]GetSQLDateTime];
-            }
         }
+ 
         
     }
     else//已经提交的作业不显示倒计时

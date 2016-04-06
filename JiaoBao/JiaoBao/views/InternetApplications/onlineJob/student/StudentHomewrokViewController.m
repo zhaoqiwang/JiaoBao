@@ -937,15 +937,18 @@
         }
         if(self.mInt_flag ==0){
             detail.navBarName = @"做作业";
+            detail.FlagStr = @"1";
+
             detail.isSubmit = [model.isHWFinish integerValue];
 
         }else{
             detail.navBarName = @"练习详情";
-            detail.isSubmit = 1;
+            detail.FlagStr = @"2";
+
+            detail.isSubmit = [model.isHWFinish integerValue];
 
         }
         
-        detail.FlagStr = @"1";
         detail.TabID = model.TabID;
         detail.hwName = model.homeworkName;
         [self.navigationController pushViewController:detail animated:YES];
@@ -1525,6 +1528,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)dealloc{
+    
+    
 }
 
 /*
