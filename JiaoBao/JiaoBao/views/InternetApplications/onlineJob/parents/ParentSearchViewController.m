@@ -491,8 +491,17 @@
 }
 
 - (void)footerRereshing{
-    self.mInt_parctice++;
-    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
+    NSString *page = @"";
+    NSMutableArray *array = self.mArr_practice;
+    if (array.count>=10&&array.count%10==0) {
+        page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
+    } else {
+        [MBProgressHUD showSuccess:@"没有更多了" ];
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
+        return;
+    }
+    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
