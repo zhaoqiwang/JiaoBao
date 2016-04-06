@@ -304,9 +304,9 @@
 }
 
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)btn{
-   self.mInt_flag = (int)btn.tag-100;
+    int m = (int)btn.tag-100;
     //如果点击练习，
-    if (self.mInt_flag==1) {
+    if (m==1) {
         //先判断作业列表，是否有没有完成的
         int a=0;
         for (int i=0; i<self.mArr_homework.count; i++) {
@@ -322,6 +322,7 @@
         //再发送获取练习列表，然后根据返回的数据，做界面显示
         
     }
+    self.mInt_flag = (int)btn.tag-100;
     self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
     [self.stuErrVC removeFromParentViewController];
@@ -926,6 +927,7 @@
         StuHWModel *model;
         if (self.mInt_flag==0) {
             model = [self.mArr_homework objectAtIndex:indexPath.row];
+            model.HWStartTime = @"2016-04-06";
         }else{
             model = [self.mArr_practiceTotal objectAtIndex:indexPath.row];
         }
@@ -959,7 +961,7 @@
     }else{
         if (self.mArr_practice.count>0) {
             StuHWModel *model = [self.mArr_practice objectAtIndex:indexPath.row];
-            
+            model.HWStartTime = @"2016-04-06";
             DetailHWViewController *detail;
             if([model.isHWFinish integerValue] == 0)
             {
@@ -1485,7 +1487,7 @@
         }else{
             [MBProgressHUD showMessage:@"获取学生信息错误" toView:self.view];
         }
-    }else if (self.mInt_flag==0) {//获取练习列表
+    }else if (self.mInt_flag==1) {//获取练习列表
         //先判断是现实练习列表，还是布置练习
         if (self.mArr_practice.count>0) {
             [self.mArr_practice removeAllObjects];
@@ -1512,8 +1514,17 @@
 }
 
 - (void)footerRereshing{
-    self.mInt_parctice++;
-    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
+    NSString *page = @"";
+    NSMutableArray *array = self.mArr_practice;
+    if (array.count>=10&&array.count%10==0) {
+        page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
+    } else {
+        [MBProgressHUD showSuccess:@"没有更多了" ];
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
+        return;
+    }
+    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
