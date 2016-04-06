@@ -108,8 +108,7 @@
     }
     //导航条
     if (self.nav_internetAppView == nil) {
-        [self.nav_internetAppView removeFromSuperview];
-        self.nav_internetAppView = [[Nav_internetAppView getInstance] initWithName:@"                                            "];
+        self.nav_internetAppView = [Nav_internetAppView getInstance];
         self.nav_internetAppView.delegate = self;
         [self.view addSubview:self.nav_internetAppView];
     }

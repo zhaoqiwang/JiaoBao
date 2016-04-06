@@ -29,7 +29,7 @@
     static Nav_internetAppView *nav_internetAppView = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        nav_internetAppView = [[Nav_internetAppView alloc] init];
+        nav_internetAppView = [[Nav_internetAppView alloc] initWithName:@""];
     });
     return nav_internetAppView;
 }
@@ -72,6 +72,9 @@
         //        [self.mBtn_search addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
         //        [self addSubview:self.mBtn_search];
         //名字
+        if (name.length==0) {
+            name = @"                                                               ";
+        }
         self.mScrollV_name = [[UIScrollView alloc] initWithFrame:CGRectMake(15, 0+[dm getInstance].statusBar, [dm getInstance].width-11-Nav_width*2-10, Nav_height)];
         CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:15]];
         self.mLab_name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, newSize.width, Nav_height)];
