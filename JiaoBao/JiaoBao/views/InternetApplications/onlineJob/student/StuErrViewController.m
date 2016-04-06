@@ -74,7 +74,7 @@ int cellRefreshCount, newHeight;
     }else if ([errModel.DoC integerValue]==3){
        errNum = @" * * *";
     }
-    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240)\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
+    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:13px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
 //    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
 //            model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"<span style=\"font-family:微软雅黑;\">" withString:[NSString  stringWithFormat:@"%@<br/>、",errModel.Tabid]];
 //    }else{
