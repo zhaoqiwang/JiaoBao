@@ -286,6 +286,7 @@ int cellRefreshCount, newHeight;
     NSString *page = @"";
     if (self.mInt_reloadData == 0) {
         [self.webDataArr removeAllObjects];
+        [self.tableVIew reloadData];
         self.mInt_index =0;
         page = @"1";
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
