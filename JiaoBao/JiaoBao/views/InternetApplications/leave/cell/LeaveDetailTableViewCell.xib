@@ -179,7 +179,7 @@
                 <outlet property="mLab_leave" destination="b7c-Dp-tig" id="8SF-ur-2jM"/>
                 <outlet property="mLab_leaveValue" destination="lQ6-bh-NVp" id="AHL-FF-CgC"/>
             </connections>
-            <point key="canvasLocation" x="215" y="439"/>
+            <point key="canvasLocation" x="392" y="436"/>
         </tableViewCell>
     </objects>
 </document>

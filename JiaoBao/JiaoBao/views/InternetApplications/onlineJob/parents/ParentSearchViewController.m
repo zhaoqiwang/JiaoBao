@@ -53,6 +53,7 @@
     self.mArr_disScore = [NSMutableArray array];
     self.mArr_practice = [NSMutableArray array];
     self.mInt_parctice = 1;
+    self.mInt_flag = 0;
     
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:@"家长查询"];
@@ -90,8 +91,8 @@
             model.mStr_imgNow = @"buttonView14";
         }else if (i==4){
             model.mStr_title = @"错题本";
-            model.mStr_img = @"buttonView24";
-            model.mStr_imgNow = @"buttonView14";
+            model.mStr_img = @"buttonView27";
+            model.mStr_imgNow = @"buttonView17";
         }
         
         [temp addObject:model];
@@ -140,7 +141,7 @@
     if ([ResultCode intValue]==0) {
         if (array.count>0) {
             [self.mArr_practice addObjectsFromArray:array];
-        }else if(self.mArr_practice.count==0){
+        }else if(self.mInt_flag==0){
             [MBProgressHUD showError:@"无数据" toView:self.view];
         }else{
             [MBProgressHUD showError:@"没有更多" toView:self.view];
@@ -478,6 +479,7 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    self.mInt_flag = 0;
     if (self.mInt_index==0) {//获取作业列表
         [self.mArr_nowHomework removeAllObjects];
     }else if (self.mInt_index ==1){//获取练习列表
@@ -501,6 +503,7 @@
         [self.mTableV_list footerEndRefreshing];
         return;
     }
+    self.mInt_flag = 1;
     [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }

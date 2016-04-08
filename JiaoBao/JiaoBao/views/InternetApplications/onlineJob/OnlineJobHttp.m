@@ -382,11 +382,16 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------StuMakeSelf: %@,",result);
 //        {"ok":true,"stateCode":200,"stateMessage":"发送成功"},
-        
+        //异常牛逼的给值方式，32个👍
         NSDictionary *dic = [result objectFromJSONString];
         if ([[dic objectForKey:@"stateCode"] intValue] ==200) {
-            [tempDic setValue:@"0" forKey:@"ResultCode"];
-            [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
+            if ([[dic objectForKey:@"ok"] isEqual:@"true"]) {
+                [tempDic setValue:@"0" forKey:@"ResultCode"];
+                [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
+            }else{
+                [tempDic setValue:@"100" forKey:@"ResultCode"];
+                [tempDic setValue:@"未抽取到合适的题目" forKey:@"ResultDesc"];
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
         }else{
             [tempDic setValue:@"100" forKey:@"ResultCode"];
