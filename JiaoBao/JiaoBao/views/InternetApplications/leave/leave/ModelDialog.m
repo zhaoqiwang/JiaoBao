@@ -24,16 +24,17 @@
 }
 -(void )setUp{
     if(self.flag==0){
-        self.startDateTF.text = self.model.mStr_startTime;
-        self.endDateTF.text = self.model.mStr_endTime;
+        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
+        self.endDateTF.text =[NSString stringWithFormat:@"开始时间:%@",self.model.mStr_endTime];
         
     }
     else{
         NSDate *date = [NSDate date];
+        NSDate *endDate = [date initWithTimeIntervalSinceNow:60*60];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
-        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@ 8:30:00",[formatter stringFromDate:date]];
-self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[formatter stringFromDate:date]];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:date]];
+self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:endDate]];
         
     }
     
@@ -75,6 +76,9 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@ 17:30:00",[fo
     NSComparisonResult result = [endDate compare:startDate];
     if(result==NSOrderedAscending){
         [MBProgressHUD showError:@"结束时间不能小于开始时间"];
+        return;
+    }else if(result==NSOrderedSame){
+        [MBProgressHUD showError:@"结束时间不能等于开始时间"];
         return;
     }
     self.model.mInt_flag = 3;

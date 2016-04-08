@@ -74,6 +74,8 @@ int cellRefreshCount, newHeight;
         errNum = @" * *";
     }else if ([errModel.DoC integerValue]==3){
        errNum = @" * * *";
+    }else{
+       errNum = @" *"; 
     }
     model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:13px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
 //    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
