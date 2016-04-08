@@ -18,6 +18,7 @@ int cellRefreshCount, newHeight;
 @property(nonatomic,assign)NSInteger flag;
 @property(nonatomic,assign)NSInteger mInt_index;
 @property(nonatomic,assign)int mInt_reloadData;
+@property(nonatomic,strong)StuErrModel *errModel;
 @end
 
 @implementation StuErrViewController
@@ -74,7 +75,7 @@ int cellRefreshCount, newHeight;
     }else if ([errModel.DoC integerValue]==3){
        errNum = @" * * *";
     }
-    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240)\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
+    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:13px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
 //    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
 //            model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"<span style=\"font-family:微软雅黑;\">" withString:[NSString  stringWithFormat:@"%@<br/>、",errModel.Tabid]];
 //    }else{
@@ -104,7 +105,7 @@ int cellRefreshCount, newHeight;
     self.mInt_index++;
     if(self.mInt_index<self.datasource.count){
         StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
-        [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:errModel.HwID QsId:errModel.QsID];
+        [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:@"0" QsId:errModel.QsID];
         [MBProgressHUD showMessage:@"" toView:self.view];
     }
     else{
@@ -121,7 +122,7 @@ int cellRefreshCount, newHeight;
         if(self.datasource.count>0){
             StuErrModel *model = [self.datasource objectAtIndex:0];
             [MBProgressHUD showMessage:@"" toView:self.view];
-            [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:model.HwID QsId:model.QsID];
+            [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:@"0" QsId:model.QsID];
             
         }
         else{
@@ -143,7 +144,7 @@ int cellRefreshCount, newHeight;
         if(arr.count>0){
             StuErrModel *model = [arr objectAtIndex:0];
             [MBProgressHUD showMessage:@"" toView:self.view];
-            [[OnlineJobHttp getInstance] GetStuHWQsWithHwInfoId:model.HwID QsId:model.QsID];
+            [[OnlineJobHttp getInstance] GetStuHWQsWithHwInfoId:@"0" QsId:model.QsID];
             
         }
         else{
@@ -177,7 +178,7 @@ int cellRefreshCount, newHeight;
     self.mInt_index = 0;
     self.webDataArr = [NSMutableArray array];
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
-
+    self.errModel = [[StuErrModel alloc]init];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
@@ -253,21 +254,20 @@ int cellRefreshCount, newHeight;
 -(void) SelectChapteridViewSure:(PublishJobModel *) model{
     [self.webDataArr removeAllObjects];
     self.mInt_index = 0;
-    StuErrModel *errModel = [[StuErrModel alloc]init];
     if(self.mModel_stuInf){
-        errModel.StuId = self.mModel_stuInf.StudentID;
+        self.errModel.StuId = self.mModel_stuInf.StudentID;
         
     }
     else {
-        errModel.StuId = self.mModel_gen.StudentID;
+        self.errModel.StuId = self.mModel_gen.StudentID;
         
     }
-    errModel.IsSelf = @"0";
-    errModel.PageIndex = @"1";
-    errModel.PageSize = @"20";
-    errModel.chapterID = model.chapterID;
+    self.errModel.IsSelf = @"0";
+    self.errModel.PageIndex = @"1";
+    self.errModel.PageSize = @"10";
+    self.errModel.chapterID = model.chapterID;
 
-    [[OnlineJobHttp getInstance]GetStuErr:errModel];
+    [[OnlineJobHttp getInstance]GetStuErr:self.errModel];
 
     
     
@@ -286,13 +286,14 @@ int cellRefreshCount, newHeight;
     NSString *page = @"";
     if (self.mInt_reloadData == 0) {
         [self.webDataArr removeAllObjects];
+        [self.tableVIew reloadData];
         self.mInt_index =0;
         page = @"1";
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
         NSMutableArray *array = self.webDataArr;
-        if (array.count>=20&&array.count%20==0) {
-            page = [NSString stringWithFormat:@"%d",(int)array.count/20+1];
+        if (array.count>=10&&array.count%10==0) {
+            page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         } else {
             [self.tableVIew headerEndRefreshing];
@@ -302,19 +303,18 @@ int cellRefreshCount, newHeight;
             return;
         }
     }
-    StuErrModel *errModel = [[StuErrModel alloc]init];
     if(self.mModel_stuInf){
-        errModel.StuId = self.mModel_stuInf.StudentID;
+        self.errModel.StuId = self.mModel_stuInf.StudentID;
         
     }
     else {
-        errModel.StuId = self.mModel_gen.StudentID;
+        self.errModel.StuId = self.mModel_gen.StudentID;
         
     }
-    errModel.IsSelf = @"0";
-    errModel.PageIndex = page;
-    errModel.PageSize = @"20";
-    [[OnlineJobHttp getInstance]GetStuErr:errModel];
+    self.errModel.IsSelf = @"0";
+    self.errModel.PageIndex = page;
+    self.errModel.PageSize = @"10";
+    [[OnlineJobHttp getInstance]GetStuErr:self.errModel];
 }
 
 @end

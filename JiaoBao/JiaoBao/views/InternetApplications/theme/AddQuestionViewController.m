@@ -17,7 +17,6 @@
 #import "NickNameModel.h"
 #import "InvitationUserInfo.h"
 
-
 @interface AddQuestionViewController ()<UITextViewDelegate>
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;
 @property(nonatomic,strong)NSArray *dataArr;

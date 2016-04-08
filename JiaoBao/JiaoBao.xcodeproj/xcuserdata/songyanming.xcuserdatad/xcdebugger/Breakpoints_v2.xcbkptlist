@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/onlineJob/student/DetailHWViewController.m"
-            timestampString = "481604403.039188"
+            timestampString = "481706337.184363"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "276"
-            endingLineNumber = "276"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
             landmarkName = "-timerAction"
             landmarkType = "5">
          </BreakpointContent>
