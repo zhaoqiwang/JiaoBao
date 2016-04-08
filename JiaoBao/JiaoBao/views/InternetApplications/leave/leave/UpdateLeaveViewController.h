@@ -23,7 +23,7 @@
 #import "LeaveDetailModel.h"
 #import "LeaveHttp.h"
 
-@interface UpdateLeaveViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,addDateCellDelegate,ModelDialogDelegate,UIActionSheetDelegate>
+@interface UpdateLeaveViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,addDateCellDelegate,ModelDialogDelegate,UIActionSheetDelegate,UITextFieldDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称
@@ -31,5 +31,6 @@
 @property (nonatomic,strong) NSMutableArray *mArr_leave;//
 @property (nonatomic,strong) LeaveDetailModel *mModel_detail;//请假详情
 @property (nonatomic,assign) int mInt_flag;//班主任、家长代请0，老师请假1
+@property (nonatomic,strong) UITextField *mTextF_reason;//cell输入框中的理由
 
 @end

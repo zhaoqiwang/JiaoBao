@@ -63,6 +63,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getUnitInfoWithUID" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnitInfoWithUID:) name:@"getUnitInfoWithUID" object:nil];
     //使用NSNotificationCenter 鍵盤隐藏時
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"keyboardWillBeHidden" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
     //获取练习查询列表
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWListPageWithStuId" object:nil];
@@ -1383,6 +1384,13 @@
     if ([string isEqualToString:@""]) {
         self.mStr_textName = textField.text;
         return YES;
+    }
+    if ([string isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textField resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
     }
     // For any other character return TRUE so that the text gets added to the view
     if(textField.text.length>49)
