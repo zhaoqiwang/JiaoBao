@@ -347,8 +347,6 @@
             model.eDateTime4 = tempNowModel.mStr_endTime;
         }
     }
-//    model.sDateTime = @"2016-03-18 15:20:04";
-//    model.eDateTime = @"2016-03-19 15:21:04";
     [[LeaveHttp getInstance] NewLeaveModel:model];
     [MBProgressHUD showMessage:@"" toView:self];
 }

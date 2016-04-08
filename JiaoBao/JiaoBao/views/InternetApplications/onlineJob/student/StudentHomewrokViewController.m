@@ -76,6 +76,7 @@
     self.mInt_flag = 0;
     self.mArr_practiceTotal = [NSMutableArray array];
     self.mInt_parctice = 1;
+    self.mInt_flagTab = 0;
     
     //输入框弹出键盘问题
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
@@ -108,8 +109,8 @@
             model.mStr_imgNow = @"buttonView14";
         }else if (i==3){
             model.mStr_title = @"错题本";
-            model.mStr_img = @"buttonView24";
-            model.mStr_imgNow = @"buttonView14";
+            model.mStr_img = @"buttonView27";
+            model.mStr_imgNow = @"buttonView17";
         }
         
         [temp addObject:model];
@@ -189,7 +190,7 @@
     if ([ResultCode intValue]==0) {
         if (array.count>0) {
             [self.mArr_practiceTotal addObjectsFromArray:array];
-        }else if(self.mArr_practiceTotal.count==0){
+        }else if(self.mInt_flagTab==0){
             [MBProgressHUD showError:@"无数据" toView:self.view];
         }else{
             [MBProgressHUD showError:@"没有更多" toView:self.view];
@@ -317,12 +318,25 @@
         }
         if (a>0) {
             [MBProgressHUD showError:@"您还有作业未完成" toView:self.view];
+            //防止有未完成作业时，页面和上面按钮对应不起来
+            for (ButtonViewCell *btn1 in self.mScrollV_all.subviews) {
+                if ([btn1.class isSubclassOfClass:[ButtonViewCell class]]) {
+                    if ((int)btn1.tag == self.mInt_flag+100) {
+                        [btn1.mImgV_pic setImage:[UIImage imageNamed:btn1.bModel.mStr_imgNow]];
+                        btn1.mLab_title.textColor = [UIColor greenColor];
+                    }else{
+                        [btn1.mImgV_pic setImage:[UIImage imageNamed:btn1.bModel.mStr_img]];
+                        btn1.mLab_title.textColor = [UIColor grayColor];
+                    }
+                }
+            }
             return;
         }
         //再发送获取练习列表，然后根据返回的数据，做界面显示
         
     }
     self.mInt_flag = (int)btn.tag-100;
+    
     self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
     [self.stuErrVC removeFromParentViewController];
@@ -760,14 +774,18 @@
             if ([model.HWStartTime isEqual:@"1970-01-01T00:00:00"]) {
                 if (self.mInt_flag == 0) {
                     cell.mLab_goto.text = @"开始作业";
-                }else{
+                }else if (self.mInt_flag == 1) {
                     cell.mLab_goto.text = @"开始练习";
+                }else {
+                    cell.mLab_goto.text = @"未开始";
                 }
             }else{
                 if (self.mInt_flag == 0) {
                     cell.mLab_goto.text = @"继续作业";
-                }else{
+                }else if (self.mInt_flag == 1) {
                     cell.mLab_goto.text = @"继续练习";
+                }else {
+                    cell.mLab_goto.text = @"未完成";
                 }
             }
         }
@@ -927,7 +945,6 @@
         StuHWModel *model;
         if (self.mInt_flag==0) {
             model = [self.mArr_homework objectAtIndex:indexPath.row];
-            model.HWStartTime = @"2016-04-06";
         }else{
             model = [self.mArr_practiceTotal objectAtIndex:indexPath.row];
         }
@@ -961,7 +978,6 @@
     }else{
         if (self.mArr_practice.count>0) {
             StuHWModel *model = [self.mArr_practice objectAtIndex:indexPath.row];
-            model.HWStartTime = @"2016-04-06";
             DetailHWViewController *detail;
             if([model.isHWFinish integerValue] == 0)
             {
@@ -1469,6 +1485,7 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    self.mInt_flagTab = 0;
     if (self.mInt_flag==0||self.mInt_flag==2) {//获取作业列表
         
         //获取
@@ -1515,7 +1532,7 @@
 
 - (void)footerRereshing{
     NSString *page = @"";
-    NSMutableArray *array = self.mArr_practice;
+    NSMutableArray *array = self.mArr_practiceTotal;
     if (array.count>=10&&array.count%10==0) {
         page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
     } else {
@@ -1524,6 +1541,7 @@
         [self.mTableV_list footerEndRefreshing];
         return;
     }
+    self.mInt_flagTab = 1;
     [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }

@@ -42,6 +42,7 @@
 @property (nonatomic,strong) TableViewWithBlock *mTableV_name;//下拉列表
 @property (nonatomic,strong) GenInfo *mModel_gen;//当前选择的学生
 @property (nonatomic,assign) int mInt_parctice;//练习查询的页码
+@property (nonatomic,assign) int mInt_flag;//判断是刷新0还是加载更多1
 
 //点击学生下拉选择
 - (IBAction)selectStuBtnAction:(id)sender;

@@ -45,6 +45,12 @@
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
+		43DD1CE11CB64E9100F66482 /* buttonView17.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDB1CB64E9100F66482 /* buttonView17.png */; };
+		43DD1CE21CB64E9100F66482 /* buttonView17@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */; };
+		43DD1CE31CB64E9100F66482 /* buttonView17@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */; };
+		43DD1CE41CB64E9100F66482 /* buttonView27.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDE1CB64E9100F66482 /* buttonView27.png */; };
+		43DD1CE51CB64E9100F66482 /* buttonView27@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDF1CB64E9100F66482 /* buttonView27@2x.png */; };
+		43DD1CE61CB64E9100F66482 /* buttonView27@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CE01CB64E9100F66482 /* buttonView27@3x.png */; };
 		43EE457B1CAB6F88006F7A5E /* UpdateLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */; };
 		43EE457C1CAB6F88006F7A5E /* UpdateLeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */; };
 		A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179771AB914D900E7093F /* work_deleteAccessory.png */; };
@@ -1231,6 +1237,12 @@
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
 		439313081B1DBE6E00169F30 /* RegisterHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterHttp.h; path = views/InternetApplications/register/RegisterHttp.h; sourceTree = "<group>"; };
 		439313091B1DBE6E00169F30 /* RegisterHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterHttp.m; path = views/InternetApplications/register/RegisterHttp.m; sourceTree = "<group>"; };
+		43DD1CDB1CB64E9100F66482 /* buttonView17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView17.png; path = buttonView/buttonView17.png; sourceTree = "<group>"; };
+		43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView17@2x.png"; path = "buttonView/buttonView17@2x.png"; sourceTree = "<group>"; };
+		43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView17@3x.png"; path = "buttonView/buttonView17@3x.png"; sourceTree = "<group>"; };
+		43DD1CDE1CB64E9100F66482 /* buttonView27.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView27.png; path = buttonView/buttonView27.png; sourceTree = "<group>"; };
+		43DD1CDF1CB64E9100F66482 /* buttonView27@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView27@2x.png"; path = "buttonView/buttonView27@2x.png"; sourceTree = "<group>"; };
+		43DD1CE01CB64E9100F66482 /* buttonView27@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView27@3x.png"; path = "buttonView/buttonView27@3x.png"; sourceTree = "<group>"; };
 		43EE45781CAB6F88006F7A5E /* UpdateLeaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateLeaveViewController.h; path = leave/UpdateLeaveViewController.h; sourceTree = "<group>"; };
 		43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateLeaveViewController.m; path = leave/UpdateLeaveViewController.m; sourceTree = "<group>"; };
 		43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdateLeaveViewController.xib; path = leave/UpdateLeaveViewController.xib; sourceTree = "<group>"; };
@@ -5219,6 +5231,12 @@
 		A7FC29C11C90170C00CB38C0 /* buttonView */ = {
 			isa = PBXGroup;
 			children = (
+				43DD1CDB1CB64E9100F66482 /* buttonView17.png */,
+				43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */,
+				43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */,
+				43DD1CDE1CB64E9100F66482 /* buttonView27.png */,
+				43DD1CDF1CB64E9100F66482 /* buttonView27@2x.png */,
+				43DD1CE01CB64E9100F66482 /* buttonView27@3x.png */,
 				A7FC29C21C90176600CB38C0 /* buttonView11.png */,
 				A7FC29C31C90176600CB38C0 /* buttonView11@2x.png */,
 				A7FC29C41C90176600CB38C0 /* buttonView11@3x.png */,
@@ -5740,6 +5758,7 @@
 				A72B581A1A3D3E14004D8920 /* RelatedUnitViewController.xib in Resources */,
 				A753FAF21A1DDC0300AB5F22 /* share_tableV_school@2x.png in Resources */,
 				A79C7AE31AF22ACB00E9D30A /* newWork_allSelect.png in Resources */,
+				43DD1CE61CB64E9100F66482 /* buttonView27@3x.png in Resources */,
 				A7724D5B1B5DF94C0095850A /* VideoShot0@3x.png in Resources */,
 				A750827F1B7998E60031E7C9 /* buttonView6@3x.png in Resources */,
 				43EE457C1CAB6F88006F7A5E /* UpdateLeaveViewController.xib in Resources */,
@@ -5765,6 +5784,7 @@
 				A7CE67381AA70A250038D0C5 /* showUnit.png in Resources */,
 				A769C6001B7464E0006C6B76 /* topBtnSelect1.png in Resources */,
 				A7BB180319F4F91E00A81286 /* Regiser_jiaobao@2x.png in Resources */,
+				43DD1CE11CB64E9100F66482 /* buttonView17.png in Resources */,
 				F7ED6F6C1C9B9C90001A559E /* StuErrCell.xib in Resources */,
 				A70E3CA31A1EECB700E6D0EC /* ArthDetailViewController.xib in Resources */,
 				A72B581F1A3D70B8004D8920 /* UnitSpaceViewController.xib in Resources */,
@@ -5898,6 +5918,7 @@
 				A7781F441AE8A0F300F03AEB /* NewWorkView_1@3x.png in Resources */,
 				A7781F401AE8A0F300F03AEB /* NewWorkView_0@2x.png in Resources */,
 				A749B9D719F89A530036F480 /* root_waitingProcess@2x.png in Resources */,
+				43DD1CE31CB64E9100F66482 /* buttonView17@3x.png in Resources */,
 				A76829891AC69B21003B31EB /* classView_click_2@2x.png in Resources */,
 				A761D3FD1A7F697900DCAEB9 /* rootTableSelect_0@3x.png in Resources */,
 				F76B64521B1EA4CE008F6961 /* CustomCell.xib in Resources */,
@@ -6108,6 +6129,7 @@
 				A76F8FF31BDA165300C84186 /* StudentHomewrokViewController.xib in Resources */,
 				A77F9F3F1AFCAAC90003E579 /* appNav_dongtai@3x.png in Resources */,
 				A753FAEE1A1DDC0300AB5F22 /* share_tableV_education@2x.png in Resources */,
+				43DD1CE41CB64E9100F66482 /* buttonView27.png in Resources */,
 				F70B96681C90F99B0001D696 /* content.png in Resources */,
 				A72B56521A81CC27005EEA9C /* forward_select2@3x.png in Resources */,
 				A76829831AC69B21003B31EB /* classView_click_0@2x.png in Resources */,
@@ -6140,6 +6162,7 @@
 				A75082741B7998E60031E7C9 /* buttonView3.png in Resources */,
 				A7781F411AE8A0F300F03AEB /* NewWorkView_0@3x.png in Resources */,
 				A7AAC4D219F75DB200A0ED40 /* appNav_setting@2x.png in Resources */,
+				43DD1CE51CB64E9100F66482 /* buttonView27@2x.png in Resources */,
 				A7FC2A091C90176600CB38C0 /* buttonView26@3x.png in Resources */,
 				A749B9D219F89A530036F480 /* root_sendNotice.png in Resources */,
 				F7F7AD701B7C30EE00923B60 /* CategoryViewController.xib in Resources */,
@@ -6231,6 +6254,7 @@
 				F7502A241AEE1E50004F822F /* rTri.png in Resources */,
 				A792B8081BE07CA800B1B0C5 /* homework_down0@3x.png in Resources */,
 				A7626FC11B0D7EDB006957F2 /* popupWindow_comment.png in Resources */,
+				43DD1CE21CB64E9100F66482 /* buttonView17@2x.png in Resources */,
 				A7626FC21B0D7EDB006957F2 /* popupWindow_comment@2x.png in Resources */,
 				A77608F91B09844000A25DC3 /* appNav_access@2x.png in Resources */,
 				A79C7AE81AF22ACB00E9D30A /* newWork_reverseSelect@3x.png in Resources */,

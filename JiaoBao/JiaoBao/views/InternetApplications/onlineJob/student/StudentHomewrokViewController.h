@@ -48,5 +48,6 @@
 @property (strong,nonatomic) GetUnitInfoModel *mModel_unitInfo;//获取到的单位信息
 @property (nonatomic,assign) int mInt_parctice;//练习查询的页码
 @property (nonatomic,assign) int mInt_flag;//buttonview上，选择的索引
+@property (nonatomic,assign) int mInt_flagTab;//判断是刷新0还是加载更多1
 
 @end

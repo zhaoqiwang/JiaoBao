@@ -36,6 +36,9 @@
     //更新一条请假条记录
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpdateLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateLeaveModel:) name:@"UpdateLeaveModel" object:nil];
+    //获取假条明细
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetLeaveModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetLeaveModel:) name:@"GetLeaveModel" object:nil];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
@@ -48,44 +51,86 @@
     [self initDetailLeave];
 }
 
+//获取假条明细
+-(void)GetLeaveModel:(NSNotification *)noti{
+    [MBProgressHUD hideHUDForView:self.view];
+    NSMutableDictionary *dic = noti.object;
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+    LeaveDetailModel *model = [dic objectForKey:@"model"];
+    if ([ResultCode intValue]==0) {
+        self.mModel_detail = model;
+        //初始化数据
+        [self initDetailLeave];
+    }else{
+        
+    }
+    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+}
+
 //删除假条的一个时间段
 -(void)DeleteLeaveTime:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-//    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    if ([ResultCode intValue]==0) {
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
 }
 
 //更新假条的一个时间段
 -(void)UpdateLeaveTime:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-    //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    if ([ResultCode intValue]==0) {
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
 }
 
 //给一个假条新增加一个时间段
 -(void)AddLeaveTime:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-    //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    if ([ResultCode intValue]==0) {
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
 }
 
 //更新一条请假条记录
 -(void)UpdateLeaveModel:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
-    //    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    if ([ResultCode intValue]==0) {
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }else{
+        [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+    }
 }
 
 //初始化数据
 -(void)initDetailLeave{
+    [self.mArr_leave removeAllObjects];
     if (self.mInt_flag == 1) {//自己请假
         
     }else{//班主任代请或者家长代假
@@ -396,11 +441,9 @@
         [MBProgressHUD showError:@"最少得有一个时间段" toView:self.view];
         return;
     }
-    LeaveNowModel *model = [self.mArr_leave objectAtIndex:view.tag];
-    [[LeaveHttp getInstance] DeleteLeaveTime:model.mStr_value];
-    [MBProgressHUD showMessage:@"" toView:self.view];
-    [self.mArr_leave removeObjectAtIndex:view.tag];
-    [self.mTableV_leave reloadData];
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定删除当前时间？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    sheet.tag = view.tag;
+    [sheet showInView:self.view];
 }
 
 //选择人员后的回调
@@ -414,6 +457,20 @@
         }
     }
     [self.mTableV_leave reloadData];
+}
+
+//删除确定，UIActionSheet回调
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
+    if (buttonIndex == 0) {//确定,删除假条时间段
+        LeaveNowModel *model = [self.mArr_leave objectAtIndex:actionSheet.tag];
+        [[LeaveHttp getInstance] DeleteLeaveTime:model.mStr_value];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        [self.mArr_leave removeObjectAtIndex:actionSheet.tag];
+        [self.mTableV_leave reloadData];
+    }else if (buttonIndex == 1) {//取消
+        
+    }
 }
 
 //检查当前网络是否可用
