@@ -385,7 +385,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         //异常牛逼的给值方式，32个👍
         NSDictionary *dic = [result objectFromJSONString];
         if ([[dic objectForKey:@"stateCode"] intValue] ==200) {
-            if ([[dic objectForKey:@"ok"] isEqual:@"true"]) {
+            if ([[dic objectForKey:@"ok"] intValue]==1) {
                 [tempDic setValue:@"0" forKey:@"ResultCode"];
                 [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
             }else{

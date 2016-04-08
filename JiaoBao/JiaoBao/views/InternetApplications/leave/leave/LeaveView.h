@@ -15,7 +15,7 @@
 #import "StuInfoModel.h"
 #import "addDateCell.h"
 
-@interface LeaveView : UIView<UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,ModelDialogDelegate,addDateCellDelegate>
+@interface LeaveView : UIView<UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,ModelDialogDelegate,addDateCellDelegate,UITextFieldDelegate>
 
 @property (nonatomic,strong) UITableView *mTableV_leave;//
 @property (nonatomic,assign) NSInteger mInt_flag;//判断身份，班主任代请0，普通老师、班主任自己请假1，家长代请2
@@ -25,6 +25,7 @@
 @property (nonatomic,strong) StuInfoModel *mModel_studentInfo;//班主任身份时，选择学生的信息
 @property (nonatomic,assign) int mInt_select0;//是1否0选择学生
 @property (nonatomic,assign) int mInt_select1;//是1否0选择请假理由
+@property (nonatomic,strong) UITextField *mTextF_reason;//cell输入框中的理由
 
 - (id)initWithFrame1:(CGRect)frame flag:(int)flag flagID:(int)flagID;
 

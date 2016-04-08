@@ -18,6 +18,9 @@
         //生成一条请假条记录
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewLeaveModel" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NewLeaveModel:) name:@"NewLeaveModel" object:nil];
+        //使用NSNotificationCenter 鍵盤隐藏時
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"keyboardWillBeHidden" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
         // Initialization code
         self.frame = frame;
         self.mInt_flag = flag;
@@ -182,6 +185,8 @@
             //内容显示
             cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
             cell.mTextF_reason.text = model.mStr_value;
+            cell.mTextF_reason.delegate = self;
+            self.mTextF_reason = cell.mTextF_reason;
         }else if (model.mInt_flag == 4){//添加时间段
             cell.mLab_name.hidden = YES;
             cell.mLab_value.hidden = YES;
@@ -322,11 +327,11 @@
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==1) {
             model.leaveType = tempModel.mStr_value;
-        }else if (tempModel.mInt_flag ==2){
+        }else if (tempModel.mInt_flag==2){
             model.leaveReason = tempModel.mStr_value;
         }
     }
-
+    
     //循环赋值时间段
     for (int i=0; i<tempArr.count; i++) {
         LeaveNowModel *tempNowModel = [tempArr objectAtIndex:i];
@@ -421,6 +426,47 @@
         }
     }
     [self.mTableV_leave reloadData];
+}
+
+//如果输入超过规定的字数100，就不再让输入
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    //输入删除时
+    if ([string isEqualToString:@""]) {
+        for (LeaveNowModel *tempModel in self.mArr_leave) {
+            if (tempModel.mInt_flag==2){
+                tempModel.mStr_value = textField.text;
+            }
+        }
+        return YES;
+    }
+    if ([string isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textField resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    if(textField.text.length>99)
+    {
+        textField.text = [textField.text substringToIndex:99];
+        for (LeaveNowModel *tempModel in self.mArr_leave) {
+            if (tempModel.mInt_flag==2){
+                tempModel.mStr_value = textField.text;
+            }
+        }
+    }
+    return TRUE;
+}
+
+//当键盘隐藏的时候
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification{
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==2){
+            tempModel.mStr_value = self.mTextF_reason.text;
+        }
+    }
 }
 
 /*
