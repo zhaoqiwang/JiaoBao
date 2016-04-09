@@ -55,7 +55,7 @@
 -(void)getUnitInfoWithUID:(NSString *)UID;
 
 //获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID
--(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId;
+-(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId isStu:(NSString*)isStu;
 
 //获取某作业下某题的作业题及答案 参数：作业ID - 试题ID
 -(void)GetStuHWQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId;

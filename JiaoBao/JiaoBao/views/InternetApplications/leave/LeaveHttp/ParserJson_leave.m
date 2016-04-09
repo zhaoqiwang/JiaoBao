@@ -232,12 +232,12 @@
     for(int i=0;i<arr.count;i++){
         NSDictionary *dic = [arr objectAtIndex:i];
         SumLeavesModel *model = [[SumLeavesModel alloc] init];
-        model.UnitClassId = [dic objectForKey:@"UnitClassId"];
+        model.UnitClassId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"UnitClassId"]];
         model.ClassStr = [dic objectForKey:@"ClassStr"];
         model.GradeStr = [dic objectForKey:@"GradeStr"];
         model.ManName = [dic objectForKey:@"ManName"];
-        model.Amount = [dic objectForKey:@"Amount"];
-        model.Amount2 = [dic objectForKey:@"Amount2"];
+        model.Amount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Amount"]];
+        model.Amount2 = [NSString stringWithFormat:@"%@",[dic objectForKey:@"Amount2"]];
         [mArr addObject:model];
     }
     return mArr;

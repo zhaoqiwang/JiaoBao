@@ -455,7 +455,13 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
-    [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID];
+    if([self.FlagStr intValue]==1){
+        [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID isStu:@"true"];
+    }
+    else{
+        [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID isStu:@"false"];
+    }
+    
     
     [self.collectionView registerNib:[UINib nibWithNibName:@"DetialHWCell" bundle:nil]forCellWithReuseIdentifier:@"DetailHWCell"];
     // Do any additional setup after loading the view from its nib.
