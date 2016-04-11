@@ -32,8 +32,14 @@
     self.stateLabel.text = model.Amount2;
     self.stateLabel.textAlignment = NSTextAlignmentCenter;
 
-
-    
+}
+-(void)setStatisticsClassData:(SumLeavesModel*)model//设置统计查询班级列表数据
+{
+    self.dateLabel.text = model.ClassStr;
+    self.reasonLabel.text = model.Amount;
+    self.reasonLabel.textAlignment = NSTextAlignmentRight;
+    self.stateLabel.text = model.Amount2;
+    self.stateLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 @end

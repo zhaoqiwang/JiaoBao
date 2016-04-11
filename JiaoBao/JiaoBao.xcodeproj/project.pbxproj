@@ -1140,6 +1140,8 @@
 		F7C8AB721B73407100E829A4 /* AllCommentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB711B73407100E829A4 /* AllCommentListModel.m */; };
 		F7C8AB751B73451700E829A4 /* commentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8AB741B73451700E829A4 /* commentListModel.m */; };
 		F7C8ADC11CA22E3200C1DFB0 /* UserClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F7C8ADC01CA22E3200C1DFB0 /* UserClassInfo.m */; };
+		F7CBB9E41CBB450F00063920 /* StudentSumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CBB9E21CBB450F00063920 /* StudentSumViewController.m */; };
+		F7CBB9E51CBB450F00063920 /* StudentSumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7CBB9E31CBB450F00063920 /* StudentSumViewController.xib */; };
 		F7D20E911BD1DD0900E77B00 /* OtherItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7D20E8F1BD1DD0900E77B00 /* OtherItemsCell.m */; };
 		F7D20E921BD1DD0900E77B00 /* OtherItemsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7D20E901BD1DD0900E77B00 /* OtherItemsCell.xib */; };
 		F7DC76421AC697C400D6B0CE /* ClassHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = F7DC76411AC697C400D6B0CE /* ClassHttp.m */; };
@@ -2851,6 +2853,9 @@
 		F7C8AB741B73451700E829A4 /* commentListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = commentListModel.m; path = views/InternetApplications/theme/commentListModel.m; sourceTree = "<group>"; };
 		F7C8ADBF1CA22E3200C1DFB0 /* UserClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserClassInfo.h; path = model/UserClassInfo.h; sourceTree = "<group>"; };
 		F7C8ADC01CA22E3200C1DFB0 /* UserClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserClassInfo.m; path = model/UserClassInfo.m; sourceTree = "<group>"; };
+		F7CBB9E11CBB450F00063920 /* StudentSumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StudentSumViewController.h; path = check/StudentSumViewController.h; sourceTree = "<group>"; };
+		F7CBB9E21CBB450F00063920 /* StudentSumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StudentSumViewController.m; path = check/StudentSumViewController.m; sourceTree = "<group>"; };
+		F7CBB9E31CBB450F00063920 /* StudentSumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StudentSumViewController.xib; path = check/StudentSumViewController.xib; sourceTree = "<group>"; };
 		F7D20E8E1BD1DD0900E77B00 /* OtherItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherItemsCell.h; sourceTree = "<group>"; };
 		F7D20E8F1BD1DD0900E77B00 /* OtherItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherItemsCell.m; sourceTree = "<group>"; };
 		F7D20E901BD1DD0900E77B00 /* OtherItemsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OtherItemsCell.xib; sourceTree = "<group>"; };
@@ -2987,6 +2992,9 @@
 				430279951C995845003546E9 /* CheckLeaveViewController.h */,
 				430279961C995845003546E9 /* CheckLeaveViewController.m */,
 				430279971C995845003546E9 /* CheckLeaveViewController.xib */,
+				F7CBB9E11CBB450F00063920 /* StudentSumViewController.h */,
+				F7CBB9E21CBB450F00063920 /* StudentSumViewController.m */,
+				F7CBB9E31CBB450F00063920 /* StudentSumViewController.xib */,
 				437E2D7E1C9F9B600074F2ED /* LeaveDetailViewController.h */,
 				437E2D7F1C9F9B600074F2ED /* LeaveDetailViewController.m */,
 				437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */,
@@ -5823,6 +5831,7 @@
 				A7781F3F1AE8A0F300F03AEB /* NewWorkView_0.png in Resources */,
 				F718032D1AB3C4EF00E6167F /* kal_left_arrow@2x.png in Resources */,
 				A74821A519FF452200234020 /* msgDetail_send@2x.png in Resources */,
+				F7CBB9E51CBB450F00063920 /* StudentSumViewController.xib in Resources */,
 				A75046931A0A14BC00C54ECC /* forward_sendMsg1.png in Resources */,
 				A76F217A1B7DE3F200D957E0 /* KnowledgeRecommentAddAnswerViewController.xib in Resources */,
 				F7502A261AEE1E50004F822F /* rTri@3x.png in Resources */,
@@ -6460,6 +6469,7 @@
 				A7AD8C2B19F60CAC002E65FB /* TabbarView.m in Sources */,
 				437E2D811C9F9B600074F2ED /* LeaveDetailViewController.m in Sources */,
 				A773FC2A1A4B9869005F84C2 /* UITableView+DelegateBlocks.m in Sources */,
+				F7CBB9E41CBB450F00063920 /* StudentSumViewController.m in Sources */,
 				F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */,
 				430279861C995618003546E9 /* LeaveTopScrollView.m in Sources */,
 				A78459DD1B7B4D1D00EA7D5D /* IQBarButtonItem.m in Sources */,
@@ -6800,7 +6810,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "9fb0727f-d7b4-4c88-b67a-8924f6550d2e";
+				PROVISIONING_PROFILE = "c8b3e78c-9e20-4790-8a3a-09309350042d";
 				SDKROOT = iphoneos8.2;
 			};
 			name = Debug;
@@ -6837,7 +6847,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "9fb0727f-d7b4-4c88-b67a-8924f6550d2e";
+				PROVISIONING_PROFILE = "c8b3e78c-9e20-4790-8a3a-09309350042d";
 				SDKROOT = iphoneos8.2;
 				VALIDATE_PRODUCT = YES;
 			};

@@ -43,5 +43,6 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIButton *conditionBtn;
 @property (strong, nonatomic) IBOutlet UIView *manSection;
+@property (weak, nonatomic) IBOutlet UILabel *ManOrClassLabel;//section中教职工或班级
 
 @end

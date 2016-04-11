@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckLeaveViewController">
             <connections>
+                <outlet property="ManOrClassLabel" destination="xRc-QI-9mr" id="DB9-h8-6Xh"/>
                 <outlet property="conditionBtn" destination="9zG-Wx-3pE" id="euO-fD-dlE"/>
                 <outlet property="datePicker" destination="Jvs-8X-YgC" id="LGL-mL-UAj"/>
                 <outlet property="manSection" destination="hvZ-3W-SmJ" id="HBz-rv-1eU"/>
@@ -92,7 +93,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="人名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xRc-QI-9mr">
-                    <rect key="frame" x="40" y="5" width="34" height="21"/>
+                    <rect key="frame" x="40" y="5" width="57" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

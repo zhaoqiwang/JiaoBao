@@ -12,6 +12,7 @@
 #import "ClassLeavesModel.h"
 #import "MyAdminClass.h"
 #import "MJRefresh.h"//上拉下拉刷新
+#import "StudentSumViewController.h"
 
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
@@ -100,6 +101,15 @@
     }
     [self.tableView reloadData];
 }
+-(void)GetClassSumLeaves:(NSNotification*)sender{
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    self.dataSource = [sender object];
+    self.mArr3 = self.dataSource;
+    [self.tableView headerEndRefreshing];
+    [self.tableView footerEndRefreshing];
+    [self.tableView reloadData];
+
+}
 -(void)GetManSumLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.dataSource = [sender object];
@@ -151,9 +161,12 @@
     //审核完毕后的通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"updateCheckCell" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateCheckCell:) name:@"updateCheckCell" object:nil];
-    //学生统计查询后的通知
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStudentSumLeaves" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStudentSumLeaves:) name:@"GetStudentSumLeaves" object:nil];
+    //学校班级请假查询统计
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetClassSumLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetClassSumLeaves:) name:@"GetClassSumLeaves" object:nil];
+//    //学生统计查询后的通知
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStudentSumLeaves" object:nil];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStudentSumLeaves:) name:@"GetStudentSumLeaves" object:nil];
     //教职工统计查询后的通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetManSumLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetManSumLeaves:) name:@"GetManSumLeaves" object:nil];
@@ -231,7 +244,6 @@
             [MBProgressHUD showSuccess:@"没有更多了" ];
             [self.tableView headerEndRefreshing];
             [self.tableView footerEndRefreshing];
-            
             return;
         }
     }
@@ -243,10 +255,8 @@
         if(self.mInt_reloadData == 0){
             if([self.recordModel.manType isEqualToString:@"0"])
             {
-                if([dm getInstance].mArr_leaveClass.count>0){
-                    MyAdminClass *classModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
-                    [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: classModel.TabID sDateTime:self.recordModel.sDateTime];
-                }
+                    [[LeaveHttp getInstance]GetClassSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime gradeStr:self.recordModel.gradeStr];
+
                 
             }else{
                 [[LeaveHttp getInstance]GetManSumLeavesWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID ] sDateTime:self.recordModel.sDateTime];
@@ -320,7 +330,12 @@
                 UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
                 [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
             }
-            [cell setStatisticsData:[self.dataSource objectAtIndex:indexPath.row]];
+            if([self.ManOrClassLabel.text isEqualToString:@"教职工"]){
+                [cell setStatisticsData:[self.dataSource objectAtIndex:indexPath.row]];
+
+            }else{
+                [cell setStatisticsClassData:[self.dataSource objectAtIndex:indexPath.row]];
+            }
             return cell;
         }
         else{
@@ -367,11 +382,17 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
-    LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
+
     if (self.mInt_flag ==2) {//统计查询
-        
+        SumLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
+
+        StudentSumViewController *detail = [[StudentSumViewController alloc]init];
+        detail.ClassSumModel = model;
+        detail.sDateTime = self.recordModel.sDateTime;
+        [self.navigationController pushViewController:detail animated:YES];
     }else{
+        ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
+        LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
         if (self.mInt_flag ==0) {
             selectVC.mInt_from = 1;
             selectVC.mInt_checkOver = 0;
@@ -483,11 +504,21 @@
 
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
         self.recordModel.manType = model.manType;
-    if([model.manType isEqualToString:@"0"]){
-        self.stuOrTeaLabel.text = @"学生";
-    }else{
-        self.stuOrTeaLabel.text = @"教职工";
+    if(self.mInt_flag==0||self.mInt_flag==1){
+        if([model.manType isEqualToString:@"0"]){
+            self.stuOrTeaLabel.text = @"学生";
+        }else{
+            self.stuOrTeaLabel.text = @"教职工";
+        }
     }
+    if(self.mInt_flag==2){
+        if([model.manType isEqualToString:@"0"]){
+            self.ManOrClassLabel.text = @"班级";
+        }else{
+            self.ManOrClassLabel.text = @"教职工";
+        }
+    }
+
         self.recordModel.level = model.level;
         self.recordModel.sDateTime = model.sDateTime;
     if ([model.gradeStr isEqual:@"全部"]) {

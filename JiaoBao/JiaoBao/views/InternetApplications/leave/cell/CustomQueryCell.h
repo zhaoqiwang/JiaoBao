@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stateLabel;
 -(void)setCellData:(MyLeaveModel*)model;//设置审核查询列表数据
 -(void)setStatisticsData:(SumLeavesModel*)model;//设置统计查询列表数据
+-(void)setStatisticsClassData:(SumLeavesModel*)model;//设置统计查询班级列表数据
+
 
 @end
