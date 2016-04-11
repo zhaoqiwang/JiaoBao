@@ -109,6 +109,8 @@
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     self.mInt_flag = (int)view.tag -100;
+    [self.mView_root0.mTextF_reason resignFirstResponder];
+    [self.mView_root1.mTextF_reason resignFirstResponder];
     //先判断身份，班主任有4个，其他为两个
     if (self.mInt_leaveID == 1) {
         if (self.mInt_flag == 0) {

@@ -253,7 +253,7 @@
     }else if (model.mInt_flag == 2){//理由填写
         
     }else if (model.mInt_flag == 3){//时间段显示
-        [self addDialog:1 row:(int)indexPath.row Model:model];
+        [self addDialog:0 row:(int)indexPath.row Model:model];
     }else if (model.mInt_flag == 4){//时间段添加
         //先判断当前有几个时间，不能大于5个
         int a=0;
