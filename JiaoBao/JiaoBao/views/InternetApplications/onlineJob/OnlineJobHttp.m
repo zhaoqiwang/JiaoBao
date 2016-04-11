@@ -301,14 +301,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 }
 
 //获取单题,作业名称,作业题量,作业开始时间,作业时长,作业上交时间 参数：作业ID
--(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId
+-(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId isStu:(NSString*)isStu
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuHW",ONLINEJOBURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *parameters = @{@"HwInfoId":HwInfoId};
+    NSDictionary *parameters = @{@"HwInfoId":HwInfoId, @"isStu":isStu};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];

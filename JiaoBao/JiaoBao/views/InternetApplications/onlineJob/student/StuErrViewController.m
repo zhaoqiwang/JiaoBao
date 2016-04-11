@@ -84,7 +84,7 @@ int cellRefreshCount, newHeight;
 //        model.QsCon = [NSString stringWithFormat:@"%@<br/>、%@",errModel.Tabid,model.QsCon];
 //    }
 
-    model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p>",model.QsAns,model.QsCorectAnswer,model.QsExplain]];
+    model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p>",errModel.Answer,model.QsCorectAnswer,model.QsExplain]];
     if([model.QsCon isEqual:[NSNull null]]){
         
     }
@@ -128,8 +128,12 @@ int cellRefreshCount, newHeight;
             
         }
         else{
+            
             [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showSuccess:@"无数据" toView:self.view];
+            [self.tableVIew reloadData];
+            [self.tableVIew headerEndRefreshing];
+             [self.tableVIew footerEndRefreshing];
         }
         
     }
@@ -268,6 +272,9 @@ int cellRefreshCount, newHeight;
     self.errModel.PageIndex = @"1";
     self.errModel.PageSize = @"10";
     self.errModel.chapterID = model.chapterID;
+    self.errModel.gradeCode = @"-1";
+    self.errModel.subjectCode = model.subjectCode;
+    self.errModel.unid = model.VersionCode;
 
     [[OnlineJobHttp getInstance]GetStuErr:self.errModel];
 

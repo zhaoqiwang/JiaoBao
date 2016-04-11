@@ -369,23 +369,27 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
     LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
-    if (self.mInt_flag ==0) {
-        selectVC.mInt_from = 1;
-        selectVC.mInt_checkOver = 0;
-    }else if (self.mInt_flag == 1){
-        selectVC.mInt_from = 2;
-        selectVC.mInt_checkOver = 0;
-    }else if (self.mInt_flag == 3)
-    {
-        selectVC.mInt_checkOver = 1;
+    if (self.mInt_flag ==2) {//统计查询
+        
+    }else{
+        if (self.mInt_flag ==0) {
+            selectVC.mInt_from = 1;
+            selectVC.mInt_checkOver = 0;
+        }else if (self.mInt_flag == 1){
+            selectVC.mInt_from = 2;
+            selectVC.mInt_checkOver = 0;
+        }else if (self.mInt_flag == 3)
+        {
+            selectVC.mInt_checkOver = 1;
+        }
+        selectVC.mInt_check = model.mInt_check;
+        selectVC.mInt_falg = [model.manType intValue];
+        selectVC.mInt_index = (int)indexPath.row;
+        selectVC.mModel_classLeaves = model;
+        selectVC.mStr_navName = @"审核";
+        selectVC.delegate = self;
+        [self.navigationController pushViewController:selectVC animated:YES];
     }
-    selectVC.mInt_check = model.mInt_check;
-    selectVC.mInt_falg = [model.manType intValue];
-    selectVC.mInt_index = (int)indexPath.row;
-    selectVC.mModel_classLeaves = model;
-    selectVC.mStr_navName = @"审核";
-    selectVC.delegate = self;
-    [self.navigationController pushViewController:selectVC animated:YES];
 }
 
 //分类状态的回调
@@ -420,6 +424,7 @@
     if(!self.recordModel.level){
         if(self.mInt_flag != 3){
             [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
+            self.dataSource = tempMArr;
             [self.tableView reloadData];
             return;
         }
