@@ -28,7 +28,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
     return self;
 }
 //获取年级列表
--(void)GetGradeList
+//获取年纪列表 - 0普通，1手动加全部
+-(void)GetGradeList:(int)flag;
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/GetGradeList",ONLINEJOBURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -38,7 +39,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 
-        NSArray *array = [ParserJson_OnlineJob parserJsonGradeList:result];
+        NSArray *array = [ParserJson_OnlineJob parserJsonGradeList:result flag:flag];
         
         D("JSON--------GetGradeList: %@,", result);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:array];
@@ -47,8 +48,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:nil];
     }];
 }
-//获取联动列表 //（年级代码）- （科目代码）- （教版联动代码）- （0： 根据年级获取科目，1：根据科目获取教版，2： 根据教版获取章节）
--(void)GetUnionChapterListWithgCode:(NSString*)gCode subCode:(NSString*)subCode uId:(NSString*)uId flag:(NSString*)flag
+//获取联动列表 //（年级代码）- （科目代码）- （教版联动代码）- （0： 根据年级获取科目，1：根据科目获取教版，2： 根据教版获取章节 - 0普通，1手动加全部
+-(void)GetUnionChapterListWithgCode:(NSString*)gCode subCode:(NSString*)subCode uId:(NSString*)uId flag:(NSString*)flag sumFlag:(int)sumFlag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/GetUnionChapterList",ONLINEJOBURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -68,16 +69,16 @@ static OnlineJobHttp *onlineJobHttp = nil;
         {
 //            if([flag integerValue]== 0)//获取科目列表
 //            {
-                NSArray *array1 = [ParserJson_OnlineJob parserJsonSubjectList:[dic objectForKey:@"args1"]];
+                NSArray *array1 = [ParserJson_OnlineJob parserJsonSubjectList:[dic objectForKey:@"args1"] sumFlag:sumFlag];
                 
 //            }
 //            else if ([flag integerValue]== 1)//获取教版列表
 //            {
-                NSArray *array2 = [ParserJson_OnlineJob parserJsonVersionList:[dic objectForKey:@"args2"]];
+                NSArray *array2 = [ParserJson_OnlineJob parserJsonVersionList:[dic objectForKey:@"args2"] sumFlag:sumFlag];
 //            }
 //            else if ([flag integerValue]== 2)//获取章节列表
 //            {
-                NSArray *array3 = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"]];
+                NSArray *array3 = [ParserJson_OnlineJob parserJsonChapterList:[dic objectForKey:@"args3"] sumFlag:sumFlag];
 //            }
             D("alirjglkgj-=====%@",array3);
 //            [self nslogarray3:array3 aaa:0];

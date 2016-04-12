@@ -22,10 +22,10 @@
 
 
 @interface ParserJson_OnlineJob : NSObject
-+(NSMutableArray *)parserJsonGradeList:(NSString *)json;//解析年级
-+(NSMutableArray *)parserJsonSubjectList:(NSString *)json;//解析科目
-+(NSMutableArray *)parserJsonVersionList:(NSString *)json;//解析教版
-+(NSMutableArray *)parserJsonChapterList:(NSString *)json;//解析章节
++(NSMutableArray *)parserJsonGradeList:(NSString *)json flag:(int)flag;//解析年级 - 0普通，1手动加全部
++(NSMutableArray *)parserJsonSubjectList:(NSString *)json sumFlag:(int)sumFlag;//解析科目- 0普通，1手动加全部
++(NSMutableArray *)parserJsonVersionList:(NSString *)json sumFlag:(int)sumFlag;//解析教版- 0普通，1手动加全部
++(NSMutableArray *)parserJsonChapterList:(NSString *)json sumFlag:(int)sumFlag;//解析章节- 0普通，1手动加全部
 +(NSMutableArray *)parserJsonHomeworkList:(NSString *)json;//解析自定义作业
 +(StuInfoModel *)parserJsonStuInfo:(NSString*)json;//解析学生信息
 +(GenInfo *)parserJsonGenInfo:(NSString*)json;//解析家长信息

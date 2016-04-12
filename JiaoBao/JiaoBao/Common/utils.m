@@ -171,5 +171,23 @@
     return tempHtml;
 }
 
+//检查当前网络是否可用
++(void)checkNetWork:(UIView *)view tableView:(UITableView *)tableView{
+    if ([self checkNetWork2:view]) {
+        [tableView headerEndRefreshing];
+        [tableView footerEndRefreshing];
+        return;
+    }
+}
+
+//检查当前网络是否可用
++(BOOL)checkNetWork2:(UIView *)view{
+    if([Reachability isEnableNetwork]==NO){
+        [MBProgressHUD showError:NETWORKENABLE toView:view];
+        return YES;
+    }else{
+        return NO;
+    }
+}
 
 @end

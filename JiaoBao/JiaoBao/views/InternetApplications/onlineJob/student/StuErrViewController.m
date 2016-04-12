@@ -259,6 +259,7 @@ int cellRefreshCount, newHeight;
 //筛选回调
 -(void) SelectChapteridViewSure:(PublishJobModel *) model{
     [self.webDataArr removeAllObjects];
+    [self.tableVIew reloadData];
     self.mInt_index = 0;
     if(self.mModel_stuInf){
         self.errModel.StuId = self.mModel_stuInf.StudentID;
@@ -272,7 +273,7 @@ int cellRefreshCount, newHeight;
     self.errModel.PageIndex = @"1";
     self.errModel.PageSize = @"10";
     self.errModel.chapterID = model.chapterID;
-    self.errModel.gradeCode = @"-1";
+    self.errModel.gradeCode = model.GradeCode;
     self.errModel.subjectCode = model.subjectCode;
     self.errModel.unid = model.VersionCode;
 

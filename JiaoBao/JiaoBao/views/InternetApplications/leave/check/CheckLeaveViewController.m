@@ -503,7 +503,9 @@
 }
 
 -(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
-        self.recordModel.manType = model.manType;
+    //检查当前网络是否可用
+    CheckNetWorkSelfView
+    self.recordModel.manType = model.manType;
     if(self.mInt_flag==0||self.mInt_flag==1){
         if([model.manType isEqualToString:@"0"]){
             self.stuOrTeaLabel.text = @"学生";

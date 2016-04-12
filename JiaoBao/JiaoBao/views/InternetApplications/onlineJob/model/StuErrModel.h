@@ -35,3 +35,11 @@
 
 - (NSMutableDictionary *)propertiesDic;
 @end
+//    self.errModel.StuId = self.mModel_stuInf.StudentID;
+//self.errModel.IsSelf = @"0";
+//self.errModel.PageIndex = @"1";
+//self.errModel.PageSize = @"10";
+//self.errModel.chapterID = model.chapterID;
+//self.errModel.gradeCode = @"-1";
+//self.errModel.subjectCode = model.subjectCode;
+//self.errModel.unid = model.VersionCode;
