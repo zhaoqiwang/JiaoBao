@@ -867,6 +867,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CheckNetWorkSelfView;
     id node1 = [self.mArr_display objectAtIndex:indexPath.row];
     if ([node1 isKindOfClass:[TreeJob_node class]]) {
         TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
@@ -1779,6 +1780,7 @@
 }
 -(void)PublishJob
 {
+    CheckNetWorkSelfView
     int int_All = [self.publishJobModel.SelNum intValue]+[self.publishJobModel.InpNum intValue];
     self.publishJobModel.AllNum =[NSString stringWithFormat:@"%d",int_All];
     NSString *textName;

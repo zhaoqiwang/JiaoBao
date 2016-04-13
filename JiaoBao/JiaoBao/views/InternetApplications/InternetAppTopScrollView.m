@@ -173,6 +173,7 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
+    //CheckNetWorkSelf
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -237,6 +238,7 @@
 }
 //当滑动scrollview停止后调用
 - (void)setButtonSelect{
+    
     //滑动选中按钮
     UIButton *button = (UIButton *)[self viewWithTag:mInt_scrollViewSelectedChannelID];
     [UIView animateWithDuration:0.25 animations:^{

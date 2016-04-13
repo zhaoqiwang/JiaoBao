@@ -256,6 +256,7 @@
 
 //点击学生下拉选择
 - (IBAction)selectStuBtnAction:(id)sender{
+    CheckNetWorkSelfView
     if (self.mTableV_name.frame.size.height>0) {
         self.mTableV_name.frame =  CGRectMake(self.mTableV_name.frame.origin.x, self.mTableV_name.frame.origin.y, self.mTableV_name.frame.size.width, 0);
     }else{
@@ -371,6 +372,7 @@
 }
 
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
+    CheckNetWorkSelfView
     if (self.mArr_parent.count==0) {
         [MBProgressHUD showError:@"暂时没有获取到学生信息" toView:self.view];
         return;
@@ -479,6 +481,11 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self.view tableView:self.mTableV_list]){
+        return;
+    }
+
     self.mInt_flag = 0;
     if (self.mInt_index==0) {//获取作业列表
         [self.mArr_nowHomework removeAllObjects];
@@ -493,6 +500,11 @@
 }
 
 - (void)footerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self.view tableView:self.mTableV_list]){
+        return;
+    }
+
     NSString *page = @"";
     NSMutableArray *array = self.mArr_practice;
     if (array.count>=10&&array.count%10==0) {
@@ -760,6 +772,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CheckNetWorkSelfView
     if (self.mInt_index ==0||self.mInt_index ==3) {//当前作业查询、练习
         StuHWModel *model;
         if (self.mInt_index == 0) {

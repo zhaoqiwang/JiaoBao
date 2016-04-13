@@ -455,6 +455,7 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    CheckNetWorkSelfView
     if([self.FlagStr intValue]==1){
         [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID isStu:@"true"];
     }
@@ -812,7 +813,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    CheckNetWorkSelfView;
     if(indexPath.row == 0)
     {
         self.previousBtn.enabled = NO;
@@ -1032,6 +1033,7 @@
 
 
 - (IBAction)previousBtnAction:(id)sender {
+    CheckNetWorkSelfView;
     [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
     self.nextBtn.enabled = YES;
     UIButton *btn = (UIButton*)sender;
@@ -1060,6 +1062,7 @@
 }
 
 - (IBAction)nextBtnAction:(id)sender {
+    CheckNetWorkSelfView;
     UIButton *btn = (UIButton*)sender;
     if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
     {
@@ -1377,6 +1380,7 @@
     
 }
 - (IBAction)qNumQustion:(id)sender {
+    CheckNetWorkSelfView;
     if(self.isOpen == YES)
     {
         self.mTableV_name.frame =  CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0);

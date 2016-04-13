@@ -346,6 +346,7 @@
 
 //导航条按钮回调事件
 -(void)Nav_internetAppViewClickBtnWith:(UIButton *)btn{
+    CheckNetWorkSelfView
     if ([[dm getInstance].jiaoBaoHao intValue]>0) {
         if (btn.tag == 1) {//点击设置按钮
             NSArray *menuItems ;
@@ -572,6 +573,8 @@
 
 //右上角“+”方法
 - (void)showMenu:(UIButton *)sender{
+    //检查网络
+    CheckNetWorkSelfView
     if ([[dm getInstance].jiaoBaoHao intValue]>0) {
         NSArray *menuItems0 =
         @[

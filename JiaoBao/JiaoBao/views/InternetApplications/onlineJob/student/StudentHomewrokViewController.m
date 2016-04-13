@@ -155,7 +155,7 @@
 //    self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
 //    self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
 //    self.mTableV_list.footerRefreshingText = @"正在加载...";
-    
+    CheckNetWorkSelfView
     //根据角色信息，获取学生id信息
     for (int i=0; i<[dm getInstance].identity.count; i++) {
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:i];
@@ -306,6 +306,8 @@
 }
 
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)btn{
+    //检查网络情况
+    CheckNetWorkSelfView
     int m = (int)btn.tag-100;
     //如果点击练习，
     if (m==1) {
@@ -942,6 +944,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    CheckNetWorkSelfView
     if (self.mInt_flag==0||self.mInt_flag==2) {
         StuHWModel *model;
         if (self.mInt_flag==0) {
@@ -1493,6 +1496,10 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self.view tableView:self.mTableV_list]){
+        return;
+    }
     self.mInt_flagTab = 0;
     if (self.mInt_flag==0||self.mInt_flag==2) {//获取作业列表
         
@@ -1539,12 +1546,16 @@
 }
 
 - (void)footerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self.view tableView:self.mTableV_list]){
+        return;
+    }
     NSString *page = @"";
     NSMutableArray *array = self.mArr_practiceTotal;
     if (array.count>=10&&array.count%10==0) {
         page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
     } else {
-        [MBProgressHUD showSuccess:@"没有更多了" ];
+        [MBProgressHUD showSuccess:@"没有更多了"];
         [self.mTableV_list headerEndRefreshing];
         [self.mTableV_list footerEndRefreshing];
         return;

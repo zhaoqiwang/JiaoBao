@@ -12,6 +12,7 @@
 #import "OnlineJobHttp.h"
 #import "StuHWQsModel.h"
 #import "TFHpple.h"
+#import "utils.h"
 int cellRefreshCount, newHeight;
 @interface StuErrViewController ()
 @property(nonatomic,strong)NSMutableArray *datasource;
@@ -288,11 +289,20 @@ int cellRefreshCount, newHeight;
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self.view tableView:self.tableVIew]){
+        return;
+    }
     self.mInt_reloadData = 0;
     [self sendRequest];
 }
 
 - (void)footerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self.view tableView:self.tableVIew]){
+        return;
+    }
+
     self.mInt_reloadData = 1;
     [self sendRequest];
 }

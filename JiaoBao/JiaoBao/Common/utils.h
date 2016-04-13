@@ -46,6 +46,6 @@
 +(NSString *)clearHtml:(NSString *)content width:(int)tempW;
 
 //检查当前网络是否可用
-+(void)checkNetWork:(UIView *)view tableView:(UITableView *)tableView;
++(BOOL)checkNetWork:(UIView *)view tableView:(UITableView *)tableView;
 
 @end

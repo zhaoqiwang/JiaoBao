@@ -172,12 +172,13 @@
 }
 
 //检查当前网络是否可用
-+(void)checkNetWork:(UIView *)view tableView:(UITableView *)tableView{
++(BOOL)checkNetWork:(UIView *)view tableView:(UITableView *)tableView{
     if ([self checkNetWork2:view]) {
         [tableView headerEndRefreshing];
         [tableView footerEndRefreshing];
-        return;
+        return YES;
     }
+    return NO;
 }
 
 //检查当前网络是否可用
