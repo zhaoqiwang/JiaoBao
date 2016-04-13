@@ -381,24 +381,24 @@
         TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
         if(node.type == 0){
             TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
-            if (node.sonNodes.count== 0) {
-                if (node.flag ==0){
-                    [MBProgressHUD showError:@"年级为空" toView:self.view];
-                }else if (node.flag ==1){
-                    [MBProgressHUD showError:@"科目为空" toView:self.view];
-                }else if (node.flag ==2){
-                    [MBProgressHUD showError:@"教版为空" toView:self.view];
-                }else if (node.flag ==3){
-                    [MBProgressHUD showError:@"章节为空" toView:self.view];
-                }
-            }else{
+//            if (node.sonNodes.count== 0) {
+//                if (node.flag ==0){
+//                    [MBProgressHUD showError:@"年级为空" toView:self.view];
+//                }else if (node.flag ==1){
+//                    [MBProgressHUD showError:@"科目为空" toView:self.view];
+//                }else if (node.flag ==2){
+//                    [MBProgressHUD showError:@"教版为空" toView:self.view];
+//                }else if (node.flag ==3){
+//                    [MBProgressHUD showError:@"章节为空" toView:self.view];
+//                }
+//            }else{
                 if (node.flag==301) {
                     ChapterModel *model = node.nodeData;
                     [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
                 }else{
                     [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
                 }
-            }
+//            }
         }else{
             if (node.flag==301) {
                 ChapterModel *model = node.nodeData;
