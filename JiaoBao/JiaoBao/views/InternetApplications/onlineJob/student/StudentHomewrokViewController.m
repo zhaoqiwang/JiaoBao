@@ -278,7 +278,7 @@
                 [self.mArr_practice addObjectsFromArray:array];
             }else{//显示添加练习
                 //获取年级列表
-                [[OnlineJobHttp getInstance] GetGradeList];
+                [[OnlineJobHttp getInstance] GetGradeList:0];
             }
         }
         [self.mTableV_list reloadData];
@@ -428,7 +428,7 @@
                     nodeData.mStr_title = temp1.GradeName;
                     nodeData.mStr_id = temp1.GradeCode;
                     temp1.mInt_select = 1;
-                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0" sumFlag:0];
                 }else{
                     temp1.mInt_select = 0;
                 }
@@ -1267,7 +1267,7 @@
                         nodeData.mStr_title = model1.GradeName;
                         nodeData.mStr_id = model1.GradeCode;
                         [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0" sumFlag:0];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
@@ -1299,7 +1299,7 @@
                         
                         TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:0];
                         TreeJob_level0_model *tempModel = tempNode.nodeData;
-                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1" sumFlag:0];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:2];
@@ -1329,7 +1329,7 @@
                         TreeJob_level0_model *tempModel = tempNode.nodeData;
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
-                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2" sumFlag:0];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:3];
@@ -1527,7 +1527,7 @@
                 if (node0.flag == 0) {
                     if (node0.sonNodes.count==0) {
                         //获取年级列表
-                        [[OnlineJobHttp getInstance] GetGradeList];
+                        [[OnlineJobHttp getInstance] GetGradeList:0];
                     }
                 }
             }

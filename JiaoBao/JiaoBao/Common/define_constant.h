@@ -42,6 +42,10 @@
 //握手通讯失败后，进行登录操作
 #define Login if ([code intValue] == 8) {[MBProgressHUD hideHUD];[[LoginSendHttp getInstance] hands_login];return;}
 
+//检查当前网络是否可用
+#define CheckNetWorkSelf if([Reachability isEnableNetwork]==NO){[MBProgressHUD showError:NETWORKENABLE toView:self];return;}
+#define CheckNetWorkSelfView if([Reachability isEnableNetwork]==NO){[MBProgressHUD showError:NETWORKENABLE toView:self.view];return;}
+
 @interface define_constant : NSObject
 
 @end

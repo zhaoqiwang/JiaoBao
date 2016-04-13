@@ -45,4 +45,7 @@
 //去掉html中的无用标签，适配手机
 +(NSString *)clearHtml:(NSString *)content width:(int)tempW;
 
+//检查当前网络是否可用
++(void)checkNetWork:(UIView *)view tableView:(UITableView *)tableView;
+
 @end

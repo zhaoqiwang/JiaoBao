@@ -41,7 +41,7 @@
     [self addDefaultData];
     [self reloadDataForDisplayArray];//初始化将要显示的数据
     //获取年级列表
-    [[OnlineJobHttp getInstance]GetGradeList];
+    [[OnlineJobHttp getInstance]GetGradeList:1];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
@@ -93,7 +93,7 @@
                     self.publishJobModel.GradeCode = temp1.GradeCode;
                     self.publishJobModel.GradeName = temp1.GradeName;
                     temp1.mInt_select = 1;
-                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                    [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0" sumFlag:1];
                 }else{
                     temp1.mInt_select = 0;
                 }
@@ -101,6 +101,7 @@
                 //塞入数据
                 [node0.sonNodes addObject:node1];
             }
+            //全部
         }
     }
     [self reloadDataForDisplayArray];
@@ -171,10 +172,10 @@
                 nodeData.mStr_id = temp1.subjectCode;
                 self.publishJobModel.subjectName = temp1.subjectName;
                 self.publishJobModel.subjectCode = temp1.subjectCode;
-                self.publishJobModel.VersionName = @"";
-                self.publishJobModel.VersionCode = @"0";
+                self.publishJobModel.VersionName = temp1.VersionName;
+                self.publishJobModel.VersionCode = temp1.VersionCode;
                 self.publishJobModel.chapterName = @"";
-                self.publishJobModel.chapterID = @"0";
+                self.publishJobModel.chapterID = @"-1";
                 temp1.mInt_select = 1;
             }else{
                 temp1.mInt_select = 0;
@@ -189,7 +190,7 @@
                 self.publishJobModel.VersionName = temp1.VersionName;
                 self.publishJobModel.VersionCode = temp1.TabID;
                 self.publishJobModel.chapterName = @"";
-                self.publishJobModel.chapterID = @"0";
+                self.publishJobModel.chapterID = @"-1";
                 temp1.mInt_select = 1;
             }else{
                 temp1.mInt_select = 0;
@@ -649,7 +650,7 @@
                         self.publishJobModel.GradeName = model1.GradeName;
                         
                         [self reloadDataForDisplayArrayChangeAt:node.flag];//修改cell的状态(关闭或打开)
-                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0"];
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:model1.GradeCode subCode:@"0" uId:@"0" flag:@"0" sumFlag:1];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
@@ -692,7 +693,7 @@
                         
                         TreeView_node *tempNode = [self.mArr_sumData objectAtIndex:0];
                         TreeJob_level0_model *tempModel = tempNode.nodeData;
-                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1"];
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:model1.subjectCode uId:@"0" flag:@"1" sumFlag:1];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode2 = [self.mArr_sumData objectAtIndex:2];
@@ -729,7 +730,7 @@
                         TreeJob_level0_model *tempModel = tempNode.nodeData;
                         TreeView_node *tempNode1 = [self.mArr_sumData objectAtIndex:1];
                         TreeJob_level0_model *tempModel1 = tempNode1.nodeData;
-                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2"];
+                        [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:tempModel.mStr_id subCode:tempModel1.mStr_id uId:model1.TabID flag:@"2" sumFlag:1];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         //给默认空值
                         TreeView_node *tempNode3 = [self.mArr_sumData objectAtIndex:3];
@@ -767,13 +768,9 @@
 
 //导航条确定按钮
 -(void)navigationRightAction:(UIButton *)sender{
-    if ([self.publishJobModel.chapterID intValue]>0) {
-        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SelectChapteridViewSure:)]) {
-            [self.delegate SelectChapteridViewSure:self.publishJobModel];
-            [self myNavigationGoback];
-        }
-    }else{
-        [MBProgressHUD showError:@"请选择章节" toView:self.view];
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(SelectChapteridViewSure:)]) {
+        [self.delegate SelectChapteridViewSure:self.publishJobModel];
+        [self myNavigationGoback];
     }
 }
 

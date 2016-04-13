@@ -20,8 +20,8 @@
 #import "utils.h"
 
 @implementation ParserJson_OnlineJob
-//解析年级
-+(NSMutableArray *)parserJsonGradeList:(NSString *)json
+//解析年级 - 0普通，1手动加全部
++(NSMutableArray *)parserJsonGradeList:(NSString *)json flag:(int)flag
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
@@ -37,10 +37,17 @@
         model.orderby = [dic objectForKey:@"orderby"];
         [array addObject:model];
     }
+    if (flag == 1) {
+        GradeModel *model = [[GradeModel alloc] init];
+        model.TabID = @"-1";
+        model.GradeCode = @"-1";
+        model.GradeName = @"全部";
+        [array insertObject:model atIndex:0];
+    }
     return array;
 }
-//解析科目
-+(NSMutableArray *)parserJsonSubjectList:(NSString *)json
+//解析科目- 0普通，1手动加全部
++(NSMutableArray *)parserJsonSubjectList:(NSString *)json sumFlag:(int)sumFlag
 {
     NSMutableArray *array = [NSMutableArray array];
     NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
@@ -57,10 +64,21 @@
         model.subjectName = [dic objectForKey:@"subjectName"];
         [array addObject:model];
     }
+    if (sumFlag == 1) {
+        SubjectModel *model = [[SubjectModel alloc] init];
+        model.TabID = @"-1";
+        model.VersionCode = @"-1";
+        model.VersionName = @"全部";
+        model.GradeCode = @"-1";
+        model.GradeName = @"全部";
+        model.subjectCode = @"-1";
+        model.subjectName = @"全部";
+        [array insertObject:model atIndex:0];
+    }
     return array;
 }
-//解析教版
-+(NSMutableArray *)parserJsonVersionList:(NSString *)json
+//解析教版- 0普通，1手动加全部
++(NSMutableArray *)parserJsonVersionList:(NSString *)json sumFlag:(int)sumFlag
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
@@ -77,11 +95,22 @@
         model.subjectName = [dic objectForKey:@"subjectName"];
         [array addObject:model];
     }
+    if (sumFlag == 1) {
+        VersionModel *model = [[VersionModel alloc] init];
+        model.TabID = @"-1";
+        model.VersionCode = @"-1";
+        model.VersionName = @"全部";
+        model.GradeCode = @"-1";
+        model.GradeName = @"全部";
+        model.subjectCode = @"-1";
+        model.subjectName = @"全部";
+        [array insertObject:model atIndex:0];
+    }
     return array;
     
 }
-//解析章节
-+(NSMutableArray *)parserJsonChapterList:(NSString *)json
+//解析章节- 0普通，1手动加全部
++(NSMutableArray *)parserJsonChapterList:(NSString *)json sumFlag:(int)sumFlag
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
@@ -108,6 +137,14 @@
         }else{
             [self addArrayChapter:model array:array flag:1];
         }
+    }
+    if (sumFlag == 1) {
+        ChapterModel *model = [[ChapterModel alloc] init];
+        model.TabID = @"-1";
+        model.chapterCode = @"-1";
+        model.chapterName = @"全部";
+        model.isExpanded = NO;
+        [array insertObject:model atIndex:0];
     }
     return array;
 }
