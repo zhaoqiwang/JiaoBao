@@ -19,8 +19,8 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewLeaveModel" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NewLeaveModel:) name:@"NewLeaveModel" object:nil];
         //使用NSNotificationCenter 鍵盤隐藏時
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"keyboardWillBeHidden" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"keyboardWillBeHidden" object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
         // Initialization code
         self.frame = frame;
         self.mInt_flag = flag;
@@ -299,7 +299,7 @@
         [MBProgressHUD showError:@"请添加请假时间" toView:self];
         return;
     }
-    
+
     NewLeaveModel *model = [[NewLeaveModel alloc] init];
     model.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
     //判断是否是家长或者班主任代请
@@ -447,6 +447,11 @@
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==2){
+            tempModel.mStr_value = [NSString stringWithFormat:@"%@%@",textField.text,string];
+        }
+    }
     // For any other character return TRUE so that the text gets added to the view
     if(textField.text.length>99)
     {
@@ -459,7 +464,13 @@
     }
     return TRUE;
 }
-
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==2){
+            tempModel.mStr_value = textField.text;
+        }
+    }
+}
 //当键盘隐藏的时候
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification{
     for (LeaveNowModel *tempModel in self.mArr_leave) {

@@ -217,6 +217,9 @@ int cellRefreshCount, newHeight;
                 cell = (StuErrCell *)[nib objectAtIndex:0];
             }
         }
+    //若是需要重用，需要写上以下两句代码
+    UINib * n= [UINib nibWithNibName:@"StuErrCell" bundle:[NSBundle mainBundle]];
+    [self.tableVIew registerNib:n forCellReuseIdentifier:indentifier];
 
     StuHWQsModel *model = [self.webDataArr objectAtIndex:indexPath.row];
 //        CGFloat webViewHeight = [[cell.webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
@@ -224,6 +227,7 @@ int cellRefreshCount, newHeight;
 //    [cell.webView loadHTMLString:model.QsCon baseURL:nil];
     NSString *content = model.QsCon;
     NSString *tempHtml = [utils clearHtml:content width:0];
+    NSLog(@"cell = %@",cell);
     cell.webView.opaque = NO; //不设置这个值 页面背景始终是白色
     [cell.webView setBackgroundColor:[UIColor clearColor]];
     [cell.webView loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];

@@ -12,11 +12,11 @@
 
 @implementation ModelDialog
 - (void)awakeFromNib {
-    self.selectedTF = [[UITextField alloc]init];
+    self.selectedTF = self.startDateTF;
     //self.selectedTF.delegate = self;
     self.startDateTF.delegate = self;
     self.endDateTF.delegate = self;
-
+    
     self.startDateTF.inputView = self.datePicker;
     self.endDateTF.inputView = self.datePicker;
     self.startDateTF.inputAccessoryView = self.toolBar;
@@ -34,7 +34,7 @@
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:date]];
-self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:endDate]];
+        self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:endDate]];
         
     }
     
@@ -49,29 +49,29 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter s
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *nowDate = [NSDate date];
     NSArray *startArr = [self.startDateTF.text componentsSeparatedByString:@"间:"];
-        NSArray *endArr = [self.endDateTF.text componentsSeparatedByString:@"间:"];
+    NSArray *endArr = [self.endDateTF.text componentsSeparatedByString:@"间:"];
     NSString *startStr;
     NSString *endStr;
     if(startArr.count>1){
         startStr = [startArr objectAtIndex:1];
-
+        
     }
     if(endArr.count>1){
         endStr = [endArr objectAtIndex:1];
-
+        
     }
-
+    
     NSDate *startDate = [dateFormatter dateFromString:startStr];
     NSDate *endDate = [dateFormatter  dateFromString:endStr];
     
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-        NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:nowDate  toDate:endDate  options:0];
-        NSInteger diffMonth    = [cps month];
+    NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:nowDate  toDate:endDate  options:0];
+    NSInteger diffMonth    = [cps month];
     if(diffMonth>=3){
         [MBProgressHUD showError:@"结束时间不能大于3个月"];
-            return;
+        return;
     }
     NSComparisonResult result = [endDate compare:startDate];
     if(result==NSOrderedAscending){
@@ -85,10 +85,10 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter s
     self.model.mStr_startTime = startStr;
     self.model.mStr_endTime = endStr;
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveNowModel:flag:row:)]) {
-    [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
+        [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
     }
     [[self.window viewWithTag:9999]removeFromSuperview];
-
+    
 }
 -(void) _doClickCloseDialog  {
     [[self.window viewWithTag:9999]removeFromSuperview];
@@ -100,21 +100,21 @@ self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter s
 }
 
 - (IBAction)doneToolAction:(id)sender {
-
-
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    [self.selectedTF resignFirstResponder];
+
+    [self.startDateTF resignFirstResponder];
+    [self.endDateTF resignFirstResponder];
     if([self.selectedTF isEqual:self.startDateTF]){
-           self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];
+        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];
     }else{
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:self.datePicker.date]];
-
+        
     }
-
+    
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     self.selectedTF = textField;
-
+    
 }
 @end

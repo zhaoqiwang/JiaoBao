@@ -11,8 +11,8 @@
 @protocol ModelDialogDelegate;
 @interface ModelDialog : UIView<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField* selectedTF;//指向开始时间或者结束时间
-@property (weak, nonatomic) IBOutlet UITextField *startDateTF;//开始时间输入框
-@property (weak, nonatomic) IBOutlet UITextField *endDateTF;//结束时间输入框
+@property (strong, nonatomic) IBOutlet UITextField *startDateTF;//开始时间输入框
+@property (strong, nonatomic) IBOutlet UITextField *endDateTF;//结束时间输入框
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;//日期控件
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
