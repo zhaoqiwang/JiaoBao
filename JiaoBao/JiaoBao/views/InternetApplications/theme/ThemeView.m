@@ -1369,11 +1369,19 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self tableView:self.mTableV_knowledge]){
+        return;
+    }
     self.mInt_reloadData = 0;
     [self sendRequest];
 }
 
 - (void)footerRereshing{
+    //检查网络情况
+    if([utils checkNetWork:self tableView:self.mTableV_knowledge]){
+        return;
+    }
     self.mInt_reloadData = 1;
     [self sendRequest];
 }

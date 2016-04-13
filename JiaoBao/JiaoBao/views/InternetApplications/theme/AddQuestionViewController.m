@@ -547,6 +547,7 @@
 }
 //点击拍照
 -(IBAction)mBtn_photo:(id)sender{
+    CheckNetWorkSelfView
     JoinUnit
     NoNickName
     self.cursorPosition = [self.mTextV_content selectedRange];
@@ -574,6 +575,7 @@
 
 //点击发布问题
 - (IBAction)addQuestionAction:(id)sender {
+    CheckNetWorkSelfView
     JoinUnit
     NoNickName
    [self.view endEditing:YES];

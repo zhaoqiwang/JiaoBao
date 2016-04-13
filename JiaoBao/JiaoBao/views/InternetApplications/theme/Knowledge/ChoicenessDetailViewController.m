@@ -293,6 +293,7 @@
 //cell的点击事件---详情
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
     if([self.QuestionDetailModel.TabID intValue]>0){
+        CheckNetWorkSelfView
         KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
         QuestionModel *model = [[QuestionModel alloc] init];
         model.TabID = self.ShowPickedModel.QID;
