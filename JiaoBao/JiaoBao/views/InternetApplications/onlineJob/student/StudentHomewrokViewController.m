@@ -508,10 +508,11 @@
                 }
             }else if (node0.flag == 3) {//往章节选择中插入
                 [node0.sonNodes removeAllObjects];
-                    TreeJob_level0_model *nodeData = node0.nodeData;
-                    if (array3.count==0) {
-                        nodeData.mStr_title = @"没有章节";
-                    }
+                TreeJob_level0_model *nodeData = node0.nodeData;
+                if (array3.count==0) {
+                    nodeData.mStr_title = @"没有章节";
+                    nodeData.mStr_id = @"0";
+                }
                 for (int m=0; m<array3.count; m++) {
                     //第1根节点
                     TreeJob_node *node1 = [[TreeJob_node alloc]init];
