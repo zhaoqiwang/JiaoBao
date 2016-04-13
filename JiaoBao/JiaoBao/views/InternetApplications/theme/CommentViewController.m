@@ -81,6 +81,7 @@
 //举报 评论 反对点击方法
 -(void) ButtonViewTitleBtn:(ButtonViewCell *) view
 {
+    CheckNetWorkSelfView
     JoinUnit
     if(view.tag == 100)
     {
@@ -819,6 +820,7 @@
 //    return cellHeight;
 //}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    CheckNetWorkSelfView
     JoinUnit
     [self.view endEditing:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -902,6 +904,7 @@
 //点击点赞按钮
 -(void)likeAction:(id)sender
 {
+    CheckNetWorkSelfView
     JoinUnit;
 //    if([self.AnswerDetailModel.LikeList isEqualToString:@"0,"])
 //    {
@@ -1326,6 +1329,7 @@
 //    model.CategorySuject = self.questionModel.CategorySuject;
 //    queston.mModel_question = model;
 //    [utils pushViewController:queston animated:YES];
+    CheckNetWorkSelfView
     if(self.topButtonTag == 1)
     {
         KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
@@ -1489,6 +1493,7 @@
 
 //顶
 - (void) mBtn_LikeCount:(AirthCommentsListCell *) airthCommentsListCell{
+    CheckNetWorkSelfView
     self.btn = airthCommentsListCell.mBtn_LikeCount;
     self.btn.tag = airthCommentsListCell.tag;
     commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:airthCommentsListCell.tag];
@@ -1497,6 +1502,7 @@
 }
 //踩
 - (void) mBtn_CaiCount:(AirthCommentsListCell *) airthCommentsListCell{
+    CheckNetWorkSelfView
     self.btn = airthCommentsListCell.mBtn_CaiCount;
     self.btn.tag = airthCommentsListCell.tag;
 

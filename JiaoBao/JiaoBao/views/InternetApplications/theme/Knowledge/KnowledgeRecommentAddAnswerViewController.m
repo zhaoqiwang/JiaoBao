@@ -546,6 +546,7 @@
 
 //详情按钮
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *) knowledgeTableViewCell{
+    CheckNetWorkSelfView
     KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
     QuestionModel *model = [[QuestionModel alloc] init];
     model.TabID = self.mModel_question.TabID;
