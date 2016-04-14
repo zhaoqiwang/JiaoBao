@@ -19,14 +19,17 @@
     [formatter setDateFormat:@"yyyy-MM"];
     NSDate *currentDate =[NSDate date];
     self.dateString = [formatter stringFromDate:currentDate];
-    self.monthArr = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"];
+    self.monthArr = @[@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12"];
     NSArray *ym = [self.dateString componentsSeparatedByString:@"-"];
     NSString *year = [ym objectAtIndex:0];
+    NSString *month = [ym objectAtIndex:1];
     self.yearArr = [NSMutableArray array];
     for(int i=-5;i<5;i++){
         NSString* currentYear = [NSString stringWithFormat:@"%d",[year intValue]+i];
         [self.yearArr addObject:currentYear];
     }
+    [self.datePicker selectRow:5 inComponent:0 animated:NO];
+    [self.datePicker selectRow:[month intValue]-1 inComponent:1 animated:NO];
     return self;
 }
 -(NSString*)getDateString{
@@ -77,10 +80,12 @@
 {
     NSString* yearStr;
     NSString* monthStr;
+    NSArray *arr = [self.dateString componentsSeparatedByString:@"-"];
     if(component==0){
         yearStr = [self.yearArr objectAtIndex:row];
-
+        monthStr =[arr objectAtIndex:1];
     }else{
+        yearStr =[arr objectAtIndex:0];
         monthStr = [self.monthArr objectAtIndex:row];
 
     }

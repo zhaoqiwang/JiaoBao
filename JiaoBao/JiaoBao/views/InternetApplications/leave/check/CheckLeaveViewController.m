@@ -22,6 +22,7 @@
 @property(nonatomic,strong)NSMutableArray *mArr3;//统计查询数组
 @property(nonatomic,strong)NSMutableArray *mArr4;//门卫查询数组
 @property(nonatomic,assign)int mInt_reloadData;
+@property(nonatomic,strong)CustomDatePicker *customPicker;
 
 @property(nonatomic,strong)leaveRecordModel *recordModel;
 
@@ -229,9 +230,9 @@
     [self.view addSubview:self.mScrollV_all];
     self.dateTF = [[UITextField alloc]initWithFrame:CGRectZero];
     [self.view addSubview:self.dateTF];
-    CustomDatePicker *datePicker = [[CustomDatePicker alloc]init];
+    self.customPicker = [[CustomDatePicker alloc]init];
     self.dateTF.inputAccessoryView = self.toolBar;
-    self.dateTF.inputView = datePicker;
+    self.dateTF.inputView = self.customPicker;
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
     NSString *page = @"";
@@ -358,7 +359,7 @@
                     UINib * n= [UINib nibWithNibName:@"CustomQueryCell" bundle:[NSBundle mainBundle]];
                     [self.tableView registerNib:n forCellReuseIdentifier:indentifier];
                 }
-                [cell setCellData:[self.dataSource objectAtIndex:indexPath.row]];
+                [cell setCellData2:[self.dataSource objectAtIndex:indexPath.row]];
                 return cell;
             }
             
@@ -437,8 +438,13 @@
         self.cellFlag = NO;
         tempMArr = self.mArr3;
     }else{
+        self.recordModel.checkFlag = nil;
         self.cellFlag = NO;
         self.conditionBtn.selected = YES;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM"];
+        NSDate *currentDate =[NSDate date];
+        [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateSelected];
         self.conditionBtn.tintColor = [UIColor whiteColor];
         tempMArr = self.mArr4;
         //return;
@@ -499,8 +505,9 @@
     [self.dateTF resignFirstResponder];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
-    [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:self.datePicker.date]] forState:UIControlStateSelected];
-    self.recordModel.sDateTime = [formatter stringFromDate:self.datePicker.date];
+    NSString *dateStr = [self.customPicker getDateString];
+    [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",dateStr] forState:UIControlStateSelected];
+    self.recordModel.sDateTime = dateStr;
     [self sendRequest];
 }
 
