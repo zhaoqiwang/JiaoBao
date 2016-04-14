@@ -13,6 +13,7 @@
 #import "MyAdminClass.h"
 #import "MJRefresh.h"//上拉下拉刷新
 #import "StudentSumViewController.h"
+#import "CustomDatePicker.h"
 
 @interface CheckLeaveViewController ()
 @property(nonatomic,strong)NSMutableArray *dataSource;
@@ -228,8 +229,9 @@
     [self.view addSubview:self.mScrollV_all];
     self.dateTF = [[UITextField alloc]initWithFrame:CGRectZero];
     [self.view addSubview:self.dateTF];
+    CustomDatePicker *datePicker = [[CustomDatePicker alloc]init];
     self.dateTF.inputAccessoryView = self.toolBar;
-    self.dateTF.inputView = self.datePicker;
+    self.dateTF.inputView = datePicker;
 }
 -(void)sendRequest{//mInt_leaveID:区分身份，门卫0，班主任1，普通老师2，家长3
     NSString *page = @"";

@@ -14,7 +14,7 @@
 #import "IQKeyboardManager.h"
 
 
-@interface CheckSubViewController : UIViewController
+@interface CheckSubViewController : UIViewController<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *agreeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *refuseBtn;
 @property(nonatomic,strong)CheckLeaveModel *model;//审批假条http请求model
