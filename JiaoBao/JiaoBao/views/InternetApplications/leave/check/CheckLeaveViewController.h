@@ -24,25 +24,22 @@
 
 @interface CheckLeaveViewController : UIViewController<MyNavigationDelegate,LeaveViewCellDelegate,CheckSelectViewCDelegate,LeaveDetailViewCDelegate>
 
-@property (strong, nonatomic)UITextField *dateTF;
-
+@property (strong, nonatomic)UITextField *dateTF;//门卫审核 点击日期按钮用到
 @property (weak, nonatomic) IBOutlet UILabel *stuOrTeaLabel;//section中的学生或教职工
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) LeaveTopScrollView *mScrollV_all;//查询分类显示
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称
 @property (nonatomic,assign) int mInt_flag;//区分当前选择的是第几个
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) IBOutlet UIButton *headView;
-@property(nonatomic,strong)UIView *tableHeadView;
-@property (strong, nonatomic) IBOutlet UIView *sectionView;
-@property (strong, nonatomic) IBOutlet UIView *stuSection;
-- (IBAction)conditionAction:(id)sender;
-- (IBAction)cancelAction:(id)sender;
-- (IBAction)doneAction:(id)sender;
-@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
-@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UIButton *conditionBtn;
-@property (strong, nonatomic) IBOutlet UIView *manSection;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;//审核列表
+@property (strong, nonatomic) IBOutlet UIView *sectionView;//统计查询列表的section
+@property (strong, nonatomic) IBOutlet UIView *stuSection;//审核查询列表的section
+@property (strong, nonatomic) IBOutlet UIView *manSection;//门卫查询列表的section
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;//日期选择控件上面的工具条
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;//日期选择控件
+@property (weak, nonatomic) IBOutlet UIButton *conditionBtn;//筛选条件按钮
 @property (weak, nonatomic) IBOutlet UILabel *ManOrClassLabel;//section中教职工或班级
+- (IBAction)conditionAction:(id)sender;//筛选条件方法
+- (IBAction)cancelAction:(id)sender;//日期选择控件上面的工具条的取消按钮
+- (IBAction)doneAction:(id)sender;//日期选择控件上面的工具条的确定按钮
 
 @end

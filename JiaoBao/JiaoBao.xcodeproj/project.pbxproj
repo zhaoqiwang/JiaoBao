@@ -22,8 +22,6 @@
 		4302798D1C995618003546E9 /* ModelDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4302797D1C995618003546E9 /* ModelDialog.xib */; };
 		4302798E1C995618003546E9 /* QueryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4302797F1C995618003546E9 /* QueryViewController.m */; };
 		4302798F1C995618003546E9 /* QueryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430279801C995618003546E9 /* QueryViewController.xib */; };
-		430279901C995618003546E9 /* TeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 430279821C995618003546E9 /* TeacherViewController.m */; };
-		430279911C995618003546E9 /* TeacherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430279831C995618003546E9 /* TeacherViewController.xib */; };
 		430279941C9957C3003546E9 /* LevelNoteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 430279931C9957C3003546E9 /* LevelNoteModel.m */; };
 		430279981C995845003546E9 /* CheckLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 430279961C995845003546E9 /* CheckLeaveViewController.m */; };
 		430279991C995845003546E9 /* CheckLeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430279971C995845003546E9 /* CheckLeaveViewController.xib */; };
@@ -1203,9 +1201,6 @@
 		4302797E1C995618003546E9 /* QueryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QueryViewController.h; path = leave/QueryViewController.h; sourceTree = "<group>"; };
 		4302797F1C995618003546E9 /* QueryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QueryViewController.m; path = leave/QueryViewController.m; sourceTree = "<group>"; };
 		430279801C995618003546E9 /* QueryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QueryViewController.xib; path = leave/QueryViewController.xib; sourceTree = "<group>"; };
-		430279811C995618003546E9 /* TeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TeacherViewController.h; path = leave/TeacherViewController.h; sourceTree = "<group>"; };
-		430279821C995618003546E9 /* TeacherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TeacherViewController.m; path = leave/TeacherViewController.m; sourceTree = "<group>"; };
-		430279831C995618003546E9 /* TeacherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TeacherViewController.xib; path = leave/TeacherViewController.xib; sourceTree = "<group>"; };
 		430279921C9957C3003546E9 /* LevelNoteModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LevelNoteModel.h; path = model/LevelNoteModel.h; sourceTree = "<group>"; };
 		430279931C9957C3003546E9 /* LevelNoteModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LevelNoteModel.m; path = model/LevelNoteModel.m; sourceTree = "<group>"; };
 		430279951C995845003546E9 /* CheckLeaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckLeaveViewController.h; path = check/CheckLeaveViewController.h; sourceTree = "<group>"; };
@@ -2979,9 +2974,6 @@
 				4302797E1C995618003546E9 /* QueryViewController.h */,
 				4302797F1C995618003546E9 /* QueryViewController.m */,
 				430279801C995618003546E9 /* QueryViewController.xib */,
-				430279811C995618003546E9 /* TeacherViewController.h */,
-				430279821C995618003546E9 /* TeacherViewController.m */,
-				430279831C995618003546E9 /* TeacherViewController.xib */,
 				43EE45781CAB6F88006F7A5E /* UpdateLeaveViewController.h */,
 				43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */,
 				43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */,
@@ -6111,7 +6103,6 @@
 				A727C7DA1A6F93780019C4CD /* share_likeBig_1.png in Resources */,
 				A782AEBC1AE9D71A00547B0F /* NewWork_accessory.png in Resources */,
 				A749B9D619F89A530036F480 /* root_waitingProcess.png in Resources */,
-				430279911C995618003546E9 /* TeacherViewController.xib in Resources */,
 				A750827D1B7998E60031E7C9 /* buttonView6.png in Resources */,
 				F79D84D81ABD4DC000897477 /* RecordCell.xib in Resources */,
 				A792B80E1BE07CA800B1B0C5 /* textFiledBG@3x.png in Resources */,
@@ -6621,7 +6612,6 @@
 				A73B52B919FB980F00187CB9 /* ParserJson.m in Sources */,
 				A7781F2B1AE88F2200F03AEB /* MoreUnitWorkView.m in Sources */,
 				A75E3FB61B6F64B700284C3D /* AFURLResponseSerialization.m in Sources */,
-				430279901C995618003546E9 /* TeacherViewController.m in Sources */,
 				A7AA1C4A1B9145EC0098E101 /* PickedIndexModel.m in Sources */,
 				A755E6A619F24EBD00BBDF3D /* RegisterViewController.m in Sources */,
 				F72385D11BE2F74F0000015D /* DetialHWCell.m in Sources */,
