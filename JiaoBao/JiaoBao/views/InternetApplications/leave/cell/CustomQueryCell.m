@@ -25,6 +25,12 @@
     self.reasonLabel.text = model.LeaveType;
     
 }
+-(void)setCellData2:(MyLeaveModel*)model{
+    self.dateLabel.text = model.WriteDate;
+    self.stateLabel.text = model.LeaveType;
+    self.reasonLabel.text = model.ManName;
+    
+}
 -(void)setStatisticsData:(SumLeavesModel*)model{
     self.dateLabel.text = model.ManName;
     self.reasonLabel.text = model.Amount;

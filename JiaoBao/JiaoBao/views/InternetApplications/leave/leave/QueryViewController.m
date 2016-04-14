@@ -18,6 +18,8 @@
 #import "ClassLeavesModel.h"
 #import "LeaveDetailViewController.h"
 #import "LeaveViewController.h"
+#import "CustomDatePicker.h"
+
 
 
 
@@ -28,6 +30,7 @@
 @property(nonatomic,strong)leaveRecordModel *recordModel;
 @property(nonatomic,strong)NSDate *currentDate;
 @property(nonatomic,assign)int mInt_reloadData;
+@property(nonatomic,strong)CustomDatePicker *customPicker;
 
 
 @end
@@ -130,11 +133,12 @@
     
     self.datePicker.backgroundColor =[UIColor whiteColor];
     UIView *headView = [[UIView alloc]init ];
+    self.customPicker = [[CustomDatePicker alloc]init];
     if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2，家长3
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
         [headView addSubview:self.teaHeadView];
         self.teaDateTF.inputAccessoryView = self.toolBar;
-        self.teaDateTF.inputView = self.datePicker;
+        self.teaDateTF.inputView = self.customPicker;
         self.dateTf = self.teaDateTF;
         [self.dateBtn setTitle:self.recordModel.sDateTime forState:UIControlStateNormal];
 
@@ -142,7 +146,7 @@
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.ParentsHeadView.frame));
         [headView addSubview:self.ParentsHeadView];
         self.dateTF.inputAccessoryView = self.toolBar;
-        self.dateTF.inputView = self.datePicker;
+        self.dateTF.inputView = self.customPicker;
         self.dateTf = self.dateTF;
         [self.parentDateBtn setTitle:self.recordModel.sDateTime forState:UIControlStateNormal];
     }
@@ -326,11 +330,10 @@
 
 - (IBAction)doneToolAction:(id)sender {
     [self.dateTf resignFirstResponder];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM"];
-    [self.parentDateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
-    [self.dateBtn setTitle:[formatter stringFromDate:self.datePicker.date] forState:UIControlStateNormal];
-    self.recordModel.sDateTime = [formatter stringFromDate:self.datePicker.date];
+
+    [self.parentDateBtn setTitle:[self.customPicker getDateString] forState:UIControlStateNormal];
+    [self.dateBtn setTitle:[self.customPicker getDateString] forState:UIControlStateNormal];
+    self.recordModel.sDateTime = [self.customPicker getDateString];
     [self sendRequest];
     
 

@@ -7,17 +7,20 @@
 //
 
 #import "CheckSelectViewController.h"
+#import "CustomDatePicker.h"
 
 @interface CheckSelectViewController ()
-
+@property(nonatomic,strong)CustomDatePicker *customPicker;
 @end
 
 @implementation CheckSelectViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.customPicker = [[CustomDatePicker alloc]init];
+
     self.dateTF.inputAccessoryView = self.toolBar;
-    self.dateTF.inputView = self.datePicker;
+    self.dateTF.inputView = self.customPicker;
     // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mArr_dispaly = [NSMutableArray array];
@@ -543,7 +546,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:2];
-    model.mStr_value = [formatter stringFromDate:self.datePicker.date];
+    model.mStr_value = [self.customPicker getDateString];
     [self setValueDisplayArray];
     
 }
