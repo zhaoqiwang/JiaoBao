@@ -273,7 +273,7 @@
         cell.mLab_leave.frame = CGRectMake(14, (44-cell.mLab_leave.frame.size.height)/2, nameSize.width, cell.mLab_leave.frame.size.height);
         cell.mLab_leave.text = model.mStr_name;
         //内容显示
-        CGSize valueSize = [model.mStr_value sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10-14*2, MAXFLOAT)];
+        CGSize valueSize = [model.mStr_value sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-nameSize.width-14*2, MAXFLOAT)];
         cell.mLab_leaveValue.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, cell.mLab_leave.frame.origin.y, valueSize.width, valueSize.height);
         cell.mLab_leaveValue.numberOfLines = 0;
         cell.mLab_leaveValue.text = model.mStr_value;
@@ -476,8 +476,19 @@
  --------------------------------------- */
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     LeaveDetailShowModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-    if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2||model.mInt_flag==3) {//请假人、发起人、发起时间，理由
+    if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2) {//请假人、发起人、发起时间，
         return 44;
+    }else if (model.mInt_flag == 3){//理由
+        //标题
+        CGSize nameSize = [model.mStr_name sizeWithFont:[UIFont systemFontOfSize:14]];
+        //内容显示
+        CGSize valueSize = [model.mStr_value sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-nameSize.width-14*2, MAXFLOAT)];
+        valueSize.height = valueSize.height+20;
+        if (valueSize.height>44) {
+            return valueSize.height;
+        }else{
+            return 44;
+        }
     }else if (model.mInt_flag == 5){//审核
         //标题
         CGSize nameSize = [model.mStr_name sizeWithFont:[UIFont systemFontOfSize:14]];
@@ -495,6 +506,7 @@
             
         }
         CGSize valueSize = [tempValue sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-nameSize.width-14*2, MAXFLOAT)];
+        valueSize.height = valueSize.height+20;
         if (valueSize.height>44) {
             return valueSize.height;
         }else{
