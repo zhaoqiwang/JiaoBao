@@ -18,12 +18,24 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSString *resultCode = [sender object];
     if([resultCode integerValue]==0){
-        [MBProgressHUD showError:@"成功"];
+        if([self.model.checkFlag integerValue]==1){
+            [MBProgressHUD showError:@"审核成功"];
+
+        }
+        else{
+            [MBProgressHUD showError:@"拒绝成功"];
+        }
 
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCheckCell" object:self.model];
             [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
     }else{
-        [MBProgressHUD showError:@"失败"];
+        if([self.model.checkFlag integerValue]==1){
+            [MBProgressHUD showError:@"审核失败"];
+            
+        }
+        else{
+            [MBProgressHUD showError:@"拒绝失败"];
+        }
     }
 }
 - (void)viewDidLoad {
@@ -93,21 +105,38 @@
     anotherBtn.selected = NO;
     self.model.checkFlag = @"2";
 }
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1){
+        self.model.tabid = self.mModel_LeaveDetail.TabID;
+        self.model.level = self.mModel_LeaveDetail.level;
+        self.model.userName = [dm getInstance].TrueName;
+        self.model.note = self.textView.text;
+        self.model.cellFlag = self.mModel_LeaveDetail.cellFlag;
+        [MBProgressHUD showMessage:@"" toView:self.view];
+        [[LeaveHttp getInstance]CheckLeaveModel:self.model];
+    }
+}
 - (IBAction)submitBtnAction:(id)sender {
-    self.model.tabid = self.mModel_LeaveDetail.TabID;
-    self.model.level = self.mModel_LeaveDetail.level;
-    self.model.userName = [dm getInstance].TrueName;
-    self.model.note = self.textView.text;
-    self.model.cellFlag = self.mModel_LeaveDetail.cellFlag;
-    [MBProgressHUD showMessage:@"" toView:self.view];
-    [[LeaveHttp getInstance]CheckLeaveModel:self.model];
+    if([utils isBlankString:self.textView.text]){
+        [MBProgressHUD showError:@"批注不能为空"];
+        return;
+    }
+    if([self.model.checkFlag integerValue]==1){
+        NSString *message = [NSString stringWithFormat:@"您确定要‘同意’%@的请假申请吗？",self.mModel_LeaveDetail.ManName];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+    }else{
+        NSString *message = [NSString stringWithFormat:@"您确定要‘拒绝’%@的请假申请吗？",self.mModel_LeaveDetail.ManName];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+
+
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
     
-    if([textView isEqual:self.textView])
-    {
         if([textView.text isEqualToString:@""])
         {
             self.TitleTF.hidden = NO;
@@ -117,8 +146,49 @@
             self.TitleTF.hidden = YES;
             
         }
-        
-    }
+        if(textView.text.length>50)
+        {
+            textView.text = [textView.text substringToIndex:50];
+        }
+    
 }
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if(range.location==49&&text.length==1)
+    {
+        NSLog(@"text = %@",text);
+        
+        if([text isEqualToString:@"➋"])
+        {
+            text = @"a";
+        }else if([text isEqualToString:@"➌"]){
+            text = @"d";
+        }else if([text isEqualToString:@"➍"]){
+            text = @"g";
+        }else if([text isEqualToString:@"➎"]){
+            text = @"j";
+        }else if([text isEqualToString:@"➏"]){
+            text = @"m";
+        }else if([text isEqualToString:@"➐"]){
+            text = @"p";
+        }else if([text isEqualToString:@"➑"]){
+            text = @"t";
+        }else if([text isEqualToString:@"➒"]){
+            text = @"w";
+        }else if([text isEqualToString:@"☻"]){
+            text = @"^";
+        }else {
+        }
+    }
+    NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
+    if(Sumstr.length>49)
+    {
+        textView.text = [Sumstr substringToIndex:50];
+        self.TitleTF.hidden = YES;
+        return NO;
+    }
+    if ([text isEqualToString:@"\n"]) {
 
+}
+    return YES;
+}
 @end

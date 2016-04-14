@@ -18,9 +18,9 @@
 @property (nonatomic,strong) NSString *CreateDate_Min;//开始时间
 @property (nonatomic,strong) NSString *CreateDate_Max;//结束时间
 @property (nonatomic,strong) NSString *QsLv;//
-@property (nonatomic,strong) NSString *gradeCode;//
-@property (nonatomic,strong) NSString *subjectCode;//
-@property (nonatomic,strong) NSString *unid;//
+@property (nonatomic,strong) NSString *gradeCode;//年级
+@property (nonatomic,strong) NSString *subjectCode;//科目
+@property (nonatomic,strong) NSString *unid;//教版
 //json数据解析model
 @property (nonatomic,strong) NSString *Tabid;//
 @property (nonatomic,strong) NSString *StuID;//学生ID
