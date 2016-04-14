@@ -27,7 +27,6 @@
         NSString* currentYear = [NSString stringWithFormat:@"%d",[year intValue]+i];
         [self.yearArr addObject:currentYear];
     }
-<#(BOOL)#>    self.datePicker selectRow:<#(NSInteger)#> inComponent:<#(NSInteger)#> animated:
     return self;
 }
 -(NSString*)getDateString{
