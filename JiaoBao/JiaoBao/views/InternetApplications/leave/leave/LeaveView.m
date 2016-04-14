@@ -33,6 +33,15 @@
             model.mInt_flag = 0 ;//选择学生
             model.mStr_name = @"学生";
             [self.mArr_leave addObject:model];
+            //当家长情况只有一个学生时，给默认值
+            if (self.mInt_flagID == 3) {
+                if ([dm getInstance].mArr_leaveStudent.count>0) {
+                    self.mModel_student = [[dm getInstance].mArr_leaveStudent objectAtIndex:0];
+                    LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
+                    model.mStr_value = self.mModel_student.StdName;
+                    self.mInt_select0 = 1;
+                }
+            }
         }
         for (int i=0; i<4; i++) {
             LeaveNowModel *model = [[LeaveNowModel alloc] init];
@@ -165,6 +174,7 @@
             }
             CGSize valueSize = [cell.mLab_value.text sizeWithFont:[UIFont systemFontOfSize:14]];
             cell.mLab_value.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, valueSize.width, cell.mLab_name.frame.size.height);
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         }else if (model.mInt_flag == 1){//理由选择
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = NO;
@@ -187,6 +197,7 @@
             cell.mTextF_reason.text = model.mStr_value;
             cell.mTextF_reason.delegate = self;
             self.mTextF_reason = cell.mTextF_reason;
+            self.mTextF_reason.delegate = self;
         }else if (model.mInt_flag == 4){//添加时间段
             cell.mLab_name.hidden = YES;
             cell.mLab_value.hidden = YES;
@@ -447,11 +458,6 @@
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
-    for (LeaveNowModel *tempModel in self.mArr_leave) {
-        if (tempModel.mInt_flag==2){
-            tempModel.mStr_value = [NSString stringWithFormat:@"%@%@",textField.text,string];
-        }
-    }
     // For any other character return TRUE so that the text gets added to the view
     if(textField.text.length>99)
     {
@@ -467,6 +473,9 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==2){
+            if(textField.text.length>99){
+                textField.text = [textField.text substringToIndex:99];
+            }
             tempModel.mStr_value = textField.text;
         }
     }

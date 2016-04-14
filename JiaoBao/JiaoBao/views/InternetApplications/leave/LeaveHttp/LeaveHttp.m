@@ -60,21 +60,22 @@ static LeaveHttp *leaveHttp = nil;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *parameters = [model propertiesDic];
+    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------NewLeaveModel: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
-        
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:dic];
+        [tempDic setValue:ResultCode forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------NewLeaveModel: %@", error);
-        NSString *ResultCode= @"100";
         NSString *ResultDesc= error.localizedDescription;
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:dic];
+        [tempDic setValue:@"100" forKey:@"ResultCode"];
+        [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:tempDic];
     }];
 }
 //更新一条请假条记录

@@ -218,11 +218,11 @@
         [temp addObject:model];
     }
     //是否有门卫权限
-//    if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+    if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
         model.mStr_title = @"门卫审核";
         [temp addObject:model];
-//    }
+    }
     self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
     self.mScrollV_all.delegate = self;
     [self.view addSubview:self.mScrollV_all];

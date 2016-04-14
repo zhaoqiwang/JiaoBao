@@ -22,6 +22,7 @@
     self.groupselit = [[groupselit_selitModel alloc] init];
     self.myUnitModel = [[myUnit alloc] init];
     self.userListModel = [[UserListModel alloc] init];
+    self.stuInfoModel = [[StuInfoModel alloc] init];
     return self;
 }
 

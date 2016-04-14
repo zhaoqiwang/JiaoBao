@@ -7,6 +7,8 @@
 //
 
 #import "ChooseStudentViewController.h"
+#import "ChineseString.h"
+#import "pinyin.h"
 
 @interface ChooseStudentViewController ()
 
@@ -37,6 +39,8 @@
                 //获取当前班级中的学生
                 [[LeaveHttp getInstance] getClassStdInfoWithUID:model.TabID];
                 [MBProgressHUD showMessage:@"" toView:self.view];
+            }else{
+                [MBProgressHUD showError:@"暂时没查到管理的班级" toView:self.view];
             }
         }
     }else if (self.mInt_flag == 1) {//选择请假理由
@@ -74,7 +78,9 @@
 -(void)getClassStdInfoWithUID:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableArray *array = noti.object;
-    self.mArr_student = array;
+    //对分组名字进行排序
+    NSMutableArray *arrayTemp = [self userNameChineseSort:array Flag:1];
+    self.mArr_student = arrayTemp;
     [self.mTableV_list reloadData];
 }
 
@@ -130,6 +136,51 @@
 -(void)myNavigationGoback{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [utils popViewControllerAnimated:YES];
+}
+
+//对人员1和分组2进行排序，
+-(NSMutableArray *)userNameChineseSort:(NSMutableArray *)array Flag:(int)flag{
+    //Step2:获取字符串中文字的拼音首字母并与字符串共同存放
+    NSMutableArray *chineseStringsArray=[NSMutableArray array];
+    for(int i=0;i<[array count];i++){
+        ChineseString *chineseString=[[ChineseString alloc]init];
+        if (flag == 1) {
+            StuInfoModel *model = [array objectAtIndex:i];
+            chineseString.string=[NSString stringWithString:model.StdName];
+            chineseString.stuInfoModel = model;
+        }
+        
+        if(chineseString.string==nil){
+            chineseString.string=@"";
+        }
+        
+        if(![chineseString.string isEqualToString:@""]){
+            NSString *pinYinResult=[NSString string];
+            for(int j=0;j<chineseString.string.length;j++){
+                NSString *singlePinyinLetter=[[NSString stringWithFormat:@"%c",pinyinFirstLetter([chineseString.string characterAtIndex:j])]uppercaseString];
+                pinYinResult=[pinYinResult stringByAppendingString:singlePinyinLetter];
+            }
+            chineseString.pinYin=pinYinResult;
+        }else{
+            chineseString.pinYin=@"";
+        }
+        [chineseStringsArray addObject:chineseString];
+    }
+    
+    //Step3:按照拼音首字母对这些Strings进行排序
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"pinYin" ascending:YES]];
+    [chineseStringsArray sortUsingDescriptors:sortDescriptors];
+    
+    // Step4:如果有需要，再把排序好的内容从ChineseString类中提取出来
+    NSMutableArray *result=[NSMutableArray array];
+    for(int i=0;i<[chineseStringsArray count];i++){
+        if (flag == 1) {
+            StuInfoModel *tempModel = ((ChineseString*)[chineseStringsArray objectAtIndex:i]).stuInfoModel;
+            [result addObject:tempModel];
+        }
+    }
+    
+    return result;
 }
 
 - (void)didReceiveMemoryWarning {
