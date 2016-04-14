@@ -14,6 +14,7 @@
 #import "groupselit_selitModel.h"
 #import "CommMsgRevicerUnitListModel.h"
 #import "UserListModel.h"
+#import "StuInfoModel.h"
 
 @interface ChineseString : NSObject
 
@@ -26,5 +27,6 @@
 @property(retain,nonatomic)groupselit_selitModel *groupselit;
 @property(retain,nonatomic)myUnit *myUnitModel;
 @property(retain,nonatomic)UserListModel *userListModel;
+@property(retain,nonatomic)StuInfoModel *stuInfoModel;
 
 @end

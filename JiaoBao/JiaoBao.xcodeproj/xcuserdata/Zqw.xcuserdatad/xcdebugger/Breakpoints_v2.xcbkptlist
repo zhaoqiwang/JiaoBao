@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/shareView/SharePostingViewController.m"
-            timestampString = "449501492.414072"
+            filePath = "JiaoBao/views/InternetApplications/leave/leave/LeaveView.m"
+            timestampString = "482298263.191082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
-            landmarkName = "-SavePublishArticle:"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
+            landmarkName = "-addLeave"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

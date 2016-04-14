@@ -47,7 +47,12 @@
         CheckSelectModel *model = [[CheckSelectModel alloc] init];
         if (i==0) {//教职工，学生
             model.mInt_flag = 0;
-            model.mInt_id = 0;
+            //判断是否有权限,老师审核
+            if ([[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
+                model.mInt_id = 0;
+            }else{
+                model.mInt_id = 1;
+            }
             model.mInt_checkTeacher = 1;
             model.mInt_allStudent = 1;
             model.mInt_allTeacher = 1;
@@ -125,16 +130,20 @@
             a++;
         }else{
             if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
-                model1.mInt_check = 1;a++;
+                model1.mInt_check = 1;
+                a++;
             }else{
                 if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
-                    model1.mInt_check = 2;a++;
+                    model1.mInt_check = 2;
+                    a++;
                 }else{
                     if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
-                        model1.mInt_check = 3;a++;
+                        model1.mInt_check = 3;
+                        a++;
                     }else{
                         if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
-                            model1.mInt_check = 4;a++;
+                            model1.mInt_check = 4;
+                            a++;
                         }
                     }
                 }

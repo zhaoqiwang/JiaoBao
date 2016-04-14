@@ -38,13 +38,13 @@
     self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_leave.tableFooterView = [[UIView alloc]init];
     //普通审核
-    if (self.mInt_checkOver ==0) {
+//    if (self.mInt_checkOver ==0) {
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
         [MBProgressHUD showMessage:@"" toView:self.view];
-    }else if (self.mInt_checkOver == 1){//门卫审核
-        
-    }
+//    }else if (self.mInt_checkOver == 1){//门卫审核
+//        
+//    }
 }
 //门卫登记离校返校时间
 -(void)UpdateGateInfo:(NSNotification *)noti{
@@ -442,7 +442,7 @@
             }else{
                 
             }
-            CGSize valueSize = [tempValue sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-10-14*2, MAXFLOAT)];
+            CGSize valueSize = [tempValue sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-nameSize.width-14*2, MAXFLOAT)];
             cell.mLab_leaveValue.frame = CGRectMake(cell.mLab_leave.frame.origin.x+cell.mLab_leave.frame.size.width+10, cell.mLab_leave.frame.origin.y, valueSize.width, valueSize.height);
             cell.mLab_leaveValue.numberOfLines = 0;
             cell.mLab_leaveValue.text = tempValue;
@@ -476,8 +476,30 @@
  --------------------------------------- */
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     LeaveDetailShowModel *model = [self.mArr_list objectAtIndex:indexPath.row];
-    if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2||model.mInt_flag==3||model.mInt_flag==5) {//请假人、发起人、发起时间，理由
+    if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2||model.mInt_flag==3) {//请假人、发起人、发起时间，理由
         return 44;
+    }else if (model.mInt_flag == 5){//审核
+        //标题
+        CGSize nameSize = [model.mStr_name sizeWithFont:[UIFont systemFontOfSize:14]];
+        //内容显示
+        NSString *tempValue = @"";
+        if ([model.mStr_status intValue]==1) {
+            tempValue = @"同意。";
+        }else if ([model.mStr_status intValue]==2){
+            tempValue = @"拒绝";
+        }
+        tempValue = [NSString stringWithFormat:@"%@%@",tempValue,model.mStr_node];
+        if ([tempValue isKindOfClass:[NSNull class]]||[tempValue isEqual:@"null"]||[tempValue isEqual:@"<null>"]) {
+            tempValue = @"";
+        }else{
+            
+        }
+        CGSize valueSize = [tempValue sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-nameSize.width-14*2, MAXFLOAT)];
+        if (valueSize.height>44) {
+            return valueSize.height;
+        }else{
+            return 44;
+        }
     }else if (model.mInt_flag == 4){//开始结束时间
         return 190;
     }
