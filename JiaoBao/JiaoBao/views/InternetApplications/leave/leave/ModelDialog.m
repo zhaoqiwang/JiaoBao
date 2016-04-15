@@ -26,7 +26,7 @@
 -(void )setUp{
     if(self.flag==0){//0是修改 1是添加
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
-        self.endDateTF.text =[NSString stringWithFormat:@"开始时间:%@",self.model.mStr_endTime];
+        self.endDateTF.text =[NSString stringWithFormat:@"结束时间:%@",self.model.mStr_endTime];
         
     }
     else{
@@ -34,6 +34,8 @@
         NSDate *endDate = [date initWithTimeIntervalSinceNow:60*60];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        self.model.mStr_startTime = [formatter stringFromDate:date];
+        self.model.mStr_endTime = [formatter stringFromDate:endDate];
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:date]];
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:endDate]];
         
@@ -111,14 +113,28 @@
     [self.endDateTF resignFirstResponder];
     if([self.selectedTF isEqual:self.startDateTF]){
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];
+        self.model.mStr_startTime = [formatter stringFromDate:self.datePicker.date];
+
     }else{
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:self.datePicker.date]];
-        
+        self.model.mStr_endTime = [formatter stringFromDate:self.datePicker.date];
+
     }
     
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     self.selectedTF = textField;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *startDate = [formatter dateFromString:self.model.mStr_startTime ];
+    NSDate *endDate = [formatter dateFromString:self.model.mStr_endTime ];
+    if([textField isEqual:self.startDateTF]){
+        self.datePicker.date = startDate ;
+    }else{
+        self.datePicker.date = endDate ;
+    }
+
+    
     
 }
 @end
