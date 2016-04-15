@@ -22,8 +22,9 @@
     self.startDateTF.inputAccessoryView = self.toolBar;
     self.endDateTF.inputAccessoryView = self.toolBar;
 }
+//日期初始化
 -(void )setUp{
-    if(self.flag==0){
+    if(self.flag==0){//0是修改 1是添加
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
         self.endDateTF.text =[NSString stringWithFormat:@"开始时间:%@",self.model.mStr_endTime];
         
@@ -39,12 +40,13 @@
     }
     
 }
-
+//弹出框上的取消按钮
 - (IBAction)cancelAction:(id)sender {
     [self _doClickCloseDialog];
 }
-
+//弹出框上的确定按钮
 - (IBAction)doneAction:(id)sender {
+    //处理输入框字符串
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDate *nowDate = [NSDate date];
@@ -63,7 +65,7 @@
     
     NSDate *startDate = [dateFormatter dateFromString:startStr];
     NSDate *endDate = [dateFormatter  dateFromString:endStr];
-    
+    //设置时间范围
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
@@ -84,21 +86,23 @@
     self.model.mInt_flag = 3;
     self.model.mStr_startTime = startStr;
     self.model.mStr_endTime = endStr;
+    //进入请假界面的回调
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveNowModel:flag:row:)]) {
         [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
     }
     [[self.window viewWithTag:9999]removeFromSuperview];
     
 }
+//移除弹出框
 -(void) _doClickCloseDialog  {
     [[self.window viewWithTag:9999]removeFromSuperview];
 }
-
+//toolbar上的取消按钮
 - (IBAction)cancelToolAction:(id)sender {
     [self.startDateTF resignFirstResponder];
     [self.endDateTF resignFirstResponder];
 }
-
+//toolBar上的确定按钮
 - (IBAction)doneToolAction:(id)sender {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];

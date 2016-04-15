@@ -14,6 +14,7 @@
 @end
 
 @implementation CheckSubViewController
+//审核假条通知回调
 -(void)CheckLeaveModel:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSString *resultCode = [sender object];
@@ -40,10 +41,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //审核假条通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CheckLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CheckLeaveModel:) name:@"CheckLeaveModel" object:nil];
     self.model = [[CheckLeaveModel alloc]init];
-    self.model.checkFlag = @"1";
+    self.model.checkFlag = @"1";//1通过，2拒绝
 
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.textView.layer.borderWidth = 1;
@@ -78,15 +80,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)agreeAction:(id)sender {
     UIButton *currentBtn = sender;
@@ -153,9 +146,9 @@
     
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    //系统九宫格限制字数
     if(range.location==49&&text.length==1)
     {
-        NSLog(@"text = %@",text);
         
         if([text isEqualToString:@"➋"])
         {
@@ -180,6 +173,7 @@
         }
     }
     NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
+    //限制为50字
     if(Sumstr.length>49)
     {
         textView.text = [Sumstr substringToIndex:50];

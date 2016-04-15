@@ -14,13 +14,14 @@
 
 
 @interface StudentSumViewController ()
-@property(nonatomic,strong)NSMutableArray *dataSource;
+@property(nonatomic,strong)NSMutableArray *dataSource;//数据源
 @property(nonatomic,assign)int mInt_reloadData;
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
 
 @end
 
 @implementation StudentSumViewController
+//学生统计查询后的通知回调
 -(void)GetStudentSumLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.dataSource = [sender object];
@@ -41,21 +42,21 @@
     self.dataSource = [NSMutableArray array];
     self.tableView.tableFooterView = [[UIView alloc]init];
     [self sendRequest];
-//    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
-//    self.tableView.headerPullToRefreshText = @"下拉刷新";
-//    self.tableView.headerReleaseToRefreshText = @"松开后刷新";
-//    self.tableView.headerRefreshingText = @"正在刷新...";
-//    [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
-//    self.tableView.footerPullToRefreshText = @"上拉加载更多";
-//    self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
-//    self.tableView.footerRefreshingText = @"正在加载...";
-//    [self.tableView headerEndRefreshing];
-//    [self.tableView footerEndRefreshing];
+    //    [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    //    self.tableView.headerPullToRefreshText = @"下拉刷新";
+    //    self.tableView.headerReleaseToRefreshText = @"松开后刷新";
+    //    self.tableView.headerRefreshingText = @"正在刷新...";
+    //    [self.tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    //    self.tableView.footerPullToRefreshText = @"上拉加载更多";
+    //    self.tableView.footerReleaseToRefreshText = @"松开加载更多数据";
+    //    self.tableView.footerRefreshingText = @"正在加载...";
+    //    [self.tableView headerEndRefreshing];
+    //    [self.tableView footerEndRefreshing];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)sendRequest{
-
-                        [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: self.ClassSumModel.UnitClassId sDateTime:self.sDateTime];
+    
+    [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: self.ClassSumModel.UnitClassId sDateTime:self.sDateTime];
 }
 //导航条返回按钮回调
 -(void)myNavigationGoback{
@@ -102,10 +103,10 @@
     }
     [cell setStatisticsData:[self.dataSource objectAtIndex:indexPath.row]];
     return cell;
-
+    
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-        return self.stuSection;
+    return self.stuSection;
 }
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section {
     return 32;
@@ -116,13 +117,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

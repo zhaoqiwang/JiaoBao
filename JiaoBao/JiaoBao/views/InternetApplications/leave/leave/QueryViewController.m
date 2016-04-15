@@ -48,6 +48,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     
 }
+//获得我提出申请的请假记录
 -(void)GetMyLeaves:(id)sender
 {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -55,7 +56,7 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     NSString *manType = [dic objectForKey:@"manType"];
-    BOOL notiFlag = NO;
+    BOOL notiFlag = NO;//区别通知（个人查询和班级查询都用到此通知）
     if((self.mInt_flag==2&&[manType isEqualToString:@"1"])){
         notiFlag = YES;
     }

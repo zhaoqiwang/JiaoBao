@@ -14,7 +14,6 @@
 #import "MobClick.h"
 #import "AddQuestionViewController.h"
 #import "MakeJobViewController.h"
-#import "TeacherViewController.h"
 #import "LeaveViewController.h"
 #import "LeaveHttp.h"
 #import "CheckLeaveViewController.h"
@@ -620,10 +619,7 @@
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
 }
--(void)leaveAction{
-    TeacherViewController *detail = [[TeacherViewController alloc] init];
-    [utils pushViewController:detail animated:YES];
-}
+
 -(KxMenuItem *)addOnLineJob{
     if ([dm getInstance].uType==2) {
         return [KxMenuItem menuItem:@"作业布置"

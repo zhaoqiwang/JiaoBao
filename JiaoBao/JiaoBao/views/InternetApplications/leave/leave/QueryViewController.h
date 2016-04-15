@@ -1,7 +1,7 @@
 //
 //  QueryViewController.h
 //  JiaoBao
-//
+//  请假查询界面
 //  Created by SongYanming on 16/3/15.
 //  Copyright © 2016年 JSY. All rights reserved.
 //
