@@ -434,7 +434,7 @@
             if ([model.mStr_status intValue]==1) {
                 tempValue = @"同意。";
             }else if ([model.mStr_status intValue]==2){
-                tempValue = @"拒绝";
+                tempValue = @"拒绝。";
             }
             tempValue = [NSString stringWithFormat:@"%@%@",tempValue,model.mStr_node];
             if ([tempValue isKindOfClass:[NSNull class]]||[tempValue isEqual:@"null"]||[tempValue isEqual:@"<null>"]) {
@@ -497,7 +497,7 @@
         if ([model.mStr_status intValue]==1) {
             tempValue = @"同意。";
         }else if ([model.mStr_status intValue]==2){
-            tempValue = @"拒绝";
+            tempValue = @"拒绝。";
         }
         tempValue = [NSString stringWithFormat:@"%@%@",tempValue,model.mStr_node];
         if ([tempValue isKindOfClass:[NSNull class]]||[tempValue isEqual:@"null"]||[tempValue isEqual:@"<null>"]) {
