@@ -19,13 +19,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/leave/leave/LeaveView.m"
-            timestampString = "482298263.191082"
+            filePath = "JiaoBao/views/InternetApplications/leave/LeaveHttp/LeaveHttp.m"
+            timestampString = "482316992.680633"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "366"
-            endingLineNumber = "366"
-            landmarkName = "-addLeave"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
+            landmarkName = "-GetGateLeaves:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

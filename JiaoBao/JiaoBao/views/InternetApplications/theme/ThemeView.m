@@ -112,6 +112,7 @@
 
 //初始化话题数组
 -(void)init_mArr_AllCategory{
+    [self.mArr_AllCategory removeAllObjects];
     NSMutableArray *tempArray = [NSMutableArray arrayWithObjects:@"首页",@"推荐",@"精选", nil];
     for (int i=0; i<tempArray.count; i++) {
         AllCategoryModel *model = [[AllCategoryModel alloc] init];
@@ -477,6 +478,7 @@
 //    self.ItemModel = nil;
     self.mInt_reloadData = 0;
     [self.mArr_AllCategory removeAllObjects];
+    [self init_mArr_AllCategory];
     [self.mArr_selectCategory removeAllObjects];
 //    self.mModel_getPickdById = nil;
     [self.mTableV_knowledge reloadData];

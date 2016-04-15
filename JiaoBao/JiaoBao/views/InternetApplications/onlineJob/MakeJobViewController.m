@@ -43,7 +43,26 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
-
+    //是否有题回调
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecQswithchapterid:) name:@"TecQswithchapterid" object:nil];
+    //发布作业回调
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
+    
+    //获取执教班级
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getUnitClassNoticeMakeJob" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnitClassNoticeMakeJob:) name:@"getUnitClassNoticeMakeJob" object:nil];
+    
+    //获取年级列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetGradeList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetGradeList:) name:@"GetGradeList" object:nil];
+    //获取联动列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnionChapterList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnionChapterList:) name:@"GetUnionChapterList" object:nil];
+    //获取老师的自定义作业列表
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetDesHWList" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetDesHWList:) name:@"GetDesHWList" object:nil];
 }
 
 //在班级选择中，插入数据
@@ -61,7 +80,7 @@
                 TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
                 
                 if (node0.flag == 1) {
-                    [node0.sonNodes removeAllObjects];
+//                    [node0.sonNodes removeAllObjects];
                     //插入数据，单独的难度行
                     for (int i=0; i<self.mArr_sumData.count; i++) {
                         TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
@@ -170,27 +189,6 @@
     [super viewDidLoad];
     self.publicFlag = 1;
     self.publicArr = [[NSMutableArray alloc]initWithCapacity:0];
-    
-    //是否有题回调
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecQswithchapterid" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecQswithchapterid:) name:@"TecQswithchapterid" object:nil];
-    //发布作业回调
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"TecMakeHWWithPublishJobModel" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(TecMakeHWWithPublishJobModel:) name:@"TecMakeHWWithPublishJobModel" object:nil];
-    
-    //获取执教班级
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getUnitClassNoticeMakeJob" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnitClassNoticeMakeJob:) name:@"getUnitClassNoticeMakeJob" object:nil];
-    
-    //获取年级列表
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetGradeList" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetGradeList:) name:@"GetGradeList" object:nil];
-    //获取联动列表
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetUnionChapterList" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnionChapterList:) name:@"GetUnionChapterList" object:nil];
-    //获取老师的自定义作业列表
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetDesHWList" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetDesHWList:) name:@"GetDesHWList" object:nil];
     
     // Do any additional setup after loading the view from its nib.
     self.mArr_sumData = [NSMutableArray array];
