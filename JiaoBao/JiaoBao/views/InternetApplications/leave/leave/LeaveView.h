@@ -27,6 +27,10 @@
 @property (nonatomic,assign) int mInt_select1;//是1否0选择请假理由
 @property (nonatomic,strong) UITextField *mTextF_reason;//cell输入框中的理由
 
+//初始化
 - (id)initWithFrame1:(CGRect)frame flag:(int)flag flagID:(int)flagID;
+
+//生成一条请假条记录
+-(void)NewLeaveModel:(NSNotification *)noti;
 
 @end

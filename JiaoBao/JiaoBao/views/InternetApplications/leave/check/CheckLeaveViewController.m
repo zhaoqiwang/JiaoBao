@@ -467,19 +467,62 @@
         [self.dateTF becomeFirstResponder];
     }
     else{//如果是筛选条件
-        CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
-        if(self.mInt_flag==0||self.mInt_flag==1){//已审核和未审核
-            selectVC.mInt_flag = 0;
+        //先判断有没有审核权限
+        int a = 0;
+        if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
+            a++;
         }
-        
-        else{//统计查询
-            selectVC.mInt_flag = 1;
+        //二审
+        if ([[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
+            a++;
         }
-        selectVC.delegate = self;
-        [self.navigationController pushViewController:selectVC animated:YES];
+        //三审
+        if ([[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
+            a++;
+        }
+        //四审
+        if ([[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
+            a++;
+        }
+        //五审
+        if ([[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
+            a++;
+        }
+        //一审
+        if ([[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]) {
+            a++;
+        }
+        //二审
+        if ([[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
+            a++;
+        }
+        //三审
+        if ([[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
+            a++;
+        }
+        //四审
+        if ([[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
+            a++;
+        }
+        //五审
+        if ([[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
+            a++;
+        }
+        if (a>0) {
+            CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
+            if(self.mInt_flag==0||self.mInt_flag==1){//已审核和未审核
+                selectVC.mInt_flag = 0;
+            }
+            
+            else{//统计查询
+                selectVC.mInt_flag = 1;
+            }
+            selectVC.delegate = self;
+            [self.navigationController pushViewController:selectVC animated:YES];
+        }else{
+            [MBProgressHUD showError:@"当前账号没有审核权限" toView:self.view];
+        }
     }
-    
-    
 }
 //toolBar取消按钮
 - (IBAction)cancelAction:(id)sender {

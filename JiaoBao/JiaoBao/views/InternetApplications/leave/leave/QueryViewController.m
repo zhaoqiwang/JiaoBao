@@ -299,6 +299,7 @@
     selectVC.mInt_from = 0;
     selectVC.mInt_check = model.mInt_check;
     selectVC.mInt_index = (int)indexPath.row;
+    selectVC.mInt_falg = self.mInt_flagID;
     selectVC.delegate = self;
     LeaveViewController *parentVC =(LeaveViewController*)self.parentViewController;
     selectVC.mStr_navName = parentVC.mStr_navName;

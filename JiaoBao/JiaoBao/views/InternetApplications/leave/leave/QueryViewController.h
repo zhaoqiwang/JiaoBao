@@ -29,6 +29,7 @@
 @property (nonatomic,strong) MyStdInfo *mModel_student;//家长身份时，选择学生的信息
 @property (weak, nonatomic) IBOutlet UIButton *stuBtn;
 @property (weak, nonatomic) IBOutlet UIButton *parentDateBtn;
+@property (nonatomic,assign) int mInt_flagID;//区分是查询老师自己1，学生0
 
 - (IBAction)cancelToolAction:(id)sender;
 - (IBAction)doneToolAction:(id)sender;
