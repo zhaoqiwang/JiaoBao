@@ -35,6 +35,9 @@
     self.dateLabel.text = model.ManName;
     self.reasonLabel.text = model.Amount;
     self.reasonLabel.textAlignment = NSTextAlignmentRight;
+    if([model.Amount2 isEqualToString:@"(null)"]){
+        model.Amount2 = @"0";
+    }
     self.stateLabel.text = model.Amount2;
     self.stateLabel.textAlignment = NSTextAlignmentCenter;
 

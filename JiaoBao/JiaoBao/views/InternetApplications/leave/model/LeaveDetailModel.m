@@ -33,6 +33,9 @@
     self.LeaveType = [dic objectForKey:@"LeaveType"];
     self.LeaveReason = [dic objectForKey:@"LeaveReason"];
     self.StatusStr = [dic objectForKey:@"StatusStr"];
+    if ([self.StatusStr isEqualToString:@"审批拒绝"]) {
+        self.StatusStr = @"拒绝";
+    }
     self.ApproveStatus = [dic objectForKey:@"ApproveStatus"];
     self.Approve = [dic objectForKey:@"Approve"];
     self.ApproveDate = [dic objectForKey:@"ApproveDate"];

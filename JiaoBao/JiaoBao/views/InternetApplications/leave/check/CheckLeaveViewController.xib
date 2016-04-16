@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -9,7 +9,10 @@
             <connections>
                 <outlet property="ManOrClassLabel" destination="xRc-QI-9mr" id="DB9-h8-6Xh"/>
                 <outlet property="conditionBtn" destination="9zG-Wx-3pE" id="euO-fD-dlE"/>
+                <outlet property="conditionContent" destination="YUc-ad-Ovc" id="lwi-CQ-Lvm"/>
+                <outlet property="conditionLabel" destination="YUc-ad-Ovc" id="Jlb-YI-AJQ"/>
                 <outlet property="datePicker" destination="Jvs-8X-YgC" id="LGL-mL-UAj"/>
+                <outlet property="height" destination="Tra-Jk-ZHU" id="J90-kS-BSA"/>
                 <outlet property="manSection" destination="hvZ-3W-SmJ" id="HBz-rv-1eU"/>
                 <outlet property="sectionView" destination="VQh-4V-w7s" id="RZ2-rc-5nr"/>
                 <outlet property="stuOrTeaLabel" destination="Pf2-s8-rzq" id="zco-HN-jWS"/>
@@ -25,7 +28,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Fwd-Vf-9j3">
-                    <rect key="frame" x="0.0" y="146" width="375" height="521"/>
+                    <rect key="frame" x="0.0" y="176" width="375" height="491"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="8QW-tc-kwj"/>
@@ -51,19 +54,38 @@
                         <action selector="conditionAction:" destination="-1" eventType="touchUpInside" id="V6U-6A-W9U"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择筛选条件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUc-ad-Ovc">
+                    <rect key="frame" x="13" y="146" width="362" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Tra-Jk-ZHU"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="Fwd-Vf-9j3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Kc-My-nLo"/>
+                <constraint firstItem="YUc-ad-Ovc" firstAttribute="leading" secondItem="9zG-Wx-3pE" secondAttribute="leading" constant="13" id="FY8-qt-Y3C"/>
                 <constraint firstItem="9zG-Wx-3pE" firstAttribute="trailing" secondItem="Fwd-Vf-9j3" secondAttribute="trailing" id="Gkj-BP-5k7"/>
                 <constraint firstAttribute="trailing" secondItem="9zG-Wx-3pE" secondAttribute="trailing" id="Gz6-2o-PY9"/>
+                <constraint firstItem="YUc-ad-Ovc" firstAttribute="top" secondItem="9zG-Wx-3pE" secondAttribute="bottom" id="TTe-hg-ivP"/>
+                <constraint firstItem="YUc-ad-Ovc" firstAttribute="top" secondItem="9zG-Wx-3pE" secondAttribute="bottom" id="WbH-z4-v5X"/>
                 <constraint firstItem="Fwd-Vf-9j3" firstAttribute="leading" secondItem="9zG-Wx-3pE" secondAttribute="leading" id="a35-E4-E70"/>
                 <constraint firstAttribute="bottom" secondItem="Fwd-Vf-9j3" secondAttribute="bottom" id="adt-5g-D7N"/>
-                <constraint firstItem="Fwd-Vf-9j3" firstAttribute="top" secondItem="9zG-Wx-3pE" secondAttribute="bottom" id="dfn-rn-8qZ"/>
+                <constraint firstItem="Fwd-Vf-9j3" firstAttribute="top" secondItem="9zG-Wx-3pE" secondAttribute="bottom" constant="30" id="dfn-rn-8qZ"/>
                 <constraint firstItem="9zG-Wx-3pE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="112" id="l6g-an-zoZ"/>
+                <constraint firstItem="Fwd-Vf-9j3" firstAttribute="top" secondItem="YUc-ad-Ovc" secondAttribute="bottom" id="rft-Dl-laW"/>
+                <constraint firstItem="YUc-ad-Ovc" firstAttribute="trailing" secondItem="9zG-Wx-3pE" secondAttribute="trailing" id="sJO-Ik-uiZ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="dfn-rn-8qZ"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="315.5" y="270.5"/>
         </view>
         <view contentMode="scaleToFill" id="ZCM-k4-Seb">

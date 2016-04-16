@@ -23,6 +23,9 @@
     }
     self.LeaveType = [dic objectForKey:@"LeaveType"];//请假类型
     self.StatusStr = [dic objectForKey:@"StatusStr"];//状态
+    if ([self.StatusStr isEqualToString:@"审批拒绝"]) {
+        self.StatusStr = @"拒绝";
+    }
     self.RowCount = [dic objectForKey:@"RowCount"];// 记录数量
     self.ManName = [dic objectForKey:@"ManName"];
     

@@ -164,12 +164,10 @@
     D("online config has fininshed and note = %@", note.userInfo);
 }
 - (void)checkNetworkStatus:(NSNotification *)notice {
-    
     NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
     switch (internetStatus)
     
     {
-            
         case NotReachable:
             
         {
@@ -352,7 +350,6 @@
     //对添加人员进行去重
     NSSet *set = [NSSet setWithArray:array];
     array = [NSMutableArray arrayWithArray:[set allObjects]];
-    
     for (int a= 0; a<[dm getInstance].mArr_unit_member.count; a++) {//循环所有的单位
         TreeView_node *node0 = [[dm getInstance].mArr_unit_member objectAtIndex:a];
         if ([node0.UID intValue] == [uid intValue]) {//找到单位和通知里一样的

@@ -25,6 +25,9 @@
     }
     self.LeaveType = [dic objectForKey:@"LeaveType"];
     self.StatusStr = [dic objectForKey:@"StatusStr"];
+    if ([self.StatusStr isEqualToString:@"审批拒绝"]) {
+        self.StatusStr = @"拒绝";
+    }
     self.RowCount = [NSString stringWithFormat:@"%@",[dic objectForKey:@"RowCount"]];
 }
 @end

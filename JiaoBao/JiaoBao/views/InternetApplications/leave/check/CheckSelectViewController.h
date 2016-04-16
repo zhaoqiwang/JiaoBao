@@ -28,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *dateTF;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (nonatomic,strong) NSString *mStr_checkName;//选择的几审
+
+
 - (IBAction)cancelToolAction:(id)sender;
 - (IBAction)doneToolAction:(id)sender;
 
@@ -38,6 +41,6 @@
 @optional
 
 //点击确定后，返回model
-- (void) CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag;
+- (void) CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag CheckName:(NSString *)name;
 
 @end

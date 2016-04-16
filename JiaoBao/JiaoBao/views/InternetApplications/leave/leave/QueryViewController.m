@@ -67,6 +67,10 @@
         NSArray *arr = [dic objectForKey:@"data"];
         if(self.mInt_reloadData==0){
             self.dataSource = [NSMutableArray arrayWithArray:arr];
+            if(self.dataSource.count == 0){
+                [MBProgressHUD showError:@"暂无内容" toView:self.view];
+            }
+            
             [self.tableView headerEndRefreshing];
             [self.tableView footerEndRefreshing];
             [self.tableView reloadData];
