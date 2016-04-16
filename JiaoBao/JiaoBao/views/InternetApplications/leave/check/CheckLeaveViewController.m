@@ -25,9 +25,26 @@
 @property(nonatomic,strong)CustomDatePicker *customPicker;//自定义日期控件
 @property(nonatomic,strong)leaveRecordModel *recordModel;//http请求model
 @property(nonatomic,assign)BOOL cellFlag;//0：有学生cell 1：没有学生cell
+@property(nonatomic,strong)NSMutableArray *conditionArr;
 @end
 
 @implementation CheckLeaveViewController
+//动态改变高度
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    if(self.mInt_flag==3)
+    {
+        self.height.constant = 0;
+    }
+    else
+    {
+        self.height.constant = 30;
+        
+    }
+    
+}
+
 //审核完成之后刷新审核列表的通知
 -(void)updateCheckCell:(NSNotification*)sender{
     CheckLeaveModel *model = [sender object];
@@ -48,6 +65,9 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.dataSource = [sender object];
+    if(self.dataSource.count==0){
+        [MBProgressHUD showError:@"暂无内容" toView:self.view];
+    }
     self.mArr4 = self.dataSource;
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
@@ -60,6 +80,9 @@
     NSArray *arr = [sender object];
     if(self.mInt_reloadData == 0){
         self.dataSource = [NSMutableArray arrayWithArray:arr];
+        if(self.dataSource.count==0){
+            [MBProgressHUD showError:@"暂无内容" toView:self.view];
+        }
         [self.tableView headerEndRefreshing];
         [self.tableView footerEndRefreshing];
         [self.tableView reloadData];
@@ -108,6 +131,9 @@
 -(void)GetClassSumLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.dataSource = [sender object];
+    if(self.dataSource.count==0){
+        [MBProgressHUD showError:@"暂无内容" toView:self.view];
+    }
     self.mArr3 = self.dataSource;
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
@@ -118,6 +144,9 @@
 -(void)GetManSumLeaves:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     self.dataSource = [sender object];
+    if(self.dataSource.count==0){
+        [MBProgressHUD showError:@"暂无内容" toView:self.view];
+    }
     if(self.mInt_flag == 0){
         self.mArr1 = self.dataSource;
     }
@@ -142,6 +171,8 @@
     self.mArr2 = [NSMutableArray array];
     self.mArr3 = [NSMutableArray array];
     self.mArr4 = [NSMutableArray array];
+    self.conditionArr = [NSMutableArray arrayWithObjects:@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件", nil];
+    self.conditionContent.text = [self.conditionArr objectAtIndex:0];
     //TableView上面有部分空白时用到
     self.automaticallyAdjustsScrollViewInsets = NO;
     //门卫取请假记录
@@ -375,12 +406,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.mInt_flag ==2) {//统计查询
-        SumLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
-        
-        StudentSumViewController *detail = [[StudentSumViewController alloc]init];
-        detail.ClassSumModel = model;
-        detail.sDateTime = self.recordModel.sDateTime;
-        [self.navigationController pushViewController:detail animated:YES];
+        if([self.ManOrClassLabel.text isEqualToString:@"班级"]){
+            SumLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
+            
+            StudentSumViewController *detail = [[StudentSumViewController alloc]init];
+            detail.ClassSumModel = model;
+            detail.sDateTime = self.recordModel.sDateTime;
+            [self.navigationController pushViewController:detail animated:YES];
+        }
+
     }else{
         ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
         LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
@@ -406,12 +440,15 @@
 
 //分类状态的回调
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
-    
+
     self.mInt_flag = (int)view.tag -100;
+    [self updateViewConstraints];
+
     //筛选条件或门卫审核日期按钮
     self.conditionBtn.selected = NO;
-    self.conditionBtn.tintColor = [UIColor lightGrayColor];
     NSMutableArray *tempMArr;
+    self.conditionContent.text = [self.conditionArr objectAtIndex:self.mInt_flag];
+
     if(self.mInt_flag ==0){//未审核
         self.recordModel.checkFlag = @"0";
         self.cellFlag = YES;
@@ -434,14 +471,19 @@
         //return;
         
     }
-    if(!self.recordModel.level){
-        if(self.mInt_flag != 3){
-            [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
-            self.dataSource = tempMArr;
-            [self.tableView reloadData];
-            return;
-        }
-        
+//    if(!self.recordModel.level){
+//        if(self.mInt_flag != 3){
+//            [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
+//            self.dataSource = tempMArr;
+//            [self.tableView reloadData];
+//            return;
+//        }
+//        
+//    }
+    if([self.conditionContent.text isEqualToString:@"请选择筛选条件"]){
+        self.dataSource = tempMArr;
+        [self.tableView reloadData];
+        return;
     }
     if(tempMArr.count==0){//数据源为空则发送请求
         [self sendRequest];
@@ -478,8 +520,6 @@
         selectVC.delegate = self;
         [self.navigationController pushViewController:selectVC animated:YES];
     }
-    
-    
 }
 //toolBar取消按钮
 - (IBAction)cancelAction:(id)sender {
@@ -496,24 +536,37 @@
     [self sendRequest];
 }
 //筛选条件的回调
--(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag{
+-(void)CheckSelectViewCSelect:(leaveRecordModel *)model flag:(int)flag  CheckName:(NSString *)name{
     //检查当前网络是否可用
     CheckNetWorkSelfView
+    NSArray *arr = [model.sDateTime componentsSeparatedByString:@"-"];
+    NSString *currentYear = [arr objectAtIndex:0];
+    NSString *currentMonth = [arr objectAtIndex:1];
+    NSString *currentDate = [NSString stringWithFormat:@"%@年%@月",currentYear,currentMonth];
     self.recordModel.manType = model.manType;//人员类型，0学生1老师
+
+    
     //设置不同的section
     if(self.mInt_flag==0||self.mInt_flag==1){
         if([model.manType isEqualToString:@"0"]){
             self.stuOrTeaLabel.text = @"学生";
+            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@%@%@的%@审核",self.stuOrTeaLabel.text,currentDate,model.gradeStr,model.classStr,name];
         }else{
             self.stuOrTeaLabel.text = @"教职工";
+            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@的%@审核",self.stuOrTeaLabel.text,currentDate,name];
         }
-    }
-    if(self.mInt_flag==2){
+
+    }else if(self.mInt_flag==2){
         if([model.manType isEqualToString:@"0"]){
             self.ManOrClassLabel.text = @"班级";
+            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@%@的审核",self.ManOrClassLabel.text,currentDate,model.gradeStr];
+
         }else{
             self.ManOrClassLabel.text = @"教职工";
+            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@的统计",self.ManOrClassLabel.text,currentDate];
+
         }
+    }else{
     }
     //设置http请求model
     self.recordModel.level = model.level;
@@ -528,8 +581,7 @@
     }else{
         self.recordModel.classStr = model.classStr;
     }
-    
-    
+    [self.conditionArr replaceObjectAtIndex:self.mInt_flag withObject:self.conditionLabel.text];
     [self sendRequest];
     
 }

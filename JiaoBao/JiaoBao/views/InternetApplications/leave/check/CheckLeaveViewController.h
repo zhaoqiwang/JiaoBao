@@ -36,10 +36,15 @@
 @property (strong, nonatomic) IBOutlet UIView *manSection;//门卫查询列表的section
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;//日期选择控件上面的工具条
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;//日期选择控件
+@property (weak, nonatomic) IBOutlet UILabel *conditionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *conditionBtn;//筛选条件按钮
 @property (weak, nonatomic) IBOutlet UILabel *ManOrClassLabel;//section中教职工或班级
 - (IBAction)conditionAction:(id)sender;//筛选条件方法
 - (IBAction)cancelAction:(id)sender;//日期选择控件上面的工具条的取消按钮
 - (IBAction)doneAction:(id)sender;//日期选择控件上面的工具条的确定按钮
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *conditionLayoutHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *layoutConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
+@property (weak, nonatomic) IBOutlet UILabel *conditionContent;
 
 @end

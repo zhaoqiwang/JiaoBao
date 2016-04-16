@@ -111,10 +111,10 @@
     }
 }
 - (IBAction)submitBtnAction:(id)sender {
-    if([utils isBlankString:self.textView.text]){
-        [MBProgressHUD showError:@"批注不能为空"];
-        return;
-    }
+//    if([utils isBlankString:self.textView.text]){
+//        [MBProgressHUD showError:@"批注不能为空"];
+//        return;
+//    }
     if([self.model.checkFlag integerValue]==1){
         NSString *message = [NSString stringWithFormat:@"您确定要‘同意’%@的请假申请吗？",self.mModel_LeaveDetail.ManName];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];

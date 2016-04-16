@@ -127,22 +127,27 @@
         //一审
         if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]) {
             model1.mInt_check = 0;
+            self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.A;
             a++;
         }else{
             if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
                 model1.mInt_check = 1;
+                self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.B;
                 a++;
             }else{
                 if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
                     model1.mInt_check = 2;
+                    self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.C;
                     a++;
                 }else{
                     if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
                         model1.mInt_check = 3;
+                        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.D;
                         a++;
                     }else{
                         if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
                             model1.mInt_check = 4;
+                            self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.E;
                             a++;
                         }
                     }
@@ -152,18 +157,23 @@
     }else{//学生
         if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
             model1.mInt_check = 0;
+            self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.A;
         }else{
             if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
                 model1.mInt_check = 1;
+                self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.B;
             }else{
                 if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
                     model1.mInt_check = 2;
+                    self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.C;
                 }else{
                     if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
                         model1.mInt_check = 3;
+                        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.D;
                     }else{
                         if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
                             model1.mInt_check = 4;
+                            self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.E;
                         }
                     }
                 }
@@ -558,7 +568,7 @@
 }
 //确定按钮
 -(void)navigationRightAction:(UIButton *)sender{
-    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:)]) {
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:CheckName:)]) {
         leaveRecordModel *selectModel = [[leaveRecordModel alloc] init];
         CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
         CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
@@ -585,8 +595,8 @@
                 selectModel.gradeStr = model3.mStr_value;
             }
         }
-        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:)]) {
-            [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag];
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(CheckSelectViewCSelect:flag:CheckName:)]) {
+            [self.delegate CheckSelectViewCSelect:selectModel flag:self.mInt_flag CheckName:self.mStr_checkName];
             [self myNavigationGoback];
         }
     }
