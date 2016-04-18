@@ -11,6 +11,7 @@
                 <outlet property="conditionBtn" destination="9zG-Wx-3pE" id="euO-fD-dlE"/>
                 <outlet property="conditionContent" destination="YUc-ad-Ovc" id="lwi-CQ-Lvm"/>
                 <outlet property="conditionLabel" destination="YUc-ad-Ovc" id="Jlb-YI-AJQ"/>
+                <outlet property="conditionLayoutHeight" destination="BRz-ob-jbs" id="xE5-Kc-VrS"/>
                 <outlet property="datePicker" destination="Jvs-8X-YgC" id="LGL-mL-UAj"/>
                 <outlet property="height" destination="Tra-Jk-ZHU" id="J90-kS-BSA"/>
                 <outlet property="manSection" destination="hvZ-3W-SmJ" id="HBz-rv-1eU"/>

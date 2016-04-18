@@ -35,10 +35,13 @@
     [super updateViewConstraints];
     if(self.mInt_flag==3)
     {
+        self.conditionLayoutHeight.constant = 0;
         self.height.constant = 0;
+        
     }
     else
     {
+        self.conditionLayoutHeight.constant = 34;
         self.height.constant = 30;
         
     }
@@ -446,8 +449,9 @@
 
     //筛选条件或门卫审核日期按钮
     //self.conditionBtn.selected = NO;
-    [self.conditionBtn setTitle:@"筛选条件      " forState:UIControlStateNormal];
-    [self.conditionBtn setImage:[UIImage imageNamed:@"kal_right_arrow"] forState:UIControlStateNormal];
+//    [self.conditionBtn setTitle:@"筛选条件      " forState:UIControlStateNormal];
+//    [self.conditionBtn setImage:[UIImage imageNamed:@"kal_right_arrow"] forState:UIControlStateNormal];
+    self.conditionBtn.hidden = NO;
     NSMutableArray *tempMArr;
     self.conditionContent.text = [self.conditionArr objectAtIndex:self.mInt_flag];
     if(self.mInt_flag ==0){//未审核
@@ -466,11 +470,12 @@
     }else{//门卫审核
         self.recordModel.checkFlag = nil;
         self.cellFlag = NO;
-        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy-MM"];
-        NSDate *currentDate =[NSDate date];
-        [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateNormal];
-        [self.conditionBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        self.conditionBtn.hidden = YES;
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//        [formatter setDateFormat:@"yyyy-MM"];
+//        NSDate *currentDate =[NSDate date];
+//        [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateNormal];
+//        [self.conditionBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         //self.conditionBtn.selected = YES;
         
         tempMArr = self.mArr4;
