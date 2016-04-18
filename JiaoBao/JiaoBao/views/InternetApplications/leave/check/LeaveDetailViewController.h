@@ -47,4 +47,7 @@
 //点击确定后，返回              表格数组中的索引    0撤回，1修改，2老师审核，3门卫审核
 - (void) LeaveDetailViewCDeleteLeave:(int)index action:(int)action;
 
+//门卫审核成功后，列表界面重新获取值
+-(void)doorCheckSuccess;
+
 @end

@@ -28,6 +28,9 @@
 		4307165C1C93C56F008D3382 /* LeaveNowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165B1C93C56F008D3382 /* LeaveNowModel.m */; };
 		430716611C93C6F3008D3382 /* LeaveNowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */; };
 		430716621C93C6F3008D3382 /* LeaveNowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */; };
+		435D45E61CC4934E0073179B /* leaveDelete.png in Resources */ = {isa = PBXBuildFile; fileRef = 435D45E31CC4934E0073179B /* leaveDelete.png */; };
+		435D45E71CC4934E0073179B /* leaveDelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 435D45E41CC4934E0073179B /* leaveDelete@2x.png */; };
+		435D45E81CC4934E0073179B /* leaveDelete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 435D45E51CC4934E0073179B /* leaveDelete@3x.png */; };
 		437D33AA1CA380B7001B5CB3 /* CheckSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D33A81CA380B7001B5CB3 /* CheckSelectViewController.m */; };
 		437D33AB1CA380B7001B5CB3 /* CheckSelectViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437D33A91CA380B7001B5CB3 /* CheckSelectViewController.xib */; };
 		437D33AE1CA38FDF001B5CB3 /* CheckSelectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 437D33AD1CA38FDF001B5CB3 /* CheckSelectModel.m */; };
@@ -1211,6 +1214,9 @@
 		4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveNowTableViewCell.h; path = cell/LeaveNowTableViewCell.h; sourceTree = "<group>"; };
 		4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveNowTableViewCell.m; path = cell/LeaveNowTableViewCell.m; sourceTree = "<group>"; };
 		430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveNowTableViewCell.xib; path = cell/LeaveNowTableViewCell.xib; sourceTree = "<group>"; };
+		435D45E31CC4934E0073179B /* leaveDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaveDelete.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete.png; sourceTree = "<group>"; };
+		435D45E41CC4934E0073179B /* leaveDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaveDelete@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete@2x.png"; sourceTree = "<group>"; };
+		435D45E51CC4934E0073179B /* leaveDelete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaveDelete@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete@3x.png"; sourceTree = "<group>"; };
 		437D33A71CA380B7001B5CB3 /* CheckSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CheckSelectViewController.h; path = check/CheckSelectViewController.h; sourceTree = "<group>"; };
 		437D33A81CA380B7001B5CB3 /* CheckSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CheckSelectViewController.m; path = check/CheckSelectViewController.m; sourceTree = "<group>"; };
 		437D33A91CA380B7001B5CB3 /* CheckSelectViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CheckSelectViewController.xib; path = check/CheckSelectViewController.xib; sourceTree = "<group>"; };
@@ -5395,6 +5401,9 @@
 		F75029E51AEE1CB3004F822F /* insideworkImage */ = {
 			isa = PBXGroup;
 			children = (
+				435D45E31CC4934E0073179B /* leaveDelete.png */,
+				435D45E41CC4934E0073179B /* leaveDelete@2x.png */,
+				435D45E51CC4934E0073179B /* leaveDelete@3x.png */,
 				A77E916A1BD77E1300488815 /* sigleSelect0.png */,
 				A77E916B1BD77E1300488815 /* sigleSelect0@2x.png */,
 				A77E916C1BD77E1300488815 /* sigleSelect0@3x.png */,
@@ -5821,6 +5830,7 @@
 				A768298A1AC69B21003B31EB /* classView_click_2@3x.png in Resources */,
 				A749B9CB19F89A530036F480 /* root_forwardNotice@2x.png in Resources */,
 				F7B816571C9698D700EDFEAA /* addDateCell.xib in Resources */,
+				435D45E71CC4934E0073179B /* leaveDelete@2x.png in Resources */,
 				A75046941A0A14BC00C54ECC /* forward_sendMsg1@2x.png in Resources */,
 				A74821A919FF452200234020 /* nav_return@2x.png in Resources */,
 				A7AD8C5619F644A2002E65FB /* tabbar_student1.png in Resources */,
@@ -6182,6 +6192,7 @@
 				A76D74751A69095A008F5856 /* share_like_0@3x.png in Resources */,
 				F7ED6F671C9B9BEA001A559E /* StuErrViewController.xib in Resources */,
 				A70179891AB91D2100E7093F /* work_accessory@3x.png in Resources */,
+				435D45E61CC4934E0073179B /* leaveDelete.png in Resources */,
 				A7724D5D1B5DF94C0095850A /* VideoShot1@2x.png in Resources */,
 				A78D65D81A89E41400BE6326 /* WorkMsgListCell.xib in Resources */,
 				F711B6E81C23ED2F00FF36DF /* MyComentCell.xib in Resources */,
@@ -6276,6 +6287,7 @@
 				A76829821AC69B21003B31EB /* classView_click_0.png in Resources */,
 				A749B9F719F8F2060036F480 /* TreeView_Level1_Cell.xib in Resources */,
 				F7FFD9DF1BCF564B004A691A /* MessageSelectionCell.xib in Resources */,
+				435D45E81CC4934E0073179B /* leaveDelete@3x.png in Resources */,
 				A77E91731BD77E1300488815 /* sigleSelect1.png in Resources */,
 				A761D4011A7F697900DCAEB9 /* rootTableSelect_2.png in Resources */,
 				A76F21711B7D88BB00D957E0 /* topBtnDown1@2x.png in Resources */,

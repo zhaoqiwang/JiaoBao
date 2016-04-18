@@ -32,8 +32,9 @@
                         <color key="textColor" red="0.3529411764705882" green="0.34509803921568627" blue="0.34509803921568627" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1q-Be-uJ8">
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1q-Be-uJ8">
                         <rect key="frame" x="15" y="29" width="22" height="22"/>
+                        <state key="normal" image="leaveDelete"/>
                         <connections>
                             <action selector="deleteBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OJ3-5D-Ogl"/>
                         </connections>
@@ -56,4 +57,7 @@
             <point key="canvasLocation" x="345" y="334"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="leaveDelete" width="16" height="16"/>
+    </resources>
 </document>

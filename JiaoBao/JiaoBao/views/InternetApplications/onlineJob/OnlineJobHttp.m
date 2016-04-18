@@ -391,7 +391,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
                 [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
             }else{
                 [tempDic setValue:@"100" forKey:@"ResultCode"];
-                [tempDic setValue:@"未抽取到合适的题目" forKey:@"ResultDesc"];
+                [tempDic setValue:@"根据您的当前学力值未抽选到合适的题目,无法生成试卷" forKey:@"ResultDesc"];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
         }else{

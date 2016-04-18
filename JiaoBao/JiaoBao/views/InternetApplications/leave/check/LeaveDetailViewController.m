@@ -38,13 +38,13 @@
     self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_leave.tableFooterView = [[UIView alloc]init];
     //普通审核
-//    if (self.mInt_checkOver ==0) {
+    if (self.mInt_checkOver ==0) {
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
         [MBProgressHUD showMessage:@"" toView:self.view];
-//    }else if (self.mInt_checkOver == 1){//门卫审核
-//        
-//    }
+    }else if (self.mInt_checkOver == 1){//门卫审核
+        [self loadClassLeaveDoor];
+    }
 }
 //门卫登记离校返校时间
 -(void)UpdateGateInfo:(NSNotification *)noti{
@@ -55,8 +55,21 @@
     if ([ResultCode intValue]==0) {
         //重新获取假条明细
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
-        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_classLeaves.TabID];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+        NSString *flag = [dic objectForKey:@"flag"];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+        NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
+        if ([flag intValue]==0) {//离校
+            self.mModel_classLeaves.LeaveTime = dateStr;
+            self.mModel_classLeaves.LWriterName = [dm getInstance].TrueName;
+        }else{//返校
+            self.mModel_classLeaves.ComeTime = dateStr;
+            self.mModel_classLeaves.CWriterName = [dm getInstance].TrueName;
+        }
+        [self loadClassLeaveDoor];
+        if (self.delegate != nil && [self.delegate respondsToSelector:@selector(doorCheckSuccess)]) {
+            [self.delegate doorCheckSuccess];
+        }
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
@@ -99,6 +112,7 @@
 
 //加载门卫审核数据
 -(void)loadClassLeaveDoor{
+    [self.mArr_list removeAllObjects];
     //请假人
     LeaveDetailShowModel *model = [[LeaveDetailShowModel alloc] init];
     model.mInt_flag = 0;
@@ -351,11 +365,11 @@
         //根据整个假条是否通过审核，然后有门卫权限，来做判断
         if (self.mInt_checkOver == 1) {//有门卫权限，并且来自门卫审核数组
             if (model.mStr_doorValue.length==0) {//没有签字过
-                cell.mBtn_checkDoor.frame = CGRectMake(cell.mLab_door.frame.origin.x+cell.mLab_door.frame.size.width+10, 10, cell.mBtn_checkDoor.frame.size.width, cell.mBtn_checkDoor.frame.size.height);
+                cell.mBtn_checkDoor.frame = CGRectMake(cell.mLab_door.frame.origin.x+cell.mLab_door.frame.size.width+10, cell.mLab_door.frame.origin.y-5, cell.mBtn_checkDoor.frame.size.width, cell.mBtn_checkDoor.frame.size.height);
                 cell.mBtn_checkDoor.hidden = NO;
             }
             if (model.mStr_door2Value.length==0) {//没有签字过
-                cell.mBtn_checkDoor2.frame = CGRectMake(cell.mLab_door2.frame.origin.x+cell.mLab_door2.frame.size.width+10, 10, cell.mBtn_checkDoor2.frame.size.width, cell.mBtn_checkDoor2.frame.size.height);
+                cell.mBtn_checkDoor2.frame = CGRectMake(cell.mLab_door2.frame.origin.x+cell.mLab_door2.frame.size.width+10, cell.mLab_door2.frame.origin.y-5, cell.mBtn_checkDoor2.frame.size.width, cell.mBtn_checkDoor2.frame.size.height);
                 cell.mBtn_checkDoor2.hidden = NO;
             }
             cell.delegate = self;
@@ -533,7 +547,7 @@
             return 44;
         }
     }else if (model.mInt_flag == 4){//开始结束时间
-        return 190;
+        return 195;
     }
     return 50;
 }
