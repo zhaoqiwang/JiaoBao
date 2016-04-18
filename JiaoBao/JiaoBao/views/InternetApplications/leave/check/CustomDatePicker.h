@@ -13,6 +13,8 @@
 @property(nonatomic,strong)NSMutableArray* yearArr;
 @property(nonatomic,strong)NSArray* monthArr;
 @property(nonatomic,strong)NSString *dateString;//选择的日期
+@property(nonatomic,strong)NSString *dateString2;//选择的日期
+
 -(NSString*)getDateString;//获取日期
 -(NSString*)getDateString2;//获取日期
 

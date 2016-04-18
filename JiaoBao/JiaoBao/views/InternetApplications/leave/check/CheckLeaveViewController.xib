@@ -35,19 +35,20 @@
                         <outlet property="delegate" destination="-1" id="KcH-PC-k89"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zG-Wx-3pE">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9zG-Wx-3pE">
                     <rect key="frame" x="0.0" y="112" width="375" height="34"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="34" id="BRz-ob-jbs"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                    <inset key="titleEdgeInsets" minX="-230" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="titleEdgeInsets" minX="-220" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="300" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <state key="normal" title="筛选条件" image="kal_right_arrow.png">
+                    <state key="normal" title="筛选条件      " image="kal_right_arrow.png">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
-                    <state key="selected" title="日期:2016-03">
+                    <state key="selected" title="日期:2016-03" image="123">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -60,9 +61,16 @@
                         <constraint firstAttribute="height" constant="30" id="Tra-Jk-ZHU"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGP-vz-85N">
+                    <rect key="frame" x="13" y="146" width="362" height="30"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <action selector="conditionAction:" destination="-1" eventType="touchUpInside" id="D3i-aL-vU2"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -74,8 +82,12 @@
                 <constraint firstItem="YUc-ad-Ovc" firstAttribute="top" secondItem="9zG-Wx-3pE" secondAttribute="bottom" id="WbH-z4-v5X"/>
                 <constraint firstItem="Fwd-Vf-9j3" firstAttribute="leading" secondItem="9zG-Wx-3pE" secondAttribute="leading" id="a35-E4-E70"/>
                 <constraint firstAttribute="bottom" secondItem="Fwd-Vf-9j3" secondAttribute="bottom" id="adt-5g-D7N"/>
+                <constraint firstItem="uGP-vz-85N" firstAttribute="leading" secondItem="YUc-ad-Ovc" secondAttribute="leading" id="dAi-TV-bXl"/>
                 <constraint firstItem="Fwd-Vf-9j3" firstAttribute="top" secondItem="9zG-Wx-3pE" secondAttribute="bottom" constant="30" id="dfn-rn-8qZ"/>
+                <constraint firstItem="uGP-vz-85N" firstAttribute="top" secondItem="YUc-ad-Ovc" secondAttribute="top" id="fyc-5X-MLY"/>
+                <constraint firstItem="uGP-vz-85N" firstAttribute="trailing" secondItem="YUc-ad-Ovc" secondAttribute="trailing" id="kaG-cn-NlN"/>
                 <constraint firstItem="9zG-Wx-3pE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="112" id="l6g-an-zoZ"/>
+                <constraint firstItem="uGP-vz-85N" firstAttribute="bottom" secondItem="YUc-ad-Ovc" secondAttribute="bottom" id="nE4-bW-4Tj"/>
                 <constraint firstItem="Fwd-Vf-9j3" firstAttribute="top" secondItem="YUc-ad-Ovc" secondAttribute="bottom" id="rft-Dl-laW"/>
                 <constraint firstItem="YUc-ad-Ovc" firstAttribute="trailing" secondItem="9zG-Wx-3pE" secondAttribute="trailing" id="sJO-Ik-uiZ"/>
             </constraints>
@@ -86,7 +98,7 @@
                     <exclude reference="dfn-rn-8qZ"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="315.5" y="270.5"/>
+            <point key="canvasLocation" x="194.5" y="186.5"/>
         </view>
         <view contentMode="scaleToFill" id="ZCM-k4-Seb">
             <rect key="frame" x="0.0" y="0.0" width="375" height="32"/>
@@ -208,6 +220,7 @@
         </view>
     </objects>
     <resources>
+        <image name="123" width="10" height="12"/>
         <image name="kal_right_arrow.png" width="10" height="12"/>
     </resources>
 </document>

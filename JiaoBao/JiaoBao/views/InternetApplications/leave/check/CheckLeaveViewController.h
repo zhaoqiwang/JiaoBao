@@ -46,5 +46,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *layoutConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *height;
 @property (weak, nonatomic) IBOutlet UILabel *conditionContent;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImgV;
 
 @end

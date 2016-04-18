@@ -39,9 +39,9 @@
     NSString *str2 = [dic objectForKey:@"WriteDate"];
     NSRange range = [str2 rangeOfString:str];
     if (range.length>0) {
-        self.WriteDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        self.WriteDate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }else{
-        self.WriteDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        self.WriteDate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "];
     }
     self.LeaveType = [dic objectForKey:@"LeaveType"];//请假类型
     self.RowCount = [dic objectForKey:@"RowCount"];// 记录数量
@@ -49,7 +49,7 @@
     str2 = [dic objectForKey:@"Sdate"];
     range = [str2 rangeOfString:str];
     if (range.length>0) {
-        self.Sdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        self.Sdate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }else{
         self.Sdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
     }
@@ -57,14 +57,35 @@
     str2 = [dic objectForKey:@"Edate"];
     range = [str2 rangeOfString:str];
     if (range.length>0) {
-        self.Edate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        self.Edate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }else{
-        self.Edate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        self.Edate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }
     self.LWriterName = [dic objectForKey:@"LWriterName"];//离校登记人（门卫）
     self.LeaveTime = [dic objectForKey:@"LeaveTime"];//离校时间
+    str2 = [dic objectForKey:@"LeaveTime"];
+    range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        self.LeaveTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    }else{
+        self.LeaveTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    }
     self.CWriterName = [dic objectForKey:@"CWriterName"];//返校登记人(门卫）
+    str2 = [dic objectForKey:@"CWriterName"];
+    range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        self.CWriterName = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    }else{
+        self.CWriterName = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    }
     self.ComeTime = [dic objectForKey:@"ComeTime"];// 返校时间
+    str2 = [dic objectForKey:@"ComeTime"];
+    range = [str2 rangeOfString:str];
+    if (range.length>0) {
+        self.ComeTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    }else{
+        self.ComeTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    }
     
 }
 

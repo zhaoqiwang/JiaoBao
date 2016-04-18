@@ -26,7 +26,11 @@
     
 }
 -(void)setCellData2:(MyLeaveModel*)model{
-    self.dateLabel.text = model.WriteDate;
+    NSArray *currentArr = [model.WriteDate componentsSeparatedByString:@" "];
+    if(currentArr.count>0){
+        NSString *dateStr = [currentArr objectAtIndex:0];
+        self.dateLabel.text = dateStr;
+    }
     self.stateLabel.text = model.LeaveType;
     self.reasonLabel.text = model.ManName;
     
