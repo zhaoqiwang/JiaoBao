@@ -627,7 +627,7 @@
                       target:self
                       action:@selector(makeJob:)];
     }else if ([dm getInstance].uType==3){
-        return [KxMenuItem menuItem:@"家长查询"
+        return [KxMenuItem menuItem:@"作业查询"
                        image:[UIImage imageNamed:@"appNav_contact"]
                       target:self
                       action:@selector(parentSearch:)];

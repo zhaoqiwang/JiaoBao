@@ -193,23 +193,43 @@
         model5.mInt_flag = 5;
         model5.mInt_check = i;
         if (i==0) {
-            model5.mStr_name = @"一审:";
+            if (self.mInt_falg == 0) {//学生
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteStd.A;
+            }else if (self.mInt_falg == 1){//老师
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteTea.A;
+            }
             model5.mStr_status = self.mModel_detail.ApproveStatus;
             model5.mStr_node = self.mModel_detail.ApproveNote;
         }else if (i==1){
-            model5.mStr_name = @"二审:";
+            if (self.mInt_falg == 0) {//学生
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteStd.B;
+            }else if (self.mInt_falg == 1){//老师
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteTea.B;
+            }
             model5.mStr_status = self.mModel_detail.ApproveStatus1;
             model5.mStr_node = self.mModel_detail.ApproveNote1;
         }else if (i==2){
-            model5.mStr_name = @"三审:";
+            if (self.mInt_falg == 0) {//学生
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteStd.C;
+            }else if (self.mInt_falg == 1){//老师
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteTea.C;
+            }
             model5.mStr_status = self.mModel_detail.ApproveStatus2;
             model5.mStr_node = self.mModel_detail.ApproveNote2;
         }else if (i==3){
-            model5.mStr_name = @"四审:";
+            if (self.mInt_falg == 0) {//学生
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteStd.D;
+            }else if (self.mInt_falg == 1){//老师
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteTea.D;
+            }
             model5.mStr_status = self.mModel_detail.ApproveStatus3;
             model5.mStr_node = self.mModel_detail.ApproveNote3;
         }else if (i==4){
-            model5.mStr_name = @"五审:";
+            if (self.mInt_falg == 0) {//学生
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteStd.E;
+            }else if (self.mInt_falg == 1){//老师
+                model5.mStr_name = [dm getInstance].leaveModel.LevelNoteTea.E;
+            }
             model5.mStr_status = self.mModel_detail.ApproveStatus4;
             model5.mStr_node = self.mModel_detail.ApproveNote4;
         }

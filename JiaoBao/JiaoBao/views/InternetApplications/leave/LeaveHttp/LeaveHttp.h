@@ -31,8 +31,8 @@
 //取指定单位的请假设置（包括当前登录用户的在该单位的审核权限，门卫权限
 -(void)GetLeaveSettingWithUnitId:(NSString*)unitId;
 
-//生成一条请假条记录
--(void)NewLeaveModel:(NewLeaveModel*)model;
+//生成一条请假条记录 - 0自己请假，1家长或老师代请
+-(void)NewLeaveModel:(NewLeaveModel*)model Flag:(NSString *)flag;
 
 //更新一条请假条记录
 -(void)UpdateLeaveModel:(NewLeaveModel*)model;

@@ -25,7 +25,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    //生成一条请假条记录
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewLeaveModel" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NewLeaveModel:) name:@"NewLeaveModel" object:nil];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
@@ -92,12 +94,14 @@
     [self.myQueryVC didMoveToParentViewController:self];
     self.myQueryVC.cellFlag = YES;
     self.myQueryVC.mInt_flag = 2;
+    self.myQueryVC.mInt_flagID = 1;
     self.myQueryVC.mInt_leaveID = self.mInt_leaveID;
 
     self.classQueryVC = [[QueryViewController alloc]init];
     [self addChildViewController:self.classQueryVC];
     self.classQueryVC.cellFlag = NO;
     self.classQueryVC.mInt_flag = 3;
+    self.classQueryVC.mInt_flagID = 0;
     self.classQueryVC.mInt_leaveID = self.mInt_leaveID;
 
     [self.classQueryVC didMoveToParentViewController:self];
@@ -105,6 +109,17 @@
     [self addChild:self.myQueryVC ];
     [self addChild:self.classQueryVC];
 
+}
+
+//生成一条请假条记录
+-(void)NewLeaveModel:(NSNotification *)noti{
+    NSMutableDictionary *dic = noti.object;
+    NSString *flag = [dic objectForKey:@"flag"];
+    if ([flag intValue]==1) {//家长或老师代请
+        [self.mView_root1 NewLeaveModel:noti];
+    }else{
+        [self.mView_root0 NewLeaveModel:noti];
+    }
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{

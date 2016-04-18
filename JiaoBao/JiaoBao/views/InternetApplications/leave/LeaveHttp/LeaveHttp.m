@@ -52,8 +52,8 @@ static LeaveHttp *leaveHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveSettingWithUnitId" object:nil];
     }];
 }
-//生成一条请假条记录
--(void)NewLeaveModel:(NewLeaveModel*)model{
+//生成一条请假条记录 - 0自己请假，1家长或老师代请
+-(void)NewLeaveModel:(NewLeaveModel*)model Flag:(NSString *)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@/Leave/NewLeaveModel",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
@@ -69,12 +69,14 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         [tempDic setValue:ResultCode forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------NewLeaveModel: %@", error);
         NSString *ResultDesc= error.localizedDescription;
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
+        [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:tempDic];
     }];
 }

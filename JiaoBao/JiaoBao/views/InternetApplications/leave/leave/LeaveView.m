@@ -13,11 +13,7 @@
 
 - (id)initWithFrame1:(CGRect)frame flag:(int)flag flagID:(int)flagID{
     self = [super init];
-    if (self)
-    {
-        //生成一条请假条记录
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewLeaveModel" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(NewLeaveModel:) name:@"NewLeaveModel" object:nil];
+    if (self){
         //使用NSNotificationCenter 鍵盤隐藏時
 //        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"keyboardWillBeHidden" object:nil];
 //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
@@ -195,9 +191,9 @@
             //内容显示
             cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
             cell.mTextF_reason.text = model.mStr_value;
-            cell.mTextF_reason.delegate = self;
             self.mTextF_reason = cell.mTextF_reason;
             self.mTextF_reason.delegate = self;
+            [self.mTextF_reason addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
         }else if (model.mInt_flag == 4){//添加时间段
             cell.mLab_name.hidden = YES;
             cell.mLab_value.hidden = YES;
@@ -313,6 +309,7 @@
 
     NewLeaveModel *model = [[NewLeaveModel alloc] init];
     model.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+    NSString *flag = @"";
     //判断是否是家长或者班主任代请
     if (self.mInt_flag==0) {//班主任代请0
         model.manId = self.mModel_studentInfo.StudentID;
@@ -321,6 +318,7 @@
         model.classStr = self.mModel_studentInfo.ClassName;
         model.unitClassId = self.mModel_studentInfo.UnitClassID;
         model.manType = @"0";
+        flag = @"1";
     }else if (self.mInt_flag ==2){//家长代请2
         model.manId = self.mModel_student.TabID;
         model.manName = self.mModel_student.StdName;
@@ -328,10 +326,12 @@
         model.classStr = self.mModel_student.ClsName;
         model.unitClassId = self.mModel_student.ClassId;
         model.manType = @"0";
+        flag = @"1";
     }else{//普通老师、班主任自己请假
         model.manId = [dm getInstance].userInfo.UserID;
         model.manType = @"1";
-        model.manName = [dm getInstance].userInfo.UserName;
+        model.manName = [dm getInstance].TrueName;
+        flag = @"0";
     }
     model.writerId = [dm getInstance].jiaoBaoHao;
     model.writer = [dm getInstance].TrueName;
@@ -363,7 +363,7 @@
             model.eDateTime4 = tempNowModel.mStr_endTime;
         }
     }
-    [[LeaveHttp getInstance] NewLeaveModel:model];
+    [[LeaveHttp getInstance] NewLeaveModel:model Flag:flag];
     [MBProgressHUD showMessage:@"" toView:self];
 }
 
@@ -477,6 +477,20 @@
                 textField.text = [textField.text substringToIndex:99];
             }
             tempModel.mStr_value = textField.text;
+        }
+    }
+}
+//如果输入超过规定的字数100，就不再让输入
+- (void)textFieldDidChange:(UITextField *)textField{
+    if (textField == self.mTextF_reason) {
+        if(textField.text.length>99)
+        {
+            textField.text = [textField.text substringToIndex:99];
+            for (LeaveNowModel *tempModel in self.mArr_leave) {
+                if (tempModel.mInt_flag==2){
+                    tempModel.mStr_value = textField.text;
+                }
+            }
         }
     }
 }
