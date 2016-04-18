@@ -445,7 +445,9 @@
     [self updateViewConstraints];
 
     //筛选条件或门卫审核日期按钮
-    self.conditionBtn.selected = NO;
+    //self.conditionBtn.selected = NO;
+    [self.conditionBtn setTitle:@"筛选条件      " forState:UIControlStateNormal];
+    [self.conditionBtn setImage:[UIImage imageNamed:@"kal_right_arrow"] forState:UIControlStateNormal];
     NSMutableArray *tempMArr;
     self.conditionContent.text = [self.conditionArr objectAtIndex:self.mInt_flag];
     if(self.mInt_flag ==0){//未审核
@@ -464,7 +466,12 @@
     }else{//门卫审核
         self.recordModel.checkFlag = nil;
         self.cellFlag = NO;
-        self.conditionBtn.selected = YES;
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"yyyy-MM"];
+        NSDate *currentDate =[NSDate date];
+        [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateNormal];
+        [self.conditionBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        //self.conditionBtn.selected = YES;
         
         tempMArr = self.mArr4;
         //return;
@@ -504,7 +511,7 @@
 }
 //点击筛选条件
 - (IBAction)conditionAction:(id)sender{
-    if(self.conditionBtn.selected == YES){//如果是门卫审核日期按钮
+    if(self.mInt_flag==3){//如果是门卫审核日期按钮
         [self.dateTF becomeFirstResponder];
     }
     else{//如果是筛选条件
@@ -575,7 +582,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
     NSString *dateStr = [self.customPicker getDateString];
-    [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",dateStr] forState:UIControlStateSelected];
+    [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",dateStr] forState:UIControlStateNormal];
     self.recordModel.sDateTime = [self.customPicker getDateString2];
     [self sendRequest];
 }

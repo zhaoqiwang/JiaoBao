@@ -281,7 +281,9 @@ int cellRefreshCount, newHeight;
     self.errModel.gradeCode = model.GradeCode;
     self.errModel.subjectCode = model.subjectCode;
     self.errModel.unid = model.VersionCode;
-
+    [self.conditionBtn setTitle:[NSString stringWithFormat:@"%@ %@ %@ %@",model.GradeName,model.subjectName,model.VersionName,model.chapterName] forState:UIControlStateNormal];
+    NSString *str = [self.conditionBtn titleForState:UIControlStateNormal];
+    NSLog(@"str = %@",str);
     [[OnlineJobHttp getInstance]GetStuErr:self.errModel];
 
     

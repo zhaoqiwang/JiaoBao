@@ -44,7 +44,6 @@
     if(!self.dateString2){
         
     }
-    self.dateString2 = [self.dateString2 stringByAppendingString:@" -1"];
     return self.dateString2;
 }
 
@@ -100,7 +99,7 @@
 
     }
     self.dateString =[NSString stringWithFormat:@"%@-%@",yearStr,monthStr];
-    self.dateString2 =[NSString stringWithFormat:@"%@-%@-1",yearStr,monthStr];
+    self.dateString2 =[NSString stringWithFormat:@"%@-%@-01",yearStr,monthStr];
 
 }
 
