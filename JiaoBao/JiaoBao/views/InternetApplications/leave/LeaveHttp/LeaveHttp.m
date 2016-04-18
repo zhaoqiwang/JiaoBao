@@ -389,8 +389,7 @@ static LeaveHttp *leaveHttp = nil;
     
 }
 //门卫登记离校返校时间 参数：请假时间记录ID - 登记人姓名 - 0离校，1返校
--(void)UpdateGateInfo:(NSString*)tabid userName:(NSString*)userName
-                 flag:(NSString*)flag{
+-(void)UpdateGateInfo:(NSString*)tabid userName:(NSString*)userName flag:(NSString*)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@/Leave/UpdateGateInfo",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
@@ -405,7 +404,7 @@ static LeaveHttp *leaveHttp = nil;
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc,@"flag":flag};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateGateInfo: %@", error);

@@ -657,10 +657,13 @@
     else{
         
     }
-    
-    
-    
 }
+
+//门卫审核成功后，列表界面重新获取值
+-(void)doorCheckSuccess{
+    [self headerRereshing];
+}
+
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
     self.mInt_reloadData = 0;
