@@ -171,7 +171,7 @@
     self.mArr2 = [NSMutableArray array];
     self.mArr3 = [NSMutableArray array];
     self.mArr4 = [NSMutableArray array];
-    self.conditionArr = [NSMutableArray arrayWithObjects:@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件", nil];
+    self.conditionArr = [NSMutableArray arrayWithObjects:@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件",@"", nil];
     self.conditionContent.text = [self.conditionArr objectAtIndex:0];
     //TableView上面有部分空白时用到
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -218,7 +218,7 @@
     NSDate *currentDate =[NSDate date];
     [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateSelected];
     self.conditionBtn.tintColor = [UIColor whiteColor];
-    self.recordModel.sDateTime = [formatter stringFromDate:currentDate];
+    self.recordModel.sDateTime = [NSString stringWithFormat:@"%@-1",[formatter stringFromDate:currentDate]];
     [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
@@ -448,7 +448,6 @@
     self.conditionBtn.selected = NO;
     NSMutableArray *tempMArr;
     self.conditionContent.text = [self.conditionArr objectAtIndex:self.mInt_flag];
-
     if(self.mInt_flag ==0){//未审核
         self.recordModel.checkFlag = @"0";
         self.cellFlag = YES;
@@ -577,7 +576,7 @@
     [formatter setDateFormat:@"yyyy-MM"];
     NSString *dateStr = [self.customPicker getDateString];
     [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",dateStr] forState:UIControlStateSelected];
-    self.recordModel.sDateTime = dateStr;
+    self.recordModel.sDateTime = [self.customPicker getDateString2];
     [self sendRequest];
 }
 //筛选条件的回调
@@ -615,7 +614,7 @@
     }
     //设置http请求model
     self.recordModel.level = model.level;
-    self.recordModel.sDateTime = model.sDateTime;
+    self.recordModel.sDateTime = [model.sDateTime stringByAppendingString:@" -1"];
     if ([model.gradeStr isEqual:@"全部"]) {
         self.recordModel.gradeStr = @"";
     }else{

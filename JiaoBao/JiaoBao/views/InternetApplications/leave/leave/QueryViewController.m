@@ -219,7 +219,7 @@
         self.recordModel.mName = @"";
     }
     [MBProgressHUD showMessage:@"" toView:self.view];
-        [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
+    [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
 
 }
 - (void)didReceiveMemoryWarning {
@@ -339,7 +339,7 @@
 
     [self.parentDateBtn setTitle:[self.customPicker getDateString] forState:UIControlStateNormal];
     [self.dateBtn setTitle:[self.customPicker getDateString] forState:UIControlStateNormal];
-    self.recordModel.sDateTime = [self.customPicker getDateString];
+    self.recordModel.sDateTime = [self.customPicker getDateString2];
     [self sendRequest];
     
 

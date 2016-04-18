@@ -19,6 +19,8 @@
     [formatter setDateFormat:@"yyyy-MM"];
     NSDate *currentDate =[NSDate date];
     self.dateString = [formatter stringFromDate:currentDate];
+    self.dateString2 = [NSString stringWithFormat:@"%@-1",self.dateString];
+
     self.monthArr = @[@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12"];
     NSArray *ym = [self.dateString componentsSeparatedByString:@"-"];
     NSString *year = [ym objectAtIndex:0];
@@ -38,6 +40,14 @@
     }
     return self.dateString;
 }
+-(NSString*)getDateString2{
+    if(!self.dateString2){
+        
+    }
+    self.dateString2 = [self.dateString2 stringByAppendingString:@" -1"];
+    return self.dateString2;
+}
+
 #pragma mark - UIPickViewDelegate
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -90,6 +100,8 @@
 
     }
     self.dateString =[NSString stringWithFormat:@"%@-%@",yearStr,monthStr];
+    self.dateString2 =[NSString stringWithFormat:@"%@-%@-1",yearStr,monthStr];
+
 }
 
 
