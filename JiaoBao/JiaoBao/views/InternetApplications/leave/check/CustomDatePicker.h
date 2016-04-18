@@ -14,5 +14,6 @@
 @property(nonatomic,strong)NSArray* monthArr;
 @property(nonatomic,strong)NSString *dateString;//选择的日期
 -(NSString*)getDateString;//获取日期
+-(NSString*)getDateString2;//获取日期
 
 @end

@@ -532,7 +532,7 @@
     [formatter setDateFormat:@"yyyy-MM"];
     NSString *dateStr = [self.customPicker getDateString];
     [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",dateStr] forState:UIControlStateSelected];
-    self.recordModel.sDateTime = dateStr;
+    self.recordModel.sDateTime = [self.customPicker getDateString2];
     [self sendRequest];
 }
 //筛选条件的回调
@@ -570,7 +570,7 @@
     }
     //设置http请求model
     self.recordModel.level = model.level;
-    self.recordModel.sDateTime = model.sDateTime;
+    self.recordModel.sDateTime = [model.sDateTime stringByAppendingString:@" -1"];
     if ([model.gradeStr isEqual:@"全部"]) {
         self.recordModel.gradeStr = @"";
     }else{

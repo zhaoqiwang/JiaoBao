@@ -38,6 +38,14 @@
     }
     return self.dateString;
 }
+-(NSString*)getDateString2{
+    if(!self.dateString){
+        
+    }
+    self.dateString = [self.dateString stringByAppendingString:@" -1"];
+    return self.dateString;
+}
+
 #pragma mark - UIPickViewDelegate
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
