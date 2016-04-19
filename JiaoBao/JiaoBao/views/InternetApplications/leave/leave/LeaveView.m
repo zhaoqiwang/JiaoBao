@@ -191,6 +191,7 @@
             //内容显示
             cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
             cell.mTextF_reason.text = model.mStr_value;
+            cell.mTextF_reason.delegate = self;
             self.mTextF_reason = cell.mTextF_reason;
             self.mTextF_reason.delegate = self;
             [self.mTextF_reason addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -461,7 +462,7 @@
     // For any other character return TRUE so that the text gets added to the view
     if(textField.text.length>99)
     {
-        textField.text = [textField.text substringToIndex:99];
+        textField.text = [textField.text substringToIndex:100];
         for (LeaveNowModel *tempModel in self.mArr_leave) {
             if (tempModel.mInt_flag==2){
                 tempModel.mStr_value = textField.text;
@@ -474,7 +475,7 @@
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==2){
             if(textField.text.length>99){
-                textField.text = [textField.text substringToIndex:99];
+                textField.text = [textField.text substringToIndex:100];
             }
             tempModel.mStr_value = textField.text;
         }
@@ -485,7 +486,13 @@
     if (textField == self.mTextF_reason) {
         if(textField.text.length>99)
         {
-            textField.text = [textField.text substringToIndex:99];
+            textField.text = [textField.text substringToIndex:100];
+            for (LeaveNowModel *tempModel in self.mArr_leave) {
+                if (tempModel.mInt_flag==2){
+                    tempModel.mStr_value = textField.text;
+                }
+            }
+        }else{
             for (LeaveNowModel *tempModel in self.mArr_leave) {
                 if (tempModel.mInt_flag==2){
                     tempModel.mStr_value = textField.text;
