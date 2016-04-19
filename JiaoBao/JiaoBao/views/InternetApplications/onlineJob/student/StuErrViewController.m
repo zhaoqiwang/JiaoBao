@@ -67,6 +67,10 @@ int cellRefreshCount, newHeight;
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
+    model.QsCon = [utils filterHTML:model.QsCon Flag:1];
+    model.QsCon = [utils filterHTML:model.QsCon Flag:0];
+    model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"( (   ) )" withString:@" (   ) "];
+        model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"（ (   ) ）" withString:@" (   ) "];
     StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
     NSString *errNum;
     if([errModel.DoC integerValue]==1){
@@ -79,32 +83,28 @@ int cellRefreshCount, newHeight;
        errNum = @" *"; 
     }
     model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:13px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
-//    if([model.QsCon containsString:@"<span style=\"font-family:微软雅黑;\">"]){
-//            model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"<span style=\"font-family:微软雅黑;\">" withString:[NSString  stringWithFormat:@"%@<br/>、",errModel.Tabid]];
-//    }else{
-//        model.QsCon = [NSString stringWithFormat:@"%@<br/>、%@",errModel.Tabid,model.QsCon];
-//    }
+
 
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p>",errModel.Answer,model.QsCorectAnswer,model.QsExplain]];
+    model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
+    model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
+    NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
+    NSAttributedString *string = [[NSAttributedString alloc] initWithData:[model.QsCon dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
+    model.attributedString = string;
+    self.textView.attributedText = string;
+    model.cellHeight = self.textView.contentSize.height;
+
     if([model.QsCon isEqual:[NSNull null]]){
+
         
     }
     else{
        [self.webDataArr addObject:model];
         
     }
-    
-    UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 0)];
-    tempWeb.delegate = self;
-    tempWeb.tag = self.mInt_index;
-    NSString *content = model.QsCon;
-    NSString *tempHtml = [utils clearHtml:content width:0];
-    tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
-    [tempWeb setBackgroundColor:[UIColor clearColor]];
-    [tempWeb.scrollView setScrollEnabled:NO];
-    [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-    [self.view addSubview:tempWeb];
-    [tempWeb setHidden:YES];
+
+
+
     self.mInt_index++;
     if(self.mInt_index<self.datasource.count){
         StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
@@ -112,7 +112,11 @@ int cellRefreshCount, newHeight;
         [MBProgressHUD showMessage:@"" toView:self.view];
     }
     else{
-
+        [MBProgressHUD hideHUDForView:self.view];
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self.tableVIew headerEndRefreshing];
+        [self.tableVIew footerEndRefreshing];
+        [self.tableVIew reloadData];
     }
 
     
@@ -159,12 +163,6 @@ int cellRefreshCount, newHeight;
         }
         self.mInt_reloadData=0;
     }
-    //self.datasource = [sender object];
-    //for (int i=0; i<self.datasource.count; i++) {
-
-
-
-   // }
 
 }
 - (void)viewDidLoad {
@@ -226,12 +224,14 @@ int cellRefreshCount, newHeight;
 //        CGFloat webViewHeight = [[cell.webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
 //        model.cellHeight = webViewHeight;
 //    [cell.webView loadHTMLString:model.QsCon baseURL:nil];
-    NSString *content = model.QsCon;
-    NSString *tempHtml = [utils clearHtml:content width:0];
-    NSLog(@"cell = %@",cell);
-    cell.webView.opaque = NO; //不设置这个值 页面背景始终是白色
-    [cell.webView setBackgroundColor:[UIColor clearColor]];
-    [cell.webView loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    //NSString *content = model.QsCon;
+//    NSAttributedString *content = [[NSAttributedString alloc]initWithString:model.QsCon];
+    cell.textview.attributedText = model.attributedString;
+//    NSString *tempHtml = [utils clearHtml:content width:0];
+//    NSLog(@"cell = %@",cell);
+//    cell.webView.opaque = NO; //不设置这个值 页面背景始终是白色
+//    [cell.webView setBackgroundColor:[UIColor clearColor]];
+//    [cell.webView loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
 
 //    if(model.webFlag==NO){
 //        cell.webView.delegate = self;
