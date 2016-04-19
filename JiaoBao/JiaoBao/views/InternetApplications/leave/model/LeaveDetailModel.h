@@ -17,7 +17,7 @@
 @property(nonatomic,strong)NSString *ClassStr;//班级名称
 @property(nonatomic,strong)NSString *GradeStr;//年级名称
 @property(nonatomic,strong)NSString *UnitId;//单位Id
-
+@property(nonatomic,strong)NSString *WriterId;//发起人教宝号
 
 @property(nonatomic,strong)NSString *Writer;////发起人姓名
 @property(nonatomic,strong)NSString *WriteDate;//发起日期

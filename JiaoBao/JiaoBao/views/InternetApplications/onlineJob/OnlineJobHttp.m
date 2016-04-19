@@ -340,7 +340,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
         
         D("JSON--------GetStuHWQsWithHwInfoId: %@,", str2);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
-        D("model.qscon===%@",model.QsCon);
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWQsWithHwInfoId" object:model];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
