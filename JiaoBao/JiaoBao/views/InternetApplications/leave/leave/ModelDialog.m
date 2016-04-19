@@ -66,11 +66,11 @@
     }
     
     NSDate *startDate = [dateFormatter dateFromString:startStr];
-    NSComparisonResult ComparisonResult = [startDate compare:[NSDate date]];
-    if(ComparisonResult == NSOrderedAscending){
-        [MBProgressHUD showError:@"开始时间不能小于当前时间"];
-        return;
-    }
+//    NSComparisonResult ComparisonResult = [startDate compare:[NSDate date]];
+//    if(ComparisonResult == NSOrderedAscending){
+//        [MBProgressHUD showError:@"开始时间不能小于当前时间"];
+//        return;
+//    }
     NSDate *endDate = [dateFormatter  dateFromString:endStr];
     //设置时间范围
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
