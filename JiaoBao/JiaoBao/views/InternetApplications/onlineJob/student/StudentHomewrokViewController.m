@@ -338,7 +338,11 @@
         //再发送获取练习列表，然后根据返回的数据，做界面显示
         
     }
+    if(self.mInt_flag == (int)btn.tag-100){
+        return;
+    }
     self.mInt_flag = (int)btn.tag-100;
+
     
     self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
