@@ -20,5 +20,6 @@
 -(void)sendRequest;
 
 - (IBAction)conditionAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextView *textView;
 
 @end
