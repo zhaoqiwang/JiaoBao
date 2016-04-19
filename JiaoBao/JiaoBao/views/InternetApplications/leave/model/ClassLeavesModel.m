@@ -51,7 +51,7 @@
     if (range.length>0) {
         self.Sdate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }else{
-        self.Sdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
+        self.Sdate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }
     self.Edate = [dic objectForKey:@"Edate"];//请假结束时间
     str2 = [dic objectForKey:@"Edate"];
@@ -71,13 +71,6 @@
         self.LeaveTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
     }
     self.CWriterName = [dic objectForKey:@"CWriterName"];//返校登记人(门卫）
-    str2 = [dic objectForKey:@"CWriterName"];
-    range = [str2 rangeOfString:str];
-    if (range.length>0) {
-        self.CWriterName = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
-    }else{
-        self.CWriterName = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
-    }
     self.ComeTime = [dic objectForKey:@"ComeTime"];// 返校时间
     str2 = [dic objectForKey:@"ComeTime"];
     range = [str2 rangeOfString:str];
