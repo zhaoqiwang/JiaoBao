@@ -67,6 +67,10 @@ int cellRefreshCount, newHeight;
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
+    model.QsCon = [utils filterHTML:model.QsCon Flag:1];
+    model.QsCon = [utils filterHTML:model.QsCon Flag:0];
+    model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"( (   ) )" withString:@" (   ) "];
+        model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"（ (   ) ）" withString:@" (   ) "];
     StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
     NSString *errNum;
     if([errModel.DoC integerValue]==1){
@@ -110,6 +114,8 @@ int cellRefreshCount, newHeight;
     else{
         [MBProgressHUD hideHUDForView:self.view];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        [self.tableVIew headerEndRefreshing];
+        [self.tableVIew footerEndRefreshing];
         [self.tableVIew reloadData];
     }
 

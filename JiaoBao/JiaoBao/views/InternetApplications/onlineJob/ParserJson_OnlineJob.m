@@ -303,8 +303,6 @@
     model.hwid = [numberFormatter stringFromNumber:[dic objectForKey:@"hwid"]];
     model.hwinfoid = [numberFormatter stringFromNumber:[dic objectForKey:@"hwinfoid"]];
     model.QsCon = [dic objectForKey:@"QsCon"];
-    model.QsCon = [utils filterHTML:model.QsCon Flag:1];
-    model.QsCon = [utils filterHTML:model.QsCon Flag:0];
     model.QsAns = [dic objectForKey:@"QsAns"];
     model.QsCorectAnswer = [dic objectForKey:@"QsCorectAnswer"];
     model.QsExplain = [dic objectForKey:@"QsExplain"];
