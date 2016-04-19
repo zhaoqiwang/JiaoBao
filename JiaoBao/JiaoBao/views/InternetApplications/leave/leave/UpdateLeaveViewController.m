@@ -267,6 +267,10 @@
             cell.mBtn_add.hidden = YES;
             cell.mBtn_submit.hidden = YES;
             cell.mTextF_reason.hidden = NO;
+            cell.mTextF_reason.delegate = self;
+            self.mTextF_reason = cell.mTextF_reason;
+            self.mTextF_reason.delegate = self;
+            [self.mTextF_reason addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
             //标题
             cell.mLab_name.frame = CGRectMake(14, (44-cell.mLab_name.frame.size.height)/2, cell.mLab_name.frame.size.width, cell.mLab_name.frame.size.height);
             cell.mLab_name.text = model.mStr_name;
@@ -510,7 +514,7 @@
     // For any other character return TRUE so that the text gets added to the view
     if(textField.text.length>99)
     {
-        textField.text = [textField.text substringToIndex:99];
+        textField.text = [textField.text substringToIndex:100];
         for (LeaveNowModel *tempModel in self.mArr_leave) {
             if (tempModel.mInt_flag==2){
                 tempModel.mStr_value = textField.text;
@@ -518,6 +522,36 @@
         }
     }
     return TRUE;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    for (LeaveNowModel *tempModel in self.mArr_leave) {
+        if (tempModel.mInt_flag==2){
+            if(textField.text.length>99){
+                textField.text = [textField.text substringToIndex:100];
+            }
+            tempModel.mStr_value = textField.text;
+        }
+    }
+}
+//如果输入超过规定的字数100，就不再让输入
+- (void)textFieldDidChange:(UITextField *)textField{
+    if (textField == self.mTextF_reason) {
+        if(textField.text.length>99)
+        {
+            textField.text = [textField.text substringToIndex:100];
+            for (LeaveNowModel *tempModel in self.mArr_leave) {
+                if (tempModel.mInt_flag==2){
+                    tempModel.mStr_value = textField.text;
+                }
+            }
+        }else{
+            for (LeaveNowModel *tempModel in self.mArr_leave) {
+                if (tempModel.mInt_flag==2){
+                    tempModel.mStr_value = textField.text;
+                }
+            }
+        }
+    }
 }
 
 //当键盘隐藏的时候

@@ -48,4 +48,7 @@
 //检查当前网络是否可用
 +(BOOL)checkNetWork:(UIView *)view tableView:(UITableView *)tableView;
 
+//过滤错题本中的输入框等 - html文本 - 0直接去掉，1替换text
++(NSString *)filterHTML:(NSString *)html Flag:(int)flag;
+
 @end

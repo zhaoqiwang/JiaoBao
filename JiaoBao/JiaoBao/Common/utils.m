@@ -191,4 +191,28 @@
     }
 }
 
+//过滤错题本中的输入框等 - html文本 - 0直接去掉，1替换text
++(NSString *)filterHTML:(NSString *)html Flag:(int)flag{
+    NSScanner * scanner = [NSScanner scannerWithString:html];
+    NSString * text = nil;
+    while([scanner isAtEnd]==NO)
+    {
+        //找到标签的起始位置
+        if (flag == 0) {
+            [scanner scanUpToString:@"<input type=\"radio\"" intoString:nil];
+        }else{
+            [scanner scanUpToString:@"<input type=\"text\"" intoString:nil];
+        }
+        //找到标签的结束位置
+        [scanner scanUpToString:@">" intoString:&text];
+        //替换字符
+        if (flag == 0) {
+            html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
+        }else{
+            html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@" (   ) "];
+        }
+    }
+    return html;
+}
+
 @end
