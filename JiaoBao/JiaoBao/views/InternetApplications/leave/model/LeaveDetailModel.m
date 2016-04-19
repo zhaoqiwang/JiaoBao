@@ -27,6 +27,7 @@
     self.TabID = [numberFormatter stringFromNumber:[dic objectForKey:@"TabID"]];
     self.ManName = [dic objectForKey:@"ManName"];
     self.Writer = [dic objectForKey:@"Writer"];
+    self.WriterId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"WriterId"]];
     NSString *str2 = [dic objectForKey:@"WriteDate"];
     NSRange range = [str2 rangeOfString:str];
     self.WriteDate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
