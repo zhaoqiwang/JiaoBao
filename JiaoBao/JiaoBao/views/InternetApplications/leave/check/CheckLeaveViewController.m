@@ -25,6 +25,7 @@
 @property(nonatomic,strong)CustomDatePicker *customPicker;//自定义日期控件
 @property(nonatomic,strong)leaveRecordModel *recordModel;//http请求model
 @property(nonatomic,assign)BOOL cellFlag;//0：有学生cell 1：没有学生cell
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property(nonatomic,strong)NSMutableArray *conditionArr;
 @end
 
@@ -35,6 +36,7 @@
     [super updateViewConstraints];
     if(self.mInt_flag==3)
     {
+        self.topConstraint.constant = 0;
         self.conditionLayoutHeight.constant = 0;
         self.height.constant = 0;
         

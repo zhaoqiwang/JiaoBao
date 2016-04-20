@@ -20,6 +20,7 @@
                 <outlet property="stuSection" destination="ZCM-k4-Seb" id="xUu-fS-9Qd"/>
                 <outlet property="tableView" destination="Fwd-Vf-9j3" id="Sue-Ls-hJF"/>
                 <outlet property="toolBar" destination="VUJ-Dp-GEW" id="bCK-kw-VIs"/>
+                <outlet property="topConstraint" destination="l6g-an-zoZ" id="guN-Lb-3dU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
