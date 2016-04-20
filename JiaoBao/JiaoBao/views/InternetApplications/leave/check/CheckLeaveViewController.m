@@ -36,7 +36,7 @@
     [super updateViewConstraints];
     if(self.mInt_flag==3)
     {
-        self.topConstraint.constant = 0;
+        self.topConstraint.constant =CGRectGetMaxY(self.mNav_navgationBar.frame);
         self.conditionLayoutHeight.constant = 0;
         self.height.constant = 0;
         
@@ -224,7 +224,6 @@
     [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateSelected];
     self.conditionBtn.tintColor = [UIColor whiteColor];
     self.recordModel.sDateTime = [NSString stringWithFormat:@"%@-1",[formatter stringFromDate:currentDate]];
-    [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
@@ -234,6 +233,8 @@
     //先判断有没有审核权限
     int a = [self selectCount];
     if (a>0) {
+        [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
+
         //4种状态
         NSMutableArray *temp = [NSMutableArray array];
         for (int i=0; i<3; i++) {
@@ -252,12 +253,19 @@
             ButtonViewModel *model = [[ButtonViewModel alloc] init];
             model.mStr_title = @"门卫审核";
             [temp addObject:model];
+            
         }
         self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
         self.mScrollV_all.delegate = self;
         [self.view addSubview:self.mScrollV_all];
     }else{//光有门卫审核
+        self.mNav_navgationBar.label_Title.text = @"门卫审核";
+        LeaveViewCell *cell = [[LeaveViewCell alloc]init];
+        cell.tag = 103;
+        ButtonViewModel *model = [[ButtonViewModel alloc] init];
+        model.mStr_title = @"门卫审核";
         
+        [self LeaveViewCellTitleBtn:cell];
     }
     
     self.dateTF = [[UITextField alloc]initWithFrame:CGRectZero];
