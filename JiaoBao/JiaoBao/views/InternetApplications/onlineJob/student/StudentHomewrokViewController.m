@@ -151,9 +151,10 @@
     //添加默认数据
     [self addDefaultData];
     self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
-    self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mScrollV_all.frame), [dm getInstance].width, [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame))];
-    self.containerView.hidden = YES;
-    [self.view addSubview:self.containerView];
+    [self addChildViewController:self.stuErrVC];
+    [self.stuErrVC didMoveToParentViewController:self];
+    [self addChild:self.stuErrVC];
+
 }
 
 //获取练习查询列表
@@ -322,8 +323,7 @@
     
     self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
-    [self.stuErrVC removeFromParentViewController];
-    self.containerView.hidden = YES;
+    self.stuErrVC.view.hidden = YES;
     if (self.mInt_flag==0) {//获取作业列表
         //判断是否有值
         if (self.mArr_homework.count==0) {
@@ -348,14 +348,9 @@
         }
     }else if(self.mInt_flag==3){
         self.mTableV_list.hidden = YES;
-        self.containerView.hidden = NO;
+        self.stuErrVC.view.hidden = NO;
         self.mTableV_list.tableHeaderView=nil;
-        
-        
-        [self addChildViewController:self.stuErrVC];
-        [self.stuErrVC didMoveToParentViewController:self];
         self.stuErrVC.mModel_stuInf = self.mModel_stuInf;
-        [self addChild:self.stuErrVC withChildToRemove:nil];
         if(self.stuErrVC.webDataArr.count==0){
             [self.stuErrVC sendRequest];
         }
@@ -364,26 +359,17 @@
     
     [self.mTableV_list reloadData];
 }
--(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+-(void)addChild:(UIViewController *)childToAdd
 {
-    assert(childToAdd != nil);
-    
-    if (childToRemove != nil)
-    {
-        [childToRemove.view removeFromSuperview];
-    }
-    
-    // match the child size to its parent
     CGRect frame = childToAdd.view.frame;
-    frame.origin.y = 0;
-    frame.size.height = [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame);
-    frame.size.width =[dm getInstance].width;
+    frame.origin.y = CGRectGetMaxY(self.mScrollV_all.frame);
+    frame.size.height = CGRectGetHeight(self.view.frame)-self.mScrollV_all.frame.origin.y-self.mScrollV_all.frame.size.height;
+    frame.size.width = CGRectGetWidth(self.view.frame);
     childToAdd.view.frame = frame;
-    
-    //containerView.backgroundColor = [UIColor clearColor];
-    NSLog(@"frame =%@",NSStringFromCGRect(childToAdd.view.frame));
-    [self.containerView addSubview:childToAdd.view];
+    [self.view addSubview:childToAdd.view];
+    childToAdd.view.hidden = YES;
 }
+
 //获取年级列表
 -(void)GetGradeList:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];

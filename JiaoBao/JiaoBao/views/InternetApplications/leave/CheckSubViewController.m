@@ -146,6 +146,10 @@
     
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    //输入删除时
+    if ([text isEqualToString:@""]) {
+        return YES;
+    }
     //系统九宫格限制字数
     if(range.location==49&&text.length==1)
     {

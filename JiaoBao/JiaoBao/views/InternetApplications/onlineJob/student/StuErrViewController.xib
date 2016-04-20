@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EFp-a0-ieT">
-                    <rect key="frame" x="0.0" y="55" width="320" height="387"/>
+                    <rect key="frame" x="0.0" y="55" width="320" height="357"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="HsH-Cm-s0Z"/>
@@ -75,7 +75,7 @@
                 <constraint firstItem="kXN-uN-B3h" firstAttribute="trailing" secondItem="EFp-a0-ieT" secondAttribute="trailing" constant="1" id="R28-Hp-1Pg"/>
                 <constraint firstItem="R45-dK-sBG" firstAttribute="top" secondItem="p3G-iT-p5S" secondAttribute="bottom" constant="-29" id="T6Q-k0-NtA"/>
                 <constraint firstItem="EFp-a0-ieT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Ud4-yM-rUU"/>
-                <constraint firstAttribute="bottom" secondItem="EFp-a0-ieT" secondAttribute="bottom" constant="-30" id="Ueg-3s-bfq"/>
+                <constraint firstAttribute="bottom" secondItem="EFp-a0-ieT" secondAttribute="bottom" id="Ueg-3s-bfq"/>
                 <constraint firstItem="kXN-uN-B3h" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="4" id="XX8-bv-Bhu"/>
                 <constraint firstAttribute="trailing" secondItem="EFp-a0-ieT" secondAttribute="trailing" id="YVh-j8-Cfc"/>
                 <constraint firstItem="p3G-iT-p5S" firstAttribute="leading" secondItem="EFp-a0-ieT" secondAttribute="leading" id="YXQ-77-kki"/>
@@ -93,6 +93,7 @@
             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
             <fontDescription key="fontDescription" type="system" pointSize="14"/>
             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+            <point key="canvasLocation" x="350" y="452"/>
         </textView>
     </objects>
     <resources>

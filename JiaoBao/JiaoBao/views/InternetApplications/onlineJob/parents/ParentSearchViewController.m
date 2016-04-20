@@ -123,10 +123,11 @@
     }
     
      
-    self.containerView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.mScrollV_all.frame), [dm getInstance].width, [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame)+50)];
+
     self.stuErrVC = [[StuErrViewController alloc]initWithNibName:@"StuErrViewController" bundle:[NSBundle mainBundle]];
-    [self.view addSubview:self.containerView];
-    self.containerView.hidden = YES;
+    [self addChildViewController:self.stuErrVC];
+    [self.stuErrVC didMoveToParentViewController:self];
+    [self addChild:self.stuErrVC];
     [self.view addSubview:self.mTableV_name];
 }
 
@@ -380,8 +381,7 @@
     self.mTableV_list.hidden = NO;
     [self.mTableV_list removeFooter];
     self.mInt_index = (int)view.tag-100;
-    [self.stuErrVC removeFromParentViewController];
-    self.containerView.hidden = YES;
+    self.stuErrVC.view.hidden = YES;
     if (self.mInt_index==0) {
         self.mTableV_list.tableHeaderView = nil;
     } else if (self.mInt_index==1){
@@ -399,14 +399,9 @@
     }else
     if (self.mInt_index==4){
         self.mTableV_list.hidden = YES;
-        self.containerView.hidden = NO;
+        self.stuErrVC.view.hidden = NO;
         self.mTableV_list.tableHeaderView=nil;
-        
-
-        [self addChildViewController:self.stuErrVC];
         self.stuErrVC.mModel_gen = self.mModel_gen;
-        [self.stuErrVC didMoveToParentViewController:self];
-        [self addChild:self.stuErrVC withChildToRemove:nil];
         
         
     }
@@ -422,26 +417,17 @@
     //发送请求
     [self sendRequst];
 }
--(void)addChild:(UIViewController *)childToAdd withChildToRemove:(UIViewController *)childToRemove
+-(void)addChild:(UIViewController *)childToAdd
 {
-    assert(childToAdd != nil);
-    
-    if (childToRemove != nil)
-    {
-        [childToRemove.view removeFromSuperview];
-    }
-    
-    // match the child size to its parent
     CGRect frame = childToAdd.view.frame;
-    frame.origin.y = 0;
-    frame.size.height = [dm getInstance].height-CGRectGetMaxY(self.mScrollV_all.frame);
-    frame.size.width =[dm getInstance].width;
+    frame.origin.y = CGRectGetMaxY(self.mScrollV_all.frame);
+    frame.size.height = CGRectGetHeight(self.view.frame)-self.mScrollV_all.frame.origin.y-self.mScrollV_all.frame.size.height;
+    frame.size.width = CGRectGetWidth(self.view.frame);
     childToAdd.view.frame = frame;
-    
-    //containerView.backgroundColor = [UIColor clearColor];
-    NSLog(@"frame =%@",NSStringFromCGRect(childToAdd.view.frame));
-    [self.containerView addSubview:childToAdd.view];
+    [self.view addSubview:childToAdd.view];
+    childToAdd.view.hidden = YES;
 }
+
 
 //发送请求
 -(void)sendRequst{
