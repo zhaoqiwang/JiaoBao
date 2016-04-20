@@ -16,7 +16,7 @@
     if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    if (text.length>9) {
+    if (text.length>15) {
         hud.detailsLabelText = text;
     }else{
         hud.labelText = text;
@@ -30,7 +30,7 @@
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:1.0];
+    [hud hide:YES afterDelay:2.0];
 }
 
 #pragma mark 显示提醒文字（不带成功与否标志）

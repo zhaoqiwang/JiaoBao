@@ -16,7 +16,7 @@
     if (view == nil) view = [UIApplication sharedApplication].keyWindow;
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    if (text.length>9) {
+    if (text.length>15) {
         hud.detailsLabelText = text;
     }else{
         hud.labelText = text;
