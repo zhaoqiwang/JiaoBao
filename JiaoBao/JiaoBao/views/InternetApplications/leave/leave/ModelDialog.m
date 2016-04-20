@@ -30,14 +30,14 @@
         
     }
     else{
-        NSDate *date = [NSDate date];
-        NSDate *endDate = [date initWithTimeIntervalSinceNow:60*60];
+        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:60*60*24];
+        //NSDate *endDate = [date initWithTimeIntervalSinceNow:60*60];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        self.model.mStr_startTime = [formatter stringFromDate:date];
-        self.model.mStr_endTime = [formatter stringFromDate:endDate];
-        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:date]];
-        self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:endDate]];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        self.model.mStr_startTime = [NSString stringWithFormat:@"%@ 8:30:00",[formatter stringFromDate:date]];
+        self.model.mStr_endTime = [NSString stringWithFormat:@"%@ 17:30:00",[formatter stringFromDate:date]];
+        self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
+        self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",self.model.mStr_endTime];
         
     }
     
