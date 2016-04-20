@@ -1103,6 +1103,8 @@
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
 
                     }
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
                 else
                 {
