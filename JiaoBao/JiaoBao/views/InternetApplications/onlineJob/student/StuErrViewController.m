@@ -40,7 +40,7 @@ int cellRefreshCount, newHeight;
     model.QsCon = [utils filterHTML:model.QsCon Flag:1];
     model.QsCon = [utils filterHTML:model.QsCon Flag:0];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"( (   ) )" withString:@" (   ) "];
-        model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"（ (   ) ）" withString:@" (   ) "];
+    model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"（ (   ) ）" withString:@" (   ) "];
     StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
     NSString *errNum;
     if([errModel.DoC integerValue]==1){
@@ -52,12 +52,14 @@ int cellRefreshCount, newHeight;
     }else{
        errNum = @" *"; 
     }
-    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:13px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
+    model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:15px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
 
 
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p>",errModel.Answer,model.QsCorectAnswer,model.QsExplain]];
+    model.QsCon = [NSString stringWithFormat:@"<div style=\"font-size:15px;\">%@</div>",model.QsCon];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
+
     NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
     NSAttributedString *string = [[NSAttributedString alloc] initWithData:[model.QsCon dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
     model.attributedString = string;
