@@ -570,7 +570,7 @@
 }
 //删除
 -(void)LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *)cell{
-    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定撤回？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定删除？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
     [sheet showInView:self.view];
 }
 //修改

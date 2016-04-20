@@ -229,28 +229,35 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     self.cellFlag = YES;
-    //4种状态
-    NSMutableArray *temp = [NSMutableArray array];
-    for (int i=0; i<3; i++) {
-        ButtonViewModel *model = [[ButtonViewModel alloc] init];
-        if (i==0){
-            model.mStr_title = @"待审核";
-        }else if (i==1){
-            model.mStr_title = @"已审核";
-        }else if (i==2){
-            model.mStr_title = @"统计查询";
+    //先判断有没有审核权限
+    int a = [self selectCount];
+    if (a>0) {
+        //4种状态
+        NSMutableArray *temp = [NSMutableArray array];
+        for (int i=0; i<3; i++) {
+            ButtonViewModel *model = [[ButtonViewModel alloc] init];
+            if (i==0){
+                model.mStr_title = @"待审核";
+            }else if (i==1){
+                model.mStr_title = @"已审核";
+            }else if (i==2){
+                model.mStr_title = @"统计查询";
+            }
+            [temp addObject:model];
         }
-        [temp addObject:model];
+        //是否有门卫权限
+        if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+            ButtonViewModel *model = [[ButtonViewModel alloc] init];
+            model.mStr_title = @"门卫审核";
+            [temp addObject:model];
+        }
+        self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
+        self.mScrollV_all.delegate = self;
+        [self.view addSubview:self.mScrollV_all];
+    }else{//光有门卫审核
+        
     }
-    //是否有门卫权限
-    if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
-        ButtonViewModel *model = [[ButtonViewModel alloc] init];
-        model.mStr_title = @"门卫审核";
-        [temp addObject:model];
-    }
-    self.mScrollV_all = [[LeaveTopScrollView alloc] initFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, 48) Array:temp Flag:1 index:0];
-    self.mScrollV_all.delegate = self;
-    [self.view addSubview:self.mScrollV_all];
+    
     self.dateTF = [[UITextField alloc]initWithFrame:CGRectZero];
     [self.view addSubview:self.dateTF];
     self.customPicker = [[CustomDatePicker alloc]init];
@@ -521,46 +528,7 @@
     }
     else{//如果是筛选条件
         //先判断有没有审核权限
-        int a = 0;
-        if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
-            a++;
-        }
-        //二审
-        if ([[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
-            a++;
-        }
-        //三审
-        if ([[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
-            a++;
-        }
-        //四审
-        if ([[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
-            a++;
-        }
-        //五审
-        if ([[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
-            a++;
-        }
-        //一审
-        if ([[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]) {
-            a++;
-        }
-        //二审
-        if ([[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
-            a++;
-        }
-        //三审
-        if ([[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
-            a++;
-        }
-        //四审
-        if ([[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
-            a++;
-        }
-        //五审
-        if ([[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
-            a++;
-        }
+        int a = [self selectCount];
         if (a>0) {
             CheckSelectViewController *selectVC = [[CheckSelectViewController alloc]init];
             if(self.mInt_flag==0||self.mInt_flag==1){//已审核和未审核
@@ -576,6 +544,51 @@
             [MBProgressHUD showError:@"当前账号没有审核权限" toView:self.view];
         }
     }
+}
+
+//判断有没有审核权限
+-(int)selectCount{
+    int a = 0;
+    if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
+        a++;
+    }
+    //二审
+    if ([[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
+        a++;
+    }
+    //三审
+    if ([[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
+        a++;
+    }
+    //四审
+    if ([[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
+        a++;
+    }
+    //五审
+    if ([[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
+        a++;
+    }
+    //一审
+    if ([[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]) {
+        a++;
+    }
+    //二审
+    if ([[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
+        a++;
+    }
+    //三审
+    if ([[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
+        a++;
+    }
+    //四审
+    if ([[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
+        a++;
+    }
+    //五审
+    if ([[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
+        a++;
+    }
+    return a;
 }
 //toolBar取消按钮
 - (IBAction)cancelAction:(id)sender {
