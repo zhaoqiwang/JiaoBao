@@ -60,7 +60,7 @@
             if ([btn1.class isSubclassOfClass:[ButtonViewCell class]]) {
                 if ((int)btn1.tag == btn.tag) {
                     [btn1.mImgV_pic setImage:[UIImage imageNamed:btn1.bModel.mStr_imgNow]];
-                    btn1.mLab_title.textColor = [UIColor greenColor];
+                    btn1.mLab_title.textColor = [UIColor colorWithRed:54/255.0 green:168/255.0 blue:12/255.0 alpha:1];
                 }else{
                     [btn1.mImgV_pic setImage:[UIImage imageNamed:btn1.bModel.mStr_img]];
                     btn1.mLab_title.textColor = [UIColor grayColor];

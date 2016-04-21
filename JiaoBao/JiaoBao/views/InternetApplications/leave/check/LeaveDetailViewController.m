@@ -571,6 +571,7 @@
 //删除
 -(void)LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *)cell{
     UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定删除？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    sheet.tag = 2;
     [sheet showInView:self.view];
 }
 //修改
@@ -584,19 +585,27 @@
 }
 //门卫离校签字
 -(void)LeaveDetailTableViewCellCheckDoorBtn:(LeaveDetailTableViewCell *)cell{
-    [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"0"];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定签字？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    sheet.tag = 0;
+    [sheet showInView:self.view];
 }
 //门卫回校签字
 -(void)LeaveDetailTableViewCellCheckDoor2Btn:(LeaveDetailTableViewCell *)cell{
-    [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"1"];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定签字？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    sheet.tag = 1;
+    [sheet showInView:self.view];
 }
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
     if (buttonIndex == 0) {//确定,删除假条
-        [[LeaveHttp getInstance] DeleteLeaveModel:self.mModel_detail.TabID];
+        if (actionSheet.tag == 2) {//删除
+            [[LeaveHttp getInstance] DeleteLeaveModel:self.mModel_detail.TabID];
+        }else if (actionSheet.tag == 0){//门卫离校签字
+            [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"0"];
+        }else if (actionSheet.tag == 1){//门卫回校签字
+             [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"1"];
+        }
         [MBProgressHUD showMessage:@"" toView:self.view];
     }else if (buttonIndex == 1) {//取消
         

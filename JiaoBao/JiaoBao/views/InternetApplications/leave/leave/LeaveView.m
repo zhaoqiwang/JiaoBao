@@ -127,7 +127,7 @@
         //时间显示
         cell.mLab_start.frame = CGRectMake(cell.mBtn_delete.frame.origin.x+cell.mBtn_delete.frame.size.width+10, 10, cell.mLab_start.frame.size.width, cell.mLab_start.frame.size.height);
         cell.mLab_end.frame = CGRectMake(cell.mLab_start.frame.origin.x, cell.mLab_start.frame.origin.y+40, cell.mLab_start.frame.size.width, cell.mLab_start.frame.size.height);
-        cell.mLab_startNow.frame = CGRectMake(cell.mLab_start.frame.origin.x+cell.mLab_start.frame.size.width+10, cell.mLab_start.frame.origin.y, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
+        cell.mLab_startNow.frame = CGRectMake(cell.mLab_start.frame.origin.x+cell.mLab_start.frame.size.width+5, cell.mLab_start.frame.origin.y, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
         cell.mLab_endNow.frame = CGRectMake(cell.mLab_startNow.frame.origin.x, cell.mLab_startNow.frame.origin.y+40, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
         cell.mLab_startNow.text = model.mStr_startTime;
         cell.mLab_endNow.text = model.mStr_endTime;
@@ -445,11 +445,11 @@
     // Any new character added is passed in as the "text" parameter
     //输入删除时
     if ([string isEqualToString:@""]) {
-        for (LeaveNowModel *tempModel in self.mArr_leave) {
-            if (tempModel.mInt_flag==2){
-                tempModel.mStr_value = textField.text;
-            }
-        }
+//        for (LeaveNowModel *tempModel in self.mArr_leave) {
+//            if (tempModel.mInt_flag==2){
+//                tempModel.mStr_value = textField.text;
+//            }
+//        }
         return YES;
     }
     if ([string isEqualToString:@"\n"]) {
@@ -462,25 +462,32 @@
     // For any other character return TRUE so that the text gets added to the view
     if(textField.text.length>99)
     {
-        textField.text = [textField.text substringToIndex:100];
-        for (LeaveNowModel *tempModel in self.mArr_leave) {
-            if (tempModel.mInt_flag==2){
-                tempModel.mStr_value = textField.text;
-            }
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 99) {
+//            for (LeaveNowModel *tempModel in self.mArr_leave) {
+//                if (tempModel.mInt_flag==2){
+//                    tempModel.mStr_value = textField.text;
+//                }
+//            }
+            return NO;
         }
     }
     return TRUE;
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    for (LeaveNowModel *tempModel in self.mArr_leave) {
-        if (tempModel.mInt_flag==2){
-            if(textField.text.length>99){
-                textField.text = [textField.text substringToIndex:100];
-            }
-            tempModel.mStr_value = textField.text;
-        }
-    }
-}
+//- (void)textFieldDidEndEditing:(UITextField *)textField{
+//    for (LeaveNowModel *tempModel in self.mArr_leave) {
+//        if (tempModel.mInt_flag==2){
+//            if(textField.text.length>99){
+//                textField.text = [textField.text substringToIndex:100];
+//            }
+//            tempModel.mStr_value = textField.text;
+//        }
+//    }
+//}
 //如果输入超过规定的字数100，就不再让输入
 - (void)textFieldDidChange:(UITextField *)textField{
     if (textField == self.mTextF_reason) {

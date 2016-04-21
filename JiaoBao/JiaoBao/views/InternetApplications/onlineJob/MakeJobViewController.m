@@ -82,13 +82,13 @@
                 if (node0.flag == 1) {
 //                    [node0.sonNodes removeAllObjects];
                     //插入数据，单独的难度行
-                    for (int i=0; i<self.mArr_sumData.count; i++) {
-                        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
-                        if (node0.flag == 1) {
-                            //统一作业，插入单独的难度行
-                            [node0.sonNodes addObject:self.sigleClassNode];
-                        }
-                    }
+//                    for (int i=0; i<self.mArr_sumData.count; i++) {
+//                        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+//                        if (node0.flag == 1) {
+//                            //统一作业，插入单独的难度行
+//                            [node0.sonNodes addObject:self.sigleClassNode];
+//                        }
+//                    }
                     for (int m=0; m<array.count; m++) {
                         //第1根节点
                         TreeJob_node *node1 = [[TreeJob_node alloc]init];
@@ -233,13 +233,13 @@
     //统一作业，插入单独的难度行
     [self sigleDifficulty];
     //插入数据
-//    for (int i=0; i<self.mArr_sumData.count; i++) {
-//        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
-//        if (node0.flag == 1) {
-//            //统一作业，插入单独的难度行
-//            [node0.sonNodes addObject:self.sigleClassNode];
-//        }
-//    }
+    for (int i=0; i<self.mArr_sumData.count; i++) {
+        TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
+        if (node0.flag == 1) {
+            //统一作业，插入单独的难度行
+            [node0.sonNodes addObject:self.sigleClassNode];
+        }
+    }
     [self reloadDataForDisplayArray];//初始化将要显示的数据
     //获取年级列表
     [[OnlineJobHttp getInstance]GetGradeList:0];
