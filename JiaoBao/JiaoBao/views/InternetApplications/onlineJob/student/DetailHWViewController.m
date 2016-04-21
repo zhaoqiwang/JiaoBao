@@ -673,7 +673,8 @@
         NSInteger interval = [zone secondsFromGMTForDate: currentDate];
         NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
         if([self.FlagStr isEqualToString:@"1"]){
-            if([self.navBarName isEqualToString:@"做练习"]){
+            if([self.navBarName isEqualToString:@"做练习"]||[self.navBarName isEqualToString:@"练习详情"]){
+                
             }else{
                 if([self.stuHomeWorkModel.HWStartTime isEqualToString:@"1970-01-01 00:00:00"]){//第一次进入做作业界面
                     self.clockLabel.text = [NSString stringWithFormat:@"%@:%@",self.stuHomeWorkModel.LongTime,@"00"];
@@ -695,6 +696,9 @@
                 }
             }
 
+        }else{
+            self.clockLabel.hidden = YES;
+            self.countdownLabel.hidden = YES;
         }
  
         

@@ -912,7 +912,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CheckNetWorkSelfView
-    if (self.mInt_flag==0||self.mInt_flag==2) {
+    if (self.mInt_flag==0||self.mInt_flag==2) {//做作业或者练习查询
         StuHWModel *model;
         if (self.mInt_flag==0) {
             model = [self.mArr_homework objectAtIndex:indexPath.row];
@@ -932,13 +932,11 @@
         if(self.mInt_flag ==0){
             detail.navBarName = @"做作业";
             detail.FlagStr = @"1";
-
             detail.isSubmit = [model.isHWFinish integerValue];
 
         }else{
             detail.navBarName = @"练习详情";
             detail.FlagStr = @"2";
-
             detail.isSubmit = [model.isHWFinish integerValue];
 
         }
