@@ -1859,7 +1859,7 @@
     else{
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [MBProgressHUD showError:[sender object] toView:self.view];
+        [MBProgressHUD showError:result toView:self.view];
         self.publicClassNum =0;
         return;
     }
@@ -1872,10 +1872,17 @@
             [MBProgressHUD showSuccess:@"发布作业成功" toView:self.view];
 
         }else{
+            if(self.publicArr.count == self.publishJobModel.classIDArr.count){
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布作业失败" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [alert show];
+                alert.delegate = self;
+                return;
+            }
             NSString *classStr = [self.publicArr componentsJoinedByString:@","];
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"发布作业失败" message:[NSString stringWithFormat:@"%@发布作业失败,其余班级成功",classStr] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alert show];
             alert.delegate = self;
+            [self.publicArr removeAllObjects];
 //            [MBProgressHUD showError:[NSString stringWithFormat:@"%@发布作业失败,其余班级成功",classStr] toView:self.view];
 
         }

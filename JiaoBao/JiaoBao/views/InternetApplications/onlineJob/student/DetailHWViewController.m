@@ -1099,7 +1099,7 @@
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
 //                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     if (self.isSubmit == YES) {
                         [btn setTitle:@"下一题" forState:UIControlStateNormal];
@@ -1107,6 +1107,15 @@
                     }else{
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
 
+                    }
+
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                    if (self.isSubmit == YES) {
+                        [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                        btn.enabled = NO;
+                    }else{
+                        [btn setTitle:@"提交" forState:UIControlStateNormal];
+                        
                     }
                     [self.collectionView reloadData];
                     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
@@ -1170,18 +1179,25 @@
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                     NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                     self.selectedBtnTag++;
-                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                    if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                     {
                             [btn setTitle:@"提交" forState:UIControlStateNormal];
                             btn.enabled = NO;
+                    }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                        [btn setTitle:@"提交" forState:UIControlStateNormal];
+                        btn.enabled = NO;
+                        [self.collectionView reloadData];
+                        [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+                        
                     }
                     else
                     {
                         [btn setTitle:@"下一题" forState:UIControlStateNormal];
                         btn.enabled = YES;
+                        [self.collectionView reloadData];
+                        [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                     }
-                    [self.collectionView reloadData];
-                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+
                 }
 
             }
@@ -1190,7 +1206,7 @@
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     if(self.isSubmit == NO){
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -1199,13 +1215,25 @@
                     {
                         btn.enabled = NO;
                     }
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                    if(self.isSubmit == NO){
+                        [btn setTitle:@"提交" forState:UIControlStateNormal];
+                    }
+                    else
+                    {
+                        btn.enabled = NO;
+                    }
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+                    
                 }
                 else
                 {
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
-                [self.collectionView reloadData];
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+
             }
 
 
@@ -1279,18 +1307,24 @@
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                     NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                     self.selectedBtnTag++;
-                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                    if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                     {
                             [btn setTitle:@"提交" forState:UIControlStateNormal];
                             btn.enabled = NO;
+                    }else if(self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                        [btn setTitle:@"提交" forState:UIControlStateNormal];
+                        btn.enabled = NO;
+                        [self.collectionView reloadData];
+                        [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                     }
                     else
                     {
                         [btn setTitle:@"下一题" forState:UIControlStateNormal];
                         btn.enabled = YES;
+                        [self.collectionView reloadData];
+                        [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                     }
-                    [self.collectionView reloadData];
-                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+
                 }
             }
             else{
@@ -1298,7 +1332,7 @@
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     if(self.isSubmit == NO){
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -1307,13 +1341,24 @@
                     {
                         btn.enabled = NO;
                     }
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                    if(self.isSubmit == NO){
+                        [btn setTitle:@"提交" forState:UIControlStateNormal];
+                    }
+                    else
+                    {
+                        btn.enabled = NO;
+                    }
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
                 else
                 {
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
-                [self.collectionView reloadData];
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+
             }
         }
         else
@@ -1349,7 +1394,7 @@
                 self.selectedBtnTag++;
                 [self changeQuestionRange:(int)self.selectedBtnTag];
 
-                if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     if(self.isSubmit == NO){
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -1358,14 +1403,26 @@
                     {
                         btn.enabled = NO;
                     }
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                    if(self.isSubmit == NO){
+                        [btn setTitle:@"提交" forState:UIControlStateNormal];
+                    }
+                    else
+                    {
+                        btn.enabled = NO;
+                    }
+                    NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
                 else
                 {
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
+                    NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
+                    [self.collectionView reloadData];
+                    [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
-                NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
-                [self.collectionView reloadData];
-                [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+
             }
 
         }

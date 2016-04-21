@@ -157,7 +157,10 @@ static OnlineJobHttp *onlineJobHttp = nil;
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:error.description];
+        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
+        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+        NSString *className = [httpObject objectForKey:@"className"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:httpObject];
 
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
