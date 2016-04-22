@@ -367,6 +367,8 @@
     model.tabId = self.mModel_detail.TabID;
     model.manId = self.mModel_detail.ManId;
     model.manName = self.mModel_detail.ManName;
+    model.gradeStr = self.mModel_detail.GradeStr;
+    model.classStr = self.mModel_detail.ClassStr;
     model.manType = [NSString stringWithFormat:@"%d",self.mInt_flag];
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==1) {
