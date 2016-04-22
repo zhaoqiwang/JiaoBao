@@ -36,7 +36,7 @@
 - (IBAction)datePickAction:(id)sender;
 
 - (IBAction)Stu_SelectionAction:(id)sender;//家长身份选择学生
-
+-(void)sendRequest;
 
 
 @end

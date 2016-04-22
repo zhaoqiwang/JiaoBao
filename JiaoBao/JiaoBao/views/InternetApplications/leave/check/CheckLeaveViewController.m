@@ -167,7 +167,17 @@
     [self.tableView reloadData];
     
 }
-
+-(void)setUpRecordModel{
+    //初始化http请求model
+    self.recordModel = [[leaveRecordModel alloc]init];
+    self.recordModel.checkFlag = @"0";////0待审记录，1已审记录
+    self.recordModel.numPerPage = @"20";
+    self.recordModel.pageNum = @"1";
+    self.recordModel.RowCount = @"0";
+    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    //self.recordModel.level = @"0";
+    //self.recordModel.manType = @"1";
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //初始化可变数组
@@ -209,13 +219,8 @@
     self.tableView.footerRefreshingText = @"正在加载...";
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
-    //初始化http请求model
-    self.recordModel = [[leaveRecordModel alloc]init];
-    self.recordModel.checkFlag = @"0";////0待审记录，1已审记录
-    self.recordModel.numPerPage = @"20";
-    self.recordModel.pageNum = @"1";
-    self.recordModel.RowCount = @"0";
-    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    [self setUpRecordModel];//初始化http请求Model
+
     //把门卫审核日期设置成当前日期
     //设置门卫审核日期
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -223,7 +228,9 @@
     NSDate *currentDate =[NSDate date];
     [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateSelected];
     self.conditionBtn.tintColor = [UIColor whiteColor];
-    self.recordModel.sDateTime = [NSString stringWithFormat:@"%@-1",[formatter stringFromDate:currentDate]];
+    self.recordModel.sDateTime = [NSString stringWithFormat:@"%@-01",[formatter stringFromDate:currentDate]];
+    //[self sendRequest];
+
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
@@ -629,20 +636,20 @@
     if(self.mInt_flag==0||self.mInt_flag==1){
         if([model.manType isEqualToString:@"0"]){
             self.stuOrTeaLabel.text = @"学生";
-            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@%@%@的%@审核",self.stuOrTeaLabel.text,currentDate,model.gradeStr,model.classStr,name];
+            self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@ %@",self.stuOrTeaLabel.text,currentDate,model.gradeStr,model.classStr,name];
         }else{
             self.stuOrTeaLabel.text = @"教职工";
-            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@的%@审核",self.stuOrTeaLabel.text,currentDate,name];
+            self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@ %@",self.stuOrTeaLabel.text,currentDate,name];
         }
 
     }else if(self.mInt_flag==2){
         if([model.manType isEqualToString:@"0"]){
             self.ManOrClassLabel.text = @"班级";
-            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@%@的审核",self.ManOrClassLabel.text,currentDate,model.gradeStr];
+            self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@ %@",self.ManOrClassLabel.text,currentDate,model.gradeStr];
 
         }else{
             self.ManOrClassLabel.text = @"教职工";
-            self.conditionLabel.text = [NSString stringWithFormat:@"对%@%@的统计",self.ManOrClassLabel.text,currentDate];
+            self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@",self.ManOrClassLabel.text,currentDate];
 
         }
     }else{
