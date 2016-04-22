@@ -61,7 +61,9 @@
         self.mTableV_leave = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, self.frame.size.height)];
         self.mTableV_leave.delegate = self;
         self.mTableV_leave.dataSource = self;
+        //去掉底部多余的表格线
         self.mTableV_leave.tableFooterView = [[UIView alloc]init];
+        self.mTableV_leave.separatorStyle = UITableViewCellSelectionStyleNone;
         [self addSubview:self.mTableV_leave];
         [self.mTableV_leave reloadData];
         
@@ -89,6 +91,15 @@
                 tempModel.mStr_value = @"";
             }else if (tempModel.mInt_flag==3) {
                 [self.mArr_leave removeObjectAtIndex:i];
+            }
+        }
+        //当家长情况只有一个学生时，给默认值
+        if (self.mInt_flagID == 3) {
+            if ([dm getInstance].mArr_leaveStudent.count>0) {
+                self.mModel_student = [[dm getInstance].mArr_leaveStudent objectAtIndex:0];
+                LeaveNowModel *model = [self.mArr_leave objectAtIndex:0];
+                model.mStr_value = self.mModel_student.StdName;
+                self.mInt_select0 = 1;
             }
         }
         [self.mTableV_leave reloadData];
@@ -131,6 +142,8 @@
         cell.mLab_endNow.frame = CGRectMake(cell.mLab_startNow.frame.origin.x, cell.mLab_startNow.frame.origin.y+40, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
         cell.mLab_startNow.text = model.mStr_startTime;
         cell.mLab_endNow.text = model.mStr_endTime;
+        cell.mLab_line.frame = CGRectMake(8, 79, [dm getInstance].width, .5);
+        cell.mLab_line.hidden = NO;
         return cell;
     }else{
         LeaveNowTableViewCell *cell = (LeaveNowTableViewCell *)[tableView dequeueReusableCellWithIdentifier:LeaveNow_indentifier];
@@ -148,6 +161,7 @@
             UINib * n= [UINib nibWithNibName:@"LeaveNowTableViewCell" bundle:[NSBundle mainBundle]];
             [self.mTableV_leave registerNib:n forCellReuseIdentifier:LeaveNow_indentifier];
         }
+        cell.mLab_line.hidden = NO;
         if (model.mInt_flag == 0||model.mInt_flag==1) {//选择学生,理由选择
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = NO;
@@ -171,6 +185,8 @@
             CGSize valueSize = [cell.mLab_value.text sizeWithFont:[UIFont systemFontOfSize:14]];
             cell.mLab_value.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, valueSize.width, cell.mLab_name.frame.size.height);
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+            cell.mLab_line.frame = CGRectMake(8, 43, [dm getInstance].width, .5);
+            return cell;
         }else if (model.mInt_flag == 1){//理由选择
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = NO;
@@ -189,7 +205,7 @@
             cell.mLab_name.frame = CGRectMake(14, (44-cell.mLab_name.frame.size.height)/2, cell.mLab_name.frame.size.width, cell.mLab_name.frame.size.height);
             cell.mLab_name.text = model.mStr_name;
             //内容显示
-            cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
+            cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y-5, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
             cell.mTextF_reason.text = model.mStr_value;
             cell.mTextF_reason.delegate = self;
             self.mTextF_reason = cell.mTextF_reason;
@@ -213,7 +229,10 @@
             cell.mBtn_submit.hidden = NO;
             cell.mTextF_reason.hidden = YES;
             cell.mBtn_submit.frame = CGRectMake(([dm getInstance].width-cell.mBtn_submit.frame.size.width)/2, 10, cell.mBtn_submit.frame.size.width, cell.mBtn_submit.frame.size.height);
+            cell.mLab_line.hidden = YES;
         }
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        cell.mLab_line.frame = CGRectMake(8, 43, [dm getInstance].width, .5);
         return cell;
     }
     
@@ -232,7 +251,7 @@
     }else if (model.mInt_flag == 5){//提交
         return 50;
     }
-    return 50;
+    return 44;
 }
 
 /*---------------------------------------

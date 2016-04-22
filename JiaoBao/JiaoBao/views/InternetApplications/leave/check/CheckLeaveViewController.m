@@ -649,7 +649,7 @@
     }
     //设置http请求model
     self.recordModel.level = model.level;
-    self.recordModel.sDateTime = [model.sDateTime stringByAppendingString:@" -1"];
+    self.recordModel.sDateTime = [model.sDateTime stringByAppendingString:@"-1"];
     if ([model.gradeStr isEqual:@"全部"]) {
         self.recordModel.gradeStr = @"";
     }else{
