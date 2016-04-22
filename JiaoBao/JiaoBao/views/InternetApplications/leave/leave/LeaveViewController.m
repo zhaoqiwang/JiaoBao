@@ -120,6 +120,13 @@
     }else{
         [self.mView_root0 NewLeaveModel:noti];
     }
+    NSString *ResultCode = [dic objectForKey:@"ResultCode"];
+    //
+    if ([ResultCode intValue]==0) {
+        [self.classQueryVC sendRequest];
+        [self.myQueryVC sendRequest];
+
+    }
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{

@@ -21,6 +21,7 @@
     self.endDateTF.inputView = self.datePicker;
     self.startDateTF.inputAccessoryView = self.toolBar;
     self.endDateTF.inputAccessoryView = self.toolBar;
+    self.model = [[LeaveNowModel alloc]init];
 }
 //日期初始化
 -(void )setUp{

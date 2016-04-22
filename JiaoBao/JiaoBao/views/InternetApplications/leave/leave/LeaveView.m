@@ -389,7 +389,8 @@
         customView.delegate = self;
         customView.flag = flag;//0是修改 1是添加
         customView.row = row;
-        customView.model = model;
+        customView.model.mStr_startTime = model.mStr_startTime;
+        customView.model.mStr_endTime = model.mStr_endTime;
         [customView setUp];
         [vwFullScreenView addSubview:customView];
     }
