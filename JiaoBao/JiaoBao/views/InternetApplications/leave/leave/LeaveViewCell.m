@@ -23,7 +23,7 @@
         
         self.mLab_title.text = str;
         
-        self.mLab_line = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height-10, self.frame.size.width, 5)];
+        self.mLab_line = [[UILabel alloc] initWithFrame:CGRectMake((self.frame.size.width-titleSize.width)/2-10, self.frame.size.height-10, titleSize.width+20, 5)];
         self.mLab_line.backgroundColor = [UIColor colorWithRed:54/255.0 green:168/255.0 blue:12/255.0 alpha:1];
         
         //判断是否默认选中

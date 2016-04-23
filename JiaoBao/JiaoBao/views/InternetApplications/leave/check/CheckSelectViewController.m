@@ -96,8 +96,18 @@
                 }
             }
         }else{//学生
-            for (CheckSelectModel *model1 in self.mArr_list) {
-                [self.mArr_dispaly addObject:model1];
+            CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+            //如果是班主任，不显示年级班级，直接给默认值
+            if (model1.mInt_check==0) {//班主任级别审核查询
+                for (CheckSelectModel *model1 in self.mArr_list) {
+                    if (model1.mInt_checkTeacher==1) {
+                        [self.mArr_dispaly addObject:model1];
+                    }
+                }
+            }else{
+                for (CheckSelectModel *model1 in self.mArr_list) {
+                    [self.mArr_dispaly addObject:model1];
+                }
             }
         }
     }else{//统计查询
@@ -158,6 +168,8 @@
         if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){//是否是班主任，班主任必有1审
             model1.mInt_check = 0;
             self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.A;
+            //如果是查询学生，并且是班主任级别，给默认值
+            [self setClassTeacher];
         }else{
             if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
                 model1.mInt_check = 1;
@@ -182,6 +194,24 @@
     }
     if (a==0) {
         model.mInt_id = 1;
+    }
+}
+
+//如果是查询学生，并且是班主任级别，给默认值
+-(void)setClassTeacher{
+    CheckSelectModel *model0 = [self.mArr_list objectAtIndex:0];
+    if (model0.mInt_id == 1) {//学生
+        CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+        //如果是班主任，不显示年级班级，直接给默认值
+        if (model1.mInt_check==0) {//班主任级别审核查询
+            if ([dm getInstance].mArr_leaveClass.count>0) {
+                MyAdminClass *tempModel = [[dm getInstance].mArr_leaveClass objectAtIndex:0];
+                CheckSelectModel *model3 = [self.mArr_list objectAtIndex:3];
+                model3.mStr_value = tempModel.GradeName;
+                CheckSelectModel *model4 = [self.mArr_list objectAtIndex:4];
+                model4.mStr_value = tempModel.ClsName;
+            }
+        }
     }
 }
 
@@ -515,12 +545,16 @@
     model.mInt_id = 1;
     [self setCheckValue];
     [self setValueDisplayArray];
+    //如果是查询学生，并且是班主任级别，给默认值
+    [self setClassTeacher];
 }
 
 -(void) CheckSelectTableViewCellOneBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 0;
     [self setValueDisplayArray];
+    //如果是查询学生，并且是班主任级别，给默认值
+    [self setClassTeacher];
 }
 
 -(void) CheckSelectTableViewCellTwoBtn:(CheckSelectTableViewCell *) cell{

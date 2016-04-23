@@ -16,5 +16,6 @@
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_add;//添加
 @property (nonatomic,strong) IBOutlet UILabel *mLab_add;//添加时间段
 @property (nonatomic,strong) IBOutlet UIButton *mBtn_submit;//提交
+@property (nonatomic,strong) IBOutlet UILabel *mLab_line;//分割线
 
 @end
