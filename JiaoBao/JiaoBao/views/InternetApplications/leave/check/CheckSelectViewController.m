@@ -534,6 +534,7 @@
 
 //cell中，button的点击回调方法
 -(void)CheckSelectTableViewCellTeacherBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
     model.mInt_id = 0;
     [self setCheckValue];
@@ -541,6 +542,7 @@
 }
 
 -(void)CheckSelectTableViewCellStudentBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
     model.mInt_id = 1;
     [self setCheckValue];
@@ -550,6 +552,7 @@
 }
 
 -(void) CheckSelectTableViewCellOneBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 0;
     [self setValueDisplayArray];
@@ -558,24 +561,28 @@
 }
 
 -(void) CheckSelectTableViewCellTwoBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 1;
     [self setValueDisplayArray];
 }
 
 -(void) CheckSelectTableViewCellThreeBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 2;
     [self setValueDisplayArray];
 }
 
 -(void) CheckSelectTableViewCellFourBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 3;
     [self setValueDisplayArray];
 }
 
 -(void) CheckSelectTableViewCellFiveBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
     model.mInt_check = 4;
     [self setValueDisplayArray];
