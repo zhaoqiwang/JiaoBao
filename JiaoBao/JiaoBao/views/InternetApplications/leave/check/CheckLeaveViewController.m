@@ -23,7 +23,14 @@
 @property(nonatomic,strong)NSMutableArray *mArr4;//门卫查询数组
 @property(nonatomic,assign)int mInt_reloadData;//标志下拉刷新或上拉加载更多
 @property(nonatomic,strong)CustomDatePicker *customPicker;//自定义日期控件
-@property(nonatomic,strong)leaveRecordModel *recordModel;//http请求model
+@property(nonatomic,strong)leaveRecordModel *recordModel1;//http请求model（未审核）
+@property(nonatomic,strong)leaveRecordModel *recordModel2;//http请求model(已审核)
+@property(nonatomic,strong)leaveRecordModel *recordModel3;//http请求model（统计查询）
+@property(nonatomic,strong)leaveRecordModel *recordModel4;//http请求model（门卫审核）
+@property(nonatomic,strong)leaveRecordModel *recordModel;//http请求model（当前http请求model）
+
+
+
 @property(nonatomic,assign)BOOL cellFlag;//0：有学生cell 1：没有学生cell
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property(nonatomic,strong)NSMutableArray *conditionArr;
@@ -169,12 +176,42 @@
 }
 -(void)setUpRecordModel{
     //初始化http请求model
-    self.recordModel = [[leaveRecordModel alloc]init];
-    self.recordModel.checkFlag = @"0";////0待审记录，1已审记录
-    self.recordModel.numPerPage = @"20";
-    self.recordModel.pageNum = @"1";
-    self.recordModel.RowCount = @"0";
-    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+//    self.recordModel = [[leaveRecordModel alloc]init];
+//    self.recordModel.checkFlag = @"0";////0待审记录，1已审记录
+//    self.recordModel.numPerPage = @"20";
+//    self.recordModel.pageNum = @"1";
+//    self.recordModel.RowCount = @"0";
+//    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    //未审核
+    self.recordModel1 = [[leaveRecordModel alloc]init];
+    self.recordModel1.checkFlag = @"0";////0待审记录，1已审记录
+    self.recordModel1.numPerPage = @"20";
+    self.recordModel1.pageNum = @"1";
+    self.recordModel1.RowCount = @"0";
+    self.recordModel1.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    //已审核
+    self.recordModel2 = [[leaveRecordModel alloc]init];
+    self.recordModel2.numPerPage = @"20";
+    self.recordModel2.checkFlag = @"1";////0待审记录，1已审记录
+
+    self.recordModel2.pageNum = @"1";
+    self.recordModel2.RowCount = @"0";
+    self.recordModel2.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    //统计查询
+    self.recordModel3 = [[leaveRecordModel alloc]init];
+    self.recordModel3.numPerPage = @"20";
+    self.recordModel3.pageNum = @"1";
+    self.recordModel3.RowCount = @"0";
+    self.recordModel3.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    //门卫审核
+    self.recordModel4 = [[leaveRecordModel alloc]init];
+    self.recordModel4.checkFlag = nil;
+    self.recordModel4.numPerPage = @"20";
+    self.recordModel4.pageNum = @"1";
+    self.recordModel4.RowCount = @"0";
+    self.recordModel4.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    self.recordModel = self.recordModel1;
+    
     //self.recordModel.level = @"0";
     //self.recordModel.manType = @"1";
 }
@@ -470,7 +507,15 @@
 
     self.mInt_flag = (int)view.tag -100;
     [self updateViewConstraints];
-
+    if(self.mInt_flag==0){
+        self.recordModel = self.recordModel1;
+    }else if (self.mInt_flag==1){
+        self.recordModel = self.recordModel2;
+    }else if (self.mInt_flag==2){
+        self.recordModel = self.recordModel3;
+    }else if (self.mInt_flag==3){
+        self.recordModel = self.recordModel4;
+    }
     //筛选条件或门卫审核日期按钮
     //self.conditionBtn.selected = NO;
 //    [self.conditionBtn setTitle:@"筛选条件      " forState:UIControlStateNormal];
@@ -629,6 +674,15 @@
     NSString *currentYear = [arr objectAtIndex:0];
     NSString *currentMonth = [arr objectAtIndex:1];
     NSString *currentDate = [NSString stringWithFormat:@"%@年%@月",currentYear,currentMonth];
+    if(self.mInt_flag==0){
+        self.recordModel = self.recordModel1;
+    }else if (self.mInt_flag==1){
+        self.recordModel = self.recordModel2;
+    }else if (self.mInt_flag==2){
+        self.recordModel = self.recordModel3;
+    }else if (self.mInt_flag==3){
+        self.recordModel = self.recordModel4;
+    }
     self.recordModel.manType = model.manType;//人员类型，0学生1老师
 
     
