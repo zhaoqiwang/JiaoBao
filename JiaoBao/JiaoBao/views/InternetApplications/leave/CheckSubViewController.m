@@ -135,9 +135,7 @@
     if([textView.text isEqualToString:@""])
     {
         self.TitleTF.hidden = NO;
-    }
-    else
-    {
+    }else {
         self.TitleTF.hidden = YES;
         
     }
