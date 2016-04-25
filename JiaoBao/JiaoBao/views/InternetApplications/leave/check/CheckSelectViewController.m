@@ -534,6 +534,7 @@
 
 //cell中，button的点击回调方法
 -(void)CheckSelectTableViewCellTeacherBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
     model.mInt_id = 0;
     [self setCheckValue];
@@ -541,6 +542,7 @@
 }
 
 -(void)CheckSelectTableViewCellStudentBtn:(CheckSelectTableViewCell *) cell{
+    [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
     model.mInt_id = 1;
     [self setCheckValue];
@@ -552,6 +554,7 @@
 -(void) CheckSelectTableViewCellOneBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 0;
+    [self.view endEditing:YES];
     [self setValueDisplayArray];
     //如果是查询学生，并且是班主任级别，给默认值
     [self setClassTeacher];
@@ -567,6 +570,7 @@
 -(void) CheckSelectTableViewCellTwoBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 1;
+    [self.view endEditing:YES];
     [self setValueDisplayArray];
     //点击选择后，修改选择的审核名称
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
@@ -580,6 +584,7 @@
 -(void) CheckSelectTableViewCellThreeBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 2;
+    [self.view endEditing:YES];
     [self setValueDisplayArray];
     //点击选择后，修改选择的审核名称
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
@@ -593,6 +598,7 @@
 -(void) CheckSelectTableViewCellFourBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 3;
+    [self.view endEditing:YES];
     [self setValueDisplayArray];
     //点击选择后，修改选择的审核名称
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
@@ -606,6 +612,7 @@
 -(void) CheckSelectTableViewCellFiveBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 4;
+    [self.view endEditing:YES];
     [self setValueDisplayArray];
     //点击选择后，修改选择的审核名称
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
