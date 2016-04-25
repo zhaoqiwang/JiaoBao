@@ -214,5 +214,91 @@
     }
     return html;
 }
+//textField限制字数 num(限制的字数大小)--（textField range string是UITextViewDelegate里的参数)
++(BOOL)textFiledWordLimit:(NSInteger)num textField:(UITextField *)textField range:(NSRange)range string:(NSString*)string{
+    //输入删除时
+    if([string isEqualToString:@""]) {
+        return YES;
+    }
+    //系统九宫格限制字数
+    if(range.location==num-1&&string.length==1)
+    {
+        
+        if([string isEqualToString:@"➋"])
+        {
+            string = @"a";
+        }else if([string isEqualToString:@"➌"]){
+            string = @"d";
+        }else if([string isEqualToString:@"➍"]){
+            string = @"g";
+        }else if([string isEqualToString:@"➎"]){
+            string = @"j";
+        }else if([string isEqualToString:@"➏"]){
+            string = @"m";
+        }else if([string isEqualToString:@"➐"]){
+            string = @"p";
+        }else if([string isEqualToString:@"➑"]){
+            string = @"t";
+        }else if([string isEqualToString:@"➒"]){
+            string = @"w";
+        }else if([string isEqualToString:@"☻"]){
+            string = @"^";
+        }else {
+        }
+    }
+    NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    //限制为50字
+    if(Sumstr.length>num-1)
+    {
+        textField.text = [Sumstr substringToIndex:num];
+        return NO;
+    }
+
+    return YES;
+}
+//textView限制字数 num(限制的字数大小)--（textView text range是UITextViewDelegate里的参数）--textField（负责显示placehold的textfield）
++(BOOL)textViewWordLimit:(NSInteger)num textView:(UITextView*)textView text:(NSString*)text range:(NSRange)range textField:(UITextField*)textField{
+    //输入删除时
+    if([text isEqualToString:@""]) {
+        return YES;
+    }
+    //系统九宫格限制字数
+    if(range.location==num-1&&text.length==1)
+    {
+        
+        if([text isEqualToString:@"➋"])
+        {
+            text = @"a";
+        }else if([text isEqualToString:@"➌"]){
+            text = @"d";
+        }else if([text isEqualToString:@"➍"]){
+            text = @"g";
+        }else if([text isEqualToString:@"➎"]){
+            text = @"j";
+        }else if([text isEqualToString:@"➏"]){
+            text = @"m";
+        }else if([text isEqualToString:@"➐"]){
+            text = @"p";
+        }else if([text isEqualToString:@"➑"]){
+            text = @"t";
+        }else if([text isEqualToString:@"➒"]){
+            text = @"w";
+        }else if([text isEqualToString:@"☻"]){
+            text = @"^";
+        }else {
+        }
+    }
+    NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
+    //限制为50字
+    if(Sumstr.length>num-1)
+    {
+        textView.text = [Sumstr substringToIndex:num];
+        textField.hidden = YES;
+        return NO;
+    }
+
+    return YES;
+    
+}
 
 @end

@@ -51,4 +51,10 @@
 //过滤错题本中的输入框等 - html文本 - 0直接去掉，1替换text
 +(NSString *)filterHTML:(NSString *)html Flag:(int)flag;
 
+//textField限制字数 num(限制的字数大小)--（textField range string是UITextViewDelegate里的参数)
++(BOOL)textFiledWordLimit:(NSInteger)num textField:(UITextField *)textField range:(NSRange)range string:(NSString*)string;
+
+//textView限制字数 num(限制的字数大小)--（textView text range是UITextViewDelegate里的参数）--textField（负责显示placehold的textfield）
++(BOOL)textViewWordLimit:(NSInteger)num textView:(UITextView*)textView text:(NSString*)text range:(NSRange)range textField:(UITextField*)textField;
+
 @end
