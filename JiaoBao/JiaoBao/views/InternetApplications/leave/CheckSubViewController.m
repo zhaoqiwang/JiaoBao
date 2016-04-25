@@ -151,7 +151,7 @@
         return YES;
     }
     //系统九宫格限制字数
-    if(range.location==49&&text.length==1)
+    if(range.location==49&&text.length==1) 
     {
         
         if([text isEqualToString:@"➋"])

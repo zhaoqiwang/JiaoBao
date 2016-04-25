@@ -387,6 +387,7 @@
         }
     }else{
         [MobClick event:@"ClassView_PopupWindowClickBtn" label:@"评论"];
+        self.mTextF_text.text = @"";
         [self.mTextF_text becomeFirstResponder];
     }
 }
@@ -397,8 +398,13 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextF_text.text.length==0) {
+    //判断字符串是否为空、是否都是空格
+    if([utils isBlankString:self.mTextF_text.text]){
         [MBProgressHUD showError:@"请输入内容" toView:self];
+        return;
+    }
+    if (self.mTextF_text.text.length>1000) {
+        [MBProgressHUD showError:@"不能多于1000字" toView:self];
         return;
     }
     self.mView_popup.hidden = YES;

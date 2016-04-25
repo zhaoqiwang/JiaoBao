@@ -33,7 +33,7 @@
     UILabel *mLab_like;//赞次数
     TopArthListModel *Arthmodel;//传过来的文章的model
     ArthDetailModel *mModel;
-//    MBProgressHUD *mProgressV;//
+    //    MBProgressHUD *mProgressV;//
     int mInt_from;//来自分享和展示1还是内务2
     NSString *mStr_tableID;//内务的加密ID
     NSString *mStr_title;//内务标题
@@ -57,12 +57,18 @@
 @property (nonatomic,strong) IBOutlet UILabel *mLab_title;//标题
 @property (nonatomic,strong) IBOutlet UILabel *mLab_name;//作者
 @property (nonatomic,strong) IBOutlet UILabel *mLab_time;//时间
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_click;//点击次数
-@property (nonatomic,strong) IBOutlet UILabel *mLab_click;//点击次数
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_View;//观看次数
-@property (nonatomic,strong) IBOutlet UILabel *mLab_View;//观看次数
-@property (nonatomic,strong) IBOutlet UIImageView *mImgV_like;//赞次数
-@property (nonatomic,strong) IBOutlet UILabel *mLab_like;//赞次数
+
+//@property (nonatomic,strong) IBOutlet UIImageView *mImgV_click;//点击次数
+//@property (nonatomic,strong) IBOutlet UILabel *mLab_click;//点击次数
+//@property (nonatomic,strong) IBOutlet UIImageView *mImgV_View;//观看次数
+//@property (nonatomic,strong) IBOutlet UILabel *mLab_View;//观看次数
+//@property (nonatomic,strong) IBOutlet UIImageView *mImgV_like;//赞次数
+//@property (nonatomic,strong) IBOutlet UILabel *mLab_like;//赞次数
+
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_click;//点击次数
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_view;//观看次数
+@property (nonatomic,strong) IBOutlet UIButton *mBtn_like;//赞次数
+
 @property (nonatomic,strong) ArthDetailModel *mModel;
 //@property (nonatomic,strong) MBProgressHUD *mProgressV;//
 @property (nonatomic,assign) int mInt_from;//来自分享和展示1还是内务2
@@ -82,5 +88,7 @@
 
 //点击更多按钮
 -(IBAction)mBtn_more:(UIButton *)btn;
+//点赞
+-(IBAction)mBtn_like:(UIButton *)btn;
 
 @end

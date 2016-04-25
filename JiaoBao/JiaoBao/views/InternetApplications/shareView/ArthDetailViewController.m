@@ -16,7 +16,7 @@
 @end
 
 @implementation ArthDetailViewController
-@synthesize mNav_navgationBar,mWebV_js,Arthmodel,mImgV_click,mImgV_like,mImgV_View,mLab_click,mLab_like,mLab_name,mLab_time,mLab_title,mLab_View,mScrollV_view,mModel,mInt_from,mStr_tableID,mStr_title,mModel_notice,mBtn_send,mTextF_text,mView_text,mArr_feeback,mBtn_more,mInt_page,mTableV_detail,mModel_commentList,mModel_arthInfo;
+@synthesize mNav_navgationBar,mWebV_js,Arthmodel,mLab_name,mLab_time,mLab_title,mScrollV_view,mModel,mInt_from,mStr_tableID,mStr_title,mModel_notice,mBtn_send,mTextF_text,mView_text,mArr_feeback,mBtn_more,mInt_page,mTableV_detail,mModel_commentList,mModel_arthInfo;
 
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
@@ -97,11 +97,6 @@
     //设置webview属性
     self.mWebV_js.scalesPageToFit = NO;
     [self.mWebV_js.scrollView setScrollEnabled:NO];
-    
-    //添加点击
-    self.mImgV_like.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLikeImg)];
-    [self.mImgV_like addGestureRecognizer:tap];
     
     self.mScrollV_view.frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51);
     self.mTableV_detail.frame = CGRectMake(0, 0, 0, 0);
@@ -187,9 +182,14 @@
             NSString *modelStr = [NSString stringWithFormat:@"回复%@",model.Number];
             if ([modelStr isEqual:tempStr]) {
                 NSString *text = [self.mTextF_text.text substringFromIndex:3+model.Number.length];
-                //判断回复几楼的，内容是否为空
-                if (text.length==0) {
+                //判断字符串是否为空、是否都是空格
+                if([utils isBlankString:text]){
                     [MBProgressHUD showError:@"请输入内容" toView:self.view];
+                    break;
+                    return;
+                }
+                if (text.length>1000) {
+                    [MBProgressHUD showError:@"不能多于1000字" toView:self.view];
                     break;
                     return;
                 }
@@ -200,7 +200,17 @@
             }
         }
     }
+    //不是对回复的回复
     if (array.count==1&&a==0) {
+        //判断字符串是否为空、是否都是空格
+        if([utils isBlankString:self.mTextF_text.text]){
+            [MBProgressHUD showError:@"请输入内容" toView:self.view];
+            return;
+        }
+        if (self.mTextF_text.text.length>1000) {
+            [MBProgressHUD showError:@"不能多于1000字" toView:self.view];
+            return;
+        }
         [[ShareHttp getInstance] shareHttpAirthAddComment:self.Arthmodel.TabIDStr content:self.mTextF_text.text refid:@""];
         [self progressViewShow:@"提交中"];
         [self.mTextF_text resignFirstResponder];
@@ -208,7 +218,7 @@
 }
 
 //点赞按钮
--(void)tapLikeImg{
+-(IBAction)mBtn_like:(UIButton *)btn{
     //检查当前网络是否可用
     if ([self checkNetWork]){
         return;
@@ -265,9 +275,8 @@
         self.mModel_arthInfo.Likeflag = -1;
         self.mModel.Likeflag = @"1";
         //点赞个数
-        self.mLab_like.text = [NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount];
-        //赞图标
-        self.mImgV_like.image = [UIImage imageNamed:[NSString stringWithFormat:@"share_likeBig_1"]];
+        [self.mBtn_like setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount] forState:UIControlStateNormal];
+        [self.mBtn_like setImage:[UIImage imageNamed:[NSString stringWithFormat:@"share_like_1"]] forState:UIControlStateNormal];
     }else{
         [MBProgressHUD showError:str toView:self.view];
     }
@@ -337,8 +346,7 @@
 
 //设置界面布局
 -(void)setFrame{
-//    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, [self tableViewHeight]);
-    self.mTableV_detail.frame = CGRectMake(0, self.mImgV_click.frame.origin.y+self.mImgV_click.frame.size.height+10, [dm getInstance].width, self.mTableV_detail.contentSize.height);
+    self.mTableV_detail.frame = CGRectMake(0, self.mBtn_like.frame.origin.y+self.mBtn_like.frame.size.height+10, [dm getInstance].width, self.mTableV_detail.contentSize.height);
     int a = (int)self.mModel_commentList.commentsList.count;
     if (a>0&&(a%20)==0) {
         self.mBtn_more.hidden = NO;
@@ -456,12 +464,9 @@
 //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
         self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height);
-        self.mLab_click.hidden = YES;
-        self.mLab_like.hidden = YES;
-        self.mLab_View.hidden = YES;
-        self.mImgV_click.hidden = YES;
-        self.mImgV_like.hidden = YES;
-        self.mImgV_View.hidden = YES;
+        self.mBtn_click.hidden = YES;
+        self.mBtn_view.hidden = YES;
+        self.mBtn_like.hidden = YES;
     }else{
         //内容
 //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
@@ -483,36 +488,20 @@
 //文章信息刷新
 -(void)setArthInfo{
     //赞个数
-    CGSize likeSize = [[NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    self.mLab_like.frame = CGRectMake([dm getInstance].width-10-likeSize.width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, likeSize.width, 30);
-    self.mLab_like.text = [NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount];
+    self.mBtn_like.frame = CGRectMake([dm getInstance].width-10-self.mBtn_like.frame.size.width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, self.mBtn_like.frame.size.width, 30);
+    [self.mBtn_like setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.LikeCount] forState:UIControlStateNormal];
     //赞图标
-    NSString *imgName;
     if (self.mModel_arthInfo.Likeflag >= 0) {
-        imgName = @"share_likeBig_0";
+        [self.mBtn_like setImage:[UIImage imageNamed:[NSString stringWithFormat:@"share_like_0"]] forState:UIControlStateNormal];
     }else{
-        imgName = @"share_likeBig_1";
+        [self.mBtn_like setImage:[UIImage imageNamed:[NSString stringWithFormat:@"share_like_1"]] forState:UIControlStateNormal];
     }
-    UIImage *likeImg = [UIImage imageNamed:imgName];
-    self.mImgV_like.frame = CGRectMake(self.mLab_like.frame.origin.x-30, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, 30, 30);
-    self.mImgV_like.image = likeImg;
-    
     //阅读人数
-    CGSize lookSize = [[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ViewCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    self.mLab_View.frame = CGRectMake(self.mImgV_like.frame.origin.x-lookSize.width-5, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, lookSize.width, 30);
-    self.mLab_View.text = [NSString stringWithFormat:@"%d",self.mModel_arthInfo.ViewCount];
-    //阅读图标
-    UIImage *lookImg = [UIImage imageNamed:@"share_lookBig"];
-    self.mImgV_View.frame = CGRectMake(self.mLab_View.frame.origin.x-30, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, 30, 30);
-    self.mImgV_View.image = lookImg;
+    self.mBtn_view.frame = CGRectMake(self.mBtn_like.frame.origin.x-self.mBtn_view.frame.size.width-5, self.mBtn_like.frame.origin.y, self.mBtn_view.frame.size.width, 30);
+    [self.mBtn_like setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ViewCount] forState:UIControlStateNormal];
     //点击人数
-    CGSize clickSize = [[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ClickCount] sizeWithFont:[UIFont systemFontOfSize:10]];
-    self.mLab_click.frame = CGRectMake(self.mImgV_View.frame.origin.x-clickSize.width-5, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, clickSize.width, 30);
-    self.mLab_click.text = [NSString stringWithFormat:@"%d",self.mModel_arthInfo.ClickCount];
-    //点击图标
-    UIImage *clickImg = [UIImage imageNamed:@"share_clickBig"];
-    self.mImgV_click.frame = CGRectMake(self.mLab_click.frame.origin.x-30, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height+5, 30, 30);
-    self.mImgV_click.image = clickImg;
+    self.mBtn_click.frame = CGRectMake(self.mBtn_view.frame.origin.x-self.mBtn_click.frame.size.width-5, self.mBtn_like.frame.origin.y, self.mBtn_click.frame.size.width, 30);
+    [self.mBtn_click setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ClickCount] forState:UIControlStateNormal];
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{

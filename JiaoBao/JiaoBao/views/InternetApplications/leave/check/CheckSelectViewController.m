@@ -550,35 +550,70 @@
 }
 
 -(void) CheckSelectTableViewCellOneBtn:(CheckSelectTableViewCell *) cell{
-    CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
-    model.mInt_check = 0;
+    CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+    model1.mInt_check = 0;
     [self setValueDisplayArray];
     //如果是查询学生，并且是班主任级别，给默认值
     [self setClassTeacher];
+    //点击选择后，修改选择的审核名称
+    CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
+    if (model.mInt_id ==0) {//当前选择是教职工
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.A;
+    }else{//学生
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.A;
+    }
 }
 
 -(void) CheckSelectTableViewCellTwoBtn:(CheckSelectTableViewCell *) cell{
-    CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
-    model.mInt_check = 1;
+    CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+    model1.mInt_check = 1;
     [self setValueDisplayArray];
+    //点击选择后，修改选择的审核名称
+    CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
+    if (model.mInt_id ==0) {//当前选择是教职工
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.B;
+    }else{//学生
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.B;
+    }
 }
 
 -(void) CheckSelectTableViewCellThreeBtn:(CheckSelectTableViewCell *) cell{
-    CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
-    model.mInt_check = 2;
+    CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+    model1.mInt_check = 2;
     [self setValueDisplayArray];
+    //点击选择后，修改选择的审核名称
+    CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
+    if (model.mInt_id ==0) {//当前选择是教职工
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.C;
+    }else{//学生
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.C;
+    }
 }
 
 -(void) CheckSelectTableViewCellFourBtn:(CheckSelectTableViewCell *) cell{
-    CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
-    model.mInt_check = 3;
+    CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+    model1.mInt_check = 3;
     [self setValueDisplayArray];
+    //点击选择后，修改选择的审核名称
+    CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
+    if (model.mInt_id ==0) {//当前选择是教职工
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.D;
+    }else{//学生
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.D;
+    }
 }
 
 -(void) CheckSelectTableViewCellFiveBtn:(CheckSelectTableViewCell *) cell{
-    CheckSelectModel *model = [self.mArr_list objectAtIndex:1];
-    model.mInt_check = 4;
+    CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
+    model1.mInt_check = 4;
     [self setValueDisplayArray];
+    //点击选择后，修改选择的审核名称
+    CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
+    if (model.mInt_id ==0) {//当前选择是教职工
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.E;
+    }else{//学生
+        self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.E;
+    }
 }
 
 - (IBAction)cancelToolAction:(id)sender {

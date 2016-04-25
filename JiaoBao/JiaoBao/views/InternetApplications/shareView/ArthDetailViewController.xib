@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" variant="6xAndEarlier" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ArthDetailViewController">
             <connections>
+                <outlet property="mBtn_click" destination="S9J-43-hmx" id="Mhf-Sd-UHP"/>
+                <outlet property="mBtn_like" destination="mMk-9T-eJe" id="fuP-A5-jKO"/>
                 <outlet property="mBtn_more" destination="tQQ-9y-dAm" id="iXR-Su-hW3"/>
                 <outlet property="mBtn_send" destination="7a3-66-1xp" id="9Gm-ps-6as"/>
-                <outlet property="mImgV_View" destination="HUV-2v-gM0" id="SxP-6o-ZsS"/>
-                <outlet property="mImgV_click" destination="g3H-7Z-K8C" id="t7Z-Mi-TzX"/>
-                <outlet property="mImgV_like" destination="CCx-or-tPn" id="YTk-na-Pkz"/>
-                <outlet property="mLab_View" destination="tZ8-WH-ca4" id="vkv-NG-ieW"/>
-                <outlet property="mLab_click" destination="NyK-j4-k1j" id="d5q-mQ-8wA"/>
-                <outlet property="mLab_like" destination="nU5-df-wT0" id="BlM-JC-WKG"/>
+                <outlet property="mBtn_view" destination="p7a-qd-3EC" id="vlq-PL-WVm"/>
                 <outlet property="mLab_name" destination="Ude-e9-19d" id="2W3-Af-se7"/>
                 <outlet property="mLab_time" destination="X0e-x8-lgd" id="dOE-YI-pl7"/>
                 <outlet property="mLab_title" destination="S1H-4f-Ecm" id="rAf-dg-SwU"/>
@@ -97,39 +94,6 @@
                                 <outlet property="delegate" destination="-1" id="jZo-aC-A8i"/>
                             </connections>
                         </webView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="g3H-7Z-K8C">
-                            <rect key="frame" x="176" y="292" width="19" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="CCx-or-tPn">
-                            <rect key="frame" x="260" y="292" width="19" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NyK-j4-k1j">
-                            <rect key="frame" x="198" y="292" width="16" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tZ8-WH-ca4">
-                            <rect key="frame" x="242" y="292" width="16" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="HUV-2v-gM0">
-                            <rect key="frame" x="222" y="292" width="19" height="22"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nU5-df-wT0">
-                            <rect key="frame" x="287" y="293" width="20" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sqp-F6-zv2">
                             <rect key="frame" x="0.0" y="320" width="320" height="69"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -152,6 +116,33 @@
                                 <action selector="mBtn_more:" destination="-1" eventType="touchUpInside" id="lt4-2g-Y18"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mMk-9T-eJe">
+                            <rect key="frame" x="245" y="282" width="60" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <state key="normal" title="100" image="share_like_1.png">
+                                <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </state>
+                            <connections>
+                                <action selector="mBtn_like:" destination="-1" eventType="touchUpInside" id="Uq6-Be-ltU"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="p7a-qd-3EC">
+                            <rect key="frame" x="172" y="282" width="60" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <state key="normal" title="100" image="share_look.png">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="S9J-43-hmx">
+                            <rect key="frame" x="102" y="282" width="60" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <state key="normal" title="100" image="share_click.png">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                        </button>
                     </subviews>
                 </scrollView>
             </subviews>
@@ -159,4 +150,9 @@
             <point key="canvasLocation" x="430" y="210"/>
         </view>
     </objects>
+    <resources>
+        <image name="share_click.png" width="13" height="13"/>
+        <image name="share_like_1.png" width="12" height="12"/>
+        <image name="share_look.png" width="14" height="9"/>
+    </resources>
 </document>
