@@ -35,8 +35,8 @@
         //NSDate *endDate = [date initWithTimeIntervalSinceNow:60*60];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd"];
-        self.model.mStr_startTime = [NSString stringWithFormat:@"%@ 08:30:00",[formatter stringFromDate:date]];
-        self.model.mStr_endTime = [NSString stringWithFormat:@"%@ 17:30:00",[formatter stringFromDate:date]];
+        self.model.mStr_startTime = [NSString stringWithFormat:@"%@ 08:30",[formatter stringFromDate:date]];
+        self.model.mStr_endTime = [NSString stringWithFormat:@"%@ 17:30",[formatter stringFromDate:date]];
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",self.model.mStr_endTime];
         
@@ -51,7 +51,7 @@
 - (IBAction)doneAction:(id)sender {
     //处理输入框字符串
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSDate *nowDate = [NSDate date];
     NSArray *startArr = [self.startDateTF.text componentsSeparatedByString:@"间:"];
     NSArray *endArr = [self.endDateTF.text componentsSeparatedByString:@"间:"];
@@ -113,7 +113,7 @@
 //toolBar上的确定按钮
 - (IBAction)doneToolAction:(id)sender {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
 
     [self.startDateTF resignFirstResponder];
     [self.endDateTF resignFirstResponder];
@@ -124,14 +124,13 @@
     }else{
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:self.datePicker.date]];
         self.model.mStr_endTime = [formatter stringFromDate:self.datePicker.date];
-
     }
     
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     self.selectedTF = textField;
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSDate *startDate = [formatter dateFromString:self.model.mStr_startTime ];
     NSDate *endDate = [formatter dateFromString:self.model.mStr_endTime ];
     if([textField isEqual:self.startDateTF]){

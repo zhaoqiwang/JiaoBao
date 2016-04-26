@@ -89,8 +89,6 @@
             [self.tableView footerEndRefreshing];
             self.mInt_reloadData=0;
 
-
-
         }
         else{
             if(arr.count==0){
@@ -353,6 +351,9 @@
     
 }
 - (void) LeaveDetailViewCDeleteLeave:(int)index action:(int)action{
+    //获得我提出申请的请假记录
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
     if(action == 0){
         NSIndexPath *indexP = [NSIndexPath indexPathForRow:index inSection:0];
         NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
