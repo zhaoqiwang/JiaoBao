@@ -19,22 +19,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/leave/LeaveHttp/LeaveHttp.m"
-            timestampString = "482988802.374044"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "528"
-            endingLineNumber = "528"
-            landmarkName = "-GetClassSumLeavesWithUnitId:sDateTime:gradeStr:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
             timestampString = "483243715.011462"
             startingColumnNumber = "9223372036854775807"
@@ -51,13 +35,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
-            timestampString = "483243715.011462"
+            filePath = "JiaoBao/views/InternetApplications/workView/MsgDetailViewController.m"
+            timestampString = "483417469.348493"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2090"
-            endingLineNumber = "2090"
-            landmarkName = "-ClassTableViewCellHeadImgTapPress:"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
+            landmarkName = "-clickSendBtn:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JiaoBao/views/InternetApplications/workView/WorkMsgListViewController.m"
+            timestampString = "483417469.348493"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
+            landmarkName = "-clickSendBtn:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

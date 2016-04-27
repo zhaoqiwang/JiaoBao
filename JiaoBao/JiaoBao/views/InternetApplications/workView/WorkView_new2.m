@@ -95,7 +95,7 @@
 -(void)RegisterView:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     [self clearArray];
-    self.mInt_index = 0;
+//    self.mInt_index = 0;
 }
 
 -(void)UnReadMsgCell:(NSNotification *)noti{
