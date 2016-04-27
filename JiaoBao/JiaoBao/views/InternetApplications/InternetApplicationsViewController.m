@@ -71,7 +71,7 @@
 -(void)GetLeaveSettingWithUnitId:(NSNotification *)noti{
     D("请假系统的权限问题:%@，%@",[dm getInstance].leaveModel.StatusStd,[dm getInstance].leaveModel.StatusTea);
     //判断是否开启了学生请假系统
-    if ([[dm getInstance].leaveModel.StatusStd intValue]==1) {
+    if ([[dm getInstance].leaveModel.StatusStd intValue]==1&&[dm getInstance].uType==3) {
         //获取家长关联的学生
         [[LeaveHttp getInstance] GetMyStdInfo:[dm getInstance].jiaoBaoHao];
     }
@@ -193,9 +193,9 @@
         [dm getInstance].leaveModel = nil;
         if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
             [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+            //应用系统通过单位ID，获取学校所有班级
+            [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         }
-        //应用系统通过单位ID，获取学校所有班级
-        [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     }else{
         [MBProgressHUD showError:@"切换失败" toView:self.view];
     }
@@ -320,9 +320,9 @@
     //老师或家长身份时，判断有没有开启请假系统
     if ([dm getInstance].uType==2||[dm getInstance].uType==3) {
         [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        //应用系统通过单位ID，获取学校所有班级
+        [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
     }
-    //应用系统通过单位ID，获取学校所有班级
-    [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
 }
 
 //获取求知中的个人信息
@@ -565,6 +565,7 @@
         self.mView_all.hidden = YES;
         self.mTableV_right.hidden = YES;
         self.mTableV_left.hidden = YES;
+        [dm getInstance].leaveModel = nil;
         [[dm getInstance].mArr_leaveClass removeAllObjects];
         [[dm getInstance].mArr_leaveStudent removeAllObjects];
     }
@@ -603,7 +604,7 @@
             }
         }
         //审核
-        if (([[dm getInstance].leaveModel.ApproveListStd.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]||[[dm getInstance].leaveModel.GateGuardList intValue]==1)&&[dm getInstance].uType==2) {
+        if (([[dm getInstance].leaveModel.ApproveListStd.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]||[[dm getInstance].leaveModel.GateGuardList intValue]==1)||([dm getInstance].uType==2&&([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3))) {
             [array addObject:[KxMenuItem menuItem:@"审核"
                                             image:[UIImage imageNamed:@"appNav_contact"]
                                            target:self
@@ -715,7 +716,6 @@
     self.mView_all.hidden = NO;
     self.mTableV_left.hidden = NO;
     self.mTableV_right.hidden = NO;
-    [dm getInstance].leaveModel = nil;
     //self.mView_all.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.mView_all];
     [self.mTableV_left reloadData];

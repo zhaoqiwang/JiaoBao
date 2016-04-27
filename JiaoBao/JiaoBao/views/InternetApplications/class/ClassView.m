@@ -659,7 +659,7 @@
 -(void)RegisterView:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     [self clearArray];
-    self.mInt_index = 0;
+//    self.mInt_index = 0;
 }
 
 //通知学校界面，切换成功身份成功，清空数组

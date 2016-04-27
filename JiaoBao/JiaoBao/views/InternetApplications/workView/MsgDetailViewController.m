@@ -83,6 +83,9 @@
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
+    
+    self.mTextF_text.delegate = self;
+    [self.mTextF_text addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     //发送请求
     [self sendQuest];
 }
@@ -352,6 +355,10 @@
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    if ([utils isBlankString:self.mTextF_text.text]) {
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
+        return;
+    }
     
     [[LoginSendHttp getInstance] addFeeBackWithUID:self.mModel_unReadMsg.TabIDStr content:self.mTextF_text.text];
     [MBProgressHUD showMessage:@"发送中..." toView:self.view];
@@ -615,6 +622,44 @@
         return cell.frame.size.height;
     }
     return 0;
+}
+
+//如果输入超过规定的字数100，就不再让输入
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    //输入删除时
+    if ([string isEqualToString:@""]) {
+        return YES;
+    }
+    if ([string isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textField resignFirstResponder];
+        
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    if(textField.text.length>999)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 999) {
+            return NO;
+        }
+    }
+    return TRUE;
+}
+//如果输入超过规定的字数100，就不再让输入
+- (void)textFieldDidChange:(UITextField *)textField{
+    if (textField == self.mTextF_text) {
+        if(textField.text.length>999)
+        {
+            textField.text = [textField.text substringToIndex:1000];
+        }
+    }
 }
 
 - (void) keyboardWasShown:(NSNotification *) notif{

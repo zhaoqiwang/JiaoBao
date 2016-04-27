@@ -662,8 +662,8 @@
             if (titleSize2.width>[dm getInstance].width-(5+cell.askImgV.frame.size.width)-70) {
                 titleSize2.width = [dm getInstance].width-(5+cell.askImgV.frame.size.width)-70;
             }
-            
-            cell.mLab_title.frame = CGRectMake(5+cell.askImgV.frame.size.width, 10, titleSize2.width, 23);
+            D("soidrjgaildfjg-=====%f,%f",titleSize2.width,[dm getInstance].width-(5+cell.askImgV.frame.size.width)-70);
+            cell.mLab_title.frame = CGRectMake(5+cell.askImgV.frame.size.width, 10, titleSize2.width+2, 23);
 //            cell.mLab_title.frame = CGRectMake(9, 10, titleSize2.width, cell.mLab_title.frame.size.height);
 //            cell.mLab_title.text = self.mModel_getPickdById.PTitle;
             cell.mLab_Category0.hidden = YES;

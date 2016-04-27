@@ -50,8 +50,10 @@
     
     self.mTableV_leave.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_leave.tableFooterView = [[UIView alloc]init];
+    self.mTableV_leave.separatorStyle = UITableViewCellSelectionStyleNone;
     //初始化数据
     [self initDetailLeave];
+    [MBProgressHUD showSuccess:@"系统提示：在假条修改过程中您的所有操作将会即时生效，请慎重操作。" toView:self.view];
 }
 
 //获取假条明细
@@ -126,6 +128,11 @@
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
         [MBProgressHUD showMessage:@"" toView:self.view];
+        //延迟执行
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [utils popViewControllerAnimated:YES];
+        });
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
@@ -214,6 +221,8 @@
         cell.mLab_endNow.frame = CGRectMake(cell.mLab_startNow.frame.origin.x, cell.mLab_startNow.frame.origin.y+40, cell.mLab_startNow.frame.size.width, cell.mLab_startNow.frame.size.height);
         cell.mLab_startNow.text = model.mStr_startTime;
         cell.mLab_endNow.text = model.mStr_endTime;
+        cell.mLab_line.frame = CGRectMake(8, 79, [dm getInstance].width, .5);
+        cell.mLab_line.hidden = NO;
         return cell;
     }else{
         LeaveNowTableViewCell *cell = (LeaveNowTableViewCell *)[tableView dequeueReusableCellWithIdentifier:LeaveNow_indentifier];
@@ -231,6 +240,8 @@
             UINib * n= [UINib nibWithNibName:@"LeaveNowTableViewCell" bundle:[NSBundle mainBundle]];
             [self.mTableV_leave registerNib:n forCellReuseIdentifier:LeaveNow_indentifier];
         }
+        cell.mLab_line.hidden = NO;
+        cell.accessoryType=UITableViewCellAccessoryNone;
         if (model.mInt_flag == 0||model.mInt_flag==1) {//选择学生,理由选择
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = NO;
@@ -244,22 +255,22 @@
             //内容显示
             if (model.mStr_value.length>0) {
                 cell.mLab_value.text = model.mStr_value;
+                if (model.mInt_flag==0) {
+                    cell.accessoryType=UITableViewCellAccessoryNone;
+                }else{
+                    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+                }
             }else{
                 if (model.mInt_flag==0) {
                     cell.mLab_value.text = @"请选择学生";
+                    cell.accessoryType=UITableViewCellAccessoryNone;
                 }else{
                     cell.mLab_value.text = @"请选择理由";
+                    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
                 }
             }
             CGSize valueSize = [cell.mLab_value.text sizeWithFont:[UIFont systemFontOfSize:14]];
             cell.mLab_value.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, valueSize.width, cell.mLab_name.frame.size.height);
-        }else if (model.mInt_flag == 1){//理由选择
-            cell.mLab_name.hidden = NO;
-            cell.mLab_value.hidden = NO;
-            cell.mLab_add.hidden = YES;
-            cell.mBtn_add.hidden = YES;
-            cell.mBtn_submit.hidden = YES;
-            cell.mTextF_reason.hidden = YES;
         }else if (model.mInt_flag == 2){//理由填写
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = YES;
@@ -275,7 +286,7 @@
             cell.mLab_name.frame = CGRectMake(14, (44-cell.mLab_name.frame.size.height)/2, cell.mLab_name.frame.size.width, cell.mLab_name.frame.size.height);
             cell.mLab_name.text = model.mStr_name;
             //内容显示
-            cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
+            cell.mTextF_reason.frame = CGRectMake(cell.mLab_name.frame.origin.x+cell.mLab_name.frame.size.width+20, cell.mLab_name.frame.origin.y-5, [dm getInstance].width-cell.mLab_name.frame.origin.x-cell.mLab_name.frame.size.width-40, cell.mTextF_reason.frame.size.height);
             cell.mTextF_reason.text = model.mStr_value;
             cell.mTextF_reason.delegate = self;
             self.mTextF_reason = cell.mTextF_reason;
@@ -297,7 +308,9 @@
             cell.mBtn_submit.hidden = NO;
             cell.mTextF_reason.hidden = YES;
             cell.mBtn_submit.frame = CGRectMake(([dm getInstance].width-cell.mBtn_submit.frame.size.width)/2, 10, cell.mBtn_submit.frame.size.width, cell.mBtn_submit.frame.size.height);
+            cell.mLab_line.hidden = YES;
         }
+        cell.mLab_line.frame = CGRectMake(8, 43, [dm getInstance].width, .5);
         return cell;
     }
     
@@ -316,7 +329,7 @@
     }else if (model.mInt_flag == 5){//提交
         return 50;
     }
-    return 50;
+    return 44;
 }
 
 /*---------------------------------------

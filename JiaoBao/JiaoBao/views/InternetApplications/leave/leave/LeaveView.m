@@ -187,13 +187,6 @@
             cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
             cell.mLab_line.frame = CGRectMake(8, 43, [dm getInstance].width, .5);
             return cell;
-        }else if (model.mInt_flag == 1){//理由选择
-            cell.mLab_name.hidden = NO;
-            cell.mLab_value.hidden = NO;
-            cell.mLab_add.hidden = YES;
-            cell.mBtn_add.hidden = YES;
-            cell.mBtn_submit.hidden = YES;
-            cell.mTextF_reason.hidden = YES;
         }else if (model.mInt_flag == 2){//理由填写
             cell.mLab_name.hidden = NO;
             cell.mLab_value.hidden = YES;

@@ -111,6 +111,7 @@
     self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15-70, 51-20);
     self.mTextF_text.delegate = self;
     self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+    [self.mTextF_text addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     //发送按钮
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
     [self.mBtn_send addTarget:self action:@selector(clickSendBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -320,6 +321,10 @@
     D("点击发送按钮");
     [self.mTextF_text resignFirstResponder];
     if (self.mTextF_text.text.length==0) {
+        [MBProgressHUD showError:@"请输入内容" toView:self.view];
+        return;
+    }
+    if ([utils isBlankString:self.mTextF_text.text]) {
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
@@ -790,7 +795,13 @@
 
 //键盘点击DO
 #pragma mark - UITextView Delegate Methods
+//如果输入超过规定的字数100，就不再让输入
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    //输入删除时
+    if ([string isEqualToString:@""]) {
+        return YES;
+    }
     if ([string isEqualToString:@"\n"]) {
         [textField resignFirstResponder];
         //若其有输入内容，则发送
@@ -799,7 +810,28 @@
         }
         return NO;
     }
-    return YES;
+    // For any other character return TRUE so that the text gets added to the view
+    if(textField.text.length>999)
+    {
+        if (string.length == 0) return YES;
+        
+        NSInteger existedLength = textField.text.length;
+        NSInteger selectedLength = range.length;
+        NSInteger replaceLength = string.length;
+        if (existedLength - selectedLength + replaceLength > 999) {
+            return NO;
+        }
+    }
+    return TRUE;
+}
+//如果输入超过规定的字数100，就不再让输入
+- (void)textFieldDidChange:(UITextField *)textField{
+    if (textField == self.mTextF_text) {
+        if(textField.text.length>999)
+        {
+            textField.text = [textField.text substringToIndex:1000];
+        }
+    }
 }
 
 //导航条返回按钮
