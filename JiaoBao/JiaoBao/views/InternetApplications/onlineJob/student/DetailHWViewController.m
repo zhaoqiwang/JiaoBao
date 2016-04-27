@@ -141,6 +141,9 @@
         [UIView animateWithDuration:0.3 animations:^{
             SelectionCell *cell = (SelectionCell*)[tableView cellForRowAtIndexPath:indexPath];
             weakSelf.mTableV_name.frame =  CGRectMake(weakSelf.qNum.frame.origin.x, weakSelf.qNum.frame.origin.y+weakSelf.qNum.frame.size.height, weakSelf.qNum.frame.size.width, 0);
+//            if([[weakSelf.qNum titleForState:UIControlStateNormal]isEqualToString:cell.textLabel.text]){
+//                
+//            }
             [weakSelf.qNum setTitle:cell.textLabel.text forState:UIControlStateNormal];
             weakSelf.isOpen = NO;
             NSIndexPath *index_path = [NSIndexPath indexPathForItem:indexPath.row*20 inSection:0];

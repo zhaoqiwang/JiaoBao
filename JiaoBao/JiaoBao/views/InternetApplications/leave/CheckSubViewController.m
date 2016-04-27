@@ -21,14 +21,14 @@
     if([resultCode integerValue]==0){
         if([self.model.checkFlag integerValue]==1){
             [MBProgressHUD showError:@"审核成功"];
-
+            
         }
         else{
             [MBProgressHUD showError:@"拒绝成功"];
         }
-
+        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCheckCell" object:self.model];
-            [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
     }else{
         if([self.model.checkFlag integerValue]==1){
             [MBProgressHUD showError:@"审核失败"];
@@ -46,7 +46,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CheckLeaveModel:) name:@"CheckLeaveModel" object:nil];
     self.model = [[CheckLeaveModel alloc]init];
     self.model.checkFlag = @"1";//1通过，2拒绝
-
+    
     self.textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.textView.layer.borderWidth = 1;
     self.textView.layer.cornerRadius = 5;
@@ -80,7 +80,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+//同意
 - (IBAction)agreeAction:(id)sender {
     UIButton *currentBtn = sender;
     currentBtn.selected = YES;
@@ -90,7 +90,7 @@
     self.model.checkFlag = @"1";
     
 }
-
+//拒绝
 - (IBAction)fefuseAction:(id)sender {
     UIButton *currentBtn = sender;
     currentBtn.selected = YES;
@@ -98,6 +98,7 @@
     anotherBtn.selected = NO;
     self.model.checkFlag = @"2";
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == 1){
@@ -110,11 +111,12 @@
         [[LeaveHttp getInstance]CheckLeaveModel:self.model];
     }
 }
+//提交
 - (IBAction)submitBtnAction:(id)sender {
-//    if([utils isBlankString:self.textView.text]){
-//        [MBProgressHUD showError:@"批注不能为空"];
-//        return;
-//    }
+    //    if([utils isBlankString:self.textView.text]){
+    //        [MBProgressHUD showError:@"批注不能为空"];
+    //        return;
+    //    }
     if([self.model.checkFlag integerValue]==1){
         NSString *message = [NSString stringWithFormat:@"您确定要‘同意’%@的请假申请吗？",self.mModel_LeaveDetail.ManName];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -124,69 +126,74 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alert show];
     }
-
-
+    
+    
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
     
-        if([textView.text isEqualToString:@""])
-        {
-            self.TitleTF.hidden = NO;
-        }
-        else
-        {
-            self.TitleTF.hidden = YES;
-            
-        }
-        if(textView.text.length>50)
-        {
-            textView.text = [textView.text substringToIndex:50];
-        }
+    if([textView.text isEqualToString:@""])
+    {
+        self.TitleTF.hidden = NO;
+    }else {
+        self.TitleTF.hidden = YES;
+        
+    }
+    if(textView.text.length>50)
+    {
+        textView.text = [textView.text substringToIndex:50];
+    }
     
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    //输入删除时
-    if ([text isEqualToString:@""]) {
+    ;
+    if([utils textViewWordLimit:50 textView:textView text:text range:range textField:self.TitleTF]){
         return YES;
-    }
-    //系统九宫格限制字数
-    if(range.location==49&&text.length==1) 
-    {
-        
-        if([text isEqualToString:@"➋"])
-        {
-            text = @"a";
-        }else if([text isEqualToString:@"➌"]){
-            text = @"d";
-        }else if([text isEqualToString:@"➍"]){
-            text = @"g";
-        }else if([text isEqualToString:@"➎"]){
-            text = @"j";
-        }else if([text isEqualToString:@"➏"]){
-            text = @"m";
-        }else if([text isEqualToString:@"➐"]){
-            text = @"p";
-        }else if([text isEqualToString:@"➑"]){
-            text = @"t";
-        }else if([text isEqualToString:@"➒"]){
-            text = @"w";
-        }else if([text isEqualToString:@"☻"]){
-            text = @"^";
-        }else {
-        }
-    }
-    NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
-    //限制为50字
-    if(Sumstr.length>49)
-    {
-        textView.text = [Sumstr substringToIndex:50];
-        self.TitleTF.hidden = YES;
+    }else{
         return NO;
     }
-    if ([text isEqualToString:@"\n"]) {
-
-}
+//    //输入删除时
+//    if ([text isEqualToString:@""]) {
+//        return YES;
+//    }
+//    //系统九宫格限制字数
+//    if(range.location==49&&text.length==1)
+//    {
+//        
+//        if([text isEqualToString:@"➋"])
+//        {
+//            text = @"a";
+//        }else if([text isEqualToString:@"➌"]){
+//            text = @"d";
+//        }else if([text isEqualToString:@"➍"]){
+//            text = @"g";
+//        }else if([text isEqualToString:@"➎"]){
+//            text = @"j";
+//        }else if([text isEqualToString:@"➏"]){
+//            text = @"m";
+//        }else if([text isEqualToString:@"➐"]){
+//            text = @"p";
+//        }else if([text isEqualToString:@"➑"]){
+//            text = @"t";
+//        }else if([text isEqualToString:@"➒"]){
+//            text = @"w";
+//        }else if([text isEqualToString:@"☻"]){
+//            text = @"^";
+//        }else {
+//            
+//        }
+//    }
+//    NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
+//    //限制为50字
+//    if(Sumstr.length>49)
+//    {
+//        textView.text = [Sumstr substringToIndex:50];
+//        self.TitleTF.hidden = YES;
+//        return NO;
+//    }
+//    if ([text isEqualToString:@"\n"]) {
+//        
+//    }
     return YES;
 }
 @end

@@ -130,6 +130,7 @@
 }
 
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
+    [self.view endEditing:YES];
     self.mInt_flag = (int)view.tag -100;
     [self.mView_root0.mTextF_reason resignFirstResponder];
     [self.mView_root1.mTextF_reason resignFirstResponder];
