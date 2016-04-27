@@ -757,6 +757,7 @@
 - (void)headerRereshing{
     if([self.conditionContent.text isEqualToString:@"请选择筛选条件"]){
         [self.tableView headerEndRefreshing];
+        return;
     }
     self.mInt_reloadData = 0;
     [self sendRequest];
