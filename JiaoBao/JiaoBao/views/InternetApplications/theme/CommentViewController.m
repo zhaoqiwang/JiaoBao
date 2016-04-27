@@ -246,12 +246,11 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
     
-//    //输入框弹出键盘问题
-//    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-//    manager.enable = NO;//控制整个功能是否启用
-//    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
-//    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
-//    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
 }
 
 -(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer

@@ -25,6 +25,11 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //获取邀请人
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetAtMeUsersWithuid:) name:@"GetAtMeUsersWithuid" object:nil];
@@ -52,6 +57,7 @@
     //问题详情
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
+    
 }
 
 -(void)removeNoti{

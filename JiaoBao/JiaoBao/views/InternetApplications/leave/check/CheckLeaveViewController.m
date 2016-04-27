@@ -755,6 +755,9 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    if([self.conditionContent.text isEqualToString:@"请选择筛选条件"]){
+        [self.tableView headerEndRefreshing];
+    }
     self.mInt_reloadData = 0;
     [self sendRequest];
 }
