@@ -584,6 +584,10 @@
         [MBProgressHUD showError:@"请填写标题"];
         return;
     }
+    if(self.mText_title.text.length<6){
+        [MBProgressHUD showError:@"标题不能小于6个字"];
+        return;
+    }
     if([utils isBlankString:self.mTextV_content.text])
     {
         self.mTextV_content.text = @"";

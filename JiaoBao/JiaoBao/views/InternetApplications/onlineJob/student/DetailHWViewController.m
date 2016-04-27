@@ -130,7 +130,6 @@
         if((indexPath.row+1)*20<[weakSelf.stuHomeWorkModel.Qsc integerValue])
         {
             cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,(indexPath.row+1)*20];
-
         }
         else
         {
