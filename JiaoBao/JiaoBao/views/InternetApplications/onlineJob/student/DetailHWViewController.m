@@ -70,41 +70,52 @@
             QsIdQId = [QsIdQIdArr objectAtIndex:0];
             QsIdQId2 = [QsIdQIdArr objectAtIndex:2];
             QsIdQId3 = [QsIdQIdArr objectAtIndex:3];
-            [self.datasource addObject:QsIdQId];
-            [self.subArr addObject:QsIdQId2];
-            [self.errQuestionArr addObject:QsIdQId3];
+            [self.datasource addObject:QsIdQId];//collectionview数据源
+            [self.subArr addObject:QsIdQId2];//提交的题目
+            [self.errQuestionArr addObject:QsIdQId3];//做错的题目 0:没做的 1:正确 2：错误
         }
         
     }
+    //题目数量小于20时，设置选题标题
     if(self.datasource.count<20)
     {
         [self.qNum setTitle:[NSString stringWithFormat:@"1-%ld",self.datasource.count] forState:UIControlStateNormal];
     }
+    //默认选择第一题
     NSIndexPath *index = [NSIndexPath indexPathForItem:0 inSection:0];
     [self.collectionView reloadData];
     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionNone];
-    if(self.datasource.count == 1)//如果只用一道题
+    
+    if(self.datasource.count == 1)//如果只有一道题
     {
-        if([self.FlagStr isEqualToString:@"1"]){
-            if(self.isSubmit == YES){
+        /*简化的代码 需验证
+        if([self.FlagStr isEqualToString:@"1"]&&self.isSubmit == NO){//是学生且没提交作业
+         [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+            self.nextBtn.enabled = YES;
+        }else{
+            [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
+            self.nextBtn.enabled = NO;
+        }*/
+        if([self.FlagStr isEqualToString:@"1"]){//学生
+            if(self.isSubmit == YES){//作业已经提交
                 [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
                 self.nextBtn.enabled = NO;
 
-            }else{
+            }else{//作业还没提交
                 [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
                 self.nextBtn.enabled = YES;
             }
    
         }
-        else{
+        else{//家长
             [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
             self.nextBtn.enabled = NO;
-
         }
     }
+    //防止循环引用
     __weak DetailHWViewController *weakSelf = self;
-
-    self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0)] ;
+    //点击选题标题弹出的选题范围列表
+    self.mTableV_name = [[TableViewWithBlock alloc]initWithFrame:CGRectMake(self.qNum.frame.origin.x, self.qNum.frame.origin.y+self.qNum.frame.size.height, self.qNum.frame.size.width, 0)];
     [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
         NSInteger count = [weakSelf.stuHomeWorkModel.Qsc integerValue];
         NSInteger cellCount = count/20;
@@ -127,11 +138,11 @@
             cell.textLabel.font = [UIFont systemFontOfSize:13];
             cell.textLabel.textAlignment = NSTextAlignmentLeft;
         }
-        if((indexPath.row+1)*20<[weakSelf.stuHomeWorkModel.Qsc integerValue])
+        if((indexPath.row+1)*20<[weakSelf.stuHomeWorkModel.Qsc integerValue])//非最后一行数据
         {
             cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,(indexPath.row+1)*20];
         }
-        else
+        else//最后一行的数据
         {
             cell.textLabel.text = [NSString stringWithFormat:@"%ld-%ld",indexPath.row*20+1,[weakSelf.stuHomeWorkModel.Qsc integerValue]];
         }
@@ -143,26 +154,30 @@
 //            if([[weakSelf.qNum titleForState:UIControlStateNormal]isEqualToString:cell.textLabel.text]){
 //                
 //            }
+            
             [weakSelf.qNum setTitle:cell.textLabel.text forState:UIControlStateNormal];
             weakSelf.isOpen = NO;
             NSIndexPath *index_path = [NSIndexPath indexPathForItem:indexPath.row*20 inSection:0];
             [weakSelf.collectionView reloadData];
+            //collectionview滚动到指定题目
             [weakSelf.collectionView selectItemAtIndexPath:index_path animated:YES scrollPosition:UICollectionViewScrollPositionTop];
+            //请求指定题目作业详情
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:weakSelf.stuHomeWorkModel.hwinfoid QsId:[weakSelf.datasource objectAtIndex:index_path.row]];
-            if(indexPath.row==0){
+            
+            if(indexPath.row==0){//第一道题
                 weakSelf.previousBtn.enabled = NO;
                 weakSelf.nextBtn.enabled = YES;
             }
-            else{
+            else{//非第一题
                 weakSelf.previousBtn.enabled = YES;
             }
+            //
             weakSelf.selectedBtnTag = index_path.row;
             if(weakSelf.selectedBtnTag+1 == [weakSelf.stuHomeWorkModel.Qsc integerValue]){
                 if(weakSelf.isSubmit == YES){
                     weakSelf.nextBtn.enabled = NO;
                 }else{
                     weakSelf.nextBtn.enabled = YES;
-                    
                 }
                 [weakSelf.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
             }else{

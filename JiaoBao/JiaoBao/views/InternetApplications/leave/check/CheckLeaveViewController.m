@@ -176,12 +176,12 @@
 }
 -(void)setUpRecordModel{
     //初始化http请求model
-//    self.recordModel = [[leaveRecordModel alloc]init];
-//    self.recordModel.checkFlag = @"0";////0待审记录，1已审记录
-//    self.recordModel.numPerPage = @"20";
-//    self.recordModel.pageNum = @"1";
-//    self.recordModel.RowCount = @"0";
-//    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
+    //    self.recordModel = [[leaveRecordModel alloc]init];
+    //    self.recordModel.checkFlag = @"0";////0待审记录，1已审记录
+    //    self.recordModel.numPerPage = @"20";
+    //    self.recordModel.pageNum = @"1";
+    //    self.recordModel.RowCount = @"0";
+    //    self.recordModel.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
     //未审核
     self.recordModel1 = [[leaveRecordModel alloc]init];
     self.recordModel1.checkFlag = @"0";////0待审记录，1已审记录
@@ -193,7 +193,7 @@
     self.recordModel2 = [[leaveRecordModel alloc]init];
     self.recordModel2.numPerPage = @"20";
     self.recordModel2.checkFlag = @"1";////0待审记录，1已审记录
-
+    
     self.recordModel2.pageNum = @"1";
     self.recordModel2.RowCount = @"0";
     self.recordModel2.unitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID ];
@@ -257,7 +257,7 @@
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
     [self setUpRecordModel];//初始化http请求Model
-
+    
     //把门卫审核日期设置成当前日期
     //设置门卫审核日期
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -267,7 +267,7 @@
     self.conditionBtn.tintColor = [UIColor whiteColor];
     self.recordModel.sDateTime = [NSString stringWithFormat:@"%@-01",[formatter stringFromDate:currentDate]];
     //[self sendRequest];
-
+    
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_navName];
     self.mNav_navgationBar.delegate = self;
@@ -278,7 +278,7 @@
     int a = [self selectCount];
     if (a>0) {
         [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
-
+        
         //4种状态
         NSMutableArray *temp = [NSMutableArray array];
         for (int i=0; i<3; i++) {
@@ -478,7 +478,7 @@
             detail.sDateTime = self.recordModel.sDateTime;
             [self.navigationController pushViewController:detail animated:YES];
         }
-
+        
     }else{
         ClassLeavesModel *model = [self.dataSource objectAtIndex:indexPath.row];
         LeaveDetailViewController *selectVC = [[LeaveDetailViewController alloc]init];
@@ -504,7 +504,7 @@
 
 //分类状态的回调
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
-
+    
     self.mInt_flag = (int)view.tag -100;
     [self updateViewConstraints];
     if(self.mInt_flag==0){
@@ -518,8 +518,8 @@
     }
     //筛选条件或门卫审核日期按钮
     //self.conditionBtn.selected = NO;
-//    [self.conditionBtn setTitle:@"筛选条件      " forState:UIControlStateNormal];
-//    [self.conditionBtn setImage:[UIImage imageNamed:@"kal_right_arrow"] forState:UIControlStateNormal];
+    //    [self.conditionBtn setTitle:@"筛选条件      " forState:UIControlStateNormal];
+    //    [self.conditionBtn setImage:[UIImage imageNamed:@"kal_right_arrow"] forState:UIControlStateNormal];
     self.conditionBtn.hidden = NO;
     NSMutableArray *tempMArr;
     self.conditionContent.text = [self.conditionArr objectAtIndex:self.mInt_flag];
@@ -540,26 +540,26 @@
         self.recordModel.checkFlag = nil;
         self.cellFlag = NO;
         self.conditionBtn.hidden = YES;
-//        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//        [formatter setDateFormat:@"yyyy-MM"];
-//        NSDate *currentDate =[NSDate date];
-//        [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateNormal];
-//        [self.conditionBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        //        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        //        [formatter setDateFormat:@"yyyy-MM"];
+        //        NSDate *currentDate =[NSDate date];
+        //        [self.conditionBtn setTitle:[NSString stringWithFormat:@"日期:%@",[formatter stringFromDate:currentDate]] forState:UIControlStateNormal];
+        //        [self.conditionBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         //self.conditionBtn.selected = YES;
         
         tempMArr = self.mArr4;
         //return;
         
     }
-//    if(!self.recordModel.level){
-//        if(self.mInt_flag != 3){
-//            [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
-//            self.dataSource = tempMArr;
-//            [self.tableView reloadData];
-//            return;
-//        }
-//        
-//    }
+    //    if(!self.recordModel.level){
+    //        if(self.mInt_flag != 3){
+    //            [MBProgressHUD showError:@"请选择筛选条件" toView:self.view];
+    //            self.dataSource = tempMArr;
+    //            [self.tableView reloadData];
+    //            return;
+    //        }
+    //
+    //    }
     if([self.conditionContent.text isEqualToString:@"请选择筛选条件"]){
         self.dataSource = tempMArr;
         [self.tableView reloadData];
@@ -684,7 +684,7 @@
         self.recordModel = self.recordModel4;
     }
     self.recordModel.manType = model.manType;//人员类型，0学生1老师
-
+    
     
     //设置不同的section
     if(self.mInt_flag==0||self.mInt_flag==1){
@@ -695,16 +695,16 @@
             self.stuOrTeaLabel.text = @"教职工";
             self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@ %@",self.stuOrTeaLabel.text,currentDate,name];
         }
-
+        
     }else if(self.mInt_flag==2){
         if([model.manType isEqualToString:@"0"]){
             self.ManOrClassLabel.text = @"班级";
             self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@ %@",self.ManOrClassLabel.text,currentDate,model.gradeStr];
-
+            
         }else{
             self.ManOrClassLabel.text = @"教职工";
             self.conditionLabel.text = [NSString stringWithFormat:@"%@ %@",self.ManOrClassLabel.text,currentDate];
-
+            
         }
     }else{
     }
