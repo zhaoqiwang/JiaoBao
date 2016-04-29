@@ -16,6 +16,7 @@
 #import <BaiduMapAPI/BMapKit.h>
 #import "MobClick.h"
 #import<CoreData/CoreData.h>
+#import "NSString+Extension.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{

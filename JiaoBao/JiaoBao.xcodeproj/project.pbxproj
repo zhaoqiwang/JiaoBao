@@ -54,6 +54,9 @@
 		43DD1CE61CB64E9100F66482 /* buttonView27@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CE01CB64E9100F66482 /* buttonView27@3x.png */; };
 		43EE457B1CAB6F88006F7A5E /* UpdateLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */; };
 		43EE457C1CAB6F88006F7A5E /* UpdateLeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */; };
+		43FBAE441CD2FA0A00236F61 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FBAE431CD2FA0A00236F61 /* NSString+Extension.m */; };
+		43FBAE4A1CD3532300236F61 /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FBAE471CD3532300236F61 /* Emoji.m */; };
+		43FBAE4B1CD3532300236F61 /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = 43FBAE491CD3532300236F61 /* EmojiEmoticons.m */; };
 		A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179771AB914D900E7093F /* work_deleteAccessory.png */; };
 		A701797B1AB914D900E7093F /* work_deleteAccessory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */; };
 		A701797C1AB914D900E7093F /* work_deleteAccessory@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A70179791AB914D900E7093F /* work_deleteAccessory@3x.png */; };
@@ -1250,6 +1253,12 @@
 		43EE45781CAB6F88006F7A5E /* UpdateLeaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateLeaveViewController.h; path = leave/UpdateLeaveViewController.h; sourceTree = "<group>"; };
 		43EE45791CAB6F88006F7A5E /* UpdateLeaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdateLeaveViewController.m; path = leave/UpdateLeaveViewController.m; sourceTree = "<group>"; };
 		43EE457A1CAB6F88006F7A5E /* UpdateLeaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdateLeaveViewController.xib; path = leave/UpdateLeaveViewController.xib; sourceTree = "<group>"; };
+		43FBAE421CD2FA0A00236F61 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Extension.h"; path = "Common/NSString+Extension.h"; sourceTree = "<group>"; };
+		43FBAE431CD2FA0A00236F61 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Extension.m"; path = "Common/NSString+Extension.m"; sourceTree = "<group>"; };
+		43FBAE461CD3532300236F61 /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Emoji.h; path = Common/emoji/Emoji.h; sourceTree = "<group>"; };
+		43FBAE471CD3532300236F61 /* Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Emoji.m; path = Common/emoji/Emoji.m; sourceTree = "<group>"; };
+		43FBAE481CD3532300236F61 /* EmojiEmoticons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmojiEmoticons.h; path = Common/emoji/EmojiEmoticons.h; sourceTree = "<group>"; };
+		43FBAE491CD3532300236F61 /* EmojiEmoticons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmojiEmoticons.m; path = Common/emoji/EmojiEmoticons.m; sourceTree = "<group>"; };
 		A70179771AB914D900E7093F /* work_deleteAccessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = work_deleteAccessory.png; path = Image/InternetApp/workView/work_deleteAccessory.png; sourceTree = "<group>"; };
 		A70179781AB914D900E7093F /* work_deleteAccessory@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "work_deleteAccessory@2x.png"; path = "Image/InternetApp/workView/work_deleteAccessory@2x.png"; sourceTree = "<group>"; };
 		A70179791AB914D900E7093F /* work_deleteAccessory@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "work_deleteAccessory@3x.png"; path = "Image/InternetApp/workView/work_deleteAccessory@3x.png"; sourceTree = "<group>"; };
@@ -3036,6 +3045,17 @@
 			name = cell;
 			sourceTree = "<group>";
 		};
+		43FBAE451CD3524B00236F61 /* emoji */ = {
+			isa = PBXGroup;
+			children = (
+				43FBAE461CD3532300236F61 /* Emoji.h */,
+				43FBAE471CD3532300236F61 /* Emoji.m */,
+				43FBAE481CD3532300236F61 /* EmojiEmoticons.h */,
+				43FBAE491CD3532300236F61 /* EmojiEmoticons.m */,
+			);
+			name = emoji;
+			sourceTree = "<group>";
+		};
 		A7141DBD1A16F34500940A3E /* share */ = {
 			isa = PBXGroup;
 			children = (
@@ -3752,6 +3772,7 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				43FBAE451CD3524B00236F61 /* emoji */,
 				A79021781C5612A3007736E9 /* 广告循环AdView */,
 				F71E9D641B86BE4A00D90487 /* TFHpple.h */,
 				F71E9D651B86BE4A00D90487 /* TFHpple.m */,
@@ -3798,6 +3819,8 @@
 				A73CAD5B1A07753600D6C5AA /* MJRefresh */,
 				A74C119C1A02180D00925230 /* MBProgressHUD.h */,
 				A74C119D1A02180E00925230 /* MBProgressHUD.m */,
+				43FBAE421CD2FA0A00236F61 /* NSString+Extension.h */,
+				43FBAE431CD2FA0A00236F61 /* NSString+Extension.m */,
 				A7AD8C2519F60011002E65FB /* JsonKit */,
 				A7BB17EC19F4B3B800A81286 /* GTMBase64.h */,
 				A7BB17ED19F4B3B800A81286 /* GTMBase64.m */,
@@ -6460,6 +6483,7 @@
 				A7A00BCB1B1EA9990056FE30 /* RegisterPassWViewController.m in Sources */,
 				F79B61371B7202A5005FEA44 /* AllCategoryModel.m in Sources */,
 				A7AD8C3319F63CC7002E65FB /* InternetApplicationsViewController.m in Sources */,
+				43FBAE441CD2FA0A00236F61 /* NSString+Extension.m in Sources */,
 				A753FAF51A1DED7000AB5F22 /* UserClassModel.m in Sources */,
 				A77FF0301A650B3F00DB85E3 /* JSONValueTransformer.m in Sources */,
 				A7AD8C3F19F63DA5002E65FB /* ApplicationCenterViewController.m in Sources */,
@@ -6489,6 +6513,7 @@
 				A773FC4D1A4C0563005F84C2 /* ELCImagePickerController.m in Sources */,
 				F70B96791C90FAF60001D696 /* AllcategoryCollectionViewCell.m in Sources */,
 				430279661C995590003546E9 /* LeaveHttp.m in Sources */,
+				43FBAE4B1CD3532300236F61 /* EmojiEmoticons.m in Sources */,
 				A75A37411A08C01F009D2464 /* unitClassAdminRevicerModel.m in Sources */,
 				F7F8700A1C925E0900A75520 /* LeaveDetailModel.m in Sources */,
 				A7375F401A0B233A00B31926 /* Forward_section.m in Sources */,
@@ -6720,6 +6745,7 @@
 				4302798C1C995618003546E9 /* ModelDialog.m in Sources */,
 				A7B0F94E1A47BC4300C1863A /* MJPhotoBrowser.m in Sources */,
 				F79D84DD1ABD4DC000897477 /* SignInModel.m in Sources */,
+				43FBAE4A1CD3532300236F61 /* Emoji.m in Sources */,
 				A755E70519F278B900BBDF3D /* ASIFormDataRequest.m in Sources */,
 				A73CAD731A07755B00D6C5AA /* UIView+MJExtension.m in Sources */,
 				43EE457B1CAB6F88006F7A5E /* UpdateLeaveViewController.m in Sources */,

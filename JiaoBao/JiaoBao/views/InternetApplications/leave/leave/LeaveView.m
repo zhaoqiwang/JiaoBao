@@ -8,6 +8,7 @@
 
 #import "LeaveView.h"
 #import "IQKeyboardManager.h"
+#import "NSString+Extension.h"
 
 @implementation LeaveView
 
@@ -376,6 +377,7 @@
             model.eDateTime4 = tempNowModel.mStr_endTime;
         }
     }
+    model.leaveReason = [model.leaveReason stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"@"] withString:@""];
     [[LeaveHttp getInstance] NewLeaveModel:model Flag:flag];
     [MBProgressHUD showMessage:@"" toView:self];
 }
@@ -456,6 +458,15 @@
 //如果输入超过规定的字数100，就不再让输入
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     // Any new character added is passed in as the "text" parameter
+    // 不让输入表情
+    if ([textField isFirstResponder]) {
+        if ([[[textField textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textField textInputMode] primaryLanguage]) {
+            return NO;
+        }
+        if ([[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString:@"emoji"]) {
+            return NO;
+        }
+    }
     //输入删除时
     if ([string isEqualToString:@""]) {
 //        for (LeaveNowModel *tempModel in self.mArr_leave) {
@@ -491,18 +502,56 @@
     }
     return TRUE;
 }
-//- (void)textFieldDidEndEditing:(UITextField *)textField{
-//    for (LeaveNowModel *tempModel in self.mArr_leave) {
-//        if (tempModel.mInt_flag==2){
-//            if(textField.text.length>99){
-//                textField.text = [textField.text substringToIndex:100];
-//            }
-//            tempModel.mStr_value = textField.text;
-//        }
-//    }
-//}
+
+//如果输入超过规定的字数100，就不再让输入
 //如果输入超过规定的字数100，就不再让输入
 - (void)textFieldDidChange:(UITextField *)textField{
+    NSString *toBeString = textField.text;
+    NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (textField.text.length>100) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-1];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+                toBeString = textField.text;
+            }
+        }
+        if (textField.text.length>100) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-2];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 2];
+                toBeString = textField.text;
+            }
+        }
+    }
+    
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > 100) {
+                
+                textField.text = [toBeString substringToIndex:100];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > 100) {
+            textField.text = [toBeString substringToIndex:100];
+        }
+    }
+
     if (textField == self.mTextF_reason) {
         if(textField.text.length>99)
         {

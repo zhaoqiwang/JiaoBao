@@ -216,6 +216,51 @@
 }
 //textField限制字数 num(限制的字数大小)--（textField range string是UITextViewDelegate里的参数)
 +(BOOL)textFiledWordLimit:(NSInteger)num textField:(UITextField *)textField range:(NSRange)range string:(NSString*)string{
+    NSString *toBeString = textField.text;
+    NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (textField.text.length>num) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-1];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+                toBeString = textField.text;
+            }
+        }
+        if (textField.text.length>num) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-2];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 2];
+                toBeString = textField.text;
+            }
+        }
+    }
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > num) {
+                
+                textField.text = [toBeString substringToIndex:num];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > num) {
+            textField.text = [toBeString substringToIndex:num];
+        }
+    }
+    
     //输入删除时
     if([string isEqualToString:@""]) {
         return YES;
@@ -258,6 +303,50 @@
 }
 //textView限制字数 num(限制的字数大小)--（textView text range是UITextViewDelegate里的参数）--textField（负责显示placehold的textfield）
 +(BOOL)textViewWordLimit:(NSInteger)num textView:(UITextView*)textView text:(NSString*)text range:(NSRange)range textField:(UITextField*)textField{
+    NSString *toBeString = textField.text;
+    NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (textField.text.length>num) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-1];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+                toBeString = textField.text;
+            }
+        }
+        if (textField.text.length>num) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-2];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 2];
+                toBeString = textField.text;
+            }
+        }
+    }
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > num) {
+                
+                textField.text = [toBeString substringToIndex:num];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > num) {
+            textField.text = [toBeString substringToIndex:num];
+        }
+    }
     //输入删除时
     if([text isEqualToString:@""]) {
         return YES;
