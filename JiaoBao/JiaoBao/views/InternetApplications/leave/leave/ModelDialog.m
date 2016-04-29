@@ -23,7 +23,19 @@
     self.endDateTF.inputAccessoryView = self.toolBar;
     self.model = [[LeaveNowModel alloc]init];
 }
+
+
+- (IBAction)startAction:(id)sender {
+    [self.startDateTF becomeFirstResponder];
+
+}
+
+- (IBAction)endAction:(id)sender {
+    [self.endDateTF becomeFirstResponder];
+
+}
 //日期初始化
+
 -(void )setUp{
     if(self.flag==0){//0是修改 1是添加
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
@@ -138,6 +150,8 @@
     }else{
         self.datePicker.date = endDate ;
     }
+    [UIMenuController sharedMenuController].menuVisible = NO;
+    
 
 }
 

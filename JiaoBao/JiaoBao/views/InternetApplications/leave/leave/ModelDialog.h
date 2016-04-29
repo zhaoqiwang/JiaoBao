@@ -23,6 +23,8 @@
 - (IBAction)doneAction:(id)sender;//弹出框上的确定按钮
 - (IBAction)cancelToolAction:(id)sender;//toolbar上的取消按钮
 - (IBAction)doneToolAction:(id)sender;//toolBar上的确定按钮
+- (IBAction)startAction:(id)sender;
+- (IBAction)endAction:(id)sender;
 -(void )setUp;////日期初始化
 @end
 

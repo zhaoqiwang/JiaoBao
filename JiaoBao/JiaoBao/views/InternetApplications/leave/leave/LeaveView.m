@@ -407,7 +407,18 @@
         [vwFullScreenView addSubview:customView];
     }
 }
+- (IBAction)startAction:(id)sender {
+    UIButton *btn = sender;
+    ModelDialog *md = (ModelDialog*)[btn superview];
+    [md.startDateTF becomeFirstResponder];
+}
 
+- (IBAction)endAction:(id)sender {
+    UIButton *btn = sender;
+    ModelDialog *md = (ModelDialog*)[btn superview];
+    [md.endDateTF becomeFirstResponder];
+    
+}
 //时间dialog点击确定后的回调
 -(void)LeaveNowModel:(LeaveNowModel *)model flag:(int)flag row:(NSInteger)row{
     //判断是新增的1，还是修改的0
