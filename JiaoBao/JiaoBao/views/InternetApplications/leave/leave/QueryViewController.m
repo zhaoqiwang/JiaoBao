@@ -114,11 +114,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //初始化http请求model
     self.recordModel = [[leaveRecordModel alloc]init];
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:@"yyyy-MM"];
     self.currentDate = [NSDate date];
     self.recordModel.sDateTime = [formatter stringFromDate:self.currentDate];
+    //tableview加下拉刷新和上拉加载更多
     self.tableView.tableFooterView = [[UIView alloc]init];
     [self.tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
     self.tableView.headerPullToRefreshText = @"下拉刷新";
@@ -130,14 +132,12 @@
     self.tableView.footerRefreshingText = @"正在加载...";
     [self.tableView headerEndRefreshing];
     [self.tableView footerEndRefreshing];
-
-
-    
-    
-    self.datePicker.backgroundColor =[UIColor whiteColor];
+    //tableHeadView
     UIView *headView = [[UIView alloc]init ];
+    
+    //自定义日期控件
     self.customPicker = [[CustomDatePicker alloc]init];
-    if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2，家长3
+    if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
         [headView addSubview:self.teaHeadView];
         self.teaDateTF.inputAccessoryView = self.toolBar;
@@ -145,7 +145,7 @@
         self.dateTf = self.teaDateTF;
         [self.dateBtn setTitle:self.recordModel.sDateTime forState:UIControlStateNormal];
 
-    }else if (self.mInt_leaveID == 3){
+    }else if (self.mInt_leaveID == 3){//家长3
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.ParentsHeadView.frame));
         [headView addSubview:self.ParentsHeadView];
         self.dateTF.inputAccessoryView = self.toolBar;
@@ -155,6 +155,7 @@
     }
 
     self.tableView.tableHeaderView = headView;
+    //家长身份设置学生默认值
     if([dm getInstance].mArr_leaveStudent.count>0){
         self.mModel_student = [[dm getInstance].mArr_leaveStudent objectAtIndex:0];
         [self.stuBtn setTitle:self.mModel_student.StdName forState:UIControlStateNormal];
@@ -198,21 +199,21 @@
     self.recordModel.pageNum = page;
     self.recordModel.RowCount = @"0";
     self.recordModel.accId = [dm getInstance].jiaoBaoHao;
-    if(self.mInt_leaveID == 3){
+    if(self.mInt_leaveID == 3){//家长
         self.recordModel.manType = @"0";
         self.recordModel.mName = self.mModel_student.StdName;
-    }else if(self.mInt_leaveID == 1){
-        if(self.mInt_flag == 2){
+    }else if(self.mInt_leaveID == 1){//班主任
+        if(self.mInt_flag == 2){//个人查询
             self.recordModel.manType = @"1";
             self.recordModel.mName = @"";
         }
-        else{
+        else{//学生查询
             self.recordModel.manType = @"0";
             self.recordModel.mName = @"";
         }
         
         
-    }else{
+    }else{//老师或门卫
         self.recordModel.manType = @"1";
         self.recordModel.mName = @"";
     }
@@ -236,7 +237,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(self.cellFlag == NO){
+    if(self.cellFlag == NO){//个人查询
         static NSString *indentifier = @"QueryCell";
         QueryCell *cell = (QueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         
@@ -258,7 +259,7 @@
         return cell;
         
     }
-    else{
+    else{//学生查询
         static NSString *indentifier = @"CustomQueryCell";
         CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
         
@@ -281,10 +282,10 @@
     return nil;
 }
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if(self.cellFlag == YES){
+    if(self.cellFlag == YES){//学生查询
         return self.stuSection;
     }
-    else{
+    else{//个人查询
         return self.sectionView;
         
     }

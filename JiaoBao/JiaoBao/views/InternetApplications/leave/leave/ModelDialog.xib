@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -19,6 +19,12 @@
                         <outlet property="delegate" destination="-1" id="uis-qy-sG9"/>
                     </connections>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mHK-gz-ByC">
+                    <rect key="frame" x="23" y="12" width="257" height="30"/>
+                    <connections>
+                        <action selector="startAction:" destination="-1" eventType="touchUpInside" id="Mfc-Id-1LR"/>
+                    </connections>
+                </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="结束时间:2016年3月9号 8:30:00" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ri0-lo-yVD">
                     <rect key="frame" x="23" y="50" width="257" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -39,6 +45,12 @@
                     <state key="normal" title="确定"/>
                     <connections>
                         <action selector="doneAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="KHD-NY-Id0"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6aH-rE-BLE">
+                    <rect key="frame" x="23" y="50" width="257" height="30"/>
+                    <connections>
+                        <action selector="endAction:" destination="-1" eventType="touchUpInside" id="1na-uu-jGv"/>
                     </connections>
                 </button>
             </subviews>

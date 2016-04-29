@@ -41,7 +41,11 @@ static LeaveHttp *leaveHttp = nil;
 
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         LeaveSettingModel *model = [ParserJson_leave parserJsonGetLeaveSetting:data];
         [dm getInstance].leaveModel = model;
@@ -65,9 +69,11 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------NewLeaveModel: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        [tempDic setValue:ResultCode forKey:@"ResultCode"];
+        [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"NewLeaveModel" object:tempDic];
@@ -94,10 +100,12 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------UpdateLeaveModel: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateLeaveModel: %@", error);
@@ -123,10 +131,12 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------AddLeaveTime: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"AddLeaveTime" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------AddLeaveTime: %@", error);
@@ -152,10 +162,12 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------UpdateLeaveTime: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateLeaveTime" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateLeaveTime: %@", error);
@@ -181,10 +193,12 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------DeleteLeaveTime: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveTime" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------DeleteLeaveTime: %@", error);
@@ -209,10 +223,12 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------DeleteLeaveModel: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"DeleteLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------DeleteLeaveModel: %@", error);
@@ -240,11 +256,13 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetMyLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
 
         NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
-        NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc,@"manType":manType};
+        NSDictionary *dic = @{@"data":mArr,@"ResultCode":code,@"ResultDesc":ResultDesc,@"manType":manType};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSString *ResultCode= @"100";
@@ -271,9 +289,11 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
         LeaveDetailModel *model = [ParserJson_leave parserJsonleaveDetail:data];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-        NSDictionary *dic = @{@"model":model,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"model":model,@"ResultCode":code,@"ResultDesc":ResultDesc};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetLeaveModel" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetLeaveModel: %@", error);
@@ -298,11 +318,13 @@ static LeaveHttp *leaveHttp = nil;
         D("JSON--------GetClassLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *data = [jsonDic objectForKey:@"Data"];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
         NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:model.manType level:model.level];
-        NSDictionary *dic = @{@"data":mArr,@"ResultCode":ResultCode,@"ResultDesc":ResultDesc};
+        NSDictionary *dic = @{@"data":mArr,@"ResultCode":code,@"ResultDesc":ResultDesc};
 
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetClassLeaves" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -328,6 +350,9 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------GetUnitLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:model.manType level:model.level];
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetUnitLeaves" object:mArr];
@@ -354,6 +379,9 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------GetGateLeaves: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonGateLeaves:data];
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGateLeaves" object:mArr];
@@ -377,9 +405,10 @@ static LeaveHttp *leaveHttp = nil;
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
 
         D("JSON--------CheckLeaveModel: %@,", result);
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
-
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:ResultCode];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:code];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CheckLeaveModel: %@", error);
         NSString *ResultCode = @"100";
@@ -401,10 +430,12 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------UpdateGateInfo: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
-        NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         
-        NSDictionary *dic = @{@"ResultCode":ResultCode,@"ResultDesc":ResultDesc,@"flag":flag};
+        NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"flag":flag};
          [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateGateInfo" object:dic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------UpdateGateInfo: %@", error);
@@ -428,6 +459,9 @@ static LeaveHttp *leaveHttp = nil;
         
         D("JSON--------GetMyStdInfo: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonMyStdInfo:data];
         [dm getInstance].mArr_leaveStudent = mArr;
@@ -452,6 +486,9 @@ static LeaveHttp *leaveHttp = nil;
             
             D("JSON--------GetMyAdminClass: %@,", result);
             NSMutableDictionary *jsonDic = [result objectFromJSONString];
+            NSString *code = [jsonDic objectForKey:@"ResultCode"];
+            //长时间不操作，握手通讯失败后，进行登录操作
+            Login
             NSString *data = [jsonDic objectForKey:@"Data"];
             NSMutableArray *mArr = [ParserJson_leave parserJsonMyAdminClass:data];
             [dm getInstance].mArr_leaveClass = mArr;
@@ -477,6 +514,9 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("JSON--------getClassStdInfoWithUID: %@,", str000);
@@ -503,6 +543,9 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *str000 = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
         D("JSON--------getunitclassWithUID: %@,", str000);
@@ -529,6 +572,9 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         D("JSON--------GetClassSumLeaves: %@,", result);
         NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
@@ -551,11 +597,12 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];
         D("JSON--------GetStudentSumLeaves: %@,", result);
-        
-        
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStudentSumLeaves" object:mArr];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------GetStudentSumLeaves: %@", error);
@@ -575,6 +622,9 @@ static LeaveHttp *leaveHttp = nil;
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
         NSString *data = [jsonDic objectForKey:@"Data"];
         D("JSON--------GetManSumLeaves: %@,", result);
         NSMutableArray *mArr = [ParserJson_leave parserJsonGetClassSumLeaves:data ];

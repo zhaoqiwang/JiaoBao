@@ -14,7 +14,7 @@
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;//班级查询列表section
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3
-@property (nonatomic,assign) int mInt_flag;//区分是是请假还是查询
+@property (nonatomic,assign) int mInt_flag;//区分是个人查询还是家长查询
 
 @property (strong, nonatomic) IBOutlet UIView *teaHeadView;//老师表头
 @property (strong, nonatomic) IBOutlet UIView *ParentsHeadView;//家长表头

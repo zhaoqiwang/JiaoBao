@@ -30,7 +30,7 @@
     self.WriterId = [NSString stringWithFormat:@"%@",[dic objectForKey:@"WriterId"]];
     NSString *str2 = [dic objectForKey:@"WriteDate"];
     NSRange range = [str2 rangeOfString:str];
-    self.WriteDate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.WriteDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16];
     self.LeaveType = [dic objectForKey:@"LeaveType"];
     self.LeaveReason = [dic objectForKey:@"LeaveReason"];
     self.StatusStr = [dic objectForKey:@"StatusStr"];
@@ -42,14 +42,14 @@
     self.ApproveDate = [dic objectForKey:@"ApproveDate"];
    str2 = [dic objectForKey:@"ApproveDate"];
    range = [str2 rangeOfString:str];
-    self.ApproveDate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    self.ApproveDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16];
     self.ApproveNote = [dic objectForKey:@"ApproveNote"];
     self.ApproveStatus1 = [dic objectForKey:@"ApproveStatus1"];
     self.Approve1 = [dic objectForKey:@"Approve1"];
     self.ApproveDate1 = [dic objectForKey:@"ApproveDate1"];
     str2 = [dic objectForKey:@"ApproveDate1"];
     range = [str2 rangeOfString:str];
-    self.ApproveDate1 = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "];
+    self.ApproveDate1 = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16];
 
     self.ApproveNote1 = [dic objectForKey:@"ApproveNote1"];
     self.ApproveStatus2 = [dic objectForKey:@"ApproveStatus2"];
@@ -57,7 +57,7 @@
     self.ApproveDate2 = [dic objectForKey:@"ApproveDate2"];
     str2 = [dic objectForKey:@"ApproveDate2"];
     range = [str2 rangeOfString:str];
-    self.ApproveDate2 = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.ApproveDate2 = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
 
     self.ApproveNote2 = [dic objectForKey:@"ApproveNote2"];
     self.ApproveStatus3 = [dic objectForKey:@"ApproveStatus3"];
@@ -65,7 +65,7 @@
     self.ApproveDate3 = [dic objectForKey:@"ApproveDate3"];
     str2 = [dic objectForKey:@"ApproveDate3"];
     range = [str2 rangeOfString:str];
-    self.ApproveDate3 = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.ApproveDate3 = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
 
     self.ApproveNote3 = [dic objectForKey:@"ApproveNote3"];
     self.ApproveStatus4 = [dic objectForKey:@"ApproveStatus4"];
@@ -73,7 +73,7 @@
     self.ApproveDate4 = [dic objectForKey:@"ApproveDate4"];
     str2 = [dic objectForKey:@"ApproveDate4"];
     range = [str2 rangeOfString:str];
-    self.ApproveDate4 = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.ApproveDate4 = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
     self.ApproveNote4 = [dic objectForKey:@"ApproveNote4"];
     self.ManId = [numberFormatter stringFromNumber:[dic objectForKey:@"ManId"]];
     self.ManType = [dic objectForKey:@"ManType"];
@@ -103,20 +103,20 @@
     self.Sdate = [dic objectForKey:@"Sdate"];
     NSString *str2 = [dic objectForKey:@"Sdate"];
     NSRange range = [str2 rangeOfString:str];
-    self.Sdate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.Sdate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
     self.Edate = [dic objectForKey:@"Edate"];
     str2 = [dic objectForKey:@"Edate"];
     range = [str2 rangeOfString:str];
-    self.Edate = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.Edate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
     self.LeaveTime = [dic objectForKey:@"LeaveTime"];
     str2 = [dic objectForKey:@"LeaveTime"];
     range = [str2 rangeOfString:str];
-    self.LeaveTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.LeaveTime = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
     self.LWriterName = [dic objectForKey:@"LWriterName"];
     self.ComeTime = [dic objectForKey:@"ComeTime"];
     str2 = [dic objectForKey:@"ComeTime"];
     range = [str2 rangeOfString:str];
-    self.ComeTime = [str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] ;
+    self.ComeTime = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "]substringToIndex:16] ;
     self.CWriterName  = [dic objectForKey:@"CWriterName "];
     
 }
