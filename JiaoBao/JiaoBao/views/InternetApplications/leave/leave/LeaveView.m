@@ -490,21 +490,12 @@
         return FALSE;
     }
     // For any other character return TRUE so that the text gets added to the view
-    if(textField.text.length>99)
-    {
-        if (string.length == 0) return YES;
-        
-        NSInteger existedLength = textField.text.length;
-        NSInteger selectedLength = range.length;
-        NSInteger replaceLength = string.length;
-        if (existedLength - selectedLength + replaceLength > 99) {
-//            for (LeaveNowModel *tempModel in self.mArr_leave) {
-//                if (tempModel.mInt_flag==2){
-//                    tempModel.mStr_value = textField.text;
-//                }
-//            }
-            return NO;
-        }
+    
+    NSInteger existedLength = textField.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = string.length;
+    if (existedLength - selectedLength + replaceLength > 100) {
+        return NO;
     }
     return TRUE;
 }
