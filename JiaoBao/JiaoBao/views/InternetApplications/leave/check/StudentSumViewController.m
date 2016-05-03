@@ -55,7 +55,6 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)sendRequest{
-    
     [[LeaveHttp getInstance]GetStudentSumLeavesWithUnitId: self.ClassSumModel.UnitClassId sDateTime:self.sDateTime];
 }
 //导航条返回按钮回调

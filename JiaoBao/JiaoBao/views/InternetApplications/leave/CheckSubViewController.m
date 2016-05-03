@@ -7,6 +7,7 @@
 //
 
 #import "CheckSubViewController.h"
+#import "NSString+Extension.h"
 
 
 @interface CheckSubViewController ()<MyNavigationDelegate>
@@ -39,8 +40,64 @@
         }
     }
 }
+- (void)textChanged:(NSNotification*)notification {
+    UITextView *textField = (UITextView *)notification.object;
+    NSString *toBeString = textField.text;
+    NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (textField.text.length>50) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-1];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+                toBeString = textField.text;
+            }
+        }
+        if (textField.text.length>50) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-2];
+            if([b isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 2];
+                toBeString = textField.text;
+            }
+        }
+    }
+    
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > 50) {
+                
+                textField.text = [toBeString substringToIndex:50];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > 50) {
+            textField.text = [toBeString substringToIndex:50];
+        }
+    }
+    
+        if(textField.text.length>49)
+        {
+            textField.text = [textField.text substringToIndex:50];
+        }
+
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     //审核假条通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CheckLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CheckLeaveModel:) name:@"CheckLeaveModel" object:nil];
@@ -146,6 +203,13 @@
     
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    // 不让输入表情
+        if ([[[textView textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textView textInputMode] primaryLanguage]) {
+            return NO;
+        }
+        if ([[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString:@"emoji"]) {
+            return NO;
+        }
     ;
     if([utils textViewWordLimit:50 textView:textView text:text range:range textField:self.TitleTF]){
         return YES;

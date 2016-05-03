@@ -379,7 +379,6 @@
     if(self.cellFlag == YES){//未审核或已审核cell
         static NSString *indentifier = @"QueryCell";
         QueryCell *cell = (QueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-        
         if (cell == nil) {
             cell = [[QueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"QueryCell" owner:self options:nil];
