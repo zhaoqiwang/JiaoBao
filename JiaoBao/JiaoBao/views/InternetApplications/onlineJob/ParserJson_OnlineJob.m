@@ -251,7 +251,7 @@
         model.HWStartTime = [dic objectForKey:@"HWStartTime"];
         
         
-//        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
+        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
 //        model.studentLevel = [dic objectForKey:@"studentLevel"];
 //        model.jiaobaohao = [dic objectForKey:@"jiaobaohao"];
 //        model.useLongtime = [dic objectForKey:@"useLongtime"];
