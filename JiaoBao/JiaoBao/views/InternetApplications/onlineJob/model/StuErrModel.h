@@ -22,6 +22,8 @@
 @property (nonatomic,strong) NSString *subjectCode;//科目
 @property (nonatomic,strong) NSString *unid;//教版
 //json数据解析model
+@property (nonatomic,strong) NSString *TabIDStr;//总页码
+
 @property (nonatomic,strong) NSString *Tabid;//
 @property (nonatomic,strong) NSString *StuID;//学生ID
 @property (nonatomic,strong) NSString *HwID;//作业ID

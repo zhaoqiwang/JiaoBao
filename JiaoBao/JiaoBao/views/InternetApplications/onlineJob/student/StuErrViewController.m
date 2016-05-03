@@ -266,6 +266,15 @@ int cellRefreshCount, newHeight;
         page = @"1";
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{
+        //再根据页码判断
+        StuErrModel *model = [self.datasource objectAtIndex:self.datasource.count-1];
+        if ([page intValue]==[model.TabIDStr intValue]+1) {
+            self.mInt_reloadData = 0;
+            [MBProgressHUD showSuccess:@"没有更多了"];
+            [self.tableVIew headerEndRefreshing];
+            [self.tableVIew footerEndRefreshing];
+            return;
+        }
         NSMutableArray *array = self.webDataArr;
         if (array.count>=10&&array.count%10==0) {
             page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
@@ -289,6 +298,7 @@ int cellRefreshCount, newHeight;
     self.errModel.IsSelf = @"0";
     self.errModel.PageIndex = page;
     self.errModel.PageSize = @"10";
+
     [[OnlineJobHttp getInstance]GetStuErr:self.errModel];
 }
 
