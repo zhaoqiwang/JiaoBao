@@ -496,14 +496,23 @@
     if (array.count>=10&&array.count%10==0) {
         page = [NSString stringWithFormat:@"%d",(int)array.count/10+1];
     } else {
-        [MBProgressHUD showSuccess:@"没有更多了" ];
+        [MBProgressHUD showSuccess:@"没有更多了"];
         [self.mTableV_list headerEndRefreshing];
         [self.mTableV_list footerEndRefreshing];
         return;
     }
-    self.mInt_flag = 1;
-    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    //再根据页码判断
+    StuHWModel *model = [self.mArr_practice objectAtIndex:self.mArr_practice.count-1];
+    if ([page intValue]==[model.TabIDStr intValue]+1) {
+        [MBProgressHUD showSuccess:@"没有更多了"];
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
+        return;
+    }else{
+        self.mInt_flag = 1;
+        [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }
 }
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{

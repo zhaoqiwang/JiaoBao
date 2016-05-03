@@ -469,14 +469,9 @@
 //如果输入超过规定的字数100，就不再让输入
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     // Any new character added is passed in as the "text" parameter
-    // 不让输入表情
-    if ([textField isFirstResponder]) {
-        if ([[[textField textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textField textInputMode] primaryLanguage]) {
-            return NO;
-        }
-        if ([[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString:@"emoji"]) {
-            return NO;
-        }
+    //
+    if (textField.text.length+string.length>100) {
+        return NO;
     }
     //输入删除时
     if ([string isEqualToString:@""]) {
@@ -523,18 +518,29 @@
     if([toBeString isContainsEmoji])
     {
         if (textField.text.length>100) {
-            NSString *b = [textField.text substringFromIndex:textField.text.length-1];
-            if([b isContainsEmoji]) {
-                textField.text = [toBeString substringToIndex:textField.text.length - 1];
-                toBeString = textField.text;
-            }
-        }
-        if (textField.text.length>100) {
+            NSString *a = [textField.text substringFromIndex:textField.text.length-1];
             NSString *b = [textField.text substringFromIndex:textField.text.length-2];
-            if([b isContainsEmoji]) {
+            NSString *c = [textField.text substringFromIndex:textField.text.length-3];
+            NSString *d = [textField.text substringFromIndex:textField.text.length-4];
+            NSString *e = [textField.text substringFromIndex:textField.text.length-5];
+            if([a isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+            }else if ([b isContainsEmoji]){
                 textField.text = [toBeString substringToIndex:textField.text.length - 2];
-                toBeString = textField.text;
+            }else if ([c isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 3];
+            }else if ([d isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 4];
+            }else if ([e isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 5];
             }
+            toBeString = textField.text;
+        }
+    }
+    for (int i=1; i<5; i++) {
+        if (textField.text.length>100) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-i];
+            D("88888888888888-======%@",b);
         }
     }
     

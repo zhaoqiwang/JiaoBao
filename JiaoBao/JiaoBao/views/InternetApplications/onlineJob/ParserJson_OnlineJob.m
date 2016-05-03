@@ -230,6 +230,7 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
+    NSString *mStr_id = @"";
     for (int i=0; i<arrList.count; i++) {
         StuHWModel *model = [[StuHWModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
@@ -250,8 +251,10 @@
         model.isHaveAdd = [numberFormatter stringFromNumber:[dic objectForKey:@"isHaveAdd"]];
         model.HWStartTime = [dic objectForKey:@"HWStartTime"];
         
-        
-        model.TabIDStr = [dic objectForKey:@"TabIDStr"];
+        if (i==0) {
+            mStr_id = [dic objectForKey:@"TabIDStr"];
+        }
+        model.TabIDStr = mStr_id;
 //        model.studentLevel = [dic objectForKey:@"studentLevel"];
 //        model.jiaobaohao = [dic objectForKey:@"jiaobaohao"];
 //        model.useLongtime = [dic objectForKey:@"useLongtime"];
@@ -260,12 +263,11 @@
 //        model.CheckTeacher = [dic objectForKey:@"CheckTeacher"];
 //        model.CheckResultJBH = [dic objectForKey:@"CheckResultJBH"];
 //        model.SubjectID = [dic objectForKey:@"SubjectID"];
-
         
         [array addObject:model];
     }
-    return array;
     
+    return array;
 }
 
 +(StuHomeWorkModel *)parserJsonStuHW:(NSString*)json//解析当前作业详细信息

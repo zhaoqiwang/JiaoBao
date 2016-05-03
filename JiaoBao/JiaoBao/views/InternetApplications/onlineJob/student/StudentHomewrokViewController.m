@@ -1525,9 +1525,18 @@
         [self.mTableV_list footerEndRefreshing];
         return;
     }
-    self.mInt_flagTab = 1;
-    [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    //再根据页码判断
+    StuHWModel *model = [self.mArr_practiceTotal objectAtIndex:self.mArr_practiceTotal.count-1];
+    if ([page intValue]==[model.TabIDStr intValue]+1) {
+        [MBProgressHUD showSuccess:@"没有更多了"];
+        [self.mTableV_list headerEndRefreshing];
+        [self.mTableV_list footerEndRefreshing];
+        return;
+    }else{
+        self.mInt_flagTab = 1;
+        [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:page PageSize:@"10"];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    }
 }
 
 //导航条返回按钮回调
