@@ -333,12 +333,14 @@
         model.unitClassId = self.mModel_studentInfo.UnitClassID;
         model.manType = @"0";
         flag = @"1";
+        model.writer = [dm getInstance].TrueName;
     }else if (self.mInt_flag ==2){//家长代请2
         model.manId = self.mModel_student.TabID;
         model.manName = self.mModel_student.StdName;
         model.gradeStr = self.mModel_student.GradeName;
         model.classStr = self.mModel_student.ClsName;
         model.unitClassId = self.mModel_student.ClassId;
+        model.writer = self.mModel_student.GenName;
         model.manType = @"0";
         flag = @"1";
     }else{//普通老师、班主任自己请假
@@ -346,9 +348,10 @@
         model.manType = @"1";
         model.manName = [dm getInstance].TrueName;
         flag = @"0";
+        model.writer = [dm getInstance].TrueName;
     }
     model.writerId = [dm getInstance].jiaoBaoHao;
-    model.writer = [dm getInstance].TrueName;
+    
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==1) {
             model.leaveType = tempModel.mStr_value;
@@ -470,9 +473,6 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     // Any new character added is passed in as the "text" parameter
     //
-    if (textField.text.length+string.length>100) {
-        return NO;
-    }
     //输入删除时
     if ([string isEqualToString:@""]) {
 //        for (LeaveNowModel *tempModel in self.mArr_leave) {
@@ -490,6 +490,9 @@
         return FALSE;
     }
     // For any other character return TRUE so that the text gets added to the view
+    if (textField.text.length+string.length>100) {
+        return NO;
+    }
     if(textField.text.length>99)
     {
         if (string.length == 0) return YES;

@@ -109,7 +109,7 @@
     if ([flag isEqual:@"1"]) {//成功
         MsgDetail_FeebackList *model = [[MsgDetail_FeebackList alloc] init];
         model.FeeBackMsg = self.mTextF_text.text;
-        model.UserName = [dm getInstance].name;
+        model.UserName = [dm getInstance].TrueName;
         [self.mArr_feeback insertObject:model atIndex:0];
         self.mTextF_text.text = @"";
         [self.mTextF_text resignFirstResponder];

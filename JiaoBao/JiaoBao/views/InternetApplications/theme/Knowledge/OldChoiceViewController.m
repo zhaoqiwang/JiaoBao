@@ -98,7 +98,7 @@
     cell.mLab_title.text = model.PTitle;
     cell.mLab_title.textColor = [UIColor colorWithRed:37/255.0 green:137/255.0 blue:209/255.0 alpha:1];
     //日期
-    cell.mLab_time.frame = CGRectMake(9, cell.mLab_title.frame.origin.y+titleSize.height+10, cell.mLab_time.frame.size.width, cell.mLab_time.frame.size.height);
+    cell.mLab_time.frame = CGRectMake(9, cell.mLab_title.frame.origin.y+titleSize.height+10, cell.mLab_time.frame.size.width+1, cell.mLab_time.frame.size.height);
     cell.mLab_time.text = model.RecDate;
     cell.mLab_time.textColor = [UIColor colorWithRed:153/255.0 green:153/255.0 blue:153/255.0 alpha:1];
     //图片

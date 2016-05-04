@@ -244,10 +244,22 @@
 
 //取消关注
 -(void)KnowledgeTableVIewCellDetailBtn:(KnowledgeTableViewCell *)knowledgeTableViewCell{
-    QuestionModel *model = [self.mArr_list objectAtIndex:knowledgeTableViewCell.tag];
-    [[KnowledgeHttp getInstance] RemoveMyAttQWithqId:model.TabID];
-    self.mInt_deleteCell = (int)knowledgeTableViewCell.tag;
-    [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    UIActionSheet *sheet=[[UIActionSheet alloc] initWithTitle:@"确定取消关注？" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    sheet.tag = (int)knowledgeTableViewCell.tag;
+    [sheet showInView:self.view];
+}
+
+//删除确定，UIActionSheet回调
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
+    if (buttonIndex == 0) {//确定,删除假条时间段
+        QuestionModel *model = [self.mArr_list objectAtIndex:actionSheet.tag];
+        [[KnowledgeHttp getInstance] RemoveMyAttQWithqId:model.TabID];
+        self.mInt_deleteCell = (int)actionSheet.tag;
+        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    }else if (buttonIndex == 1) {//取消
+        
+    }
 }
 
 //取消关注该问题
@@ -273,13 +285,6 @@
             [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"1" pageNum:[NSString stringWithFormat:@"%lu",(unsigned long)self.mInt_list+1] RowCount:[NSString stringWithFormat:@"%d",self.mInt_rowcount]];
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
-        
-        //关注问题，只增不减，----
-        //        self.mModel_question.AttCount = [NSString stringWithFormat:@"%d",[self.mModel_question.AttCount intValue]-1];
-        //        //设置布局
-        //        [self setTitleCell:self.mModel_question];
-        //        //通知主页修改关注数量
-        //        [[NSNotificationCenter defaultCenter]postNotificationName:@"updataAddMyAttQ" object:self.mModel_question];
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
@@ -315,11 +320,6 @@
     if ([self checkNetWork]) {
         return;
     }
-//    NSString *rowCount = @"0";
-//    if (self.mArr_list.count>0) {
-//        QuestionModel *model = [self.mArr_list objectAtIndex:self.mArr_list.count-1];
-//        rowCount = model.rowCount;
-//    }
     if (self.mInt_reloadData == 0) {
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{

@@ -234,7 +234,7 @@
         NSString *comment = [noti.object objectForKey:@"comment"];
         
         commentsListModel *tempModel = [[commentsListModel alloc] init];
-        tempModel.UserName = [dm getInstance].name;
+        tempModel.UserName = [dm getInstance].TrueName;
         if (self.mTextF_text.text.length==0) {
             tempModel.Commnets = comment;
         }else{
