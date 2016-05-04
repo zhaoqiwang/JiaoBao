@@ -472,14 +472,9 @@
 //如果输入超过规定的字数100，就不再让输入
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     // Any new character added is passed in as the "text" parameter
-    //
+
     //输入删除时
     if ([string isEqualToString:@""]) {
-//        for (LeaveNowModel *tempModel in self.mArr_leave) {
-//            if (tempModel.mInt_flag==2){
-//                tempModel.mStr_value = textField.text;
-//            }
-//        }
         return YES;
     }
     if ([string isEqualToString:@"\n"]) {
@@ -493,21 +488,12 @@
     if (textField.text.length+string.length>100) {
         return NO;
     }
-    if(textField.text.length>99)
-    {
-        if (string.length == 0) return YES;
-        
-        NSInteger existedLength = textField.text.length;
-        NSInteger selectedLength = range.length;
-        NSInteger replaceLength = string.length;
-        if (existedLength - selectedLength + replaceLength > 99) {
-//            for (LeaveNowModel *tempModel in self.mArr_leave) {
-//                if (tempModel.mInt_flag==2){
-//                    tempModel.mStr_value = textField.text;
-//                }
-//            }
-            return NO;
-        }
+    
+    NSInteger existedLength = textField.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = string.length;
+    if (existedLength - selectedLength + replaceLength > 100) {
+        return NO;
     }
     return TRUE;
 }
@@ -540,13 +526,7 @@
             toBeString = textField.text;
         }
     }
-    for (int i=1; i<5; i++) {
-        if (textField.text.length>100) {
-            NSString *b = [textField.text substringFromIndex:textField.text.length-i];
-            D("88888888888888-======%@",b);
-        }
-    }
-    
+
     if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
         
         UITextRange *selectedRange = [textField markedTextRange];

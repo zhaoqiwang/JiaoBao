@@ -41,25 +41,36 @@
     }
 }
 - (void)textChanged:(NSNotification*)notification {
-    UITextView *textField = (UITextView *)notification.object;
+        UITextView *textField = (UITextView *)notification.object;
     NSString *toBeString = textField.text;
     NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
     
     if([toBeString isContainsEmoji])
     {
         if (textField.text.length>50) {
-            NSString *b = [textField.text substringFromIndex:textField.text.length-1];
-            if([b isContainsEmoji]) {
-                textField.text = [toBeString substringToIndex:textField.text.length - 1];
-                toBeString = textField.text;
-            }
-        }
-        if (textField.text.length>50) {
+            NSString *a = [textField.text substringFromIndex:textField.text.length-1];
             NSString *b = [textField.text substringFromIndex:textField.text.length-2];
-            if([b isContainsEmoji]) {
+            NSString *c = [textField.text substringFromIndex:textField.text.length-3];
+            NSString *d = [textField.text substringFromIndex:textField.text.length-4];
+            NSString *e = [textField.text substringFromIndex:textField.text.length-5];
+            if([a isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+            }else if ([b isContainsEmoji]){
                 textField.text = [toBeString substringToIndex:textField.text.length - 2];
-                toBeString = textField.text;
+            }else if ([c isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 3];
+            }else if ([d isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 4];
+            }else if ([e isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 5];
             }
+            toBeString = textField.text;
+        }
+    }
+    for (int i=1; i<5; i++) {
+        if (textField.text.length>50) {
+            NSString *b = [textField.text substringFromIndex:textField.text.length-i];
+            D("88888888888888-======%@",b);
         }
     }
     
@@ -91,13 +102,12 @@
         if(textField.text.length>49)
         {
             textField.text = [textField.text substringToIndex:50];
-        }
 
-    
+        }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     //审核假条通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CheckLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(CheckLeaveModel:) name:@"CheckLeaveModel" object:nil];
@@ -203,23 +213,20 @@
     
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    // 不让输入表情
-        if ([[[textView textInputMode] primaryLanguage] isEqualToString:@"emoji"] || ![[textView textInputMode] primaryLanguage]) {
-            return NO;
-        }
-        if ([[[UITextInputMode currentInputMode] primaryLanguage] isEqualToString:@"emoji"]) {
-            return NO;
-        }
-    ;
-    if([utils textViewWordLimit:50 textView:textView text:text range:range textField:self.TitleTF]){
-        return YES;
-    }else{
+
+    if (textView.text.length+text.length>50) {
         return NO;
     }
-//    //输入删除时
-//    if ([text isEqualToString:@""]) {
-//        return YES;
-//    }
+    //输入删除时
+    if ([text isEqualToString:@""]) {
+        return YES;
+    }
+    NSInteger existedLength = textView.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = text.length;
+    if (existedLength - selectedLength + replaceLength > 50) {
+        return NO;
+    }
 //    //系统九宫格限制字数
 //    if(range.location==49&&text.length==1)
 //    {
@@ -248,7 +255,7 @@
 //        }
 //    }
 //    NSString *Sumstr = [NSString stringWithFormat:@"%@%@",textView.text,text];
-//    //限制为50字
+////    //限制为50字
 //    if(Sumstr.length>49)
 //    {
 //        textView.text = [Sumstr substringToIndex:50];

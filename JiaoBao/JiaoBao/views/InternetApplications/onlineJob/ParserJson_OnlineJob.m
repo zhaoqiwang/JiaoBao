@@ -384,6 +384,7 @@
 {
     NSMutableArray *array = [NSMutableArray array];
     NSArray *arrList = [json objectFromJSONString];
+    NSString *mStr_id = @"";
     for (int i=0; i<arrList.count; i++) {
         StuErrModel *model = [[StuErrModel alloc] init];
         NSDictionary *dic = [arrList objectAtIndex:i];
@@ -395,10 +396,14 @@
         model.chapterID = [numberFormatter stringFromNumber:[dic objectForKey:@"chapterID"]];
         model.QsID = [numberFormatter stringFromNumber:[dic objectForKey:@"QsID"]];
         model.QsType = [numberFormatter stringFromNumber:[dic objectForKey:@"QsType"]];
-                      model.Answer = [dic objectForKey:@"Answer" ] ;
-                      model.DoDate = [dic objectForKey:@"DoDate" ] ;
-                      model.DoC = [dic objectForKey:@"DoC" ] ;
+        model.Answer = [dic objectForKey:@"Answer" ] ;
+        model.DoDate = [dic objectForKey:@"DoDate" ] ;
+        model.DoC = [dic objectForKey:@"DoC" ] ;
         
+        if (i==0) {
+            mStr_id = [dic objectForKey:@"TabIDStr"];
+        }
+        model.TabIDStr = mStr_id;
         [array addObject:model];
     }
     return array;
