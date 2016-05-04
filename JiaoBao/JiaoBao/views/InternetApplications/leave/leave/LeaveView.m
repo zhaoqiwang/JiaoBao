@@ -333,12 +333,14 @@
         model.unitClassId = self.mModel_studentInfo.UnitClassID;
         model.manType = @"0";
         flag = @"1";
+        model.writer = [dm getInstance].TrueName;
     }else if (self.mInt_flag ==2){//家长代请2
         model.manId = self.mModel_student.TabID;
         model.manName = self.mModel_student.StdName;
         model.gradeStr = self.mModel_student.GradeName;
         model.classStr = self.mModel_student.ClsName;
         model.unitClassId = self.mModel_student.ClassId;
+        model.writer = self.mModel_student.GenName;
         model.manType = @"0";
         flag = @"1";
     }else{//普通老师、班主任自己请假
@@ -346,9 +348,10 @@
         model.manType = @"1";
         model.manName = [dm getInstance].TrueName;
         flag = @"0";
+        model.writer = [dm getInstance].TrueName;
     }
     model.writerId = [dm getInstance].jiaoBaoHao;
-    model.writer = [dm getInstance].TrueName;
+    
     for (LeaveNowModel *tempModel in self.mArr_leave) {
         if (tempModel.mInt_flag==1) {
             model.leaveType = tempModel.mStr_value;
@@ -469,17 +472,9 @@
 //如果输入超过规定的字数100，就不再让输入
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     // Any new character added is passed in as the "text" parameter
-    //
-    if (textField.text.length+string.length>100) {
-        return NO;
-    }
+
     //输入删除时
     if ([string isEqualToString:@""]) {
-//        for (LeaveNowModel *tempModel in self.mArr_leave) {
-//            if (tempModel.mInt_flag==2){
-//                tempModel.mStr_value = textField.text;
-//            }
-//        }
         return YES;
     }
     if ([string isEqualToString:@"\n"]) {
@@ -490,6 +485,9 @@
         return FALSE;
     }
     // For any other character return TRUE so that the text gets added to the view
+    if (textField.text.length+string.length>100) {
+        return NO;
+    }
     
     NSInteger existedLength = textField.text.length;
     NSInteger selectedLength = range.length;
@@ -528,13 +526,7 @@
             toBeString = textField.text;
         }
     }
-    for (int i=1; i<5; i++) {
-        if (textField.text.length>100) {
-            NSString *b = [textField.text substringFromIndex:textField.text.length-i];
-            D("88888888888888-======%@",b);
-        }
-    }
-    
+
     if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
         
         UITextRange *selectedRange = [textField markedTextRange];

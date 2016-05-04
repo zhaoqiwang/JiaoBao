@@ -675,7 +675,7 @@
         }else{
             model.RecDate = [[str2 stringByReplacingOccurrencesOfString:@"T" withString:@" "] substringToIndex:10];
         }
-        model.UserName = [dm getInstance].name;
+        model.UserName = [dm getInstance].TrueName;
         model.JiaoBaoHao = [dm getInstance].jiaoBaoHao;
         model.NoReadCount = [NSString stringWithFormat:@"%@",[result objectForKey:@"noReadCount"]];
         model.NoReplyCount = [NSString stringWithFormat:@"%@",[result objectForKey:@"FBCount"]];

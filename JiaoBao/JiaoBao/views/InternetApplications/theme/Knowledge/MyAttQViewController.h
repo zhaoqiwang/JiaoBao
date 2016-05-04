@@ -17,7 +17,7 @@
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"//上拉下拉刷新
 
-@interface MyAttQViewController : UIViewController<MyNavigationDelegate,KnowledgeTableViewCellDelegate>
+@interface MyAttQViewController : UIViewController<MyNavigationDelegate,KnowledgeTableViewCellDelegate,UIActionSheetDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) IBOutlet UITableView *mTalbeV_liset;//
