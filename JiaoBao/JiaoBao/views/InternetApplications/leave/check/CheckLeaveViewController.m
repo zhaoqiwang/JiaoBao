@@ -122,7 +122,6 @@
             [self.dataSource addObjectsFromArray:arr];
             [self.tableView reloadData];
             
-            
         }
         self.recordModel.numPerPage = @"20";
         self.mInt_reloadData=0;

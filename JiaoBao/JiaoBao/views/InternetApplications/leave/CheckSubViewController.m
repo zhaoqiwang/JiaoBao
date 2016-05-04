@@ -214,12 +214,13 @@
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
 
-    if (textView.text.length+text.length>50) {
-        return NO;
-    }
+
     //输入删除时
     if ([text isEqualToString:@""]) {
         return YES;
+    }
+    if (textView.text.length+text.length>50) {
+        return NO;
     }
     NSInteger existedLength = textView.text.length;
     NSInteger selectedLength = range.length;
@@ -227,6 +228,7 @@
     if (existedLength - selectedLength + replaceLength > 50) {
         return NO;
     }
+    
 //    //系统九宫格限制字数
 //    if(range.location==49&&text.length==1)
 //    {
