@@ -10,7 +10,7 @@
 #import "MyStdInfo.h"
 #import "LeaveDetailViewController.h"
 
-@interface QueryViewController : UITableViewController<UITableViewDelegate,LeaveDetailViewCDelegate>
+@interface QueryViewController : UITableViewController<UITableViewDelegate,LeaveDetailViewCDelegate,UIScrollViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIView *sectionView;//班级查询列表section
 @property (nonatomic,assign) int mInt_leaveID;//区分身份，门卫0，班主任1，普通老师2，家长3

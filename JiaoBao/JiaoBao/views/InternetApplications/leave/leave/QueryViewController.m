@@ -237,7 +237,10 @@
 }
 
 #pragma mark - Table view data source
-
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.view endEditing:YES];
+    
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
