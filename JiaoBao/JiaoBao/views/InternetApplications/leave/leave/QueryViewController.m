@@ -90,16 +90,27 @@
             self.mInt_reloadData=0;
 
         }
-        else{
+        else if(self.mInt_reloadData==3){
             if(arr.count==0){
                 //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             }
             else{
-                [self.dataSource replaceObjectAtIndex:[self.recordModel.pageNum intValue]-1 withObject:[arr objectAtIndex:0]];
-                [self.tableView reloadData];
-                
+                    [self.dataSource insertObject:[arr objectAtIndex:0] atIndex:[self.recordModel.pageNum intValue]-1 ];
+                    [self.tableView reloadData];
+
             }
             self.mInt_reloadData=0;
+        }else{
+            {
+                if(arr.count==0){
+                    //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
+                }
+                else{
+                    [self.dataSource replaceObjectAtIndex:[self.recordModel.pageNum intValue]-1 withObject:[arr objectAtIndex:0]];
+                    [self.tableView reloadData];
+                }
+                self.mInt_reloadData=0;
+            }
         }
 
 
@@ -226,7 +237,10 @@
 }
 
 #pragma mark - Table view data source
-
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.view endEditing:YES];
+    
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -314,6 +328,7 @@
 
 
 - (IBAction)Stu_SelectionAction:(id)sender {
+    [self.view endEditing:YES];
     ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
     chooseStu.delegate = self;
     chooseStu.mInt_flagID = 0;
@@ -368,7 +383,7 @@
     else if (action == 1){
         self.recordModel.numPerPage = @"1";
         self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)(index+1)];
-        self.mInt_reloadData = 3;
+        self.mInt_reloadData = 4;
         [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
         
     }

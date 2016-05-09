@@ -17,6 +17,8 @@
 @property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
 @property(nonatomic,assign)BOOL isOpen;//是否下拉的标志
 @property(nonatomic,assign)NSRange cursorPosition;
+@property(nonatomic,strong)NSString *tempContentText;
+
 
 @end
 
@@ -286,41 +288,87 @@
     if ([flag integerValue]==0) {
         self.imageCount--;
         UploadImgModel *model = [dic objectForKey:@"model"];
-        [self.mArr_pic addObject:model];
         if(self.imageCount == 0)
         {
-            //self.mTextV_content.text = @"";
             [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
             NSInteger index = self.cursorPosition.location;
-            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
-            [content insertString:model.originalName atIndex:index];
-            self.mTextV_content.text = content;
-//            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
-//                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-//                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-//                int p1_int = [su_p11 intValue];
-//                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
-//                
-//                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
-//                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
-//                int p2_int = [su_p22 intValue];
-//                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
-//                
-//                return [p1_num compare:p2_num];
-//            }];
-//            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-//            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
-//            {
-//                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
-//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
-//
-//            }
-//
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(index <= model.cursorPosition.location){
+                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+1, model.cursorPosition.length);
+                }
+                
+            }
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+            NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index-1]];
+            UIImage *image = [UIImage imageWithContentsOfFile:imgPath];
+            NSMutableAttributedString *str=[[NSMutableAttributedString alloc] initWithAttributedString:self.mTextV_content.attributedText];
+            NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
+            textAttach.image = image;
+            textAttach.bounds=CGRectMake(0, 0, 30, 30);
+            model.cursorPosition = self.cursorPosition;
+            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
+            [str insertAttributedString:strA atIndex:index];
+            model.attributedString = strA;
+            self.mTextV_content.attributedText = str;
+            [self.mArr_pic addObject:model];
+            
+            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+                
+                NSNumber *p1_num = [NSNumber numberWithInteger:p1.cursorPosition.location ];
+                NSNumber *p2_num = [NSNumber numberWithInteger:p2.cursorPosition.location ];
+                
+                return [p1_num compare:p2_num];
+            }];
+            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+            
         }
-        self._placeholdLabel.hidden = YES;
     }else{
         [MBProgressHUD showError:@"失败" toView:self.view];
     }
+
+//    [MBProgressHUD hideHUDForView:self.view];
+//    NSMutableDictionary *dic = noti.object;
+//    NSString *flag = [dic objectForKey:@"flag"];
+//    if ([flag integerValue]==0) {
+//        self.imageCount--;
+//        UploadImgModel *model = [dic objectForKey:@"model"];
+//        [self.mArr_pic addObject:model];
+//        if(self.imageCount == 0)
+//        {
+//            //self.mTextV_content.text = @"";
+//            [MBProgressHUD showSuccess:@"上传成功" toView:self.view];
+//            NSInteger index = self.cursorPosition.location;
+//            NSMutableString *content = [[NSMutableString alloc] initWithString:self.mTextV_content.text];
+//            [content insertString:model.originalName atIndex:index];
+//            self.mTextV_content.text = content;
+////            NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
+////                NSString *sub_p1 = [p1.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+////                NSString *su_p11 = [sub_p1 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+////                int p1_int = [su_p11 intValue];
+////                NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
+////                
+////                NSString *sub_p2 = [p2.originalName stringByReplacingOccurrencesOfString:@"[图片" withString:@""];
+////                NSString *su_p22 = [sub_p2 stringByReplacingOccurrencesOfString:@"]" withString:@""];
+////                int p2_int = [su_p22 intValue];
+////                NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
+////                
+////                return [p1_num compare:p2_num];
+////            }];
+////            self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+////            for(int i=self.tfContentTag;i<self.mArr_pic.count;i++)
+////            {
+////                UploadImgModel *model1 = [self.mArr_pic objectAtIndex:i];
+////                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,model1.originalName];
+////
+////            }
+////
+//        }
+//        self._placeholdLabel.hidden = YES;
+//    }else{
+//        [MBProgressHUD showError:@"失败" toView:self.view];
+//    }
 }
 
 -(void)SavePublishArticle:(NSNotification *)noti{
@@ -364,28 +412,29 @@
         [MBProgressHUD showError:@"标题不能大于50个字" toView:self.view];
         return;
     }
-    NSString *content = self.mTextV_content.text;
-    int m=0;
-    for (int i=0; i<self.mArr_pic.count; i++) {
+    UITextView *tempView = [[UITextView alloc]init];
+    tempView.attributedText = self.mTextV_content.attributedText;
+    for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
         UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-        NSString *temp = model.originalName;
-        if ([content rangeOfString:temp].location != NSNotFound) {
-            m++;
-        }
-        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        NSRange range = NSMakeRange(model.cursorPosition.location, 1);
+        //NSString *temp = model.originalName;
+        //content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
+        NSMutableAttributedString *strz =  [[NSMutableAttributedString alloc]initWithAttributedString: tempView.attributedText];
+        [strz replaceCharactersInRange:range withString:model.url];
+        tempView.attributedText = strz;
+        
     }
-    if (m>9) {
-        [MBProgressHUD showError:@"照片最多为9张" toView:self.view];
-        return;
-    }
-    content = [NSString stringWithFormat:@"<p>%@</p>",content];
-    D("content--------%@",content);
+    self.tempContentText = tempView.text;
+
+    //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
+    self.tempContentText = [self.tempContentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
+    self.tempContentText = [self.tempContentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
     
     if (self.mInt_section == 0) {//分享
         D("self.mStr_unitID = %@",self.mStr_unitID);
-        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
+        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:self.tempContentText uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"1"];
     }else if (self.mInt_section == 1){//展示
-        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:content uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
+        [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:self.tempContentText uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }
     
     [MBProgressHUD showMessage:@"" toView:self.view];
@@ -443,6 +492,8 @@
     }
 
     self.mInt_index ++;
+    self._placeholdLabel.hidden = YES;
+
     //[self.mProgressV hide:YES];
 }
 
@@ -578,6 +629,8 @@
 
 
 }];
+    self._placeholdLabel.hidden = YES;
+
        // [self.mProgressV hide:YES];
 }
 
@@ -604,7 +657,7 @@
         self.tfContentTag = self.mArr_pic.count;
         if(self.mArr_pic.count>=9)
         {
-            UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传20张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传9张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alertview show];
             return;
         }
@@ -633,7 +686,7 @@
     self.tfContentTag= self.mArr_pic.count;
     if(self.mArr_pic.count>=9)
     {
-        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传20张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"你只能上传9张图片" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alertview show];
         return;
     }
@@ -653,8 +706,92 @@
     }
     return YES;
 }
+- (void)textViewDidChange:(UITextView *)textView{
+    if([textView isEqual:self.mTextV_content])
+    {
+        if([textView.text isEqualToString:@""])
+        {
+            self._placeholdLabel.hidden = NO;
+        }
+        else
+        {
+            self._placeholdLabel.hidden = YES;
+            
+        }
+        
+    }
+}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+        //输入删除时
+        if ([text isEqualToString:@""]) {
+            if([textView isEqual:self.mTextV_content]){
+                for (int i=0; i<self.mArr_pic.count; i++) {
+                    UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                    if(range.length==1){
+                        if(range.location < model.cursorPosition.location){
+                            model.cursorPosition = NSMakeRange(model.cursorPosition.location-1, model.cursorPosition.length);
+                        }
+                        else{
+                            if(range.location == model.cursorPosition.location ){
+                                [self.mArr_pic removeObject:model];
+                                i--;
+                            }
+                            
+                        }
+                    } else{
+                        if(range.location<=model.cursorPosition.location&&range.location+range.length>model.cursorPosition.location){
+                            [self.mArr_pic removeObject:model];
+                            i--;
+                            
+                        }
+                        else if(range.location<=model.cursorPosition.location&&range.location+range.length<=model.cursorPosition.location){
+                            model.cursorPosition = NSMakeRange(model.cursorPosition.location-range.length, model.cursorPosition.length);
+                            
+                        }else if(range.location>model.cursorPosition.location){
+                            
+                        }
+                    }
+                    
+                    
+                }
+                
+            }
+            
+            
+            
+        
+        
+        if([textView isEqual:self.mTextV_content])
+        {
+            if ([text isEqualToString:@"\n"]) {
+                textView.text = [NSString stringWithFormat:@"%@ ",textView.text];
+                self._placeholdLabel.hidden = YES;
+                // Be sure to test for equality using the "isEqualToString" message
+                
+                // Return FALSE so that the final '\n' character doesn't get added
+                return NO;
+            }
+        }
+        else{
+            for (int i=0; i<self.mArr_pic.count; i++) {
+                UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+                if(range.location <= model.cursorPosition.location){
+                    model.cursorPosition = NSMakeRange(model.cursorPosition.location+text.length, model.cursorPosition.length);
+                }
+            }
+            
+        }
+        
+        return YES;
+    }
+    for (int i=0; i<self.mArr_pic.count; i++) {
+        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
+        if(range.location <= model.cursorPosition.location){
+            model.cursorPosition = NSMakeRange(model.cursorPosition.location+text.length, model.cursorPosition.length);
+        }
+    }
     if (![text isEqualToString:@""]){
         self._placeholdLabel.hidden = YES;
     }

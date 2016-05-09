@@ -395,7 +395,18 @@
     [[LeaveHttp getInstance] UpdateLeaveModel:model];
     [MBProgressHUD showMessage:@"" toView:self.view];
 }
+- (IBAction)startAction:(id)sender {
+    UIButton *btn = sender;
+    ModelDialog *md = (ModelDialog*)[btn superview];
+    [md.startDateTF becomeFirstResponder];
+}
 
+- (IBAction)endAction:(id)sender {
+    UIButton *btn = sender;
+    ModelDialog *md = (ModelDialog*)[btn superview];
+    [md.endDateTF becomeFirstResponder];
+    
+}
 //弹出时间选择框
 -(void)addDialog:(int)flag row:(int)row Model:(LeaveNowModel *)model{
     UIView* vwFullScreenView = [[UIView alloc]init];
