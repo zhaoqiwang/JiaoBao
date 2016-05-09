@@ -595,7 +595,7 @@
         MsgDetail_FeebackList *model = [[MsgDetail_FeebackList alloc] init];
         model.FeeBackMsg = self.mTextF_text.text;
         model.Jiaobaohao = [dm getInstance].jiaoBaoHao;
-        model.UserName = [dm getInstance].TrueName;
+        model.UserName = @"我";
         [self.mArr_feeback insertObject:model atIndex:0];
         self.mTextF_text.text = @"";
         [self.mTextF_text resignFirstResponder];

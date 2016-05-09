@@ -385,7 +385,7 @@
 
 //文章详情通知
 -(void)ArthDetai:(NSNotification *)noti{
-//    [MBProgressHUD hideHUDForView:self.view];
+    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
