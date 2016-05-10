@@ -75,6 +75,8 @@
 @property (nonatomic,strong) NSString *uuid;//启动时设置，注册成功后，添加到key中
 @property(nonatomic,assign)BOOL tableSymbol;
 @property(nonatomic,strong)NSMutableSet *sectionSet;//内部事务界面判断section是否展开的集合
+@property(nonatomic,strong)NSMutableSet *sectionSet2;//个性表现界面判断section是否展开的集合
+
 @property(nonatomic,assign)NSUInteger notificationSymbol;//发布事务区分相同通知的标志
 @property (nonatomic,strong) CommMsgRevicerUnitListModel *mModel_unitList;
 @property(nonatomic,assign)NSUInteger topButtonSymbol;//发布事务界面点击顶部button的标志

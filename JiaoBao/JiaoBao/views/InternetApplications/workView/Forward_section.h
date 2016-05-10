@@ -25,6 +25,7 @@
 @property(nonatomic,strong)UIButton *triangleBtn;
 @property(nonatomic,strong)UIButton *rightBtn;
 @property(nonatomic,assign)BOOL sel_symbol;
+@property(nonatomic,strong)NSString *classFlag;//区分是内部事务中的cell还是个性表现中的cell
 
 
 - (void)initWithFrame1:(CGRect)frame;
