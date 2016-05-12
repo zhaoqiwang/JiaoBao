@@ -28,6 +28,7 @@
 @property(nonatomic,strong)leaveRecordModel *recordModel3;//http请求model（统计查询）
 @property(nonatomic,strong)leaveRecordModel *recordModel4;//http请求model（门卫审核）
 @property(nonatomic,strong)leaveRecordModel *recordModel;//http请求model（当前http请求model）
+@property(nonatomic,assign)int refreshFlag;
 
 
 
@@ -68,6 +69,9 @@
     self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)self.dataSource.count+1];
     self.mInt_reloadData = 3;
     [[LeaveHttp getInstance]GetUnitLeaves:self.recordModel];
+    if(self.mInt_flag == 0){
+        self.refreshFlag = 1;
+    }
     //[self.tableView reloadRowsAtIndexPaths:indexP_arr withRowAnimation:NO];
     
     
@@ -527,9 +531,17 @@
         tempMArr = self.mArr1;
     }
     else if(self.mInt_flag ==1){//已审核
-        self.recordModel.checkFlag = @"1";
-        self.cellFlag = YES;
-        tempMArr = self.mArr2;
+        if(self.refreshFlag == 1&&[[self.conditionArr objectAtIndex:0]isEqualToString:[self.conditionArr objectAtIndex:1]]){
+            self.recordModel.checkFlag = @"1";
+            self.cellFlag = YES;
+            [self.mArr2 removeAllObjects];
+            tempMArr = self.mArr2;
+            self.refreshFlag = 0;
+        }else{
+            self.recordModel.checkFlag = @"1";
+            self.cellFlag = YES;
+            tempMArr = self.mArr2;
+        }
     }
     else if(self.mInt_flag ==2){//统计查询
         self.cellFlag = NO;
@@ -705,6 +717,7 @@
             
         }
     }else{
+        
     }
     //设置http请求model
     self.recordModel.level = model.level;

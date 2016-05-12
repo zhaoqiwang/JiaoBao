@@ -480,7 +480,6 @@
     if ([string isEqualToString:@"\n"]) {
         // Be sure to test for equality using the "isEqualToString" message
         [textField resignFirstResponder];
-        
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
@@ -488,7 +487,6 @@
     if (textField.text.length+string.length>100) {
         return NO;
     }
-    
     NSInteger existedLength = textField.text.length;
     NSInteger selectedLength = range.length;
     NSInteger replaceLength = string.length;
