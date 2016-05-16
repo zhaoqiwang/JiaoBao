@@ -148,26 +148,26 @@ NSString *kCell = @"Forward_cell2";
 -(void)selSecBtn:(id)sender
 {
     [MBProgressHUD hideHUDForView:self];
-    self.datasource = [dm getInstance].mModel_unitList.UnitClass;
+    //self.datasource = [dm getInstance].mModel_unitList.UnitClass;
 
-    self.dataArr = [NSMutableArray arrayWithArray:[sender object] ];
+    self.datasource = [NSMutableArray arrayWithArray:[sender object]];
 
-    for(int i=0;i<self.dataArr.count;i++)
-    {
-        myUnit *unit = [self.dataArr objectAtIndex:i];
-        for(int i =0;i<unit.list.count ;i++)
-        {
-            UserListModel *model = [unit.list objectAtIndex:i];
-            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
-            {
-                [unit.list removeObject:model];
-            }
-            
-        }
-        
-        
-        
-    }
+//    for(int i=0;i<self.dataArr.count;i++)
+//    {
+//        myUnit *unit = [self.dataArr objectAtIndex:i];
+//        for(int i =0;i<unit.list.count ;i++)
+//        {
+//            UserListModel *model = [unit.list objectAtIndex:i];
+//            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+//            {
+//                [unit.list removeObject:model];
+//            }
+//            
+//        }
+//        
+//        
+//        
+//    }
 //    if(self.datasource.count == 0)
 //    {
 //        [SVProgressHUD showInfoWithStatus:@"无班级" ];
