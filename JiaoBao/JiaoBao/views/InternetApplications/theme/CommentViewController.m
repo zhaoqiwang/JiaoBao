@@ -1095,8 +1095,11 @@
     if (content.length==0&&[self.AnswerDetailModel.Flag integerValue]==2) {
         content = @"此答案已被修改";
     }
-    NSString *tempHtml = [utils clearHtml:content width:18];
-    [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    //NSString *tempHtml = [utils clearHtml:content width:18];
+    //[cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    NSURL *url = [NSURL URLWithString:content];
+    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:15];
+    [cell.mWebV_comment loadRequest:request];
     //加载
     //[self webViewLoadFinish:0];
     
@@ -1184,9 +1187,8 @@
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(0, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width, height+15);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(5, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width-10, height);
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
-//    self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize = CGSizeMake(self.KnowledgeTableViewCell.mWebV_comment.scrollView.contentSize.width, self.KnowledgeTableViewCell.mWebV_comment.frame.size.height+20);
     self.tableHeadView = [[UIView alloc]init];
     [self.tableHeadView addSubview:self.KnowledgeTableViewCell];
     if(self.topButtonTag == 1)
@@ -1252,8 +1254,6 @@
 
     [self.tableHeadView addSubview:self.rdateLabel];
     [self.tableHeadView addSubview:self.mBtnV_btn];
-
-
     self.tableHeadView.frame = CGRectMake(0, 0, [dm getInstance].width, self.mBtnV_btn.frame.origin.y+self.mBtnV_btn.frame.size.height);
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height) style:UITableViewStylePlain];
@@ -1281,27 +1281,13 @@
 
 
 }
--(void)webViewDidStartLoad:(UIWebView *)webView
-{
-    
-}
--(void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    NSLog(@"dfosjfpjsf = %f",webView.scrollView.contentSize.width);
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
-    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
-//    NSString* js = @"document.getElementById(\"main\") ? document.getElementById(\"main\").offsetHeight : -1";
-//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:js] floatValue];
 
-    [webView stringByEvaluatingJavaScriptFromString:meta];
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
-    [self webViewLoadFinish:webViewHeight+10];
-    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+    [self webViewLoadFinish:webViewHeight];
 }
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    
-}
+
 
 //通知界面，更新答案数据
 -(void)updataQuestionDetailModel:(NSNotification *)noti{
