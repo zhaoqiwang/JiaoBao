@@ -405,7 +405,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
 
     Forward_section *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kDetailedViewControllerID forIndexPath:indexPath];
-    
+    view.classFlag = @"0";
     NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
     if([[dm getInstance].sectionSet containsObject:num])
     {

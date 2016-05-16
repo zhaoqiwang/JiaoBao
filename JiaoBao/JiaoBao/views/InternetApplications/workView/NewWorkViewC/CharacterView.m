@@ -19,12 +19,10 @@ NSString *kSection = @"Forward_section3";
 }
 -(void)selSecBtn:(id)sender
 {
-        self.datasource = [NSMutableArray arrayWithArray:[sender object] ];
+    self.datasource = [NSMutableArray arrayWithArray:[sender object] ];
 
-    
-    
-            [self.mCollectionV_list reloadData];
-    }
+    [self.mCollectionV_list reloadData];
+}
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -54,8 +52,8 @@ NSString *kSection = @"Forward_section3";
     [self.mCollectionV_list registerClass:[Forward_section class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kSection];
     self.mCollectionV_list.delegate = self;
     self.mCollectionV_list.dataSource = self;
-//[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-
+    //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+    
     
     
     
@@ -75,12 +73,12 @@ NSString *kSection = @"Forward_section3";
     if(unit.list.count == 1)
     {
         model = [unit.list objectAtIndex:0];
-
+        
     }
     if(unit.list.count>1)
     {
         model = [unit.list objectAtIndex:1];
-
+        
         
     }
     
@@ -88,8 +86,8 @@ NSString *kSection = @"Forward_section3";
     {
         return 0;
     }
-        return model.groupselit_selit.count;
-
+    return model.groupselit_selit.count;
+    
 }
 //定义并返回每个cell
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -99,7 +97,7 @@ NSString *kSection = @"Forward_section3";
         
     }
     myUnit *unit = [self.datasource objectAtIndex:indexPath.section];
-
+    
     UserListModel *model;
     if(unit.list.count == 1)
     {
@@ -112,21 +110,21 @@ NSString *kSection = @"Forward_section3";
         
         
     }
-        groupselit_selitModel *groupModel;
-        groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
-        if (groupModel.mInt_select == 0) {
-            cell.mImgV_select.image = [UIImage imageNamed:@"blank.png"];
-        } else {
-            cell.mImgV_select.image = [UIImage imageNamed:@"selected.png"];
-        }
+    groupselit_selitModel *groupModel;
+    groupModel = [model.groupselit_selit objectAtIndex:indexPath.row];
+    if (groupModel.mInt_select == 0) {
+        cell.mImgV_select.image = [UIImage imageNamed:@"blank.png"];
+    } else {
+        cell.mImgV_select.image = [UIImage imageNamed:@"selected.png"];
+    }
     
-        CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
-        if (size.width>cell.mLab_name.frame.size.width) {
-            cell.mLab_name.numberOfLines = 2;
-        }
-        cell.mLab_name.text = groupModel.Name;
-
-
+    CGSize size = [groupModel.Name sizeWithFont:[UIFont systemFontOfSize:12]];
+    if (size.width>cell.mLab_name.frame.size.width) {
+        cell.mLab_name.numberOfLines = 2;
+    }
+    cell.mLab_name.text = groupModel.Name;
+    
+    
     
     return cell;
 }
@@ -134,12 +132,12 @@ NSString *kSection = @"Forward_section3";
     NSNumber *num = [NSNumber numberWithInteger:indexPath.section];
     
     
-
-
+    
+    
     Forward_section *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:kSection forIndexPath:indexPath];
-
-
-    if([[dm getInstance].sectionSet containsObject:num])
+    
+    view.classFlag = @"1";
+    if([[dm getInstance].sectionSet2 containsObject:num])
     {
         [view.addBtn setImage:[UIImage imageNamed:@"plus.png"] forState:UIControlStateNormal];
         [view.triangleBtn setImage:[UIImage imageNamed:@"bTri.png"] forState:UIControlStateNormal];
@@ -166,33 +164,33 @@ NSString *kSection = @"Forward_section3";
     }
     if(model.cellSelNum == model.groupselit_selit.count){
         [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
-
-
+        
+        
     }else {
         [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
-
+        
     }
-   // UserListModel *model = [unit.list objectAtIndex:indexPath.section];
-//    if(myunit.isSelected == YES)
-//    {
-//        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
-//    }
-//    else
-//    {
-//        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"]forState:UIControlStateNormal];
-//        
-//    }
+    // UserListModel *model = [unit.list objectAtIndex:indexPath.section];
+    //    if(myunit.isSelected == YES)
+    //    {
+    //        [view.rightBtn setImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateNormal];
+    //    }
+    //    else
+    //    {
+    //        [view.rightBtn setImage:[UIImage imageNamed:@"blank.png"]forState:UIControlStateNormal];
+    //
+    //    }
     view.delegate = self;
     view.tag = indexPath.section;
     view.mLab_name.text = unit.UintName ;
-
+    
     //view.rightBtn.hidden = YES;
     //view.mBtn_all.hidden = YES;
     CGSize size = [view.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:12]];
     
     view.addBtn.frame = CGRectMake(view.mLab_name.frame.origin.x+size.width, 5, 30, 30);
-
-
+    
+    
     return view;
 }
 //手动设置size
@@ -231,12 +229,12 @@ NSString *kSection = @"Forward_section3";
         groupModel.mInt_select = 1;
         model.cellSelNum++;
     }
-
-
     
-        [self.mCollectionV_list reloadData];
     
-
+    
+    [self.mCollectionV_list reloadData];
+    
+    
 }
 //每一个cell的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -257,7 +255,7 @@ NSString *kSection = @"Forward_section3";
     {
         groupselit_selitModel *groupModel ;
         myUnit *unit = [self.datasource objectAtIndex:section.tag];
-
+        
         UserListModel *model;
         if(unit.list.count == 1)
         {
@@ -281,7 +279,7 @@ NSString *kSection = @"Forward_section3";
             {
                 groupModel.mInt_select = 1;
             }
-
+            
             
         }
         model.cellSelNum = (int)model.groupselit_selit.count-model.cellSelNum;
@@ -311,7 +309,7 @@ NSString *kSection = @"Forward_section3";
         {
             groupModel = [model.groupselit_selit objectAtIndex:i];
             groupModel.mInt_select = 1;
-
+            
             
         }
         model.cellSelNum = (int)model.groupselit_selit.count;
@@ -339,17 +337,17 @@ NSString *kSection = @"Forward_section3";
         if(model.sectionSelSymbol == 0)
         {
             model.sectionSelSymbol = 1;
-
+            
             
         }
         else
         {
             model.sectionSelSymbol = 0;
-
+            
         }
-
-
-
+        
+        
+        
         
         [self.mCollectionV_list reloadData];
         
@@ -359,7 +357,7 @@ NSString *kSection = @"Forward_section3";
     HomeClassWorkView *home = (HomeClassWorkView*)[[[self superview]superview]superview];
     [home setFrame];
     
-
+    
 }
 
 

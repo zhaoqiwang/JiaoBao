@@ -206,10 +206,10 @@
         self.TitleTF.hidden = YES;
         
     }
-    if(textView.text.length>50)
-    {
-        textView.text = [textView.text substringToIndex:50];
-    }
+//    if(textView.text.length>50)
+//    {
+//        textView.text = [textView.text substringToIndex:50];
+//    }
     
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
