@@ -524,14 +524,14 @@
 }
 
 //答案明细 参数描述:答案id
--(void)AnswerDetailWithAId:(NSString*)AId
+-(void)AnswerDetailWithAId:(NSString*)AId byUrl:(NSString *)byUrl
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AnswerDetail",MAINURL];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    NSDictionary *dic = @{@"AId":AId,@"byUrl":@"1"};
+    NSDictionary *dic = @{@"AId":AId,@"byUrl":byUrl};
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];

@@ -147,7 +147,7 @@
         for(int i=0;i<array.count;i++)
         {
             CommsModel *model = [array objectAtIndex:i];
-            [[KnowledgeHttp getInstance]AnswerDetailWithAId:model.AId];
+            [[KnowledgeHttp getInstance]AnswerDetailWithAId:model.AId byUrl:@"1"];
         }
 
     }else{

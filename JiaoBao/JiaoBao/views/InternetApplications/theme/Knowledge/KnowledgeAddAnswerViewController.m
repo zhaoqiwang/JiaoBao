@@ -102,7 +102,7 @@
     [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
     //如果已经回答过，取自己回答的答案明细
     if ([self.mStr_MyAnswerId intValue]>0) {
-        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mStr_MyAnswerId];
+        [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mStr_MyAnswerId byUrl:@"0"];
         self.hideFlag = 0;
 
     }
@@ -362,7 +362,7 @@
                 if ([self.mModel_questionDetail.MyAnswerId intValue]>0) {
                     self.mStr_MyAnswerId = self.mModel_questionDetail.MyAnswerId;
 //                    self.mBtn_anSubmit.hidden = YES;
-                    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId];//答案明细
+                    [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.mModel_questionDetail.MyAnswerId byUrl:@"0"];//答案明细
                     self.hideFlag = 0;
                     
                 }
@@ -464,8 +464,10 @@
     self.mView_titlecell.mWebV_comment.delegate = self;
     NSString *content = model.KnContent;
 //    D("doifjgj-===kncontent-=====%@",model.KnContent);
-    NSString *tempHtml = [utils clearHtml:content width:18];
-    [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+//    NSString *tempHtml = [utils clearHtml:content width:18];
+//    [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
+    NSURL *url = [[NSURL alloc] initWithString:content];
+    [self.mView_titlecell.mWebV_comment loadRequest:[NSURLRequest requestWithURL:url]];
     //加载
     [self webViewLoadFinish:0 Width:0];
 }
@@ -520,7 +522,7 @@
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollWidth"]floatValue];
-    [self webViewLoadFinish:webViewHeight+10 Width:webViewWidth];
+    [self webViewLoadFinish:webViewHeight Width:webViewWidth];
 }
 
 -(void)placeTextFrame{
