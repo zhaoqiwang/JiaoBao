@@ -151,12 +151,12 @@
         //获取答案详情
         if(self.answerModel)//答案列表跳转用answerModel
         {
-            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID byUrl:@"1"];
             
         }
         else
         {
-            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID byUrl:@"1"];//首页跳转用questionModel.answerModel
 
             
         }
@@ -421,11 +421,11 @@
         //获取答案详情
         if(self.answerModel)//答案列表跳转用answerModel
         {
-            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID];
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID byUrl:@"1"];
         }
         else
         {
-            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID];//首页跳转用questionModel.answerModel
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID byUrl:@"1"];//首页跳转用questionModel.answerModel
         }
         if(self.answerModel)
         {

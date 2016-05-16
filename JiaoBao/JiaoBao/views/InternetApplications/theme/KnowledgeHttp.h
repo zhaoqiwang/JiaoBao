@@ -82,8 +82,8 @@
 //评价答案 参数描述:答案id - (1=反对，0=支持)
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag;
 
-//答案明细 参数描述:答案id
--(void)AnswerDetailWithAId:(NSString*)AId;
+//答案明细 参数描述:答案id - 1获取到url,0文章内容
+-(void)AnswerDetailWithAId:(NSString*)AId byUrl:(NSString *)byUrl;
 
 //添加评论 参数描述：答案Id - 评论内容 - 引用评论ID
 -(void)AddCommentWithAId:(NSString*)AId comment:(NSString*)comment RefID:(NSString*)RefID;
