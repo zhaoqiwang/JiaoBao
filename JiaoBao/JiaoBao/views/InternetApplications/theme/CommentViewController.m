@@ -1084,7 +1084,7 @@
     
     
     //加载webview
-    [cell.mWebV_comment.scrollView setScrollEnabled:YES];
+    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.tag = -1;
     cell.mWebV_comment.scrollView.bounces = NO;
 

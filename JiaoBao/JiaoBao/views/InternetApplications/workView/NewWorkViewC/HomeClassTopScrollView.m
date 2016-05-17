@@ -228,7 +228,6 @@
 
 -(void)GetUnitRevicer:(NSNotification *)noti
 {
-
     //[MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
