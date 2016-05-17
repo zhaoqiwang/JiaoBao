@@ -212,17 +212,7 @@
     [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
-//    D("webViewHeight-=000===%f",webViewHeight);
-//    D("webview.frame-===%@",NSStringFromCGSize(webView.scrollView.contentSize));
     if (webView.tag == -1) {
-//        CGRect frame = webView.frame;
-//        frame.size.width = [dm getInstance].width-5;
-//        frame.size.height = 1;
-//        webView.frame = frame;
-//        frame.size.height = webView.scrollView.contentSize.height;
-//        D("webViewHeight-=111===%f,%f,%f",webViewHeight,frame.size.height,webViewWidth);
-//        [self webViewLoadFinish:webViewHeight+10];
-//        [self.mTableV_answer reloadData];
         [self addDetailCell:self.mModel_recomment Float:webViewHeight];
     }else{
         CGRect frame = webView.frame;
@@ -230,7 +220,6 @@
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
-//        D("webViewHeight-=222===%f,%f",webViewHeight,frame.size.height);
         [webView setBackgroundColor:[UIColor clearColor]];
         webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
@@ -258,28 +247,25 @@
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
-////                D("99999999999999999=333===%d,%lu",self.mInt_index,(unsigned long)self.mModel_recomment.answerArray.count);
-////                if ([model.Flag integerValue]>0) {//非无内容
-                    tempWeb.delegate = self;
-                    tempWeb.tag = self.mInt_index-1;
+                tempWeb.delegate = self;
+                tempWeb.tag = self.mInt_index-1;
                 NSURL *url = [[NSURL alloc] initWithString:model.Abstracts];
                 tempWeb.scrollView.bounces = NO;
                 [tempWeb loadRequest:[NSURLRequest requestWithURL:url]];
-//                NSString *content = model.Abstracts;
-//                if (content.length==0&&[model.Flag integerValue]==2) {
-//                    content = @"此答案已被修改";
-//                }
-//                    NSString *tempHtml = [utils clearHtml:content width:85];
-//                    tempWeb.opaque = NO; //不设置这个值 页面背景始终是白色
-//                    [tempWeb setBackgroundColor:[UIColor clearColor]];
-//                    [tempWeb.scrollView setScrollEnabled:NO];
-//                    [tempWeb loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-                    [self.view addSubview:tempWeb];
-                    [tempWeb setHidden:YES];
-////                }
+                [self.view addSubview:tempWeb];
+                [tempWeb setHidden:YES];
                 self.mInt_index++;
             });
         }
+    }
+}
+
+#pragma mark 禁止webview中的链接点击
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+    if(navigationType==UIWebViewNavigationTypeLinkClicked){//判断是否是点击链接
+        return NO;
+    }else{
+        return YES;
     }
 }
 
