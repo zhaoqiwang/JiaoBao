@@ -485,6 +485,15 @@
     }
 }
 
+#pragma mark 禁止webview中的链接点击
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+    if(navigationType==UIWebViewNavigationTypeLinkClicked){//判断是否是点击链接
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
 //文章信息刷新
 -(void)setArthInfo{
     //赞个数

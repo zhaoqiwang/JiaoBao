@@ -911,7 +911,7 @@ static LoginSendHttp *loginSendHttp = nil;
 //            if (SHOWRONGYUN == 1) {
 //                [[ExchangeHttp getInstance] exchangeHttpRongYunGetToken:[dm getInstance].jiaoBaoHao TrueName:[dm getInstance].TrueName];
 //            }
-            NSString *tempName = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].TrueName];
+            NSString *tempName = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
             CGSize newSize = [tempName sizeWithFont:[UIFont systemFontOfSize:16]];
             [Nav_internetAppView getInstance].mLab_name.text = tempName;
             [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
@@ -1283,18 +1283,18 @@ static LoginSendHttp *loginSendHttp = nil;
                 }
             }
         }
-//        NSString *name;
-//        if ([str000 isKindOfClass:[NSNull class]]||[str000 isEqual:@"null"]) {
-//            [dm getInstance].name = [dm getInstance].TrueName;
-//            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
-//        }else{
-//            [dm getInstance].name = model.UserName;
-//            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,model.UserName];
-//        }
+        NSString *name;
+        if ([str000 isKindOfClass:[NSNull class]]||[str000 isEqual:@"null"]) {
+            [dm getInstance].name = [dm getInstance].TrueName;
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
+        }else{
+            [dm getInstance].name = model.UserName;
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,model.UserName];
+        }
         [dm getInstance].mainID = model.UserID;
-//        CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
-//        [Nav_internetAppView getInstance].mLab_name.text = name;
-//        [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
+        CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
+        [Nav_internetAppView getInstance].mLab_name.text = name;
+        [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
         
         //通知internetApp界面，获取成功
         [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"0"];

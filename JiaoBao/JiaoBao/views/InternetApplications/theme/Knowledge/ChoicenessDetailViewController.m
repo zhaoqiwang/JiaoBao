@@ -217,8 +217,15 @@
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetWidth"]floatValue];
     [self webViewLoadFinish:webViewHeight Width:webViewWidth];
-    
-    
+}
+
+#pragma mark 禁止webview中的链接点击
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+    if(navigationType==UIWebViewNavigationTypeLinkClicked){//判断是否是点击链接
+        return NO;
+    }else{
+        return YES;
+    }
 }
 
 //cell的点击事件---详情

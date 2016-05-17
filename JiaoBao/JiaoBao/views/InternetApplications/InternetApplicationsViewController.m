@@ -242,7 +242,7 @@
                 Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:m];
                 D("Identity_UserUnits_mode.ljl-====%@,%@",userUnitsModel.UnitID,str_default);
                 if ([userUnitsModel.UnitID intValue] == [str_default intValue]) {
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].TrueName];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
@@ -256,7 +256,7 @@
             for (int m=0; m<array.count; m++) {
                 Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:m];
                 if ([userUnitsModel.ClassID intValue]==[str_default intValue]) {
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].TrueName];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
@@ -285,7 +285,7 @@
                 array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
                 if (array.count>0) {
                     Identity_UserUnits_model *userUnitsModel = [array objectAtIndex:0];
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].TrueName];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.UnitName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.UnitID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.UnitName;
@@ -296,7 +296,7 @@
                 array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
                 if (array.count>0) {
                     Identity_UserClasses_model *userUnitsModel = [array objectAtIndex:0];
-                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].TrueName];
+                    name = [NSString stringWithFormat:@"%@:%@",userUnitsModel.ClassName,[dm getInstance].name];
                     [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;

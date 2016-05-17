@@ -525,6 +525,15 @@
     [self webViewLoadFinish:webViewHeight Width:webViewWidth];
 }
 
+#pragma mark 禁止webview中的链接点击
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+    if(navigationType==UIWebViewNavigationTypeLinkClicked){//判断是否是点击链接
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
 -(void)placeTextFrame{
     self.mLab_answer.frame = CGRectMake(12, self.mTextV_answer.frame.origin.y+3, self.mLab_answer.frame.size.width, self.mLab_answer.frame.size.height);
     self.mLab_content.frame = CGRectMake(12, self.mTextV_content.frame.origin.y+3, self.mLab_content.frame.size.width, self.mLab_content.frame.size.height);
