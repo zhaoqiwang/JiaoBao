@@ -441,7 +441,7 @@
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     
-    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-20];
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     [MBProgressHUD hideHUDForView:self.view];
     
@@ -462,7 +462,7 @@
     if (self.mInt_from == 2) {
         //内容
 //        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webView.scrollView.contentSize.height);
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width, webViewHeight+10);
+        self.mWebV_js.frame = CGRectMake(5, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width-10, webViewHeight+10);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mWebV_js.frame.origin.y+self.mWebV_js.frame.size.height);
         self.mBtn_click.hidden = YES;
         self.mBtn_view.hidden = YES;
@@ -477,7 +477,7 @@
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
         
-        self.mWebV_js.frame = CGRectMake(0, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width,  frame.size.height+10);
+        self.mWebV_js.frame = CGRectMake(5, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width-10,  frame.size.height+10);
         
         [self setArthInfo];
         //设置布局

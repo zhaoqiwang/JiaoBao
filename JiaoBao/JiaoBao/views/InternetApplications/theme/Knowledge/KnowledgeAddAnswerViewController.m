@@ -473,7 +473,7 @@
 }
 
 -(void)webViewLoadFinish:(float)height Width:(float)width{
-    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width, height);
+    self.mView_titlecell.mWebV_comment.frame = CGRectMake(5, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-10, height);
     self.mView_titlecell.mWebV_comment.scrollView.contentSize = CGSizeMake(width, height);
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
@@ -518,7 +518,7 @@
     }else{
         self.hideFlag ++;
     }
-    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     [webView stringByEvaluatingJavaScriptFromString:meta];
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     CGFloat webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollWidth"]floatValue];

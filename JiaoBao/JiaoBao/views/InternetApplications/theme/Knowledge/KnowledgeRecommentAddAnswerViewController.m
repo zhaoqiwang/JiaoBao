@@ -82,18 +82,6 @@
             }
         }
         
-        //延时执行
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-//            UIWebView *tempWeb0 = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-10, 0)];
-//            tempWeb0.delegate = self;
-//            tempWeb0.tag = -1;
-//            NSString *content0 = self.mModel_recomment.questionModel.KnContent;
-//            NSString *tempHtml0 = [utils clearHtml:content0 width:10];
-//            tempWeb0.opaque = NO; //不设置这个值 页面背景始终是白色
-//            [tempWeb0 setBackgroundColor:[UIColor clearColor]];
-//            [tempWeb0 loadHTMLString:tempHtml0 baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
-//            [self.view addSubview:tempWeb0];
-//            [tempWeb0 setHidden:YES];
         NSURL *url = [[NSURL alloc] initWithString:self.mModel_recomment.questionModel.KnContent];
         self.mView_titlecell.mWebV_comment.delegate = self;
         self.mView_titlecell.mWebV_comment.tag = -1;
@@ -102,7 +90,6 @@
         
 //        [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         self.mInt_index =1;
-//        });
         
         [self.mTableV_answer reloadData];
         [self addDetailCell:self.mModel_recomment Float:0];
@@ -183,13 +170,6 @@
     self.mView_titlecell.mWebV_comment.hidden = NO;
     [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:YES];
     self.mView_titlecell.mWebV_comment.tag = -1;
-//    self.mView_titlecell.mWebV_comment.userInteractionEnabled = NO;
-//    self.mView_titlecell.mWebV_comment.delegate = self;
-//    NSString *content = model.questionModel.KnContent;
-//    NSString *tempHtml = [utils clearHtml:content width:10];
-//    self.mView_titlecell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
-//    [self.mView_titlecell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
-//    [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     
     //加载
     [self webViewLoadFinish:height];
@@ -199,8 +179,7 @@
     [MBProgressHUD hideHUDForView:self.view];
     NSString *meta;
     if (webView.tag==-1) {
-        
-//        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     }else{
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
@@ -270,7 +249,8 @@
 }
 
 -(void)webViewLoadFinish:(float)height{
-    self.mView_titlecell.mWebV_comment.frame = CGRectMake(0, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width, height);
+    self.mView_titlecell.mWebV_comment.frame = CGRectMake(5, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height, [dm getInstance].width-10, height);
+    [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
