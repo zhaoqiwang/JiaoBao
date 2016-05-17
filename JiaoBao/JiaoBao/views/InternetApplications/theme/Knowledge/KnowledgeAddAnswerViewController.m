@@ -160,14 +160,6 @@
     }else{
         AnswerDetailModel *model = [dic objectForKey:@"model"];
         self.mTextV_answer.text = model.ATitle;
-//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"<img " withString:@"<img height=\"30\" width=\"30\""];
-//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<p>"] withString:@""];
-//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
-//        model.AContent = [model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
-//        NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
-//        NSAttributedString *string = [[NSAttributedString alloc] initWithData:[model.AContent dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
-////        //textView是UITextView
-//        self.mTextV_content.attributedText = string;
 
         NSData* htmlData = [model.AContent dataUsingEncoding:NSUTF8StringEncoding];
         
@@ -180,11 +172,6 @@
         model.AContent =[model.AContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<br/>"] withString:@"\r"];
         model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
         model.AContent = [model.AContent stringByReplacingOccurrencesOfString:@"'" withString:@"\""];
-
-//        NSMutableAttributedString *content=[[NSMutableAttributedString alloc] initWithString:model.AContent];
-//        self.mTextV_content.attributedText = content;
-//        NSString * htmlStr = [self getHTML];
-//        NSLog(@"htmlStr = %@",htmlStr);
 
         NSString *contentText = model.AContent;
         NSString *tempStr = model.AContent;
@@ -205,7 +192,6 @@
 
             }
 
-            NSLog(@"imgUrl = %@",ImgModel.url);
             ImgModel.originalName = @"";
             ImgModel.size = @"";
             ImgModel.type = @"";
@@ -214,10 +200,6 @@
                 
                 ImgModel.cursorPosition = NSMakeRange([[rangeArr objectAtIndex:0]longValue], 1);
             }
-            NSLog(@"cursorPosition = %lu",(unsigned long)ImgModel.cursorPosition.location);
-//            tempStr = [tempStr stringByReplacingOccurrencesOfString:ImgModel.url withString:@""];
-//            contentText = [contentText stringByReplacingOccurrencesOfString:ImgModel.url withString:@" "];
-            NSLog(@"contentText = %@ tempStr = %@",contentText,tempStr);
             tempStr = [tempStr stringByReplacingCharactersInRange:NSMakeRange(ImgModel.cursorPosition.location-i, ImgModel.url.length) withString:@""];
             contentText = [contentText stringByReplacingCharactersInRange:NSMakeRange(ImgModel.cursorPosition.location, ImgModel.url.length) withString:@" "];
             NSTextAttachment *textAttach = [[NSTextAttachment alloc]init];
@@ -291,11 +273,6 @@
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]==0) {
         [MBProgressHUD showSuccess:ResultDesc ];
-
-//        self.mTextV_content.text = @"";
-//        self.mTextV_answer.text = @"";
-//        self.mLab_answer.hidden = NO;
-//        self.mLab_content.hidden = NO;
         //切换按钮显示标题
         [self.mBtn_submit setTitle:@"修改答案" forState:UIControlStateNormal];
         [self.mBtn_anSubmit setTitle:@"匿名修改" forState:UIControlStateNormal];
@@ -307,10 +284,6 @@
             self.mModel_questionDetail.AnswersCount = [NSString stringWithFormat:@"%d",[self.mModel_questionDetail.AnswersCount intValue]+1];
             self.mStr_MyAnswerId = [dic objectForKey:@"Data"];
         }
-//        if (self.mInt_flag==1) {
-//            //问题明细
-//            [[KnowledgeHttp getInstance] QuestionDetailWithQId:self.mModel_question.TabID];
-//        }
         [self.mTextV_answer resignFirstResponder];
         [self.mTextV_content resignFirstResponder];
         //通知其余界面，更新答案数据
@@ -382,14 +355,6 @@
     self.mView_titlecell.hidden = NO;
     self.mView_titlecell.askImgV.hidden = NO;
     //标题
-//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, 16);
-//    NSString *title1 = [model.Title stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//    title1 = [title1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//    self.mView_titlecell.mLab_title.text = title1;
-//    [self.mView_titlecell.mLab_title setNumberOfLines:0];
-//    self.mView_titlecell.mLab_title.lineBreakMode = NSLineBreakByWordWrapping;//换行方式
-//    CGSize labelsize = [title1 sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-9*2,99999) lineBreakMode:NSLineBreakByWordWrapping];
-//    self.mView_titlecell.mLab_title.frame = CGRectMake(9, 10, [dm getInstance].width-9*2, labelsize.height);
     self.mView_titlecell.mLab_title.hidden = NO;
     NSString *string1 = model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
@@ -446,26 +411,12 @@
     self.mView_titlecell.mView_background.frame = CGRectMake(0, 0, [dm getInstance].width, self.mView_titlecell.mLab_Category0.frame.origin.y+self.mView_titlecell.mLab_Category0.frame.size.height+10);
     //回答内容
     self.mView_titlecell.mLab_Abstracts.hidden = YES;
-//    NSString *string2 = model.KnContent;
-//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\n" withString:@""];
-//    string2 = [string2 stringByReplacingOccurrencesOfString:@"\r\r" withString:@""];
-//    NSString *name2 = [NSString stringWithFormat:@"<font size=14 color='red'>详情 : </font> <font>%@</font>", string2];
-//    NSString *string = [NSString stringWithFormat:@"详情 : %@",string2];
-//    CGSize size = [string sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width-18, 1000)];
-//    self.mView_titlecell.mLab_Abstracts.frame = CGRectMake(9, self.mView_titlecell.mView_background.frame.origin.y+self.mView_titlecell.mView_background.frame.size.height+10, [dm getInstance].width-18, size.height);
-//    NSMutableDictionary *row2 = [NSMutableDictionary dictionary];
-//    [row2 setObject:name2 forKey:@"text"];
-//    RTLabelComponentsStructure *componentsDS2 = [RCLabel extractTextStyle:[row2 objectForKey:@"text"]];
-//    self.mView_titlecell.mLab_Abstracts.componentsAndPlainText = componentsDS2;
     //webview
     self.mView_titlecell.mWebV_comment.hidden = NO;
     [self.mView_titlecell.mWebV_comment.scrollView setScrollEnabled:NO];
     self.mView_titlecell.mWebV_comment.tag = -1;
     self.mView_titlecell.mWebV_comment.delegate = self;
     NSString *content = model.KnContent;
-//    D("doifjgj-===kncontent-=====%@",model.KnContent);
-//    NSString *tempHtml = [utils clearHtml:content width:18];
-//    [self.mView_titlecell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     NSURL *url = [[NSURL alloc] initWithString:content];
     [self.mView_titlecell.mWebV_comment loadRequest:[NSURLRequest requestWithURL:url]];
     //加载
@@ -478,11 +429,7 @@
     //图片
     [self.mView_titlecell.mCollectionV_pic reloadData];
     self.mView_titlecell.mCollectionV_pic.hidden = NO;
-//    if (model.Thumbnail.count>0) {
-//        self.mView_titlecell.mCollectionV_pic.frame = CGRectMake(9, self.mView_titlecell.mLab_Abstracts.frame.origin.y+self.mView_titlecell.mLab_Abstracts.frame.size.height+5, [dm getInstance].width-65, ([dm getInstance].width-65-30)/3);
-//    }else{
-        self.mView_titlecell.mCollectionV_pic.frame = self.mView_titlecell.mWebV_comment.frame;
-//    }
+    self.mView_titlecell.mCollectionV_pic.frame = self.mView_titlecell.mWebV_comment.frame;
     //时间
     self.mView_titlecell.mLab_RecDate.hidden = YES;
     //评论
@@ -574,8 +521,7 @@
     
     sheet.tag = 255;
     [sheet showInView:self.view];
-    self.tfContentTag = self.mArr_pic.count;
-
+    self.tfContentTag = (int)self.mArr_pic.count;
 }
 
 //提交答案
@@ -642,16 +588,6 @@
         
     }
     NSString *content = tempView.text;
-//    for (int i=0; i<self.mArr_pic.count; i++) {
-//        UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
-//        NSString *temp = model.originalName;
-//        content = [content stringByReplacingOccurrencesOfString:temp withString:model.url];
-//    }
-    if (content.length>4000) {
-        [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
-        return;
-    }
-//    content = [NSString stringWithFormat:@"<p>%@</p>",content];
     //如果已经回答过
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
 
@@ -673,7 +609,7 @@
     //输入删除时
     if ([text isEqualToString:@""]) {
         if([textView isEqual:self.mTextV_content]){
-            NSMutableArray *picArr = [self.mArr_pic mutableCopy];
+//            NSMutableArray *picArr = [self.mArr_pic mutableCopy];
             for (int i=0; i<self.mArr_pic.count; i++) {
                 UploadImgModel *model = [self.mArr_pic objectAtIndex:i];
                 if(range.length==1){
@@ -811,7 +747,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == 255) {
-        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//        NSUInteger sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         // 判断是否支持相机
         if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             switch (buttonIndex) {

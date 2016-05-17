@@ -125,6 +125,7 @@
         [MBProgressHUD showText:str toView:self.view];
         //发送修改昵称和姓名协议
         [dm getInstance].NickName = self.mTextF_nickName.text;
+        [dm getInstance].NickName1 = self.mTextF_nickName.text;
         [dm getInstance].TrueName = self.mTextF_trueName.text;
         //延迟执行
         dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
