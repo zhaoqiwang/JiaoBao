@@ -1084,7 +1084,7 @@
     
     
     //加载webview
-    [cell.mWebV_comment.scrollView setScrollEnabled:YES];
+    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.tag = -1;
     cell.mWebV_comment.scrollView.bounces = NO;
 
@@ -1283,6 +1283,9 @@
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
+    [webView stringByEvaluatingJavaScriptFromString:meta];
+
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"]floatValue];
     [self webViewLoadFinish:webViewHeight];
 }
