@@ -12,6 +12,7 @@
 #import "SelectionCell.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "MobClick.h"
+#import "NSString+Extension.h"
 
 @interface SharePostingViewController ()
 @property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
@@ -57,7 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mInt_index = 1;
-
+    [self.mTextF_title addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     //音频
     [self audio];
     //上传图片
@@ -408,10 +409,12 @@
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    
     if (self.mTextF_title.text.length>50) {
-        [MBProgressHUD showError:@"标题不能大于50个字" toView:self.view];
+        [MBProgressHUD showError:@"标题不能超过50个字" toView:self.view];
         return;
     }
+
     UITextView *tempView = [[UITextView alloc]init];
     tempView.attributedText = self.mTextV_content.attributedText;
     for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
@@ -425,6 +428,10 @@
         
     }
     self.tempContentText = tempView.text;
+    if(self.mTextV_content.text.length>20000){
+        [MBProgressHUD showError:@"内容不能超过20000个字" toView:self.view];
+        return;
+    }
 
     //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
     self.tempContentText = [self.tempContentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
@@ -1073,6 +1080,94 @@
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
     return img;
+}
+//如果输入超过规定的字数100，就不再让输入
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    
+    //输入删除时
+    if ([string isEqualToString:@""]) {
+        return YES;
+    }
+    if ([string isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textField resignFirstResponder];
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    if (textField.text.length+string.length>50) {
+        return NO;
+    }
+    NSInteger existedLength = textField.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = string.length;
+    if (existedLength - selectedLength + replaceLength > 50) {
+        return NO;
+    }
+    return TRUE;
+}
+
+//如果输入超过规定的字数100，就不再让输入
+- (void)textFieldDidChange:(UITextField *)textField{
+    NSString *toBeString = textField.text;
+    NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (textField.text.length>50) {
+            NSString *a = [textField.text substringFromIndex:textField.text.length-1];
+            NSString *b = [textField.text substringFromIndex:textField.text.length-2];
+            NSString *c = [textField.text substringFromIndex:textField.text.length-3];
+            NSString *d = [textField.text substringFromIndex:textField.text.length-4];
+            NSString *e = [textField.text substringFromIndex:textField.text.length-5];
+            if([a isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+            }else if ([b isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 2];
+            }else if ([c isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 3];
+            }else if ([d isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 4];
+            }else if ([e isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 5];
+            }
+            toBeString = textField.text;
+        }
+    }
+    
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > 50) {
+                
+                textField.text = [toBeString substringToIndex:50];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > 50) {
+            textField.text = [toBeString substringToIndex:50];
+        }
+    }
+    
+        if(textField.text.length>49)
+        {
+            textField.text = [textField.text substringToIndex:50];
+
+        }
+    
+    
 }
 
 @end

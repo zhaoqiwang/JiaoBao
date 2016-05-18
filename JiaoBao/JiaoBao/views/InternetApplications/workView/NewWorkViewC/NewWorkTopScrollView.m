@@ -115,7 +115,7 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
-
+    [self.superview endEditing:YES];
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮

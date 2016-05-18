@@ -18,7 +18,6 @@
 #import "OnlineJobHttp.h"
 #import "CheckSubViewController.h"
 
-
 @implementation ThemeView
 
 - (id)initWithFrame1:(CGRect)frame{
@@ -271,8 +270,6 @@
     if (self.mArr_AllCategory.count==3) {
         [[KnowledgeHttp getInstance] GetAllCategory];
     }
-    
-    
     [self sendRequest];
 }
 
@@ -517,6 +514,7 @@
             temp1.mInt_btn = 2;
             [model.mArr_sum insertObject:temp1 atIndex:0];
         }
+        
         return model.mArr_sum;
     }
     return 0;

@@ -108,6 +108,7 @@
 
 //附件按钮点击事件
 -(void)mBtn_accessory:(UIButton *)btn{
+    [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
 //    AccessoryViewController *access = [[AccessoryViewController alloc] init];
 //    access.delegate = self;
@@ -124,12 +125,14 @@
 
 //发送按钮
 -(void)mBtn_send:(UIButton *)btn{
+    [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
     [self.delegate mBtn_send:btn];
 }
 
 //点击删除附件
 -(void)deleteAccessoryPhoto:(UIButton *)btn{
+    [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
     //从数组中删除
     [self.mArr_accessory removeObjectAtIndex:btn.tag];
@@ -479,6 +482,7 @@
 
 - (void)btnVoiceDown:(id)sender
 {
+    [self.mTextV_input resignFirstResponder];
     self.mInt_flag = 1;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
     [self.imageView setHidden:NO];
@@ -493,6 +497,7 @@
 }
 - (void)btnVoiceUp:(id)sender
 {
+    [self.mTextV_input resignFirstResponder];
     if (self.mInt_flag ==1) {
         self.mInt_flag = 0;
         [self.imageView setHidden:YES];
@@ -511,6 +516,7 @@
 }
 - (void)btnVoiceDragUp:(id)sender
 {
+    [self.mTextV_input resignFirstResponder];
     [self.imageView setHidden:YES];
     //删除录制文件
     [self.recorder deleteRecording];

@@ -87,6 +87,7 @@
 
 //附件按钮点击事件
 -(void)mBtn_accessory:(UIButton *)btn{
+    [self.mTextV_input resignFirstResponder];
     AccessoryViewController *access = [[AccessoryViewController alloc] init];
     access.delegate = self;
     [utils pushViewController:access animated:YES];

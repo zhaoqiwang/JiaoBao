@@ -104,7 +104,6 @@
 
 //按钮点击事件
 -(void)clickBtn:(UIButton *)btn{
-    
     NSNumber *num = [NSNumber numberWithInteger:self.tag];
     
     if(btn.tag == 6)//三角 加号 bigButton

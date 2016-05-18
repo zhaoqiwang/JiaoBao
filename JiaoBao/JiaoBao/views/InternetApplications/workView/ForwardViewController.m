@@ -550,6 +550,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //section点击事件
 -(void)Forward_sectionClickBtnWith:(UIButton *)btn cell:(Forward_section *)section{
+    [self.view.superview endEditing:YES];
     UserListModel *model = [self.mModel_myUnit.list objectAtIndex:section.tag];
 
     if(btn.tag == 6)

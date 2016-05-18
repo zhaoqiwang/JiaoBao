@@ -119,6 +119,7 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
+    [self.superview endEditing:YES];
     [dm getInstance].notificationSymbol = sender.tag;
     [[NSNotificationCenter defaultCenter]postNotificationName:@"updateUI" object:nil];
 
