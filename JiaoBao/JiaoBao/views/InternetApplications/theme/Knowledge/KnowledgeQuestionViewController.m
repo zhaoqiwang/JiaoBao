@@ -663,13 +663,13 @@
     }else if (optimalSize2.height>20) {
         optimalSize2 = CGSizeMake(optimalSize2.width, 35);
     }
-    cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y+5, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
+    cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
 //    cell.mLab_Abstracts.frame = CGRectMake(63, cell.mImgV_head.frame.origin.y+2, [dm getInstance].width-75, optimalSize2.height);
     //背景色
     if ([model.Flag integerValue]==2){//有证据
         cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.basisImagV.frame.size.height+10);
     }else{
-        cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.mLab_Abstracts.frame.size.height+10);
+        cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y+5, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, cell.mLab_Abstracts.frame.size.height+10);
     }
     
 //    cell.mView_background.frame = CGRectMake(cell.mLab_Abstracts.frame.origin.x-2, cell.mLab_Abstracts.frame.origin.y-3, [dm getInstance].width-70, cell.mLab_Abstracts.frame.size.height+4);

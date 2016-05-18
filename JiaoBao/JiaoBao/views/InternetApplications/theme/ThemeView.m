@@ -1147,7 +1147,7 @@
                 }
                 
 
-                cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y+5, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
+                cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
                 cell.mLab_Abstracts.textAlignment = RTTextAlignmentLeft;
                 //背景色
 //                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);
