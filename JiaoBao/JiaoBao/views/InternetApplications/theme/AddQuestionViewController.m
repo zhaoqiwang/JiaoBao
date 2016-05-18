@@ -634,7 +634,7 @@
     }
     self.tempContentText = tempView.text;
     if (self.tempContentText.length>4000) {
-        [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
+        [MBProgressHUD showError:@"提问内容不能超过4000字" toView:self.view];
         return;
     }
     //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
