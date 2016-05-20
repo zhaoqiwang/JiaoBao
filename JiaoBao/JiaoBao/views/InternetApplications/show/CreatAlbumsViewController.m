@@ -66,7 +66,8 @@
     self.mTextF_type.frame = CGRectMake(self.mLab_name.frame.origin.x+self.mLab_name.frame.size.width+10, self.mLab_type.frame.origin.y, self.mTextF_type.frame.size.width, self.mTextF_type.frame.size.height);
     self.mBtn_type.frame = self.mTextF_type.frame;
     self.mTableV_type.frame = CGRectMake(self.mTextF_type.frame.origin.x, self.mTextF_type.frame.origin.y+self.mTextF_type.frame.size.height, self.mTextF_type.frame.size.width, 0);
-    
+    //限制输入字数
+//    [self.mTextF_name addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 //    个人，0:私有；1：好友可访问；2：关注可访问；3：游客可访问，单位：0无限制，1单位内可见
     NSMutableArray *array ;
     if ([self.mStr_flag intValue] == 1) {
@@ -139,6 +140,25 @@
         }];
     }
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([string isEqualToString:@"\n"]) {
+        [textField resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
+//限制输入字数
+//- (void)textFieldDidChange:(UITextField *)textField
+//{
+//    if (textField == self.mTextF_name) {
+//        if (textField.text.length > 20) {
+//            textField.text = [textField.text substringToIndex:20];
+//        }
+//    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

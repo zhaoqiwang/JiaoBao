@@ -25,7 +25,7 @@
 
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
-    if ([str intValue] ==0) {//成功
+    if ([str intValue] ==0||[str intValue] ==2) {//成功
         [[LoginSendHttp getInstance]GetCommPerm];
     }else{
     }
@@ -82,7 +82,7 @@
 
     [dm getInstance].secondFlag = @"0";
     [dm getInstance].notificationSymbol = 1;
-    [[LoginSendHttp getInstance]changeCurUnit];
+    [[LoginSendHttp getInstance]changeCurUnit:1];
     //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];D
     
     [MBProgressHUD showMessage:@"" toView:self.view];

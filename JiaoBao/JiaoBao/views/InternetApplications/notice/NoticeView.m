@@ -140,7 +140,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
                     UnitSectionMessageModel *model = [self.mArr_unit objectAtIndex:self.mInt_flag];
                     D("NoticeHttpGetUnitNoticesWith-===%@,%@,%d",model.UnitType,model.UnitID,self.mInt_index);
                     //发送获取切换单位和个人信息请求
-                    [[LoginSendHttp getInstance] changeCurUnit];
+                    [[LoginSendHttp getInstance] changeCurUnit:0];
                     [[LoginSendHttp getInstance] getUserInfoWith:[NSString stringWithFormat:@"%d",[dm getInstance].uType] UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
                     //设置标签名
                     self.mLab_name.text = [NSString stringWithFormat:@"  %@",model.UnitName];
@@ -622,7 +622,7 @@ static NSString *NoticeCell = @"ShareCollectionViewCell";
         [dm getInstance].mStr_unit = model.UnitName;
         //    [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
         //发送获取切换单位和个人信息请求
-        [[LoginSendHttp getInstance] changeCurUnit];
+        [[LoginSendHttp getInstance] changeCurUnit:0];
         [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         [MBProgressHUD showMessage:@"" toView:self];
     }else if ([model.UnitType intValue] ==2){//学校

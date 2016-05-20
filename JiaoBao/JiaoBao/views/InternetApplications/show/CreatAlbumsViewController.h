@@ -18,7 +18,7 @@
 
 @protocol CreatAlbumsDelegate;
 
-@interface CreatAlbumsViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate>{
+@interface CreatAlbumsViewController : UIViewController<MyNavigationDelegate,MBProgressHUDDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条
     UILabel *mLab_name;//相册名
     UITextField *mTextF_name;//相册名

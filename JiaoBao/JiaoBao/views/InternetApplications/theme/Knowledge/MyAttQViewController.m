@@ -274,7 +274,7 @@
         
         [self.mArr_list removeObjectAtIndex:self.mInt_deleteCell];
         [self.mTalbeV_liset reloadData];
-        
+        [MBProgressHUD showSuccess:@"取消关注成功" toView:self.view];
         //修改model中的值，和界面显示
         //重新获取
         self.mInt_reloadData = 1;
@@ -283,7 +283,6 @@
         self.mInt_list--;
         if (self.mInt_rowcount>self.mArr_list.count) {
             [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"1" pageNum:[NSString stringWithFormat:@"%lu",(unsigned long)self.mInt_list+1] RowCount:[NSString stringWithFormat:@"%d",self.mInt_rowcount]];
-            [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         }
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];

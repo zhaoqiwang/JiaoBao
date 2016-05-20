@@ -107,6 +107,15 @@
     //发送按钮
     self.mBtn_send.frame = CGRectMake([dm getInstance].width-65, 0, 60, 51);
     [self.mBtn_send addTarget:self action:@selector(clickSendBtn) forControlEvents:UIControlEventTouchUpInside];
+    
+    //点击隐藏键盘
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
+    [self.view addGestureRecognizer:singleTap];
+}
+//点击隐藏键盘
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer{
+    [self.view endEditing:YES];
 }
 
 -(void)sendRequest{
@@ -507,7 +516,7 @@
     }
     //阅读人数
     self.mBtn_view.frame = CGRectMake(self.mBtn_like.frame.origin.x-self.mBtn_view.frame.size.width-5, self.mBtn_like.frame.origin.y, self.mBtn_view.frame.size.width, 30);
-    [self.mBtn_like setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ViewCount] forState:UIControlStateNormal];
+    [self.mBtn_view setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ViewCount] forState:UIControlStateNormal];
     //点击人数
     self.mBtn_click.frame = CGRectMake(self.mBtn_view.frame.origin.x-self.mBtn_click.frame.size.width-5, self.mBtn_like.frame.origin.y, self.mBtn_click.frame.size.width, 30);
     [self.mBtn_click setTitle:[NSString stringWithFormat:@"%d",self.mModel_arthInfo.ClickCount] forState:UIControlStateNormal];

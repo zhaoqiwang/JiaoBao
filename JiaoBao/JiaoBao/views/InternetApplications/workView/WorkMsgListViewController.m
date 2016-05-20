@@ -374,6 +374,7 @@
         //将图层的边框设置为圆脚
         cell.mLab_time.layer.cornerRadius = 2;
         cell.mLab_time.layer.masksToBounds = YES;
+        cell.mLab_time.hidden = NO;
         //按钮
         cell.mBtn_work.hidden = NO;
         cell.mBtn_work.frame = CGRectMake([dm getInstance].width-55, 33, 50, 30);
@@ -493,17 +494,17 @@
         cell.mLab_name.numberOfLines = 0;
         cell.mLab_name.lineBreakMode = NSLineBreakByCharWrapping;
         cell.mLab_name.text = model.UserName;
-        cell.mLab_name.textAlignment = NSTextAlignmentLeft;
+        cell.mLab_name.textAlignment = NSTextAlignmentCenter;
         cell.mLab_name.font = [UIFont systemFontOfSize:11];
         //        CGRect rect=[cell.mLab_name.text boundingRectWithSize:CGSizeMake(40, 1000) options:NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesFontLeading  |NSStringDrawingUsesLineFragmentOrigin
         //                                      attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:11],NSFontAttributeName, nil]  context:nil];
         CGSize size = [cell.mLab_name.text sizeWithFont:[UIFont systemFontOfSize:11] constrainedToSize:CGSizeMake(40, 1000)];
-        cell.mLab_name.frame = CGRectMake([dm getInstance].width-55, 62, 40, size.height);
+        cell.mLab_name.frame = CGRectMake([dm getInstance].width-55, 52, 40, size.height);
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,model.Jiaobaohao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         //cell.mLab_name.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
         
         
-        cell.mImgV_head.frame = CGRectMake([dm getInstance].width-50, 20, 40, 40);
+        cell.mImgV_head.frame = CGRectMake([dm getInstance].width-50, 10, 40, 40);
         
         //时间
         //        CGSize timeSize = [[NSString stringWithFormat:@"%@",model.RecDate] sizeWithFont:[UIFont systemFontOfSize:12]];
@@ -538,7 +539,7 @@
         //再计算行高,看内容是否高于头像
         CGFloat lineH;
         CGFloat tempBack = cell.mImgV_background.frame.origin.y+cell.mImgV_background.frame.size.height+5;
-        CGFloat tempBack1 = cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+5;
+        CGFloat tempBack1 = cell.mImgV_head.frame.origin.y+cell.mImgV_head.frame.size.height+15;
         if (tempBack>tempBack1) {
             lineH = tempBack;
         }else{

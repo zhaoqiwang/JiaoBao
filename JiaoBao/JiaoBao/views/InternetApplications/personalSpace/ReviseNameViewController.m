@@ -83,12 +83,17 @@
         [self.mTextF_nickName setSecureTextEntry:YES];
         [self.mTextF_trueName setSecureTextEntry:YES];
     }
-    NSString *trueName = [dm getInstance].TrueName;
-    NSString *nickName = [dm getInstance].NickName;
-    self.mTextF_nickName.text = nickName;
+    
     self.mTextF_nickName.tag = 10;
-    self.mTextF_trueName.text = trueName;
+    
     self.mTextF_trueName.tag = 11;
+    //如果是昵称，给默认值
+    if (self.mInt_flag == 1) {
+        NSString *trueName = [dm getInstance].TrueName;
+        NSString *nickName = [dm getInstance].NickName;
+        self.mTextF_nickName.text = nickName;
+        self.mTextF_trueName.text = trueName;
+    }
     //确定按钮
     self.mBtn_sure.frame = CGRectMake(20, self.mTextF_trueName.frame.origin.y+self.mTextF_trueName.frame.size.height+20, [dm getInstance].width-40, self.mBtn_sure.frame.size.height);
 }

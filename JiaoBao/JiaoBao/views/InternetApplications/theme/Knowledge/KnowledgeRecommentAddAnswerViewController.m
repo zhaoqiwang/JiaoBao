@@ -181,7 +181,7 @@
     if (webView.tag==-1) {
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     }else{
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
+        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-85];
     }
     [webView stringByEvaluatingJavaScriptFromString:meta];
     webView.keyboardDisplayRequiresUserAction = NO;
@@ -412,16 +412,16 @@
     cell.mWebV_comment.hidden = NO;
     cell.mWebV_comment.tag = indexPath.row;
 //    cell.mWebV_comment.scalesPageToFit = YES;
-    [cell.mWebV_comment.scrollView setScrollEnabled:YES];
+    [cell.mWebV_comment.scrollView setScrollEnabled:NO];
     cell.mWebV_comment.scrollView.bounces = NO;
     cell.mWebV_comment.frame = CGRectMake(63, cell.mLab_Abstracts.frame.origin.y, [dm getInstance].width-75, model.floatH);
 //    cell.mWebV_comment.userInteractionEnabled = NO;
+    cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
+    [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
     NSString *content = model.Abstracts;
     if (content.length==0&&[model.Flag integerValue]==2) {
         content = @"此答案已被修改";
         NSString *tempHtml = [utils clearHtml:content width:85];
-        cell.mWebV_comment.opaque = NO; //不设置这个值 页面背景始终是白色
-        [cell.mWebV_comment setBackgroundColor:[UIColor clearColor]];
         [cell.mWebV_comment loadHTMLString:tempHtml baseURL:[NSURL fileURLWithPath: [[NSBundle mainBundle]  bundlePath]]];
     }else{
         NSURL *url = [[NSURL alloc] initWithString:model.Abstracts];

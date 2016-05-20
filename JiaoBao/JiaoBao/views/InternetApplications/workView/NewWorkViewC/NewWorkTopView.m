@@ -20,6 +20,9 @@
         // Initialization code
 //        self.frame = frame;
         self.mArr_accessory = [NSMutableArray array];
+        //通知对应界面，将键盘隐藏
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"selectNameButton" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectNameButton:) name:@"selectNameButton" object:nil];
         
         //音频
         [self audio];
@@ -94,6 +97,11 @@
     return self;
 }
 
+//通知对应界面，将键盘隐藏
+-(void)selectNameButton:(NSNotification *)noti{
+    [self.mTextV_input resignFirstResponder];
+}
+
 //点击发送短信按钮
 -(void)sendMsgBtn:(UIButton *)btn{
     [self btnVoiceUp:nil];
@@ -108,6 +116,10 @@
 
 //附件按钮点击事件
 -(void)mBtn_accessory:(UIButton *)btn{
+    if (self.mArr_accessory.count>9) {
+        [MBProgressHUD showError:@"附件不能多于10个" toView:self];
+        return;
+    }
     [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
 //    AccessoryViewController *access = [[AccessoryViewController alloc] init];
@@ -125,6 +137,10 @@
 
 //发送按钮
 -(void)mBtn_send:(UIButton *)btn{
+    if (self.mArr_accessory.count>9) {
+        [MBProgressHUD showError:@"附件不能多于10个" toView:self];
+        return;
+    }
     [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
     [self.delegate mBtn_send:btn];
@@ -268,11 +284,6 @@
 //如果输入超过规定的字数1000，就不再让输入
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     // Any new character added is passed in as the "text" parameter
-    //输入删除时
-    if ([text isEqualToString:@""]) {
-        self.mTextV_input.text = textView.text;
-        return YES;
-    }
     if ([text isEqualToString:@"\n"]) {
         // Be sure to test for equality using the "isEqualToString" message
         [textView resignFirstResponder];
@@ -281,12 +292,15 @@
         return FALSE;
     }
     // For any other character return TRUE so that the text gets added to the view
-    if(textView.text.length>999)
-    {
-        textView.text = [textView.text substringToIndex:999];
-        self.mTextV_input.text = textView.text;
-    }
     return TRUE;
+}
+
+-(void)textViewDidChange:(UITextView *)textView{
+    NSInteger number = [textView.text length];
+    if (number > 999) {
+        textView.text = [textView.text substringToIndex:999];
+    }
+    self.mTextV_input.text = textView.text;
 }
 
 #pragma mark ELCImagePickerControllerDelegate Methods
@@ -482,6 +496,10 @@
 
 - (void)btnVoiceDown:(id)sender
 {
+    if (self.mArr_accessory.count>9) {
+        [MBProgressHUD showError:@"附件不能多于10个" toView:self];
+        return;
+    }
     [self.mTextV_input resignFirstResponder];
     self.mInt_flag = 1;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];

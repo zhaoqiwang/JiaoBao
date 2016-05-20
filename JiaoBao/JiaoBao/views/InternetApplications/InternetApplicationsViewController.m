@@ -189,8 +189,10 @@
 -(void)changeCurUnit:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
-    if ([str intValue] ==0) {//成功
-        [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+    if ([str intValue] ==0||[str intValue] ==2) {//成功
+        if ([str intValue] ==0) {
+            [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+        }
         [dm getInstance].leaveModel = nil;
         if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
             [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
@@ -559,7 +561,7 @@
         }
         [dm getInstance].uType = [idenModel.RoleIdentity intValue];
         //发送获取列表请求
-        [[LoginSendHttp getInstance] changeCurUnit];
+        [[LoginSendHttp getInstance] changeCurUnit:0];
         [LoginSendHttp getInstance].mInt_forwardFlag =2;
 //        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];

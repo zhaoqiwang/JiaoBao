@@ -91,8 +91,8 @@
 //获取接收人列表或单位列表,flag是短信还是普通请求，all是否群发
 -(void)ReceiveListWithFlag:(int)flag all:(int)all;
 
-//切换所在单位，切换身份
--(void)changeCurUnit;
+//切换所在单位，切换身份 - 0需要提示加载，1不需要
+-(void)changeCurUnit:(int)flag;
 
 //获取自己的个人信息
 -(void)getUserInfoWith:(NSString *)accID UID:(NSString *)uid;

@@ -415,8 +415,8 @@ static LoginSendHttp *loginSendHttp = nil;
     [request setDelegate:self];
     [request startAsynchronous];
 }
-//切换所在单位，切换身份
--(void)changeCurUnit{
+//切换所在单位，切换身份 - 0需要提示加载，1不需要
+-(void)changeCurUnit:(int)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@Account/changeCurUnit",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -427,6 +427,7 @@ static LoginSendHttp *loginSendHttp = nil;
     [request addPostValue:@([dm getInstance].UID) forKey:@"UID"];
     [request addPostValue:@([dm getInstance].uType) forKey:@"uType"];
     request.tag = 16;//设置请求tag
+    request.userInfo = [NSDictionary dictionaryWithObject:@(flag) forKey:@"flag"];
     self.flag_request = 0;
     [request setDelegate:self];
     [request startAsynchronous];
@@ -1214,6 +1215,10 @@ static LoginSendHttp *loginSendHttp = nil;
             }
         }
         //通知内务界面，切换成功
+        NSString *flag = [_request.userInfo objectForKey:@"flag"];
+        if ([flag integerValue]==1) {
+            time = @"2";
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:@"changeCurUnit" object:time];
     }else if (_request.tag == 17){//发表交流信息,内容
         NSString *time = [jsonDic objectForKey:@"ResultCode"];

@@ -115,6 +115,8 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
+    //通知对应界面，将键盘隐藏
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectNameButton" object:nil];
     [self.superview endEditing:YES];
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
