@@ -160,7 +160,6 @@
     //获取验证验证码是否正确的数据
     _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
         [MBProgressHUD hideHUDForView:self.view];
-
         NSDictionary *dic = note.object;
         NSArray *keyArr =[dic allKeys];
         NSString *str = [keyArr objectAtIndex:0];

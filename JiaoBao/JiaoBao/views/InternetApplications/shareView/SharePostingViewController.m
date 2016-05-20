@@ -454,27 +454,29 @@
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     self.imageCount = 1;
-    D("info_count = %ld",(unsigned long)info.count);
     [picker dismissViewControllerAnimated:YES completion:^{
         
-
+        
     }];
-    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
-
+    [MBProgressHUD showMessage:@"正在上传" toView:nil];
+    
     UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
-        image = [self fixOrientation:image];
-    
+    image = [self fixOrientation:image];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     NSData *imageData = UIImageJPEGRepresentation(image,0);
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+    NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
     D("图片路径是：%@",imgPath);
-
-
+    
+    
     BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
     if (!yesNo) {//不存在，则直接写入后通知界面刷新
         BOOL result = [imageData writeToFile:imgPath atomically:YES];
@@ -483,7 +485,6 @@
                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                 
                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                 break;
             }
         }
@@ -497,17 +498,15 @@
                     NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                     
                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-//                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                     break;
                 }
             }
         }
     }
-
+    
     self.mInt_index ++;
     self._placeholdLabel.hidden = YES;
-
-    //[self.mProgressV hide:YES];
+    
 }
 
 
