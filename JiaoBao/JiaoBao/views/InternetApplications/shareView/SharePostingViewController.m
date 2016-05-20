@@ -310,8 +310,12 @@
             textAttach.bounds=CGRectMake(0, 0, 30, 30);
             model.cursorPosition = self.cursorPosition;
             NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
-            [str insertAttributedString:strA atIndex:index];
-            model.attributedString = strA;
+            NSMutableAttributedString *strB = [[NSMutableAttributedString alloc]initWithAttributedString:strA];
+
+            //为所有文本设置字体
+            [strB addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [strB length])];
+            [str insertAttributedString:strB atIndex:index];
+            model.attributedString = strB;
             self.mTextV_content.attributedText = str;
             [self.mArr_pic addObject:model];
             
@@ -461,7 +465,8 @@
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
-    image = [self fixOrientation:image];
+        image = [self fixOrientation:image];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
@@ -583,7 +588,7 @@
             if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                    
+                    image = [self fixOrientation:image];
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
                     
                     // NSLog(@"%lu",(unsigned long)imageData.length);

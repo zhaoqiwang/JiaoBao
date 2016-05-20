@@ -190,7 +190,8 @@
         }
         else
         {
-            [MBProgressHUD showError:ResultDesc toView:self.view];
+            [MBProgressHUD showError:ResultDesc];
+            [self.navigationController popViewControllerAnimated:YES];
 
         }
         
@@ -233,7 +234,7 @@
 //    [self.navigationController pushViewController:pass animated:YES];
     if([utils isBlankString:self.tel_identi_codeTF.text])
     {
-        [self progressViewTishi:@"请输入手机号码"];
+        [self progressViewTishi:@"请输入验证码"];
         return;
 
         

@@ -337,7 +337,7 @@
 
 if([dm getInstance].notificationSymbol == 100)
 {
-    NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.dataArr;
+    NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.datasource;
     for(int i=0;i<dataArr.count;i++)
     {
         myUnit *unit = [dataArr objectAtIndex:i];

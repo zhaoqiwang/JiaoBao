@@ -17,7 +17,7 @@ NSString *kCell = @"Forward_cell2";
 {
    self = [super initWithFrame:frame];
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(selSecBtn:) name:@"selSecBtn" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(classMessage:) name:@"classMessage" object:nil];
 
 
     self.dataArr = [[NSMutableArray alloc]initWithCapacity:0];
@@ -145,34 +145,41 @@ NSString *kCell = @"Forward_cell2";
 //
 //    
 //}
--(void)selSecBtn:(id)sender
+-(void)classMessage:(id)sender
 {
-    [MBProgressHUD hideHUDForView:self];
+    //[MBProgressHUD hideHUDForView:self];
     self.datasource = [dm getInstance].mModel_unitList.UnitClass;
+                    for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
+                    {
+    
+                        myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+                        [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+    
+                    }
 
     self.dataArr = [NSMutableArray arrayWithArray:[sender object]];
 
-//    for(int i=0;i<self.dataArr.count;i++)
-//    {
-//        myUnit *unit = [self.dataArr objectAtIndex:i];
-//        for(int i =0;i<unit.list.count ;i++)
-//        {
-//            UserListModel *model = [unit.list objectAtIndex:i];
-//            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
-//            {
-//                [unit.list removeObject:model];
-//            }
-//            
-//        }
-//        
-//        
-//        
-//    }
+    for(int i=0;i<self.dataArr.count;i++)
+    {
+        myUnit *unit = [self.dataArr objectAtIndex:i];
+        for(int i =0;i<unit.list.count ;i++)
+        {
+            UserListModel *model = [unit.list objectAtIndex:i];
+            if([model.GroupName isEqualToString:@"本班老师"]|[model.GroupName isEqualToString:@"本班学生"])
+            {
+                [unit.list removeObject:model];
+            }
+            
+        }
+        
+        
+        
+    }
 //    if(self.datasource.count == 0)
 //    {
 //        [SVProgressHUD showInfoWithStatus:@"无班级" ];
 //    }
-           [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
+//           [[NSNotificationCenter defaultCenter]postNotificationName:@"progress2" object:nil];
 
     
     [self.mCollectionV_list reloadData];

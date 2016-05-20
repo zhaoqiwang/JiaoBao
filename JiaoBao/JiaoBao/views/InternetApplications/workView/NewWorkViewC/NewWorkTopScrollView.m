@@ -141,16 +141,17 @@
             {
 
                 [dm getInstance].notificationSymbol = 100;
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"classMessage" object:nil];
 
                 //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
 
-                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
-                {
-
-                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
-                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
-                    
-                }
+//                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
+//                {
+//
+//                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+//                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+//                    
+//                }
 
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;

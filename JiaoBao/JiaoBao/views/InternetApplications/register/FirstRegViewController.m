@@ -183,9 +183,6 @@
                 weakSelf.tel.text = @"";
                 weakSelf.telSymbol = NO;
 
-
-
-                
             }
         }
         
@@ -207,6 +204,7 @@
                sec.tel = weakSelf.tel.text;
                sec.forgetPWSymbol = weakSelf.forgetPWSymbol;
                [weakSelf.navigationController pushViewController:sec animated:YES];
+               self.urlNumTF.text = @"";
                
            }
         else
