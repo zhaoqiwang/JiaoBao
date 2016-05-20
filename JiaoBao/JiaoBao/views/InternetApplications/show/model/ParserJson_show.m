@@ -103,6 +103,7 @@
 //获取个人相册
 +(NSMutableArray *)parserJsonGetPhotoList:(NSString *)json{
     NSMutableArray *array = [NSMutableArray array];
+    json = [json stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     NSArray *arrList = [json objectFromJSONString];
     for (int i=0; i<arrList.count; i++) {
         PersonPhotoModel *model = [[PersonPhotoModel alloc] init];

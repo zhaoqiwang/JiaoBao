@@ -632,6 +632,7 @@
     }
     
 //    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.accessoryType=UITableViewCellAccessoryNone;
     //先判断是精选还是别的类型
     if (self.mInt_index ==2) {//精选
         for (UIView *temp in cell.subviews) {
@@ -931,6 +932,7 @@
             cell.mLab_AttCount.hidden = YES;
             cell.mLab_selectCategory.hidden = NO;
             cell.mLab_selectCategory1.hidden = NO;
+            cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
             cell.mLab_selectCategory.frame = CGRectMake(30, 0, cell.mLab_selectCategory.frame.size.width, 44);
             AllCategoryModel *allModel = [self.mArr_AllCategory objectAtIndex:self.mInt_index];
             NSString *temp2 = allModel.item_now.Subject;

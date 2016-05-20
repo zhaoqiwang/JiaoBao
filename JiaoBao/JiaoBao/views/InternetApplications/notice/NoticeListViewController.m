@@ -47,7 +47,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetUnitNotices:) name:@"GetUnitNotices" object:nil];
     //通知内务界面，切换成功
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeCurUnit" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit) name:@"changeCurUnit" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCurUnit:) name:@"changeCurUnit" object:nil];
     
     self.mArr_list = [NSMutableArray array];
     self.mInt_index = 1;
@@ -139,7 +139,7 @@
 //发送获取切换单位和个人信息请求
 -(void)sendhttpRequest{
     [LoginSendHttp getInstance].mInt_forwardFlag = 1;
-    [[LoginSendHttp getInstance] changeCurUnit];
+    [[LoginSendHttp getInstance] changeCurUnit:0];
 }
 //切换成功
 -(void)changeCurUnit:(NSNotification *)noti{

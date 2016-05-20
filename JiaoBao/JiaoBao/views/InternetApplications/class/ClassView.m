@@ -665,7 +665,7 @@
 //通知学校界面，切换成功身份成功，清空数组
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
-    if ([str intValue] ==0) {//成功
+    if ([str intValue] ==0||[str intValue] ==2) {//成功
         if (self.mInt_changeUnit ==1) {
             [self clearArray];
             [self.mTableV_list reloadData];

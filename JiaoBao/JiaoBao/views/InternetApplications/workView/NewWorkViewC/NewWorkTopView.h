@@ -1,7 +1,7 @@
 //
 //  NewWorkTopView.h
 //  JiaoBao
-//  新建界面的上半部分
+//  新建事务界面的上半部分
 //  Created by Zqw on 15-4-25.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
