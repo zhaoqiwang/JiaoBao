@@ -876,7 +876,8 @@
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
-    image = [self fixOrientation:image];
+        image = [self fixOrientation:image];
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
@@ -951,7 +952,7 @@
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                     
-                    
+                    image = [self fixOrientation:image];
                     
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
                     

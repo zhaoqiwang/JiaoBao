@@ -116,7 +116,8 @@
 
 - (void)selectNameButton:(UIButton *)sender{
     //通知对应界面，将键盘隐藏
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectNameButton" object:nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectNameButton" object:nil];
+    [self.superview endEditing:YES];
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -142,16 +143,17 @@
             {
 
                 [dm getInstance].notificationSymbol = 100;
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"classMessage" object:nil];
 
                 //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
 
-                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
-                {
-
-                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
-                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
-                    
-                }
+//                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
+//                {
+//
+//                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+//                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+//                    
+//                }
 
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
                 self.firstSel = 1;

@@ -1187,7 +1187,7 @@
     return cell;
 }
 -(void)webViewLoadFinish:(float)height{
-    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(5, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y, [dm getInstance].width-10, height);
+    self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(5, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y+5, [dm getInstance].width-10, height);
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
     self.tableHeadView = [[UIView alloc]init];
     [self.tableHeadView addSubview:self.KnowledgeTableViewCell];

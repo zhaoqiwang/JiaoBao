@@ -18,7 +18,6 @@
 #import "OnlineJobHttp.h"
 #import "CheckSubViewController.h"
 
-
 @implementation ThemeView
 
 - (id)initWithFrame1:(CGRect)frame{
@@ -271,8 +270,6 @@
     if (self.mArr_AllCategory.count==3) {
         [[KnowledgeHttp getInstance] GetAllCategory];
     }
-    
-    
     [self sendRequest];
 }
 
@@ -517,6 +514,7 @@
             temp1.mInt_btn = 2;
             [model.mArr_sum insertObject:temp1 atIndex:0];
         }
+        
         return model.mArr_sum;
     }
     return 0;
@@ -1149,7 +1147,7 @@
                 }
                 
 
-                cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y+5, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
+                cell.mLab_Abstracts.frame = CGRectMake(cell.basisImagV.frame.origin.x+cell.basisImagV.frame.size.width, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x-cell.basisImagV.frame.size.width, optimalSize2.height);
                 cell.mLab_Abstracts.textAlignment = RTTextAlignmentLeft;
                 //背景色
 //                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);

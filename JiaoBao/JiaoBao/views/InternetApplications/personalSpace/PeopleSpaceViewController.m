@@ -538,7 +538,9 @@
             if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                    image = [self fixOrientation:image];
+
+                        image = [self fixOrientation:image];
+                   
                     NSData *imageData = UIImageJPEGRepresentation(image,1);
                     [[RegisterHttp getInstance]registerHttpUpDateFaceImg:imageData];
                 }

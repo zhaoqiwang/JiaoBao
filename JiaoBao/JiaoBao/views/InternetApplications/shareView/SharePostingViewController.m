@@ -12,6 +12,7 @@
 #import "SelectionCell.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "MobClick.h"
+#import "NSString+Extension.h"
 
 @interface SharePostingViewController ()
 @property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
@@ -57,7 +58,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mInt_index = 1;
-
+    [self.mTextF_title addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     //音频
     [self audio];
     //上传图片
@@ -309,8 +310,12 @@
             textAttach.bounds=CGRectMake(0, 0, 30, 30);
             model.cursorPosition = self.cursorPosition;
             NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
-            [str insertAttributedString:strA atIndex:index];
-            model.attributedString = strA;
+            NSMutableAttributedString *strB = [[NSMutableAttributedString alloc]initWithAttributedString:strA];
+
+            //为所有文本设置字体
+            [strB addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [strB length])];
+            [str insertAttributedString:strB atIndex:index];
+            model.attributedString = strB;
             self.mTextV_content.attributedText = str;
             [self.mArr_pic addObject:model];
             
@@ -408,10 +413,12 @@
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
         return;
     }
+    
     if (self.mTextF_title.text.length>50) {
-        [MBProgressHUD showError:@"标题不能大于50个字" toView:self.view];
+        [MBProgressHUD showError:@"标题不能超过50个字" toView:self.view];
         return;
     }
+
     UITextView *tempView = [[UITextView alloc]init];
     tempView.attributedText = self.mTextV_content.attributedText;
     for (long i=self.mArr_pic.count-1; i<self.mArr_pic.count; i--) {
@@ -425,6 +432,10 @@
         
     }
     self.tempContentText = tempView.text;
+    if(self.mTextV_content.text.length>20000){
+        [MBProgressHUD showError:@"内容不能超过20000个字" toView:self.view];
+        return;
+    }
 
     //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
     self.tempContentText = [self.tempContentText stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\n"] withString:@"</br>"];
@@ -443,25 +454,29 @@
 #pragma mark - image picker delegte
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     self.imageCount = 1;
-    D("info_count = %ld",(unsigned long)info.count);
     [picker dismissViewControllerAnimated:YES completion:^{
         
-
+        
     }];
-    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
-
+    [MBProgressHUD showMessage:@"正在上传" toView:nil];
+    
     UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
+    image = [self fixOrientation:image];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
-
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    //判断文件夹是否存在
+    if(![fileManager fileExistsAtPath:tempPath]) {//如果不存在
+        [fileManager createDirectoryAtPath:tempPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
     NSData *imageData = UIImageJPEGRepresentation(image,0);
-    NSString *imgPath=[[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
+    NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
     D("图片路径是：%@",imgPath);
-
-
+    
+    
     BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
     if (!yesNo) {//不存在，则直接写入后通知界面刷新
         BOOL result = [imageData writeToFile:imgPath atomically:YES];
@@ -470,7 +485,6 @@
                 NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                 
                 [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-//                self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                 break;
             }
         }
@@ -484,17 +498,15 @@
                     NSString *name = [NSString stringWithFormat:@"[图片%d]",self.mInt_index];
                     
                     [[ShareHttp getInstance] shareHttpUploadSectionImgWith:imgPath Name:name];
-//                    self.mTextV_content.text = [NSString stringWithFormat:@"%@%@",self.mTextV_content.text,name];
                     break;
                 }
             }
         }
     }
-
+    
     self.mInt_index ++;
     self._placeholdLabel.hidden = YES;
-
-    //[self.mProgressV hide:YES];
+    
 }
 
 
@@ -575,7 +587,7 @@
             if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                    
+                    image = [self fixOrientation:image];
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
                     
                     // NSLog(@"%lu",(unsigned long)imageData.length);
@@ -996,6 +1008,170 @@
     }
     result = tempPath;
     return result;
+}
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
+//如果输入超过规定的字数100，就不再让输入
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    // Any new character added is passed in as the "text" parameter
+    
+    //输入删除时
+    if ([string isEqualToString:@""]) {
+        return YES;
+    }
+    if ([string isEqualToString:@"\n"]) {
+        // Be sure to test for equality using the "isEqualToString" message
+        [textField resignFirstResponder];
+        // Return FALSE so that the final '\n' character doesn't get added
+        return FALSE;
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    if (textField.text.length+string.length>50) {
+        return NO;
+    }
+    NSInteger existedLength = textField.text.length;
+    NSInteger selectedLength = range.length;
+    NSInteger replaceLength = string.length;
+    if (existedLength - selectedLength + replaceLength > 50) {
+        return NO;
+    }
+    return TRUE;
+}
+
+//如果输入超过规定的字数100，就不再让输入
+- (void)textFieldDidChange:(UITextField *)textField{
+    NSString *toBeString = textField.text;
+    NSString *lang = [textField.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (textField.text.length>50) {
+            NSString *a = [textField.text substringFromIndex:textField.text.length-1];
+            NSString *b = [textField.text substringFromIndex:textField.text.length-2];
+            NSString *c = [textField.text substringFromIndex:textField.text.length-3];
+            NSString *d = [textField.text substringFromIndex:textField.text.length-4];
+            NSString *e = [textField.text substringFromIndex:textField.text.length-5];
+            if([a isContainsEmoji]) {
+                textField.text = [toBeString substringToIndex:textField.text.length - 1];
+            }else if ([b isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 2];
+            }else if ([c isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 3];
+            }else if ([d isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 4];
+            }else if ([e isContainsEmoji]){
+                textField.text = [toBeString substringToIndex:textField.text.length - 5];
+            }
+            toBeString = textField.text;
+        }
+    }
+    
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [textField markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > 50) {
+                
+                textField.text = [toBeString substringToIndex:50];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > 50) {
+            textField.text = [toBeString substringToIndex:50];
+        }
+    }
+    
+        if(textField.text.length>49)
+        {
+            textField.text = [textField.text substringToIndex:50];
+
+        }
+    
+    
 }
 
 @end

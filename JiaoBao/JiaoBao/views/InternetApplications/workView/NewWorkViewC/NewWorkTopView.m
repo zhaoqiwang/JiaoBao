@@ -120,6 +120,7 @@
         [MBProgressHUD showError:@"附件不能多于10个" toView:self];
         return;
     }
+    [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
 //    AccessoryViewController *access = [[AccessoryViewController alloc] init];
 //    access.delegate = self;
@@ -140,12 +141,14 @@
         [MBProgressHUD showError:@"附件不能多于10个" toView:self];
         return;
     }
+    [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
     [self.delegate mBtn_send:btn];
 }
 
 //点击删除附件
 -(void)deleteAccessoryPhoto:(UIButton *)btn{
+    [self.mTextV_input resignFirstResponder];
     [self btnVoiceUp:nil];
     //从数组中删除
     [self.mArr_accessory removeObjectAtIndex:btn.tag];
@@ -421,6 +424,7 @@
     {
         NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
         UIImage *chosenImage=[info objectForKey:UIImagePickerControllerOriginalImage];
+        chosenImage = [self fixOrientation:chosenImage];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -496,6 +500,7 @@
         [MBProgressHUD showError:@"附件不能多于10个" toView:self];
         return;
     }
+    [self.mTextV_input resignFirstResponder];
     self.mInt_flag = 1;
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
     [self.imageView setHidden:NO];
@@ -510,6 +515,7 @@
 }
 - (void)btnVoiceUp:(id)sender
 {
+    [self.mTextV_input resignFirstResponder];
     if (self.mInt_flag ==1) {
         self.mInt_flag = 0;
         [self.imageView setHidden:YES];
@@ -528,6 +534,7 @@
 }
 - (void)btnVoiceDragUp:(id)sender
 {
+    [self.mTextV_input resignFirstResponder];
     [self.imageView setHidden:YES];
     //删除录制文件
     [self.recorder deleteRecording];
@@ -721,5 +728,82 @@
     result = tempPath;
     return result;
 }
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
+
 
 @end

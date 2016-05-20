@@ -876,6 +876,7 @@
  处理cell选中事件，需要自定义的部分
  --------------------------------------- */
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.superview endEditing:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TreeView_node *node = [self.mArr_display objectAtIndex:indexPath.row];
     

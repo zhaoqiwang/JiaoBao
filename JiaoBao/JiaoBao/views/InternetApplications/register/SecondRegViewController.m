@@ -160,7 +160,6 @@
     //获取验证验证码是否正确的数据
     _observer4 = [[NSNotificationCenter defaultCenter]addObserverForName:@"RegCheckMobileVcode" object:nil queue:nil usingBlock:^(NSNotification *note) {
         [MBProgressHUD hideHUDForView:self.view];
-
         NSDictionary *dic = note.object;
         NSArray *keyArr =[dic allKeys];
         NSString *str = [keyArr objectAtIndex:0];
@@ -190,7 +189,8 @@
         }
         else
         {
-            [MBProgressHUD showError:ResultDesc toView:self.view];
+            [MBProgressHUD showError:ResultDesc];
+            [self.navigationController popViewControllerAnimated:YES];
 
         }
         
@@ -233,7 +233,7 @@
 //    [self.navigationController pushViewController:pass animated:YES];
     if([utils isBlankString:self.tel_identi_codeTF.text])
     {
-        [self progressViewTishi:@"请输入手机号码"];
+        [self progressViewTishi:@"请输入验证码"];
         return;
 
         

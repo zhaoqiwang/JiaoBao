@@ -634,7 +634,7 @@
     }
     self.tempContentText = tempView.text;
     if (self.tempContentText.length>4000) {
-        [MBProgressHUD showError:@"您输入内容字数过多" toView:self.view];
+        [MBProgressHUD showError:@"提问内容不能超过4000字" toView:self.view];
         return;
     }
     //        content = [NSString stringWithFormat:@"<p>%@</p>",content];
@@ -903,9 +903,14 @@
             textAttach.image = image;
             textAttach.bounds=CGRectMake(0, 0, 30, 30);
             model.cursorPosition = self.cursorPosition;
-            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach];
-            [str insertAttributedString:strA atIndex:index];
-            model.attributedString = strA;
+            NSAttributedString *strA = [NSAttributedString attributedStringWithAttachment:textAttach]
+            ;
+            NSMutableAttributedString *strB = [[NSMutableAttributedString alloc]initWithAttributedString:strA];
+            //为所有文本设置字体
+            [strB addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, [strB length])];
+            [str insertAttributedString:strB atIndex:index];
+            model.attributedString = strB;
+            
             self.mTextV_content.attributedText = str;
             [self.mArr_pic addObject:model];
 
@@ -937,7 +942,7 @@
     if (!image) {
         image=[info objectForKey:UIImagePickerControllerOriginalImage];
     }
-    image = [self fixOrientation:image];
+        image = [self fixOrientation:image];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
@@ -1012,6 +1017,7 @@
             if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
                 if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                     UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                    image = [self fixOrientation:image];
                     NSData *imageData = UIImageJPEGRepresentation(image,0);
                     NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"[图片%d].png",self.mInt_index]];
                     D("图片路径是：%@",imgPath);

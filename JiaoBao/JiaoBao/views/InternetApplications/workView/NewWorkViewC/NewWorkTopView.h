@@ -23,7 +23,7 @@
 //-(void)sendMsgBtn:(UIButton *)btn;
 
 //附件按钮点击事件
-//-(void)mBtn_accessory:(UIButton *)btn;
+-(void)mBtn_accessory:(UIButton *)btn;
 
 //点击照片
 //-(void)mBtn_photo:(UIButton *)btn;
