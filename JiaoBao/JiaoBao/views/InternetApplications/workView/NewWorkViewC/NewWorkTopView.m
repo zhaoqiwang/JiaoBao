@@ -329,6 +329,7 @@
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                image = [self fixOrientation:image];
                 NSData *imageData = UIImageJPEGRepresentation(image,0);
                 
                 NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png",timeSp]];
@@ -397,7 +398,6 @@
         
         if([[[UIDevice
               currentDevice] systemVersion] floatValue]>=8.0) {
-            
             self.picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
             
         }

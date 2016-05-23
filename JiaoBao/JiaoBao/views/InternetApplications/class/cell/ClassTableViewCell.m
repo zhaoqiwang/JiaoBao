@@ -198,7 +198,6 @@
     [MobClick event:@"ClassView_HeadImgTapPress" label:@""];
     [headImgDelegate ClassTableViewCellHeadImgTapPress:self];
 }
-
 //设置不同字体颜色
 -(void)fuwenbenLabel:(UILabel *)labell FontNumber:(id)font AndRange:(NSRange)range AndColor:(UIColor *)vaColor
 {
