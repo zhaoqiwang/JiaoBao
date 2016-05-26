@@ -137,7 +137,7 @@
 
 //发送按钮
 -(void)mBtn_send:(UIButton *)btn{
-    if (self.mArr_accessory.count>9) {
+    if (self.mArr_accessory.count>10) {
         [MBProgressHUD showError:@"附件不能多于10个" toView:self];
         return;
     }
@@ -300,7 +300,7 @@
     if (number > 999) {
         textView.text = [textView.text substringToIndex:999];
     }
-    self.mTextV_input.text = textView.text;
+//    self.mTextV_input.text = textView.text;
 }
 
 #pragma mark ELCImagePickerControllerDelegate Methods
