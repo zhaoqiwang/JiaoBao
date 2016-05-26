@@ -28,7 +28,6 @@
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
-
     [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
@@ -47,9 +46,7 @@
             {
                 myUnit *unit = [dataArr objectAtIndex:i];
                 unit.isSelected = NO;
-                
-                
-                
+
             }
             [[HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list reloadData];
             
@@ -217,8 +214,6 @@
         [HomeClassRootScrollView shareInstance].frame = CGRectMake(0, self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y+48, [dm getInstance].width, [HomeClassRootScrollView shareInstance].classMessageView.mCollectionV_list.frame.size.height+150);
         self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+[HomeClassTopScrollView shareInstance].frame.origin.y+48);
         [HomeClassRootScrollView shareInstance].classMessageView.frame  = CGRectMake(0, 0, [dm getInstance].width, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
-
-        
     }
     
     if([dm getInstance].notificationSymbol == 101)
@@ -286,7 +281,6 @@
         self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, [HomeClassRootScrollView shareInstance].frame.size.height+48+self.mViewTop.frame.size.height+self.mViewTop.frame.origin.y);
         
         [HomeClassRootScrollView shareInstance].patriarchView.frame  = CGRectMake([dm getInstance].width*3, 0, [dm getInstance].width, [HomeClassTopScrollView shareInstance].frame.origin.y+[HomeClassTopScrollView shareInstance].frame.size.height+[HomeClassRootScrollView shareInstance].frame.size.height);
-        
     }
 
 
@@ -314,7 +308,6 @@
     if(fileSizeSum>10000000)
     {
         [MBProgressHUD showError:@"上传文件不能大于10M" toView:self];
-
         return;
         
     }

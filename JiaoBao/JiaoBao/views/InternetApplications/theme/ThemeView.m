@@ -1151,7 +1151,7 @@
                 cell.mLab_Abstracts.textAlignment = RTTextAlignmentLeft;
                 //背景色
 //                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);
-                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, 39+3);
+                cell.mView_background.frame = CGRectMake(cell.basisImagV.frame.origin.x, cell.basisImagV.frame.origin.y, [dm getInstance].width-9- cell.basisImagV.frame.origin.x, optimalSize2.height+7);
                 //图片
                 [cell.mCollectionV_pic reloadData];
                 cell.mCollectionV_pic.backgroundColor = [UIColor clearColor];
