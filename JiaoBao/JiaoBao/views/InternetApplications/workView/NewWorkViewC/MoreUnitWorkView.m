@@ -115,8 +115,6 @@
     NSString *code = [dic objectForKey:@"ResultCode"];
     NSString *message = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]!=0) {
-        [MBProgressHUD showError:@"发送失败" toView:self];
-    }else{
         [MBProgressHUD showSuccess:message toView:self];
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
@@ -140,6 +138,8 @@
         }
         //刷新
         [self reloadDataForDisplayArray];
+    }else{
+        [MBProgressHUD showError:@"发送失败" toView:self];
     }
 }
 

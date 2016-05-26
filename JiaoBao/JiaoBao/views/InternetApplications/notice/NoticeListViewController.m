@@ -8,6 +8,7 @@
 
 #import "NoticeListViewController.h"
 #import "MobClick.h"
+#import "OnlineJobHttp.h"
 
 @interface NoticeListViewController ()
 
@@ -145,7 +146,13 @@
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
     if ([str intValue] ==0) {//成功
-        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        if ([dm getInstance].uType==3) {//家长
+            [[OnlineJobHttp getInstance] getGenInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+        }else if ([dm getInstance].uType == 4){//学生
+            [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+        }else{//教育局、老师
+            [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        }
     }else{
     }
 }

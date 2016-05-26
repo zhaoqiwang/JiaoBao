@@ -57,11 +57,15 @@
     //发送请求
     [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"10" pageNum:@"1" RowCount:@"0"];
     [MBProgressHUD showMessage:@"加载中..." toView:self.view];
+    self.mInt_flag = 0;
 }
 
 //获取我关注的问题列表
 -(void)MyAttQIndexWithnumPerPage:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    if (self.mInt_flag == 0) {
+        [MBProgressHUD hideHUDForView:self.view];
+    }
+    
     [self.mTalbeV_liset headerEndRefreshing];
     [self.mTalbeV_liset footerEndRefreshing];
     NSMutableDictionary *dic = noti.object;
@@ -283,6 +287,7 @@
         self.mInt_list--;
         if (self.mInt_rowcount>self.mArr_list.count) {
             [[KnowledgeHttp getInstance] MyAttQIndexWithnumPerPage:@"1" pageNum:[NSString stringWithFormat:@"%lu",(unsigned long)self.mInt_list+1] RowCount:[NSString stringWithFormat:@"%d",self.mInt_rowcount]];
+            self.mInt_flag = 1;
         }
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -319,6 +324,7 @@
     if ([self checkNetWork]) {
         return;
     }
+    self.mInt_flag = 0;
     if (self.mInt_reloadData == 0) {
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
     }else{

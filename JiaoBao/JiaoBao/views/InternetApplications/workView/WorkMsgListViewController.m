@@ -357,6 +357,9 @@
     }
     cell.tag = indexPath.row;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    for (UIButton *btn in cell.mView_att.subviews) {
+        [btn removeFromSuperview];
+    }
     //判断要显示哪种类型的数据
     if (self.mArr_msg.count>indexPath.row) {
         CommMsgListModel *model = [self.mArr_list objectAtIndex:indexPath.row];
@@ -436,9 +439,7 @@
         cell.mView_att.frame = CGRectMake(cell.mLab_content.frame.origin.x, cell.mLab_content.frame.origin.y+cell.mLab_content.frame.size.height, 0, 0);
         //        CGRect rect = CGRectMake(65, 37+contentSize.height+2, 0, 0);
         CGRect rect = CGRectMake(0, 0, 0, 0);
-        for (UIButton *btn in cell.mView_att.subviews) {
-            [btn removeFromSuperview];
-        }
+        
         if (self.mArr_msg.count == indexPath.row+1) {
             //是否有附件
             for (int i=0; i<self.mArr_attList.count; i++) {

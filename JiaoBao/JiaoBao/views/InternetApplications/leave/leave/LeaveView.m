@@ -333,7 +333,7 @@
         model.unitClassId = self.mModel_studentInfo.UnitClassID;
         model.manType = @"0";
         flag = @"1";
-        model.writer = [dm getInstance].TrueName;
+        model.writer = [dm getInstance].name;
     }else if (self.mInt_flag ==2){//家长代请2
         model.manId = self.mModel_student.TabID;
         model.manName = self.mModel_student.StdName;
@@ -346,9 +346,9 @@
     }else{//普通老师、班主任自己请假
         model.manId = [dm getInstance].userInfo.UserID;
         model.manType = @"1";
-        model.manName = [dm getInstance].TrueName;
+        model.manName = [dm getInstance].name;
         flag = @"0";
-        model.writer = [dm getInstance].TrueName;
+        model.writer = [dm getInstance].name;
     }
     model.writerId = [dm getInstance].jiaoBaoHao;
     

@@ -181,7 +181,6 @@ static OnlineJobHttp *onlineJobHttp = nil;
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------getStuInfoWithAccID: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         //长时间不操作，握手通讯失败后，进行登录操作
@@ -194,6 +193,19 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
+        
+        //左上角姓名
+        NSString *name;
+        if ([model.StdName isKindOfClass:[NSNull class]]||[model.StdName isEqual:@"null"]) {
+            [dm getInstance].name = [dm getInstance].TrueName;
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
+        }else{
+            [dm getInstance].name = model.StdName;
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,model.StdName];
+        }
+        CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
+        [Nav_internetAppView getInstance].mLab_name.text = name;
+        [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:tempDic];
         
@@ -218,7 +230,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        D("JSON--------getGenInfoWithAccID: %@,", result);
+        
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
         //长时间不操作，握手通讯失败后，进行登录操作
@@ -226,10 +238,23 @@ static OnlineJobHttp *onlineJobHttp = nil;
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSString *data = [jsonDic objectForKey:@"Data"];
         NSString *dataStr = [DESTool decryptWithText:data Key:[[NSUserDefaults standardUserDefaults] valueForKey:@"ClientKey"]];
+        D("JSON--------getGenInfoWithAccID: %@,", dataStr);
         GenInfo *model = [ParserJson_OnlineJob parserJsonGenInfo:dataStr];
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
+        //左上角姓名
+        NSString *name;
+        if ([model.StdName isKindOfClass:[NSNull class]]||[model.StdName isEqual:@"null"]) {
+            [dm getInstance].name = [dm getInstance].TrueName;
+            name = [NSString stringWithFormat:@"%@:%@",[dm getInstance].mStr_unit,[dm getInstance].name];
+        }else{
+            [dm getInstance].name = model.StdName;
+            name = [NSString stringWithFormat:@"%@:%@家长",[dm getInstance].mStr_unit,model.StdName];
+        }
+        CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:16]];
+        [Nav_internetAppView getInstance].mLab_name.text = name;
+        [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getGenInfoWithAccID" object:tempDic];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];

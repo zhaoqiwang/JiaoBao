@@ -10,6 +10,7 @@
 #import "InternetAppTopScrollView.h"
 #import "RegisterHttp.h"
 #import "RightModel.h"
+#import "OnlineJobHttp.h"
 
 static LoginSendHttp *loginSendHttp = nil;
 
@@ -1167,7 +1168,7 @@ static LoginSendHttp *loginSendHttp = nil;
         //获取的用户自定义内容
         NSString *fileName = [_request.userInfo objectForKey:@"fileName"];
         fileName = [fileName stringByReplacingOccurrencesOfString:@"/" withString:@""];
-        D("tag.14-=== %@",responseData);
+//        D("tag.14-=== %@",responseData);
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
         NSFileManager* fileManager=[NSFileManager defaultManager];
@@ -1209,7 +1210,13 @@ static LoginSendHttp *loginSendHttp = nil;
             if (self.mInt_forwardFlag == 1) {//普通请求
                 //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
             }else if (self.mInt_forwardFlag ==2){//获取个人信息
-                [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+                if ([dm getInstance].uType==3) {//家长
+                    [[OnlineJobHttp getInstance] getGenInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+                }else if ([dm getInstance].uType == 4){//学生
+                    [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+                }else{//教育局、老师
+                    [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+                }
             }else{//短信直通车
                 [self ReceiveListWithFlag:self.mInt_forwardFlag all:self.mInt_forwardAll];
             }

@@ -306,9 +306,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
     NSString *message = [dic objectForKey:@"ResultDesc"];
-    if ([code integerValue]!=0) {
-        [MBProgressHUD showError:@"发送失败" toView:self.view];
-    }else{
+    if ([code integerValue]==0) {
         if([dm getInstance].notificationSymbol ==1 )
         {
             [MBProgressHUD showSuccess:message ];
@@ -327,6 +325,8 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
             self.imgV.image = [UIImage imageNamed:@"blank.png"];
             [self.mCollectionV_list reloadData];
         }
+    }else{
+        [MBProgressHUD showError:@"发送失败" toView:self.view];
     }
 }
 -(void)noMore{

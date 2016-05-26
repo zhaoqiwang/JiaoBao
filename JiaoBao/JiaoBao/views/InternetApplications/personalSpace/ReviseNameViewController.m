@@ -172,10 +172,16 @@
             [self progressViewTishi:@"请输入昵称"];
             return;
 //        }else if (self.mTextF_trueName.text.length==0) {
-        }else if ([utils isBlankString:self.mTextF_trueName.text]){
+        }
+        if (self.mTextF_nickName.text.length>20) {
+            [self progressViewTishi:@"昵称长度不能大于20个字符"];
+            return;
+        }
+        if ([utils isBlankString:self.mTextF_trueName.text]){
             [self progressViewTishi:@"请输入真实姓名"];
             return;
-        }else if (self.mTextF_trueName.text.length>20){
+        }
+        if (self.mTextF_trueName.text.length>20){
             [self progressViewTishi:@"真实姓名长度不能大于20个字符"];
             return;
         }
@@ -262,7 +268,7 @@
         return NO;
     }
     //如果输入超过规定的字数20，就不再让输入
-    if(textField.text.length>19)
+    if(textField.text.length>20)
     {
         textField.text = [textField.text substringToIndex:19];
     }

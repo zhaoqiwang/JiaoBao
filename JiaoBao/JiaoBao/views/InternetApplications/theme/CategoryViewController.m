@@ -118,8 +118,6 @@
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AddMyattCateWithuid" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddMyattCateWithuid:) name:@"AddMyattCateWithuid" object:nil];
-//    [[OnlineJobHttp getInstance]getStuInfoWithAccID:@"723609" UID:@"72202"];
-//    [[OnlineJobHttp getInstance]getGenInfoWithAccID:@"5236710" UID:@"72202"];
 
     self.mArr_addBtnSel = [[NSMutableArray alloc]init];
 

@@ -594,6 +594,7 @@
     content = [content stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"\r"] withString:@"</br>"];
     if (content.length>20000) {
         [MBProgressHUD showError:@"内容不得大于20000字" toView:self.view];
+        return;
     }
     if ([self.mStr_MyAnswerId intValue]>0) {
         [[KnowledgeHttp getInstance] UpdateAnswerWithTabID:self.mStr_MyAnswerId Title:self.mTextV_answer.text AContent:content UserName:name Flag:[NSString stringWithFormat:@"%d",self.mSigleBtn.mInt_flag]];

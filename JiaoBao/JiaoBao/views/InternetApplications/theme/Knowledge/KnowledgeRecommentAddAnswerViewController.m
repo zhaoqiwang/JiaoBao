@@ -181,7 +181,7 @@
     if (webView.tag==-1) {
         meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-10];
     }else{
-        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-85];
+//        meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width-75];
     }
     [webView stringByEvaluatingJavaScriptFromString:meta];
     webView.keyboardDisplayRequiresUserAction = NO;
@@ -195,15 +195,19 @@
         [self addDetailCell:self.mModel_recomment Float:webViewHeight];
     }else{
         CGRect frame = webView.frame;
-        frame.size.width = [dm getInstance].width-85;
+        frame.size.width = [dm getInstance].width-75;
         frame.size.height = 1;
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
         [webView setBackgroundColor:[UIColor clearColor]];
         webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
+        
+        CGSize fittingSize = webView.scrollView.contentSize;
+//        CGSize fittingSize = [self.mWebV_temp sizeThatFits:CGSizeZero];
+        NSLog(@"webView:%@，%f",NSStringFromCGSize(fittingSize),webViewHeight);
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
-        model.floatH = frame.size.height;
-        [webView.scrollView setScrollEnabled:NO];
+        model.floatH = fittingSize.height;
+        [webView removeFromSuperview];
         [self.mTableV_answer reloadData];
         self.mTableV_answer.frame = CGRectMake(0, self.mView_titlecell.frame.origin.y+self.mView_titlecell.frame.size.height, [dm getInstance].width, self.mTableV_answer.contentSize.height);
         self.mScrollV_view.contentSize = CGSizeMake([dm getInstance].width, self.mTableV_answer.frame.origin.y+self.mTableV_answer.contentSize.height);
@@ -225,7 +229,7 @@
             [MBProgressHUD showMessage:@"加载中..." toView:self.view];
             
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000ull * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-                UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-85, 0)];
+                UIWebView *tempWeb = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width-75, 0)];
                 tempWeb.delegate = self;
                 tempWeb.tag = self.mInt_index-1;
                 NSURL *url = [[NSURL alloc] initWithString:model.Abstracts];
@@ -233,6 +237,11 @@
                 [tempWeb loadRequest:[NSURLRequest requestWithURL:url]];
                 [self.view addSubview:tempWeb];
                 [tempWeb setHidden:YES];
+//                self.mWebV_temp.tag = self.mInt_index-1;
+//                NSURL *url = [[NSURL alloc] initWithString:model.Abstracts];
+//                self.mWebV_temp.scrollView.bounces = NO;
+//                self.mWebV_temp.delegate = self;
+//                [self.mWebV_temp loadRequest:[NSURLRequest requestWithURL:url]];
                 self.mInt_index++;
             });
         }

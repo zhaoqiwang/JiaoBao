@@ -20,9 +20,6 @@
         // Initialization code
 //        self.frame = frame;
         self.mArr_accessory = [NSMutableArray array];
-        //通知对应界面，将键盘隐藏
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"selectNameButton" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectNameButton:) name:@"selectNameButton" object:nil];
         
         //音频
         [self audio];

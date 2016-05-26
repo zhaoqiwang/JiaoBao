@@ -61,6 +61,7 @@
 @property (nonatomic,strong) NSString *unReadMsg2;//未读回复信息数量
 @property (nonatomic,assign) int UID;//单位ID
 @property (nonatomic,assign) int uType;//用户身份ID
+@property (nonatomic,strong) NSString *ClassID;//当学生、家长身份时，获取个人信息用
 @property (nonatomic,strong) NSString *mStr_unit;//当前登录单位的名字
 @property (nonatomic,strong) NSString *mStr_tableID;//当前所在单位的加密ID
 @property (nonatomic,strong) NSString *mainID;//当前用户id

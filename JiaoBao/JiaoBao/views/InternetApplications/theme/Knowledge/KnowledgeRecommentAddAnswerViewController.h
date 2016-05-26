@@ -31,5 +31,4 @@
 @property (nonatomic,strong) IBOutlet UITableView *mTableV_answer;//推荐答案列表
 @property (nonatomic,assign) int mInt_index;//当前加载的是第几个html，head中的，和tableview中的
 
-
 @end

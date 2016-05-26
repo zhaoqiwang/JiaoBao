@@ -29,5 +29,6 @@
 @property (nonatomic,assign) int mInt_list;//总数组，包括隐藏的
 @property (nonatomic,assign) int mInt_rowcount;//后台服务器存在数据总数
 @property (nonatomic,assign) int mInt_deleteCell;//取消关注的行
+@property (nonatomic,assign) int mInt_flag;//区分当前是取消关注后的加载1，还是别的0
 
 @end

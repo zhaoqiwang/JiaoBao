@@ -61,10 +61,10 @@
         NSString *dateStr = [dateFormatter stringFromDate:[NSDate date]];
         if ([flag intValue]==0) {//离校
             self.mModel_classLeaves.LeaveTime = dateStr;
-            self.mModel_classLeaves.LWriterName = [dm getInstance].TrueName;
+            self.mModel_classLeaves.LWriterName = [dm getInstance].name;
         }else{//返校
             self.mModel_classLeaves.ComeTime = dateStr;
-            self.mModel_classLeaves.CWriterName = [dm getInstance].TrueName;
+            self.mModel_classLeaves.CWriterName = [dm getInstance].name;
         }
         [self loadClassLeaveDoor];
         if (self.delegate != nil && [self.delegate respondsToSelector:@selector(doorCheckSuccess)]) {
@@ -602,9 +602,9 @@
         if (actionSheet.tag == 2) {//删除
             [[LeaveHttp getInstance] DeleteLeaveModel:self.mModel_detail.TabID];
         }else if (actionSheet.tag == 0){//门卫离校签字
-            [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"0"];
+            [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].name flag:@"0"];
         }else if (actionSheet.tag == 1){//门卫回校签字
-             [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].TrueName flag:@"1"];
+             [[LeaveHttp getInstance] UpdateGateInfo:self.mModel_classLeaves.TabID userName:[dm getInstance].name flag:@"1"];
         }
         [MBProgressHUD showMessage:@"" toView:self.view];
     }else if (buttonIndex == 1) {//取消

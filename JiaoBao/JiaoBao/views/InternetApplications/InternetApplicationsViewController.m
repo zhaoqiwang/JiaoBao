@@ -263,6 +263,7 @@
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+                    [dm getInstance].ClassID = userUnitsModel.ClassID;
                     break;
                 }
             }
@@ -303,6 +304,7 @@
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+                    [dm getInstance].ClassID = userUnitsModel.ClassID;
                 }
             }else{
                 [dm getInstance].uType = [idenModel.RoleIdentity intValue];
@@ -315,7 +317,14 @@
             }
         }
     }
-    [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    if ([dm getInstance].uType==3) {//家长
+        [[OnlineJobHttp getInstance] getGenInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+    }else if ([dm getInstance].uType == 4){//学生
+        [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+    }else{//教育局、老师
+        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    }
+    
     //检查更新
     [[LoginSendHttp getInstance] login_itunesUpdataCheck];
     //获取求知中的个人信息
@@ -558,12 +567,12 @@
             [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.ClassName;
             [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+            [dm getInstance].ClassID = userUnitsModel.ClassID;
         }
         [dm getInstance].uType = [idenModel.RoleIdentity intValue];
         //发送获取列表请求
         [[LoginSendHttp getInstance] changeCurUnit:0];
         [LoginSendHttp getInstance].mInt_forwardFlag =2;
-//        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         self.mView_all.hidden = YES;
         self.mTableV_right.hidden = YES;
