@@ -220,7 +220,6 @@ static LeaveHttp *leaveHttp = nil;
     
     [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        
         D("JSON--------DeleteLeaveModel: %@,", result);
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];

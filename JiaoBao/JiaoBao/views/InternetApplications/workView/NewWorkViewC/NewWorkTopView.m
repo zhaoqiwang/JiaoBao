@@ -183,7 +183,7 @@
         [but addTarget:self action:@selector(deleteAccessoryPhoto:) forControlEvents:UIControlEventTouchUpInside];
         [self.mView_accessory addSubview:but];
         UIButton *tempBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        tempBtn.frame = CGRectMake(30, but.frame.origin.y, self.self.mView_accessory.frame.size.width-35, 25);
+        tempBtn.frame = CGRectMake(30, but.frame.origin.y, self.self.mView_accessory.frame.size.width-35, 25); 
         AccessoryModel *model = [self.mArr_accessory objectAtIndex:i];
         [tempBtn setTitle:model.mStr_name forState:UIControlStateNormal];
         tempBtn.titleLabel.font = [UIFont systemFontOfSize:12];
