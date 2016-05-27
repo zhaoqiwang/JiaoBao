@@ -1144,6 +1144,8 @@
                     optimalSize2 = CGSizeMake(optimalSize2.width, 25);
                 }else if (optimalSize2.height>20) {
                     optimalSize2 = CGSizeMake(optimalSize2.width, 35);
+                }else if(optimalSize2.height==0){
+                    optimalSize2 = CGSizeMake(optimalSize2.width, 15);
                 }
                 
 
