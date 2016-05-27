@@ -56,7 +56,11 @@
             }else if (i==3){
                 model.StdName = @"其他";
             }
-            [self.mArr_student addObject:model];
+            if (self.mInt_flagID == 2 && i==0) {//老师无请假
+                
+            }else{
+                [self.mArr_student addObject:model];
+            }
         }
     }else if (self.mInt_flag == 2) {//选择年级
         
@@ -95,7 +99,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleIdentify];
     }
-    if (self.mInt_flagID == 0) {//家长
+    if (self.mInt_flagID == 0||self.mInt_flagID == 2) {//家长代请、老师自己请
         MyStdInfo *model = [self.mArr_student objectAtIndex:indexPath.row];
         cell.textLabel.text = model.StdName;
     }else if (self.mInt_flagID == 1){//班主任

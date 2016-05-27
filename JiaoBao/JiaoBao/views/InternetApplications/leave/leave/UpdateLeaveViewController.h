@@ -32,5 +32,6 @@
 @property (nonatomic,strong) LeaveDetailModel *mModel_detail;//请假详情
 @property (nonatomic,assign) int mInt_flag;//班主任、家长代请0，老师请假1
 @property (nonatomic,strong) UITextField *mTextF_reason;//cell输入框中的理由
+@property (nonatomic,assign) int mInt_return;//=0返回，=1不返回
 
 @end

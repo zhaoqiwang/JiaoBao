@@ -83,6 +83,8 @@
     if ([ResultCode intValue]==0) {
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [self addLeave];
+        self.mInt_return = 1;
         [MBProgressHUD showMessage:@"" toView:self.view];
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -98,6 +100,8 @@
     if ([ResultCode intValue]==0) {
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [self addLeave];
+        self.mInt_return = 1;
         [MBProgressHUD showMessage:@"" toView:self.view];
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -113,6 +117,8 @@
     if ([ResultCode intValue]==0) {
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+        [self addLeave];
+        self.mInt_return = 1;
         [MBProgressHUD showMessage:@"" toView:self.view];
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -132,7 +138,11 @@
         //延迟执行
         dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
         dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-            [utils popViewControllerAnimated:YES];
+            if (self.mInt_return == 1) {
+                self.mInt_return = 0;
+            }else{
+                [utils popViewControllerAnimated:YES];
+            }
         });
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
@@ -345,6 +355,7 @@
         ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
         chooseStu.delegate = self;
         chooseStu.mInt_flag = 1;
+        chooseStu.mInt_flagID = 2;
         chooseStu.mStr_navName = @"选择理由";
         [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 2){//理由填写
@@ -367,6 +378,8 @@
         }
     }else if (model.mInt_flag == 5){//提交
         [self addLeave];
+        self.mInt_return = 0;
+        [MBProgressHUD showMessage:@"" toView:self.view];
     }
 }
 
@@ -393,7 +406,6 @@
     }
     
     [[LeaveHttp getInstance] UpdateLeaveModel:model];
-    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 - (IBAction)startAction:(id)sender {
     UIButton *btn = sender;
@@ -456,6 +468,8 @@
         [[LeaveHttp getInstance] AddLeaveTime:tempModel];
         [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
     }
+    [self addLeave];
+    self.mInt_return = 1;
     [MBProgressHUD showMessage:@"" toView:self.view];
     [self.mTableV_leave reloadData];
 }
@@ -501,6 +515,8 @@
     if (buttonIndex == 0) {//确定,删除假条时间段
         LeaveNowModel *model = [self.mArr_leave objectAtIndex:actionSheet.tag];
         [[LeaveHttp getInstance] DeleteLeaveTime:model.mStr_value];
+        [self addLeave];
+        self.mInt_return = 1;
         [MBProgressHUD showMessage:@"" toView:self.view];
         [self.mArr_leave removeObjectAtIndex:actionSheet.tag];
         [self.mTableV_leave reloadData];

@@ -203,7 +203,6 @@
         webView.scrollView.contentSize = CGSizeMake(webViewWidth, frame.size.height);
         
         CGSize fittingSize = webView.scrollView.contentSize;
-//        CGSize fittingSize = [self.mWebV_temp sizeThatFits:CGSizeZero];
         NSLog(@"webView:%@，%f",NSStringFromCGSize(fittingSize),webViewHeight);
         AnswerModel *model = [self.mModel_recomment.answerArray objectAtIndex:webView.tag];
         model.floatH = fittingSize.height;
@@ -237,11 +236,6 @@
                 [tempWeb loadRequest:[NSURLRequest requestWithURL:url]];
                 [self.view addSubview:tempWeb];
                 [tempWeb setHidden:YES];
-//                self.mWebV_temp.tag = self.mInt_index-1;
-//                NSURL *url = [[NSURL alloc] initWithString:model.Abstracts];
-//                self.mWebV_temp.scrollView.bounces = NO;
-//                self.mWebV_temp.delegate = self;
-//                [self.mWebV_temp loadRequest:[NSURLRequest requestWithURL:url]];
                 self.mInt_index++;
             });
         }

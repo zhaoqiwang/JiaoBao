@@ -269,6 +269,7 @@
         ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
         chooseStu.delegate = self;
         chooseStu.mInt_flag = 1;
+        chooseStu.mInt_flagID = 2;
         chooseStu.mStr_navName = @"选择理由";
         [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 2){//理由填写
@@ -340,7 +341,7 @@
         model.gradeStr = self.mModel_student.GradeName;
         model.classStr = self.mModel_student.ClsName;
         model.unitClassId = self.mModel_student.ClassId;
-        model.writer = self.mModel_student.GenName;
+        model.writer = [dm getInstance].name;
         model.manType = @"0";
         flag = @"1";
     }else{//普通老师、班主任自己请假

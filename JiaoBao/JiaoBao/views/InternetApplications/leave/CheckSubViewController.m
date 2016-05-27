@@ -171,7 +171,7 @@
     if(buttonIndex == 1){
         self.model.tabid = self.mModel_LeaveDetail.TabID;
         self.model.level = self.mModel_LeaveDetail.level;
-        self.model.userName = [dm getInstance].TrueName;
+        self.model.userName = [dm getInstance].name;
         self.model.note = self.textView.text;
         self.model.cellFlag = self.mModel_LeaveDetail.cellFlag;
         [MBProgressHUD showMessage:@"" toView:self.view];
