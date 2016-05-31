@@ -256,6 +256,15 @@
             
             if(self.getClassNotiFlag == [dm getInstance].mModel_unitList.UnitClass.count )
             {
+                NSArray *arr = [self.dataArr sortedArrayUsingComparator:^NSComparisonResult(myUnit *p1, myUnit *p2){
+                    int p1_int = [p1.TabID intValue];
+                    NSNumber *p1_num = [NSNumber numberWithInt:p1_int ];
+                    int p2_int = [p2.TabID intValue];
+                    NSNumber *p2_num = [NSNumber numberWithInt:p2_int ];
+                    return [p1_num compare:p2_num];
+                }];
+                self.dataArr =[NSMutableArray arrayWithArray:arr];
+            
                 [[NSNotificationCenter defaultCenter ]postNotificationName:@"selSecBtn" object:self.dataArr];
                 [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"1"];
             }
