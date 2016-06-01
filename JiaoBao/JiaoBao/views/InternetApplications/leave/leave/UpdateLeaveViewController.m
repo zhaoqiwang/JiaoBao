@@ -85,9 +85,11 @@
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
         [self addLeave];
         self.mInt_return = 1;
-        [MBProgressHUD showMessage:@"" toView:self.view];
+//        [MBProgressHUD showMessage:@"" toView:self.view];
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
     }
 }
 
@@ -102,9 +104,11 @@
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
         [self addLeave];
         self.mInt_return = 1;
-        [MBProgressHUD showMessage:@"" toView:self.view];
+//        [MBProgressHUD showMessage:@"" toView:self.view];
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
     }
 }
 
@@ -119,8 +123,10 @@
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
         [self addLeave];
         self.mInt_return = 1;
-        [MBProgressHUD showMessage:@"" toView:self.view];
+//        [MBProgressHUD showMessage:@"" toView:self.view];
     }else{
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
 }
@@ -134,12 +140,12 @@
     if ([ResultCode intValue]==0) {
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
-        [MBProgressHUD showMessage:@"" toView:self.view];
+//        [MBProgressHUD showMessage:@"" toView:self.view];
         //延迟执行
         dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
         dispatch_after(delayTime, dispatch_get_main_queue(), ^{
             if (self.mInt_return == 1) {
-                self.mInt_return = 0;
+                
             }else{
                 [utils popViewControllerAnimated:YES];
             }

@@ -269,7 +269,15 @@
         ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
         chooseStu.delegate = self;
         chooseStu.mInt_flag = 1;
-        chooseStu.mInt_flagID = 2;
+//        mInt_flagID;//家长请假0，班主任代请1，班主任、老师、门卫自己请假2，年级3班级4
+//        mInt_flag;//判断身份，班主任代请0，普通老师、班主任自己请假1，家长代请2
+        if (self.mInt_flag==1) {//老师请假
+            chooseStu.mInt_flagID = 2;
+        }else if (self.mInt_flag==0) {//班主任代请
+            chooseStu.mInt_flagID = 1;
+        }else if (self.mInt_flag==2) {//家长代请
+            chooseStu.mInt_flagID = 0;
+        }
         chooseStu.mStr_navName = @"选择理由";
         [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 2){//理由填写
