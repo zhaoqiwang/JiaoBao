@@ -385,7 +385,7 @@
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row1 objectForKey:@"text"]];
     cell.mLab_ATitle.componentsAndPlainText = componentsDS;
     CGSize titleSize = [string1 sizeWithFont:[UIFont systemFontOfSize:12] constrainedToSize:CGSizeMake([dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, MAXFLOAT)];
-    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width+5, cell.mLab_LikeCount.frame.origin.y+2, [dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, titleSize.height);
+    cell.mLab_ATitle.frame = CGRectMake(60+cell.answerImgV.frame.size.width+5, cell.mLab_LikeCount.frame.origin.y+2, [dm getInstance].width-9-10-cell.answerImgV.frame.size.width-cell.answerImgV.frame.origin.x, titleSize.height+4);
 
     //回答内容
     NSString *name2 = @"";

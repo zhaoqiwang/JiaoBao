@@ -33,5 +33,6 @@
 @property (nonatomic,assign) int mInt_flag;//班主任、家长代请0，老师请假1
 @property (nonatomic,strong) UITextField *mTextF_reason;//cell输入框中的理由
 @property (nonatomic,assign) int mInt_return;//=0返回，=1不返回
+@property (nonatomic,strong) NSMutableArray *mArr_time;//记录原先的时间，提交时，和现在页面中的做对比
 
 @end
