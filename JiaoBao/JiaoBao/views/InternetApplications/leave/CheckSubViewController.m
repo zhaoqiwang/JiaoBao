@@ -18,25 +18,28 @@
 //审核假条通知回调
 -(void)CheckLeaveModel:(NSNotification*)sender{
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    NSString *resultCode = [sender object];
+    NSDictionary *dic =[sender object];
+    NSString *resultCode = [dic objectForKey:@"code"];
+    NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
+
     if([resultCode integerValue]==0){
         if([self.model.checkFlag integerValue]==1){
             [MBProgressHUD showError:@"审核成功"];
             
         }
         else{
-            [MBProgressHUD showError:@"拒绝成功"];
+            [MBProgressHUD showError:@"审核成功"];
         }
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCheckCell" object:self.model];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
     }else{
         if([self.model.checkFlag integerValue]==1){
-            [MBProgressHUD showError:@"审核失败"];
+            [MBProgressHUD showError:ResultDesc];
             
         }
         else{
-            [MBProgressHUD showError:@"拒绝失败"];
+            [MBProgressHUD showError:ResultDesc];
         }
     }
 }
@@ -214,7 +217,10 @@
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
 
-
+if ([@"\n" isEqualToString:text] == YES)
+{
+    return NO;
+}
     //输入删除时
     if ([text isEqualToString:@""]) {
         return YES;
