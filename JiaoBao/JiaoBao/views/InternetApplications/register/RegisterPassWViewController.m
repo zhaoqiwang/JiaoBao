@@ -46,8 +46,14 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registerPW" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registerPW:) name:@"registerPW" object:nil];
 }
+-(void)goback{
+    [self.parentViewController dismissViewControllerAnimated:NO completion:nil];
+
+}
 -(void)registerPW:(id)sender
 {
+    
+    
     [MBProgressHUD hideHUDForView:self.view];
     NSNotification *note = (NSNotification*)sender;
     NSDictionary *dic = note.object;
@@ -58,25 +64,17 @@
     {
         if([str integerValue ] == 0)
         {
-            NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
-                [MBProgressHUD showText:@"注册成功" toView:self.view];
+            [MBProgressHUD showSuccess:@"注册成功" toView:self.view];
                 [dm getInstance].RegisterSymbol = NO;
-                sleep(2);
-                
-                
-            }];
+
             
-            NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
-                [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-                
-                
-                
-            }];
-            [op2 addDependency:op1];
-            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
-            [queue addOperation:op1];
-            [queue addOperation:op2];
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(goback) userInfo:nil repeats:NO];
             
+                
+                
+
+        
             
         }
         else
@@ -91,29 +89,11 @@
     {
         if([str integerValue ] == 0)
         {
-            NSBlockOperation *op1 = [NSBlockOperation blockOperationWithBlock:^{
-                [self progressViewTishi:@"重置密码成功"];
-                [dm getInstance].RegisterSymbol = NO;
-                
-                sleep(2);
-                
-                
-            }];
-            
-            NSBlockOperation *op2 = [NSBlockOperation blockOperationWithBlock:^{
-                [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-                
-                
-                
-            }];
-            [op2 addDependency:op1];
-            [op2 addDependency:op1];
-            NSOperationQueue *queue = [[NSOperationQueue alloc]init];
-            [queue addOperation:op1];
-            [queue addOperation:op2];
-//            [self progressViewTishi:@"重置密码成功"];
-//            [dm getInstance].RegisterSymbol = NO;
-//            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
+            [MBProgressHUD showSuccess:@"重置密码成功" toView:self.view];
+            [dm getInstance].RegisterSymbol = NO;
+            [[NSNotificationCenter defaultCenter] removeObserver:self];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(goback) userInfo:nil repeats:NO];
+//
             
             
         }
@@ -167,6 +147,7 @@
         [self progressViewTishi:@"确认密码长度不正确"];
         return;
     }
+    [self.view endEditing:YES];
     //判断两次密码输入是否一致，一致，则发送注册协议
     if ([self.mTextF_confirmPassword.text isEqual:self.mTextF_password.text]) {
         D("哦了");
@@ -178,7 +159,12 @@
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setValue:self.mStr_phoneNum forKey:@"mobilenum"];
             [dic setValue:self.mTextF_password.text forKey:@"npw"];
-            NSString *json = [dic JSONString];
+            //NSString *json = [dic JSONString];
+            NSError *parseError = nil;
+            
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+            
+            NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             [[RegisterHttp getInstance] registerHttpResetAccPw:json iOS:@"true"];
         }
     }else{
@@ -195,7 +181,15 @@
     [dic setValue:self.mStr_phoneNum forKey:@"MobileNum"];
     [dic setValue:self.mTextF_password.text forKey:@"UserPW"];
     [dic setValue:time forKey:@"TimeStamp"];
-    NSString *json = [dic JSONString];
+    //NSString *json = [dic JSONString];
+    
+    
+        NSError *parseError = nil;
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+        
+        NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        
     [[RegisterHttp getInstance] registerHttpRegAccId:CLIVER IAMSCID:[[NSUserDefaults standardUserDefaults]objectForKey:@"UUID"] regAccIdStr:json TimeStamp:time Sign:@"" ios:@"true"];
 }
 
