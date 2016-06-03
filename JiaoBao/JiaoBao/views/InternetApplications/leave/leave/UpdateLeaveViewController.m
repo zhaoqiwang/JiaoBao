@@ -18,6 +18,7 @@
 -(instancetype)init{
     self = [super init];
     self.mArr_leave = [NSMutableArray array];
+    self.mArr_time = [NSMutableArray array];
     self.mModel_detail = [[LeaveDetailModel alloc] init];
     return self;
 }
@@ -54,11 +55,12 @@
     self.mTableV_leave.separatorStyle = UITableViewCellSelectionStyleNone;
     //初始化数据
     [self initDetailLeave];
-    [MBProgressHUD showSuccess:@"系统提示：在假条修改过程中您的所有操作将会即时生效，请慎重操作。" toView:self.view];
+//    [MBProgressHUD showSuccess:@"系统提示：在假条修改过程中您的所有操作将会即时生效，请慎重操作。" toView:self.view];
 }
 
 //获取假条明细
 -(void)GetLeaveModel:(NSNotification *)noti{
+    self.mInt_return--;
     [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
@@ -76,16 +78,20 @@
 
 //删除假条的一个时间段
 -(void)DeleteLeaveTime:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    self.mInt_return--;
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode intValue]==0) {
-        //获取假条明细
-        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
-        [self addLeave];
-        self.mInt_return = 1;
-//        [MBProgressHUD showMessage:@"" toView:self.view];
+        if (self.mInt_return == 0) {
+            //获取假条明细
+            [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+            //延迟执行
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                [utils popViewControllerAnimated:YES];
+            });
+        }
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
         //获取假条明细
@@ -95,16 +101,20 @@
 
 //更新假条的一个时间段
 -(void)UpdateLeaveTime:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    self.mInt_return--;
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode intValue]==0) {
-        //获取假条明细
-        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
-        [self addLeave];
-        self.mInt_return = 1;
-//        [MBProgressHUD showMessage:@"" toView:self.view];
+        if (self.mInt_return == 0) {
+            //获取假条明细
+            [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+            //延迟执行
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                [utils popViewControllerAnimated:YES];
+            });
+        }
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
         //获取假条明细
@@ -114,16 +124,20 @@
 
 //给一个假条新增加一个时间段
 -(void)AddLeaveTime:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    self.mInt_return--;
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode intValue]==0) {
-        //获取假条明细
-        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
-        [self addLeave];
-        self.mInt_return = 1;
-//        [MBProgressHUD showMessage:@"" toView:self.view];
+        if (self.mInt_return == 0) {
+            //获取假条明细
+            [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+            //延迟执行
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+                [utils popViewControllerAnimated:YES];
+            });
+        }
     }else{
         //获取假条明细
         [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
@@ -133,23 +147,20 @@
 
 //更新一条请假条记录
 -(void)UpdateLeaveModel:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
+    self.mInt_return--;
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     if ([ResultCode intValue]==0) {
-        //获取假条明细
-        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
-//        [MBProgressHUD showMessage:@"" toView:self.view];
-        //延迟执行
-        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
-        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
-            if (self.mInt_return == 1) {
-                
-            }else{
+        if (self.mInt_return == 0) {
+            //获取假条明细
+            [[LeaveHttp getInstance] GetLeaveModel:self.mModel_detail.TabID];
+            //延迟执行
+            dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+            dispatch_after(delayTime, dispatch_get_main_queue(), ^{
                 [utils popViewControllerAnimated:YES];
-            }
-        });
+            });
+        }
     }else{
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
     }
@@ -200,6 +211,7 @@
         model.mStr_value = tempModel.TabID;
         [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
     }
+    self.mArr_time = [NSMutableArray arrayWithArray:self.mModel_detail.TimeList];
     [self.mTableV_leave reloadData];
 }
 
@@ -384,8 +396,6 @@
         }
     }else if (model.mInt_flag == 5){//提交
         [self addLeave];
-        self.mInt_return = 0;
-        [MBProgressHUD showMessage:@"" toView:self.view];
     }
 }
 
@@ -394,6 +404,44 @@
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
+    }
+    //先对所有的时间，进行判断，判断是否修改或者删除、增加
+    for (TimeListModel *timeModel in self.mArr_time) {//遍历原始时间数组
+        int a = 0;
+        for (LeaveNowModel *leaveModel in self.mArr_leave) {//遍历现在的假条界面
+            if (leaveModel.mInt_flag == 3) {//找到显示时间的
+                if ([timeModel.TabID isEqualToString:leaveModel.mStr_value]&&[leaveModel.mStr_value intValue]>0) {//判断是否时间段的id一样
+                    if ([timeModel.Sdate isEqual:leaveModel.mStr_startTime]&&[timeModel.Edate isEqual:leaveModel.mStr_endTime]) {//判断时间段的时间，是否一致，一致则不做修改
+                        a = 1;
+                    }else{//当前为修改时间
+                        a = 2;
+                        NewLeaveModel *tempModel = [[NewLeaveModel alloc] init];
+                        tempModel.sDateTime = leaveModel.mStr_startTime;
+                        tempModel.eDateTime = leaveModel.mStr_endTime;
+                        tempModel.tabId = leaveModel.mStr_value;
+                        [[LeaveHttp getInstance] UpdateLeaveTime:tempModel];
+                        self.mInt_return++;
+                    }
+                }
+            }
+        }
+        if (a == 0) {//证明当前时间不存在，已被删除
+            [[LeaveHttp getInstance] DeleteLeaveTime:timeModel.TabID];
+            self.mInt_return++;
+        }
+    }
+    for (LeaveNowModel *leaveModel in self.mArr_leave) {//遍历现在的假条界面
+        if (leaveModel.mInt_flag == 3) {//找到显示时间的
+            if ([leaveModel.mStr_value intValue]==0) {//当前为新增时间
+                NewLeaveModel *tempModel = [[NewLeaveModel alloc] init];
+                tempModel.sDateTime = leaveModel.mStr_startTime;
+                tempModel.eDateTime = leaveModel.mStr_endTime;
+                tempModel.leaveId = self.mModel_detail.TabID;
+                tempModel.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
+                [[LeaveHttp getInstance] AddLeaveTime:tempModel];
+                self.mInt_return++;
+            }
+        }
     }
     NewLeaveModel *model = [[NewLeaveModel alloc] init];
     
@@ -412,6 +460,8 @@
     }
     
     [[LeaveHttp getInstance] UpdateLeaveModel:model];
+    self.mInt_return++;
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 - (IBAction)startAction:(id)sender {
     UIButton *btn = sender;
@@ -464,19 +514,10 @@
     tempModel.eDateTime = model.mStr_endTime;
     //判断是新增的1，还是修改的0
     if (flag == 0) {
-        LeaveNowModel *model1 = [self.mArr_leave objectAtIndex:row];
-        tempModel.tabId = model1.mStr_value;
-        [[LeaveHttp getInstance] UpdateLeaveTime:tempModel];
         [self.mArr_leave replaceObjectAtIndex:row withObject:model];
     }else{
-        tempModel.leaveId = self.mModel_detail.TabID;
-        tempModel.UnitId = [NSString stringWithFormat:@"%d",[dm getInstance].UID];
-        [[LeaveHttp getInstance] AddLeaveTime:tempModel];
         [self.mArr_leave insertObject:model atIndex:self.mArr_leave.count-2];
     }
-    [self addLeave];
-    self.mInt_return = 1;
-    [MBProgressHUD showMessage:@"" toView:self.view];
     [self.mTableV_leave reloadData];
 }
 
@@ -505,7 +546,6 @@
 //选择人员后的回调
 -(void)ChooseStudentViewCSelect:(id)student flag:(int)flag flagID:(int)flagID{
     if (flag == 1) {//请假理由
-//        self.mInt_select1 = 1;
         for (LeaveNowModel *model in self.mArr_leave) {
             if (model.mInt_flag==1) {
                 model.mStr_value = ((MyStdInfo *)student).StdName;
@@ -519,11 +559,6 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     //该方法由UIActionSheetDelegate协议定义，在点击ActionSheet的按钮后自动执行
     if (buttonIndex == 0) {//确定,删除假条时间段
-        LeaveNowModel *model = [self.mArr_leave objectAtIndex:actionSheet.tag];
-        [[LeaveHttp getInstance] DeleteLeaveTime:model.mStr_value];
-        [self addLeave];
-        self.mInt_return = 1;
-        [MBProgressHUD showMessage:@"" toView:self.view];
         [self.mArr_leave removeObjectAtIndex:actionSheet.tag];
         [self.mTableV_leave reloadData];
     }else if (buttonIndex == 1) {//取消
