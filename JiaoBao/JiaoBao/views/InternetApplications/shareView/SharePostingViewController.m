@@ -735,7 +735,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    
+
         //输入删除时
         if ([text isEqualToString:@""]) {
             if([textView isEqual:self.mTextV_content]){
@@ -771,7 +771,7 @@
                 
             }
             
-            
+
             
         
         
@@ -818,6 +818,10 @@
         
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
+    }
+    if(textView.text.length==3000){
+        [MBProgressHUD showError:@"内容不能超过3000个字"];
+        return NO;
     }
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;

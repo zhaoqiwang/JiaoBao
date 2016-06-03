@@ -346,7 +346,7 @@
     {
         if(self.symbol == YES)
         {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];            
             [dm getInstance].secondFlag =@"无权限";
             
         }
