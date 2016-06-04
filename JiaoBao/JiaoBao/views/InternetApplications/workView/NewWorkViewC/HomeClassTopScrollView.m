@@ -378,6 +378,17 @@
                 self.symbol = YES;
             }
         }
+        if(self.symbol == YES)
+        {
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+            [dm getInstance].secondFlag =@"无权限";
+            
+        }
+        else
+        {
+            [dm getInstance].secondFlag = @"0";
+            
+        }
         if([dm getInstance].notificationSymbol == 102)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
