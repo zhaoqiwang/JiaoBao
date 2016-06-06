@@ -405,14 +405,17 @@ static LeaveHttp *leaveHttp = nil;
 
         D("JSON--------CheckLeaveModel: %@,", result);
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
         //长时间不操作，握手通讯失败后，进行登录操作
         Login
-         [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:code];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:@{@"code":code,@"ResultDesc":ResultDesc}];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         D("Error---------CheckLeaveModel: %@", error);
         NSString *ResultCode = @"100";
+        NSString *ResultDesc = error.localizedDescription;
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:ResultCode];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckLeaveModel" object:@{@"code":ResultCode,@"ResultDesc":ResultDesc}];
     }];
     
 }
