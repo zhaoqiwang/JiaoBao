@@ -8,7 +8,7 @@
 
 #import "CheckSubViewController.h"
 #import "NSString+Extension.h"
-
+#import "LeaveDetailViewController.h"
 
 @interface CheckSubViewController ()<MyNavigationDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
@@ -32,7 +32,9 @@
         }
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"updateCheckCell" object:self.model];
-        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:1] animated:YES];
+        //获取假条明细
+        [[LeaveHttp getInstance] GetLeaveModel:self.mModel_LeaveDetail.TabID];
+        [self myNavigationGoback];
     }else{
         if([self.model.checkFlag integerValue]==1){
             [MBProgressHUD showError:ResultDesc];

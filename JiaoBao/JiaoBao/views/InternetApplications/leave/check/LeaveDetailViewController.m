@@ -14,9 +14,20 @@
 
 @implementation LeaveDetailViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    //做bug服务器显示当前的哪个界面
+    NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
+    [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     //获取假条明细
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetLeaveModel" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetLeaveModel:) name:@"GetLeaveModel" object:nil];
@@ -26,6 +37,7 @@
     //门卫登记离校返校时间
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UpdateGateInfo" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateGateInfo:) name:@"UpdateGateInfo" object:nil];
+    // Do any additional setup after loading the view from its nib.
     self.mArr_list = [NSMutableArray array];
     self.mModel_detail = [[LeaveDetailModel alloc] init];
     //添加导航条
@@ -170,6 +182,12 @@
     model2.mStr_name = @"发起时间:";
     model2.mStr_value = self.mModel_detail.WriteDate;
     [self.mArr_list addObject:model2];
+    //请假类型
+    LeaveDetailShowModel *model7 = [[LeaveDetailShowModel alloc] init];
+    model7.mInt_flag = 7;
+    model7.mStr_name = @"请假类型:";
+    model7.mStr_value = self.mModel_detail.LeaveType;
+    [self.mArr_list addObject:model7];
     //理由
     LeaveDetailShowModel *model3 = [[LeaveDetailShowModel alloc] init];
     model3.mInt_flag = 3;
@@ -288,7 +306,7 @@
     cell.mBtn_update.hidden = YES;
     cell.mBtn_checkDoor.hidden = YES;
     cell.mBtn_checkDoor2.hidden = YES;
-    if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2||model.mInt_flag==3) {//请假人、发起人、发起时间，理由
+    if (model.mInt_flag == 0||model.mInt_flag==1||model.mInt_flag==2||model.mInt_flag==3||model.mInt_flag==7) {//请假人、发起人、发起时间，理由
         cell.mLab_leave.hidden = NO;
         cell.mLab_leaveValue.hidden = NO;
         cell.mLab_go.hidden = YES;
