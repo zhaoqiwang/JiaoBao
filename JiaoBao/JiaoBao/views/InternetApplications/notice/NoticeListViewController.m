@@ -9,7 +9,6 @@
 #import "NoticeListViewController.h"
 #import "MobClick.h"
 #import "OnlineJobHttp.h"
-
 @interface NoticeListViewController ()
 
 @end

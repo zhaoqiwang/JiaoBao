@@ -51,6 +51,7 @@
     }
     else
     {
+        self.topConstraint.constant = 112;
         self.conditionLayoutHeight.constant = 34;
         self.height.constant = 30;
         
@@ -534,17 +535,20 @@
         if(self.refreshFlag == 1&&[[self.conditionArr objectAtIndex:0]isEqualToString:[self.conditionArr objectAtIndex:1]]){
             self.recordModel.checkFlag = @"1";
             self.cellFlag = YES;
+            self.conditionBtn.hidden = NO;
             [self.mArr2 removeAllObjects];
             tempMArr = self.mArr2;
             self.refreshFlag = 0;
         }else{
             self.recordModel.checkFlag = @"1";
             self.cellFlag = YES;
+            self.conditionBtn.hidden = NO;
             tempMArr = self.mArr2;
         }
     }
     else if(self.mInt_flag ==2){//统计查询
         self.cellFlag = NO;
+        self.conditionBtn.hidden = NO;
         tempMArr = self.mArr3;
     }else{//门卫审核
         self.recordModel.checkFlag = nil;
