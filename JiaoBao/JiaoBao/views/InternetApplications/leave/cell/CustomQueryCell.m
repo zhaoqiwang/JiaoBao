@@ -22,6 +22,7 @@
 -(void)setCellData:(MyLeaveModel*)model{
     self.dateLabel.text = model.WriteDate;
     self.stateLabel.text = model.StatusStr;
+    self.stateLabel.textColor = [UIColor colorWithRed:0 green:122/255.0 blue:255/255.0 alpha:1];
     self.reasonLabel.text = model.LeaveType;
     
 }
