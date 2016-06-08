@@ -59,6 +59,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     self.mInt_index = 1;
     [self.mTextF_title addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     //音频
@@ -434,8 +435,8 @@
         
     }
     self.tempContentText = tempView.text;
-    if(self.mTextV_content.text.length>20000){
-        [MBProgressHUD showError:@"内容不能超过20000个字" toView:self.view];
+    if(self.mTextV_content.text.length>3000){
+        [MBProgressHUD showError:@"内容不能超过3000个字" toView:self.view];
         return;
     }
 
@@ -460,7 +461,7 @@
         
         
     }];
-    [MBProgressHUD showMessage:@"正在上传" toView:nil];
+    [MBProgressHUD showMessage:@"正在上传" toView:self.view];
     
     UIImage* image=[info objectForKey:UIImagePickerControllerEditedImage];
     if (!image) {
@@ -735,7 +736,75 @@
         
     }
 }
+-(void)textChanged:(id)sender{
+    NSString *toBeString = self.mTextV_content.text;
+    if(self.mTextV_content.text.length>3000){
+        [MBProgressHUD showError:@"内容不能超过3000个字"];
+    }
+    NSString *lang = [self.mTextV_content.textInputMode primaryLanguage]; // 键盘输入模式
+    
+    if([toBeString isContainsEmoji])
+    {
+        if (self.mTextV_content.text.length>3000) {
+            NSString *a = [self.mTextV_content.text substringFromIndex:self.mTextV_content.text.length-1];
+            NSString *b = [self.mTextV_content.text substringFromIndex:self.mTextV_content.text.length-2];
+            NSString *c = [self.mTextV_content.text substringFromIndex:self.mTextV_content.text.length-3];
+            NSString *d = [self.mTextV_content.text substringFromIndex:self.mTextV_content.text.length-4];
+            NSString *e = [self.mTextV_content.text substringFromIndex:self.mTextV_content.text.length-5];
+            if([a isContainsEmoji]) {
+                self.mTextV_content.text = [toBeString substringToIndex:self.mTextV_content.text.length - 1];
+            }else if ([b isContainsEmoji]){
+                self.mTextV_content.text = [toBeString substringToIndex:self.mTextV_content.text.length - 2];
+            }else if ([c isContainsEmoji]){
+                self.mTextV_content.text = [toBeString substringToIndex:self.mTextV_content.text.length - 3];
+            }else if ([d isContainsEmoji]){
+                self.mTextV_content.text = [toBeString substringToIndex:self.mTextV_content.text.length - 4];
+            }else if ([e isContainsEmoji]){
+                self.mTextV_content.text = [toBeString substringToIndex:self.mTextV_content.text.length - 5];
+            }
+            toBeString = self.mTextV_content.text;
+        }
+    }
+    for (int i=1; i<5; i++) {
+        if (self.mTextV_content.text.length>3000) {
+            NSString *b = [self.mTextV_content.text substringFromIndex:self.mTextV_content.text.length-i];
+            D("88888888888888-======%@",b);
+        }
+    }
+    
+    if ([lang isEqualToString:@"zh-Hans"]) { // 简体中文输入，包括简体拼音，健体五笔，简体手写
+        
+        UITextRange *selectedRange = [self.mTextV_content markedTextRange];
+        //获取高亮部分
+        UITextPosition *position = [self.mTextV_content positionFromPosition:selectedRange.start offset:0];
+        // 没有高亮选择的字，则对已输入的文字进行字数统计和限制
+        if (!position) {
+            
+            if (toBeString.length > 3000) {
+                
+                self.mTextV_content.text = [toBeString substringToIndex:3000];
+            }
+        }
+        // 有高亮选择的字符串，则暂不对文字进行统计和限制
+        else{
+        }
+    }
+    // 中文输入法以外的直接对其统计限制即可，不考虑其他语种情况
+    else{
+        
+        if (toBeString.length > 3000) {
+            self.mTextV_content.text = [toBeString substringToIndex:3000];
+        }
+    }
+    
+    if(self.mTextV_content.text.length>2999)
+    {
+        self.mTextV_content.text = [self.mTextV_content.text substringToIndex:3000];
+        
+    }
 
+
+}
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
 
         //输入删除时
@@ -821,10 +890,10 @@
         // Return FALSE so that the final '\n' character doesn't get added
         return FALSE;
     }
-    if(textView.text.length==3000){
-        [MBProgressHUD showError:@"内容不能超过3000个字"];
-        return NO;
-    }
+//    if(textView.text.length==3000){
+//        [MBProgressHUD showError:@"内容不能超过3000个字"];
+//        return NO;
+//    }
     // For any other character return TRUE so that the text gets added to the view
     return TRUE;
 }
