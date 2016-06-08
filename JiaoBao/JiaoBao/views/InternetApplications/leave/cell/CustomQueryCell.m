@@ -22,6 +22,7 @@
 -(void)setCellData:(MyLeaveModel*)model{
     self.dateLabel.text = model.WriteDate;
     self.stateLabel.text = model.StatusStr;
+    self.stateLabel.textColor = [UIColor colorWithRed:0 green:122/255.0 blue:255/255.0 alpha:1];
     self.reasonLabel.text = model.LeaveType;
     
 }
@@ -37,12 +38,13 @@
 }
 -(void)setStatisticsData:(SumLeavesModel*)model{
     self.dateLabel.text = model.ManName;
-    self.reasonLabel.text = model.Amount;
-    self.reasonLabel.textAlignment = NSTextAlignmentRight;
     if([model.Amount2 isEqualToString:@"(null)"]){
         model.Amount2 = @"0";
     }
-    self.stateLabel.text = model.Amount2;
+    self.reasonLabel.text = model.Amount2;
+    self.reasonLabel.textAlignment = NSTextAlignmentRight;
+
+    self.stateLabel.text = model.Amount;
     self.stateLabel.textAlignment = NSTextAlignmentCenter;
 
 }

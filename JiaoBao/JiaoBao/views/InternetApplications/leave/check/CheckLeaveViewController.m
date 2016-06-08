@@ -42,15 +42,21 @@
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-    if(self.mInt_flag==3)
-    {
+    if(self.mInt_flag==4){
         self.topConstraint.constant =CGRectGetMaxY(self.mNav_navgationBar.frame);
+        self.conditionLayoutHeight.constant = 0;
+        self.height.constant = 0;
+    }
+    else if(self.mInt_flag==3)
+    {
+        self.topConstraint.constant =CGRectGetMaxY(self.mNav_navgationBar.frame)+48;
         self.conditionLayoutHeight.constant = 0;
         self.height.constant = 0;
         
     }
     else
     {
+        self.topConstraint.constant = 112;
         self.conditionLayoutHeight.constant = 34;
         self.height.constant = 30;
         
@@ -226,7 +232,7 @@
     self.mArr2 = [NSMutableArray array];
     self.mArr3 = [NSMutableArray array];
     self.mArr4 = [NSMutableArray array];
-    self.conditionArr = [NSMutableArray arrayWithObjects:@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件",@"", nil];
+    self.conditionArr = [NSMutableArray arrayWithObjects:@"请选择筛选条件",@"请选择筛选条件",@"请选择筛选条件",@"",@"", nil];
     self.conditionContent.text = [self.conditionArr objectAtIndex:0];
     //TableView上面有部分空白时用到
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -308,7 +314,7 @@
     }else{//光有门卫审核
         self.mNav_navgationBar.label_Title.text = @"门卫审核";
         LeaveViewCell *cell = [[LeaveViewCell alloc]init];
-        cell.tag = 103;
+        cell.tag = 104;
         ButtonViewModel *model = [[ButtonViewModel alloc] init];
         model.mStr_title = @"门卫审核";
         
@@ -359,7 +365,7 @@
         }
         
         
-    }else if(self.mInt_flag == 3){//门卫审核
+    }else if(self.mInt_flag == 3||self.mInt_flag == 4){//门卫审核
         [[LeaveHttp getInstance]GetGateLeaves:self.recordModel];
         
     }
@@ -428,7 +434,7 @@
         }
         else{//门卫审核
             {
-                static NSString *indentifier = @"CustomQueryCell";
+                static NSString *indentifier = @"CustomQueryCell2";
                 CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
                 
                 if (cell == nil) {
@@ -516,6 +522,8 @@
     }else if (self.mInt_flag==2){
         self.recordModel = self.recordModel3;
     }else if (self.mInt_flag==3){
+        self.recordModel = self.recordModel4;
+    }else{
         self.recordModel = self.recordModel4;
     }
     //筛选条件或门卫审核日期按钮

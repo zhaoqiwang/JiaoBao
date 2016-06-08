@@ -221,7 +221,12 @@
         [dic setValue:[NSString stringWithFormat:@"%@",[dm getInstance].jiaoBaoHao] forKey:@"AccId"];
         [dic setValue:self.mTextF_nickName.text forKey:@"opw"];
         [dic setValue:self.mTextF_trueName.text forKey:@"npw"];
-        NSString *json = [dic JSONString];
+        //NSString *json = [dic JSONString];
+        NSError *parseError = nil;
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
+        
+        NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         [[RegisterHttp getInstance] registerHttpChangePW:json iOS:@"true"];
     }
 }
