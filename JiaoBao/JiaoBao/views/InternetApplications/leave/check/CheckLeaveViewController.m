@@ -369,9 +369,6 @@
         [[LeaveHttp getInstance]GetGateLeaves:self.recordModel];
         
     }
-    
-    
-    
 }
 #pragma mark - Table view data source
 
@@ -382,7 +379,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataSource.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(self.cellFlag == YES){//未审核或已审核cell
@@ -436,7 +432,6 @@
             {
                 static NSString *indentifier = @"CustomQueryCell2";
                 CustomQueryCell *cell = (CustomQueryCell *)[tableView dequeueReusableCellWithIdentifier:indentifier];
-                
                 if (cell == nil) {
                     cell = [[CustomQueryCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
                     NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomQueryCell" owner:self options:nil];

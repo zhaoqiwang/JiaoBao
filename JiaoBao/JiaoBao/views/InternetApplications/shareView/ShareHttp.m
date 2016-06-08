@@ -424,6 +424,8 @@ static ShareHttp *shareHttp = nil;
     NSMutableDictionary *jsonDic = [dataString objectFromJSONString];
     //先对返回值做判断，是否连接超时
     NSString *code = [jsonDic objectForKey:@"ResultCode"];
+    NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
     if ([code intValue] == 8) {
         [[LoginSendHttp getInstance] hands_login];
         [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
@@ -705,6 +707,7 @@ static ShareHttp *shareHttp = nil;
         model.TabIDStr = tableID;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:code forKey:@"flag"];
+        [dic setValue:ResultDesc forKey:@"ResultDesc"];
         [dic setValue:model forKey:@"model"];
         [dic setValue:view forKey:@"view"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:dic];
