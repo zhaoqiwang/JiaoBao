@@ -209,23 +209,54 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (actionSheet.tag == 1) {//单位
         if (buttonIndex == 0){//相册添加
-            ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
-            
-            elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至10
-            elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
-            elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
-            elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
-            //            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //支持图片和电影类型
-            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //支持图片和电影类型
-            elcPicker.imagePickerDelegate = self;
-            //            [self presentViewController:elcPicker animated:YES completion:nil];
-            [utils pushViewController1:elcPicker animated:YES];
+            ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+            if(author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+                [MBProgressHUD showError:@"您暂时没有访问相册的权限" toView:self];
+                return;
+            }else{
+                ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
+                
+                elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至10
+                elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
+                elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
+                elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
+                //            elcPicker.mediaTypes = @[(NSString *)kUTTypeImage, (NSString *)kUTTypeMovie]; //支持图片和电影类型
+                elcPicker.mediaTypes = @[(NSString *)kUTTypeImage]; //支持图片和电影类型
+                elcPicker.imagePickerDelegate = self;
+                //            [self presentViewController:elcPicker animated:YES completion:nil];
+                [utils pushViewController1:elcPicker animated:YES];
+            }
         }else if (buttonIndex == 1){//拍照添加
+            NSString *mediaType = AVMediaTypeVideo;
+            AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+            if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+                [MBProgressHUD showError:@"请开启摄像头功能" toView:self];
+                return;
+            }
             [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
         }else if (buttonIndex ==2){//视频
-            VideoRecorderViewController *video = [[VideoRecorderViewController alloc] init];
-            video.delegate = self;
-            [utils pushViewController:video animated:NO];
+            //判断是否开启麦克风功能
+            AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+            if ([audioSession respondsToSelector:@selector(requestRecordPermission:)]) {
+                [audioSession performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
+                    if (granted) {//开启
+                        NSString *mediaType = AVMediaTypeVideo;
+                        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+                        if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+                            [MBProgressHUD showError:@"请开启摄像头功能" toView:self];
+                            return;
+                        }else{
+                            VideoRecorderViewController *video = [[VideoRecorderViewController alloc] init];
+                            video.delegate = self;
+                            [utils pushViewController:video animated:NO];
+                        }
+                    }
+                    else {//未开启
+                        [MBProgressHUD showError:@"请开启麦克风功能" toView:self];
+                        return;
+                    }
+                }];
+            }
         }else if (buttonIndex ==3){//本地附件
             AccessoryViewController *access = [[AccessoryViewController alloc] init];
             access.delegate = self;
@@ -393,8 +424,7 @@
         self.picker.sourceType=sourceType;
         
         
-        if([[[UIDevice
-              currentDevice] systemVersion] floatValue]>=8.0) {
+        if([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0) {
             self.picker.modalPresentationStyle=UIModalPresentationOverCurrentContext;
             
         }
@@ -498,17 +528,28 @@
         return;
     }
     [self.mTextV_input resignFirstResponder];
-    self.mInt_flag = 1;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
-    [self.imageView setHidden:NO];
-    //创建录音文件，准备录音
-    if ([self.recorder prepareToRecord]) {
-        //开始
-        [self.recorder record];
+    //判断是否开启麦克风功能
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    if ([audioSession respondsToSelector:@selector(requestRecordPermission:)]) {
+        [audioSession performSelector:@selector(requestRecordPermission:) withObject:^(BOOL granted) {
+            if (granted) {//开启
+                self.mInt_flag = 1;
+                [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
+                [self.imageView setHidden:NO];
+                //创建录音文件，准备录音
+                if ([self.recorder prepareToRecord]) {
+                    //开始
+                    [self.recorder record];
+                }
+                //设置定时检测
+                timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
+            }
+            else {//未开启
+                [MBProgressHUD showError:@"请开启麦克风功能" toView:self];
+                return;
+            }
+        }];
     }
-    
-    //设置定时检测
-    timer = [NSTimer scheduledTimerWithTimeInterval:0 target:self selector:@selector(detectionVoice) userInfo:nil repeats:YES];
 }
 - (void)btnVoiceUp:(id)sender
 {

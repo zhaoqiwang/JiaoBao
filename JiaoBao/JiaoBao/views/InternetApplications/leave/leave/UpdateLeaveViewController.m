@@ -183,7 +183,7 @@
 //          mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间显示，4添加时间段，5提交
         if (i==0) {
             model.mInt_flag = 1 ;//1理由选择
-            model.mStr_name = @"理由";
+            model.mStr_name = @"类型";
             model.mStr_value = self.mModel_detail.LeaveType;
         }else if (i==1){
             model.mInt_flag = 2 ;//2理由填写
@@ -395,6 +395,16 @@
             [self addDialog:1 row:0 Model:model1];
         }
     }else if (model.mInt_flag == 5){//提交
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确定修改此假条？" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
+    }
+}
+
+//处理选中按键触发事件，使用以下方法：
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {//取消
+        
+    }else{//==1，确定修改
         [self addLeave];
     }
 }

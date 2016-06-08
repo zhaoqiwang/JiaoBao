@@ -208,7 +208,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:tempDic];
-        
+        //通知internetApp界面，获取成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"0"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
@@ -256,6 +257,8 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [Nav_internetAppView getInstance].mLab_name.text = name;
         [Nav_internetAppView getInstance].mScrollV_name.contentSize = CGSizeMake(newSize.width, 49);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getGenInfoWithAccID" object:tempDic];
+        //通知internetApp界面，获取成功
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"0"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];

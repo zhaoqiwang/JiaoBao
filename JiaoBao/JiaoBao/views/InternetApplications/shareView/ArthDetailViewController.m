@@ -131,7 +131,7 @@
         //获取文章详情
         [[ShareHttp getInstance] shareHttpGetShowArthDetailWith:self.Arthmodel.TabIDStr SectionID:self.Arthmodel.SectionID];
         //获取文章附加信息
-        [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.Arthmodel.TabIDStr sid:self.Arthmodel.SectionID];
+        [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.Arthmodel.TabIDStr sid:self.Arthmodel.SectionID from:@"1"];
         self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.Arthmodel.Title];
     }
     D("model.tableID==%@,sectionID-===%@",self.Arthmodel.TabIDStr,self.Arthmodel.SectionID);

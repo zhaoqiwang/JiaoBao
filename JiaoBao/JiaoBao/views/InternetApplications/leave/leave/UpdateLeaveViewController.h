@@ -23,7 +23,7 @@
 #import "LeaveDetailModel.h"
 #import "LeaveHttp.h"
 
-@interface UpdateLeaveViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,addDateCellDelegate,ModelDialogDelegate,UIActionSheetDelegate,UITextFieldDelegate>
+@interface UpdateLeaveViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,ChooseStudentViewCDelegate,addDateCellDelegate,ModelDialogDelegate,UIActionSheetDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) MyNavigationBar *mNav_navgationBar;//导航条
 @property (nonatomic,strong) NSString *mStr_navName;//导航条名称

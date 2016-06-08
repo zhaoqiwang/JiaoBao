@@ -45,7 +45,7 @@
 //            mInt_flag;//判断是哪个cell，0选人，1理由选择，2理由填写，3时间显示，4添加时间段，5提交
             if (i==0) {
                 model.mInt_flag = 1 ;//1理由选择
-                model.mStr_name = @"理由";
+                model.mStr_name = @"类型";
             }else if (i==1){
                 model.mInt_flag = 2 ;//2理由填写
                 model.mStr_name = @"理由";

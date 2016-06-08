@@ -80,8 +80,8 @@
 //评论顶和踩                     加密评论ID             顶=1，踩=0
 -(void)shareHttpAirthAddScore:(NSString *)uid tp:(NSString *)tp;
 
-//取文章附加信息                   文章加密id          文章栏目id
--(void)shareHttpAirthGetArthInfo:(NSString *)aid sid:(NSString *)sid;
+//取文章附加信息                   文章加密id          文章栏目id             0列表界面，1详情界面
+-(void)shareHttpAirthGetArthInfo:(NSString *)aid sid:(NSString *)sid from:(NSString *)view;
 
 
 @end

@@ -548,7 +548,6 @@
     }else if (tableView.tag == 100) {
         self.mInt_defaultTV_index = (int)indexPath.row;
         [self.mTableV_right reloadData];
-        [dm getInstance].uType = (int)indexPath.row+1;
     } else if (tableView.tag == 101){
         //检查当前网络是否可用
         if ([self checkNetWork]) {

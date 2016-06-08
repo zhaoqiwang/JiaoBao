@@ -382,7 +382,7 @@
 //                [self loadNoMore:@"已赞"];
             }
         }else{//发送获取当前文章附加信息的请求
-            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID];
+            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID from:@"0"];
             [self ProgressViewLoad:@"获取信息中..."];
         }
     }else{
@@ -502,7 +502,11 @@
     if ([flag integerValue]==0) {
         GetArthInfoModel *model = [dic objectForKey:@"model"];
         //判断是否需要点赞请求
-        [self sendLike:model];
+        NSString *view = [dic objectForKey:@"view"];
+        if ([view integerValue] == 0) {
+            [self sendLike:model];
+        }
+        
         if (self.mInt_index == 2) {
             for (int i=0; i<self.mArr_unitTop.count; i++) {
                 ClassModel *classModel = [self.mArr_unitTop objectAtIndex:i];
@@ -573,7 +577,7 @@
             [self ProgressViewLoad:@"点赞中..."];
         }
     }else{//已赞
-        [self loadNoMore:@"已赞"];
+        [MBProgressHUD showError:@"已赞" toView:self];
     }
 }
 

@@ -195,7 +195,7 @@
                 //                [self loadNoMore:@"已赞"];
             }
         }else{//发送获取当前文章附加信息的请求
-            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID];
+            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID from:@"1"];
             [self ProgressViewLoad:@"获取信息中..."];
         }
     }else{

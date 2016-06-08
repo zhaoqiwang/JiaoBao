@@ -62,21 +62,46 @@
 //    NSArray * rslt = [self.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
 //    NSString * fileType = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
     
-//    if ([fileType isEqual:@"doc"]||[fileType isEqual: @"docx"]||[fileType isEqual:@"pdf"]||[fileType isEqual:@"mp4"]||[fileType isEqual:@"wav"]||[fileType isEqual:@"txt"]||[fileType isEqual:@"xls"]||[fileType isEqual:@"xlsx"]||[fileType isEqual:@"ppt"]||[fileType isEqual:@"pptx"]||[fileType isEqual:@"avi"]||[fileType isEqual:@"htm"]||[fileType isEqual:@"html"]||[fileType isEqual:@"pps"]||[fileType isEqual:@"m4v"]) {
+    //    if ([fileType isEqual:@"doc"]||[fileType isEqual: @"docx"]||[fileType isEqual:@"pdf"]||[fileType isEqual:@"mp4"]||[fileType isEqual:@"wav"]||[fileType isEqual:@"txt"]||[fileType isEqual:@"xls"]||[fileType isEqual:@"xlsx"]||[fileType isEqual:@"ppt"]||[fileType isEqual:@"pptx"]||[fileType isEqual:@"avi"]||[fileType isEqual:@"htm"]||[fileType isEqual:@"html"]||[fileType isEqual:@"pps"]||[fileType isEqual:@"m4v"]) {
     
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
-        NSString * mStr_filePath = [NSString stringWithFormat:@"%@/%@",tempPath,self.mStr_name];
-        
-        NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+    NSString * mStr_filePath = [NSString stringWithFormat:@"%@/%@",tempPath,self.mStr_name];
+    
+    NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];
+    
+    if ([[self mimeType:url] isEqualToString:@"text/csv"]) {
+        // 服务器的响应对象,服务器接收到请求返回给客户端的
+        NSURLResponse *respnose = nil;
+        NSData *data = [NSData dataWithContentsOfFile:mStr_filePath];
+
+        // 在iOS开发中,如果不是特殊要求,所有的文本编码都是用UTF8
+        // 先用UTF8解释接收到的二进制数据流
+        [self.mWebView loadData:data MIMEType:respnose.MIMEType textEncodingName:@"GBK" baseURL:nil];
+    }else{
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.mWebView loadRequest:request];
-//    }
+    }
 //    else {
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
 //        alert.tag = 11;
 //        [alert show];
 //    }
+}
+
+#pragma mark 获取指定URL的MIMEType类型
+- (NSString *)mimeType:(NSURL *)url
+{
+    //1NSURLRequest
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    //2NSURLConnection
+    
+    //3 在NSURLResponse里，服务器告诉浏览器用什么方式打开文件。
+    
+    //使用同步方法后去MIMEType
+    NSURLResponse *response = nil;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    return response.MIMEType;
 }
 
 //导航条返回按钮
