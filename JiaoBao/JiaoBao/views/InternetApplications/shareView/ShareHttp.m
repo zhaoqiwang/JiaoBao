@@ -397,8 +397,8 @@ static ShareHttp *shareHttp = nil;
     [request startAsynchronous];
 }
 
-//取文章附加信息                   文章加密id          文章栏目id
--(void)shareHttpAirthGetArthInfo:(NSString *)aid sid:(NSString *)sid{
+//取文章附加信息                   文章加密id          文章栏目id             0列表界面，1详情界面
+-(void)shareHttpAirthGetArthInfo:(NSString *)aid sid:(NSString *)sid from:(NSString *)view{
     NSString *urlString = [NSString stringWithFormat:@"%@Sections/GetArthInfo",MAINURL];
     NSURL *url = [NSURL URLWithString:urlString];
     ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
@@ -408,7 +408,8 @@ static ShareHttp *shareHttp = nil;
     [request setRequestMethod:@"POST"];
     [request addPostValue:aid forKey:@"aid"];
     [request addPostValue:sid forKey:@"sid"];
-    request.userInfo = [NSDictionary dictionaryWithObject:aid forKey:@"tableID"];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:aid,@"tableID",view,@"view", nil];
+    request.userInfo = dic;
     request.tag = 17;//设置请求tag
     [request setDelegate:self];
     [request startAsynchronous];
@@ -702,11 +703,13 @@ static ShareHttp *shareHttp = nil;
         D("str00===17=>>>>==%@",str000);
         GetArthInfoModel *model = [ParserJson_share parserJsonGetArthInfo:str000];
         NSString *tableID = [_request.userInfo objectForKey:@"tableID"];
+        NSString *view = [_request.userInfo objectForKey:@"view"];
         model.TabIDStr = tableID;
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setValue:code forKey:@"flag"];
         [dic setValue:ResultDesc forKey:@"ResultDesc"];
         [dic setValue:model forKey:@"model"];
+        [dic setValue:view forKey:@"view"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetArthInfo" object:dic];
     }
 }
