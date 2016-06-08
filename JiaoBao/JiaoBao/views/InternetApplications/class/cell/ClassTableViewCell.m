@@ -36,7 +36,7 @@
 #pragma mark - TableViewdelegate&&TableViewdataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"indexPath = %ld height = %f",(long)indexPath.row,[self cellFloat:indexPath]);
+//    NSLog(@"indexPath = %ld height = %f",(long)indexPath.row,[self cellFloat:indexPath]);
     return [self cellFloat:indexPath];
 }
 

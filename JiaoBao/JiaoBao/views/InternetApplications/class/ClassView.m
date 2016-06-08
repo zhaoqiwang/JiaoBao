@@ -1827,6 +1827,10 @@
 
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
     //标注为刷新
     self.mInt_flag = 1;
     if ([dm getInstance].UID ==0) {
