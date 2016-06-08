@@ -152,6 +152,8 @@
 -(void)GetArthInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSString *flag = [noti.object objectForKey:@"flag"];
+    NSString *ResultDesc = [noti.object objectForKey:@"ResultDesc"];
+
     if ([flag integerValue]==0) {
         GetArthInfoModel *model = [noti.object objectForKey:@"model"];
         self.mModel_arthInfo = model;
@@ -163,8 +165,10 @@
             [[ShareHttp getInstance] shareHttpAirthCommentsList:self.Arthmodel.TabIDStr Page:@"1" Num:@"20" Flag:@""];
         }
         [self setArthInfo];
+    }else if([flag integerValue]==999999){
+        
     }else{
-        [MBProgressHUD showError:@"超时" toView:self.view];
+        [MBProgressHUD showError:ResultDesc  toView:self.view];
     }
 }
 

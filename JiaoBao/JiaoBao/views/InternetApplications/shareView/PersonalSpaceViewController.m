@@ -11,6 +11,7 @@
 #import "UnitAlbumsViewController.h"
 #import "Reachability.h"
 #import "MobClick.h"
+#import "MJRefresh.h"//上拉下拉刷新
 static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 
 @interface PersonalSpaceViewController ()
@@ -85,14 +86,54 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     //文章标签
     self.mLab_arth.frame = CGRectMake(0, self.mCollectionV_albums.frame.origin.y+self.mCollectionV_albums.frame.size.height, [dm getInstance].width, self.mLab_arth.frame.size.height);
     //文章列表
-    self.mTableV_arth.frame = CGRectMake(0, self.mLab_arth.frame.origin.y+self.mLab_arth.frame.size.height, [dm getInstance].width, 0);
+    self.mTableV_arth.frame = CGRectMake(0, 0, [dm getInstance].width, 0);
+    self.mTableV_arth.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.mLab_arth.frame.origin.y+self.mLab_arth.frame.size.height)];
+    [self.mTableV_arth.tableHeaderView addSubview:self.mImgV_head];
+    [self.mTableV_arth.tableHeaderView addSubview:self.mLab_detail];
+    [self.mTableV_arth.tableHeaderView addSubview:self.mLab_jiaobaohao];
+    [self.mTableV_arth.tableHeaderView addSubview:self.mLab_albums];
+    [self.mTableV_arth.tableHeaderView addSubview:self.mCollectionV_albums];
+    [self.mTableV_arth.tableHeaderView addSubview:self.mLab_arth];
+    [self.mTableV_arth addHeaderWithTarget:self action:@selector(headerRereshing)];
+    self.mTableV_arth.headerPullToRefreshText = @"下拉刷新";
+    self.mTableV_arth.headerReleaseToRefreshText = @"松开后刷新";
+    self.mTableV_arth.headerRefreshingText = @"正在刷新...";
+    [self.mTableV_arth addFooterWithTarget:self action:@selector(footerRereshing)];
+    self.mTableV_arth.footerPullToRefreshText = @"上拉加载更多";
+    self.mTableV_arth.footerReleaseToRefreshText = @"松开加载更多数据";
+    self.mTableV_arth.footerRefreshingText = @"正在加载...";
+    [self.mTableV_arth headerEndRefreshing];
+    [self.mTableV_arth footerEndRefreshing];
+    
     //加载更多按钮
     self.mBtn_add.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y+self.mTableV_arth.frame.size.height, [dm getInstance].width, self.mBtn_add.frame.size.height);
     [self.mBtn_add addTarget:self action:@selector(mBtn_addArth:) forControlEvents:UIControlEventTouchUpInside];
     
     [self sendRequest];
 }
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing{
+    self.mInt_index=0;
+    [self sendRequest];
+}
 
+- (void)footerRereshing{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    if (self.mArr_list.count>=20&&self.mArr_list.count%20==0) {
+        self.mInt_index = (int)self.mArr_list.count/20+1;
+        //发送获取文章请求
+        [[ShowHttp getInstance] showHttpGetUnitArthLIstIndexWith:@"99" UnitID:self.mModel_personal.AccID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
+        [MBProgressHUD showMessage:@"" toView:self.view];
+    } else {
+        [MBProgressHUD showError:@"没有更多了" toView:self.view];
+        [self.mTableV_arth headerEndRefreshing];
+        [self.mTableV_arth footerEndRefreshing];
+    }
+
+}
 -(void)sendRequest{
     //检查当前网络是否可用
     if ([self checkNetWork]) {
@@ -104,6 +145,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     [[ThemeHttp getInstance] themeHttpGetNewPhoto:self.mModel_personal.AccID Count:@"3"];
     
     [MBProgressHUD showMessage:@"" toView:self.view];
+
 }
 
 //检查当前网络是否可用
@@ -125,9 +167,9 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
         self.mArr_NewPhoto = [NSMutableArray arrayWithArray:array];
         [self.mCollectionV_albums reloadData];
     }else{
-        UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.mCollectionV_albums.frame.origin.y, [dm getInstance].width, self.mCollectionV_albums.frame.size.height)];
+        UIImageView *img = [[UIImageView alloc] initWithFrame:self.mCollectionV_albums.frame];
         img.image = [UIImage imageNamed:@"noPhoto"];
-        [self.mScrollV_all addSubview:img];
+        [self.mTableV_arth.tableHeaderView addSubview:img];
         img.userInteractionEnabled = YES;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didSelectImg)];
         [img addGestureRecognizer:tap];
@@ -149,13 +191,18 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
         if (self.mInt_index > 1) {
             if (array.count>0) {
                 [self.mArr_list addObjectsFromArray:array];
+            }else{
+                [MBProgressHUD showError:@"没有更多了" toView:self.view];
+
             }
         }else{
             self.mArr_list = [NSMutableArray arrayWithArray:array];
         }
+        [self.mTableV_arth headerEndRefreshing];
+        [self.mTableV_arth footerEndRefreshing];
         //刷新，布局
         [self.mTableV_arth reloadData];
-        self.mTableV_arth.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y, self.mTableV_arth.frame.size.width, self.mArr_list.count*70);
+        self.mTableV_arth.frame = CGRectMake(0, 0, self.mTableV_arth.frame.size.width, [dm getInstance].height-64);
         self.mBtn_add.frame = CGRectMake(0, self.mTableV_arth.frame.origin.y+self.mTableV_arth.frame.size.height, [dm getInstance].width, self.mBtn_add.frame.size.height);
         self.mScrollV_all.contentSize = CGSizeMake([dm getInstance].width, self.mBtn_add.frame.origin.y+self.mBtn_add.frame.size.height);
     }else{
@@ -170,7 +217,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mArr_list.count>=20) {
+    if (self.mArr_list.count>=20&&self.mArr_list.count%20==0) {
         self.mInt_index = (int)self.mArr_list.count/20+1;
         //发送获取文章请求
         [[ShowHttp getInstance] showHttpGetUnitArthLIstIndexWith:@"99" UnitID:self.mModel_personal.AccID Page:[NSString stringWithFormat:@"%d",self.mInt_index]];
