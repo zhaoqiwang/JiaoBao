@@ -463,6 +463,8 @@
             [self showMenu:btn];
         }
     }else{
+        //长时间不操作，握手通讯失败后，进行登录操作
+        [[LoginSendHttp getInstance] hands_login];
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
 }
@@ -628,6 +630,8 @@
                       fromRect:sender.frame
                      menuItems:menuItems];
     }else{
+        //长时间不操作，握手通讯失败后，进行登录操作
+        [[LoginSendHttp getInstance] hands_login];
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
 }

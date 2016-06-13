@@ -75,18 +75,21 @@
     
     NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];
     
-    if ([[self mimeType:url] isEqualToString:@"text/csv"]) {
-        // 服务器的响应对象,服务器接收到请求返回给客户端的
-        NSURLResponse *respnose = nil;
-        NSData *data = [NSData dataWithContentsOfFile:mStr_filePath];
-
-        // 在iOS开发中,如果不是特殊要求,所有的文本编码都是用UTF8
-        // 先用UTF8解释接收到的二进制数据流
-        [self.mWebView loadData:data MIMEType:respnose.MIMEType textEncodingName:@"GBK" baseURL:nil];
-    }else{
+//    if ([[self mimeType:url] isEqualToString:@"text/csv"]) {
+//        // 服务器的响应对象,服务器接收到请求返回给客户端的
+//        NSURLResponse *respnose = nil;
+//        NSData *data = [NSData dataWithContentsOfFile:mStr_filePath];
+//
+//        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+//        NSString *retStr = [[NSString alloc] initWithData:data encoding:enc];
+//        D("restr-======%@",retStr);
+//        // 在iOS开发中,如果不是特殊要求,所有的文本编码都是用UTF8
+//        // 先用UTF8解释接收到的二进制数据流
+//        [self.mWebView loadData:data MIMEType:respnose.MIMEType textEncodingName:@"GBK" baseURL:nil];
+//    }else{
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.mWebView loadRequest:request];
-    }
+//    }
 //    else {
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
 //        alert.tag = 11;
