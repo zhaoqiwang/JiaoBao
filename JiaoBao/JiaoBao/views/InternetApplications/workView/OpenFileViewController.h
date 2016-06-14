@@ -10,6 +10,7 @@
 #import "MyNavigationBar.h"
 #import "dm.h"
 #import "utils.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface OpenFileViewController : UIViewController<MyNavigationDelegate,UIWebViewDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条

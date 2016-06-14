@@ -86,10 +86,19 @@
         [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
         [audioSession setActive:YES error:nil];
         
+        //录音图片
         self.imageView = [[UIImageView alloc] init];
         self.imageView.frame = CGRectMake(([dm getInstance].width-80)/2, 20, 80, 100);
         [self addSubview:self.imageView];
         [self.imageView setHidden:YES];
+        //录音时间
+        self.mLab_time = [[UILabel alloc] init];
+        self.mLab_time.frame = CGRectMake(0, 20, 80, 24);
+        self.mLab_time.font = [UIFont systemFontOfSize:12];
+        self.mLab_time.textColor = [UIColor blackColor];
+        self.mLab_time.textAlignment = NSTextAlignmentCenter;
+        [self.imageView addSubview:self.mLab_time];
+        self.mLab_time.hidden = YES;
     }
     return self;
 }
@@ -536,6 +545,7 @@
                 self.mInt_flag = 1;
                 [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryRecord error:nil];
                 [self.imageView setHidden:NO];
+                self.mLab_time.hidden = NO;
                 //创建录音文件，准备录音
                 if ([self.recorder prepareToRecord]) {
                     //开始
@@ -557,6 +567,7 @@
     if (self.mInt_flag ==1) {
         self.mInt_flag = 0;
         [self.imageView setHidden:YES];
+        self.mLab_time.hidden = YES;
         double cTime = self.recorder.currentTime;
         self.mInt_time = cTime;
         if (cTime > 1) {//如果录制时间<2 不发送
@@ -574,6 +585,7 @@
 {
     [self.mTextV_input resignFirstResponder];
     [self.imageView setHidden:YES];
+    self.mLab_time.hidden = YES;
     //删除录制文件
     [self.recorder deleteRecording];
     [self.recorder stop];
@@ -613,7 +625,8 @@
     [self.recorder updateMeters];//刷新音量数据
     //获取音量的平均值  [recorder averagePowerForChannel:0];
     //音量的最大值  [recorder peakPowerForChannel:0];
-    
+    int cTime = self.recorder.currentTime;
+    self.mLab_time.text = [NSString stringWithFormat:@"%dS",cTime];
     double lowPassResults = pow(10, (0.05 * [self.recorder peakPowerForChannel:0]));
 //    NSLog(@"111111----===%lf",lowPassResults);
     //最大50  0
@@ -678,7 +691,6 @@
                 for (;;) {
                     if (result) {
                         model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
-                        //                model.pathStr = mStr_path;
                         model.pathStr = path;
                         model.fileAttributeDic = [fileManager attributesOfItemAtPath:path error:nil];
                         [self.mArr_accessory addObject:model];
@@ -693,7 +705,6 @@
                     for (;;) {
                         if (result) {
                             model.mStr_name= [NSString stringWithFormat:@"%@.aac",timeSp];
-                            //                model.pathStr = mStr_path;
                             model.pathStr = path;
                             model.fileAttributeDic = [fileManager attributesOfItemAtPath:path error:nil];
                             [self.mArr_accessory addObject:model];
@@ -709,7 +720,12 @@
             D("按住时间太短");
             [MBProgressHUD showError:@"按住时间太短" toView:self];
         }
-        
+        //写入数据完成后，将默认的删除，否则会出现一个系统自动加载完成的
+        BOOL tempFile=[[NSFileManager defaultManager] fileExistsAtPath:mStr_path];
+        if (tempFile) {//存在
+            //删除
+            [[NSFileManager defaultManager] removeItemAtPath:mStr_path error:nil];
+        }
     } else {
         D("Stopping the audio recording failed.");
     }

@@ -69,7 +69,7 @@
 @property (nonatomic,assign) int mInt_flag;//录音按钮是否按下状态
 
 @property(nonatomic,strong)UIImagePickerController *picker;
-
+@property (nonatomic,strong) UILabel *mLab_time;//显示录音的时间长短
 
 //刷新显示附件
 -(void)addAccessoryPhoto;

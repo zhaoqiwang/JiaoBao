@@ -839,6 +839,7 @@ static LoginSendHttp *loginSendHttp = nil;
 //请求成功
 - (void)requestFinished:(ASIHTTPRequest *)_request{
     NSData *responseData = [_request responseData];
+    D("temp-======%lu,%lu",(unsigned long)_request.responseEncoding,(unsigned long)_request.defaultResponseEncoding);
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
     NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
     D("dataString--tag=%ld--flag=%d-  %@",(long)_request.tag,flag_request,dataString);
@@ -1182,12 +1183,23 @@ static LoginSendHttp *loginSendHttp = nil;
         NSString *imgPath=[tempPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",fileName]];
         D("imgPath-2222== %@",imgPath);
         BOOL yesNo=[[NSFileManager defaultManager] fileExistsAtPath:imgPath];
+        NSData *tempData;
+        //将data进行转码，
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSString *retStr = [[NSString alloc] initWithData:responseData encoding:enc];
+        tempData = [retStr dataUsingEncoding:NSUTF8StringEncoding];
+        //判断转码后的data，是否有值，有则用转后的数据，否则用之前的默认编码格式数据
+        if (tempData.length>0) {
+            
+        }else{
+            tempData = responseData;
+        }
         if (!yesNo) {//不存在，则直接写入后通知界面刷新
-            [responseData writeToFile:imgPath atomically:YES];
+            [tempData writeToFile:imgPath atomically:YES];
         }else {//存在
             BOOL blDele= [fileManager removeItemAtPath:imgPath error:nil];//先删除
             if (blDele) {//删除成功后，写入，通知界面
-                [responseData writeToFile:imgPath atomically:YES];
+                [tempData writeToFile:imgPath atomically:YES];
             }
         }
     }else if (_request.tag == 15){//获取接收人列表或单位列表，普通请求

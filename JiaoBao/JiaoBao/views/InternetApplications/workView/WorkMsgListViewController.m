@@ -119,9 +119,17 @@
     self.mProgressV = [[MBProgressHUD alloc]initWithView:self.navigationController.view];
     [self.navigationController.view addSubview:self.mProgressV];
     self.mProgressV.delegate = self;
+    //点击空白退出键盘
+    self.view.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
+    [self.view addGestureRecognizer:singleTap];
     
     [[LoginSendHttp getInstance] msgDetailwithUID:self.mStr_tableID page:1 feeBack:self.mStr_tableID ReadFlag:self.mStr_flag];
     [MBProgressHUD showMessage:@"" toView:self.view];
+}
+//点击空白退出键盘
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer{
+    [self.view endEditing:YES];
 }
 
 //通知界面刷新信息详情

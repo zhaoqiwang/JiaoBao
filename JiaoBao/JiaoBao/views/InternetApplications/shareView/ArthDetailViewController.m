@@ -26,6 +26,7 @@
     [super viewWillDisappear:YES];
     [MobClick endLogPageView:UMMESSAGE];
     [MobClick endLogPageView:UMPAGE];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -406,8 +407,9 @@
             self.mModel_notice = [dic objectForKey:@"model"];
             NSString *str = self.mModel_notice.NoticMsg;
             //标题
-            CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel_notice.Subject] sizeWithFont:[UIFont systemFontOfSize:14]];
-            self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
+            CGSize sizeTitle = [self.mModel_notice.Subject sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width, MAXFLOAT)];
+            self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, sizeTitle.height);
+            self.mLab_title.numberOfLines = 0;
             self.mLab_title.text = self.mModel_notice.Subject;
             //作者
             CGSize nameSize = [[NSString stringWithFormat:@"作者:%@",self.mModel_notice.UserName] sizeWithFont:[UIFont systemFontOfSize:13]];
@@ -427,8 +429,9 @@
             NSString *str = self.mModel.Context;
             
             //标题
-            CGSize numSize = [[NSString stringWithFormat:@"%@",self.mModel.Title] sizeWithFont:[UIFont systemFontOfSize:14]];
-            self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, numSize.height);
+            CGSize sizeTitle = [self.mModel.Title sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake([dm getInstance].width, MAXFLOAT)];
+            self.mLab_title.frame = CGRectMake(0, 5, [dm getInstance].width, sizeTitle.height);
+            self.mLab_title.numberOfLines = 0;
             self.mLab_title.text = self.mModel.Title;
             //作者
             CGSize nameSize = [[NSString stringWithFormat:@"作者:%@",self.mModel.UserName] sizeWithFont:[UIFont systemFontOfSize:13]];
@@ -490,7 +493,7 @@
         webView.frame = frame;
         frame.size.height = webView.scrollView.contentSize.height;
         
-        self.mWebV_js.frame = CGRectMake(5, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width-10,  frame.size.height+10);
+        self.mWebV_js.frame = CGRectMake(5, self.mLab_name.frame.origin.y+self.mLab_name.frame.size.height+5, [dm getInstance].width-10, webView.scrollView.contentSize.height);
         
         [self setArthInfo];
         //设置布局
