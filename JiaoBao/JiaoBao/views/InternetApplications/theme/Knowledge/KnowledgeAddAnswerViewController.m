@@ -14,7 +14,7 @@
 @interface KnowledgeAddAnswerViewController ()
 @property(nonatomic,assign)NSRange cursorPosition;
 @property(nonatomic,assign)NSInteger hideFlag;
-
+@property(nonatomic,assign)BOOL positionFlag;
 @end
 
 @implementation KnowledgeAddAnswerViewController
@@ -46,6 +46,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mInt_index = 1;
     self.hideFlag = 0;
+     self.positionFlag = NO;
     
     self.mArr_pic = [NSMutableArray array];
     self.mInt_flag = 0;
@@ -493,7 +494,11 @@
     [self submitAnswer:1];
 }
 -(IBAction)mBtn_photo:(id)sender{
-    self.cursorPosition = [self.mTextV_content selectedRange];
+    if(self.positionFlag == NO){
+        self.cursorPosition = [self.mTextV_content selectedRange];
+        
+    }
+    //self.cursorPosition = [self.mTextV_content selectedRange];
     [self.mTextV_content resignFirstResponder];
     [self.mTextV_answer resignFirstResponder];
     if(self.mArr_pic.count>=20)
@@ -719,6 +724,7 @@
     JoinUnitTextV
     //没有昵称，不能交互
     NoNickNameTextV
+    self.positionFlag =NO;
 }
 
 //在这个地方计算输入的字数
@@ -814,6 +820,7 @@
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
+    self.positionFlag = YES;
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
@@ -855,6 +862,8 @@
                 return [p1_num compare:p2_num];
             }];
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
+            self.cursorPosition = NSMakeRange(model.cursorPosition.location+1, model.cursorPosition.length);
+
 
         }
         self.mLab_content.hidden = YES;

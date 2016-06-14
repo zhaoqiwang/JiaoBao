@@ -31,6 +31,8 @@
 @property(nonatomic,assign)NSRange cursorPosition;
 @property(nonatomic,strong)NSString *deleteStr;
 @property(nonatomic,strong)NSString *tempContentText;
+@property(nonatomic,assign)BOOL positionFlag;
+
 @end
 
 @implementation AddQuestionViewController
@@ -202,6 +204,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mInt_index = 1;
+    self.positionFlag = NO;
     //邀请指定的用户回答问题
     //获取邀请人
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
@@ -550,7 +553,11 @@
     CheckNetWorkSelfView
     JoinUnit
     NoNickName
-    self.cursorPosition = [self.mTextV_content selectedRange];
+    if(self.positionFlag == NO){
+        self.cursorPosition = [self.mTextV_content selectedRange];
+        
+    }
+    //self.cursorPosition = [self.mTextV_content selectedRange];
 
     [self.mTextV_content resignFirstResponder];
     [self.mText_title resignFirstResponder];
@@ -661,6 +668,7 @@
     JoinUnitTextV
     //没有昵称，不能交互
     NoNickNameTextV
+    self.positionFlag =NO;
 
 }
 
@@ -878,6 +886,7 @@
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
     [MBProgressHUD hideHUD];
+    self.positionFlag = YES;
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
@@ -922,7 +931,8 @@
                             return [p1_num compare:p2_num];
             }];
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            
+            self.cursorPosition = NSMakeRange(model.cursorPosition.location+1, model.cursorPosition.length);
+
         }
     }else{
         [MBProgressHUD showError:@"失败" toView:self.view];
