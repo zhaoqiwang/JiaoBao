@@ -451,7 +451,7 @@
         [[ShareHttp getInstance] shareHttpSavePublishArticleWith:self.mTextF_title.text Content:self.tempContentText uType:self.mStr_uType UnitID:self.mStr_unitID SectionFlag:@"2"];
     }
     
-    [MBProgressHUD showMessage:@"" toView:self.view];
+    [MBProgressHUD showMessage:@"" toView:self.view]; 
 }
 
 #pragma mark - image picker delegte

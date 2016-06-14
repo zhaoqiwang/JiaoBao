@@ -26,6 +26,9 @@
     if ([self.StatusStr isEqualToString:@"审批拒绝"]) {
         self.StatusStr = @"拒绝";
     }
+    if ([self.StatusStr isEqualToString:@"等待中"]) {
+        self.StatusStr = @"未审核";
+    }
     self.RowCount = [dic objectForKey:@"RowCount"];// 记录数量
     self.ManName = [dic objectForKey:@"ManName"];
     
