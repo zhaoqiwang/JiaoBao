@@ -26,6 +26,8 @@
 #import "MyAttQViewController.h"
 #import "PointsModel.h"
 #import "MyCommentViewController.h"
+#import <AVFoundation/AVFoundation.h>
+
 
 @interface KnowledgePeoleSpaceViewController ()<MyNavigationDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,strong)NSArray *questionArr;
@@ -198,6 +200,12 @@
                     
                 case 1: //相机
                 {
+                    NSString *mediaType = AVMediaTypeVideo;
+                    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+                    if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+                        [MBProgressHUD showError:@"请开启摄像头功能" toView:self.view];
+                        return;
+                    }
                     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
                     imagePickerController.delegate = self;
                     imagePickerController.allowsEditing = NO;
@@ -211,6 +219,11 @@
                     break;
                 case 0: //相册
                 {
+                    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+                    if(author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+                        [MBProgressHUD showError:@"您暂时没有访问相册的权限" toView:self.view];
+                        return;
+                    }
                     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
                     
                     elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
@@ -365,9 +378,6 @@
 {
     return 1;
 }
-
-
-
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
     return 54;

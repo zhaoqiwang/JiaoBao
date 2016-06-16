@@ -662,6 +662,12 @@
 }
 
 - (IBAction)cameraBtnAction:(id)sender {
+    NSString *mediaType = AVMediaTypeVideo;
+    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+    if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+        [MBProgressHUD showError:@"请开启摄像头功能" toView:self.view];
+        return;
+    }
     if(self.positionFlag == NO){
         self.cursorPosition = [self.mTextV_content selectedRange];
         
@@ -695,6 +701,12 @@
 }
 
 - (IBAction)albumBtnAction:(id)sender {
+    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+    if(author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+        [MBProgressHUD showError:@"您暂时没有访问相册的权限" toView:self.view];
+        return;
+    }
+
     if(self.positionFlag == NO){
         self.cursorPosition = [self.mTextV_content selectedRange];
 
