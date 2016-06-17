@@ -10,6 +10,8 @@
 #import "MyNavigationBar.h"
 #import "ELCImagePickerController.h"
 #include<AssetsLibrary/AssetsLibrary.h>
+#import <AVFoundation/AVFoundation.h>
+
 
 
 @interface AddQuestionViewController : UIViewController<MyNavigationDelegate,UIActionSheetDelegate,ELCAssetSelectionDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>

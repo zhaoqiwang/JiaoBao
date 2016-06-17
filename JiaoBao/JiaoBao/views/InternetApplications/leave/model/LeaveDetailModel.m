@@ -37,6 +37,9 @@
     if ([self.StatusStr isEqualToString:@"审批拒绝"]) {
         self.StatusStr = @"拒绝";
     }
+    if ([self.StatusStr isEqualToString:@"等待中"]) {
+        self.StatusStr = @"未审核";
+    }
     self.ApproveStatus = [dic objectForKey:@"ApproveStatus"];
     self.Approve = [dic objectForKey:@"Approve"];
     self.ApproveDate = [dic objectForKey:@"ApproveDate"];

@@ -31,6 +31,8 @@
 @property(nonatomic,assign)NSRange cursorPosition;
 @property(nonatomic,strong)NSString *deleteStr;
 @property(nonatomic,strong)NSString *tempContentText;
+@property(nonatomic,assign)BOOL positionFlag;
+
 @end
 
 @implementation AddQuestionViewController
@@ -202,6 +204,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mInt_index = 1;
+    self.positionFlag = NO;
     //邀请指定的用户回答问题
     //获取邀请人
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetAtMeUsersWithuid" object:nil];
@@ -550,7 +553,11 @@
     CheckNetWorkSelfView
     JoinUnit
     NoNickName
-    self.cursorPosition = [self.mTextV_content selectedRange];
+    if(self.positionFlag == NO){
+        self.cursorPosition = [self.mTextV_content selectedRange];
+        
+    }
+    //self.cursorPosition = [self.mTextV_content selectedRange];
 
     [self.mTextV_content resignFirstResponder];
     [self.mText_title resignFirstResponder];
@@ -661,6 +668,7 @@
     JoinUnitTextV
     //没有昵称，不能交互
     NoNickNameTextV
+    self.positionFlag =NO;
 
 }
 
@@ -826,6 +834,12 @@
                     return;
                 case 1: //相机
                 {
+                    NSString *mediaType = AVMediaTypeVideo;
+                    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+                    if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+                        [MBProgressHUD showError:@"请开启摄像头功能" toView:self.view];
+                        return;
+                    }
                     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
                     imagePickerController.delegate = self;
                     imagePickerController.allowsEditing = NO;
@@ -839,6 +853,11 @@
                     break;
                 case 2: //相册
                 {
+                    ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+                    if(author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+                        [MBProgressHUD showError:@"您暂时没有访问相册的权限" toView:self.view];
+                        return;
+                    }
                     ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
                     
                     elcPicker.maximumImagesCount = 1; //Set the maximum number of images to select to 10
@@ -878,6 +897,7 @@
 //上传图片回调
 -(void)UploadImg:(NSNotification *)noti{
     [MBProgressHUD hideHUD];
+    self.positionFlag = YES;
     NSMutableDictionary *dic = noti.object;
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
@@ -913,7 +933,6 @@
             
             self.mTextV_content.attributedText = str;
             [self.mArr_pic addObject:model];
-
             NSArray *arr = [self.mArr_pic sortedArrayUsingComparator:^NSComparisonResult(UploadImgModel *p1, UploadImgModel *p2){
 
                             NSNumber *p1_num = [NSNumber numberWithInteger:p1.cursorPosition.location ];
@@ -922,7 +941,8 @@
                             return [p1_num compare:p2_num];
             }];
             self.mArr_pic =[NSMutableArray arrayWithArray:arr];
-            
+            self.cursorPosition = NSMakeRange(model.cursorPosition.location+1, model.cursorPosition.length);
+
         }
     }else{
         [MBProgressHUD showError:@"失败" toView:self.view];

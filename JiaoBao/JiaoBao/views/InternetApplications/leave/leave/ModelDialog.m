@@ -88,11 +88,19 @@
     //设置时间范围
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
-    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit ;
+    NSDateComponents *cps2 = [chineseClendar components:unitFlags fromDate:startDate  toDate:nowDate  options:0];
+    NSInteger diffday2    = [cps2 day];
+    if(diffday2>30){
+        [MBProgressHUD showError:@"开始时间不能小于当前时间30天"];
+        return;
+    }
+
     NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:nowDate  toDate:endDate  options:0];
-    NSInteger diffMonth    = [cps month];
-    if(diffMonth>=3){
-        [MBProgressHUD showError:@"结束时间不能大于3个月"];
+    NSInteger diffday    = [cps day];
+
+    if(diffday>30){
+        [MBProgressHUD showError:@"结束时间不能大于当前时间30天"];
         return;
     }
     NSComparisonResult result = [endDate compare:startDate];
