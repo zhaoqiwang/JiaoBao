@@ -209,6 +209,8 @@
         [MBProgressHUD showError:@"请输入账号或密码" toView:self.view];
         return;
     }
+    [self.mTextF_userName resignFirstResponder];
+    [self.mTextF_passwd resignFirstResponder];
     [[NSUserDefaults standardUserDefaults] setValue:self.mTextF_userName.text forKey:@"UserName"];
     [LoginSendHttp getInstance].mStr_userName = self.mTextF_userName.text;
     [LoginSendHttp getInstance].mStr_passwd = self.mTextF_passwd.text;
