@@ -1,7 +1,7 @@
 //
 //  HomeClassWorkView.h
 //  JiaoBao
-//
+//  家校互动主界面
 //  Created by Zqw on 15-4-23.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //

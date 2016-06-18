@@ -1,7 +1,7 @@
 //
 //  HomeClassTopScrollView.h
 //  JiaoBao
-//
+//  家校互动顶部scrollView
 //  Created by songyanming on 15/4/27.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
