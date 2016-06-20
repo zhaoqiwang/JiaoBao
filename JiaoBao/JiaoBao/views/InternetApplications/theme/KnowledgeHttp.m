@@ -9,6 +9,7 @@
 #import "KnowledgeHttp.h"
 #import "PointsModel.h"
 #import "CommsModel.h"
+#import "AFHTTPRequestOperationManager.h"
 
 //static KnowledgeHttp *knowledgeHttp = nil;
 

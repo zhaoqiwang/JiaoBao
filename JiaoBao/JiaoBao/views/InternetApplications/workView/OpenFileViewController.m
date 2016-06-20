@@ -64,37 +64,141 @@
 }
 
 -(void)openFile{
-//    NSArray * rslt = [self.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
-//    NSString * fileType = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
-    
-    //    if ([fileType isEqual:@"doc"]||[fileType isEqual: @"docx"]||[fileType isEqual:@"pdf"]||[fileType isEqual:@"mp4"]||[fileType isEqual:@"wav"]||[fileType isEqual:@"txt"]||[fileType isEqual:@"xls"]||[fileType isEqual:@"xlsx"]||[fileType isEqual:@"ppt"]||[fileType isEqual:@"pptx"]||[fileType isEqual:@"avi"]||[fileType isEqual:@"htm"]||[fileType isEqual:@"html"]||[fileType isEqual:@"pps"]||[fileType isEqual:@"m4v"]) {
+    NSArray * rslt = [self.mStr_name componentsSeparatedByString:@"."];//在“.”的位置将文件名分成几块
+    NSString * fileType = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
     NSString * mStr_filePath = [NSString stringWithFormat:@"%@/%@",tempPath,self.mStr_name];
-    
+//    [self checkEncodingWithfilePath:mStr_filePath];
     NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];
-    
-//    if ([[self mimeType:url] isEqualToString:@"text/csv"]) {
-//        // 服务器的响应对象,服务器接收到请求返回给客户端的
-//        NSURLResponse *respnose = nil;
-//        NSData *data = [NSData dataWithContentsOfFile:mStr_filePath];
-//
-//        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//        NSString *retStr = [[NSString alloc] initWithData:data encoding:enc];
-//        D("restr-======%@",retStr);
-//        // 在iOS开发中,如果不是特殊要求,所有的文本编码都是用UTF8
-//        // 先用UTF8解释接收到的二进制数据流
-//        [self.mWebView loadData:data MIMEType:respnose.MIMEType textEncodingName:@"GBK" baseURL:nil];
-//    }else{
+    if ([fileType isEqual:@"png"]||[fileType isEqual: @"gif"]||[fileType isEqual:@"bmp"]||[fileType isEqual:@"jpg"]||[fileType isEqual:@"jpeg"]) {
+        //编码图片
+        UIImage *selectedImage = [UIImage imageWithContentsOfFile:mStr_filePath];
+        NSString *stringImage = [self htmlForJPGImage:selectedImage];
+        
+        //构造内容
+        NSString *contentImg = [NSString stringWithFormat:@"%@", stringImage];
+        NSString *content =[NSString stringWithFormat:
+                            @"<html>"
+                            "<style type=\"text/css\">"
+                            "<!--"
+                            "body{font-size:40pt;line-height:60pt;}"
+                            "-->"
+                            "</style>"
+                            "<body>"
+                            "%@"
+                            "</body>"
+                            "</html>"
+                            , contentImg];
+        
+        //让self.contentWebView加载content
+        [self.mWebView loadHTMLString:content baseURL:nil];
+    }else if ([fileType isEqual:@"txt"]){
+        NSString *htmlString = [NSString stringWithContentsOfFile:mStr_filePath encoding:NSUTF8StringEncoding error:nil];
+        if (htmlString.length>0) {
+            [self.mWebView loadHTMLString:htmlString baseURL:nil];
+        }else{
+            NSURLRequest *request = [NSURLRequest requestWithURL:url];
+            [self.mWebView loadRequest:request];
+        }
+    }else{
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.mWebView loadRequest:request];
-//    }
-//    else {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//        alert.tag = 11;
-//        [alert show];
-//    }
+    }
+    //    else {
+    //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    //        alert.tag = 11;
+    //        [alert show];
+    //    }
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+//    NSString *meta = [NSString stringWithFormat:@"document.getElementsByName(\"viewport\")[0].content = \"width=%d, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no\"", [dm getInstance].width];
+//    [webView stringByEvaluatingJavaScriptFromString:meta];
+}
+-(NSString *)checkEncodingWithfilePath:(NSString *)filePath{
+    
+    @autoreleasepool {
+        
+        NSArray *arrEncoding = @[@(NSASCIIStringEncoding),
+                                 @(NSNEXTSTEPStringEncoding),
+                                 @(NSJapaneseEUCStringEncoding),
+                                 @(NSUTF8StringEncoding),
+                                 @(NSISOLatin1StringEncoding),
+                                 @(NSSymbolStringEncoding),
+                                 @(NSNonLossyASCIIStringEncoding),
+                                 @(NSShiftJISStringEncoding),
+                                 @(NSISOLatin2StringEncoding),
+                                 @(NSUnicodeStringEncoding),
+                                 @(NSWindowsCP1251StringEncoding),
+                                 @(NSWindowsCP1252StringEncoding),
+                                 @(NSWindowsCP1253StringEncoding),
+                                 @(NSWindowsCP1254StringEncoding),
+                                 @(NSWindowsCP1250StringEncoding),
+                                 @(NSISO2022JPStringEncoding),
+                                 @(NSMacOSRomanStringEncoding),
+                                 @(NSUTF16StringEncoding),
+                                 @(NSUTF16BigEndianStringEncoding),
+                                 @(NSUTF16LittleEndianStringEncoding),
+                                 @(NSUTF32StringEncoding),
+                                 @(NSUTF32BigEndianStringEncoding),
+                                 @(NSUTF32LittleEndianStringEncoding)
+                                 ];
+        
+        NSArray *arrEncodingName = @[@"NSASCIIStringEncoding",
+                                     @"NSNEXTSTEPStringEncoding",
+                                     @"NSJapaneseEUCStringEncoding",
+                                     @"NSUTF8StringEncoding",
+                                     @"NSISOLatin1StringEncoding",
+                                     @"NSSymbolStringEncoding",
+                                     @"NSNonLossyASCIIStringEncoding",
+                                     @"NSShiftJISStringEncoding",
+                                     @"NSISOLatin2StringEncoding",
+                                     @"NSUnicodeStringEncoding",
+                                     @"NSWindowsCP1251StringEncoding",
+                                     @"NSWindowsCP1252StringEncoding",
+                                     @"NSWindowsCP1253StringEncoding",
+                                     @"NSWindowsCP1254StringEncoding",
+                                     @"NSWindowsCP1250StringEncoding",
+                                     @"NSISO2022JPStringEncoding",
+                                     @"NSMacOSRomanStringEncoding",
+                                     @"NSUTF16StringEncoding",
+                                     @"NSUTF16BigEndianStringEncoding",
+                                     @"NSUTF16LittleEndianStringEncoding",
+                                     @"NSUTF32StringEncoding",
+                                     @"NSUTF32BigEndianStringEncoding",
+                                     @"NSUTF32LittleEndianStringEncoding"
+                                     ];
+        
+        for (int i = 0 ; i < [arrEncoding count]; i++) {
+            unsigned long encodingCode = [arrEncoding[i] unsignedLongValue];
+            NSLog(@"(%@)", arrEncodingName[i]);
+            NSError *error = nil;
+            NSString *filePath1 = filePath; // <---这里是要查看的文件路径
+            NSString *aString = [NSString stringWithContentsOfFile:filePath1 encoding:encodingCode  error:&error];
+            NSLog(@"Error:%@,%lu,%@", [error localizedDescription],(unsigned long)aString.length,aString);
+            NSData *data = [aString dataUsingEncoding:encodingCode];
+            NSString *string = [[NSString alloc] initWithData:data encoding:encodingCode];
+            NSLog(@"%@", string);
+            
+            /*
+             // 如果有必要，还可以把文件创建出来再测试
+             [string writeToFile:[NSString stringWithFormat:@"/Users/dlios1/Desktop/%@.xml", arrEncodingName[i]]
+             atomically:YES
+             encoding:encodingCode
+             error:&error];
+             */
+        }
+    }
+    return 0;
+}
+//编码图片
+- (NSString *)htmlForJPGImage:(UIImage *)image
+{
+    NSData *imageData = UIImageJPEGRepresentation(image,1.0);
+    NSString *imageSource = [NSString stringWithFormat:@"data:image/jpg;base64,%@",[imageData base64Encoding]];
+    return [NSString stringWithFormat:@"<img src = \"%@\" width=100%% />", imageSource];
 }
 
 #pragma mark 获取指定URL的MIMEType类型

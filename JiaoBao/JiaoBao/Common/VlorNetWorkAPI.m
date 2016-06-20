@@ -9,6 +9,7 @@
 #import "VlorNetWorkAPI.h"
 //#import "FMDatabase.h"
 //#import "FMResultSet.h"
+#import "AFHTTPRequestOperationManager.h"
 
 @implementation NSString (VlorNetWorkAPI)
 

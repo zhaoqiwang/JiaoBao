@@ -14,6 +14,7 @@
 #import "ClassLeavesModel.h"
 #import "StuInfoModel.h"
 #import "ParserJson_OnlineJob.h"
+#import "AFHTTPRequestOperationManager.h"
 static LeaveHttp *leaveHttp = nil;
 
 @implementation LeaveHttp

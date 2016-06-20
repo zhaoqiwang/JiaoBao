@@ -11,6 +11,7 @@
 #import "StuHWQsModel.h"
 #import "StuHomeWorkModel.h"
 #import "StuSubModel.h"
+#import "AFHTTPRequestOperationManager.h"
 static OnlineJobHttp *onlineJobHttp = nil;
 
 @implementation OnlineJobHttp

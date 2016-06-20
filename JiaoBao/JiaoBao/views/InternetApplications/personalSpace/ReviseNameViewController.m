@@ -149,9 +149,14 @@
     NSString *flag = [dic objectForKey:@"code"];
     NSString *str = [dic objectForKey:@"str"];
     if ([flag intValue] ==0) {//修改成功
-        //发送修改昵称和姓名协议
+        [MBProgressHUD showText:str toView:self.view];
+        //修改记住的账号密码
         [[NSUserDefaults standardUserDefaults] setValue:self.mTextF_trueName.text forKey:@"PassWD"];
-        [utils popViewControllerAnimated:YES];
+        //延迟执行
+        dispatch_time_t delayTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5/*延迟执行时间*/ * NSEC_PER_SEC));
+        dispatch_after(delayTime, dispatch_get_main_queue(), ^{
+            [utils popViewControllerAnimated:YES];
+        });
     }else{//修改失败
         [MBProgressHUD showText:str toView:self.view];
     }
@@ -229,6 +234,9 @@
         NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         [[RegisterHttp getInstance] registerHttpChangePW:json iOS:@"true"];
     }
+    [self.mTextF_nickName resignFirstResponder];
+    [self.mTextF_trueName resignFirstResponder];
+    [MBProgressHUD showMessage:@"" toView:self.view];
 }
 
 //整形判断

@@ -10,6 +10,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "AFNetworking.h"
 #import "Reachability.h"
+#import "AFHTTPRequestOperation.h"
 
 
 @interface NSString (VlorNetWorkAPI)
