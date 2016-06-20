@@ -14,6 +14,7 @@
 
 @implementation HomeClassWorkView
 @synthesize mViewTop,mScrollV_all;
+//添加附件或删除附件 刷新界面的通知
 -(void)refreshWorkView:(id)sender
 {
     //[MBProgressHUD hideHUDForView:self];
@@ -37,6 +38,7 @@
         self.mViewTop.mTextV_input.text = @"";
         [self.mViewTop.mArr_accessory removeAllObjects];
         [self.mViewTop addAccessoryPhoto];
+        //班级通知清空数据
         if([dm getInstance].notificationSymbol == 100)
         {
             NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.datasource;
@@ -50,6 +52,7 @@
             
             
         }
+        //个性表现清空数据
         if([dm getInstance].notificationSymbol == 101)
         {
             NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].characterView.datasource;
@@ -86,6 +89,7 @@
             [[HomeClassRootScrollView shareInstance].characterView.mCollectionV_list reloadData];
             
         }
+        //校园通知清空数据
         if([dm getInstance].notificationSymbol == 102)
         {
             
@@ -93,6 +97,7 @@
             
             
         }
+        //多校家长清空数据
         if([dm getInstance].notificationSymbol == 103)
         {
             NSArray *arr = [HomeClassRootScrollView shareInstance].patriarchView.datasource;
@@ -117,6 +122,7 @@
                 
             }
         }
+        //刷新界面
         [self setFrame];
     }else{
         [MBProgressHUD showError:@"发送失败" toView:self];
