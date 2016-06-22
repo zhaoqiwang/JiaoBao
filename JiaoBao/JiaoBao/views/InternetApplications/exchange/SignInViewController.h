@@ -1,7 +1,7 @@
 //
 //  SignInViewController.h
 //  JiaoBao
-//
+//  日程记录
 //  Created by songyanming on 15/3/5.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //
