@@ -45,6 +45,8 @@
 //检查当前网络是否可用
 #define CheckNetWorkSelf if([Reachability isEnableNetwork]==NO){[MBProgressHUD showError:NETWORKENABLE toView:self];return;}
 #define CheckNetWorkSelfView if([Reachability isEnableNetwork]==NO){[MBProgressHUD showError:NETWORKENABLE toView:self.view];return;}
+//设置颜色
+#define color(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
 
 @interface define_constant : NSObject
 

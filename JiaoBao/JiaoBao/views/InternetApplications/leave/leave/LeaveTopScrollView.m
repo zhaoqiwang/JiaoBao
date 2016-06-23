@@ -53,7 +53,7 @@
         LeaveViewCell *btn = (LeaveViewCell *)gest.view;
         for (LeaveViewCell *btn1 in self.subviews) {
             if ([btn1.class isSubclassOfClass:[LeaveViewCell class]]) {
-                if ((int)btn1.tag == btn.tag) {
+                if ((int)btn1.tag == btn.tag) {//
                     btn1.mLab_title.textColor = [UIColor colorWithRed:54/255.0 green:168/255.0 blue:12/255.0 alpha:1];
                     btn1.mLab_line.hidden = NO;
                 }else{
