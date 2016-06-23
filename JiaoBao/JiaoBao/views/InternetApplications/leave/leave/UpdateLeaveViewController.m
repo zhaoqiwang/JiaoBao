@@ -373,7 +373,12 @@
         ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
         chooseStu.delegate = self;
         chooseStu.mInt_flag = 1;
-        chooseStu.mInt_flagID = 2;
+//        chooseStu.mInt_flagID = 2;
+        if (self.mInt_flag==0) {//班主任、家长代请0
+            chooseStu.mInt_flagID = 0;
+        }else {//老师代请
+            chooseStu.mInt_flagID = 2;
+        }
         chooseStu.mStr_navName = @"选择理由";
         [utils pushViewController:chooseStu animated:YES];
     }else if (model.mInt_flag == 2){//理由填写
