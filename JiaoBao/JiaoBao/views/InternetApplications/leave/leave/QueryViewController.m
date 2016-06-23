@@ -24,13 +24,11 @@
 
 
 @interface QueryViewController ()<ChooseStudentViewCDelegate>
-@property(nonatomic,strong)NSMutableArray *dataSource;
-@property(nonatomic,strong)NSMutableArray *myDataSource;
-@property(nonatomic,strong)NSMutableArray *stuDataSource;
-@property(nonatomic,strong)leaveRecordModel *recordModel;
-@property(nonatomic,strong)NSDate *currentDate;
-@property(nonatomic,assign)int mInt_reloadData;
-@property(nonatomic,strong)CustomDatePicker *customPicker;
+@property(nonatomic,strong)NSMutableArray *dataSource;//列表数据
+@property(nonatomic,strong)leaveRecordModel *recordModel;//获得我提出申请的请假记录model
+@property(nonatomic,strong)NSDate *currentDate;//当前日期
+@property(nonatomic,assign)int mInt_reloadData;//0：下拉刷新 1：下拉加载更多 2：替换一条数据 3：添加一条数据
+@property(nonatomic,strong)CustomDatePicker *customPicker;//自定义日期控件
 
 
 @end
@@ -56,16 +54,16 @@
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
     NSString *manType = [dic objectForKey:@"manType"];
-    BOOL notiFlag = NO;//区别通知（个人查询和班级查询都用到此通知）
-    if((self.mInt_flag==2&&[manType isEqualToString:@"1"])){
+    BOOL notiFlag = NO;//区别通知（个人查询和班级查询都用到此通知 此回调走4次）
+    if((self.mInt_flag==2&&[manType isEqualToString:@"1"])){//个人查询
         notiFlag = YES;
     }
-    if((self.mInt_flag==3&&[manType isEqualToString:@"0"])){
+    if((self.mInt_flag==3&&[manType isEqualToString:@"0"])){//班级查询
         notiFlag = YES;
     }
     if([ResultCode integerValue]==0&&notiFlag == YES){
         NSArray *arr = [dic objectForKey:@"data"];
-        if(self.mInt_reloadData==0){
+        if(self.mInt_reloadData==0){//上拉刷新
             self.dataSource = [NSMutableArray arrayWithArray:arr];
             if(self.dataSource.count == 0){
                 [MBProgressHUD showError:@"暂无内容" toView:self.view];
@@ -75,7 +73,7 @@
             [self.tableView footerEndRefreshing];
             [self.tableView reloadData];
             
-        }else if(self.mInt_reloadData == 1){
+        }else if(self.mInt_reloadData == 1){//下拉加载更多
             if(arr.count==0){
                 [MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             }
@@ -90,7 +88,7 @@
             self.mInt_reloadData=0;
 
         }
-        else if(self.mInt_reloadData==3){
+        else if(self.mInt_reloadData==3){//添加一条数据
             if(arr.count==0){
                 //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
             }
@@ -100,7 +98,7 @@
 
             }
             self.mInt_reloadData=0;
-        }else{
+        }else{//替换一条数据
             {
                 if(arr.count==0){
                     //[MBProgressHUD showSuccess:@"没有更多了" toView:self.view];
@@ -148,9 +146,12 @@
     
     //自定义日期控件
     self.customPicker = [[CustomDatePicker alloc]init];
+    
+    //设置老师或家长的tableHeaderView
     if(self.mInt_leaveID ==1||self.mInt_leaveID ==2||self.mInt_leaveID ==0){//区分身份，门卫0，班主任1，普通老师2
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.teaHeadView.frame));
         [headView addSubview:self.teaHeadView];
+        
         self.teaDateTF.inputAccessoryView = self.toolBar;
         self.teaDateTF.inputView = self.customPicker;
         self.dateTf = self.teaDateTF;
@@ -159,6 +160,7 @@
     }else if (self.mInt_leaveID == 3){//家长3
         headView.frame = CGRectMake(0, 0, [dm getInstance].width, CGRectGetHeight(self.ParentsHeadView.frame));
         [headView addSubview:self.ParentsHeadView];
+        
         self.dateTF.inputAccessoryView = self.toolBar;
         self.dateTF.inputView = self.customPicker;
         self.dateTf = self.dateTF;
@@ -326,7 +328,7 @@
 
 
 
-
+//选择学生
 - (IBAction)Stu_SelectionAction:(id)sender {
     [self.view endEditing:YES];
     ChooseStudentViewController *chooseStu = [[ChooseStudentViewController alloc] init];
@@ -338,16 +340,18 @@
 
 
 }
+//选择日期
 - (IBAction)datePickAction:(id)sender {
     [self.dateTf becomeFirstResponder];
 
 
 }
+//取消
 - (IBAction)cancelToolAction:(id)sender {
     [self.dateTf resignFirstResponder];
 
 }
-
+//确定
 - (IBAction)doneToolAction:(id)sender {
     [self.dateTf resignFirstResponder];
 
@@ -359,6 +363,7 @@
 
     
 }
+//选择学生回调
 - (void) ChooseStudentViewCSelect:(id) student flag:(int)flag flagID:(int)flagID{
 
     self.mModel_student = student;
@@ -366,11 +371,12 @@
     [self sendRequest];
     
 }
+//点击确定后，返回              表格数组中的索引    0撤回，1修改，2老师审核，3门卫审核
 - (void) LeaveDetailViewCDeleteLeave:(int)index action:(int)action{
     //获得我提出申请的请假记录
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetMyLeaves" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetMyLeaves:) name:@"GetMyLeaves" object:nil];
-    if(action == 0){
+    if(action == 0){//撤回
         NSIndexPath *indexP = [NSIndexPath indexPathForRow:index inSection:0];
         NSArray *indexP_arr = [NSArray arrayWithObject:indexP];
         [self.dataSource removeObjectAtIndex:index];
@@ -380,17 +386,17 @@
         self.mInt_reloadData = 3;
         [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
     }
-    else if (action == 1){
+    else if (action == 1){//修改
         self.recordModel.numPerPage = @"1";
         self.recordModel.pageNum = [NSString stringWithFormat:@"%lu",(unsigned long)(index+1)];
         self.mInt_reloadData = 4;
         [[LeaveHttp getInstance]GetMyLeaves:self.recordModel];
         
     }
-    else if (action == 2){
+    else if (action == 2){//老师审核
         
     }
-    else{
+    else{//门卫审核
         
     }
     

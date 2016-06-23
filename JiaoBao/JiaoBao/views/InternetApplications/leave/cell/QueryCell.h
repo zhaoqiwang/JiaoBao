@@ -10,10 +10,10 @@
 #import "MyLeaveModel.h"
 
 @interface QueryCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *reasonLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stateLabel;
--(void)setCellData:(MyLeaveModel*)model;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;//时间
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;//学生、教职工或人员
+@property (weak, nonatomic) IBOutlet UILabel *reasonLabel;//理由
+@property (weak, nonatomic) IBOutlet UILabel *stateLabel;//状态
+-(void)setCellData:(MyLeaveModel*)model;//设置cell上的数据
 
 @end

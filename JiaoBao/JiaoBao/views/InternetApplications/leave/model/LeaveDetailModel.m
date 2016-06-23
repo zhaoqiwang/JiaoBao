@@ -98,7 +98,7 @@
 }
 @end
 @implementation TimeListModel
--(void)dicToModel:(NSDictionary*)dic{
+-(void)dicToModel:(NSDictionary*)dic{//门卫
     NSNumberFormatter* numberFormatter = [[NSNumberFormatter alloc] init];
     NSString *str = [utils getLocalTimeDate];
     

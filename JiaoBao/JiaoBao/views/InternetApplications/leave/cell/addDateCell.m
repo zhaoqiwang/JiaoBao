@@ -11,11 +11,14 @@
 @implementation addDateCell
 
 - (void)awakeFromNib {
+    //设置cell的圆角
     self.layer.cornerRadius = 0.6;
     self.layer.masksToBounds = YES;
+    
     self.mLab_startNow.layer.borderWidth=0.6;
     self.mLab_startNow.layer.cornerRadius=6;
     self.mLab_startNow.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     self.mLab_endNow.layer.borderWidth=0.6;
     self.mLab_endNow.layer.cornerRadius=6;
     self.mLab_endNow.layer.borderColor = [UIColor lightGrayColor].CGColor;

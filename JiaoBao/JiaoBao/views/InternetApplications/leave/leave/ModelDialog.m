@@ -16,11 +16,13 @@
     //self.selectedTF.delegate = self;
     self.startDateTF.delegate = self;
     self.endDateTF.delegate = self;
-    
+    //设置输入框的inputview为日期选择控件
     self.startDateTF.inputView = self.datePicker;
     self.endDateTF.inputView = self.datePicker;
+    //设置输入框的inputAccessoryView为工具条
     self.startDateTF.inputAccessoryView = self.toolBar;
     self.endDateTF.inputAccessoryView = self.toolBar;
+    
     self.model = [[LeaveNowModel alloc]init];
 }
 
@@ -35,20 +37,20 @@
 
 }
 //日期初始化
-
 -(void )setUp{
-    if(self.flag==0){//0是修改 1是添加
+    if(self.flag==0){//0是修改
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
         self.endDateTF.text =[NSString stringWithFormat:@"结束时间:%@",self.model.mStr_endTime];
         
     }
-    else{
-        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:60*60*24];
+    else{//1是添加
+        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:60*60*24];//明天
         //NSDate *endDate = [date initWithTimeIntervalSinceNow:60*60];
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd"];
         self.model.mStr_startTime = [NSString stringWithFormat:@"%@ 08:30",[formatter stringFromDate:date]];
         self.model.mStr_endTime = [NSString stringWithFormat:@"%@ 17:30",[formatter stringFromDate:date]];
+        
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",self.model.mStr_startTime];
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",self.model.mStr_endTime];
         
@@ -67,8 +69,8 @@
     NSDate *nowDate = [NSDate date];
     NSArray *startArr = [self.startDateTF.text componentsSeparatedByString:@"间:"];
     NSArray *endArr = [self.endDateTF.text componentsSeparatedByString:@"间:"];
-    NSString *startStr;
-    NSString *endStr;
+    NSString *startStr;//开始时间
+    NSString *endStr;//结束时间
     if(startArr.count>1){
         startStr = [startArr objectAtIndex:1];
         
@@ -89,20 +91,22 @@
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit ;
+    //比较开始时间和当前时间
     NSDateComponents *cps2 = [chineseClendar components:unitFlags fromDate:startDate  toDate:nowDate  options:0];
-    NSInteger diffday2    = [cps2 day];
+    NSInteger diffday2    = [cps2 day];//获取时差（天）
     if(diffday2>30){
         [MBProgressHUD showError:@"开始时间不能小于当前时间30天"];
         return;
     }
-
+//比较结束时间和当前时间
     NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:nowDate  toDate:endDate  options:0];
-    NSInteger diffday    = [cps day];
+    NSInteger diffday    = [cps day];//获取时差（天）
 
     if(diffday>30){
         [MBProgressHUD showError:@"结束时间不能大于当前时间30天"];
         return;
     }
+    //比较开始时间和结束时间
     NSComparisonResult result = [endDate compare:startDate];
     if(result==NSOrderedAscending){
         [MBProgressHUD showError:@"结束时间不能小于开始时间"];
@@ -111,6 +115,7 @@
         [MBProgressHUD showError:@"结束时间不能等于开始时间"];
         return;
     }
+    //修改添加请假时间的model
     self.model.mInt_flag = 3;
     self.model.mStr_startTime = startStr;
     self.model.mStr_endTime = endStr;
@@ -118,6 +123,7 @@
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveNowModel:flag:row:)]) {
         [self.delegate LeaveNowModel:self.model flag:self.flag row:self.row];
     }
+    //移除弹出框
     [[self.window viewWithTag:9999]removeFromSuperview];
     
 }
@@ -137,11 +143,12 @@
 
     [self.startDateTF resignFirstResponder];
     [self.endDateTF resignFirstResponder];
-    if([self.selectedTF isEqual:self.startDateTF]){
+    
+    if([self.selectedTF isEqual:self.startDateTF]){//开始时间textField
         self.startDateTF.text = [NSString stringWithFormat:@"开始时间:%@",[formatter stringFromDate:self.datePicker.date]];
         self.model.mStr_startTime = [formatter stringFromDate:self.datePicker.date];
 
-    }else{
+    }else{//结束时间textField
         self.endDateTF.text = [NSString stringWithFormat:@"结束时间:%@",[formatter stringFromDate:self.datePicker.date]];
         self.model.mStr_endTime = [formatter stringFromDate:self.datePicker.date];
     }
@@ -153,12 +160,13 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm"];
     NSDate *startDate = [formatter dateFromString:self.model.mStr_startTime ];
     NSDate *endDate = [formatter dateFromString:self.model.mStr_endTime ];
+    //弹出日期选择控件是 显示输入框上选择的日期
     if([textField isEqual:self.startDateTF]){
         self.datePicker.date = startDate ;
     }else{
         self.datePicker.date = endDate ;
     }
-    [UIMenuController sharedMenuController].menuVisible = NO;
+    //[UIMenuController sharedMenuController].menuVisible = NO;
     
 
 }
