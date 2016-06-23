@@ -112,6 +112,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //批注输入框内容变化的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     //审核假条通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"CheckLeaveModel" object:nil];

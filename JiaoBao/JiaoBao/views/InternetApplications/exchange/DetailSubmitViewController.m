@@ -13,6 +13,8 @@
 #import "MobClick.h"
 #import "SelectionCell.h"
 #import "LoginSendHttp.h"
+#import "IQKeyboardManager.h"
+
 
 
 @interface DetailSubmitViewController ()
@@ -41,9 +43,17 @@
     [MobClick endLogPageView:UMPAGE];
 
 }
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = YES;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = YES;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = YES;//控制是否显示键盘上的工具条
     [dm getInstance].onlyGetInfo = [dm getInstance].userInfo.UserID;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUpLoadResult:) name:@"getUpLoadResult" object:nil];
     self.datePicker.backgroundColor = [UIColor whiteColor];
@@ -223,26 +233,26 @@
     
 }
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
-{
-    if([textView isEqual:self.textView2])
-    {
-        //self.mainView.frame.origin.y+self.textView2.frame.origin.y
-        self.mainView.frame = CGRectMake(0,self.mainView.frame.origin.y-90, self.mainView.frame.size.width, self.mainView.frame.size.height);
-    }
-    return YES;
-}
-
--(BOOL)textViewShouldEndEditing:(UITextView *)textView
-{
-    if([textView isEqual:self.textView2])
-    {
-        self.mainView.frame = CGRectMake(0,51 , self.mainView.frame.size.width, self.mainView.frame.size.height);
-    }
-    [self.view endEditing:YES];
-    return YES;
-    
-}
+//- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+//{
+//    if([textView isEqual:self.textView2])
+//    {
+//        //self.mainView.frame.origin.y+self.textView2.frame.origin.y
+//        self.mainView.frame = CGRectMake(0,self.mainView.frame.origin.y-90, self.mainView.frame.size.width, self.mainView.frame.size.height);
+//    }
+//    return YES;
+//}
+//
+//-(BOOL)textViewShouldEndEditing:(UITextView *)textView
+//{
+//    if([textView isEqual:self.textView2])
+//    {
+//        self.mainView.frame = CGRectMake(0,51 , self.mainView.frame.size.width, self.mainView.frame.size.height);
+//    }
+//    [self.view endEditing:YES];
+//    return YES;
+//    
+//}
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
@@ -308,6 +318,13 @@
 
 
 -(void)myNavigationGoback{
+    [dm getInstance].addQuestionNoti = NO;
+    //输入框弹出键盘问题
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = NO;//控制整个功能是否启用
+    manager.shouldResignOnTouchOutside = NO;//控制点击背景是否收起键盘
+    manager.shouldToolbarUsesTextFieldTintColor = NO;//控制键盘上的工具条文字颜色是否用户自定义
+    manager.enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     [utils popViewControllerAnimated:YES];
 }
 

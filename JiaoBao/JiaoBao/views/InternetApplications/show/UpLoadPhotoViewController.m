@@ -16,6 +16,8 @@
 #import "Reachability.h"
 #import "MobClick.h"
 #import "PhotoCollectionCell.h"
+#import <AVFoundation/AVFoundation.h>
+
 
 @interface UpLoadPhotoViewController ()
 {
@@ -233,6 +235,11 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex == 0)
     {
+        ALAuthorizationStatus author = [ALAssetsLibrary authorizationStatus];
+        if(author == ALAuthorizationStatusRestricted || author ==ALAuthorizationStatusDenied){
+            [MBProgressHUD showError:@"您暂时没有访问相册的权限" toView:self.view];
+            return;
+        }
         ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
         
         elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至10
@@ -248,6 +255,12 @@
     }
     else if(buttonIndex == 1)
     {
+        NSString *mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        if(authStatus == ALAuthorizationStatusRestricted || authStatus == ALAuthorizationStatusDenied){
+            [MBProgressHUD showError:@"请开启摄像头功能" toView:self.view];
+            return;
+        }
         [self getMediaFromSource:UIImagePickerControllerSourceTypeCamera];
     }
 
