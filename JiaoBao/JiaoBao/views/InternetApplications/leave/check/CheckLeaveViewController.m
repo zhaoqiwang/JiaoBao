@@ -28,13 +28,13 @@
 @property(nonatomic,strong)leaveRecordModel *recordModel3;//http请求model（统计查询）
 @property(nonatomic,strong)leaveRecordModel *recordModel4;//http请求model（门卫审核）
 @property(nonatomic,strong)leaveRecordModel *recordModel;//http请求model（当前http请求model）
-@property(nonatomic,assign)int refreshFlag;
+@property(nonatomic,assign)int refreshFlag;//刷新界面标志 1：刷新 0：不刷新
 
 
 
 @property(nonatomic,assign)BOOL cellFlag;//0：有学生cell 1：没有学生cell
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
-@property(nonatomic,strong)NSMutableArray *conditionArr;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;//筛选条件与顶部的距离
+@property(nonatomic,strong)NSMutableArray *conditionArr;//条件内容数组
 @end
 
 @implementation CheckLeaveViewController
@@ -42,11 +42,13 @@
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
+    //只有门卫审核时
     if(self.mInt_flag==4){
         self.topConstraint.constant =CGRectGetMaxY(self.mNav_navgationBar.frame);
         self.conditionLayoutHeight.constant = 0;
         self.height.constant = 0;
     }
+    //门卫审核界面
     else if(self.mInt_flag==3)
     {
         self.topConstraint.constant =CGRectGetMaxY(self.mNav_navgationBar.frame)+48;
@@ -54,6 +56,7 @@
         self.height.constant = 0;
         
     }
+    //其他界面
     else
     {
         self.topConstraint.constant = 112;

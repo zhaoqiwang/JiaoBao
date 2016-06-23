@@ -370,25 +370,28 @@
     if ([flag integerValue]==0) {
         NSArray *arr = [dic objectForKey:@"array"];
         self.thirdArr = arr;
-        for(int i=0;i<arr.count;i++)
-        {
-            SMSTreeArrayModel *model =[arr objectAtIndex:i];
-            if(model.smsTree.count == 0)
+        if([dm getInstance].notificationSymbol!=1&&[dm getInstance].notificationSymbol!=3){
+            for(int i=0;i<arr.count;i++)
             {
-                self.symbol = YES;
+                SMSTreeArrayModel *model =[arr objectAtIndex:i];
+                if(model.smsTree.count == 0)
+                {
+                    self.symbol = YES;
+                }
+            }
+            if(self.symbol == YES)
+            {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
+                [dm getInstance].secondFlag =@"无权限";
+                
+            }
+            else
+            {
+                [dm getInstance].secondFlag = @"0";
+                
             }
         }
-        if(self.symbol == YES)
-        {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无权限"];
-            [dm getInstance].secondFlag =@"无权限";
-            
-        }
-        else
-        {
-            [dm getInstance].secondFlag = @"0";
-            
-        }
+
         if([dm getInstance].notificationSymbol == 102)
         {
             [[NSNotificationCenter defaultCenter]postNotificationName:@"seleForuth" object:arr];
