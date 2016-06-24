@@ -295,13 +295,13 @@
 -(void)timerAction{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];
-    NSDate *serverDate = [dateFormatter  dateFromString:self.serverDate];
+    NSDate *startDate = [dateFormatter dateFromString:self.stuHomeWorkModel.HWStartTime];//开始时间
+    NSDate *serverDate = [dateFormatter  dateFromString:self.serverDate];//服务器时间
 
     NSCalendar* chineseClendar = [ [ NSCalendar alloc ] initWithCalendarIdentifier:NSGregorianCalendar ];
     NSUInteger unitFlags =
     NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
-    if(self.isOverTime ==NO){
+    if(self.isOverTime ==NO){//没有超时
         NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:serverDate  toDate:startDate  options:0];
         NSInteger diffMin    = [cps minute];
         NSInteger diffSec   = [cps second];
@@ -323,7 +323,7 @@
         self.serverDate = [dateFormatter stringFromDate:[ NSDate dateWithTimeInterval:1 sinceDate:serverDate]];
         
     }
-    else{
+    else{//超时
         NSDateComponents *cps = [chineseClendar components:unitFlags fromDate:startDate  toDate:serverDate  options:0];
         NSInteger diffDay = [cps day];
         NSInteger diffHour = [cps hour];
@@ -359,6 +359,7 @@
     [self.timer invalidate];
     self.timer = nil;
 }
+//获取服务器时间
 -(void)GetSQLDateTime:(id)sender{
     NSString *serverDate = [sender object];
     self.serverDate = serverDate;
@@ -475,10 +476,10 @@
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     CheckNetWorkSelfView
-    if([self.FlagStr intValue]==1){
+    if([self.FlagStr intValue]==1){//学生界面
         [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID isStu:@"true"];
     }
-    else{
+    else{//家长界面
         [[OnlineJobHttp getInstance] GetStuHWWithHwInfoId:self.TabID isStu:@"false"];
     }
     
@@ -492,7 +493,7 @@
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if([self.stuHWQsModel.QsT isEqualToString:@"1"])
+    if([self.stuHWQsModel.QsT isEqualToString:@"1"])//选择题
     {
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
         NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
@@ -561,14 +562,14 @@
         
     }
     }
-    else if ([self.stuHWQsModel.QsT isEqualToString:@"2"])
+    else if ([self.stuHWQsModel.QsT isEqualToString:@"2"])//填空题
     {
         NSArray *textArr;
         NSLog(@"dfrnflre;gm;r = %@",self.stuHWQsModel.QsAns);
-        if([self.stuHWQsModel.QsAns isEqual:[NSNull null]])
+        if([self.stuHWQsModel.QsAns isEqual:[NSNull null]])//答案为空
         {
             NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
-            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];//输入框数量
             for(int i=0;i<inputCount;i++)
             {
                 NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
@@ -579,9 +580,9 @@
                 }
                 if([typeStr isEqualToString:@"text"])
                 {
-                    if([self.FlagStr isEqualToString:@"1"])
+                    if([self.FlagStr isEqualToString:@"1"])//学生界面
                     {
-                        if(self.isSubmit == YES)
+                        if(self.isSubmit == YES)//已提交
                         {
                             NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -592,7 +593,7 @@
                             
                         }
                     }
-                    else
+                    else//家长界面
                     {
                             NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -600,7 +601,7 @@
                 }
             }
         }
-        else
+        else//答案不为空
         {
             textArr = [self.stuHWQsModel.QsAns componentsSeparatedByString:@"," ];
             NSLog(@"textArr_num = %@",[textArr objectAtIndex:textArr.count-1]);
@@ -616,7 +617,7 @@
                 {
                     continue;
                 }
-                if([typeStr isEqualToString:@"text"])
+                if([typeStr isEqualToString:@"text"])//输入框类型
                 {
                     if(i==0){
                         isText = YES;
@@ -639,9 +640,9 @@
                     }
                     
                     NSLog(@"checkStr = %@",checkStr);
-                    if([self.FlagStr isEqualToString:@"1"])
+                    if([self.FlagStr isEqualToString:@"1"])//学生界面
                     {
-                        if(self.isSubmit == YES)
+                        if(self.isSubmit == YES)//已提交
                         {
                             NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -649,15 +650,15 @@
                             
                         }
                         
-                        else
+                        else//未提交
                         {
                             [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
                             
                         }
                     }
-                    else
+                    else//家长界面
                     {
-                        if(self.isSubmit == YES)
+                        if(self.isSubmit == YES)//已提交
                         {
                             NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -665,7 +666,7 @@
                             
                         }
                         
-                        else
+                        else//未提交
                         {
                             NSString *disabled = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].disabled = true",i];
                             [self.webView stringByEvaluatingJavaScriptFromString:disabled];
@@ -682,14 +683,14 @@
         
     }
     //倒计时
-    if(self.isSubmit == NO){
+    if(self.isSubmit == NO){//未完成
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSDate *currentDate = [NSDate date];
         NSTimeZone *zone = [NSTimeZone systemTimeZone];
         NSInteger interval = [zone secondsFromGMTForDate: currentDate];
         NSDate *localeCurrentDate = [currentDate  dateByAddingTimeInterval: interval];
-        if([self.FlagStr isEqualToString:@"1"]){
+        if([self.FlagStr isEqualToString:@"1"]){//学生界面
             if([self.navBarName isEqualToString:@"做练习"]||[self.navBarName isEqualToString:@"练习详情"]){
                 
             }else{
@@ -713,7 +714,7 @@
                 }
             }
 
-        }else{
+        }else{//家长界面
             self.clockLabel.hidden = YES;
             self.countdownLabel.hidden = YES;
         }
@@ -727,7 +728,7 @@
     }
 
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-
+//点击继续做作业跳转界面
     JSContext *content = [self.webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     __weak DetailHWViewController *weakSelf = self;
 
@@ -766,39 +767,39 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     DetialHWCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailHWCell" forIndexPath:indexPath];
     cell.numLabel.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
-    if([self.FlagStr integerValue]==1){
-        if(self.isSubmit == 0&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]!=0)
+    if([self.FlagStr integerValue]==1){//学生
+        if(self.isSubmit == 0&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]!=0)//已做的题目
         {
             cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
             
         }
-        else if (self.isSubmit == 0&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]== 0)
+        else if (self.isSubmit == 0&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]== 0)//没做的题目
         {
              cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
         
-        else if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
+        else if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)//错误题目
         {
             cell.numLabel.textColor = [UIColor blackColor];
             cell.numLabel.backgroundColor = [UIColor redColor];
         }
         
-        else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)
+        else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)//没做的题目
         {
             //cell.numLabel.textColor = [UIColor redColor];
             //cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
             cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
 
         }
-        else
+        else//其他
         {
           cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
         }
         }
     
-    else
+    else//家长
     {
-        if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)
+        if(self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==2)//错误题目
         {
            cell.numLabel.textColor = [UIColor blackColor];
           cell.numLabel.backgroundColor = [UIColor redColor];
@@ -806,7 +807,7 @@
            //cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
         }
         
-        else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)
+        else if (self.isSubmit == 1&&[[self.errQuestionArr objectAtIndex:indexPath.row]integerValue]==0)//没做的题目
         {
              cell.numLabel.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
             //cell.numLabel.backgroundColor = [UIColor colorWithRed:164/255.0 green:234/255.0 blue:183/255.0 alpha:1];
@@ -845,7 +846,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CheckNetWorkSelfView;
-    if(indexPath.row == 0)
+    if(indexPath.row == 0)//第一道题
     {
         self.previousBtn.enabled = NO;
     }
@@ -858,45 +859,45 @@
 //        self.previousBtn.enabled = NO;
 //        self.nextBtn.enabled = NO;
 //    }
-    if(indexPath.row+1 == [self.stuHomeWorkModel.Qsc integerValue])
+    if(indexPath.row+1 == [self.stuHomeWorkModel.Qsc integerValue])//最后一道题
     {
-        if(self.isSubmit == YES)
+        if(self.isSubmit == YES)//已提交
         {
             [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
             self.nextBtn.enabled = NO;
 
         }
-        else
+        else//未提交
         {
-            if([self.FlagStr isEqualToString:@"1"]){
+            if([self.FlagStr isEqualToString:@"1"]){//学生界面
                 [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
                 self.nextBtn.enabled = YES;
    
             }
-            else{
+            else{//老师界面
                 [self.nextBtn setTitle:@"提交" forState:UIControlStateNormal];
                 self.nextBtn.enabled = NO;
             }
         }
         
     }
-    else
+    else//小于最后一题
     {
         [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
         self.nextBtn.enabled = YES;
     }
-    if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
+    if(self.datasource.count>self.selectedBtnTag)//小于最后一题
     {
-        if([self.stuHWQsModel.QsT isEqualToString:@"1"])
+        if([self.stuHWQsModel.QsT isEqualToString:@"1"])//选择题
         {
             BOOL isFinish = false;
             NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
-            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];//选项数量
             for(int i=0;i<inputCount;i++)
             {
                 NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
                 NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
-                if(![typeStr isEqualToString:@"radio"])
+                if(![typeStr isEqualToString:@"radio"])//非radio类型
                 {
                     continue;
                 }
@@ -905,12 +906,12 @@
                 //            NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByName('TopicRadio')[%d].checked",i];
                 NSString *isChecked = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
                 NSLog(@"isChecked = %@",isChecked);
-                if([isChecked isEqualToString:@"true"])
+                if([isChecked isEqualToString:@"true"])//已经选择
                 {
 
                     NSString *value = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
                     NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
-                    if(self.isSubmit == NO)
+                    if(self.isSubmit == NO)//未完成
                     {
                         if(self.datasource.count-1==self.selectedBtnTag)
                         {
@@ -918,7 +919,7 @@
                         }
                         else
                         {
-                            
+                            //提交题目
                             [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                             [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
                             //[self.collectionView reloadData];
@@ -935,11 +936,11 @@
 
             
         }
-        else
+        else//填空题
         {
             BOOL isFinish = false;
             NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
-            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+            NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];//输入框数量
             NSString *answer = @"";
             for(int i=0;i<inputCount;i++)
             {
@@ -949,11 +950,12 @@
                 value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"’"];
                 NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
                 NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
-                if(![typeStr isEqualToString:@"text"])
+                if(![typeStr isEqualToString:@"text"])//非输入框类型
                 {
                     continue;
                 }
                 NSString *content;
+                //答案以逗号隔开
                 if(i == inputCount-1)
                 {
                     content = [value stringByAppendingString:@""];
@@ -1062,13 +1064,14 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+//点击上一题
 - (IBAction)previousBtnAction:(id)sender {
+    //检查当前网络是否可用
     CheckNetWorkSelfView;
     [self.nextBtn setTitle:@"下一题" forState:UIControlStateNormal];
     self.nextBtn.enabled = YES;
     UIButton *btn = (UIButton*)sender;
-    if(self.selectedBtnTag == 0)
+    if(self.selectedBtnTag == 0)//如果是第一道题
     {
         btn.enabled = NO;
     }
@@ -1076,37 +1079,40 @@
     {
         btn.enabled = YES;
         self.selectedBtnTag--;
-        if(self.selectedBtnTag == 0)
+        if(self.selectedBtnTag == 0)//如果是第一道题
         {
             btn.enabled = NO;
         }
         NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
-        [self changeQuestionRange:(int)index.row];
+        [self changeQuestionRange:(int)index.row];//改变到指定题目范围
 
         [MBProgressHUD showMessage:@"" toView:self.view];
         [self.collectionView reloadData];
+        //滚动collectionview到选择的题目范围
         [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop ];
-                [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
+        //请求题目内容数据
+        [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
 
     }
 
 }
-
+//点击下一题
 - (IBAction)nextBtnAction:(id)sender {
+    //检查当前网络是否可用
     CheckNetWorkSelfView;
     UIButton *btn = (UIButton*)sender;
     if(self.datasource.count>self.selectedBtnTag)//最后一题要做判断
     {
-    if([self.stuHWQsModel.QsT isEqualToString:@"1"])
+    if([self.stuHWQsModel.QsT isEqualToString:@"1"])//选择题
     {
         BOOL isFinish = false;
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
-        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];//有几个选项
         for(int i=0;i<inputCount;i++)
         {
             NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
             NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
-            if(![typeStr isEqualToString:@"radio"])
+            if(![typeStr isEqualToString:@"radio"])//不是选择（radio）类型
             {
                 continue;
             }
@@ -1114,7 +1120,7 @@
 //            NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByName('TopicRadio')[%d].checked",i];
             NSString *isChecked = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
             NSLog(@"isChecked = %@",isChecked);
-            if([isChecked isEqualToString:@"true"])
+            if([isChecked isEqualToString:@"true"])//已经选出答案
             {
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 [self.collectionView reloadData];
@@ -1123,40 +1129,41 @@
                 NSString *answer = [self.webView stringByEvaluatingJavaScriptFromString:value];
 //                [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])//最后一题之前的题目
                 {
-                    if (self.isSubmit == YES) {
+                    if (self.isSubmit == YES) {//已经提交
                         [btn setTitle:@"下一题" forState:UIControlStateNormal];
                         btn.enabled = NO;
-                    }else{
+                    }else{//未提交
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
 
                     }
 
-                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
-                    if (self.isSubmit == YES) {
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){//最后一题
+                    if (self.isSubmit == YES) {//已经提交
                         [btn setTitle:@"下一题" forState:UIControlStateNormal];
                         btn.enabled = NO;
-                    }else{
+                    }else{//未提交
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
                         
                     }
                     [self.collectionView reloadData];
                     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
-                else
+                else//大于最后一题
                 {
                     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
                 }
 
                 isFinish = YES;
-                if(self.datasource.count==self.selectedBtnTag-1)
+                if(self.datasource.count==self.selectedBtnTag-1)//最后一题
                 {
                     self.previousBtn.enabled = YES;
-                    if(self.isSubmit == NO)
+                    if(self.isSubmit == NO)//未提交
                     {
                         {
+                            //提交作业
                             [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                             [MBProgressHUD showMessage:@"" toView:self.view];
 
@@ -1166,13 +1173,15 @@
 
                 }
                 
-                else
+                else//不是最后一题
                 {
                 self.previousBtn.enabled = YES;
+                    //提交答案
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag-1] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
                 if(index.row<self.datasource.count)
                 {
+                    //获取下一题内容
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:index.row]];
                     [self changeQuestionRange:(int)index.row];
 
@@ -1185,24 +1194,26 @@
 
             
         }
-        if(isFinish == false)
+        if(isFinish == false)//题目没有完成
         {
-            if(self.isSubmit == NO){
-                if([self.FlagStr isEqualToString:@"1"]){
-                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue]){
+            if(self.isSubmit == NO){//未提交
+                if([self.FlagStr isEqualToString:@"1"]){//学生界面
+                    if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue]){//最后一题
                         [MBProgressHUD showError:@"题目没有完成，无法提交"];
 
-                    }else{
+                    }else{//不是最后一题
                         [MBProgressHUD showError:@"题目没有完成，无法进入下一题"];
  
                     }
 
 
-                }else{
+                }else{//家长界面
                     self.previousBtn.enabled = YES;
+                    //获取下一题内容
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                     NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                     self.selectedBtnTag++;
+                    //是下一题或者提交
                     if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                     {
                             [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -1225,11 +1236,13 @@
                 }
 
             }
-            else{
+            else{//已提交
                 self.previousBtn.enabled = YES;
+                //获取题目内容
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 self.selectedBtnTag++;
+                //是下一题或者提交
                 if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
                 {
                     if(self.isSubmit == NO){
@@ -1262,9 +1275,9 @@
 
 
         }
-        else
+        else//题目已经完成
         {
-            if(self.isSubmit == NO){
+            if(self.isSubmit == NO){//没有提交
 
             [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag-1 withObject:@"1"];
             }
@@ -1272,18 +1285,18 @@
         }
 
     }
-    else
+    else//填空题
     {
-        BOOL isFinish = false;
+        BOOL isFinish = false;//题目是否完成
         NSString *inputNum = [NSString stringWithFormat:@"document.getElementsByTagName('input').length"];
-        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];
+        NSUInteger inputCount = [[self.webView stringByEvaluatingJavaScriptFromString:inputNum]integerValue];//输入框数量
         NSString *answer = @"";
         for(int i=0;i<inputCount;i++)
         {
             NSString *checkStr = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].value",i];
             NSString *value = [self.webView stringByEvaluatingJavaScriptFromString:checkStr];
-            value = [value stringByReplacingOccurrencesOfString:@"," withString:@" "];
-            value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"’"];
+            value = [value stringByReplacingOccurrencesOfString:@"," withString:@" "];//替换逗号为空格
+            value = [value stringByReplacingOccurrencesOfString:@"'" withString:@"’"];//替换引号
             NSString *type = [NSString stringWithFormat:@"document.getElementsByTagName('input')[%d].type",i];
             NSString *typeStr = [self.webView stringByEvaluatingJavaScriptFromString:type];
             if(![typeStr isEqualToString:@"text"])
@@ -1298,11 +1311,11 @@
                 {
                     isFinish = YES;
                 }
-                if(i == inputCount-1)
+                if(i == inputCount-1)//最后一个输入框
                 {
                     content = [value stringByAppendingString:@""];
                 }
-                else
+                else//答案之间加逗号
                 {
                     content = [value stringByAppendingString:@","];
                     
@@ -1314,10 +1327,10 @@
             }
 
         }
-        if(isFinish == false)
+        if(isFinish == false)//未完成
         {
-            if(self.isSubmit == NO){
-                if([self.FlagStr isEqualToString:@"1"]){
+            if(self.isSubmit == NO){//未提交
+                if([self.FlagStr isEqualToString:@"1"]){//学生界面
                     if(self.selectedBtnTag+1>= [self.stuHomeWorkModel.Qsc integerValue]){
                         [MBProgressHUD showError:@"题目没有完成，无法提交"];
                         
@@ -1326,22 +1339,23 @@
                         
                     }
 
-                }else{
+                }else{//家长界面
                     self.previousBtn.enabled = YES;
                     [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                     NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                     self.selectedBtnTag++;
-                    if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
+                    //是否是最后一题
+                    if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])//大于最后一题
                     {
                             [btn setTitle:@"提交" forState:UIControlStateNormal];
                             btn.enabled = NO;
-                    }else if(self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                    }else if(self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){//最后一题
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
                         btn.enabled = NO;
                         [self.collectionView reloadData];
                         [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                     }
-                    else
+                    else//小于最后一题
                     {
                         [btn setTitle:@"下一题" forState:UIControlStateNormal];
                         btn.enabled = YES;
@@ -1351,12 +1365,13 @@
 
                 }
             }
-            else{
+            else{//已提交
                 self.previousBtn.enabled = YES;
+                //获取题目内容
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag+1 inSection:0];
                 self.selectedBtnTag++;
-                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])//大于最后一题
                 {
                     if(self.isSubmit == NO){
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -1365,8 +1380,8 @@
                     {
                         btn.enabled = NO;
                     }
-                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
-                    if(self.isSubmit == NO){
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){//最后一题
+                    if(self.isSubmit == NO){//未提交时
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
                     }
                     else
@@ -1376,7 +1391,7 @@
                     [self.collectionView reloadData];
                     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
-                else
+                else//小于最后一题
                 {
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
                     [self.collectionView reloadData];
@@ -1385,17 +1400,18 @@
 
             }
         }
-        else
-        {   if(self.isSubmit == NO){
+        else//已经完成
+        {   if(self.isSubmit == NO){//未提交
 
             [self.errQuestionArr replaceObjectAtIndex:self.selectedBtnTag withObject:@"1"];
         }
             self.previousBtn.enabled = YES;
 
-            if(self.datasource.count-1==self.selectedBtnTag)
+            if(self.datasource.count-1==self.selectedBtnTag)//最后一题
             {
-                if(self.isSubmit == NO){
+                if(self.isSubmit == NO){//未提交
                     {
+                        //提交作业
                         [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                         [MBProgressHUD showMessage:@"" toView:self.view];
                         [self.collectionView reloadData];
@@ -1405,20 +1421,22 @@
                 }
             }
             
-            else
+            else//小于最后一题
             {
-                if(self.isSubmit == NO){
+                if(self.isSubmit == NO){//未提交
                     {
 
                 [[OnlineJobHttp getInstance]StuSubQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag] Answer:answer];
                 [MBProgressHUD showMessage:@"" toView:self.view];
                     }
             }
+                //获取题目内容
                 [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:self.stuHomeWorkModel.hwinfoid QsId:[self.datasource objectAtIndex:self.selectedBtnTag+1]];
                 self.selectedBtnTag++;
+                //改变题目范围
                 [self changeQuestionRange:(int)self.selectedBtnTag];
 
-                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])
+                if(self.selectedBtnTag+1> [self.stuHomeWorkModel.Qsc integerValue])//大于最后一题
                 {
                     if(self.isSubmit == NO){
                     [btn setTitle:@"提交" forState:UIControlStateNormal];
@@ -1427,7 +1445,7 @@
                     {
                         btn.enabled = NO;
                     }
-                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){
+                }else if (self.selectedBtnTag+1== [self.stuHomeWorkModel.Qsc integerValue]){//最后一题
                     if(self.isSubmit == NO){
                         [btn setTitle:@"提交" forState:UIControlStateNormal];
                     }
@@ -1439,7 +1457,7 @@
                     [self.collectionView reloadData];
                     [self.collectionView selectItemAtIndexPath:index animated:YES scrollPosition:UICollectionViewScrollPositionTop];
                 }
-                else
+                else//小于最后一题
                 {
                     [btn setTitle:@"下一题" forState:UIControlStateNormal];
                     NSIndexPath *index = [NSIndexPath indexPathForItem:self.selectedBtnTag inSection:0];
@@ -1453,7 +1471,7 @@
  
     }
     }
-    if(self.datasource.count ==1)
+    if(self.datasource.count ==1)//只有一道题时
     {
         self.previousBtn.enabled = NO;
     }
@@ -1469,6 +1487,7 @@
 {
     
 }
+//点击题目数范围按钮
 - (IBAction)qNumQustion:(id)sender {
     CheckNetWorkSelfView;
     if(self.isOpen == YES)
@@ -1504,6 +1523,7 @@
      self.view.frame = CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
 
 }
+//改变题目范围
 -(void)changeQuestionRange:(int)num
 {
     int a = (int)(num)/20;
