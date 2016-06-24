@@ -1,10 +1,10 @@
 //
 //  ParserJson_OnlineJob.h
 //  JiaoBao
-//
+//  在线作业接口数据json解析
 //  Created by songyanming on 15/10/16.
 //  Copyright © 2015年 JSY. All rights reserved.
-//在线作业接口数据json解析
+//
 
 #import <Foundation/Foundation.h>
 #import "JSONKit.h"

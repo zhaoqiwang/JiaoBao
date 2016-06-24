@@ -92,16 +92,16 @@
     self.myQueryVC = [[QueryViewController alloc]init];
     [self addChildViewController:self.myQueryVC];
     [self.myQueryVC didMoveToParentViewController:self];
-    self.myQueryVC.cellFlag = YES;
-    self.myQueryVC.mInt_flag = 2;
-    self.myQueryVC.mInt_flagID = 1;
+    self.myQueryVC.cellFlag = YES;//1：有学生cell 0：没有学生cell
+    self.myQueryVC.mInt_flag = 2;//个人查询
+    self.myQueryVC.mInt_flagID = 1;;//区分是查询老师自己1，学生0
     self.myQueryVC.mInt_leaveID = self.mInt_leaveID;
 
     self.classQueryVC = [[QueryViewController alloc]init];
     [self addChildViewController:self.classQueryVC];
-    self.classQueryVC.cellFlag = NO;
-    self.classQueryVC.mInt_flag = 3;
-    self.classQueryVC.mInt_flagID = 0;
+    self.classQueryVC.cellFlag = NO;//1：有学生cell 0：没有学生cell
+    self.classQueryVC.mInt_flag = 3;//班级查询
+    self.classQueryVC.mInt_flagID = 0;;//区分是查询老师自己1，学生0
     self.classQueryVC.mInt_leaveID = self.mInt_leaveID;
 
     [self.classQueryVC didMoveToParentViewController:self];

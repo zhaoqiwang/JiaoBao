@@ -1,10 +1,10 @@
 //
 //  addDateCell.h
 //  JiaoBao
-//
+//  自定的添加日期cell
 //  Created by SongYanming on 16/3/9.
 //  Copyright © 2016年 JSY. All rights reserved.
-//自定的添加日期cell
+//
 
 #import <UIKit/UIKit.h>
 

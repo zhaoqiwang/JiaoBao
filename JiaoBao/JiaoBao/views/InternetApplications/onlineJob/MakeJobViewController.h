@@ -42,8 +42,8 @@
 @property (nonatomic,strong) TreeJob_node *sigleClassNode;//统一作业中，单独的难度node
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
-- (IBAction)cancelBtnAction:(id)sender;
-- (IBAction)doneBtnAction:(id)sender;
+- (IBAction)cancelBtnAction:(id)sender;//取消
+- (IBAction)doneBtnAction:(id)sender;//确定
 - (IBAction)publishJobAction:(id)sender;
 
 @end

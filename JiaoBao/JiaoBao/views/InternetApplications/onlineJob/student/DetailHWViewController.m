@@ -29,8 +29,8 @@
 @property(nonatomic,strong)TableViewWithBlock *mTableV_name;//显示题数范围
 @property(nonatomic,assign)BOOL isOpen;//是否展开
 @property(nonatomic,strong)NSTimer *timer;//计时器
-@property(nonatomic,strong)NSString* serverDate;
-@property(nonatomic,assign)BOOL isOverTime;
+@property(nonatomic,strong)NSString* serverDate;//服务器时间
+@property(nonatomic,assign)BOOL isOverTime;//是否超时
 @end
 
 @implementation DetailHWViewController

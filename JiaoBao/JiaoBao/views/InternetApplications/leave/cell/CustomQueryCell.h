@@ -1,10 +1,10 @@
 //
 //  CustomQueryCell.h
 //  JiaoBao
-//
+//  请假或查询没有学生或教职工的cell
 //  Created by SongYanming on 16/3/16.
 //  Copyright © 2016年 JSY. All rights reserved.
-//请假或查询没有学生或教职工的cell
+//
 
 #import <UIKit/UIKit.h>
 #import "MyLeaveModel.h"

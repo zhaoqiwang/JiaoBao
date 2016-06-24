@@ -1,7 +1,7 @@
 //
 //  NewLeaveModel.h
 //  JiaoBao
-//
+//  生成一条请假条记录 更新一条请假条记录 给一个假条新增加一个时间段 更新假条的一个时间段
 //  Created by SongYanming on 16/3/10.
 //  Copyright © 2016年 JSY. All rights reserved.
 //
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NewLeaveModel : NSObject
-//生成一条请假条记录
+//
 @property(nonatomic,strong)NSString *UnitId;//单位Id
 @property(nonatomic,strong)NSString *manId;//请假人的人员Id，学生ID或老师Id,非教宝号
 @property(nonatomic,strong)NSString *manName;//请假人姓名

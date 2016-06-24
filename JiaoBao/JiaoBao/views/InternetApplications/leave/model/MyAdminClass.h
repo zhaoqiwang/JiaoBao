@@ -1,7 +1,7 @@
 //
 //  MyAdminClass.h
 //  JiaoBao
-//
+//  作为班主任身份,取得我所管理的班级列表model
 //  Created by SongYanming on 16/3/14.
 //  Copyright © 2016年 JSY. All rights reserved.
 //
