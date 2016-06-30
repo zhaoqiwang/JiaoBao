@@ -1,7 +1,7 @@
 //
 //  AnswerByIdModel.h
 //  JiaoBao
-//
+//  答案列表model
 //  Created by songyanming on 15/8/6.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //

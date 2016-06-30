@@ -123,70 +123,7 @@
         lastButton.selected = NO;
         //赋值按钮ID
         mInt_userSelectedChannelID = sender.tag;
-        if(sender.tag == 100)
-        {
-            if([[dm getInstance].firstFlag isEqualToString: @"1"])
-            {
-                [MBProgressHUD showError:@"没有权限" toView:nil];
-            }
-            
-            [dm getInstance].notificationSymbol = 1;
 
-            
-        }
-        if(sender.tag == 101)
-        {
-
-            if(self.firstSel == 0)
-            {
-
-                [dm getInstance].notificationSymbol = 100;
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"classMessage" object:nil];
-
-                //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
-
-//                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
-//                {
-//
-//                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
-//                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
-//                    
-//                }
-
-                //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
-                self.firstSel = 1;
-                if([dm getInstance].mModel_unitList.UnitClass.count == 0)
-                {
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
-                    [dm getInstance].secondFlag = @"无班级";
-                }
-                else{
-                    [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"0"];
-                    [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
-
-                }
-            }
-            else
-            {
-                [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
-                if(![[dm getInstance].secondFlag isEqualToString: @"0"])
-                {
-                    [MBProgressHUD showError:[dm getInstance].secondFlag toView:nil];
-                }
-
-                
-            }
-
-            
-        }
-        
-        if(sender.tag ==102)
-        {
-
-            [dm getInstance].topButtonSymbol = [dm getInstance].notificationSymbol;
-            [dm getInstance].notificationSymbol = 3;
- 
-        }
     }
 //    [NewWorkRootScrollView shareInstance].mInt = (int)sender.tag - 100;
     NSString *a = [NSString stringWithFormat:@"%d",(int)sender.tag - 100];
@@ -243,9 +180,74 @@
 }
 //当第一次到达页面时，发送请求
 -(void)sendRequest{
-    if (mInt_userSelectedChannelID == 102) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fristGotoMoreUnit" object:nil];
+    if(mInt_userSelectedChannelID == 100)
+    {
+        if([[dm getInstance].firstFlag isEqualToString: @"1"])
+        {
+            [MBProgressHUD showError:@"没有权限" toView:nil];
+        }
+        
+        [dm getInstance].notificationSymbol = 1;
+        
+        
     }
+    if(mInt_userSelectedChannelID == 101)
+    {
+        
+        if(self.firstSel == 0)
+        {
+            
+            [dm getInstance].notificationSymbol = 100;
+            [dm getInstance].topButtonSymbol = 100;
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"classMessage" object:nil];
+            
+            //self.unitStr = self.mModel_unitList.myUnit.TabIDStr;
+            
+            //                for(int i=0;i<[dm getInstance].mModel_unitList.UnitClass.count;i++)
+            //                {
+            //
+            //                    myUnit *unit = [[dm getInstance].mModel_unitList.UnitClass objectAtIndex:i];
+            //                    [[LoginSendHttp getInstance] login_GetUnitClassRevicer:unit.TabID Flag:unit.flag];
+            //
+            //                }
+            
+            //[[LoginSendHttp getInstance] login_CommMsgRevicerUnitList];
+            self.firstSel = 1;
+            if([dm getInstance].mModel_unitList.UnitClass.count == 0)
+            {
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"progress" object:@"无班级"];
+                [dm getInstance].secondFlag = @"无班级";
+            }
+            else{
+                [[NSNotificationCenter defaultCenter ]postNotificationName:@"addMBPro" object:@"0"];
+                [HomeClassRootScrollView shareInstance].schoolMessage.label.text = [dm getInstance].mStr_unit;
+                
+            }
+        }
+        else
+        {
+            [dm getInstance].notificationSymbol =[dm getInstance].topButtonSymbol;
+            if(![[dm getInstance].secondFlag isEqualToString: @"0"])
+            {
+                [MBProgressHUD showError:[dm getInstance].secondFlag toView:nil];
+            }
+            
+            
+        }
+        
+        
+    }
+    
+    if(mInt_userSelectedChannelID ==102)
+    {
+        
+        //[dm getInstance].topButtonSymbol = [dm getInstance].notificationSymbol;
+        [dm getInstance].notificationSymbol = 3;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"fristGotoMoreUnit" object:nil];
+
+        
+    }
+
 }
 
 

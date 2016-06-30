@@ -302,13 +302,13 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
     NSString *message = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]==0) {
         if([dm getInstance].notificationSymbol ==1 )
         {
+            [MBProgressHUD hideHUDForView:self.view];
             [MBProgressHUD showSuccess:message ];
             self.topView.mTextV_input.text = @"";
             [self.topView.mArr_accessory removeAllObjects];

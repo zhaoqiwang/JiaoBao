@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *provinceTF;//省输入框
 @property (weak, nonatomic) IBOutlet UITextField *regionTF;//地区输入框
 @property (weak, nonatomic) IBOutlet UITextField *countyTF;//区县输入框
-@property(nonatomic,strong)NSMutableArray *mArr_AllCategory;//
+@property(nonatomic,strong)NSMutableArray *mArr_AllCategory;//所有分类
 @property (weak, nonatomic) IBOutlet UITextField *categoryTF;//分类输入框
 @property(nonatomic,strong)NSMutableString *categoryId;//分类id
 @property (weak, nonatomic) IBOutlet UITextField *titleTF;//标题输入框
@@ -35,21 +35,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *ttitleLabel;//标题
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;//描述
 @property (weak, nonatomic) IBOutlet UILabel *categoryLabel;//分类
-@property (weak, nonatomic) IBOutlet UIButton *selectBtn;
-- (IBAction)selectBtnAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *selectBtn;//有证明过程按钮
+- (IBAction)selectBtnAction:(id)sender;//有证明过程按钮方法
 
--(IBAction)mBtn_photo:(id)sender;
-@property (weak, nonatomic) IBOutlet UILabel *placehold_title;
-@property (weak, nonatomic) IBOutlet UIButton *addQuestionBtn;
-
-@property (weak, nonatomic) IBOutlet UILabel *placehold_content;
+-(IBAction)mBtn_photo:(id)sender;//点击拍照方法
+@property (weak, nonatomic) IBOutlet UIButton *addQuestionBtn;//发布问题按钮
 
 
-- (IBAction)provinceBtnAction:(id)sender;
-- (IBAction)regionBtnAction:(id)sender;
-- (IBAction)countyBtnAction:(id)sender;
-- (IBAction)categaryBtnAction:(id)sender;
-- (IBAction)addQuestionAction:(id)sender;
+
+- (IBAction)provinceBtnAction:(id)sender;//省
+- (IBAction)regionBtnAction:(id)sender;//市
+- (IBAction)countyBtnAction:(id)sender;//县
+- (IBAction)categaryBtnAction:(id)sender;//选择分类
+- (IBAction)addQuestionAction:(id)sender;//发布问题
 
 
 @end
