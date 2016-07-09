@@ -1,10 +1,10 @@
 //
 //  LeaveDetailModel.h
 //  JiaoBao
-//
+//  假条详情model
 //  Created by SongYanming on 16/3/11.
 //  Copyright © 2016年 JSY. All rights reserved.
-//假条详情model
+//
 
 #import <Foundation/Foundation.h>
 
@@ -49,10 +49,10 @@
 @property(nonatomic,assign) int cellFlag;//cell当前的索引
 @property(nonatomic,strong) NSString *level;//审核级别
 
--(void)dicToModel:(NSDictionary*)dic;
+-(void)dicToModel:(NSDictionary*)dic;//解析假条详情
 
 @end
-@interface TimeListModel:NSObject
+@interface TimeListModel:NSObject//门卫
 @property(nonatomic,strong)NSString *TabID;//时间段记录ID
 @property(nonatomic,strong)NSString *Sdate;//开始时间
 @property(nonatomic,strong)NSString *Edate;//结束时间
@@ -60,7 +60,7 @@
 @property(nonatomic,strong)NSString *LWriterName;//门卫
 @property(nonatomic,strong)NSString *ComeTime;//到校时间
 @property(nonatomic,strong)NSString *CWriterName ;//门卫
--(void)dicToModel:(NSDictionary*)dic;
+-(void)dicToModel:(NSDictionary*)dic;//解析门卫假条详情
 
 
 @end

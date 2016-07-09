@@ -19,6 +19,7 @@
 
     // Configure the view for the selected state
 }
+//设置审核查询列表数据
 -(void)setCellData:(MyLeaveModel*)model{
     self.dateLabel.text = model.WriteDate;
     self.stateLabel.text = model.StatusStr;
@@ -26,6 +27,7 @@
     self.reasonLabel.text = model.LeaveType;
     
 }
+//门卫审核
 -(void)setCellData2:(MyLeaveModel*)model{
     NSArray *currentArr = [model.WriteDate componentsSeparatedByString:@" "];
     if(currentArr.count>0){
@@ -36,6 +38,7 @@
     self.reasonLabel.text = model.ManName;
     
 }
+//设置统计查询列表数据
 -(void)setStatisticsData:(SumLeavesModel*)model{
     self.dateLabel.text = model.ManName;
     if([model.Amount2 isEqualToString:@"(null)"]){
@@ -48,6 +51,7 @@
     self.stateLabel.textAlignment = NSTextAlignmentCenter;
 
 }
+//设置统计查询班级列表数据
 -(void)setStatisticsClassData:(SumLeavesModel*)model//设置统计查询班级列表数据
 {
     self.dateLabel.text = model.ClassStr;

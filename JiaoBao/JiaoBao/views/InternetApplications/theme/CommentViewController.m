@@ -22,11 +22,11 @@
 
 @interface CommentViewController ()<UIActionSheetDelegate,UIGestureRecognizerDelegate>
 @property(nonatomic,strong)MyNavigationBar *mNav_navgationBar;
-@property(nonatomic,strong)AllCommentListModel *AllCommentListModel;
+@property(nonatomic,strong)AllCommentListModel *AllCommentListModel;//全部评论model
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
 @property(nonatomic,assign)int mInt_reloadData;
 @property(nonatomic,strong)UIButton *btn;//评论的支持和反对按钮（被点击的）
-@property(nonatomic,strong)NSString *hideHUDTag;
+@property(nonatomic,strong)NSString *hideHUDTag;//隐藏提示框 1：隐藏 0：不隐藏
 @end
 
 @implementation CommentViewController
@@ -83,7 +83,7 @@
 {
     CheckNetWorkSelfView
     JoinUnit
-    if(view.tag == 100)
+    if(view.tag == 100)//举报
     {
 
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否举报" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -92,7 +92,7 @@
         alert.tag= 10000;
 
     }
-    if(view.tag == 101)
+    if(view.tag == 101)//评论
     {
         NoNickName
 
@@ -102,16 +102,16 @@
         [self.mTextV_text becomeFirstResponder];
         
     }
-    if(view.tag == 102 )
+    if(view.tag == 102 )//反对
     {
 
-        if(self.answerModel)
+        if(self.answerModel)//答案列表跳转用answerModel
         {
             [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"0"];
             
             
         }
-        else
+        else//首页列表跳转
         {
             [[KnowledgeHttp getInstance]SetYesNoWithAId:self.questionModel.answerModel.TabID yesNoFlag:@"0"];
 
@@ -138,7 +138,7 @@
     else
     {
         [MBProgressHUD showSuccess:ResultDesc toView:self.view];
-        if(self.answerModel)
+        if(self.answerModel)//答案列表跳转用answerModel
         {
             [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0" AId:self.answerModel.TabID];
             //[[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" AId:self.answerModel.TabID];
@@ -154,7 +154,7 @@
             [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID byUrl:@"1"];
             
         }
-        else
+        else//首页列表跳转
         {
             [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID byUrl:@"1"];//首页跳转用questionModel.answerModel
 
@@ -339,8 +339,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.hideHUDTag = @"0";
+    self.hideHUDTag = @"0";//隐藏提示框 1：隐藏 0：不隐藏
     self.view.userInteractionEnabled = YES;
+    //单击view
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fingerTapped:)];
     singleTap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:singleTap];
@@ -352,7 +353,7 @@
 //    [[KnowledgeHttp getInstance]AddMyattCateWithuid:@"11,15,45"];
     //[[KnowledgeHttp getInstance]GetAtMeUsersWithuid:@"" catid:@"3"];
     self.mInt_reloadData = 0;
-    self.btn_tag = -1;
+    self.btn_tag = -1;// 赞：-1 反对：0
     //评论的赞和反对回调
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AddScoreWithtabid" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AddScoreWithtabid:) name:@"AddScoreWithtabid" object:nil];
@@ -406,6 +407,7 @@
     self.mTextV_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
     //self.mTextV_text.borderStyle = UITextBorderStyleRoundedRect;
     //self.mTextF_text.returnKeyType = UIReturnKeyDone;//return键的类型
+    //确定按钮
     self.doneBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     self.doneBtn.frame =CGRectMake(self.mTextV_text.frame.origin.x+self.mTextV_text.frame.size.width, 0, 50, 50);
     [self.doneBtn setTitle:@"确定" forState:UIControlStateNormal];
@@ -423,15 +425,16 @@
         {
             [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.answerModel.TabID byUrl:@"1"];
         }
-        else
+        else//首页跳转用questionModel.answerModel
         {
-            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID byUrl:@"1"];//首页跳转用questionModel.answerModel
+            [[KnowledgeHttp getInstance] AnswerDetailWithAId:self.questionModel.answerModel.TabID byUrl:@"1"];
         }
-        if(self.answerModel)
+        //获取评论列表
+        if(self.answerModel)//答案列表跳转用answerModel
         {
             [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.answerModel.TabID];
         }
-        else
+        else//首页跳转用questionModel.answerModel
         {
 
             [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:@"1" RowCount:@"0"  AId:self.questionModel.answerModel.TabID];
@@ -441,13 +444,13 @@
 }
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing{
-    self.hideHUDTag = @"1";
+    self.hideHUDTag = @"1";//隐藏提示框 1：隐藏 0：不隐藏
     self.mInt_reloadData = 0;
     [self sendRequest];
 }
 
 - (void)footerRereshing{
-    self.hideHUDTag = @"1";
+    self.hideHUDTag = @"1";//隐藏提示框 1：隐藏 0：不隐藏
     self.mInt_reloadData = 1;
     [self sendRequest];
 }
@@ -469,11 +472,13 @@
             return;
         }
     }
-    if(self.answerModel)
+    //获取评论列表
+    if(self.answerModel)//答案列表跳转用answerModel
     {
         [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page RowCount:self.AllCommentListModel.RowCount AId:self.answerModel.TabID];
         return;
     }
+    //首页跳转用questionModel.answerModel
     [[KnowledgeHttp getInstance]CommentsListWithNumPerPage:@"20" pageNum:page RowCount:self.AllCommentListModel.RowCount AId:self.questionModel.answerModel.TabID];
 }
 //获取评论列表cell高度
@@ -493,7 +498,7 @@
 #pragma mark - TableView Data Source
 
 -(NSInteger) tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section{
-    if(self.topButtonTag == 1)
+    if(self.topButtonTag == 1)//推荐
     {
         return 0;
     }
@@ -520,6 +525,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.tag = indexPath.row;
+    //评论列表model
     commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:indexPath.row];
 
     //commentsListModel *model = [self.mModel_commentList.commentsList objectAtIndex:indexPath.row];
@@ -543,18 +549,19 @@
     CGSize sizeTime = [model.RecDate sizeWithFont:[UIFont systemFontOfSize:12]];
     cell.mLab_time.frame = CGRectMake([dm getInstance].width-10-sizeTime.width, 10, sizeTime.width, 15);
     cell.mLab_time.text = model.RecDate;
-    NSArray *refArr;
+    NSArray *refArr;//此评论引用的评论id数组
     if(model.RefIds)
     {
         refArr = [model.RefIds componentsSeparatedByString:@","];
 
     }
-    if (refArr.count>0) {
+    if (refArr.count>0) {//存在引用的评论
         cell.mView_RefID.hidden = NO;
         
         int m=0;
         for (int i=0; i<refArr.count-1; i++) {
             int a ;
+            //排序
             NSString *tempTab = [refArr objectAtIndex:i];
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"TabID == %@", tempTab];
             NSArray *filteredArray = [self.AllCommentListModel.mArr_refcomments filteredArrayUsingPredicate:predicate];
@@ -600,7 +607,7 @@
                 tempBtnCai.tag = -2;
                 tempBtnCai.hidden = YES;
                 //边框
-                if(refModel.Caiselected == YES)
+                if(refModel.Caiselected == YES)//已选择了踩
                 {
                     tempBtnCai.enabled = NO;
                     [tempBtnCai.layer setMasksToBounds:YES];
@@ -612,7 +619,7 @@
                     [tempView addSubview:tempBtnCai];
                     [tempBtnCai setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                     
-                }else{
+                }else{//还没选择踩
                     tempBtnCai.enabled = YES;
                     [tempBtnCai.layer setMasksToBounds:YES];
                     [tempBtnCai.layer setCornerRadius:5.0]; //设置矩形四个圆角半径
@@ -624,7 +631,7 @@
                     [tempBtnCai setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                     
                 }
-                if(refModel.Likeselected == YES){
+                if(refModel.Likeselected == YES){//已选择了赞
                     tempBtnLike.enabled = NO;
                     CGColorRef colorref = [UIColor grayColor].CGColor;
                     
@@ -637,7 +644,7 @@
                     [tempBtnLike setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
                     
                     
-                }else{
+                }else{//还没选择赞
                     tempBtnLike.enabled = YES;
                     CGColorRef colorref = [UIColor blueColor].CGColor;
                     
@@ -727,14 +734,14 @@
     cell.mBtn_LikeCount.frame = CGRectMake(cell.mBtn_CaiCount.frame.origin.x-30-sizeLike.width, cell.mBtn_CaiCount.frame.origin.y, sizeLike.width+20, 30);
     [cell.mBtn_LikeCount setTitle:tempLike forState:UIControlStateNormal];
     cell.mBtn_LikeCount.restorationIdentifier = model.TabID;
-    if(model.Likeselected == YES){
+    if(model.Likeselected == YES){//已赞
         cell.mBtn_LikeCount.enabled = NO;
 
         CGColorRef colorref = [UIColor grayColor].CGColor;
         [cell.mBtn_LikeCount.layer setBorderColor:colorref];//边框颜色
         [cell.mBtn_LikeCount setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
  
-    }else{
+    }else{//没赞
         cell.mBtn_LikeCount.enabled = YES;
 
         CGColorRef colorref = [UIColor blueColor].CGColor;
@@ -743,13 +750,13 @@
         
     }
     
-    if(model.Caiselected == YES){
+    if(model.Caiselected == YES){//已踩
         cell.mBtn_CaiCount.enabled = NO;
         CGColorRef colorref = [UIColor grayColor].CGColor;
         [cell.mBtn_CaiCount.layer setBorderColor:colorref];//边框颜色
         [cell.mBtn_CaiCount setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         
-    }else{
+    }else{//没踩
         cell.mBtn_CaiCount.enabled = YES;
         CGColorRef colorref = [UIColor blueColor].CGColor;
         [cell.mBtn_CaiCount.layer setBorderColor:colorref];//边框颜色
@@ -761,7 +768,7 @@
     
     //给头像添加点击事件
     cell.delegate = self;
-    [cell headImgClick];
+    //[cell headImgClick];
     
     int a=0;
     float b = cell.mBtn_LikeCount.frame.origin.y+cell.mBtn_LikeCount.frame.size.height+10;
@@ -874,6 +881,7 @@
     {
         if(buttonIndex == 1)
         {
+            //举报答案
             if(self.answerModel)
             {
                 //[[KnowledgeHttp getInstance]reportanswerWithAId:self.answerModel.TabID];
@@ -895,6 +903,7 @@
         if(buttonIndex == 1)
         {
             commentListModel *model = [self.AllCommentListModel.mArr_CommentList objectAtIndex:alertView.tag];
+            //举报评论
             [[KnowledgeHttp getInstance]ReportAnsWithAId:model.TabID repType:@"2"];
         }
     }
@@ -910,6 +919,7 @@
 //        [MBProgressHUD showText:@"你已经评价过了"];
 //        return;
 //    }
+    //评价答案 参数描述:答案id - (0=反对，1=支持)
     if(self.answerModel)
     {
         [[KnowledgeHttp getInstance]SetYesNoWithAId:self.answerModel.TabID yesNoFlag:@"1"];
@@ -940,18 +950,19 @@
     //详情
     //cell.mBtn_detail.hidden = YES;
     cell.mBtn_detail.frame = CGRectMake([dm getInstance].width-52, 3, 40, cell.mBtn_detail.frame.size.height);
-    if(self.topButtonTag ==  1)
+    if(self.topButtonTag ==  1)//推荐
     {
         [cell.mBtn_detail setTitle:@"原文" forState:UIControlStateNormal];
 
         
     }
-    else
+    else//评论列表
     {
         [cell.mBtn_detail setTitle:@"详情" forState:UIControlStateNormal];
 
     }
-    if(self.flag == NO)
+    if(self.flag == NO)//0：推荐界面 1：评论列表界面
+
     {
         cell.mBtn_detail.hidden = YES;
         
@@ -967,6 +978,7 @@
 //    cell.mLab_title.numberOfLines =0;
 //    cell.mLab_title.text = cell.model.Title;
 //    cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, size_title.height);
+    //答
     NSString *string1 = cell.model.Title;
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     string1 = [string1 stringByReplacingOccurrencesOfString:@"\r" withString:@""];
@@ -980,10 +992,10 @@
     cell.mLab_title.componentsAndPlainText = componentsDS;
     CGSize titleSize = [cell.mLab_title optimumSize];
    // cell.mLab_title.frame = CGRectMake(9, 3, cell.mBtn_detail.frame.origin.x-5, 23);
-    if(self.flag == NO){
+    if(self.flag == NO){//0：推荐界面
             cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2- cell.answerImgV.frame.size.width, titleSize.height);
         
-    }else{
+    }else{//1：评论列表界面
             cell.mLab_title.frame = CGRectMake(cell.askImgV.frame.origin.x+cell.askImgV.frame.size.width, cell.askImgV.frame.origin.y, [dm getInstance].width-9*2-40- cell.answerImgV.frame.size.width, titleSize.height);
         
     }
@@ -1037,7 +1049,7 @@
         cell.mWebV_comment.hidden =NO;
         //分割线
         cell.mLab_line.frame = CGRectMake(20, cell.mLab_Category0.frame.origin.y+cell.mLab_Category0.frame.size.height+5, [dm getInstance].width-20, .5);
-      if([self.AnswerDetailModel.TabID integerValue]==0)
+      if([self.AnswerDetailModel.TabID integerValue]==0)//没有答案
       {
           return cell;
       }
@@ -1105,7 +1117,7 @@
     
     cell.mLab_Abstracts.frame = CGRectMake(9, cell.mLab_ATitle.frame.origin.y+cell.mLab_ATitle.frame.size.height+10, [dm getInstance].width-18, 50);
     //    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, cell.mLab_Abstracts.frame.origin.y-15, 50, 30)];
-    if([self.AnswerDetailModel.Flag integerValue]==1)
+    if([self.AnswerDetailModel.Flag integerValue]==1)//内容
     {
         cell.basisImagV.image = [UIImage imageNamed:@"content"];
         cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 26, 16);
@@ -1116,7 +1128,7 @@
 
 
     }
-    else if([self.AnswerDetailModel.Flag integerValue]==2)
+    else if([self.AnswerDetailModel.Flag integerValue]==2)//依据
     {
         cell.basisImagV.image = [UIImage imageNamed:@"basis"];
         cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 29, 29);
@@ -1124,7 +1136,7 @@
 //        contentLabel.text = @"依据:";
 //        contentLabel.textColor = [UIColor redColor];
     }
-    else
+    else//无内容
     {
         cell.basisImagV.image = [UIImage imageNamed:@"noContent"];
         cell.basisImagV.frame = CGRectMake(9, cell.mLab_Abstracts.frame.origin.y, 36, 16);
@@ -1186,12 +1198,13 @@
     cell.userInteractionEnabled = YES;
     return cell;
 }
+//webview加载完后执行
 -(void)webViewLoadFinish:(float)height{
     self.KnowledgeTableViewCell.mWebV_comment.frame = CGRectMake(5, self.KnowledgeTableViewCell.basisImagV.frame.size.height+self.KnowledgeTableViewCell.basisImagV.frame.origin.y+5, [dm getInstance].width-10, height);
     self.KnowledgeTableViewCell.frame = CGRectMake(0, 5, [dm getInstance].width, self.KnowledgeTableViewCell.mWebV_comment.frame.origin.y+self.KnowledgeTableViewCell.mWebV_comment.frame.size.height);
     self.tableHeadView = [[UIView alloc]init];
     [self.tableHeadView addSubview:self.KnowledgeTableViewCell];
-    if(self.topButtonTag == 1)
+    if(self.topButtonTag == 1)//推荐
     {
     self.tableHeadView.frame = CGRectMake(0, 0, [dm getInstance].width, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height);
         
@@ -1207,8 +1220,9 @@
         [MBProgressHUD hideHUDForView:self.view];
         return;
     }
+    //评论列表界面
     NSMutableArray *temp = [NSMutableArray array];
-    if(!self.mBtnV_btn)
+    if(!self.mBtnV_btn)//还没创建
     {
         for (int i=0; i<3; i++) {
             ButtonViewModel *model = [[ButtonViewModel alloc] init];
@@ -1236,13 +1250,15 @@
             [temp addObject:model];
 
         }
+        //时间
         self.rdateLabel = [[UILabel alloc]initWithFrame:CGRectMake([dm getInstance].width-100, self.KnowledgeTableViewCell.frame.origin.y+self.KnowledgeTableViewCell.frame.size.height, 100, 30)];
         self.rdateLabel.text = self.AnswerDetailModel.RecDate;
+        //举报评论反对
         self.mBtnV_btn = [[ButtonView alloc] initFrame:CGRectMake(0, self.rdateLabel.frame.origin.y+self.rdateLabel.frame.size.height, [dm getInstance].width, 50) Array:temp Flag:0 index:0];
 
         self.mBtnV_btn.delegate = self;
     }
-    else
+    else//已创建
     {
         ButtonViewCell *btnView101 = (ButtonViewCell*)[self.view viewWithTag:101];
         ButtonViewCell *btnView102 = (ButtonViewCell*)[self.view viewWithTag:102];
@@ -1305,7 +1321,7 @@
     
 }
 
-
+//通知界面，更新访问量等数据
 -(void)updataQuestionDetail:(NSNotification *)noti{
     QuestionDetailModel *model = noti.object;
     self.KnowledgeTableViewCell.mLab_ViewCount.text = [NSString stringWithFormat:@"%d",[model.ViewCount intValue]+1];
@@ -1326,14 +1342,14 @@
 //    queston.mModel_question = model;
 //    [utils pushViewController:queston animated:YES];
     CheckNetWorkSelfView
-    if(self.topButtonTag == 1)
+    if(self.topButtonTag == 1)//推荐
     {
         KnowledgeQuestionViewController *queston = [[KnowledgeQuestionViewController alloc] init];
 
         queston.mModel_question = knowledgeTableViewCell.model;
         [utils pushViewController:queston animated:YES];
     }
-    else{
+    else{//评论列表
         
         KnowledgeAddAnswerViewController *detail = [[KnowledgeAddAnswerViewController alloc] init];
         detail.mInt_view = 0;
@@ -1366,6 +1382,7 @@
                          ;
                      }];
 }
+
 - (void) keyboardWasHidden:(NSNotification *) notif{
     self.mView_text.hidden = YES;
     NSDictionary *userInfo = [notif userInfo];
@@ -1380,13 +1397,14 @@
                          ;
                      }];
 }
-
+//点击view
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if(touch.view != self.tableView){
         return NO;
     }else
         return YES;
 }
+//确定按钮方法
 -(void)doneAction:(id)sender
 {
         [self.mTextV_text resignFirstResponder];
@@ -1408,6 +1426,7 @@
                 self.cellmodel = [[commentListModel alloc]init];
                 self.cellmodel.TabID = @"";
             }
+            //添加评论
             if(self.answerModel)
             {
                 [[KnowledgeHttp getInstance]AddCommentWithAId:self.answerModel.TabID comment:self.mTextV_text.text RefID:self.cellmodel.TabID];
@@ -1467,7 +1486,7 @@
     [self tableView:self.tableView didSelectRowAtIndexPath:index];
 }
 
-
+//评论的评论顶
 -(void)tempViewBtnLike:(id)sender
 {
     UIButton *likeBtn = sender;
@@ -1477,6 +1496,7 @@
     [[KnowledgeHttp getInstance]AddScoreWithtabid:refModel.TabID tp:@"1"];
 
 }
+//评论的评论踩
 -(void)tempViewBtnCai:(id)sender
 {
     UIButton *caiBtn = sender;

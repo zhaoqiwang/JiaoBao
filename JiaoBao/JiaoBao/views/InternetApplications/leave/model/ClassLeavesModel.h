@@ -1,10 +1,10 @@
 //
 //  ClassLeavesModel.h
 //  JiaoBao
-//
+//  班主任或审核人员取得请假记录model或门卫取请假记录model
 //  Created by SongYanming on 16/3/14.
 //  Copyright © 2016年 JSY. All rights reserved.
-//班主任或审核人员取得请假记录model或门卫取请假记录model
+//
 
 #import <Foundation/Foundation.h>
 

@@ -15,8 +15,8 @@
 @property(nonatomic,strong)NSString *TVersionID;//
 @property(nonatomic,strong)NSString *Unid;//
 @property(nonatomic,strong)NSString *Pid;//父级id
-@property(nonatomic,strong)NSString *chapterCode;//
-@property(nonatomic,strong)NSString *chapterName;//
+@property(nonatomic,strong)NSString *chapterCode;//章节代码
+@property(nonatomic,strong)NSString *chapterName;//章节名称
 @property(nonatomic,strong)NSString *Remark;//
 @property(nonatomic,strong)NSString *isEnable;//
 @property(nonatomic,strong)NSString *orderby;//

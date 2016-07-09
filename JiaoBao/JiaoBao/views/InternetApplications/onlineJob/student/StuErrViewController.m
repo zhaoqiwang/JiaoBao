@@ -15,34 +15,35 @@
 #import "utils.h"
 int cellRefreshCount, newHeight;
 @interface StuErrViewController ()
-@property(nonatomic,strong)NSMutableArray *datasource;
-@property(nonatomic,assign)NSInteger flag;
-@property(nonatomic,assign)NSInteger mInt_index;
-@property(nonatomic,assign)int mInt_reloadData;
-@property(nonatomic,strong)StuErrModel *errModel;
+@property(nonatomic,strong)NSMutableArray *datasource;//错题集基本信息数组
+@property(nonatomic,assign)NSInteger mInt_index;//当前错题索引
+@property(nonatomic,assign)int mInt_reloadData;//0：上拉刷新 1：下拉加载更多
+@property(nonatomic,strong)StuErrModel *errModel;//错题集列表基本信息model
 @end
 
 @implementation StuErrViewController
 -(void)viewWillAppear:(BOOL)animated{
+    //获取错题集列表详情通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStuHWQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
-    
+    //获取错题集列表基本信息通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetStuErr" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
-
+//获取错题集列表详情
 -(void)GetStuHWQsWithHwInfoId:(id)sender{
     [MBProgressHUD hideHUDForView:self.view];
     StuHWQsModel *model = [sender object];
+    ////过滤错题本中的输入框等
     model.QsCon = [utils filterHTML:model.QsCon Flag:1];
     model.QsCon = [utils filterHTML:model.QsCon Flag:0];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"( (   ) )" withString:@" (   ) "];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:@"（ (   ) ）" withString:@" (   ) "];
     StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
-    NSString *errNum;
+    NSString *errNum;//是否重复错
     if([errModel.DoC integerValue]==1){
         errNum = @" *";
     }else if ([errModel.DoC integerValue]==2){
@@ -54,19 +55,19 @@ int cellRefreshCount, newHeight;
     }
     model.QsCon = [NSString stringWithFormat:@"<div style = \"background:rgb(240,240,240);font-size:15px\">%@<span style=\"color:red \">%@</span> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp&nbsp难度：%@</div>%@",errModel.Tabid,errNum,errModel.QsLv,model.QsCon];
 
-
     model.QsCon = [model.QsCon stringByAppendingString:[NSString stringWithFormat:@"<p >作答：<span style=\"color:red \">%@</span><br />正确答案：%@<br /><span style=\"color:rgb(235,115,80) \">%@</span></p>",errModel.Answer,model.QsCorectAnswer,model.QsExplain]];
     model.QsCon = [NSString stringWithFormat:@"<div style=\"font-size:15px;\">%@</div>",model.QsCon];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</p>"] withString:@""];
     model.QsCon = [model.QsCon stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"</br>"] withString:@"\r"];
-
+    
+//设置textview的attributedText
     NSDictionary *options = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
     NSAttributedString *string = [[NSAttributedString alloc] initWithData:[model.QsCon dataUsingEncoding:NSUnicodeStringEncoding] options:options documentAttributes:nil error:nil];
     model.attributedString = string;
     self.textView.attributedText = string;
     CGRect rect =   [model.attributedString boundingRectWithSize:CGSizeMake([dm getInstance].width, 100000) options:NSStringDrawingUsesLineFragmentOrigin context:nil];
         model.cellHeight = rect.size.height;
-    if([model.QsCon isEqual:[NSNull null]]){
+    if([model.QsCon isEqual:[NSNull null]]){//内容为空
 
         
     }
@@ -76,12 +77,13 @@ int cellRefreshCount, newHeight;
     }
 
     self.mInt_index++;
+    //同步请求错题集内容
     if(self.mInt_index<self.datasource.count){
         StuErrModel *errModel = [self.datasource objectAtIndex:self.mInt_index];
         [[OnlineJobHttp getInstance]GetStuHWQsWithHwInfoId:@"0" QsId:errModel.QsID];
         [MBProgressHUD showMessage:@"" toView:self.view];
     }
-    else{
+    else{//
         [MBProgressHUD hideHUDForView:self.view];
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         [self.tableVIew headerEndRefreshing];
@@ -91,6 +93,7 @@ int cellRefreshCount, newHeight;
 
     
 }
+//获取错题集基本信息
 -(void)GetStuErr:(id)sender{
     
     if (self.mInt_reloadData ==0)
@@ -125,6 +128,7 @@ int cellRefreshCount, newHeight;
         if(arr.count>0){
             StuErrModel *model = [arr objectAtIndex:0];
             [MBProgressHUD showMessage:@"" toView:self.view];
+            //请求错题集第一个错题详细内容
             [[OnlineJobHttp getInstance] GetStuHWQsWithHwInfoId:@"0" QsId:model.QsID];
             
         }
@@ -154,10 +158,10 @@ int cellRefreshCount, newHeight;
     self.webDataArr = [NSMutableArray array];
     self.datasource = [[NSMutableArray alloc]initWithCapacity:0];
     self.errModel = [[StuErrModel alloc]init];
-
+//获取错题集列表详情通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuHWQsWithHwInfoId" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuHWQsWithHwInfoId:) name:@"GetStuHWQsWithHwInfoId" object:nil];
-
+//获取错题集列表基本信息通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetStuErr" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetStuErr:) name:@"GetStuErr" object:nil];
 
@@ -203,7 +207,7 @@ int cellRefreshCount, newHeight;
 }
 
 
-
+//点击筛选条件
 - (IBAction)conditionAction:(id)sender {
     SelectChapteridViewController *detail = [[SelectChapteridViewController alloc]init];
     detail.delegate  = self;
@@ -215,7 +219,7 @@ int cellRefreshCount, newHeight;
     [self.webDataArr removeAllObjects];
     [self.tableVIew reloadData];
     self.mInt_index = 0;
-    if(self.mModel_stuInf){
+    if(self.mModel_stuInf){//
         self.errModel.StuId = self.mModel_stuInf.StudentID;
         
     }

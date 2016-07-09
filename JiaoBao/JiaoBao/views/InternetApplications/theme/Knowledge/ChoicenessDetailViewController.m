@@ -15,7 +15,7 @@
 
 @interface ChoicenessDetailViewController ()<KnowledgeTableViewCellDelegate,UIWebViewDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;
-@property(nonatomic,strong)ShowPickedModel *ShowPickedModel;
+@property(nonatomic,strong)ShowPickedModel *ShowPickedModel;//获取精选id Model
 @property(nonatomic,strong)UIWebView *webView;
 
 @end
@@ -35,6 +35,7 @@
 //    }
 //    }
 //}
+//获取问题id
 -(void)ShowPicked:(id)sender
 {
     //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -59,6 +60,7 @@
         [self.scrollview addSubview:self.KnowledgeTableViewCell];
     }
 }
+//获取问题详情
 -(void)QuestionDetail:(id)noti
 {
     //[MBProgressHUD hideAllHUDsForView:self.view animated:YES];
@@ -79,10 +81,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    //获取问题id
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"ShowPicked" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(ShowPicked:) name:@"ShowPicked" object:nil];
-    
+    //问题详情
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"QuestionDetail" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(QuestionDetail:) name:@"QuestionDetail" object:nil];
     

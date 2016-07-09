@@ -10,12 +10,12 @@
 
 @interface SubjectModel : NSObject
 @property(nonatomic,strong)NSString *TabID;//
-@property(nonatomic,strong)NSString *VersionCode;//
-@property(nonatomic,strong)NSString *VersionName;//
-@property(nonatomic,strong)NSString *GradeCode;//
-@property(nonatomic,strong)NSString *GradeName;//
-@property(nonatomic,strong)NSString *subjectCode;//
-@property(nonatomic,strong)NSString *subjectName;//
+@property(nonatomic,strong)NSString *VersionCode;//教版代码
+@property(nonatomic,strong)NSString *VersionName;//教版名称
+@property(nonatomic,strong)NSString *GradeCode;//年级代码
+@property(nonatomic,strong)NSString *GradeName;//年级名称
+@property(nonatomic,strong)NSString *subjectCode;//科目代码
+@property(nonatomic,strong)NSString *subjectName;//科目名称
 @property (nonatomic,assign) int mInt_select;//是否选择1，否0
 
 

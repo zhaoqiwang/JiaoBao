@@ -28,10 +28,12 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
+//关注话题回调
 -(void)AddMyattCateWithuid:(id)sender
 {
     [MBProgressHUD showSuccess:@"保存成功"];
 }
+//获取我关注的话题id
 -(void)GetMyattCate:(id)sender
 {
     NSNotification *note = sender;
@@ -70,6 +72,7 @@
     }
     
 }
+//获取我关注的话题
 -(void)GetCategoryById:(id)sender
 {
     NSNotification *note = sender;
@@ -115,13 +118,15 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    //关注话题通知
     [[NSNotificationCenter defaultCenter]removeObserver:self name:@"AddMyattCateWithuid" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(AddMyattCateWithuid:) name:@"AddMyattCateWithuid" object:nil];
 
     self.mArr_addBtnSel = [[NSMutableArray alloc]init];
 
-    if([self.classStr isEqualToString:@"ThemeView"])
+    if([self.classStr isEqualToString:@"ThemeView"])//首页选择话题
     {
         [[KnowledgeHttp getInstance]GetMyattCate];
         [MBProgressHUD showMessage:@"" toView:self.view];
@@ -136,7 +141,7 @@
         [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GetCategoryById" object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(GetCategoryById:) name:@"GetCategoryById" object:nil];
     }
-    else
+    else//添加问题界面选择话题
     {
         self.collectionView.allowsMultipleSelection = NO;
         self.titileLabel.text = @"请选择话题类别";
@@ -233,7 +238,7 @@
     self.ItemModel.Subject = itemModel.Subject;
     
 
-    if([self.classStr isEqualToString:@"AddQuestionViewController"])
+    if([self.classStr isEqualToString:@"AddQuestionViewController"])//添加问题界面
     {
         [self.mArr_selectCategory removeAllObjects];
         [self.mArr_selectCategory addObject:itemModel];
@@ -252,7 +257,7 @@
 
 
     }
-    else
+    else//首页
     {
         if([cell.nameLabel.textColor isEqual:[UIColor redColor]])
         {
@@ -344,7 +349,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     return 5;
 }
-
+//选择相应话题
 -(void)CategorySectionClickBtnWith:(UIButton *)btn section:(CategorySection *) section
 {
     NSNumber *num = [NSNumber numberWithInteger:section.tag];
@@ -377,11 +382,12 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+//关闭
 - (IBAction)backAction:(id)sender {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+//保存
 - (IBAction)selectAction:(id)sender {
     NSMutableArray *mArr = [[NSMutableArray alloc]initWithCapacity:0];
     if(self.mArr_selectCategory.count >0)

@@ -29,18 +29,19 @@
 
 //发表消息成功
 -(void)creatCommMsg:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self];
     NSMutableDictionary *dic = noti.object;
     NSString *code = [dic objectForKey:@"ResultCode"];
     NSString *message = [dic objectForKey:@"ResultDesc"];
     if ([code integerValue]==0) {
-        [MBProgressHUD showSuccess:message toView:self];
-        self.mViewTop.mTextV_input.text = @"";
-        [self.mViewTop.mArr_accessory removeAllObjects];
-        [self.mViewTop addAccessoryPhoto];
+
         //班级通知清空数据
         if([dm getInstance].notificationSymbol == 100)
         {
+            [MBProgressHUD hideHUDForView:self];
+            [MBProgressHUD showSuccess:message toView:self];
+            self.mViewTop.mTextV_input.text = @"";
+            [self.mViewTop.mArr_accessory removeAllObjects];
+            [self.mViewTop addAccessoryPhoto];
             NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.datasource;
             for(int i=0;i<dataArr.count;i++)
             {
@@ -55,6 +56,11 @@
         //个性表现清空数据
         if([dm getInstance].notificationSymbol == 101)
         {
+            [MBProgressHUD hideHUDForView:self];
+            [MBProgressHUD showSuccess:message toView:self];
+            self.mViewTop.mTextV_input.text = @"";
+            [self.mViewTop.mArr_accessory removeAllObjects];
+            [self.mViewTop addAccessoryPhoto];
             NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].characterView.datasource;
             for(int i=0;i<dataArr.count;i++)
             {
@@ -92,6 +98,11 @@
         //校园通知清空数据
         if([dm getInstance].notificationSymbol == 102)
         {
+            [MBProgressHUD hideHUDForView:self];
+            [MBProgressHUD showSuccess:message toView:self];
+            self.mViewTop.mTextV_input.text = @"";
+            [self.mViewTop.mArr_accessory removeAllObjects];
+            [self.mViewTop addAccessoryPhoto];
             
             [[HomeClassRootScrollView shareInstance].schoolMessage.rightBtn setImage:[UIImage imageNamed:@"blank.png"] forState:UIControlStateNormal];
             
@@ -100,6 +111,11 @@
         //多校家长清空数据
         if([dm getInstance].notificationSymbol == 103)
         {
+            [MBProgressHUD hideHUDForView:self];
+            [MBProgressHUD showSuccess:message toView:self];
+            self.mViewTop.mTextV_input.text = @"";
+            [self.mViewTop.mArr_accessory removeAllObjects];
+            [self.mViewTop addAccessoryPhoto];
             NSArray *arr = [HomeClassRootScrollView shareInstance].patriarchView.datasource;
             
             for (int i=0; i<arr.count; i++) {
@@ -299,6 +315,10 @@
     if ([self checkNetWork]) {
         return;
     }
+    if([[dm getInstance].secondFlag isEqualToString: @"无权限"]){
+        [MBProgressHUD showError:@"无权限" toView:self];
+        return;
+    }
     long long fileSizeSum = 0;
     for(int i=0;i<self.mViewTop.mArr_accessory.count;i++)
     {
@@ -320,6 +340,7 @@
         [MBProgressHUD showError:@"请输入内容" toView:self];
         return;
     }
+
     NSMutableArray *genArr = [[NSMutableArray alloc]initWithCapacity:0];
     NSMutableArray *array0 = [[NSMutableArray alloc]initWithCapacity:0];
     for(int i=0;i<self.mViewTop.mArr_accessory.count;i++)

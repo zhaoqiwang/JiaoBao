@@ -18,20 +18,19 @@
 #import "InvitationUserInfo.h"
 
 @interface AddQuestionViewController ()<UITextViewDelegate>
-@property(nonatomic,strong)TableViewWithBlock *mTableV_name;
-@property(nonatomic,strong)NSArray *dataArr;
-@property(nonatomic,strong)NSArray *provinceArr;
-@property(nonatomic,assign)BOOL isOpen;
-@property(nonatomic,strong)UITextField *selectedTF;
-@property(nonatomic,strong)ProviceModel *proviceModel;
-@property(nonatomic,assign)BOOL QFlag;
-@property(nonatomic,assign)NSString *QId;
-@property(nonatomic,strong)NickNameModel *nickNameModel;
-@property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;
-@property(nonatomic,assign)NSRange cursorPosition;
-@property(nonatomic,strong)NSString *deleteStr;
-@property(nonatomic,strong)NSString *tempContentText;
-@property(nonatomic,assign)BOOL positionFlag;
+@property(nonatomic,strong)TableViewWithBlock *mTableV_name;//选择省市县列表
+@property(nonatomic,strong)NSArray *dataArr;//省市县数据源
+@property(nonatomic,strong)NSArray *provinceArr;//省数组
+@property(nonatomic,assign)BOOL isOpen;//列表是否展开
+@property(nonatomic,strong)UITextField *selectedTF;//选择的省或市或县输入框
+@property(nonatomic,strong)ProviceModel *proviceModel;//省市县model
+@property(nonatomic,assign)BOOL QFlag;//1：有证明过程 0：无证明过程
+@property(nonatomic,assign)NSString *QId;//问题id
+@property(nonatomic,strong)NickNameModel *nickNameModel;//昵称model
+@property(nonatomic,strong)InvitationUserInfo *invitationUserInfo;//邀请用户性情
+@property(nonatomic,assign)NSRange cursorPosition;//textview拍照时选择的位置
+@property(nonatomic,strong)NSString *tempContentText;//textview内容
+@property(nonatomic,assign)BOOL positionFlag;//是否上一次输入是拍照或者相册
 
 @end
 
@@ -148,6 +147,7 @@
         //detailVC.view.superview.frame = CGRectMake(10, 44+30, [dm getInstance].width-20, [dm getInstance].height-84);
     }];
 }
+//邀请人回答时，获取回答该话题问题最多的用户列表通知
 -(void)GetAtMeUsersWithuid:(id)sender
 {
     NSDictionary *dic = [sender object];
@@ -172,6 +172,7 @@
             self.invitationUserInfo = [arr objectAtIndex:0];
             
             NSString *QFlagStr = [NSString stringWithFormat:@"%d",self.QFlag];
+            //发布问题
             [[KnowledgeHttp getInstance]NewQuestionWithCategoryId:self.categoryId Title:self.mText_title.text KnContent:self.tempContentText TagsList:@"" QFlag:QFlagStr AreaCode:self.AreaCode atAccIds:@""];
         }
         else
@@ -214,7 +215,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AtMeForAnswerWithAccId:) name:@"AtMeForAnswerWithAccId" object:nil];
     [self.selectBtn setImage:[UIImage imageNamed:@"selected"] forState:UIControlStateNormal];
     self.QFlag = 1;
-    [dm getInstance].addQuestionNoti = YES;
+    [dm getInstance].addQuestionNoti = YES;//防止通知混淆
 
 
     //输入框弹出键盘问题
@@ -531,7 +532,7 @@
     JoinUnitTextF
     NoNickNameTextF
 }
-
+//已证明过程
 - (IBAction)selectBtnAction:(id)sender {
     JoinUnit
     NoNickName

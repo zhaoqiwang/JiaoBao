@@ -1,10 +1,10 @@
 //
 //  MyStdInfo.h
 //  JiaoBao
-//
+//  取得我的教宝号所关联的学生列表(家长身份）model
 //  Created by SongYanming on 16/3/14.
 //  Copyright © 2016年 JSY. All rights reserved.
-//取得我的教宝号所关联的学生列表(家长身份）model
+//
 
 #import <Foundation/Foundation.h>
 

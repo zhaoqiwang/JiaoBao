@@ -1,7 +1,7 @@
 //
 //  CategoryViewController.h
 //  JiaoBao
-//
+//  话题分类界面
 //  Created by songyanming on 15/8/13.
 //  Copyright (c) 2015年 JSY. All rights reserved.
 //

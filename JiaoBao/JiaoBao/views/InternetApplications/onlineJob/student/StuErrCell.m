@@ -11,9 +11,7 @@
 @implementation StuErrCell
 
 - (void)awakeFromNib {
-    self.webView.scrollView.scrollEnabled = NO;
-    //self.webView.scalesPageToFit = YES;
-    // Initialization code
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

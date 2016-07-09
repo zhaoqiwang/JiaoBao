@@ -15,11 +15,11 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableVIew;
 @property (nonatomic,strong) StuInfoModel *mModel_stuInf;//学生信息，包含id
 @property (nonatomic,strong) GenInfo *mModel_gen;//当前选择的学生
-@property(nonatomic,strong)NSMutableArray *webDataArr;
-@property (weak, nonatomic) IBOutlet UIButton *conditionBtn;
+@property(nonatomic,strong)NSMutableArray *webDataArr;//错题集内容数组
+@property (weak, nonatomic) IBOutlet UIButton *conditionBtn;//显示筛选条件
 -(void)sendRequest;
 
-- (IBAction)conditionAction:(id)sender;
-@property (strong, nonatomic) IBOutlet UITextView *textView;
+- (IBAction)conditionAction:(id)sender;//筛选条件方法
+@property (strong, nonatomic) IBOutlet UITextView *textView;//显示错题内容的textview
 
 @end

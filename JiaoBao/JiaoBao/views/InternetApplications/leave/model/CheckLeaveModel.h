@@ -1,7 +1,7 @@
 //
 //  CheckLeaveModel.h
 //  JiaoBao
-//
+//  //审批人审批假条，并做批注http请求model
 //  Created by SongYanming on 16/3/14.
 //  Copyright © 2016年 JSY. All rights reserved.
 //

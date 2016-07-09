@@ -1,10 +1,10 @@
 //
 //  MyLeaveModel.h
 //  JiaoBao
-//
+//  获得我提出申请的请假记录model
 //  Created by SongYanming on 16/3/11.
 //  Copyright © 2016年 JSY. All rights reserved.
-//获得我提出申请的请假记录model
+//
 
 #import <Foundation/Foundation.h>
 

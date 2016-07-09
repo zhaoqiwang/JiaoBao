@@ -1,7 +1,7 @@
 //
 //  PublishJobCellTableViewCell.h
 //  JiaoBao
-//
+//  发布作业按钮cell
 //  Created by songyanming on 15/10/20.
 //  Copyright © 2015年 JSY. All rights reserved.
 //

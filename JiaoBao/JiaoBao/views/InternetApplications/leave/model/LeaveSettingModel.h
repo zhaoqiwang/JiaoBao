@@ -1,10 +1,10 @@
 //
 //  LeaveSettingModel.h
 //  JiaoBao
-//
+//  指定单位的请假设置model
 //  Created by SongYanming on 16/3/10.
 //  Copyright © 2016年 JSY. All rights reserved.
-//指定单位的请假设置model
+//
 
 #import <Foundation/Foundation.h>
 #import "LevelNoteModel.h"
