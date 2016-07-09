@@ -281,7 +281,7 @@
 -(void)selectScrollButton:(UIButton *)btn{
     
 }
-
+//上半部分点击事件
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)btn{
     //检查网络情况
     CheckNetWorkSelfView
@@ -346,7 +346,7 @@
             [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_stuInf.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if(self.mInt_flag==3){
+    }else if(self.mInt_flag==3){//错题本
         self.mTableV_list.hidden = YES;
         self.stuErrVC.view.hidden = NO;
         self.mTableV_list.tableHeaderView=nil;
@@ -391,11 +391,12 @@
                 node1.mInt_index = self.mInt_index;//全局索引标识
                 self.mInt_index++;
                 GradeModel *temp1 =[array objectAtIndex:m];
-                if (m==0) {
+                if (m==0) {//没值
                     TreeJob_level0_model *nodeData = node0.nodeData;
                     nodeData.mStr_title = temp1.GradeName;
                     nodeData.mStr_id = temp1.GradeCode;
                     temp1.mInt_select = 1;
+                    //获取联动列表
                     [[OnlineJobHttp getInstance]GetUnionChapterListWithgCode:temp1.GradeCode subCode:@"0" uId:@"0" flag:@"0" sumFlag:0];
                 }else{
                     temp1.mInt_select = 0;
@@ -419,7 +420,7 @@
     NSMutableArray *array1 = [dic objectForKey:@"args1"];//科目列表
     NSMutableArray *array2 = [dic objectForKey:@"args2"];//教版
     NSMutableArray *array3 = [dic objectForKey:@"args3"];//章节
-    if ([flag intValue]==0) {//
+    if ([flag intValue]==0) {//作业
         for (int i=0; i<self.mArr_sumData.count; i++) {
             TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
             if (node0.flag == 1) {//往科目选择中插入
@@ -504,7 +505,7 @@
                 }
             }
         }
-    }else if ([flag intValue]==1){//
+    }else if ([flag intValue]==1){//练习
         for (int i=0; i<self.mArr_sumData.count; i++) {
             TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
             if (node0.flag == 2) {//往教版选择中插入
@@ -559,7 +560,7 @@
                 }
             }
         }
-    }else if ([flag intValue]==2){//
+    }else if ([flag intValue]==2){//练习查询
         for (int i=0; i<self.mArr_sumData.count; i++) {
             TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
             if (node0.flag == 3) {//往章节选择中插入
@@ -640,6 +641,7 @@
     self.mArr_display = [NSArray arrayWithArray:tmp];
     [self.mTableV_list reloadData];
 }
+//循环遍历
 -(void)addArrayChapter:(ChapterModel *)model array:(NSMutableArray *)array{
     if (model.isExpanded) {
         for (ChapterModel *temp1 in model.array) {
@@ -685,11 +687,11 @@
             [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
         }
         StuHWModel *model;
-        if (self.mInt_flag == 0) {
+        if (self.mInt_flag == 0) {//作业列表
             model = [self.mArr_homework objectAtIndex:indexPath.row];
-        }else if (self.mInt_flag == 1) {
+        }else if (self.mInt_flag == 1) {//练习列表
             model = [self.mArr_practice objectAtIndex:indexPath.row];
-        }else if (self.mInt_flag == 2) {
+        }else if (self.mInt_flag == 2) {//练习查询
             model = [self.mArr_practiceTotal objectAtIndex:indexPath.row];
         }
         if ([model.isHaveAdd intValue]==1) {//主观题
@@ -970,7 +972,7 @@
                 if(node.type == 0){
                     TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
                     if (node.sonNodes.count== 0) {
-                        if (node.flag ==0){
+                        if (node.flag ==0){//当前节点
                             [MBProgressHUD showError:@"年级为空" toView:self.view];
                         }else if (node.flag ==1){
                             [MBProgressHUD showError:@"科目为空" toView:self.view];
@@ -1002,7 +1004,7 @@
         }
     }
 }
-
+//循环塞数据
 -(void) reloadDataForDisplayArrayChangeAt1:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
         if(node.flag == 3){
@@ -1019,7 +1021,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环遍历自己
 -(void)addArrayChapter1:(NSInteger)tableID array:(NSMutableArray *)array{
     for (ChapterModel *temp1 in array) {
         if ([temp1.TabID intValue]==tableID) {
@@ -1079,7 +1081,7 @@
         }
     }
 }
-
+// 为不同类型cell填充数据
 -(void)loadDataForSigleSelectTreeViewCell1:(UITableViewCell*)cell with:(ChapterModel*)model flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -1121,7 +1123,7 @@
         cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
     }
 }
-
+// 为不同类型cell填充数据
 -(void)loadDataForSigleSelectTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -1179,7 +1181,7 @@
         cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
     }
 }
-
+//循环塞数据
 -(void) reloadDataForDisplayArrayChangeAt2:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
         if(node.flag == 3){
@@ -1200,7 +1202,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环遍历自己
 -(void)addArrayChapter2:(NSInteger)tableID array:(NSMutableArray *)array node:(TreeJob_node *)node{
     for (ChapterModel *model1 in array) {
         if ([model1.TabID intValue]==tableID) {
@@ -1219,7 +1221,7 @@
 //年级、科目、教版、章节的单选cell回调
 -(void)TreeJob_sigleSelect_TableViewCellClick:(TreeJob_sigleSelect_TableViewCell *)treeJob_sigleSelect_TableViewCell{
     id temp = treeJob_sigleSelect_TableViewCell.model;
-    if ([temp isKindOfClass:[ChapterModel class]]) {
+    if ([temp isKindOfClass:[ChapterModel class]]) {//匹配model
         ChapterModel *model = treeJob_sigleSelect_TableViewCell.model;
         [self reloadDataForDisplayArrayChangeAt2:model.TabID];
     }else if ([temp isKindOfClass:[TreeJob_node class]]) {

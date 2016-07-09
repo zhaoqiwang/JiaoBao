@@ -85,7 +85,7 @@
     //添加表格的下拉刷新
     self.mTableV_detail.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mTableV_detail.backgroundColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
-    if (self.mInt_flag == 1) {
+    if (self.mInt_flag == 1) {//判断是详情页2，还是列表页1
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, 30)];
         label.font = [UIFont systemFontOfSize:13];
         label.text = @"                              下拉加载更多";
@@ -141,7 +141,7 @@
     NSString *flag = [dic objectForKey:@"flag"];
     if ([flag integerValue]==0) {
         NSMutableArray *tempArr = [dic valueForKey:@"array"];
-        if (self.mInt_page > 1) {
+        if (self.mInt_page > 1) {//记录当前请求的详情数据，是第几页
             if (tempArr.count>0) {
                 [self.mArr_feeback addObjectsFromArray:tempArr];
             }
@@ -254,7 +254,7 @@
         [MBProgressHUD showError:@"获取失败" toView:self.view];
     }
 }
-
+//
 -(void)addArray{
     [self.mArr_list removeAllObjects];
     NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,[self.mArr_msg count])];
@@ -734,6 +734,7 @@
         }
     }
 }
+//进度
 -(void)setProgress:(float)newProgress{
     [self.mProgressV setProgress:newProgress];
     D("进度是：%@",[NSString stringWithFormat:@"%0.f",newProgress*100]);

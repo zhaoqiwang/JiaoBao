@@ -134,27 +134,27 @@
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     int a=0;
     if (model.mInt_id ==0) {//当前选择是教职工
-        //一审
+        //有一审权限
         if ([[dm getInstance].leaveModel.ApproveListTea.A intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]) {
             model1.mInt_check = 0;
             self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.A;
             a++;
-        }else{
+        }else{//有二审权限
             if ([[dm getInstance].leaveModel.ApproveListTea.B intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]) {
                 model1.mInt_check = 1;
                 self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.B;
                 a++;
-            }else{
+            }else{//有三审权限
                 if ([[dm getInstance].leaveModel.ApproveListTea.C intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]) {
                     model1.mInt_check = 2;
                     self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.C;
                     a++;
-                }else{
+                }else{//有四审权限
                     if ([[dm getInstance].leaveModel.ApproveListTea.D intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]) {
                         model1.mInt_check = 3;
                         self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.D;
                         a++;
-                    }else{
+                    }else{//有五审权限
                         if ([[dm getInstance].leaveModel.ApproveListTea.E intValue]==1||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]) {
                             model1.mInt_check = 4;
                             self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteTea.E;
@@ -170,20 +170,20 @@
             self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.A;
             //如果是查询学生，并且是班主任级别，给默认值
             [self setClassTeacher];
-        }else{
-            if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {
+        }else{//
+            if ([[dm getInstance].leaveModel.ApproveListStd.B intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]) {//有二审权限
                 model1.mInt_check = 1;
                 self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.B;
-            }else{
-                if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {
+            }else{//有一审权限
+                if ([[dm getInstance].leaveModel.ApproveListStd.C intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]) {//有三审权限
                     model1.mInt_check = 2;
                     self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.C;
                 }else{
-                    if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {
+                    if ([[dm getInstance].leaveModel.ApproveListStd.D intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]) {//有四审权限
                         model1.mInt_check = 3;
                         self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.D;
                     }else{
-                        if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {
+                        if ([[dm getInstance].leaveModel.ApproveListStd.E intValue]==1||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]) {//有五审权限
                             model1.mInt_check = 4;
                             self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.E;
                         }
@@ -379,31 +379,31 @@
                 cell.mBtn_five.hidden = YES;
             }
         }
-        if (model.mInt_check ==0) {
+        if (model.mInt_check ==0) {//0一审，1二审，等
             [cell.mBtn_one setImage:[UIImage imageNamed:@"sigleSelect1"] forState:UIControlStateNormal];
             [cell.mBtn_two setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_three setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_four setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_five setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
-        }else if (model.mInt_check == 1){
+        }else if (model.mInt_check == 1){//0一审，1二审，等
             [cell.mBtn_one setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_two setImage:[UIImage imageNamed:@"sigleSelect1"] forState:UIControlStateNormal];
             [cell.mBtn_three setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_four setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_five setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
-        }else if (model.mInt_check == 2){
+        }else if (model.mInt_check == 2){//0一审，1二审，等
             [cell.mBtn_one setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_two setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_three setImage:[UIImage imageNamed:@"sigleSelect1"] forState:UIControlStateNormal];
             [cell.mBtn_four setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_five setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
-        }else if (model.mInt_check == 3){
+        }else if (model.mInt_check == 3){//0一审，1二审，等
             [cell.mBtn_one setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_two setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_three setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_four setImage:[UIImage imageNamed:@"sigleSelect1"] forState:UIControlStateNormal];
             [cell.mBtn_five setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
-        }else if (model.mInt_check == 4){
+        }else if (model.mInt_check == 4){//0一审，1二审，等
             [cell.mBtn_one setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_two setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
             [cell.mBtn_three setImage:[UIImage imageNamed:@"sigleSelect0"] forState:UIControlStateNormal];
@@ -532,7 +532,7 @@
     [self setValueDisplayArray];
 }
 
-//cell中，button的点击回调方法
+//cell中，button的点击回调方法，选择教职工
 -(void)CheckSelectTableViewCellTeacherBtn:(CheckSelectTableViewCell *) cell{
     [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
@@ -540,7 +540,7 @@
     [self setCheckValue];
     [self setValueDisplayArray];
 }
-
+//选择学生
 -(void)CheckSelectTableViewCellStudentBtn:(CheckSelectTableViewCell *) cell{
     [self.view endEditing:YES];
     CheckSelectModel *model = [self.mArr_list objectAtIndex:0];
@@ -550,7 +550,7 @@
     //如果是查询学生，并且是班主任级别，给默认值
     [self setClassTeacher];
 }
-
+//选择一审
 -(void) CheckSelectTableViewCellOneBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 0;
@@ -566,7 +566,7 @@
         self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.A;
     }
 }
-
+//选择二审
 -(void) CheckSelectTableViewCellTwoBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 1;
@@ -580,7 +580,7 @@
         self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.B;
     }
 }
-
+//选择三审
 -(void) CheckSelectTableViewCellThreeBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 2;
@@ -594,7 +594,7 @@
         self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.C;
     }
 }
-
+//选择四审
 -(void) CheckSelectTableViewCellFourBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 3;
@@ -608,7 +608,7 @@
         self.mStr_checkName = [dm getInstance].leaveModel.LevelNoteStd.D;
     }
 }
-
+//选择五审
 -(void) CheckSelectTableViewCellFiveBtn:(CheckSelectTableViewCell *) cell{
     CheckSelectModel *model1 = [self.mArr_list objectAtIndex:1];
     model1.mInt_check = 4;

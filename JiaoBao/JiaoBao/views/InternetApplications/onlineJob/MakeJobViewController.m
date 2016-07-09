@@ -79,7 +79,7 @@
             for (int i=0; i<self.mArr_sumData.count; i++) {
                 TreeJob_node *node0 = [self.mArr_sumData objectAtIndex:i];
                 
-                if (node0.flag == 1) {
+                if (node0.flag == 1) {//节点
 //                    [node0.sonNodes removeAllObjects];
                     //插入数据，单独的难度行
 //                    for (int i=0; i<self.mArr_sumData.count; i++) {
@@ -453,7 +453,7 @@
         }
     }
 }
-
+//add联动列表中的数组
 -(void)addChapterList:(TreeJob_node *)node0 array:(NSMutableArray *)array flag:(int)flag type:(int)type{
     [node0.sonNodes removeAllObjects];
     if (type==3) {
@@ -472,7 +472,7 @@
         node1.isExpanded = FALSE;//节点是否展开
         node1.mInt_index = self.mInt_index;//全局索引标识
         self.mInt_index++;
-        if (type==1) {
+        if (type==1) {//节点
             SubjectModel *temp1 =[array objectAtIndex:m];
             if (m==0) {
                 TreeJob_level0_model *nodeData = node0.nodeData;
@@ -560,6 +560,7 @@
     self.mArr_display = [NSArray arrayWithArray:tmp];
     [self.mTableV_work reloadData];
 }
+//循环遍历自己
 -(void)addArrayChapter:(ChapterModel *)model array:(NSMutableArray *)array{
     if (model.isExpanded) {
         for (ChapterModel *temp1 in model.array) {
@@ -872,21 +873,21 @@
         if(node.type == 0){
             TreeJob_node *node = [self.mArr_display objectAtIndex:indexPath.row];
             if (node.sonNodes.count== 0) {
-                if (node.flag==1) {
+                if (node.flag==1) {//节点标记
                     [MBProgressHUD showError:@"没有执教班级" toView:self.view];
-                }else if (node.flag ==2){
+                }else if (node.flag ==2){//节点标记
                     [MBProgressHUD showError:@"年级为空" toView:self.view];
-                }else if (node.flag ==3){
+                }else if (node.flag ==3){//节点标记
                     [MBProgressHUD showError:@"科目为空" toView:self.view];
-                }else if (node.flag ==4){
+                }else if (node.flag ==4){//节点标记
                     [MBProgressHUD showError:@"教版为空" toView:self.view];
-                }else if (node.flag ==5){
+                }else if (node.flag ==5){//节点标记
                     [MBProgressHUD showError:@"章节为空" toView:self.view];
-                }else if (node.flag ==8){
+                }else if (node.flag ==8){//节点标记
                     [MBProgressHUD showError:@"自定义作业为空" toView:self.view];
                 }
             }else{
-                if (node.flag==501) {
+                if (node.flag==501) {//节点标记
                     ChapterModel *model = node.nodeData;
                     [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
                 }else{
@@ -894,7 +895,7 @@
                 }
             }
         }else{
-            if (node.flag==501) {
+            if (node.flag==501) {//节点标记
                 ChapterModel *model = node.nodeData;
                 [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
             }else{
@@ -906,7 +907,7 @@
         [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
     }
 }
-
+//循环塞数据
 -(void) reloadDataForDisplayArrayChangeAt1:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
         if(node.flag == 5){
@@ -923,7 +924,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环遍历自己
 -(void)addArrayChapter1:(NSInteger)tableID array:(NSMutableArray *)array{
     for (ChapterModel *temp1 in array) {
         if ([temp1.TabID intValue]==tableID) {
@@ -950,7 +951,7 @@
             TreeJob_level0_model *nodeData = node.nodeData;
             cell0.mLab_title.text = nodeData.mStr_name;
             cell0.mLab_title.frame = CGRectMake(20, 15, 80, 21);
-        }else if (node.flag == 8){
+        }else if (node.flag == 8){//节点标记
             if (self.mInt_modeSelect==0||self.mInt_modeSelect==1||self.mInt_modeSelect == 2) {//个性、统一、AB卷
                 cell0.mLab_title.hidden = YES;
                 cell0.mLab_select.hidden = YES;
@@ -1072,7 +1073,7 @@
         }
     }
 }
-
+// 为不同类型cell填充数据
 -(void)loadDataForSigleSelectTreeViewCell1:(UITableViewCell*)cell with:(ChapterModel*)model flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -1115,7 +1116,7 @@
         cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
     }
 }
-
+// 为不同类型cell填充数据
 -(void)loadDataForSigleSelectTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -1146,7 +1147,7 @@
         name = model.homeworkName;
     }
     
-    if (cell0.sigleBtn.mInt_flag ==1) {
+    if (cell0.sigleBtn.mInt_flag ==1) {//图片
         [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"sigleSelect1"]];
     }else{
         [cell0.sigleBtn.mImg_head setImage:[UIImage imageNamed:@"sigleSelect0"]];
@@ -1177,7 +1178,7 @@
         cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
     }
 }
-
+// 为不同类型cell填充数据
 -(void) loadDataForClassTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node{
     TreeJob_class_TableViewCell *cell0 = (TreeJob_class_TableViewCell*)cell;
     TreeJob_class_model *nodeData = node.nodeData;
@@ -1446,7 +1447,7 @@
     TreeJob_level0_model *model1 = node1.nodeData;
     self.publishJobModel.InpNum = model1.mStr_title;
 }
-
+//更新数组
 -(void) reloadDataForDisplayArrayChangeAt2:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
         if(node.flag == 5){
@@ -1482,7 +1483,7 @@
     }
 //    [self reloadDataForDisplayArray];
 }
-
+//循环遍历自己塞数据
 -(void)addArrayChapter2:(NSInteger)tableID array:(NSMutableArray *)array node:(TreeJob_node *)node{
     for (ChapterModel *model1 in array) {
         if ([model1.TabID intValue]==tableID) {
@@ -1776,6 +1777,7 @@
     self.publishJobModel.ExpTime = dateStr;
     
 }
+//提交
 -(void)PublishJob
 {
     CheckNetWorkSelfView

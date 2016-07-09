@@ -155,7 +155,7 @@
 //    createUserResponseAlert.delegate = self;
 //    [createUserResponseAlert show];
 }
-
+//通知是否有更新
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         NSString *strUrl = @"https://itunes.apple.com/us/app/jiao-bao/id958950234?l=zh&ls=1&mt=8";
@@ -203,7 +203,7 @@
         [MBProgressHUD showError:@"切换失败" toView:self.view];
     }
 }
-
+//通知internetApp界面，获取成功
 -(void)internetAppGetUserInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSString *flag = noti.object;
@@ -237,7 +237,7 @@
         Identity_model *idenModel = [tempArr objectAtIndex:i];
         NSString *str_default = idenModel.DefaultUnitId;
         
-        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {//教育局、老师
             NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
@@ -252,7 +252,7 @@
                     break;
                 }
             }
-        }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){
+        }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){//家长、学生
             NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
@@ -278,6 +278,7 @@
             break;
         }
     }
+    //如果没有值，给默认
     if (name.length==0) {
         for (int i=0; i<tempArr.count; i++) {
             Identity_model *idenModel ;
@@ -635,7 +636,7 @@
         [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
 }
-
+//在线作业
 -(KxMenuItem *)addOnLineJob{
     if ([dm getInstance].uType==2) {
         return [KxMenuItem menuItem:@"作业布置"
@@ -655,6 +656,7 @@
     }
     return nil;
 }
+//签到考勤
 - (void) pushMenuItemSignIn:(id)sender{
     [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
     CheckingInViewController *check = [[CheckingInViewController alloc]init];
@@ -663,7 +665,7 @@
     check.mTableV_right = self.mTableV_right;
     [utils pushViewController:check animated:YES];
 }
-
+//日程记录
 - (void) pushMenuItemSchedule:(id)sender{
     [MobClick event:@"InternetApplications_add" label:@"日程记录"];
 
@@ -836,6 +838,7 @@
     PeopleSpaceViewController *view = [[PeopleSpaceViewController alloc] init];
     [utils pushViewController:view animated:YES];
 }
+//添加问题
 -(void)pushMenuItem9:(id)sender
 {
     JoinUnit

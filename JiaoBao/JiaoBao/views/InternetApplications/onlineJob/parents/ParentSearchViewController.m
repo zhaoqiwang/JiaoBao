@@ -102,7 +102,7 @@
     [self.view addSubview:self.mScrollV_all];
     
     self.mView_head = [[ParentSearchHeadView alloc] initFrame1];
-    //
+    //列表
     self.mTableV_list.frame = CGRectMake(0, self.mScrollV_all.frame.size.height+self.mScrollV_all.frame.origin.y-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-self.mLab_select.frame.size.height-20-self.mScrollV_all.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_list.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.mTableV_list addHeaderWithTarget:self action:@selector(headerRereshing)];
@@ -223,7 +223,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环塞数据
 -(void)addChapterRunloop:(TreeJob_node *)node Array:(NSMutableArray *)array chapterid:(NSString *)chapterid uId:(NSString *)uId StuId:(NSString *)StuId index:(int)index{
     for (TreeJob_node *node1 in node.sonNodes) {
         LevelModel *model1 = node1.nodeData;
@@ -276,8 +276,9 @@
     if ([ResultCode intValue]==0) {
         GenInfo *model = [dic objectForKey:@"model"];
         [self.mArr_parent addObject:model];
+        //block中防止引用计数递增
         __weak ParentSearchViewController *weakSelf = self;
-        [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){
+        [self.mTableV_name initTableViewDataSourceAndDelegate:^NSInteger(UITableView *tableView,NSInteger section){//返回个数
             return weakSelf.mArr_parent.count;
         } setCellForIndexPathBlock:^(UITableView *tableView,NSIndexPath *indexPath){
             UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"SelectionCell"];
@@ -285,11 +286,12 @@
                 cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SelectionCell"];
                 [cell setSelectionStyle:UITableViewCellSelectionStyleGray];
             }
+            //循环家长数组model
             GenInfo *model = [weakSelf.mArr_parent objectAtIndex:indexPath.row];
             cell.textLabel.text = model.StdName;
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             return cell;
-        } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){
+        } setDidSelectRowBlock:^(UITableView *tableView,NSIndexPath *indexPath){//点击
             [UIView animateWithDuration:0.3 animations:^{
                 weakSelf.mTableV_name.frame =  CGRectMake(weakSelf.mTableV_name.frame.origin.x, weakSelf.mTableV_name.frame.origin.y, weakSelf.mTableV_name.frame.size.width, 0);
             } completion:^(BOOL finished){
@@ -371,7 +373,7 @@
 -(void)selectScrollButton:(UIButton *)btn{
     
 }
-
+//上半部分点击回调
 -(void)ButtonViewTitleBtn:(ButtonViewCell *)view{
     CheckNetWorkSelfView
     if (self.mArr_parent.count==0) {
@@ -382,22 +384,21 @@
     [self.mTableV_list removeFooter];
     self.mInt_index = (int)view.tag-100;
     self.stuErrVC.view.hidden = YES;
-    if (self.mInt_index==0) {
+    if (self.mInt_index==0) {//当前作业
         self.mTableV_list.tableHeaderView = nil;
-    } else if (self.mInt_index==1){
+    } else if (self.mInt_index==1){//完成情况
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"完成/缺交/总数";
-    }else if (self.mInt_index==2){
+    }else if (self.mInt_index==2){//学历查询
         self.mTableV_list.tableHeaderView = self.mView_head;
         self.mView_head.mLab_title1.text = @"学力";
-    }else if (self.mInt_index==3){
+    }else if (self.mInt_index==3){//练习查询
         [self.mTableV_list addFooterWithTarget:self action:@selector(footerRereshing)];
         self.mTableV_list.footerPullToRefreshText = @"上拉加载更多";
         self.mTableV_list.footerReleaseToRefreshText = @"松开加载更多数据";
         self.mTableV_list.footerRefreshingText = @"正在加载...";
         self.mTableV_list.tableHeaderView = nil;
-    }else
-    if (self.mInt_index==4){
+    }else if (self.mInt_index==4){//错题本
         self.mTableV_list.hidden = YES;
         self.stuErrVC.view.hidden = NO;
         self.mTableV_list.tableHeaderView=nil;
@@ -456,7 +457,7 @@
             [[OnlineJobHttp getInstance] GetStuHWListPageWithStuId:self.mModel_gen.StudentID IsSelf:@"1" PageIndex:[NSString stringWithFormat:@"%d",self.mInt_parctice] PageSize:@"10"];
             [MBProgressHUD showMessage:@"" toView:self.view];
         }
-    }else if (self.mInt_index==4){
+    }else if (self.mInt_index==4){//错题本
         self.stuErrVC.mModel_gen = self.mModel_gen;
         if (self.stuErrVC.webDataArr.count==0) {
              [self.stuErrVC sendRequest];
@@ -472,7 +473,7 @@
         return;
     }
 
-    self.mInt_flag = 0;
+    self.mInt_flag = 0;//刷新标识
     if (self.mInt_index==0) {//获取作业列表
         [self.mArr_nowHomework removeAllObjects];
     }else if (self.mInt_index ==1){//获取练习列表
@@ -484,13 +485,13 @@
     }
     [self sendRequst];
 }
-
+//加载更多
 - (void)footerRereshing{
     //检查网络情况
     if([utils checkNetWork:self.view tableView:self.mTableV_list]){
         return;
     }
-
+    //计算是否还能加载更多
     NSString *page = @"";
     NSMutableArray *array = self.mArr_practice;
     if (array.count>=10&&array.count%10==0) {
@@ -545,7 +546,7 @@
         [self.mTableV_list registerNib:n forCellReuseIdentifier:indentifier];
     }
     
-    if (self.mInt_index == 0||self.mInt_index == 3) {
+    if (self.mInt_index == 0||self.mInt_index == 3) {//当前作业、练习
         StuHWModel *model;
         if (self.mInt_index == 0) {
             model = [self.mArr_nowHomework objectAtIndex:indexPath.row];
@@ -626,7 +627,7 @@
         //分割线
         cell.mLab_line.frame = CGRectMake(0, cell.mLab_numLab.frame.origin.y+cell.mLab_numLab.frame.size.height+5, [dm getInstance].width, .5);
         return cell;
-    }else if (self.mInt_index == 1) {
+    }else if (self.mInt_index == 1) {//完成情况
         CompleteStatusModel *model = [self.mArr_overHomework objectAtIndex:indexPath.row];
         cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
         cell.mImg_pic.hidden = YES;
@@ -668,7 +669,7 @@
         cell.mLab_line.frame = CGRectMake(0, 43, [dm getInstance].width, .5);
         
         return cell;
-    }else if (self.mInt_index == 2) {
+    }else if (self.mInt_index == 2) {//学历查询
         TreeJob_node *node = [self.mArr_disScore objectAtIndex:indexPath.row];
         LevelModel *model = node.nodeData;
         cell.mImg_pic.frame = CGRectMake(8, 10, 0, 0);
@@ -775,20 +776,20 @@
         }else{
             model = [self.mArr_practice objectAtIndex:indexPath.row];
         }
-            DetailHWViewController *detail;
-            detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
-            detail.TabID = model.TabID;
-            detail.isSubmit = [model.isHWFinish integerValue];
-            detail.hwName = model.homeworkName;
+        DetailHWViewController *detail;
+        detail = [[DetailHWViewController alloc]initWithNibName:@"DetailHWVc" bundle:nil];
+        detail.TabID = model.TabID;
+        detail.isSubmit = [model.isHWFinish integerValue];
+        detail.hwName = model.homeworkName;
         if (self.mInt_index==0) {
             detail.navBarName = @"作业详情";
         }else{
             detail.navBarName = @"练习详情";
         }
         
-            detail.FlagStr = @"2";
-            [self.navigationController pushViewController:detail animated:YES];
-    }else if (self.mInt_index == 2){
+        detail.FlagStr = @"2";
+        [self.navigationController pushViewController:detail animated:YES];
+    }else if (self.mInt_index == 2){//学历查询
         TreeJob_node *node = [self.mArr_disScore objectAtIndex:indexPath.row];
         LevelModel *model = node.nodeData;
         //判断是教版
@@ -857,7 +858,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环遍历
 -(void)openOrClose:(TreeJob_node *)node0 Model:(LevelModel *)model{
     for (TreeJob_node *node1 in node0.sonNodes) {
         LevelModel *model1 = node1.nodeData;
@@ -892,7 +893,7 @@
     self.mArr_disScore = [NSArray arrayWithArray:tmp];
     [self.mTableV_list reloadData];
 }
-
+//循环遍历
 -(void)addRunloop:(TreeJob_node *)node SumArr:(NSMutableArray *)tmp{
     for(TreeJob_node *node2 in node.sonNodes){
         [tmp addObject:node2];

@@ -273,7 +273,7 @@
     //    [self dismissViewControllerAnimated:YES completion:nil];
     [utils popViewControllerAnimated1:YES];
 }
-
+#pragma 拍照模块
 -(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
     NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
     if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {

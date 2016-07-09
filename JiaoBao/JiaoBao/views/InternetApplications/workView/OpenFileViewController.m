@@ -72,6 +72,7 @@
     NSString * mStr_filePath = [NSString stringWithFormat:@"%@/%@",tempPath,self.mStr_name];
 //    [self checkEncodingWithfilePath:mStr_filePath];
     NSURL *url = [NSURL fileURLWithPath:mStr_filePath isDirectory:YES];
+    //打开图片类型
     if ([fileType isEqual:@"png"]||[fileType isEqual: @"gif"]||[fileType isEqual:@"bmp"]||[fileType isEqual:@"jpg"]||[fileType isEqual:@"jpeg"]) {
         //编码图片
         UIImage *selectedImage = [UIImage imageWithContentsOfFile:mStr_filePath];
@@ -106,11 +107,6 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.mWebView loadRequest:request];
     }
-    //    else {
-    //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此文件格式打不开" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    //        alert.tag = 11;
-    //        [alert show];
-    //    }
 }
 
 -(void)webViewDidFinishLoad:(UIWebView *)webView{

@@ -97,7 +97,7 @@
     [self clearArray];
 //    self.mInt_index = 0;
 }
-
+//取发给我消息的用户列表
 -(void)UnReadMsgCell:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self];
     [self.mTableV_list headerEndRefreshing];
@@ -474,7 +474,7 @@
     }
     //不是刷新
     self.mInt_flag = 0;
-    if (self.mInt_index == 0) {
+    if (self.mInt_index == 0) {//全部
         if (self.mArr_sum.count>=20&&self.mArr_sum.count%20==0) {
             int a = (int)self.mArr_sum.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:[NSString stringWithFormat:@"%d",a]];
@@ -482,7 +482,7 @@
         } else {
             [self loadNoMore];
         }
-    }else if (self.mInt_index == 1){
+    }else if (self.mInt_index == 1){//未读
         if (self.mArr_unRead.count>=20&&self.mArr_unRead.count%20==0) {
             int a = (int)self.mArr_unRead.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:6 page:[NSString stringWithFormat:@"%d",a]];
@@ -490,7 +490,7 @@
         } else {
             [self loadNoMore];
         }
-    }else if (self.mInt_index == 2){
+    }else if (self.mInt_index == 2){//未回复
         if (self.mArr_unReply.count>=20&&self.mArr_unReply.count%20==0) {
             int a = (int)self.mArr_unReply.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:8 page:[NSString stringWithFormat:@"%d",a]];
@@ -498,7 +498,7 @@
         } else {
             [self loadNoMore];
         }
-    }else if (self.mInt_index == 3){
+    }else if (self.mInt_index == 3){//已回复
         if (self.mArr_reply.count>=20&&self.mArr_reply.count%20==0) {
             int a = (int)self.mArr_reply.count/20+1;
             [[LoginSendHttp getInstance] wait_unReadMsgWithTag:9 page:[NSString stringWithFormat:@"%d",a]];
@@ -506,7 +506,7 @@
         } else {
             [self loadNoMore];
         }
-    }else if (self.mInt_index == 4){
+    }else if (self.mInt_index == 4){//我发的
         if (self.mArr_mySend.count>=20&&self.mArr_mySend.count%20==0) {
             int a = (int)self.mArr_mySend.count/20+1;
             [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:[NSString stringWithFormat:@"%d",a]];
@@ -519,19 +519,19 @@
 
 //刚进入学校圈，或者下拉刷新时执行
 -(void)tableViewDownReloadData{
-    if (self.mInt_index == 0) {
+    if (self.mInt_index == 0) {//全部
         [[LoginSendHttp getInstance] wait_unReadMsgWithTag:0 page:@"1"];
         [self ProgressViewLoad];
-    }else if (self.mInt_index == 1){
+    }else if (self.mInt_index == 1){//未读
         [[LoginSendHttp getInstance] wait_unReadMsgWithTag:6 page:@"1"];
         [self ProgressViewLoad];
-    }else if (self.mInt_index == 2){
+    }else if (self.mInt_index == 2){//未回复
         [[LoginSendHttp getInstance] wait_unReadMsgWithTag:8 page:@"1"];
         [self ProgressViewLoad];
-    }else if (self.mInt_index == 3){
+    }else if (self.mInt_index == 3){//已回复
         [[LoginSendHttp getInstance] wait_unReadMsgWithTag:9 page:@"1"];
         [self ProgressViewLoad];
-    }else if (self.mInt_index == 4){
+    }else if (self.mInt_index == 4){//我发的
         [[LoginSendHttp getInstance] getMyselfSendMsgWithPage:@"1"];
         [self ProgressViewLoad];
     }

@@ -97,9 +97,9 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mInt_refresh == 1) {
+    if (self.mInt_refresh == 1) {//1是加载，2是刷新
         [self firstSendHttp];
-    } else if (self.mInt_refresh == 2){
+    } else if (self.mInt_refresh == 2){//1是加载，2是刷新
         if (self.mArr_detail.count>=20) {
             self.mInt_page = (int)self.mArr_detail.count/20+1;
             D("self.mint.page-====%lu %d",(unsigned long)self.mArr_detail.count,self.mInt_page);

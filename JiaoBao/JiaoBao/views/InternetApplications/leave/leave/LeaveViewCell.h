@@ -1,7 +1,7 @@
 //
 //  LeaveView.h
 //  JiaoBao
-//
+//  请假上半部分中，每个单独的块
 //  Created by Zqw on 16/3/11.
 //  Copyright © 2016年 JSY. All rights reserved.
 //

@@ -145,7 +145,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//塞数据，给默认值
 -(void)addChapterList:(TreeJob_node *)node0 array:(NSMutableArray *)array flag:(int)flag type:(int)type{
     [node0.sonNodes removeAllObjects];
     if (type==3) {
@@ -233,6 +233,7 @@
     self.mArr_display = [NSArray arrayWithArray:tmp];
     [self.mTableV_work reloadData];
 }
+//循环遍历自己
 -(void)addArrayChapter:(ChapterModel *)model array:(NSMutableArray *)array{
     if (model.isExpanded) {
         for (ChapterModel *temp1 in model.array) {
@@ -412,7 +413,7 @@
         [self reloadDataForDisplayArrayChangeAt1:model.TabID];//修改章节cell的状态(关闭或打开)
     }
 }
-
+//循环塞数据
 -(void) reloadDataForDisplayArrayChangeAt1:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
         if(node.flag == 3){
@@ -429,7 +430,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环遍历自己
 -(void)addArrayChapter1:(NSInteger)tableID array:(NSMutableArray *)array{
     for (ChapterModel *temp1 in array) {
         if ([temp1.TabID intValue]==tableID) {
@@ -470,7 +471,7 @@
         cell0.mLab_title.frame = CGRectMake(20, 15, 80, 21);
     }
 }
-
+// 为不同类型cell填充数据
 -(void)loadDataForSigleSelectTreeViewCell1:(UITableViewCell*)cell with:(ChapterModel*)model flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -513,7 +514,7 @@
         cell0.sigleBtn.frame = CGRectMake(30, 8, cell0.sigleBtn.mLab_title.frame.origin.x+titleSize.width, cell0.sigleBtn.frame.size.height);
     }
 }
-
+// 为不同类型cell填充数据
 -(void)loadDataForSigleSelectTreeViewCell:(UITableViewCell*)cell with:(TreeJob_node*)node flag:(int)flag{
     TreeJob_sigleSelect_TableViewCell *cell0 = (TreeJob_sigleSelect_TableViewCell*)cell;
     NSString *name = @"";
@@ -587,7 +588,7 @@
     }
     [self reloadDataForDisplayArray];
 }
-
+//循环塞数据
 -(void) reloadDataForDisplayArrayChangeAt2:(NSString *)tableID{
     for (TreeJob_node *node in self.mArr_sumData) {
         if(node.flag == 3){
@@ -610,7 +611,7 @@
     }
     //    [self reloadDataForDisplayArray];
 }
-
+//循环遍历自己
 -(void)addArrayChapter2:(NSInteger)tableID array:(NSMutableArray *)array node:(TreeJob_node *)node{
     for (ChapterModel *model1 in array) {
         if ([model1.TabID intValue]==tableID) {

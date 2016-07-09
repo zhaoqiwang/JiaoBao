@@ -223,7 +223,7 @@
     static NSString *LeaveNow_indentifier = @"LeaveNowTableViewCell";
     static NSString *addDateCell_indentifier = @"addDateCell";
     LeaveNowModel *model = [self.mArr_leave objectAtIndex:indexPath.row];
-    if (model.mInt_flag==3) {
+    if (model.mInt_flag==3) {//时间
         addDateCell *cell = (addDateCell *)[tableView dequeueReusableCellWithIdentifier:addDateCell_indentifier];
         if (cell == nil) {
             cell = [[addDateCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addDateCell_indentifier];
@@ -284,13 +284,14 @@
             //内容显示
             if (model.mStr_value.length>0) {
                 cell.mLab_value.text = model.mStr_value;
+                //是否显示右侧系统按钮
                 if (model.mInt_flag==0) {
                     cell.accessoryType=UITableViewCellAccessoryNone;
                 }else{
                     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
                 }
             }else{
-                if (model.mInt_flag==0) {
+                if (model.mInt_flag==0) {//0选人，1理由选择
                     cell.mLab_value.text = @"请选择学生";
                     cell.accessoryType=UITableViewCellAccessoryNone;
                 }else{

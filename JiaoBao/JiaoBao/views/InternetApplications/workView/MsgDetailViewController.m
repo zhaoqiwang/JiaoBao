@@ -162,6 +162,7 @@
         [MBProgressHUD showError:@"" toView:self.view];
     }
 }
+//设置frame，定位
 -(void)setFrame{
     self.mScrollV_view.frame = CGRectMake(0, 44, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height-51+[dm getInstance].statusBar);
     D("self.mScrollV_view.frame-==  %@",NSStringFromCGRect(self.mScrollV_view.frame));
@@ -501,6 +502,7 @@
         }
     }
 }
+//下载进度
 -(void)setProgress:(float)newProgress{
     [self.mProgressV setProgress:newProgress];
     self.mProgressV.labelText = [NSString stringWithFormat:@"已经下载：%0.f%%",newProgress*100];

@@ -43,7 +43,7 @@
 
 @optional
 
-//
+//回调
 -(void) LeaveDetailTableViewCellCheckBtn:(LeaveDetailTableViewCell *) cell;
 -(void) LeaveDetailTableViewCellDeleteBtn:(LeaveDetailTableViewCell *) cell;
 -(void) LeaveDetailTableViewCellUpdateBtn:(LeaveDetailTableViewCell *) cell;

@@ -1,7 +1,7 @@
 //
 //  LeaveView.h
 //  JiaoBao
-//
+//  请假显示界面
 //  Created by Zqw on 16/3/12.
 //  Copyright © 2016年 JSY. All rights reserved.
 //

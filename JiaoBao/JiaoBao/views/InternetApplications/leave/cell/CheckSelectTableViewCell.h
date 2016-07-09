@@ -37,7 +37,7 @@
 
 @optional
 
-//
+//回调
 -(void) CheckSelectTableViewCellTeacherBtn:(CheckSelectTableViewCell *) cell;
 -(void) CheckSelectTableViewCellStudentBtn:(CheckSelectTableViewCell *) cell;
 -(void) CheckSelectTableViewCellOneBtn:(CheckSelectTableViewCell *) cell;

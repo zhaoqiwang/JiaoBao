@@ -47,12 +47,12 @@
     }
     return self;
 }
-
+//点击
 -(void)buttonViewClick:(UIGestureRecognizer *)gest{
-    if (self.flag == 1) {
+    if (self.flag == 1) {//上下显示时
         LeaveViewCell *btn = (LeaveViewCell *)gest.view;
-        for (LeaveViewCell *btn1 in self.subviews) {
-            if ([btn1.class isSubclassOfClass:[LeaveViewCell class]]) {
+        for (LeaveViewCell *btn1 in self.subviews) {//循环当前的所有控件
+            if ([btn1.class isSubclassOfClass:[LeaveViewCell class]]) {//找到类型相同的
                 if ((int)btn1.tag == btn.tag) {//
                     btn1.mLab_title.textColor = [UIColor colorWithRed:54/255.0 green:168/255.0 blue:12/255.0 alpha:1];
                     btn1.mLab_line.hidden = NO;
@@ -63,10 +63,10 @@
             }
         }
     }
+    //回调到显示view界面
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(LeaveViewCellTitleBtn:)]) {
         [self.delegate LeaveViewCellTitleBtn:(LeaveViewCell *)gest.view];
     }
-    D("idsjgldjgl;kjsl;d-=====%ld",(long)gest.view.tag);
 }
 
 /*

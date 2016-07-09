@@ -128,33 +128,33 @@
 
     }
 }
-
+//点击
 -(void)LeaveViewCellTitleBtn:(LeaveViewCell *)view{
     [self.view endEditing:YES];
     self.mInt_flag = (int)view.tag -100;
     [self.mView_root0.mTextF_reason resignFirstResponder];
     [self.mView_root1.mTextF_reason resignFirstResponder];
     //先判断身份，班主任有4个，其他为两个
-    if (self.mInt_leaveID == 1) {
-        if (self.mInt_flag == 0) {
+    if (self.mInt_leaveID == 1) {//门卫0，班主任1，普通老师2，家长3
+        if (self.mInt_flag == 0) {//待审
             self.mView_root0.hidden = NO;
             self.mView_root1.hidden = YES;
             self.myQueryVC.view.hidden = YES;
             self.classQueryVC.view.hidden = YES;
 
-        }else if (self.mInt_flag == 1){
+        }else if (self.mInt_flag == 1){//已审
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = NO;
             self.myQueryVC.view.hidden = YES;
             self.classQueryVC.view.hidden = YES;
 
-        }else if (self.mInt_flag == 2){
+        }else if (self.mInt_flag == 2){//统计查询
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = YES;
             self.myQueryVC.view.hidden = NO;
             self.classQueryVC.view.hidden = YES;
 
-        }else if (self.mInt_flag == 3){
+        }else if (self.mInt_flag == 3){//门卫审核
             self.mView_root0.hidden = YES;
             self.mView_root1.hidden = YES;
             self.myQueryVC.view.hidden = YES;
@@ -162,13 +162,13 @@
         }
     }else{
         //判断是不是家长
-        if (self.mInt_leaveID == 3) {
-            if (self.mInt_flag == 0) {
+        if (self.mInt_leaveID == 3) {//门卫0，班主任1，普通老师2，家长3
+            if (self.mInt_flag == 0) {//待审
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = NO;
                 self.myQueryVC.view.hidden = YES;
                 self.classQueryVC.view.hidden = YES;
-            }else if (self.mInt_flag == 1){
+            }else if (self.mInt_flag == 1){//已审
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
                 self.myQueryVC.view.hidden = YES;
@@ -176,12 +176,12 @@
 
             }
         }else{
-            if (self.mInt_flag == 0) {
+            if (self.mInt_flag == 0) {//待审
                 self.mView_root0.hidden = NO;
                 self.mView_root1.hidden = YES;
                 self.myQueryVC.view.hidden = YES;
                 self.classQueryVC.view.hidden = YES;
-            }else if (self.mInt_flag == 1){
+            }else if (self.mInt_flag == 1){//已审
                 self.mView_root0.hidden = YES;
                 self.mView_root1.hidden = YES;
                 self.myQueryVC.view.hidden = NO;
