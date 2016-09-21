@@ -597,10 +597,10 @@
                          image:[UIImage imageNamed:@"appNav_contact"]
                         target:self
                         action:@selector(pushMenuItemSignIn:)],
-          [KxMenuItem menuItem:@"日程记录"
-                         image:[UIImage imageNamed:@"appNav_contact"]
-                        target:self
-                        action:@selector(pushMenuItemSchedule:)],
+//          [KxMenuItem menuItem:@"日程记录"
+//                         image:[UIImage imageNamed:@"appNav_contact"]
+//                        target:self
+//                        action:@selector(pushMenuItemSchedule:)],
           
           ];
         //在线作业
