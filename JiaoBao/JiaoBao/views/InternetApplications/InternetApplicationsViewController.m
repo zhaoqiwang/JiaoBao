@@ -593,14 +593,14 @@
         NSArray *menuItems0 =
         @[
           
-          [KxMenuItem menuItem:@"签到考勤"
-                         image:[UIImage imageNamed:@"appNav_contact"]
-                        target:self
-                        action:@selector(pushMenuItemSignIn:)],
-//          [KxMenuItem menuItem:@"日程记录"
+//          [KxMenuItem menuItem:@"签到考勤"
 //                         image:[UIImage imageNamed:@"appNav_contact"]
 //                        target:self
-//                        action:@selector(pushMenuItemSchedule:)],
+//                        action:@selector(pushMenuItemSignIn:)],
+          [KxMenuItem menuItem:@"日程记录"
+                         image:[UIImage imageNamed:@"appNav_contact"]
+                        target:self
+                        action:@selector(pushMenuItemSchedule:)],
           
           ];
         //在线作业
