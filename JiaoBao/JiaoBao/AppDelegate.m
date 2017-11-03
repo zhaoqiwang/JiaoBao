@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import<AVFoundation/AVFoundation.h>
 #import "IQKeyboardManager.h"
+#import "BBLaunchAdMonitor.h"
 
 
 //CLLocationManager *locationManager;
@@ -58,6 +59,14 @@
                                              selector:@selector(checkNetworkStatus:)
      
                                                  name:kReachabilityChangedNotification object:nil];
+    
+    // Override point for customization after application launch.
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAdDetail:) name:BBLaunchAdDetailDisplayNotification object:nil];
+//    NSString *path = @"http://qn-edures.jiaobaowang.net/zypt/gx-k12/dongman/img/img-0-0-61403.png?e=1503996986&token=SDtQBeriWyCnNor8FnDFuRYWuvlsZ1xbPYQkLFT0:hlT_mlT25c-mg7zXp4QMvx8CzK0=";
+//    [BBLaunchAdMonitor showAdAtPath:path
+//                             onView:self.window.rootViewController.view
+//                       timeInterval:5.
+//                   detailParameters:@{@"carId":@(12345), @"name":@"奥迪-品质生活"}];
     
     internetReachable = [Reachability reachabilityForInternetConnection];
     
@@ -158,6 +167,10 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+- (void)showAdDetail:(NSNotification *)noti
+{
+    NSLog(@"detail parameters:%@", noti.object);
 }
 //友盟初始化
 - (void)onlineConfigCallBack:(NSNotification *)note {
@@ -554,6 +567,48 @@
             abort();
         }
     }
+}
+
+/**
+ *  当一个指定的URL资源打开时调用，iOS9之前
+ *
+ *  @param url               指定的url
+ *  @param sourceApplication 请求打开应用的bundle ID
+ */
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    NSLog(@"url : %@",url);
+    
+    NSLog(@"sourceApplication : %@",sourceApplication);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[url absoluteString]
+                                                    message:sourceApplication
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"OtherBtn",nil];
+    [alert show];
+    
+    return YES;
+}
+/**
+ *  当一个指定的URL资源打开时调用，iOS9之后
+ *
+ *  @param url     指定的url
+ *  @param options 打开选项，其中通过UIApplicationOpenURLOptionsSourceApplicationKey获得sourceApplication
+ */
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    NSLog(@"url : %@",url);
+    
+    NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
+    NSLog(@"sourceApplication : %@",sourceApplication);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[url absoluteString]
+                                                    message:sourceApplication
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    return YES;
 }
 
 

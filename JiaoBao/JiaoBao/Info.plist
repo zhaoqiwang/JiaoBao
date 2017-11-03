@@ -40,13 +40,30 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.10</string>
+	<string>2.1.01</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.sdjsy.JiaoBao</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>weixin</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>2.0.11</string>
+	<string>2.1.01</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>testa</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -54,10 +71,28 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>是否许允此App使用蓝牙？</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>是否允许此App使用日历？</string>
+	<key>NSCameraUsageDescription</key>
+	<string>是否允许此App访问你的媒体资料库？</string>
+	<key>NSContactsUsageDescription</key>
+	<string>是否允许此App访问你的通讯录？</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>是否允许此App使用你的麦克风？</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>是否允许此App使用你的相机？</string>
+	<key>Privacy - Location Always Usage Description</key>
+	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
+	<key>Privacy - Location When In Use Usage Description</key>
+	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
+	<key>Privacy - Speech Recognition Usage Description</key>
+	<string>是否允许此App使用语音识别？</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -72,23 +107,5 @@
 	<false/>
 	<key>requestWhenInUseAuthorization</key>
 	<true/>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>是否允许此App使用你的麦克风？</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>是否允许此App使用你的相机？</string>
-	<key>NSCameraUsageDescription</key>
-	<string>是否允许此App访问你的媒体资料库？</string>
-	<key>NSContactsUsageDescription</key>
-	<string>是否允许此App访问你的通讯录？</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>是否许允此App使用蓝牙？</string>
-	<key>Privacy - Speech Recognition Usage Description</key>
-	<string>是否允许此App使用语音识别？</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>是否允许此App使用日历？</string>
-	<key>Privacy - Location Always Usage Description</key>
-	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
-	<key>Privacy - Location When In Use Usage Description</key>
-	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
 </dict>
 </plist>

@@ -28,6 +28,7 @@
 		4307165C1C93C56F008D3382 /* LeaveNowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165B1C93C56F008D3382 /* LeaveNowModel.m */; };
 		430716611C93C6F3008D3382 /* LeaveNowTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */; };
 		430716621C93C6F3008D3382 /* LeaveNowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */; };
+		434853B41F5553CA000B9BC3 /* BBLaunchAdMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 434853B31F5553CA000B9BC3 /* BBLaunchAdMonitor.m */; };
 		435D45E61CC4934E0073179B /* leaveDelete.png in Resources */ = {isa = PBXBuildFile; fileRef = 435D45E31CC4934E0073179B /* leaveDelete.png */; };
 		435D45E71CC4934E0073179B /* leaveDelete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 435D45E41CC4934E0073179B /* leaveDelete@2x.png */; };
 		435D45E81CC4934E0073179B /* leaveDelete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 435D45E51CC4934E0073179B /* leaveDelete@3x.png */; };
@@ -1217,6 +1218,8 @@
 		4307165E1C93C6F3008D3382 /* LeaveNowTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveNowTableViewCell.h; path = cell/LeaveNowTableViewCell.h; sourceTree = "<group>"; };
 		4307165F1C93C6F3008D3382 /* LeaveNowTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveNowTableViewCell.m; path = cell/LeaveNowTableViewCell.m; sourceTree = "<group>"; };
 		430716601C93C6F3008D3382 /* LeaveNowTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveNowTableViewCell.xib; path = cell/LeaveNowTableViewCell.xib; sourceTree = "<group>"; };
+		434853B21F5553CA000B9BC3 /* BBLaunchAdMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BBLaunchAdMonitor.h; path = "Common/广告循环AdView/BBLaunchAdMonitor.h"; sourceTree = "<group>"; };
+		434853B31F5553CA000B9BC3 /* BBLaunchAdMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BBLaunchAdMonitor.m; path = "Common/广告循环AdView/BBLaunchAdMonitor.m"; sourceTree = "<group>"; };
 		435D45E31CC4934E0073179B /* leaveDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaveDelete.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete.png; sourceTree = "<group>"; };
 		435D45E41CC4934E0073179B /* leaveDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaveDelete@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete@2x.png"; sourceTree = "<group>"; };
 		435D45E51CC4934E0073179B /* leaveDelete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaveDelete@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete@3x.png"; sourceTree = "<group>"; };
@@ -4958,6 +4961,8 @@
 		A79021781C5612A3007736E9 /* 广告循环AdView */ = {
 			isa = PBXGroup;
 			children = (
+				434853B21F5553CA000B9BC3 /* BBLaunchAdMonitor.h */,
+				434853B31F5553CA000B9BC3 /* BBLaunchAdMonitor.m */,
 				A79021791C561300007736E9 /* AdView.h */,
 				A790217A1C561300007736E9 /* AdView.m */,
 			);
@@ -6642,6 +6647,7 @@
 				A755E71319F278B900BBDF3D /* ASIS3BucketRequest.m in Sources */,
 				A77FF0291A650B3F00DB85E3 /* JSONModelClassProperty.m in Sources */,
 				F7C8AB751B73451700E829A4 /* commentListModel.m in Sources */,
+				434853B41F5553CA000B9BC3 /* BBLaunchAdMonitor.m in Sources */,
 				A73CAD561A071EC200D6C5AA /* WorkDetailListViewController.m in Sources */,
 				A7357A391A4025B800A195C5 /* ThemeListModel.m in Sources */,
 				A773FC4C1A4C0563005F84C2 /* ELCConsole.m in Sources */,
