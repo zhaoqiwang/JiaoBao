@@ -47,6 +47,10 @@
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
 		4392A5BE1B2067F600C5878D /* ReviseNameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */; };
 		4393130A1B1DBE6E00169F30 /* RegisterHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = 439313091B1DBE6E00169F30 /* RegisterHttp.m */; };
+		43B97EFB1FAC0EFC00067171 /* TeacherSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43B97EF91FAC0EFC00067171 /* TeacherSignInViewController.m */; };
+		43B97EFC1FAC0EFC00067171 /* TeacherSignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B97EFA1FAC0EFC00067171 /* TeacherSignInViewController.xib */; };
+		43B97F001FAC100E00067171 /* TeacherSignInTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43B97EFE1FAC100E00067171 /* TeacherSignInTableViewCell.m */; };
+		43B97F011FAC100E00067171 /* TeacherSignInTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B97EFF1FAC100E00067171 /* TeacherSignInTableViewCell.xib */; };
 		43DD1CE11CB64E9100F66482 /* buttonView17.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDB1CB64E9100F66482 /* buttonView17.png */; };
 		43DD1CE21CB64E9100F66482 /* buttonView17@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */; };
 		43DD1CE31CB64E9100F66482 /* buttonView17@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */; };
@@ -1247,6 +1251,12 @@
 		4392A5BC1B2067F600C5878D /* ReviseNameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ReviseNameViewController.xib; path = views/InternetApplications/personalSpace/ReviseNameViewController.xib; sourceTree = "<group>"; };
 		439313081B1DBE6E00169F30 /* RegisterHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterHttp.h; path = views/InternetApplications/register/RegisterHttp.h; sourceTree = "<group>"; };
 		439313091B1DBE6E00169F30 /* RegisterHttp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterHttp.m; path = views/InternetApplications/register/RegisterHttp.m; sourceTree = "<group>"; };
+		43B97EF81FAC0EFC00067171 /* TeacherSignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TeacherSignInViewController.h; path = views/InternetApplications/exchange/TeacherSignInViewController.h; sourceTree = "<group>"; };
+		43B97EF91FAC0EFC00067171 /* TeacherSignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TeacherSignInViewController.m; path = views/InternetApplications/exchange/TeacherSignInViewController.m; sourceTree = "<group>"; };
+		43B97EFA1FAC0EFC00067171 /* TeacherSignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TeacherSignInViewController.xib; path = views/InternetApplications/exchange/TeacherSignInViewController.xib; sourceTree = "<group>"; };
+		43B97EFD1FAC100E00067171 /* TeacherSignInTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TeacherSignInTableViewCell.h; path = views/InternetApplications/exchange/TeacherSignInTableViewCell.h; sourceTree = "<group>"; };
+		43B97EFE1FAC100E00067171 /* TeacherSignInTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TeacherSignInTableViewCell.m; path = views/InternetApplications/exchange/TeacherSignInTableViewCell.m; sourceTree = "<group>"; };
+		43B97EFF1FAC100E00067171 /* TeacherSignInTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TeacherSignInTableViewCell.xib; path = views/InternetApplications/exchange/TeacherSignInTableViewCell.xib; sourceTree = "<group>"; };
 		43DD1CDB1CB64E9100F66482 /* buttonView17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView17.png; path = buttonView/buttonView17.png; sourceTree = "<group>"; };
 		43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView17@2x.png"; path = "buttonView/buttonView17@2x.png"; sourceTree = "<group>"; };
 		43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView17@3x.png"; path = "buttonView/buttonView17@3x.png"; sourceTree = "<group>"; };
@@ -4465,6 +4475,12 @@
 				A79C207A1A2DC50E00D0AA27 /* model */,
 				A79C20771A2DB60A00D0AA27 /* ExchangeHttp.h */,
 				A79C20781A2DB60A00D0AA27 /* ExchangeHttp.m */,
+				43B97EF81FAC0EFC00067171 /* TeacherSignInViewController.h */,
+				43B97EF91FAC0EFC00067171 /* TeacherSignInViewController.m */,
+				43B97EFA1FAC0EFC00067171 /* TeacherSignInViewController.xib */,
+				43B97EFD1FAC100E00067171 /* TeacherSignInTableViewCell.h */,
+				43B97EFE1FAC100E00067171 /* TeacherSignInTableViewCell.m */,
+				43B97EFF1FAC100E00067171 /* TeacherSignInTableViewCell.xib */,
 			);
 			name = exchange;
 			sourceTree = "<group>";
@@ -6039,6 +6055,7 @@
 				A753E5281A1B2C79005A8EED /* ShareCollectionViewCell.xib in Resources */,
 				A73AD8291A20271600F68C47 /* ArthLIstViewController.xib in Resources */,
 				F70B968A1C90FB650001D696 /* icon@3x.png in Resources */,
+				43B97F011FAC100E00067171 /* TeacherSignInTableViewCell.xib in Resources */,
 				A76829841AC69B21003B31EB /* classView_click_0@3x.png in Resources */,
 				A7BB180219F4F91E00A81286 /* Regiser_jiaobao.png in Resources */,
 				A75E6EBA1ABACDBD00B51B18 /* classView_0@3x.png in Resources */,
@@ -6128,6 +6145,7 @@
 				A7FC2A001C90176600CB38C0 /* buttonView23@3x.png in Resources */,
 				A7FC29E91C90176600CB38C0 /* buttonView12.png in Resources */,
 				A766B4461ACB9E1B00018D46 /* classView_more@3x.png in Resources */,
+				43B97EFC1FAC0EFC00067171 /* TeacherSignInViewController.xib in Resources */,
 				A7804CA21B789516007C0DC6 /* buttonView1.png in Resources */,
 				A7AD8C5719F644A2002E65FB /* tabbar_student1@2x.png in Resources */,
 				A701797A1AB914D900E7093F /* work_deleteAccessory.png in Resources */,
@@ -6555,6 +6573,7 @@
 				A7141DC01A17022E00940A3E /* ShareView.m in Sources */,
 				A74821AF19FF745900234020 /* MsgDetail_TrunToList.m in Sources */,
 				A76F21751B7DDC4C00D957E0 /* RecommentAddAnswerModel.m in Sources */,
+				43B97F001FAC100E00067171 /* TeacherSignInTableViewCell.m in Sources */,
 				F7EE1A0A1B78896000B31D79 /* CommentViewController.m in Sources */,
 				A74339591A452B7700AFC0A5 /* UIImageView+HighlightedWebCache.m in Sources */,
 				A70E3CA21A1EECB700E6D0EC /* ArthDetailViewController.m in Sources */,
@@ -6641,6 +6660,7 @@
 				A7595E911A5FC2F30027848E /* MWGridCell.m in Sources */,
 				A7557BFA19FA30480057835B /* Identity_UserClasses_model.m in Sources */,
 				A768296A1AC69575003B31EB /* ParserJson_class.m in Sources */,
+				43B97EFB1FAC0EFC00067171 /* TeacherSignInViewController.m in Sources */,
 				A78459DE1B7B4D1D00EA7D5D /* IQTitleBarButtonItem.m in Sources */,
 				A75A37371A087C76009D2464 /* ForwardViewController.m in Sources */,
 				F718031E1AB3C46300E6167F /* JTCalendar.m in Sources */,

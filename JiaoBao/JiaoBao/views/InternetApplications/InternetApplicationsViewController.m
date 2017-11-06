@@ -608,6 +608,13 @@
         if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
             [array addObject:[self addOnLineJob]];
         }
+        //签到
+        if ([dm getInstance].uType==2||[dm getInstance].uType==1) {
+            [array addObject:[KxMenuItem menuItem:@"签到"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemSignIn1:)]];
+        }
         //请假
         if ([[dm getInstance].leaveModel.StatusStd intValue]==1||[[dm getInstance].leaveModel.StatusTea intValue]==1) {
             if ([dm getInstance].mArr_leaveStudent.count>0||[dm getInstance].uType==2) {
@@ -670,6 +677,14 @@
     [MobClick event:@"InternetApplications_add" label:@"日程记录"];
 
     SignInViewController *signIn = [[SignInViewController alloc] init];
+    [utils pushViewController:signIn animated:YES];
+}
+
+//快速签到
+- (void) pushMenuItemSignIn1:(id)sender{
+    [MobClick event:@"InternetApplications_add" label:@"签到"];
+    
+    TeacherSignInViewController *signIn = [[TeacherSignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
 }
 

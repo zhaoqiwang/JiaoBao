@@ -17,6 +17,7 @@
     NSString *SchoolType;//
     NSString *TownShip;//
     NSString *TabIDStr;//单位加密ID
+    int flag;//是否签到，0无1签到
 }
 @property (strong,nonatomic) NSString *UnitID;
 @property (strong,nonatomic) NSString *UnitType;
@@ -26,5 +27,6 @@
 @property (strong,nonatomic) NSString *SchoolType;
 @property (strong,nonatomic) NSString *TownShip;
 @property (strong,nonatomic) NSString *TabIDStr;
+@property (assign,nonatomic) int flag;
 
 @end

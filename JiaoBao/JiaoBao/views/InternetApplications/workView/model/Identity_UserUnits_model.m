@@ -9,6 +9,6 @@
 #import "Identity_UserUnits_model.h"
 
 @implementation Identity_UserUnits_model
-@synthesize UnitID,UnitType,UnitName,ShortName,Area,SchoolType,TownShip,TabIDStr;
+@synthesize UnitID,UnitType,UnitName,ShortName,Area,SchoolType,TownShip,TabIDStr,flag;
 
 @end
