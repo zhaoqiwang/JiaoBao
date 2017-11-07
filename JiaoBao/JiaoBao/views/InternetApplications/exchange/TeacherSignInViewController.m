@@ -12,7 +12,7 @@
 #import "UIImageView+WebCache.h"
 
 @interface TeacherSignInViewController ()
-
+@property(nonatomic,weak)UITextField *currTF;
 @end
 
 @implementation TeacherSignInViewController
@@ -31,6 +31,10 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     self.mTableV_detailist.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    self.beginDate.inputView = self.datePicker;
+    self.endDate.inputView = self.datePicker;
+    self.beginDate.inputAccessoryView = self.toolBar;
+    self.endDate.inputAccessoryView = self.toolBar;
     //添加表格的下拉刷新
 //    [self.mTableV_detailist addHeaderWithTarget:self action:@selector(headerRereshing)];
 //    self.mTableV_detailist.headerPullToRefreshText = @"下拉刷新";
@@ -254,4 +258,24 @@
 }
 */
 
+- (IBAction)checkAction:(id)sender {
+    [[SignInHttp getInstance] searchMySignInfoWithSDate:@"2017-11-1" eDate:@"2017-11-30" num:10 pageNum:1 rowCount:0];
+
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    self.currTF = textField;
+    return YES;
+}
+- (IBAction)cancelAction:(id)sender {
+    [self.currTF endEditing: YES];
+}
+
+- (IBAction)doneAction:(id)sender {
+    [self.currTF endEditing: YES];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    self.currTF.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:self.datePicker.date]];
+    if()
+    
+}
 @end

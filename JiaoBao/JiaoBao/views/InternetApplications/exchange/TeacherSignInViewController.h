@@ -27,5 +27,13 @@
 @property (nonatomic,strong) NSString *mStr_navName;//传递nav名字
 @property (nonatomic,strong) NSString *mStr_url;//需要申请的url
 @property (nonatomic,assign) int mInt_refresh;//判断是刷新还是加载更多
+@property (weak, nonatomic) IBOutlet UIButton *checkBtn;
+@property (weak, nonatomic) IBOutlet UITextField *beginDate;
+@property (weak, nonatomic) IBOutlet UITextField *endDate;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+- (IBAction)checkAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+- (IBAction)cancelAction:(id)sender;
+- (IBAction)doneAction:(id)sender;
 
 @end
