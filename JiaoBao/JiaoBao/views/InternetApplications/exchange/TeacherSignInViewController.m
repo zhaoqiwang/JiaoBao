@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "MobClick.h"
 #import "UIImageView+WebCache.h"
+#import "CheckSignInViewController.h"
 
 @interface TeacherSignInViewController ()
 @property(nonatomic,weak)UITextField *currTF;
@@ -31,10 +32,7 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     self.mTableV_detailist.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
-    self.beginDate.inputView = self.datePicker;
-    self.endDate.inputView = self.datePicker;
-    self.beginDate.inputAccessoryView = self.toolBar;
-    self.endDate.inputAccessoryView = self.toolBar;
+
     //添加表格的下拉刷新
 //    [self.mTableV_detailist addHeaderWithTarget:self action:@selector(headerRereshing)];
 //    self.mTableV_detailist.headerPullToRefreshText = @"下拉刷新";
@@ -115,47 +113,47 @@
 //}
 
 //通知界面刷新消息cell头像
--(void)UnReadMsgCellImg:(NSNotification *)noti{
-    [MBProgressHUD hideHUDForView:self.view];
-    [self.mTableV_detailist reloadData];
-}
+//-(void)UnReadMsgCellImg:(NSNotification *)noti{
+//    [MBProgressHUD hideHUDForView:self.view];
+//    [self.mTableV_detailist reloadData];
+//}
 
 //通知界面刷新消息cell
--(void)UnReadMsgCell:(NSNotification *)noti{
-    [self.mTableV_detailist headerEndRefreshing];
-    [self.mTableV_detailist footerEndRefreshing];
-    [MBProgressHUD hideHUDForView:self.view];
-    NSMutableDictionary *dic = noti.object;
-    NSString *flag = [dic objectForKey:@"flag"];
-    if ([flag integerValue]==0) {
-        NSMutableArray *array = [dic valueForKey:@"array"];
-        if (self.mInt_page == 1) {
-            if (array.count>0) {
-                [self.mArr_detail removeAllObjects];
-                self.mArr_detail = [NSMutableArray arrayWithArray:array];
-            }
+//-(void)UnReadMsgCell:(NSNotification *)noti{
+//    [self.mTableV_detailist headerEndRefreshing];
+//    [self.mTableV_detailist footerEndRefreshing];
+//    [MBProgressHUD hideHUDForView:self.view];
+//    NSMutableDictionary *dic = noti.object;
+//    NSString *flag = [dic objectForKey:@"flag"];
+//    if ([flag integerValue]==0) {
+//        NSMutableArray *array = [dic valueForKey:@"array"];
+//        if (self.mInt_page == 1) {
+//            if (array.count>0) {
+//                [self.mArr_detail removeAllObjects];
+//                self.mArr_detail = [NSMutableArray arrayWithArray:array];
+//            }
 //            if (array.count==20) {
 //                [self.mTableV_detailist addFooterWithTarget:self action:@selector(footerRereshing)];
 //                self.mTableV_detailist.footerPullToRefreshText = @"上拉加载更多";
 //                self.mTableV_detailist.footerReleaseToRefreshText = @"松开加载更多数据";
 //                self.mTableV_detailist.footerRefreshingText = @"正在加载...";
 //            }
-        }else{
+//        }else{
 //            if (array.count>0) {
 //                for (int i=0; i<array.count; i++) {
 //                    UnReadMsg_model *unReadMsgModel = [array objectAtIndex:i];
 //                    [self.mArr_detail addObject:unReadMsgModel];
 //                }
 //            }
-            if (array.count<20) {
-                [self.mTableV_detailist removeFooter];
-            }
-        }
-        [self.mTableV_detailist reloadData];
-    }else{
-        [MBProgressHUD showError:@"获取失败" toView:self.view];
-    }
-}
+//            if (array.count<20) {
+//                [self.mTableV_detailist removeFooter];
+//            }
+//        }
+//        [self.mTableV_detailist reloadData];
+//    }else{
+//        [MBProgressHUD showError:@"获取失败" toView:self.view];
+//    }
+//}
 //导航条返回按钮
 -(void)myNavigationGoback{
     [utils popViewControllerAnimated:YES];
@@ -163,9 +161,8 @@
 
 -(void)navigationRightAction:(UIButton *)sender{
     D("签到查询按钮");
-    [[SignInHttp getInstance] searchMySignInfoWithSDate:@"2017-11-1" eDate:@"2017-11-30" num:10 pageNum:1 rowCount:0];
-//    TeacherSignInViewController *signIn = [[TeacherSignInViewController alloc] init];
-//    [utils pushViewController:signIn animated:YES];
+    CheckSignInViewController *checkVC = [[CheckSignInViewController alloc]initWithNibName:@"CheckSignInViewController" bundle:nil];
+    [self.navigationController pushViewController:checkVC animated:YES];
 }
 
 #pragma mark 开始进入刷新状态
@@ -258,24 +255,5 @@
 }
 */
 
-- (IBAction)checkAction:(id)sender {
-    [[SignInHttp getInstance] searchMySignInfoWithSDate:@"2017-11-1" eDate:@"2017-11-30" num:10 pageNum:1 rowCount:0];
 
-}
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    self.currTF = textField;
-    return YES;
-}
-- (IBAction)cancelAction:(id)sender {
-    [self.currTF endEditing: YES];
-}
-
-- (IBAction)doneAction:(id)sender {
-    [self.currTF endEditing: YES];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    self.currTF.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:self.datePicker.date]];
-    if()
-    
-}
 @end

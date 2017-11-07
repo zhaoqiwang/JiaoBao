@@ -455,7 +455,7 @@ static  SignInHttp*__instance;
             NSDictionary *dicList = [dataString objectFromJSONString];
             NSString *result = [dicList objectForKey:@"ResultDesc"];
             D("result:%@",dataString);
-//            [[NSNotificationCenter defaultCenter]postNotificationName:@"getMySingInfo" object:dicList];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"getMySingInfo" object:dicList];
         }
 //        }
         
