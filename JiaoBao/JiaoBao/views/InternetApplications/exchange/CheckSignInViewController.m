@@ -210,6 +210,7 @@
     
     //从一个日期里面把这些内容取出来
      NSDate *endDate = [inputFormatter dateFromString:self.endDate.text];
+    com = [calendar components:flags fromDate:endDate];
     NSInteger endyear = [com year];
     NSInteger endmonth = [com month];
     NSInteger endday = [com day];
