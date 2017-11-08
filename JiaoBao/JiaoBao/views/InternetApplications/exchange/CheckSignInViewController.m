@@ -244,7 +244,6 @@
     self.currTF.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:self.datePicker.date]];
     
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
