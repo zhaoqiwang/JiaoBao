@@ -952,6 +952,7 @@
 		F70466171FB14B0C00A90504 /* CheckSignInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F70466151FB14B0C00A90504 /* CheckSignInCell.m */; };
 		F70466181FB14B0C00A90504 /* CheckSignInCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F70466161FB14B0C00A90504 /* CheckSignInCell.xib */; };
 		F704661B1FB14C6F00A90504 /* CheckModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F704661A1FB14C6F00A90504 /* CheckModel.m */; };
+		F704661E1FB2AFFC00A90504 /* BaseTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F704661D1FB2AFFC00A90504 /* BaseTextField.m */; };
 		F70B965F1C90F99B0001D696 /* answer.png in Resources */ = {isa = PBXBuildFile; fileRef = F70B96501C90F99B0001D696 /* answer.png */; };
 		F70B96601C90F99B0001D696 /* answer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F70B96511C90F99B0001D696 /* answer@2x.png */; };
 		F70B96611C90F99B0001D696 /* answer@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F70B96521C90F99B0001D696 /* answer@3x.png */; };
@@ -2525,6 +2526,8 @@
 		F70466161FB14B0C00A90504 /* CheckSignInCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CheckSignInCell.xib; path = views/InternetApplications/exchange/CheckSignInCell.xib; sourceTree = "<group>"; };
 		F70466191FB14C6F00A90504 /* CheckModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckModel.h; sourceTree = "<group>"; };
 		F704661A1FB14C6F00A90504 /* CheckModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckModel.m; sourceTree = "<group>"; };
+		F704661C1FB2AFFC00A90504 /* BaseTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaseTextField.h; path = views/InternetApplications/exchange/BaseTextField.h; sourceTree = "<group>"; };
+		F704661D1FB2AFFC00A90504 /* BaseTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = BaseTextField.m; path = views/InternetApplications/exchange/BaseTextField.m; sourceTree = "<group>"; };
 		F70B96501C90F99B0001D696 /* answer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = answer.png; path = Image/InternetApp/knowledge/answer.png; sourceTree = "<group>"; };
 		F70B96511C90F99B0001D696 /* answer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "answer@2x.png"; path = "Image/InternetApp/knowledge/answer@2x.png"; sourceTree = "<group>"; };
 		F70B96521C90F99B0001D696 /* answer@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "answer@3x.png"; path = "Image/InternetApp/knowledge/answer@3x.png"; sourceTree = "<group>"; };
@@ -4502,6 +4505,8 @@
 				F70466161FB14B0C00A90504 /* CheckSignInCell.xib */,
 				F70466191FB14C6F00A90504 /* CheckModel.h */,
 				F704661A1FB14C6F00A90504 /* CheckModel.m */,
+				F704661C1FB2AFFC00A90504 /* BaseTextField.h */,
+				F704661D1FB2AFFC00A90504 /* BaseTextField.m */,
 			);
 			name = exchange;
 			sourceTree = "<group>";
@@ -6512,6 +6517,7 @@
 				F776E9B01C059872004A1F1E /* PointsModel.m in Sources */,
 				A7357A1B1A3FE1E000A195C5 /* MyFriendsViewController.m in Sources */,
 				A7141DCE1A174A5D00940A3E /* ShareHttp.m in Sources */,
+				F704661E1FB2AFFC00A90504 /* BaseTextField.m in Sources */,
 				F711B6E71C23ED2F00FF36DF /* MyComentCell.m in Sources */,
 				A749B9E919F8A2C00036F480 /* TreeView_node.m in Sources */,
 				A7AD8C3919F63D58002E65FB /* StudentFileViewController.m in Sources */,
