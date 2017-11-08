@@ -35,6 +35,10 @@
     self.endDate.inputView = self.datePicker;
     self.beginDate.inputAccessoryView = self.toolBar;
     self.endDate.inputAccessoryView = self.toolBar;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    self.beginDate.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:[NSDate date]]];
+    self.endDate.text = [NSString stringWithFormat:@"%@",[formatter stringFromDate:[NSDate date]]];
     //添加表格的下拉刷新和上拉加载更多
     [self.mTableV_detailist addHeaderWithTarget:self action:@selector(headerRereshing)];
     self.mTableV_detailist.headerPullToRefreshText = @"下拉刷新";
@@ -168,7 +172,7 @@
 }
 
 -(CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 50;
+    return 62.5;
 }
 
 //点击查询按钮
