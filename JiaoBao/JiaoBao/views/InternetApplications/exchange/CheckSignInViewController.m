@@ -45,7 +45,7 @@
     self.mTableV_detailist.footerReleaseToRefreshText = @"松开加载更多数据";
     self.mTableV_detailist.footerRefreshingText = @"正在加载...";
     self.mTableV_detailist.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
-    
+    self.automaticallyAdjustsScrollViewInsets = false;
     //查询到的签到数组
     self.mArr_detail = [[NSMutableArray alloc] init];
     self.mInt_page = 1;//默认获取第一页
@@ -203,10 +203,6 @@
     NSInteger beginyear = [com year];
     NSInteger beginmonth = [com month];
     NSInteger beginday = [com day];
-    
-
-    
-
     
     //从一个日期里面把这些内容取出来
      NSDate *endDate = [inputFormatter dateFromString:self.endDate.text];
