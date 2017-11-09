@@ -16,46 +16,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/exchange/SignInViewController.m"
-            timestampString = "459675181.212045"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "480"
-            endingLineNumber = "480">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/show/UnitAlbumsViewController.m"
-            timestampString = "460430156.28887"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "-GetPhotoList:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/KnowledgeHttp.m"
-            timestampString = "461040509.562887"
+            filePath = "JiaoBao/views/InternetApplications/register/RegisterHttp.m"
+            timestampString = "486551229.850608"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "-knowledgeHttpGetCity:level:"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
+            landmarkName = "-requestFinished:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -65,29 +35,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/AllCategory_ViewController.m"
-            timestampString = "461123034.958851"
+            filePath = "JiaoBao/views/InternetApplications/theme/CommentViewController.m"
+            timestampString = "488768990.937056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "-collectionView:numberOfItemsInSection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/AllCategory_ViewController.m"
-            timestampString = "461123169.75306"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "-ButtonViewTitleBtn:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -97,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/AllCategory_ViewController.m"
-            timestampString = "461123171.721671"
+            filePath = "JiaoBao/views/InternetApplications/workView/NewWorkViewC/NewWorkTopScrollView.m"
+            timestampString = "488793773.701651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "-collectionView:shouldHighlightItemAtIndexPath:"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "-sendRequest"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -113,13 +67,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/theme/AllCategory_ViewController.m"
-            timestampString = "461123172.596243"
+            filePath = "JiaoBao/views/InternetApplications/workView/NewWorkViewC/NewWorkTopScrollView.m"
+            timestampString = "488793826.339896"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "-numberOfSectionsInCollectionView:"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
+            landmarkName = "-sendRequest"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -129,13 +83,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JiaoBao/views/InternetApplications/class/ClassView.m"
-            timestampString = "461899623.416451"
+            filePath = "JiaoBao/views/InternetApplications/workView/NewWorkViewC/NewWorkTopScrollView.m"
+            timestampString = "488793847.259059"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1906"
-            endingLineNumber = "1906"
-            landmarkName = "-footerRereshing"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "-sendRequest"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

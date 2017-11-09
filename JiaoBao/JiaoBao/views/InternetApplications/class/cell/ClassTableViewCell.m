@@ -36,6 +36,7 @@
 #pragma mark - TableViewdelegate&&TableViewdataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    NSLog(@"indexPath = %ld height = %f",(long)indexPath.row,[self cellFloat:indexPath]);
     return [self cellFloat:indexPath];
 }
 
@@ -83,21 +84,13 @@
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
     
 
-    NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-
-
     NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
     [row4 setObject:name forKey:@"text"];
     RTLabelComponentsStructure *componentsDS = [RCLabel extractTextStyle:[row4 objectForKey:@"text"]];
     cell.contentLabel.componentsAndPlainText = componentsDS;
-
     CGSize optimalSize2 = [cell.contentLabel optimumSize];
-
-
-
-    cell.frame = CGRectMake(0, 0, [dm getInstance ].width, optimalSize2.height+3);
-    
-    
+    cell.contentLabel.frame = CGRectMake(0, 0, [dm getInstance ].width-65, optimalSize2.height+3);
+    cell.frame = CGRectMake(0, 0, [dm getInstance ].width-65, optimalSize2.height+3);
     return cell;
 }
 
@@ -112,9 +105,9 @@
     
     contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     contentLabel.font = [UIFont systemFontOfSize:14];
-    NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
-    NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
-    [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
+    //NSString *string = [NSString stringWithFormat:@"%@:%@",string1,string2];
+//    NSMutableAttributedString *titleAttriString = [[NSMutableAttributedString alloc] initWithString:string];
+//    [titleAttriString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:[string rangeOfString:[NSString stringWithFormat:@"%@:",string1]]];
     NSString *name = [NSString stringWithFormat:@"<font size=13 color='#3229CA'>%@：</font> <font size=13 color=black>%@</font>",string1,string2];
     NSMutableDictionary *row4 = [NSMutableDictionary dictionary];
     [row4 setObject:name forKey:@"text"];
@@ -205,7 +198,6 @@
     [MobClick event:@"ClassView_HeadImgTapPress" label:@""];
     [headImgDelegate ClassTableViewCellHeadImgTapPress:self];
 }
-
 //设置不同字体颜色
 -(void)fuwenbenLabel:(UILabel *)labell FontNumber:(id)font AndRange:(NSRange)range AndColor:(UIColor *)vaColor
 {

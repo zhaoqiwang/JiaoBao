@@ -15,12 +15,17 @@
 //#import "BMapKit.h"
 #import <BaiduMapAPI/BMapKit.h>
 #import "MobClick.h"
+#import<CoreData/CoreData.h>
+#import "NSString+Extension.h"
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{
 //    RootViewController *mRoot_view;
     InternetApplicationsViewController *mInternet;
     RegisterViewController *mRegister_view;
     int mInt_index;//当往数组中添加数据时，记录当前的readflag
+    Reachability *internetReachable;
+
 }
 
 //@property (nonatomic,strong) RootViewController *mRoot_view;
@@ -30,6 +35,13 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (retain,nonatomic) UINavigationController *navigationController;
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+- (void)saveContext;
+- (NSURL *)applicationDocumentsDirectory;
 
 
 @end

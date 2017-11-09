@@ -87,6 +87,7 @@
 
 //附件按钮点击事件
 -(void)mBtn_accessory:(UIButton *)btn{
+    [self.mTextV_input resignFirstResponder];
     AccessoryViewController *access = [[AccessoryViewController alloc] init];
     access.delegate = self;
     [utils pushViewController:access animated:YES];
@@ -138,7 +139,7 @@
         if (buttonIndex == 0){//相册添加
             ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] initImagePicker];
             
-            elcPicker.maximumImagesCount = 10; //设置的图像的最大数目来选择至10
+            elcPicker.maximumImagesCount = 1; //设置的图像的最大数目来选择至10
             elcPicker.returnsOriginalImage = YES; //只返回fullScreenImage，而不是fullResolutionImage
             elcPicker.returnsImage = YES; //返回的UIImage如果YES。如果NO，只返回资产位置信息
             elcPicker.onOrder = YES; //对于多个图像选择，显示和选择图像的退货订单
@@ -272,7 +273,7 @@
     //    [self dismissViewControllerAnimated:YES completion:nil];
     [utils popViewControllerAnimated1:YES];
 }
-
+#pragma 拍照模块
 -(void)getMediaFromSource:(UIImagePickerControllerSourceType)sourceType{
     NSArray *mediatypes=[UIImagePickerController availableMediaTypesForSourceType:sourceType];
     if ([UIImagePickerController isSourceTypeAvailable:sourceType] && [mediatypes count]>0) {

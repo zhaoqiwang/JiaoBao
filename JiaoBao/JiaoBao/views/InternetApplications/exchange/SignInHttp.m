@@ -253,7 +253,42 @@ static  SignInHttp*__instance;
     [request startAsynchronous];
     
 }
+//签到--2017-11-06
+-(void)setSign:(NSString*)UnitID
+{
+    NSString *urlString = [NSString stringWithFormat:@"%@/SignIn/SignIn",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:[dm getInstance].jiaoBaoHao forKey:@"accId"];
+    [request addPostValue:UnitID forKey:@"unitId"];
+    request.tag = 11;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
 
+//查询我的签到记录
+-(void)searchMySignInfoWithSDate:(NSString *)sDate eDate:(NSString *)eDate num:(int)num pageNum:(int)page rowCount:(NSString *)rowCount{
+    NSString *urlString = [NSString stringWithFormat:@"%@/SignIn/getMySingInfo",MAINURL];
+    NSURL *url = [NSURL URLWithString:urlString];
+    ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:url];
+    request.timeOutSeconds = TIMEOUT;
+    [request addRequestHeader:@"Content-Type" value:@"text/xml"];
+    [request addRequestHeader:@"charset" value:@"UTF8"];
+    [request setRequestMethod:@"POST"];
+    [request addPostValue:[dm getInstance].jiaoBaoHao forKey:@"accId"];
+    [request addPostValue:sDate forKey:@"sDate"];
+    [request addPostValue:eDate forKey:@"eDate"];
+    [request addPostValue:@(num) forKey:@"numPerPage"];
+    [request addPostValue:@(page) forKey:@"pageNum"];
+    [request addPostValue:rowCount forKey:@"RowCount"];
+    request.tag = 12;//设置请求tag
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
 
 
 - (void)requestFinished:(ASIHTTPRequest *)_request{
@@ -275,8 +310,8 @@ static  SignInHttp*__instance;
     }
     if([ResultCode isEqual:[NSNull null]]== NO)
     {
-        if([ResultCode integerValue]==0)
-        {
+//        if([ResultCode integerValue]==0)
+//        {
             if(_request.tag == 0)
             {
                 NSData *responseData = [_request responseData];
@@ -402,12 +437,27 @@ static  SignInHttp*__instance;
                 NSDictionary *dicList = [dataString objectFromJSONString];
                 NSString *result = [dicList objectForKey:@"ResultDesc"];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"checkinResult" object:result];
-                
-                
-                
             }
-            
+            if(_request.tag == 11)
+            {
+                NSData *responseData = [_request responseData];
+                NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+                NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+                NSDictionary *dicList = [dataString objectFromJSONString];
+                NSString *result = [dicList objectForKey:@"ResultDesc"];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"UnitSignIn" object:dicList];
+            }
+        if(_request.tag == 12)
+        {
+            NSData *responseData = [_request responseData];
+            NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
+            NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
+            NSDictionary *dicList = [dataString objectFromJSONString];
+            NSString *result = [dicList objectForKey:@"ResultDesc"];
+            D("result:%@",dataString);
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"getMySingInfo" object:dicList];
         }
+//        }
         
     }
 
@@ -477,9 +527,12 @@ static  SignInHttp*__instance;
     {
 
         [[NSNotificationCenter defaultCenter]postNotificationName:@"checkinResult" object:ResultDesc];
-        
-        
-        
+    }
+    if(_request.tag == 11){
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"UnitSignIn" object:ResultDesc];
+    }
+    if(_request.tag == 12){
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"getMySingInfo" object:ResultDesc];
     }
     //[SVProgressHUD showErrorWithStatus:@"请求超时"];
 

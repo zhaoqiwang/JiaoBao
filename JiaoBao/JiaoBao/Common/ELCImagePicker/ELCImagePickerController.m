@@ -14,6 +14,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "ELCConsole.h"
+#import "MBProgressHUD+AD.h"
 
 @implementation ELCImagePickerController
 
@@ -71,13 +72,13 @@
 {
     BOOL shouldSelect = previousCount < self.maximumImagesCount;
     if (!shouldSelect) {
-        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"Only %d photos please!", nil), self.maximumImagesCount];
-        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"You can only send %d photos at a time.", nil), self.maximumImagesCount];
+        NSString *title = [NSString stringWithFormat:NSLocalizedString(@"提示!", nil), self.maximumImagesCount];
+        NSString *message = [NSString stringWithFormat:NSLocalizedString(@"你只能上传%d张图片", nil), self.maximumImagesCount];
         [[[UIAlertView alloc] initWithTitle:title
                                     message:message
                                    delegate:nil
                           cancelButtonTitle:nil
-                          otherButtonTitles:NSLocalizedString(@"Okay", nil), nil] show];
+                          otherButtonTitles:NSLocalizedString(@"确定", nil), nil] show];
     }
     return shouldSelect;
 }
@@ -108,7 +109,10 @@
 
         //This method returns nil for assets from a shared photo stream that are not yet available locally. If the asset becomes available in the future, an ALAssetsLibraryChangedNotification notification is posted.
         ALAssetRepresentation *assetRep = [asset defaultRepresentation];
-
+        if(assetRep.size>10000000){
+            [MBProgressHUD showError:@"图片大小不能超过10M"];
+            return;
+        }
         if(assetRep != nil) {
             if (_returnsImage) {
                 CGImageRef imgRef = nil;

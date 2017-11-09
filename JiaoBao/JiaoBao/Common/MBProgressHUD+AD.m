@@ -16,7 +16,11 @@
     if (view == nil) view = [[UIApplication sharedApplication].windows lastObject];
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = text;
+    if (text.length>15) {
+        hud.detailsLabelText = text;
+    }else{
+        hud.labelText = text;
+    }
     // 设置图片
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", icon]]];
     // 再设置模式
@@ -26,7 +30,7 @@
     hud.removeFromSuperViewOnHide = YES;
     
     // 1秒之后再消失
-    [hud hide:YES afterDelay:1.0];
+    [hud hide:YES afterDelay:2.0];
 }
 
 #pragma mark 显示提醒文字（不带成功与否标志）
@@ -68,6 +72,7 @@
         hud.removeFromSuperViewOnHide = YES;
         // YES代表需要蒙版效果
         hud.dimBackground = NO;
+    [hud hide:YES afterDelay:30.0];
         return hud;
 //    }
 //    return nil;
@@ -85,7 +90,7 @@
 
 + (MBProgressHUD *)showMessage:(NSString *)message
 {
-    return [self showMessage:message toView:nil];
+    return [self showMessage:message toView:[[UIApplication sharedApplication].windows lastObject]];
 }
 
 + (void)hideHUDForView:(UIView *)view
@@ -95,7 +100,8 @@
 
 + (void)hideHUD
 {
-    [self hideHUDForView:nil];
+    [self hideAllHUDsForView:[[UIApplication sharedApplication].windows lastObject] animated:YES];
+    [self hideHUDForView:[[UIApplication sharedApplication].windows lastObject]];
 }
 
 //检查当前网络是否可用

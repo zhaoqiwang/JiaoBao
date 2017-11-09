@@ -18,6 +18,10 @@
 @implementation UIImage (MultiFormat)
 
 + (UIImage *)sd_imageWithData:(NSData *)data {
+    if (!data) {
+        return nil;
+    }
+    
     UIImage *image;
     NSString *imageContentType = [NSData sd_contentTypeForImageData:data];
     if ([imageContentType isEqualToString:@"image/gif"]) {
@@ -38,7 +42,6 @@
         if (image.size.width > 1024||image.size.height>1024) {
             image = [self compressImageWith:image];
         }
-        
         UIImageOrientation orientation = [self sd_imageOrientationFromImageData:data];
         if (orientation != UIImageOrientationUp) {
             image = [UIImage imageWithCGImage:image.CGImage
@@ -122,7 +125,7 @@
 {
     float imageWidth = image.size.width;
     float imageHeight = image.size.height;
-//    float width = 640;
+    //    float width = 640;
     float width = 320;
     float height = image.size.height/(image.size.width/width);
     
@@ -146,8 +149,6 @@
     UIGraphicsEndImageContext();
     
     return newImage;
-    
 }
-
 
 @end

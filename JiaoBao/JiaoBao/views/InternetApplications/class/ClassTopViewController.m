@@ -195,7 +195,7 @@
                 //                [self loadNoMore:@"已赞"];
             }
         }else{//发送获取当前文章附加信息的请求
-            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID];
+            [[ShareHttp getInstance] shareHttpAirthGetArthInfo:self.mView_popup.mModel_class.TabIDStr sid:self.mView_popup.mModel_class.SectionID from:@"1"];
             [self ProgressViewLoad:@"获取信息中..."];
         }
     }else{
@@ -209,8 +209,13 @@
     if ([self checkNetWork]) {
         return;
     }
-    if (self.mTextF_text.text.length==0) {
+    //判断字符串是否为空、是否都是空格
+    if([utils isBlankString:self.mTextF_text.text]){
         [MBProgressHUD showError:@"请输入内容" toView:self.view];
+        return;
+    }
+    if (self.mTextF_text.text.length>1000) {
+        [MBProgressHUD showError:@"不能多于1000字" toView:self.view];
         return;
     }
     self.mView_popup.hidden = YES;
@@ -229,7 +234,7 @@
         NSString *comment = [noti.object objectForKey:@"comment"];
         
         commentsListModel *tempModel = [[commentsListModel alloc] init];
-        tempModel.UserName = [dm getInstance].name;
+        tempModel.UserName = @"我";
         if (self.mTextF_text.text.length==0) {
             tempModel.Commnets = comment;
         }else{
@@ -662,8 +667,8 @@
         if(model.mArr_comment.count<5)
         {
             cell.moreBtn.frame = CGRectZero;
-            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, h+7+10);
-            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-10, h+13+10);
+            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-5, h+7+10);
+            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-5, h+13+10);
             UIImage *backImage = [UIImage imageNamed:@"bj.png"];
             // The background should be pinned to the left and not stretch.
             backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
@@ -674,14 +679,14 @@
             
         }
         else{
-            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-10, h+7+15);
-            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-10, h+13+15);
+            cell.tableview.frame = CGRectMake(62, cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height+5+5, [dm getInstance].width-60-5, h+7+15);
+            cell.backImgV.frame = CGRectMake(62,  cell.mLab_click.frame.origin.y+cell.mLab_click.frame.size.height-4+5, [dm getInstance].width-60-5, h+13+15);
             //UIImage *backImage = [UIImage imageNamed:@"bj.png"];
             // The background should be pinned to the left and not stretch.
             //backImage = [backImage resizableImageWithCapInsets:UIEdgeInsetsMake(backImage.size.height - 1, 0, 0, 0)];
             [cell.backImgV setImage:[[UIImage imageNamed:@"bj.png"]stretchableImageWithLeftCapWidth:100 topCapHeight:40]];
             //cell.backImgV.image = backImage;
-            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height, [dm getInstance].width-60-10, 30);
+            cell.moreBtn.frame = CGRectMake(62, cell.backImgV.frame.origin.y+cell.backImgV.frame.size.height, [dm getInstance].width-60-5, 30);
             cell.frame = CGRectMake(0, 0, [dm getInstance].width, cell.mLab_time.frame.origin.y+cell.mLab_time.frame.size.height+h+15+cell.moreBtn.frame.size.height+5+5+10);
             
         }

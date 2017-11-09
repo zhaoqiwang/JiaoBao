@@ -9,7 +9,7 @@
 #import "Nav_internetAppView.h"
 #import "define_constant.h"
 
-static Nav_internetAppView *nav_internetAppView = nil;
+//static Nav_internetAppView *nav_internetAppView = nil;
 
 #define Nav_width 44
 #define Nav_height 43
@@ -19,12 +19,18 @@ static Nav_internetAppView *nav_internetAppView = nil;
 @synthesize mLab_name,mBtn_add,mBtn_search,mBtn_setting,mScrollV_name,delegate;
 
 +(Nav_internetAppView *)getInstance{
-    if (nav_internetAppView == nil) {
-        nav_internetAppView = [[Nav_internetAppView alloc] init];
-        for (UIView *view in nav_internetAppView.subviews) {
-            [view removeFromSuperview];
-        }
-    }
+//    if (nav_internetAppView == nil) {
+//        nav_internetAppView = [[Nav_internetAppView alloc] init];
+//        for (UIView *view in nav_internetAppView.subviews) {
+//            [view removeFromSuperview];
+//        }
+//    }
+//    return nav_internetAppView;
+    static Nav_internetAppView *nav_internetAppView = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        nav_internetAppView = [[Nav_internetAppView alloc] initWithName:@""];
+    });
     return nav_internetAppView;
 }
 //-(id)init{
@@ -66,6 +72,9 @@ static Nav_internetAppView *nav_internetAppView = nil;
         //        [self.mBtn_search addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
         //        [self addSubview:self.mBtn_search];
         //名字
+        if (name.length==0) {
+            name = @"                                                               ";
+        }
         self.mScrollV_name = [[UIScrollView alloc] initWithFrame:CGRectMake(15, 0+[dm getInstance].statusBar, [dm getInstance].width-11-Nav_width*2-10, Nav_height)];
         CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:15]];
         self.mLab_name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, newSize.width, Nav_height)];

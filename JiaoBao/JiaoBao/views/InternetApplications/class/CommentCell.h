@@ -11,5 +11,6 @@
 
 @interface CommentCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet RCLabel *contentLabel;
+@property(strong,nonatomic)UILabel *commentLabel;
 
 @end

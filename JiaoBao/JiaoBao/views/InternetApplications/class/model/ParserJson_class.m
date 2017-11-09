@@ -40,6 +40,7 @@
         }
         model.Thumbnail = [dic objectForKey:@"Thumbnail"];
         NSString *thumbnail = [dic objectForKey:@"Thumbnail"];
+//        NSLog(@"[dic objectForKey:@]-==0-0-0-====%@",[dic objectForKey:@"Thumbnail"]);
         if ([thumbnail isEqual:[NSNull null]]||[thumbnail isEqual:@"<null>"]) {
             model.Thumbnail = [NSMutableArray array];
         }else{

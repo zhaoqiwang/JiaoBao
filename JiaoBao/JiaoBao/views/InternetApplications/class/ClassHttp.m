@@ -121,7 +121,7 @@ static ClassHttp *classHttp = nil;
     NSData *responseData = [_request responseData];
     NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8);
     NSString* dataString = [[NSString alloc] initWithData:responseData encoding:encoding];
-    D("dataString--tag=----class--------====%ld---  ",(long)_request.tag);
+    D("dataString--tag=----class--------====%ld--- %@ ",(long)_request.tag,dataString);
     NSMutableDictionary *jsonDic = [dataString objectFromJSONString];
     //先对返回值做判断，是否连接超时
     NSString *code = [jsonDic objectForKey:@"ResultCode"];

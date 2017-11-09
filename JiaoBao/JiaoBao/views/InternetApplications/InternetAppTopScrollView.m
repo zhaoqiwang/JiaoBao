@@ -55,13 +55,8 @@
         self.contentSize = CGSizeMake([dm getInstance].width, 48);
         if (SHOWRONGYUN == 1) {
             self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"学校圈",@"主题", nil];
-//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"交流",@"事务", @"分享",@"展示",@"主题", nil];
         }else{
-//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"学校圈",@"主题", nil];
-//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务",@"学校圈",@"主题", nil];
-//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"学校圈",@"事务",@"主题", nil];
-            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"学校圈",@"事务", nil];
-//            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@"事务", @"分享",@"展示",@"主题", nil];
+            self.mArr_name = [[NSMutableArray alloc] initWithObjects:@" 求知 ",@"学校圈",@" 事务 ", nil];
         }
         
         mInt_userSelectedChannelID = 100;
@@ -96,21 +91,21 @@
         [button setTitleColor:[UIColor colorWithRed:91/255.0 green:178/255.0 blue:57/255.0 alpha:1] forState:UIControlStateSelected];
         [button setBackgroundColor:[UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1]];
         //设置标题位置
-        if (i>=1) {
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+2]] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+2]] forState:UIControlStateSelected];
-        }else{
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+1]] forState:UIControlStateNormal];
-            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+1]] forState:UIControlStateSelected];
-        }
+//        if (i>=1) {
+//            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i+2]] forState:UIControlStateNormal];
+//            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i+2]] forState:UIControlStateSelected];
+//        }else{
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i]] forState:UIControlStateNormal];
+            [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i]] forState:UIControlStateSelected];
+//        }
         
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
         //    在UIButton中有三个对EdgeInsets的设置：ContentEdgeInsets、titleEdgeInsets、imageEdgeInsets
         button.imageEdgeInsets = UIEdgeInsetsMake(4,(tempWidth-25)/2,21,(tempWidth-25)/2);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
-//        button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
 //        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
-        button.titleEdgeInsets = UIEdgeInsetsMake(32, -((tempWidth-tempSize.width)/2)/2, 4, 0);
+        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2+10, 4, 0);
 //        button.imageEdgeInsets = UIEdgeInsetsMake(4,0,21,(tempWidth-25)/2);
 //        button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
 //        button.titleEdgeInsets = UIEdgeInsetsMake(32, (tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
@@ -178,6 +173,7 @@
 }
 
 - (void)selectNameButton:(UIButton *)sender{
+    //CheckNetWorkSelf
     //如果更换按钮
     if (sender.tag != mInt_userSelectedChannelID) {
         //取之前的按钮
@@ -199,21 +195,23 @@
                 //做bug服务器显示当前的哪个界面
                 if(sender.tag == 100)
                 {
-                    NSString *nowViewStr = @"classView";
+                    NSString *nowViewStr = @"themeView";
                     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
                     
                     
                 }
                 if(sender.tag == 101)
                 {
-                    NSString *nowViewStr = @"WorkView_new2";
+                    NSString *nowViewStr = @"classView";
                     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+                    
 
                 }
                 if(sender.tag == 102)
                 {
-                    NSString *nowViewStr = @"themeView";
+                    NSString *nowViewStr = @"WorkView_new2";
                     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+                    
                 }
 
             [[InternetAppRootScrollView shareInstance] setContentOffset:CGPointMake(BUTTONID*[dm getInstance].width, 0) animated:NO];
@@ -240,6 +238,7 @@
 }
 //当滑动scrollview停止后调用
 - (void)setButtonSelect{
+    
     //滑动选中按钮
     UIButton *button = (UIButton *)[self viewWithTag:mInt_scrollViewSelectedChannelID];
     [UIView animateWithDuration:0.25 animations:^{
@@ -317,15 +316,25 @@
             }
         }
     }else{
-        if (mInt_userSelectedChannelID == 100) {//学校圈
+        if (mInt_userSelectedChannelID == 100) {//求知
+            if (mInt_theme == 0)
+            {
+                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
+                mInt_theme = 1;
+                [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
 
+            }
+
+
+            
+        }else if (mInt_userSelectedChannelID == 101) {//学校圈
             if (mInt_show == 0) {
                 self.timer2 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol2:) userInfo:nil repeats:NO];
                 mInt_show = 1;
                 [[InternetAppRootScrollView shareInstance].classView tableViewDownReloadData];
             }
             
-        }else if (mInt_userSelectedChannelID == 101) {//事务
+        }else if (mInt_userSelectedChannelID == 102){//事务
             if(self.mInt_unReadMsg == 0)
             {
                 self.timer0 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol0:) userInfo:nil repeats:NO];
@@ -341,14 +350,13 @@
             if (mInt_work_sendToMe == 0) {
                 mInt_work_sendToMe = 1;
             }
-        }else if (mInt_userSelectedChannelID == 102){//主题
-            if(mInt_theme == 0){
-                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
-                mInt_theme = 1;
-                //取我关注的和我所参与的主题
-                [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
-                [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
-            }
+//            if(mInt_theme == 0){
+//                self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];
+//                mInt_theme = 1;
+//                //取我关注的和我所参与的主题
+//                [[ThemeHttp getInstance] themeHttpEnjoyInterestList:[dm getInstance].jiaoBaoHao];
+//                [[InternetAppRootScrollView shareInstance].themeView ProgressViewLoad];
+//            }
         }else if (mInt_userSelectedChannelID == 103){//主题
             if (mInt_theme == 0) {
                 self.timer3 = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(updateRequestSymbol3:) userInfo:nil repeats:NO];

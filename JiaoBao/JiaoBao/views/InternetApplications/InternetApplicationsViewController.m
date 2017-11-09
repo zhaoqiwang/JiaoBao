@@ -12,6 +12,11 @@
 #import "CheckingInViewController.h"
 #import "MBProgressHUD+AD.h"
 #import "MobClick.h"
+#import "AddQuestionViewController.h"
+#import "MakeJobViewController.h"
+#import "LeaveViewController.h"
+#import "LeaveHttp.h"
+#import "CheckLeaveViewController.h"
 
 @interface InternetApplicationsViewController ()
 
@@ -23,6 +28,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
     [dm getInstance].sectionSet = nil;
+    [dm getInstance].sectionSet2 = nil;
     [dm getInstance].tableSymbol =NO;
     if (self.mInt_flag == 0) {
         self.mInt_flag = 1;
@@ -30,7 +36,6 @@
         [[LoginSendHttp getInstance] getUnreadMessages1];
         [[LoginSendHttp getInstance] getUnreadMessages2];
     }
-
     //添加通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getIdentity" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getIdentity:) name:@"getIdentity" object:nil];
@@ -55,9 +60,27 @@
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+    //取指定单位的请假设置
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GetLeaveSettingWithUnitId" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetLeaveSettingWithUnitId:) name:@"GetLeaveSettingWithUnitId" object:nil];
     
      [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
+}
+
+//取指定单位的请假设置
+-(void)GetLeaveSettingWithUnitId:(NSNotification *)noti{
+    D("请假系统的权限问题:%@，%@",[dm getInstance].leaveModel.StatusStd,[dm getInstance].leaveModel.StatusTea);
+    //判断是否开启了学生请假系统
+    if ([[dm getInstance].leaveModel.StatusStd intValue]==1&&[dm getInstance].uType==3) {
+        //获取家长关联的学生
+        [[LeaveHttp getInstance] GetMyStdInfo:[dm getInstance].jiaoBaoHao];
+    }
+    //判断是否开启了老师请假系统
+    if ([[dm getInstance].leaveModel.StatusTea intValue]==1) {
+        //获取班主任管理的班级
+        [[LeaveHttp getInstance] GetMyAdminClass:[dm getInstance].jiaoBaoHao];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -84,9 +107,11 @@
         }
     }
     //导航条
-    self.nav_internetAppView = [[Nav_internetAppView getInstance] initWithName:@"                                            "];
-    self.nav_internetAppView.delegate = self;
-    [self.view addSubview:self.nav_internetAppView];
+    if (self.nav_internetAppView == nil) {
+        self.nav_internetAppView = [Nav_internetAppView getInstance];
+        self.nav_internetAppView.delegate = self;
+        [self.view addSubview:self.nav_internetAppView];
+    }
     //top
     [self.view addSubview:[InternetAppTopScrollView shareInstance]];
     //root
@@ -126,11 +151,11 @@
 //是否有更新
 -(void)itunesUpdataCheck:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
-    UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"新版本被发现" message: @"发现新版本，如果不更新，可能会出现未知问题，是否下载最新？" delegate:self cancelButtonTitle:@"哦，不" otherButtonTitles: @"下载", nil];
-    createUserResponseAlert.delegate = self;
-    [createUserResponseAlert show];
+//    UIAlertView *createUserResponseAlert = [[UIAlertView alloc] initWithTitle:@"新版本被发现" message: @"发现新版本，如果不更新，可能会出现未知问题，是否下载最新？" delegate:self cancelButtonTitle:@"哦，不" otherButtonTitles: @"下载", nil];
+//    createUserResponseAlert.delegate = self;
+//    [createUserResponseAlert show];
 }
-
+//通知是否有更新
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 1) {
         NSString *strUrl = @"https://itunes.apple.com/us/app/jiao-bao/id958950234?l=zh&ls=1&mt=8";
@@ -164,13 +189,21 @@
 -(void)changeCurUnit:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSString *str = noti.object;
-    if ([str intValue] ==0) {//成功
-        [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+    if ([str intValue] ==0||[str intValue] ==2) {//成功
+        if ([str intValue] ==0) {
+            [MBProgressHUD showSuccess:@"切换成功" toView:self.view];
+        }
+        [dm getInstance].leaveModel = nil;
+        if ([dm getInstance].uType==2||[dm getInstance].uType==3) {//老师或家长身份时，判断有没有开启请假系统
+            [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+            //应用系统通过单位ID，获取学校所有班级
+            [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        }
     }else{
         [MBProgressHUD showError:@"切换失败" toView:self.view];
     }
 }
-
+//通知internetApp界面，获取成功
 -(void)internetAppGetUserInfo:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
     NSString *flag = noti.object;
@@ -181,11 +214,11 @@
         }
         [[InternetAppTopScrollView shareInstance] sendRequest];
         //是否隐藏加号
-        if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
-            [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
-        }else{
-            [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
-        }
+//        if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
+        [Nav_internetAppView getInstance].mBtn_add.hidden = NO;
+//        }else{
+//            [Nav_internetAppView getInstance].mBtn_add.hidden = YES;
+//        }
     }else{
         [MBProgressHUD showError:@"获取个人信息超时" toView:self.view];
     }
@@ -204,7 +237,7 @@
         Identity_model *idenModel = [tempArr objectAtIndex:i];
         NSString *str_default = idenModel.DefaultUnitId;
         
-        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
+        if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {//教育局、老师
             NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserUnits];
             for (int m=0; m<array.count; m++) {
@@ -219,7 +252,7 @@
                     break;
                 }
             }
-        }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){
+        }else if([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4){//家长、学生
             NSMutableArray *array ;
             array = [NSMutableArray arrayWithArray:idenModel.UserClasses];
             for (int m=0; m<array.count; m++) {
@@ -230,6 +263,7 @@
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+                    [dm getInstance].ClassID = userUnitsModel.ClassID;
                     break;
                 }
             }
@@ -244,6 +278,7 @@
             break;
         }
     }
+    //如果没有值，给默认
     if (name.length==0) {
         for (int i=0; i<tempArr.count; i++) {
             Identity_model *idenModel ;
@@ -270,6 +305,7 @@
                     [dm getInstance].uType = [idenModel.RoleIdentity intValue];
                     [dm getInstance].mStr_unit = userUnitsModel.ClassName;
                     [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+                    [dm getInstance].ClassID = userUnitsModel.ClassID;
                 }
             }else{
                 [dm getInstance].uType = [idenModel.RoleIdentity intValue];
@@ -282,10 +318,28 @@
             }
         }
     }
-    [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    if ([dm getInstance].uType==3) {//家长
+        [[OnlineJobHttp getInstance] getGenInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+    }else if ([dm getInstance].uType == 4){//学生
+        [[OnlineJobHttp getInstance] getStuInfoWithAccID:[dm getInstance].jiaoBaoHao UID:[dm getInstance].ClassID];
+    }else{//教育局、老师
+        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    }
+    
     //检查更新
     [[LoginSendHttp getInstance] login_itunesUpdataCheck];
+    //获取求知中的个人信息
+    [[KnowledgeHttp getInstance] GetUserInfo];
+    //老师或家长身份时，判断有没有开启请假系统
+    if ([dm getInstance].uType==2||[dm getInstance].uType==3) {
+        [[LeaveHttp getInstance] GetLeaveSettingWithUnitId:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+        //应用系统通过单位ID，获取学校所有班级
+        [[LeaveHttp getInstance] getunitclassWithUID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
+    }
 }
+
+//获取求知中的个人信息
+
 
 //点击事件，点击隐藏
 -(void)pressTap:(UITapGestureRecognizer *)tap{
@@ -304,107 +358,115 @@
 
 //导航条按钮回调事件
 -(void)Nav_internetAppViewClickBtnWith:(UIButton *)btn{
-    D("点击的button是  %ld",(long)btn.tag);
-    if (btn.tag == 1) {//点击设置按钮
-        NSArray *menuItems ;
-        if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
-            menuItems =
-            @[
-              [KxMenuItem menuItem:@"发布单位动态"
-                             image:[UIImage imageNamed:@"appNav_dongtai"]
-                            target:self
-                            action:@selector(pushMenuItem4:)],
-              [KxMenuItem menuItem:@"发表分享"
-                             image:[UIImage imageNamed:@"appNav_share"]
-                            target:self
-                            action:@selector(pushMenuItem5:)],
-              
-              [KxMenuItem menuItem:@"下载的附件"
-                             image:[UIImage imageNamed:@"appNav_access"]
-                            target:self
-                            action:@selector(pushMenuItem7:)],
-              
-              [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem8:)],
-              
-              [KxMenuItem menuItem:@"切换单位"
-                             image:[UIImage imageNamed:@"appNav_changeUnit"]
-                            target:self
-                            action:@selector(pushMenuItem2:)],
-              
-              [KxMenuItem menuItem:@"切换账号"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem3:)],
-              
-              ];
-        }else if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
-            menuItems =
-            @[
-              [KxMenuItem menuItem:@"新建事务"
-                             image:[UIImage imageNamed:@"appNav_work"]
-                            target:self
-                            action:@selector(pushMenuItem6:)],
-              
-              [KxMenuItem menuItem:@"发布单位动态"
-                             image:[UIImage imageNamed:@"appNav_dongtai"]
-                            target:self
-                            action:@selector(pushMenuItem4:)],
-              [KxMenuItem menuItem:@"发表分享"
-                             image:[UIImage imageNamed:@"appNav_share"]
-                            target:self
-                            action:@selector(pushMenuItem5:)],
-              
-              [KxMenuItem menuItem:@"下载的附件"
-                             image:[UIImage imageNamed:@"appNav_access"]
-                            target:self
-                            action:@selector(pushMenuItem7:)],
-              
-              [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem8:)],
-              
-              [KxMenuItem menuItem:@"切换单位"
-                             image:[UIImage imageNamed:@"appNav_changeUnit"]
-                            target:self
-                            action:@selector(pushMenuItem2:)],
-              
-              [KxMenuItem menuItem:@"切换账号"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem3:)],
-              
-              ];
-        }else{
-            menuItems =
-            @[
-              
-              [KxMenuItem menuItem:@"个人中心"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem8:)],
-              
-              [KxMenuItem menuItem:@"切换账号"
-                             image:[UIImage imageNamed:@"appNav_changeUser"]
-                            target:self
-                            action:@selector(pushMenuItem3:)],
-              
-              ];
-        }
-        
-        
-        [KxMenu showMenuInView:self.view
-                      fromRect:btn.frame
-                     menuItems:menuItems];
-    }else if (btn.tag == 2) {//点击添加按钮,让显示不同的界面时，点击出现不同的功能
-//        if ([InternetAppRootScrollView shareInstance].mInt == 0) {//交流
+    CheckNetWorkSelfView
+    if ([[dm getInstance].jiaoBaoHao intValue]>0) {
+        if (btn.tag == 1) {//点击设置按钮
+            NSArray *menuItems ;
+            if ([dm getInstance].uType==3||[dm getInstance].uType==4) {
+                menuItems =
+                @[ [KxMenuItem menuItem:@"添加问题"
+                                  image:[UIImage imageNamed:@"appNav_dongtai"]
+                                 target:self
+                                 action:@selector(pushMenuItem9:)],
+                   [KxMenuItem menuItem:@"发布单位动态"
+                                  image:[UIImage imageNamed:@"appNav_dongtai"]
+                                 target:self
+                                 action:@selector(pushMenuItem4:)],
+                   [KxMenuItem menuItem:@"发表分享"
+                                  image:[UIImage imageNamed:@"appNav_share"]
+                                 target:self
+                                 action:@selector(pushMenuItem5:)],
+                   
+                   [KxMenuItem menuItem:@"下载的附件"
+                                  image:[UIImage imageNamed:@"appNav_access"]
+                                 target:self
+                                 action:@selector(pushMenuItem7:)],
+                   
+                   [KxMenuItem menuItem:@"个人中心"
+                                  image:[UIImage imageNamed:@"appNav_changeUser"]
+                                 target:self
+                                 action:@selector(pushMenuItem8:)],
+                   
+                   [KxMenuItem menuItem:@"切换单位"
+                                  image:[UIImage imageNamed:@"appNav_changeUnit"]
+                                 target:self
+                                 action:@selector(pushMenuItem2:)],
+                   
+                   [KxMenuItem menuItem:@"切换账号"
+                                  image:[UIImage imageNamed:@"appNav_changeUser"]
+                                 target:self
+                                 action:@selector(pushMenuItem3:)],
+                   
+                   ];
+            }else if ([dm getInstance].uType==1||[dm getInstance].uType==2) {
+                menuItems =
+                @[[KxMenuItem menuItem:@"添加问题"
+                                 image:[UIImage imageNamed:@"appNav_dongtai"]
+                                target:self
+                                action:@selector(pushMenuItem9:)],
+                  [KxMenuItem menuItem:@"新建事务"
+                                 image:[UIImage imageNamed:@"appNav_work"]
+                                target:self
+                                action:@selector(pushMenuItem6:)],
+                  
+                  [KxMenuItem menuItem:@"发布单位动态"
+                                 image:[UIImage imageNamed:@"appNav_dongtai"]
+                                target:self
+                                action:@selector(pushMenuItem4:)],
+                  [KxMenuItem menuItem:@"发表分享"
+                                 image:[UIImage imageNamed:@"appNav_share"]
+                                target:self
+                                action:@selector(pushMenuItem5:)],
+                  
+                  [KxMenuItem menuItem:@"下载的附件"
+                                 image:[UIImage imageNamed:@"appNav_access"]
+                                target:self
+                                action:@selector(pushMenuItem7:)],
+                  
+                  [KxMenuItem menuItem:@"个人中心"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem8:)],
+                  
+                  [KxMenuItem menuItem:@"切换单位"
+                                 image:[UIImage imageNamed:@"appNav_changeUnit"]
+                                target:self
+                                action:@selector(pushMenuItem2:)],
+                  
+                  [KxMenuItem menuItem:@"切换账号"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem3:)],
+                  
+                  ];
+            }else{
+                menuItems =
+                @[
+                  
+                  [KxMenuItem menuItem:@"个人中心"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem8:)],
+                  
+                  [KxMenuItem menuItem:@"切换账号"
+                                 image:[UIImage imageNamed:@"appNav_changeUser"]
+                                target:self
+                                action:@selector(pushMenuItem3:)],
+                  
+                  ];
+            }
+            
+            
+            [KxMenu showMenuInView:self.view
+                          fromRect:btn.frame
+                         menuItems:menuItems];
+        }else if (btn.tag == 2) {//点击添加按钮,让显示不同的界面时，点击出现不同的功能
             [self showMenu:btn];
-//        }else if ([InternetAppRootScrollView shareInstance].mInt == 1) {//分享
-//            [self shareAddMenu:btn];
-//        }
+        }
+    }else{
+        //长时间不操作，握手通讯失败后，进行登录操作
+        [[LoginSendHttp getInstance] hands_login];
+        [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
     }
 }
 
@@ -425,7 +487,7 @@
         Identity_model *idenModel = [[dm getInstance].identity objectAtIndex:self.mInt_defaultTV_index];
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             return idenModel.UserUnits.count;
-        }else if ([idenModel.RoleIdentity intValue]==3) {
+        }else if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
             return idenModel.UserClasses.count;
         }
     }
@@ -466,7 +528,7 @@
         if ([idenModel.RoleIdentity intValue]==1||[idenModel.RoleIdentity intValue]==2) {
             Identity_UserUnits_model *userUnitsModel = [idenModel.UserUnits objectAtIndex:row];
             cell.textLabel.text = userUnitsModel.UnitName;
-        }else if ([idenModel.RoleIdentity intValue]==3) {
+        }else if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
             Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:row];
             cell.textLabel.text = userUnitsModel.ClassName;
         }
@@ -489,7 +551,6 @@
     }else if (tableView.tag == 100) {
         self.mInt_defaultTV_index = (int)indexPath.row;
         [self.mTableV_right reloadData];
-        [dm getInstance].uType = (int)indexPath.row+1;
     } else if (tableView.tag == 101){
         //检查当前网络是否可用
         if ([self checkNetWork]) {
@@ -503,48 +564,106 @@
             [dm getInstance].UID = [userUnitsModel.UnitID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.UnitName;
             [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
-        }else if ([idenModel.RoleIdentity intValue]==3) {
+        }else if ([idenModel.RoleIdentity intValue]==3||[idenModel.RoleIdentity intValue]==4) {
             Identity_UserClasses_model *userUnitsModel = [idenModel.UserClasses objectAtIndex:indexPath.row];
             [dm getInstance].UID = [userUnitsModel.SchoolID intValue];
             [dm getInstance].mStr_unit = userUnitsModel.ClassName;
             [dm getInstance].mStr_tableID = userUnitsModel.TabIDStr;
+            [dm getInstance].ClassID = userUnitsModel.ClassID;
         }
         [dm getInstance].uType = [idenModel.RoleIdentity intValue];
         //发送获取列表请求
-        [[LoginSendHttp getInstance] changeCurUnit];
+        [[LoginSendHttp getInstance] changeCurUnit:0];
         [LoginSendHttp getInstance].mInt_forwardFlag =2;
-//        [[LoginSendHttp getInstance] getUserInfoWith:[dm getInstance].jiaoBaoHao UID:[NSString stringWithFormat:@"%d",[dm getInstance].UID]];
         [MBProgressHUD showMessage:@"加载中..." toView:self.view];
         self.mView_all.hidden = YES;
         self.mTableV_right.hidden = YES;
         self.mTableV_left.hidden = YES;
+        [dm getInstance].leaveModel = nil;
+        [[dm getInstance].mArr_leaveClass removeAllObjects];
+        [[dm getInstance].mArr_leaveStudent removeAllObjects];
     }
 }
 
 //右上角“+”方法
 - (void)showMenu:(UIButton *)sender{
-    NSArray *menuItems =
-    @[
-      
-      [KxMenuItem menuItem:@"签到考勤"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(pushMenuItemSignIn:)],
-      [KxMenuItem menuItem:@"日程记录"
-                     image:[UIImage imageNamed:@"appNav_contact"]
-                    target:self
-                    action:@selector(pushMenuItemSchedule:)],
-      
-      ];
-    
-//    KxMenuItem *first = menuItems[0];
-//    first.foreColor = [UIColor colorWithRed:47/255.0f green:112/255.0f blue:225/255.0f alpha:1.0];
-//    first.alignment = NSTextAlignmentCenter;
-    
-    [KxMenu showMenuInView:self.view
-                  fromRect:sender.frame
-                 menuItems:menuItems];
+    //检查网络
+    CheckNetWorkSelfView
+    if ([[dm getInstance].jiaoBaoHao intValue]>0) {
+        NSArray *menuItems0 =
+        @[
+          
+//          [KxMenuItem menuItem:@"签到考勤"
+//                         image:[UIImage imageNamed:@"appNav_contact"]
+//                        target:self
+//                        action:@selector(pushMenuItemSignIn:)],
+          [KxMenuItem menuItem:@"日程记录"
+                         image:[UIImage imageNamed:@"appNav_contact"]
+                        target:self
+                        action:@selector(pushMenuItemSchedule:)],
+          
+          ];
+        //在线作业
+        NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
+        if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
+            [array addObject:[self addOnLineJob]];
+        }
+        //签到
+        if ([dm getInstance].uType==2||[dm getInstance].uType==1) {
+            [array addObject:[KxMenuItem menuItem:@"签到"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemSignIn1:)]];
+        }
+        //请假
+        if ([[dm getInstance].leaveModel.StatusStd intValue]==1||[[dm getInstance].leaveModel.StatusTea intValue]==1) {
+            if ([dm getInstance].mArr_leaveStudent.count>0||[dm getInstance].uType==2) {
+                [array addObject:[KxMenuItem menuItem:@"请假"
+                                                image:[UIImage imageNamed:@"appNav_contact"]
+                                               target:self
+                                               action:@selector(pushMenuItemLeave:)]];
+            }
+        }
+        //审核
+        if (([[dm getInstance].leaveModel.ApproveListStd.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListStd.E isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.A isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.B isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.C isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.D isEqual:@"True"]||[[dm getInstance].leaveModel.ApproveListTea.E isEqual:@"True"]||[[dm getInstance].leaveModel.GateGuardList intValue]==1)||([dm getInstance].uType==2&&([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3))) {
+            [array addObject:[KxMenuItem menuItem:@"审核"
+                                            image:[UIImage imageNamed:@"appNav_contact"]
+                                           target:self
+                                           action:@selector(pushMenuItemCheckLeave:)]];
+        }
+        
+        NSArray *menuItems = array;
+        D("iudhfgjhjh-==========%d",[dm getInstance].uType);
+        [KxMenu showMenuInView:self.view
+                      fromRect:sender.frame
+                     menuItems:menuItems];
+    }else{
+        //长时间不操作，握手通讯失败后，进行登录操作
+        [[LoginSendHttp getInstance] hands_login];
+        [MBProgressHUD showSuccess:@"登录成功后方可操作" toView:self.view];
+    }
 }
+//在线作业
+-(KxMenuItem *)addOnLineJob{
+    if ([dm getInstance].uType==2) {
+        return [KxMenuItem menuItem:@"作业布置"
+                       image:[UIImage imageNamed:@"appNav_contact"]
+                      target:self
+                      action:@selector(makeJob:)];
+    }else if ([dm getInstance].uType==3){
+        return [KxMenuItem menuItem:@"作业查询"
+                       image:[UIImage imageNamed:@"appNav_contact"]
+                      target:self
+                      action:@selector(parentSearch:)];
+    }else if ([dm getInstance].uType==4){
+        return [KxMenuItem menuItem:@"我的作业"
+                       image:[UIImage imageNamed:@"appNav_contact"]
+                      target:self
+                      action:@selector(myJob:)];
+    }
+    return nil;
+}
+//签到考勤
 - (void) pushMenuItemSignIn:(id)sender{
     [MobClick event:@"InternetApplications_add" label:@"签到考勤"];
     CheckingInViewController *check = [[CheckingInViewController alloc]init];
@@ -553,12 +672,65 @@
     check.mTableV_right = self.mTableV_right;
     [utils pushViewController:check animated:YES];
 }
-
+//日程记录
 - (void) pushMenuItemSchedule:(id)sender{
     [MobClick event:@"InternetApplications_add" label:@"日程记录"];
 
     SignInViewController *signIn = [[SignInViewController alloc] init];
     [utils pushViewController:signIn animated:YES];
+}
+
+//快速签到
+- (void) pushMenuItemSignIn1:(id)sender{
+    [MobClick event:@"InternetApplications_add" label:@"签到"];
+    
+    TeacherSignInViewController *signIn = [[TeacherSignInViewController alloc] init];
+    [utils pushViewController:signIn animated:YES];
+}
+
+//请假
+- (void) pushMenuItemLeave:(id)sender{
+//    TeacherViewController *detail = [[TeacherViewController alloc] init];
+//    [utils pushViewController:detail animated:YES];
+    LeaveViewController *leave = [[LeaveViewController alloc] init];
+    if ([dm getInstance].uType==3) {
+        leave.mStr_navName = @"家长";
+        leave.mInt_leaveID = 3;
+    }else if ([[dm getInstance].leaveModel.GateGuardList intValue]==1) {
+        leave.mStr_navName = @"门卫";
+        leave.mInt_leaveID = 0;
+    }else if ([[dm getInstance].userInfo.isAdmin intValue]==2||[[dm getInstance].userInfo.isAdmin intValue]==3){
+        leave.mStr_navName = @"班主任";
+        leave.mInt_leaveID = 1;
+    }else{
+        leave.mStr_navName = @"老师";
+        leave.mInt_leaveID = 2;
+    }
+    [utils pushViewController:leave animated:YES];
+}
+
+//审核
+-(void) pushMenuItemCheckLeave:(id)sender{
+    CheckLeaveViewController *checkLeave = [[CheckLeaveViewController alloc] init];
+    checkLeave.mStr_navName = @"审核";
+    [utils pushViewController:checkLeave animated:YES];
+}
+
+//我的作业
+-(void)myJob:(id)sender{
+    StudentHomewrokViewController *view = [[StudentHomewrokViewController alloc] init];
+    [utils pushViewController:view animated:YES];
+}
+
+-(void)parentSearch:(id)sender{
+    ParentSearchViewController *view = [[ParentSearchViewController alloc] init];
+    [utils pushViewController:view animated:YES];
+}
+
+//作业布置
+-(void)makeJob:(id)sender{
+    MakeJobViewController *makeJob = [[MakeJobViewController alloc] init];
+    [utils pushViewController:makeJob animated:YES];
 }
 
 //附件
@@ -602,12 +774,15 @@
     [dm getInstance].url = @"";
     [dm getInstance].UID = 0;
     [[dm getInstance].identity removeAllObjects];
+    [dm getInstance].jiaoBaoHao = @"";
+    [dm getInstance].leaveModel = nil;
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
     //通知界面，更新数据
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegisterView" object:nil];
     [Nav_internetAppView getInstance].mLab_name.text = @"";
+    [self.nav_internetAppView removeFromSuperview];
     [utils pushViewController:mRegister_view animated:NO];
 }
 
@@ -677,6 +852,14 @@
     }
     PeopleSpaceViewController *view = [[PeopleSpaceViewController alloc] init];
     [utils pushViewController:view animated:YES];
+}
+//添加问题
+-(void)pushMenuItem9:(id)sender
+{
+    JoinUnit
+    NoNickName
+    AddQuestionViewController *addQuestionVC = [[AddQuestionViewController alloc]init];
+    [utils pushViewController:addQuestionVC animated:YES];
 }
 
 //获取当前用户可以发布动态的单位列表(含班级）

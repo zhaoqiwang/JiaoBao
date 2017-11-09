@@ -35,6 +35,10 @@
 -(void)getTime;
 -(void)GetSignInListForMobile:(NSString*)year Month:(NSString*)month;
 -(void)WorkPlanSelectContentByMonth:(NSString*)UnitID UserID:(NSString*)UserID strSelectDate:(NSString*)strSelectDate;
+//签到--2017-11-06
+-(void)setSign:(NSString*)UnitID;
+//查询我的签到记录
+-(void)searchMySignInfoWithSDate:(NSString *)sDate eDate:(NSString *)eDate num:(int)num pageNum:(int)page rowCount:(NSString *)rowCount;
 
 
 @end

@@ -10,6 +10,9 @@
 #import "UncaughtExceptionHandler.h"
 #import "Reachability.h"
 #import<AVFoundation/AVFoundation.h>
+#import "IQKeyboardManager.h"
+#import "BBLaunchAdMonitor.h"
+
 
 //CLLocationManager *locationManager;
 
@@ -20,21 +23,25 @@
 @implementation AppDelegate
 @synthesize mInternet,mRegister_view,mInt_index;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //友盟统计
     [MobClick setAppVersion:XcodeAppVersion];//参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"test"];//channelId默认会被被当作@"App Store"渠道
+    [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"TEST"];//channelId默认会被被当作@"App Store"渠道
     //初始化
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
     D("tempPath-====%@",tempPath);
-
+//    [[SDWebImageManager sharedManager].imageCache clearMemory];
+//    [[SDWebImageManager sharedManager].imageCache clearDisk];
     BMKMapManager *mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
     BOOL ret = [mapManager start:@"iqYoKFAodVcfY8oRpi0KtuHs"  generalDelegate:self];
     if (!ret) {
-        D("manager start failed!");
+        NSLog(@"manager start failed!");
     }
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -47,10 +54,27 @@
     //全局异常捕获,bug服务器
     InstallUncaughtExceptionHandler();
     //添加网络切换时的处理
+    [[NSNotificationCenter defaultCenter] addObserver:self
+     
+                                             selector:@selector(checkNetworkStatus:)
+     
+                                                 name:kReachabilityChangedNotification object:nil];
+    
+    // Override point for customization after application launch.
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAdDetail:) name:BBLaunchAdDetailDisplayNotification object:nil];
+//    NSString *path = @"http://qn-edures.jiaobaowang.net/zypt/gx-k12/dongman/img/img-0-0-61403.png?e=1503996986&token=SDtQBeriWyCnNor8FnDFuRYWuvlsZ1xbPYQkLFT0:hlT_mlT25c-mg7zXp4QMvx8CzK0=";
+//    [BBLaunchAdMonitor showAdAtPath:path
+//                             onView:self.window.rootViewController.view
+//                       timeInterval:5.
+//                   detailParameters:@{@"carId":@(12345), @"name":@"奥迪-品质生活"}];
+    
+    internetReachable = [Reachability reachabilityForInternetConnection];
+    
+    [internetReachable startNotifier];
 //    Reachability *_internetReach = [Reachability reachabilityForInternetConnection];
 //    [_internetReach startNotifier];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
     
     [dm getInstance].mStr_unit = @"暂无";
     [dm getInstance].name = @"新用户";
@@ -88,7 +112,6 @@
             [application registerForRemoteNotificationTypes:myTypes];
         }
     }
-    
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registeredSuccessfully" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(registeredSuccessfully) name:@"registeredSuccessfully" object:nil];//注册成功跳转主界面通知
@@ -141,14 +164,54 @@
         [aNa setNavigationBarHidden:YES];
         self.window.rootViewController = aNa;
     }
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+- (void)showAdDetail:(NSNotification *)noti
+{
+    NSLog(@"detail parameters:%@", noti.object);
 }
 //友盟初始化
 - (void)onlineConfigCallBack:(NSNotification *)note {
     D("online config has fininshed and note = %@", note.userInfo);
 }
-
+- (void)checkNetworkStatus:(NSNotification *)notice {
+    NetworkStatus internetStatus = [internetReachable currentReachabilityStatus];
+    switch (internetStatus)
+    
+    {
+        case NotReachable:
+            
+        {
+            [MBProgressHUD showError:@"网络连接异常" ];
+            NSLog(@"The internet is down.");
+            break;
+            
+        }
+            
+        case ReachableViaWiFi:
+            
+        {
+            [MBProgressHUD showError:@"接入wifi网络" ];
+            NSLog(@"The internet is working via WIFI");
+            break;
+            
+        }
+            
+        case ReachableViaWWAN:
+            
+        {
+            [MBProgressHUD showError:@"接入wwan网络" ];
+            
+            NSLog(@"The internet is working via WWAN!");
+            break;
+            
+        }
+            
+    }
+    
+}
 - (void)reachabilityChanged: (NSNotification* )note {
     Reachability *curReach = [note object];
     NetworkStatus networkStatus = [curReach currentReachabilityStatus];
@@ -300,7 +363,6 @@
     //对添加人员进行去重
     NSSet *set = [NSSet setWithArray:array];
     array = [NSMutableArray arrayWithArray:[set allObjects]];
-    
     for (int a= 0; a<[dm getInstance].mArr_unit_member.count; a++) {//循环所有的单位
         TreeView_node *node0 = [[dm getInstance].mArr_unit_member objectAtIndex:a];
         if ([node0.UID intValue] == [uid intValue]) {//找到单位和通知里一样的
@@ -409,10 +471,10 @@
 - (void)onGetNetworkState:(int)iError
 {
     if (0 == iError) {
-        D("联网成功");
+        NSLog(@"联网成功");
     }
     else{
-        D("onGetNetworkState %d",iError);
+        NSLog(@"onGetNetworkState %d",iError);
     }
     
 }
@@ -420,12 +482,135 @@
 - (void)onGetPermissionState:(int)iError
 {
     if (0 == iError) {
-        D("授权成功");
+        NSLog(@"授权成功");
     }
     else {
-        D("onGetPermissionState %d",iError);
+        NSLog(@"onGetPermissionState %d",iError);
     }
 }
+
+#pragma mark - Core Data stack
+
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+- (NSURL *)applicationDocumentsDirectory {
+    // The directory the application uses to store the Core Data store file. This code uses a directory named "JSY.___" in the application's documents directory.
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (NSManagedObjectModel *)managedObjectModel {
+    // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+    // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it.
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
+    }
+    
+    // Create the coordinator and store
+    
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Model.sqlite"];
+    NSError *error = nil;
+    NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        // Report any error we got.
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
+        dict[NSLocalizedFailureReasonErrorKey] = failureReason;
+        dict[NSUnderlyingErrorKey] = error;
+        error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
+        // Replace this with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _persistentStoreCoordinator;
+}
+
+
+- (NSManagedObjectContext *)managedObjectContext {
+    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (!coordinator) {
+        return nil;
+    }
+    _managedObjectContext = [[NSManagedObjectContext alloc] init];
+    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    return _managedObjectContext;
+}
+
+#pragma mark - Core Data Saving support
+
+- (void)saveContext {
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        NSError *error = nil;
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
+/**
+ *  当一个指定的URL资源打开时调用，iOS9之前
+ *
+ *  @param url               指定的url
+ *  @param sourceApplication 请求打开应用的bundle ID
+ */
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    NSLog(@"url : %@",url);
+    
+    NSLog(@"sourceApplication : %@",sourceApplication);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[url absoluteString]
+                                                    message:sourceApplication
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"OtherBtn",nil];
+    [alert show];
+    
+    return YES;
+}
+/**
+ *  当一个指定的URL资源打开时调用，iOS9之后
+ *
+ *  @param url     指定的url
+ *  @param options 打开选项，其中通过UIApplicationOpenURLOptionsSourceApplicationKey获得sourceApplication
+ */
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    NSLog(@"url : %@",url);
+    
+    NSString *sourceApplication = options[UIApplicationOpenURLOptionsSourceApplicationKey];
+    NSLog(@"sourceApplication : %@",sourceApplication);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[url absoluteString]
+                                                    message:sourceApplication
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    return YES;
+}
+
 
 
 @end

@@ -74,6 +74,11 @@
 {
     if([keyPath isEqualToString:@"selectedDateStr"])
     {
+        if(self.selectedDateStr == nil)
+        {
+            return;
+        }
+        
         if([self.selectedDateStr isEqualToString:@""])
         {
             self.dataSource = nil;

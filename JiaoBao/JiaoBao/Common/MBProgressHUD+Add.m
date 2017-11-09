@@ -16,7 +16,11 @@
     if (view == nil) view = [UIApplication sharedApplication].keyWindow;
     // 快速显示一个提示信息
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = text;
+    if (text.length>15) {
+        hud.detailsLabelText = text;
+    }else{
+        hud.labelText = text;
+    }
     // 设置图片
     hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MBProgressHUD.bundle/%@", icon]]];
     // 再设置模式

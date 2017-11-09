@@ -39,6 +39,22 @@
 
 //判断字符串是否为空、是否都是空格
 + (BOOL)isBlankString:(NSString *)string;
+//
++ (void)logDic:(NSDictionary *)dic;
 
+//去掉html中的无用标签，适配手机
++(NSString *)clearHtml:(NSString *)content width:(int)tempW;
+
+//检查当前网络是否可用
++(BOOL)checkNetWork:(UIView *)view tableView:(UITableView *)tableView;
+
+//过滤错题本中的输入框等 - html文本 - 0直接去掉，1替换text
++(NSString *)filterHTML:(NSString *)html Flag:(int)flag;
+
+//textField限制字数 num(限制的字数大小)--（textField range string是UITextViewDelegate里的参数)
++(BOOL)textFiledWordLimit:(NSInteger)num textField:(UITextField *)textField range:(NSRange)range string:(NSString*)string;
+
+//textView限制字数 num(限制的字数大小)--（textView text range是UITextViewDelegate里的参数）--textField（负责显示placehold的textfield）
++(BOOL)textViewWordLimit:(NSInteger)num textView:(UITextView*)textView text:(NSString*)text range:(NSRange)range textField:(UITextField*)textField;
 
 @end
