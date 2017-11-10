@@ -32,6 +32,8 @@
     [self.view addSubview:self.mNav_navgationBar];
     
     self.mTableV_detailist.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    self.mTableV_detailist.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
+//    self.automaticallyAdjustsScrollViewInsets = false;
 
     //添加表格的下拉刷新
 //    [self.mTableV_detailist addHeaderWithTarget:self action:@selector(headerRereshing)];
@@ -61,7 +63,8 @@
     NSMutableDictionary *dic = noti.object;
     NSString *ResultCode = [dic objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dic objectForKey:@"ResultDesc"];
-    if ([ResultCode intValue] == 0) {
+    if ([ResultCode intValue] == 0 || [ResultDesc isEqualToString:@"该时段内用户已经签到成功，无需重复签到！"]) {
+        [MBProgressHUD showError:ResultDesc toView:self.view];
         Identity_UserUnits_model *model = self.mArr_detail[self.mInt_tag];
         model.flag = 1;
         [self.mTableV_detailist reloadData];
@@ -202,8 +205,10 @@
     cell2.mBtn_signIn.tag = indexPath.row;
     if (unReadMsgModel.flag == 0) {
         [cell2.mBtn_signIn setTitle:@"未签到" forState:UIControlStateNormal];
+        [cell2.mBtn_signIn setBackgroundColor:[UIColor orangeColor]];
     } else {
         [cell2.mBtn_signIn setTitle:@"已签到" forState:UIControlStateNormal];
+         [cell2.mBtn_signIn setBackgroundColor:[UIColor brownColor]];
     }
     [cell2.mBtn_signIn addTarget:self action:@selector(clickSignInBtn:) forControlEvents:UIControlEventTouchUpInside];
     //若是回复我的，显示回复内容
