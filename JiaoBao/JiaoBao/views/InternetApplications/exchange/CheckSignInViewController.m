@@ -177,6 +177,7 @@
 
 //点击查询按钮
 - (IBAction)checkAction:(id)sender {
+    [self.currTF endEditing:YES];
     NSLog(@"发送请求");
     if([self.beginDate.text isEqualToString: @""]){
         [MBProgressHUD showError:@"请输入开始时间" toView:self.view];
