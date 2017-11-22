@@ -8,7 +8,7 @@
 
 #import "MyFriendsViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 @interface MyFriendsViewController ()
 
 @end

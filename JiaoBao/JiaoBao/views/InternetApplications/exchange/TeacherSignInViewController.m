@@ -8,7 +8,7 @@
 
 #import "TeacherSignInViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "UIImageView+WebCache.h"
 #import "CheckSignInViewController.h"
 

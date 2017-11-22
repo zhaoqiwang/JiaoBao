@@ -12,7 +12,7 @@
 #import "MBProgressHUD.h"
 #import "RegisterHttp.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 
 @interface MobileUnitViewController ()<unitCellDelegate,MBProgressHUDDelegate>

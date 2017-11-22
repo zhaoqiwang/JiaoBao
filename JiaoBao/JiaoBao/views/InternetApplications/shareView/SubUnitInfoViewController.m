@@ -8,7 +8,7 @@
 
 #import "SubUnitInfoViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 @interface SubUnitInfoViewController ()
 
 @end

@@ -11,7 +11,7 @@
 #import "Forward_cell.h"
 #import "Forward_section.h"
 #import "MsgDetail_ReaderList.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #define Margin 10//边距
 #define BtnColor [UIColor colorWithRed:185/255.0 green:185/255.0 blue:185/255.0 alpha:1]//按钮背景色
 

@@ -51,6 +51,8 @@
 		43B97EFC1FAC0EFC00067171 /* TeacherSignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B97EFA1FAC0EFC00067171 /* TeacherSignInViewController.xib */; };
 		43B97F001FAC100E00067171 /* TeacherSignInTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 43B97EFE1FAC100E00067171 /* TeacherSignInTableViewCell.m */; };
 		43B97F011FAC100E00067171 /* TeacherSignInTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43B97EFF1FAC100E00067171 /* TeacherSignInTableViewCell.xib */; };
+		43C0A9461FC5741D006A58B8 /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C0A9451FC5741C006A58B8 /* UMAnalytics.framework */; };
+		43C0A9481FC576E2006A58B8 /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43C0A9471FC576E2006A58B8 /* UMCommon.framework */; };
 		43DD1CE11CB64E9100F66482 /* buttonView17.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDB1CB64E9100F66482 /* buttonView17.png */; };
 		43DD1CE21CB64E9100F66482 /* buttonView17@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */; };
 		43DD1CE31CB64E9100F66482 /* buttonView17@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */; };
@@ -860,7 +862,7 @@
 		A7B0F9551A47C0E200C1863A /* SDWebImageManager+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B0F9541A47C0E200C1863A /* SDWebImageManager+MJ.m */; };
 		A7B0F9581A47C37D00C1863A /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = A7B0F9571A47C37D00C1863A /* MBProgressHUD+Add.m */; };
 		A7BB17DD19F49CC000A81286 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BB17DC19F49CC000A81286 /* libxml2.2.dylib */; };
-		A7BB17E019F49E9300A81286 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BB17DF19F49E9300A81286 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		A7BB17E019F49E9300A81286 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BB17DF19F49E9300A81286 /* Reachability.m */; };
 		A7BB17E219F4A12A00A81286 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A7BB17E119F4A12A00A81286 /* libz.1.2.5.dylib */; };
 		A7BB17E519F4AB4600A81286 /* LoginSendHttp.m in Sources */ = {isa = PBXBuildFile; fileRef = A7BB17E419F4AB4600A81286 /* LoginSendHttp.m */; };
 		A7BB17E819F4B22000A81286 /* jsyiamsCA.cer in Resources */ = {isa = PBXBuildFile; fileRef = A7BB17E719F4B22000A81286 /* jsyiamsCA.cer */; };
@@ -899,8 +901,6 @@
 		A7CE673B1AA70A250038D0C5 /* themeTotal.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE672F1AA70A250038D0C5 /* themeTotal.png */; };
 		A7CE673C1AA70A250038D0C5 /* themeTotal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */; };
 		A7CE673D1AA70A250038D0C5 /* themeTotal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */; };
-		A7D504551B4E043100BBB7C8 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */; };
-		A7D504561B4E043100BBB7C8 /* libMobClickLibraryS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */; };
 		A7D829A91B61D0D400812340 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = A7D829A61B61D0D400812340 /* UIImage+Resize.m */; };
 		A7E2E5EA1B2031A8003F85B5 /* PeopleSpaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E2E5E81B2031A8003F85B5 /* PeopleSpaceViewController.m */; };
 		A7E2E5EB1B2031A8003F85B5 /* PeopleSpaceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E2E5E91B2031A8003F85B5 /* PeopleSpaceViewController.xib */; };
@@ -1263,6 +1263,8 @@
 		43B97EFD1FAC100E00067171 /* TeacherSignInTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TeacherSignInTableViewCell.h; path = views/InternetApplications/exchange/TeacherSignInTableViewCell.h; sourceTree = "<group>"; };
 		43B97EFE1FAC100E00067171 /* TeacherSignInTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TeacherSignInTableViewCell.m; path = views/InternetApplications/exchange/TeacherSignInTableViewCell.m; sourceTree = "<group>"; };
 		43B97EFF1FAC100E00067171 /* TeacherSignInTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TeacherSignInTableViewCell.xib; path = views/InternetApplications/exchange/TeacherSignInTableViewCell.xib; sourceTree = "<group>"; };
+		43C0A9451FC5741C006A58B8 /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
+		43C0A9471FC576E2006A58B8 /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
 		43DD1CDB1CB64E9100F66482 /* buttonView17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonView17.png; path = buttonView/buttonView17.png; sourceTree = "<group>"; };
 		43DD1CDC1CB64E9100F66482 /* buttonView17@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView17@2x.png"; path = "buttonView/buttonView17@2x.png"; sourceTree = "<group>"; };
 		43DD1CDD1CB64E9100F66482 /* buttonView17@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonView17@3x.png"; path = "buttonView/buttonView17@3x.png"; sourceTree = "<group>"; };
@@ -2460,10 +2462,6 @@
 		A7CE672F1AA70A250038D0C5 /* themeTotal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = themeTotal.png; path = Image/InternetApp/themeTotal.png; sourceTree = "<group>"; };
 		A7CE67301AA70A250038D0C5 /* themeTotal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@2x.png"; path = "Image/InternetApp/themeTotal@2x.png"; sourceTree = "<group>"; };
 		A7CE67311AA70A250038D0C5 /* themeTotal@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "themeTotal@3x.png"; path = "Image/InternetApp/themeTotal@3x.png"; sourceTree = "<group>"; };
-		A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = Common/UMAnalytics_Sdk_3.5.8/libMobClickLibrary.a; sourceTree = "<group>"; };
-		A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibraryS.a; path = Common/UMAnalytics_Sdk_3.5.8/libMobClickLibraryS.a; sourceTree = "<group>"; };
-		A7D504531B4E043100BBB7C8 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = Common/UMAnalytics_Sdk_3.5.8/MobClick.h; sourceTree = "<group>"; };
-		A7D504541B4E043100BBB7C8 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClickSocialAnalytics.h; path = Common/UMAnalytics_Sdk_3.5.8/MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		A7D829A51B61D0D400812340 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+Resize.h"; path = "Common/UIImage+Resize.h"; sourceTree = "<group>"; };
 		A7D829A61B61D0D400812340 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Resize.m"; path = "Common/UIImage+Resize.m"; sourceTree = "<group>"; };
 		A7E2E5E71B2031A8003F85B5 /* PeopleSpaceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeopleSpaceViewController.h; path = views/InternetApplications/personalSpace/PeopleSpaceViewController.h; sourceTree = "<group>"; };
@@ -2966,7 +2964,6 @@
 				A7595EC11A5FC56A0027848E /* MessageUI.framework in Frameworks */,
 				A7595EBF1A5FC55E0027848E /* AssetsLibrary.framework in Frameworks */,
 				A74339631A455B0C00AFC0A5 /* ImageIO.framework in Frameworks */,
-				A7D504561B4E043100BBB7C8 /* libMobClickLibraryS.a in Frameworks */,
 				A73789101A2F108100DF8882 /* CoreGraphics.framework in Frameworks */,
 				A73789261A2F112C00DF8882 /* SystemConfiguration.framework in Frameworks */,
 				F7F8700E1C92798A00A75520 /* BaiduMapAPI.framework in Frameworks */,
@@ -2983,6 +2980,7 @@
 				A737890E1A2F105C00DF8882 /* CoreLocation.framework in Frameworks */,
 				A737890C1A2F103500DF8882 /* CoreAudio.framework in Frameworks */,
 				A737890A1A2F101C00DF8882 /* AVFoundation.framework in Frameworks */,
+				43C0A9481FC576E2006A58B8 /* UMCommon.framework in Frameworks */,
 				A73789081A2F100D00DF8882 /* AudioToolbox.framework in Frameworks */,
 				A7BB17E219F4A12A00A81286 /* libz.1.2.5.dylib in Frameworks */,
 				A7BB17DD19F49CC000A81286 /* libxml2.2.dylib in Frameworks */,
@@ -2990,7 +2988,7 @@
 				A755E6AD19F254A600BBDF3D /* Security.framework in Frameworks */,
 				A755E6AB19F2549B00BBDF3D /* UIKit.framework in Frameworks */,
 				A755E6A919F2548E00BBDF3D /* Foundation.framework in Frameworks */,
-				A7D504551B4E043100BBB7C8 /* libMobClickLibrary.a in Frameworks */,
+				43C0A9461FC5741D006A58B8 /* UMAnalytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3734,6 +3732,8 @@
 		A755E69719F24AC500BBDF3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				43C0A9471FC576E2006A58B8 /* UMCommon.framework */,
+				43C0A9451FC5741C006A58B8 /* UMAnalytics.framework */,
 				F769889F1C3A02610052DE77 /* Photos.framework */,
 				F718782F1BFF1BAC00A5ABCA /* JavaScriptCore.framework */,
 				F72385DE1BE346BC0000015D /* WebKit.framework */,
@@ -3817,7 +3817,6 @@
 				A7D829A51B61D0D400812340 /* UIImage+Resize.h */,
 				A7D829A61B61D0D400812340 /* UIImage+Resize.m */,
 				A76255D41B5C9F3C00AD8089 /* AVCaptureManager */,
-				A7D504501B4E03DA00BBB7C8 /* UMAnalytics_Sdk */,
 				A78FE2371B3AAFAC00C8D1FD /* UIViewController+HUD.h */,
 				A78FE2381B3AAFAC00C8D1FD /* UIViewController+HUD.m */,
 				A78FE2341B3AA43D00C8D1FD /* MBProgressHUD+AD.h */,
@@ -5248,17 +5247,6 @@
 			);
 			name = MJPhotoBrowser;
 			path = Common/MJPhotoBrowser;
-			sourceTree = "<group>";
-		};
-		A7D504501B4E03DA00BBB7C8 /* UMAnalytics_Sdk */ = {
-			isa = PBXGroup;
-			children = (
-				A7D504511B4E043100BBB7C8 /* libMobClickLibrary.a */,
-				A7D504521B4E043100BBB7C8 /* libMobClickLibraryS.a */,
-				A7D504531B4E043100BBB7C8 /* MobClick.h */,
-				A7D504541B4E043100BBB7C8 /* MobClickSocialAnalytics.h */,
-			);
-			name = UMAnalytics_Sdk;
 			sourceTree = "<group>";
 		};
 		A7D829AB1B61E62100812340 /* Chat */ = {
@@ -6881,8 +6869,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -6925,8 +6913,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -6952,14 +6940,15 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 68R8QP4X33;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiaoBao",
 					"$(PROJECT_DIR)/JiaoBao/Common",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6975,10 +6964,11 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0b6c9db7-148a-495e-a815-c6ff59d8ff5a";
-				PROVISIONING_PROFILE_SPECIFIER = dis_jiaobao_Zqw;
+				PROVISIONING_PROFILE = "bf2b4c43-db7a-40fb-84ed-763b3061bc20";
+				PROVISIONING_PROFILE_SPECIFIER = dev_jiaobao_Zqw;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -6989,14 +6979,15 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 68R8QP4X33;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiaoBao",
 					"$(PROJECT_DIR)/JiaoBao/Common",
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7012,10 +7003,11 @@
 					"$(PROJECT_DIR)/JiaoBao/Common/BaiduSDk",
 					"$(PROJECT_DIR)/JiaoBao/Common/UMAnalytics_Sdk_3.5.8",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0b6c9db7-148a-495e-a815-c6ff59d8ff5a";
-				PROVISIONING_PROFILE_SPECIFIER = dis_jiaobao_Zqw;
+				PROVISIONING_PROFILE = "ad4bc96e-c21f-4caa-987b-66171c5c44e0";
+				PROVISIONING_PROFILE_SPECIFIER = dev_jiaobao_Zqw;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

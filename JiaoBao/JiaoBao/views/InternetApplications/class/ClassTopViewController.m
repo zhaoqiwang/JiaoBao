@@ -8,7 +8,7 @@
 
 #import "ClassTopViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "RCLabel.h"
 
 @interface ClassTopViewController ()

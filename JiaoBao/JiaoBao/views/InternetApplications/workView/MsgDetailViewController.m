@@ -8,7 +8,7 @@
 
 #import "MsgDetailViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "UIImageView+WebCache.h"
 
 @interface MsgDetailViewController ()

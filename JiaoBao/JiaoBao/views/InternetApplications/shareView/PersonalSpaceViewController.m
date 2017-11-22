@@ -10,7 +10,7 @@
 #import "ShareCollectionViewCell.h"
 #import "UnitAlbumsViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "MJRefresh.h"//上拉下拉刷新
 static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
 

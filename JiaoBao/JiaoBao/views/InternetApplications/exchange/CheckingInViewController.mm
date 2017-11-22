@@ -12,7 +12,7 @@
 #import "dm.h"
 #import "MBProgressHUD.h"
 #import "RecordViewController.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface CheckingInViewController ()
 {

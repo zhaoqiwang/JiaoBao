@@ -13,7 +13,7 @@
 #import "RegisterPassWViewController.h"
 #import "MBProgressHUD.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface SecondRegViewController ()<MBProgressHUDDelegate>
 {

@@ -7,7 +7,7 @@
 //
 #import "WorkView_new2.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 
 @implementation WorkView_new2

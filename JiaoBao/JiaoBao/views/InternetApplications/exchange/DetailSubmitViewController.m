@@ -10,7 +10,7 @@
 #import "SignInHttp.h"
 #import "dm.h"
 #import "SVProgressHUD.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "SelectionCell.h"
 #import "LoginSendHttp.h"
 #import "IQKeyboardManager.h"

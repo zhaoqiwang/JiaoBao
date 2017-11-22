@@ -9,7 +9,7 @@
 #import "PeopleSpaceViewController.h"
 #import "UnitTableViewCell.h"
 #import "MobileUnitViewController.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "KnowledgePeoleSpaceViewController.h"
