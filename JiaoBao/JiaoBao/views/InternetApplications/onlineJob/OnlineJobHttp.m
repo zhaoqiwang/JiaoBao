@@ -571,6 +571,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
             return;
         }
         NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf,@"PageIndex":PageIndex,@"PageSize":PageSize,};
+    NSLog(@"parameters:%@",parameters);
         NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
         [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
         [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

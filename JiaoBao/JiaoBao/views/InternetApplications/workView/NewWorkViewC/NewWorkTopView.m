@@ -366,6 +366,7 @@
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+//                image = [self text:@"添加文字" addToImage:image];
                 image = [self fixOrientation:image];
                 NSData *imageData = UIImageJPEGRepresentation(image,0);
                 
@@ -417,6 +418,31 @@
     //    [self.mProgressV hide:YES];
 }
 
+- (UIImage*)text:(NSString*)text addToImage:(UIImage*)image{
+    NSLog(@"lkshdfksjdnksjdnfs,jdn,");
+    UIFont *font = [UIFont fontWithName:@"Arial-BoldItalicMT" size:32];
+    NSDictionary *dict = @{NSFontAttributeName:font,NSForegroundColorAttributeName:[UIColor redColor]};
+    CGSize textSize = [text sizeWithAttributes:dict];
+    //绘制图片上下文
+    
+    UIGraphicsBeginImageContext(image.size);
+    
+    [image drawInRect:CGRectMake(0,0, image.size.width, image.size.height)];
+    
+    int border =10;
+    CGRect re = {CGPointMake(image.size.width- textSize.width- border, image.size.height- textSize.height- border), textSize};
+    
+    //此方法必须写在上下文才生效
+    [text drawInRect:re withAttributes:dict];
+    
+    UIImage*newImage =UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+    
+}
+
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker{
     //    [self dismissViewControllerAnimated:YES completion:nil];
     [utils popViewControllerAnimated1:YES];
@@ -461,6 +487,7 @@
         NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[[NSDate date] timeIntervalSince1970]];
         UIImage *chosenImage=[info objectForKey:UIImagePickerControllerOriginalImage];
         chosenImage = [self fixOrientation:chosenImage];
+//        chosenImage = [self text:@"添加文字" addToImage:chosenImage];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
         //文件名
         NSFileManager *fileManager = [NSFileManager defaultManager];

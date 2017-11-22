@@ -338,10 +338,9 @@
     // Pass the selected object to the new view controller.
 }
 */
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+- (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.dateTextField = textField;
-    return YES;
 }
 - (IBAction)cancelAction:(id)sender {
     [self.view endEditing:YES];

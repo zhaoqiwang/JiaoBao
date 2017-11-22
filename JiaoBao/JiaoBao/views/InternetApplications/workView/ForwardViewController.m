@@ -92,7 +92,7 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
 
     //大scrollview的坐标
     self.mScrollV_all.frame = CGRectMake(0, 0, [dm getInstance].width, [dm getInstance].height-44-10);
-
+    self.view.frame =CGRectMake(0, 0, [dm getInstance].width, self.view.frame.size.height);
     //接收人，全选，反选，发表
 
     self.topView = [[NewWorkTopView alloc]init];
