@@ -11,7 +11,7 @@
 #import "SignInHttp.h"
 #import "SVProgressHUD.h"
 #import "RecordCell.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface RecordViewController ()<JTCalendarDataSource>
 @property (weak, nonatomic) IBOutlet JTCalendarMenuView *menuView;

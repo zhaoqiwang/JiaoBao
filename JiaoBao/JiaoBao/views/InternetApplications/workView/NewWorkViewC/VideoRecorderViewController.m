@@ -11,7 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "utils.h"
 #import "dm.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "define_constant.h"
 #import "MBProgressHUD+AD.h"
 

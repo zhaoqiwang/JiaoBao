@@ -8,7 +8,7 @@
 
 #import "OpenFileViewController.h"
 #import "define_constant.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 @interface OpenFileViewController ()
 
 @end

@@ -12,7 +12,8 @@
 #import<AVFoundation/AVFoundation.h>
 #import "IQKeyboardManager.h"
 #import "BBLaunchAdMonitor.h"
-
+#import <UMCommon/UMCommon.h>           // 公共组件是所有友盟产品的基础组件，必选
+#import <UMAnalytics/MobClick.h>        // 统计组件
 
 //CLLocationManager *locationManager;
 
@@ -27,10 +28,10 @@
     [IQKeyboardManager sharedManager].enable = NO;//控制整个功能是否启用
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;//控制是否显示键盘上的工具条
     //友盟统计
-    [MobClick setAppVersion:XcodeAppVersion];//参数为NSString * 类型,自定义app版本信息，如果不设置，默认从CFBundleVersion里取
-    [MobClick startWithAppkey:@"559dd7ea67e58e790d00625c" reportPolicy:BATCH   channelId:@"TEST"];//channelId默认会被被当作@"App Store"渠道
-    //初始化
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+    [UMConfigure setEncryptEnabled:YES]; // optional: 设置加密传输, 默认NO
+    [UMConfigure initWithAppkey:@"559dd7ea67e58e790d00625c" channel:@"App Store"];
+    // 统计组件配置
+    [MobClick setScenarioType:E_UM_NORMAL];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];

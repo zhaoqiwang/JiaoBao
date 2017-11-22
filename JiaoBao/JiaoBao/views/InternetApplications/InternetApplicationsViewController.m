@@ -11,7 +11,7 @@
 #import "SignInViewController.h"
 #import "CheckingInViewController.h"
 #import "MBProgressHUD+AD.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "AddQuestionViewController.h"
 #import "MakeJobViewController.h"
 #import "LeaveViewController.h"

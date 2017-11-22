@@ -12,7 +12,7 @@
 #import "UITableView+DataSourceBlocks.h"
 #import "TableViewWithBlock.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface CreatAlbumsViewController ()
 

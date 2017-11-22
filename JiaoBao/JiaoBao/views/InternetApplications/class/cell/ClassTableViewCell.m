@@ -11,7 +11,7 @@
 #import "dm.h"
 #import "ClassTableViewCell.h"
 #import "utils.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @implementation ClassTableViewCell
 

@@ -9,7 +9,7 @@
 #import "MakeJobViewController.h"
 #import "Loger.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "define_constant.h"
 #import "OnlineJobHttp.h"
 #import "AppDelegate.h"

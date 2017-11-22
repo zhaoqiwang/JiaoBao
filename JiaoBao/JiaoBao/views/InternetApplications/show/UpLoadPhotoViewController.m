@@ -14,7 +14,7 @@
 //#import "ELCImagePickerDemoViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "PhotoCollectionCell.h"
 #import <AVFoundation/AVFoundation.h>
 

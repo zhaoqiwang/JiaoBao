@@ -9,7 +9,7 @@
 #import "UnitSpaceViewController.h"
 #import "ShareCollectionViewCell.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 static NSString *UnitSpaceCell = @"ShareCollectionViewCell";
 

@@ -9,7 +9,7 @@
 #import "NewWorkViewController.h"
 #import "ForwardViewController.h"
 #import "RightModel.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 @interface NewWorkViewController ()
 
 @property(nonatomic,strong)ForwardViewController *forward;

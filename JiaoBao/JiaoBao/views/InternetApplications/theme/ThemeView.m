@@ -8,7 +8,7 @@
 
 #import "ThemeView.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "CommentViewController.h"
 #import "CategoryViewController.h"
 #import "ChoicenessDetailViewController.h"

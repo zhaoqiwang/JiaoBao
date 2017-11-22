@@ -11,7 +11,7 @@
 #import "TableViewWithBlock.h"
 #import "SelectionCell.h"
 #import <MobileCoreServices/UTCoreTypes.h>
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "NSString+Extension.h"
 
 @interface SharePostingViewController ()

@@ -9,7 +9,7 @@
 #import "UnitPeopleViewController.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "UIImageView+WebCache.h"
 
 @interface UnitPeopleViewController ()

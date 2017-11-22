@@ -13,7 +13,7 @@
 #import "SignInHttp.h"
 #import "SVProgressHUD.h"
 #import "KxMenu.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface SignInViewController ()<JTCalendarDataSource>
 @property (weak, nonatomic) IBOutlet JTCalendarMenuView *menuView;

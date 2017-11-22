@@ -14,7 +14,7 @@
 #import "Loger.h"
 //#import "BMapKit.h"
 #import <BaiduMapAPI/BMapKit.h>
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import<CoreData/CoreData.h>
 #import "NSString+Extension.h"
 

@@ -8,7 +8,7 @@
 
 #import "ReviseNameViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface ReviseNameViewController ()
 

@@ -9,7 +9,7 @@
 #import "UnitSpaceArthListViewController.h"
 #import "Reachability.h"
 #import "MBProgressHUD+AD.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface UnitSpaceArthListViewController ()
 

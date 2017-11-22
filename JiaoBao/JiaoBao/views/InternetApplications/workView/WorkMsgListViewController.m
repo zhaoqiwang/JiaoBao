@@ -9,7 +9,7 @@
 #import "WorkMsgListViewController.h"
 #import "Reachability.h"
 #import "ReSendMsgViewController.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 #import "UIImageView+WebCache.h"
 @interface WorkMsgListViewController ()
 

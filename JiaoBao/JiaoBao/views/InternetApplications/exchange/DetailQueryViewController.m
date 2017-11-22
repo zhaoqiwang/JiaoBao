@@ -9,7 +9,7 @@
 #import "DetailQueryViewController.h"
 #import "SignInHttp.h"
 #import "DetailQueryCell.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface DetailQueryViewController ()
 @property(nonatomic,strong)NSArray *keyArr;//把需要的字典中的key存到数组中

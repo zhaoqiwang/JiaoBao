@@ -8,7 +8,7 @@
 
 #import "UnitDetailViewController.h"
 #import "Reachability.h"
-#import "MobClick.h"
+#import <UMAnalytics/MobClick.h>
 
 @interface UnitDetailViewController ()
 
