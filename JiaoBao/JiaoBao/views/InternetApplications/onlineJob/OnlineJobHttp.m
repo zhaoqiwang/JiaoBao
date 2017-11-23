@@ -11,7 +11,8 @@
 #import "StuHWQsModel.h"
 #import "StuHomeWorkModel.h"
 #import "StuSubModel.h"
-#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
+
 static OnlineJobHttp *onlineJobHttp = nil;
 
 @implementation OnlineJobHttp
@@ -33,18 +34,19 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetGradeList:(int)flag;
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/GetGradeList",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 
         NSArray *array = [ParserJson_OnlineJob parserJsonGradeList:result flag:flag];
         
         D("JSON--------GetGradeList: %@,", result);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:array];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetGradeList: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetGradeList" object:nil];
     }];
@@ -53,14 +55,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetUnionChapterListWithgCode:(NSString*)gCode subCode:(NSString*)subCode uId:(NSString*)uId flag:(NSString*)flag sumFlag:(int)sumFlag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/GetUnionChapterList",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSDictionary *parameters = @{@"gCode": gCode,@"subCode": subCode,@"uId":uId,@"flag":flag};
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSDictionary *dic = [result objectFromJSONString];
         NSString *code = [dic objectForKey:@"statusCode"];
@@ -92,7 +94,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         }
 
         D("JSON--------GetUnionChaterListWithgCode: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetUnionChaterListWithgCode: %@", error);
     }];
 }
@@ -109,19 +111,19 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetDesHWListWithChapterID:(NSString*)ChapterID teacherJiaobaohao:(NSString*)teacherJiaobaohao
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetDesHWList",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSDictionary *parameters = @{@"ChapterID": ChapterID,@"teacherJiaobaohao": teacherJiaobaohao};
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSArray *array = [ParserJson_OnlineJob parserJsonHomeworkList:result];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetDesHWList" object:array];
         D("JSON--------GetDestHWListWithChapterID: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetDestHWListWithChapterID: %@", error);
     }];
 }
@@ -131,7 +133,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)TecMakeHWWithPublishJobModel:(PublishJobModel*)publishJobModel
 {
     NSString *urlString = [NSString stringWithFormat:@"%@TecMakeHW",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -140,28 +142,28 @@ static OnlineJobHttp *onlineJobHttp = nil;
     [parameters removeObjectForKey:@"classIDArr"];
     D("%@",publishJobModel.className);
 
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
-        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
-        NSString *className = [httpObject objectForKey:@"className"];
-        D("JSON--------TecMakeHWWithPublishJobModel: %@, %@", result,HTTPBody);
+//        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
+//        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+//        NSString *className = [httpObject objectForKey:@"className"];
+//        D("JSON--------TecMakeHWWithPublishJobModel: %@, %@", result,HTTPBody);
         
         if([result isEqualToString:@"true"]){
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"成功" userInfo:httpObject];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"成功" userInfo:nil];
 
         }else{
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:httpObject];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:nil];
 
         }
         
         
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
-        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
-        NSString *className = [httpObject objectForKey:@"className"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:httpObject];
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+//        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
+//        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+//        NSString *className = [httpObject objectForKey:@"className"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:nil];
 
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);
@@ -173,14 +175,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)getStuInfoWithAccID:(NSString*)AccID UID:(NSString*)UID
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Account/getStuInfo",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"AccID":AccID,@"UID":UID};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -211,7 +213,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:tempDic];
         //通知internetApp界面，获取成功
         [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"0"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getStuInfo" object:tempDic];
@@ -223,14 +225,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)getGenInfoWithAccID:(NSString*)AccID UID:(NSString*)UID
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Account/getGenInfo",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"AccID":AccID,@"UID":UID};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
@@ -260,7 +262,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getGenInfoWithAccID" object:tempDic];
         //通知internetApp界面，获取成功
         [[NSNotificationCenter defaultCenter] postNotificationName:@"internetAppGetUserInfo" object:@"0"];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getGenInfoWithAccID" object:tempDic];
@@ -271,14 +273,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 //单位信息获取接口      参数：用户单位ID
 -(void)getUnitInfoWithUID:(NSString *)UID{
     NSString *urlString = [NSString stringWithFormat:@"%@/Basic/GetUnitInfo",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"UID":UID};
     //    NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
 //        NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -291,7 +293,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         //        [tempDic setValue:@"0" forKey:@"ResultCode"];
         //        [tempDic setValue:arr forKey:@"array"];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"getUnitInfoWithUID" object:model];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------getUnitInfoWithUID: %@", error);
     }];
 }
@@ -301,7 +303,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetStuHWListWithStuId:(NSString*)StuId IsSelf:(NSString *)IsSelf
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWList",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -317,7 +319,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     NSDictionary *parameters = @{@"StuId":StuId,@"IsSelf":IsSelf};
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWListWithStuId: %@,", result);
         NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
@@ -325,7 +327,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [tempDic setValue:arr forKey:@"array"];
         [tempDic setValue:IsSelf forKey:@"IsSelf"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWList" object:tempDic];
@@ -337,18 +339,18 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetStuHWWithHwInfoId:(NSString*)HwInfoId isStu:(NSString*)isStu
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuHW",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"HwInfoId":HwInfoId, @"isStu":isStu};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuHWWithHwInfoId: %@,", result);
         StuHomeWorkModel *model = [ParserJson_OnlineJob parserJsonStuHW:result];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWWithHwInfoId" object:model];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         D("Error---------GetStuHWWithHwInfoId: %@", error);
     }];
@@ -359,13 +361,13 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetStuHWQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWQs",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"HwInfoId":HwInfoId,@"QsId":QsId};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
         NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
@@ -373,7 +375,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         D("JSON--------GetStuHWQsWithHwInfoId: %@,", str2);
         StuHWQsModel *model = [ParserJson_OnlineJob parserJsonStuHWQs:result];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetStuHWQsWithHwInfoId" object:model];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         D("Error---------GetStuHWQsWithHwInfoId: %@", error);
     }];
@@ -382,18 +384,18 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)StuSubQsWithHwInfoId:(NSString*)HwInfoId QsId:(NSString*)QsId Answer:(NSString*)Answer
 {
     NSString *urlString = [NSString stringWithFormat:@"%@StuSubQs",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"HwInfoId":HwInfoId,@"QsId":QsId,@"Answer":Answer};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------StuSubQsWithHwInfoId: %@,", result);
         StuSubModel *model = [ParserJson_OnlineJob parserJsonStuSubModel:result];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"StuSubQsWithHwInfoId" object:model];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------StuSubQsWithHwInfoId: %@", error);
         StuSubModel *model;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"StuSubQsWithHwInfoId" object:model];
@@ -404,14 +406,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 //学生发布练习                学生id                    班级id                    班级名称                        联合id                    章节id                        作业名称                            学校名称
 -(void)StuMakeSelfWithStuId:(NSString *)StuId classID:(NSString *)classID className:(NSString *)className Unid:(NSString *)Unid chapterID:(NSString *)chapterID homeworkName:(NSString *)homeworkName schoolName:(NSString *)schoolName{
     NSString *urlString = [NSString stringWithFormat:@"%@StuMakeSelf",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"UserJBH":[dm getInstance].jiaoBaoHao,@"StuId":StuId,@"classID":classID,@"className":className,@"Unid":Unid,@"chapterID":chapterID,@"homeworkName":homeworkName,@"schoolName":schoolName,@"IsSys":@"2"};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------StuMakeSelf: %@,",result);
 //        {"ok":true,"stateCode":200,"stateMessage":"发送成功"},
@@ -431,7 +433,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
             [tempDic setValue:[dic objectForKey:@"stateMessage"] forKey:@"ResultDesc"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"StuMakeSelf" object:tempDic];
@@ -444,14 +446,14 @@ static OnlineJobHttp *onlineJobHttp = nil;
 {
     D("sdfgjlksgjkl-=====%@,%@,%@,%@",StuId,uId,chapterid,flag);
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuEduLevel",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"StuId":StuId,@"uId":uId,@"chapterid":chapterid};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuEduLevelWithStuId: %@,", result);
         NSArray *levelArr = [ParserJson_OnlineJob parserJsonStuEduLevel:result];
@@ -462,7 +464,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
         [tempDic setValue:StuId forKey:@"StuId"];
         [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuEduLevel" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuEduLevel" object:tempDic];
@@ -474,21 +476,21 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)GetCompleteStatusHWWithStuId:(NSString*)StuId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@GetCompleteStatusHW",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"StuId":StuId};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetCompleteStatusHWWithStuId: %@,", result);
         NSArray *CompleteStatusArr = [ParserJson_OnlineJob parserJsonCompleteStatusHWWith:result];
         [tempDic setValue:@"0" forKey:@"ResultCode"];
         [tempDic setValue:CompleteStatusArr forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCompleteStatusHW" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCompleteStatusHW" object:tempDic];
@@ -500,53 +502,53 @@ static OnlineJobHttp *onlineJobHttp = nil;
 -(void)TecQswithchapterid:(NSString*)chapterid
 {
     NSString *urlString = [NSString stringWithFormat:@"%@TecQs",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"chapterid":chapterid};
     [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------TecQswithchapterid: %@,", result);
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:result];
 
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         [[NSNotificationCenter defaultCenter]postNotificationName:@"TecQswithchapterid" object:error.localizedDescription];
         D("Error---------TecQswithchapterid: %@", error);
     }];
 }
 -(void)GetSQLDateTime{
     NSString *urlString = [NSString stringWithFormat:@"%@GetSQLDateTime",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetSQLDateTime" object:result];
         
         D("JSON--------GetSQLDateTime: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
 
     }];
 }
 // 错题表
 -(void)GetStuErr:(StuErrModel*)model{
     NSString *urlString = [NSString stringWithFormat:@"%@GetStuErr",ONLINEJOBURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *parameters = [model propertiesDic];
     
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------GetStuErr: %@,", result);
         NSMutableArray *mArr = [ParserJson_OnlineJob parserJsonStuErr:result];
          [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:mArr];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetStuErr: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuErr" object:nil];
     }];
@@ -557,7 +559,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
     
         NSString *urlString = [NSString stringWithFormat:@"%@GetStuHWListPage",ONLINEJOBURL];
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer.timeoutInterval = TIMEOUT;
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -574,7 +576,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
     NSLog(@"parameters:%@",parameters);
         NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
         [manager.requestSerializer setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-        [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
             NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
             D("JSON--------GetStuHWListPageWithStuId: %@,", result);
             NSArray *arr =[ParserJson_OnlineJob parserJsonStuHWList:result];
@@ -582,7 +584,7 @@ static OnlineJobHttp *onlineJobHttp = nil;
             [tempDic setValue:arr forKey:@"array"];
             [tempDic setValue:IsSelf forKey:@"IsSelf"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
             [tempDic setValue:@"100" forKey:@"ResultCode"];
             [tempDic setValue:@"服务器异常" forKey:@"ResultDesc"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"GetStuHWListPageWithStuId" object:tempDic];

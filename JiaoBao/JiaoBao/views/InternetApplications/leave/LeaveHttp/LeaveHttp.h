@@ -18,7 +18,6 @@
 #import "define_constant.h"
 #import "ParserJson_share.h"
 #import "LoginSendHttp.h"
-#import "VlorNetWorkAPI.h"
 #import "NewLeaveModel.h"
 #import "ParserJson_knowledge.h"
 #import "leaveRecordModel.h"

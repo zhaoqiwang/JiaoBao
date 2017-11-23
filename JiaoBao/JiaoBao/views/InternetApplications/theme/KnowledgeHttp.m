@@ -9,7 +9,7 @@
 #import "KnowledgeHttp.h"
 #import "PointsModel.h"
 #import "CommsModel.h"
-#import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPSessionManager.h"
 
 //static KnowledgeHttp *knowledgeHttp = nil;
 
@@ -35,11 +35,12 @@
 //取系统中的省份信息
 -(void)knowledgeHttpGetProvice{
     NSString *urlString = [NSString stringWithFormat:@"%@Basic/GetProvice",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -50,7 +51,7 @@
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetProvice" object:dic];
         D("JSON--------knowledgeHttpGetProvice: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSString *code = @"100";
         NSString *ResultDesc = error.localizedDescription ;
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
@@ -62,12 +63,13 @@
 //取指定省份的地市数据或取指定地市的区县数据
 -(void)knowledgeHttpGetCity:(NSString *)cityCode level:(NSString *)level{
     NSString *urlString = [NSString stringWithFormat:@"%@Basic/GetCity",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *parameters = @{@"cityCode": cityCode,@"level": level};
-    [manager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -78,7 +80,7 @@
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"array":array};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"knowledgeHttpGetCity" object:dic];
         D("JSON--------knowledgeHttpGetCity: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSString *code = @"100";
         NSString *ResultDesc = error.localizedDescription ;
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
@@ -91,12 +93,13 @@
 -(void)GetAccIdbyNickname:(NSArray*)nickNames;
 {
     NSString *urlString = [NSString stringWithFormat:@"%@Knl/GetAccIdbyNickname",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     //NSDictionary *parameters = @{@"cityCode": cityCode,@"level": level};
-    [manager POST:urlString parameters:nickNames success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [manager POST:urlString parameters:nickNames progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -109,7 +112,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic1];
         D("JSON--------GetAccIdbyNickname: %@,", result);
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetAccIdbyNickname: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAccIdbyNickname" object:dic];
@@ -118,11 +121,11 @@
 -(void)GetUserInfo//取用户信息
 {
     NSString *urlString = [NSString stringWithFormat:@"%@Knl/GetUserInfo",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -131,7 +134,7 @@
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         UserInformationModel *model = [ParserJson_knowledge parserJsonGetUserInfo:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetUserInfo: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetUserInfo: %@", error);
     }];
 }
@@ -140,11 +143,11 @@
 -(void)SetIdflagWithAccId:(NSString *)accId idFlag:(NSString*)idFlag userName:(NSString*)userName
 {
     NSString *urlString = [NSString stringWithFormat:@"%@Knl/SetIdflag",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -152,7 +155,7 @@
         Login
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         D("JSON--------SetIdflagWithAccId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------SetIdflagWithAccId: %@", error);
     }];
 }
@@ -161,12 +164,12 @@
 -(void)GetCategoryWithParentId:(NSString*)parentId subject:(NSString*)subject
 {
     NSString *urlString = [NSString stringWithFormat:@"%@Knl/GetCategory",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
    // NSDictionary *dic = @{@"parentId":parentId, @"subject":subject};
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -175,7 +178,7 @@
         NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
         NSArray *array = [ParserJson_knowledge parserJsonGetCategory:[jsonDic objectForKey:@"Data"]];
         D("JSON--------GetCategoryWithParentId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetCategoryWithParentId: %@", error);
     }];
 }
@@ -184,12 +187,12 @@
 -(void)GetCategoryById:(NSString*)uId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@Knl/GetCategoryById",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
      NSDictionary *dic = @{@"uId":uId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -200,7 +203,7 @@
         NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"model":model};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic1];
         D("JSON--------GetCategoryById: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetCategoryById: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetCategoryById" object:dic];
@@ -211,12 +214,12 @@
 -(void)GetAllCategory
 {
     NSString *urlString = [NSString stringWithFormat:@"%@Knl/GetAllCategory",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -229,7 +232,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAllCategory" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetAllCategory: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAllCategory" object:dic];
@@ -240,12 +243,12 @@
 -(void)NewQuestionWithCategoryId:(NSString*)CategoryId Title:(NSString*)Title KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList QFlag:(NSString*)QFlag AreaCode:(NSString*)AreaCode atAccIds:(NSString*)atAccIds
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/NewQuestion",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"CategoryId":CategoryId,@"Title":Title,@"KnContent":KnContent,@"TagsList":TagsList,@"QFlag":QFlag,@"AreaCode":AreaCode,@"atAccIds":atAccIds};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         D("JSON--------NewQuestionWithCategoryId: %@,", result);
 
@@ -258,7 +261,7 @@
         NSDictionary *dic1 = @{@"ResultCode":code,@"ResultDesc":ResultDesc,@"Data":Data};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic1];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"NewQuestionWithCategoryId" object:dic];
         D("Error---------NewQuestionWithCategoryId: %@", error);
@@ -271,12 +274,12 @@
 //-(void)UpdateQuestionWithTabIDStr:(NSString*)TabIDStr KnContent:(NSString*)KnContent TagsList:(NSString*)TagsList
 //{
 //    NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UpdateQuestion",MAINURL];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.requestSerializer.timeoutInterval = TIMEOUT;
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //    NSDictionary *dic = @{@"TabIDStr":TabIDStr,@"KnContent":KnContent,@"TagsList":TagsList};
-//    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
 //        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
 //        NSMutableDictionary *jsonDic = [result objectFromJSONString];
 //        NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -284,7 +287,7 @@
 //        
 //        
 //        D("JSON--------UpdateQuestionWithTabIDStr: %@,", result);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//    } failure:^(NSURLSessionTask *operation, NSError *error) {
 //        D("Error---------UpdateQuestionWithTabIDStr: %@", error);
 //    }];
 //}
@@ -293,12 +296,12 @@
 {
     D("s;odjfl;dkjg;l-====%@,%@,%@",numPerPage,pageNum,CategoryId);
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/QuestionIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"CategoryId":CategoryId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -308,7 +311,7 @@
         NSArray *array = [ParserJson_knowledge parserJsonQuestionIndex:[jsonDic objectForKey:@"Data"]];
         
         D("JSON--------QuestionIndexWithNumPerPage: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------QuestionIndexWithNumPerPage: %@", error);
     }];
 }
@@ -317,13 +320,13 @@
 -(void)QuestionDetailWithQId:(NSString*)QId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/QuestionDetail",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"QId":QId,@"byUrl":@"1"};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -337,7 +340,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"QuestionDetail" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------QuestionDetailWithQId: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"QuestionDetail" object:dic];
@@ -348,13 +351,13 @@
 -(void)AddAnswerWithQId:(NSString*)QId Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddAnswer",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"QId":QId,@"Title":Title,@"AContent":AContent,@"UserName":UserName,@"Flag":Flag};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -367,7 +370,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:[jsonDic objectForKey:@"Data"] forKey:@"Data"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddAnswer" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AddAnswerWithQId: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"AddAnswer" object:dic];
@@ -377,13 +380,13 @@
 -(void)UpdateAnswerWithTabID:(NSString*)TabID Title:(NSString*)Title AContent:(NSString*)AContent UserName:(NSString*)UserName Flag:(NSString*)Flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UpdateAnswer",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"TabID":TabID,@"Title":Title,@"AContent":AContent ,@"UserName":UserName,@"Flag":Flag};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -395,7 +398,7 @@
         [tempDic setValue:code forKey:@"code"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateAnswer" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------UpdateAnswerWithTabID: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"UpdateAnswer" object:dic];
@@ -406,13 +409,13 @@
 -(void)GetAnswerByIdWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum QId:(NSString*)QId flag:(NSString*)flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetAnswerById",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"QId":QId,@"flag":flag};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -426,7 +429,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetAnswerById" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetAnswerByIdWithNumPerPage: %@", error);
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetAnswerById" object:dic];
@@ -440,12 +443,12 @@
 -(void)SetYesNoWithAId:(NSString*)AId yesNoFlag:(NSString*)yesNoFlag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/SetYesNo",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"AId":AId,@"yesNoFlag":yesNoFlag};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -457,7 +460,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:dic];
         
         D("JSON--------SetYesNoWithAId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"SetYesNoWithAId" object:resultDic ];
@@ -470,12 +473,12 @@
 -(void)AddCommentWithAId:(NSString*)AId comment:(NSString*)comment RefID:(NSString*)RefID
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddComment",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"AId":AId,@"comment":comment,@"RefID":RefID};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -485,7 +488,7 @@
         NSDictionary *dic = @{@"ResultCode":code,@"ResultDesc":ResultDesc};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
         D("JSON--------AddCommentWithAId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSDictionary *dic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshComment" object:dic];
         D("Error---------AddCommentWithAId: %@", error);
@@ -497,12 +500,12 @@
 -(void)CommentsListWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount AId:(NSString*)AId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CommentsList",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"AId":AId,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -515,7 +518,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"CommentsListWithNumPerPage" object:resultDic ];
         
         D("JSON--------CommentsListWithNumPerPage: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------CommentsListWithNumPerPage: %@", error);
         NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
 
@@ -528,12 +531,12 @@
 -(void)AnswerDetailWithAId:(NSString*)AId byUrl:(NSString *)byUrl
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AnswerDetail",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"AId":AId,@"byUrl":byUrl};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSString *str1 = [result stringByReplacingOccurrencesOfString:@"\\u003c" withString:@"<"];
         NSString *str2 = [str1 stringByReplacingOccurrencesOfString:@"\\u003e" withString:@">"];
@@ -549,7 +552,7 @@
 
         
         D("JSON--------AnswerDetailWithAId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AnswerDetailWithAId: %@", error);
         NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
         
@@ -564,14 +567,14 @@
 -(void)UserIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/UserIndexQuestion",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     D("srgpjpdsj'-===%@,%@,%@,%@",numPerPage,pageNum,RowCount,flag);
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount,@"flag":flag};
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -586,7 +589,7 @@
         [tempDic setValue:array forKey:@"array"];
         [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserIndexQuestion" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------UserIndexQuestionWithNumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -598,13 +601,13 @@
 -(void)CategoryIndexQuestionWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount flag:(NSString*)flag uid:(NSString*)uid
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/CategoryIndexQuestion",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount,@"flag":flag,@"uid":uid};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -619,7 +622,7 @@
         [tempDic setValue:array forKey:@"array"];
         [tempDic setValue:flag forKey:@"flag"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CategoryIndexQuestion" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------CategoryIndexQuestionWith: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -630,13 +633,13 @@
 //推荐列表 参数描述：（取回的记录数量）-（第几页）-(记录数量)
 -(void)RecommentIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/RecommentIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -650,7 +653,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RecommentIndex" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------RecommentIndex: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -661,13 +664,13 @@
 //单个推荐明细  参数描述：（推荐ID）
 -(void)ShowRecommentWithTable:(NSString*)tabid{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ShowRecomment",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"tabid":tabid,@"byUrl":@"1"};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -681,7 +684,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowRecomment" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------ShowRecomment: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -692,13 +695,13 @@
 //获取话题的置顶问题  参数描述：（话题Id）
 -(void)GetCategoryTopQWithId:(NSString *)categoryid{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetCategoryTopQ",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"categoryid":categoryid};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -712,7 +715,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetCategoryTop" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetCategoryTop: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -723,13 +726,13 @@
 //获取一个精选内容集 参数描述：精选集ID,为0时取最新一期精选
 -(void)GetPickedByIdWithTabID:(NSString *)tabId flag:(NSString *)flag{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetPickedById",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"tabId":tabId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -753,7 +756,7 @@
         }else{//单个精选
             [[NSNotificationCenter defaultCenter] postNotificationName:@"SingleGetPickedById" object:tempDic];
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetPickedById: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -768,13 +771,13 @@
 //获取一个精选内容明细 参数描述：精选内容ID
 -(void)ShowPickedWithTabID:(NSString *)tabId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ShowPicked",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"tabId":tabId,@"byUrl":@"1"};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -789,7 +792,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:model forKey:@"model"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ShowPicked" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------ShowPicked: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -800,13 +803,13 @@
 //获取各期精选列表  参数描述：（取回的记录数量，默认20）- （第几页，默认为1）- (记录数量)
 -(void)PickedIndexWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/PickedIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -820,7 +823,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PickedIndex" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------PickedIndex: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -832,13 +835,13 @@
 -(void)AddMyAttQWithqId:(NSString*)qId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddMyAttQ",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"qId":qId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -849,7 +852,7 @@
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddMyAttQWithqId" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AddMyAttQWithqId: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -860,13 +863,13 @@
 //取消关注问题 参数描述：问题ID
 -(void)RemoveMyAttQWithqId:(NSString *)qId{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/RemoveMyAttQ",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"qId":qId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -877,7 +880,7 @@
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoveMyAttQWithqId" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------RemoveMyAttQWithqId: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -889,13 +892,13 @@
 -(void)AtMeForAnswerWithAccId:(NSString*)accId qId:(NSString*)qId
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AtMeForAnswer",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"accId":accId,@"qId":qId};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -906,7 +909,7 @@
         [tempDic setValue:code forKey:@"ResultCode"];
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeForAnswerWithAccId" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AtMeForAnswerWithAccId: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -917,13 +920,13 @@
 -(void)MyAttQIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/MyAttQIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -937,7 +940,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAttQIndexWithnumPerPage" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------MyAttQIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -948,13 +951,13 @@
 -(void)AtMeQIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AtMeQIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -968,7 +971,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AtMeQIndexWithnumPerPage" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AtMeQIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -979,13 +982,13 @@
 -(void)MyQuestionIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount;
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/MyQuestionIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -999,7 +1002,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyQuestionIndexWithnumPerPage" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------MyQuestionIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -1010,13 +1013,13 @@
 -(void)MyAnswerIndexWithnumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum RowCount:(NSString*)RowCount
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/MyAnswerIndex",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum,@"RowCount":RowCount};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -1030,7 +1033,7 @@
         [tempDic setValue:ResultDesc forKey:@"ResultDesc"];
         [tempDic setValue:array forKey:@"array"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MyAnswerIndexWithnumPerPage" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------MyAnswerIndexWithnumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -1043,12 +1046,12 @@
 -(void)GetMyattCate
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/GetMyattCate",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
-    [manager POST:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:nil progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -1067,7 +1070,7 @@
         [tempDic setValue:cateArr forKey:@"array"];
         D("JSON--------GetMyattCate: %@,", result);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyattCate" object:tempDic];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetMyattCate: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -1078,13 +1081,13 @@
 -(void)AddMyattCateWithuid:(NSString*)uid
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/AddMyattCate",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"uid":uid};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -1103,7 +1106,7 @@
             [MBProgressHUD showSuccess:@"关注话题失败"];
 
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AddMyattCateWithuid: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -1115,13 +1118,13 @@
 -(void)GetAtMeUsersWithuid:(NSString*)uid catid:(NSString*)catid
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/KnUser/GetAtMeUsers",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
     NSDictionary *dic = @{@"uid":uid,@"catid":catid};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -1134,7 +1137,7 @@
 
         D("JSON--------GetAtMeUsersWithuid: %@,", result);
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetAtMeUsersWithuid: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];
@@ -1145,12 +1148,12 @@
 -(void)ReportAnsWithAId:(NSString*)AId repType:(NSString*)repType
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/ReportAns",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"ansId":AId,@"repType":repType};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *code = [jsonDic objectForKey:@"ResultCode"];
@@ -1167,7 +1170,7 @@
             [MBProgressHUD showError:ResultDesc];
         }
         D("JSON--------reportanswerWithAId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------reportanswerWithAId: %@", error);
         [MBProgressHUD showError:error.localizedDescription];
         //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
@@ -1177,12 +1180,12 @@
 //求知日积分 参数：用户教宝号 - （日期，取指定日期的积分，如果为null,或者不可识别 为日期，则默认取今天的积分，日期如：“2015-11-1”）
 -(void)GetMyPointsDayWithAccId:(NSString*)accId dateTime:(NSString*)dateTime{
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetMyPointsDay",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"accId":accId,@"dateTime":dateTime};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *resultData = [jsonDic objectForKey:@"Data"];
@@ -1190,7 +1193,7 @@
         PointsModel *model = [ParserJson_knowledge parserJsonGetMyPoints:resultData];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyPointsDayWithAccId" object:model];
         D("JSON--------GetMyPointsDayWithAccId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetMyPointsDayWithAccId: %@", error);
         [MBProgressHUD showError:error.localizedDescription];
         //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
@@ -1203,12 +1206,12 @@
 -(void)GetMyPointsMonthWithAccId:(NSString*)accId dateTime:(NSString*)dateTime
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetMyPointsMonth",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"accId":accId,@"dateTime":dateTime};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *resultData = [jsonDic objectForKey:@"Data"];
@@ -1217,7 +1220,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"GetMyPointsMonthWithAccId" object:model];
 
         D("JSON--------GetMyPointsMonthWithAccId: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetMyPointsMonthWithAccId: %@", error);
         [MBProgressHUD showError:error.localizedDescription];
         //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
@@ -1229,12 +1232,12 @@
 -(void)AddScoreWithtabid:(NSString*)tabid tp:(NSString*)tp
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/AddScore",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"tabid":tabid,@"tp":tp};
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *ResultCode = [jsonDic objectForKey:@"ResultCode"];
@@ -1248,7 +1251,7 @@
             [MBProgressHUD showSuccess:@"失败"];
         }
         D("JSON--------AddScoreWithtabid: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------AddScoreWithtabid: %@", error);
         [MBProgressHUD showError:error.localizedDescription];
         //        NSDictionary *resultDic = @{@"ResultCode":@"100",@"ResultDesc":error.localizedDescription};
@@ -1259,14 +1262,14 @@
 -(void)GetMyCommsWithNumPerPage:(NSString*)numPerPage pageNum:(NSString*)pageNum
 {
     NSString *urlString = [NSString stringWithFormat:@"%@/Knl/GetMyComms",MAINURL];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer.timeoutInterval = TIMEOUT;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     NSDictionary *dic = @{@"numPerPage":numPerPage,@"pageNum":pageNum};
     NSMutableDictionary *tempDic = [NSMutableDictionary dictionary];
 
-    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:dic progress:nil success:^(NSURLSessionTask *task, id responseObject){
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
         NSMutableDictionary *jsonDic = [result objectFromJSONString];
         NSString *resultData = [jsonDic objectForKey:@"Data"];
@@ -1281,7 +1284,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyCommsWithNumPerPage" object:tempDic];
 
         D("JSON--------GetMyCommsWithNumPerPage: %@,", result);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         D("Error---------GetMyCommsWithNumPerPage: %@", error);
         [tempDic setValue:@"100" forKey:@"ResultCode"];
         [tempDic setValue:error.localizedDescription forKey:@"ResultDesc"];

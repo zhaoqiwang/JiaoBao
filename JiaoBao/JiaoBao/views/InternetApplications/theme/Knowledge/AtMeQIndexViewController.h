@@ -16,6 +16,7 @@
 #import "KnowledgeHttp.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"//上拉下拉刷新
+#import "Reachability.h"
 
 @interface AtMeQIndexViewController : UIViewController<MyNavigationDelegate>
 

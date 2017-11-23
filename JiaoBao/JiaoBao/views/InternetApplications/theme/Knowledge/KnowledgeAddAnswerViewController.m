@@ -11,7 +11,7 @@
 #import "IQKeyboardManager.h"
 #import "TFHpple.h"
 #import <AVFoundation/AVFoundation.h>
-
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface KnowledgeAddAnswerViewController ()
 @property(nonatomic,assign)NSRange cursorPosition;

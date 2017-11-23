@@ -12,6 +12,7 @@
 #import "KnowledgeHttp.h"
 #import "KnowledgeQuestionViewController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
+#import "Reachability.h"
 
 @interface ChoicenessDetailViewController ()<KnowledgeTableViewCellDelegate,UIWebViewDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)KnowledgeTableViewCell *KnowledgeTableViewCell;

@@ -21,6 +21,7 @@
 #include<AssetsLibrary/AssetsLibrary.h>
 #import "SigleBtnView.h"
 #import "KnowledgeQuestionViewController.h"
+#import "Reachability.h"
 
 @interface KnowledgeAddAnswerViewController : UIViewController<MyNavigationDelegate,UITextViewDelegate,UIActionSheetDelegate,ELCImagePickerControllerDelegate,UIImagePickerControllerDelegate,UIWebViewDelegate>
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Reachability.h"
 #define ONLINEJOBURL @"https://znzy.jiaobaowang.net/AtHWPort/"//在线作业url
 //#define ONLINEJOBURL @"http://192.168.0.11:8301/AtHWPort/"//在线作业url
 //#define MAINURL @"http://www.jsyoa.edu8800.com/JBClient/"//网址
