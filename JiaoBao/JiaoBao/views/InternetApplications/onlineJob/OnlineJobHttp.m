@@ -144,26 +144,26 @@ static OnlineJobHttp *onlineJobHttp = nil;
 
     [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
-//        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
-//        NSString *className = [httpObject objectForKey:@"className"];
-//        D("JSON--------TecMakeHWWithPublishJobModel: %@, %@", result,HTTPBody);
+        NSString *HTTPBody = [[NSString alloc]initWithData:task.originalRequest.HTTPBody encoding:NSUTF8StringEncoding];
+        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+        NSString *className = [httpObject objectForKey:@"className"];
+        D("JSON--------TecMakeHWWithPublishJobModel: %@, %@", result,HTTPBody);
         
         if([result isEqualToString:@"true"]){
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"成功" userInfo:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"成功" userInfo:httpObject];
 
         }else{
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:httpObject];
 
         }
         
         
         
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-//        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
-//        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
-//        NSString *className = [httpObject objectForKey:@"className"];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:nil];
+        NSString *HTTPBody = [[NSString alloc]initWithData:operation.originalRequest.HTTPBody encoding:NSUTF8StringEncoding];
+        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+        NSString *className = [httpObject objectForKey:@"className"];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"TecMakeHWWithPublishJobModel" object:@"失败" userInfo:httpObject];
 
         
         D("Error---------TecMakeHWWithPublishJobModel: %@", error);

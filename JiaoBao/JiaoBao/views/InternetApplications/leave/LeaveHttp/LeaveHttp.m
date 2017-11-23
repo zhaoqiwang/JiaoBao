@@ -249,21 +249,21 @@ static LeaveHttp *leaveHttp = nil;
     NSMutableDictionary *parameters = [model propertiesDic];
     
     [manager POST:urlString parameters:parameters progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-//        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSString *HTTPBody = [[NSString alloc]initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding];
-//        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
-//        NSString *manType = [httpObject objectForKey:@"manType"];
-//        D("JSON--------GetMyLeaves: %@,", result);
-//        NSMutableDictionary *jsonDic = [result objectFromJSONString];
-//        NSString *data = [jsonDic objectForKey:@"Data"];
-//        NSString *code = [jsonDic objectForKey:@"ResultCode"];
-//        //长时间不操作，握手通讯失败后，进行登录操作
-//        Login
-//        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
-//
-//        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
-//        NSDictionary *dic = @{@"data":mArr,@"ResultCode":code,@"ResultDesc":ResultDesc,@"manType":manType};
-//         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
+        NSString *result = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSString *HTTPBody = [[NSString alloc]initWithData:task.originalRequest.HTTPBody encoding:NSUTF8StringEncoding];
+        NSDictionary * httpObject = [HTTPBody objectFromJSONString];
+        NSString *manType = [httpObject objectForKey:@"manType"];
+        D("JSON--------GetMyLeaves: %@,", result);
+        NSMutableDictionary *jsonDic = [result objectFromJSONString];
+        NSString *data = [jsonDic objectForKey:@"Data"];
+        NSString *code = [jsonDic objectForKey:@"ResultCode"];
+        //长时间不操作，握手通讯失败后，进行登录操作
+        Login
+        NSString *ResultDesc = [jsonDic objectForKey:@"ResultDesc"];
+
+        NSMutableArray *mArr = [ParserJson_leave parserJsonClassLeaves:data mantype:@"" level:@""];
+        NSDictionary *dic = @{@"data":mArr,@"ResultCode":code,@"ResultDesc":ResultDesc,@"manType":manType};
+         [[NSNotificationCenter defaultCenter] postNotificationName:@"GetMyLeaves" object:dic];
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSString *ResultCode= @"100";
         NSString *ResultDesc= error.localizedDescription;
