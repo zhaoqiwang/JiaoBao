@@ -12,8 +12,7 @@
 #import "RegisterViewController.h"
 #import "dm.h"
 #import "Loger.h"
-//#import "BMapKit.h"
-#import <BaiduMapAPI/BMapKit.h>
+#import <BaiduMapAPI_Map/BMKMapComponent.h>
 #import <UMAnalytics/MobClick.h>
 #import<CoreData/CoreData.h>
 #import "NSString+Extension.h"
