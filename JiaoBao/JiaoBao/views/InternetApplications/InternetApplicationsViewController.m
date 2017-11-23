@@ -606,7 +606,7 @@
         //在线作业
         NSMutableArray *array = [NSMutableArray arrayWithArray:menuItems0];
         if ([dm getInstance].uType==2||[dm getInstance].uType==3||[dm getInstance].uType==4) {
-            [array addObject:[self addOnLineJob]];
+//            [array addObject:[self addOnLineJob]];
         }
         //签到
         if ([dm getInstance].uType==2||[dm getInstance].uType==1) {
