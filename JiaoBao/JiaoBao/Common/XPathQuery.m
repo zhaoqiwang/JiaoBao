@@ -166,7 +166,7 @@ NSArray *PerformHTMLXPathQueryWithEncoding(NSData *document, NSString *query,NSS
     }
     
     NSArray *result = PerformXPathQuery(doc, query);
-    xmlFreeDoc(doc);
+//    xmlFreeDoc(doc);
     
     return result;
 }
