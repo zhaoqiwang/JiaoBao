@@ -114,6 +114,7 @@
     }
     //top
     [self.view addSubview:[InternetAppTopScrollView shareInstance]];
+    [InternetAppTopScrollView shareInstance].backgroundColor = [UIColor colorWithRed:247/255.0 green:246/255.0 blue:246/255.0 alpha:1];
     //root
     [self.view addSubview:[InternetAppRootScrollView shareInstance]];
     

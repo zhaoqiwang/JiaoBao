@@ -1189,6 +1189,7 @@
 		F7F7D72A1BD6433800D8B856 /* HomeworkModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F7D7291BD6433700D8B856 /* HomeworkModel.m */; };
 		F7F870071C9258B400A75520 /* MyLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870061C9258B400A75520 /* MyLeaveModel.m */; };
 		F7F8700A1C925E0900A75520 /* LeaveDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F7F870091C925E0900A75520 /* LeaveDetailModel.m */; };
+		F7FB79DD1FF3729A006B5233 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7FB79DC1FF3729A006B5233 /* Launch Screen.storyboard */; };
 		F7FFD9D91BCF4DB4004A691A /* Mode_Selection_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */; };
 		F7FFD9DA1BCF4DB4004A691A /* Mode_Selection_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */; };
 		F7FFD9DE1BCF564B004A691A /* MessageSelectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F7FFD9DC1BCF564B004A691A /* MessageSelectionCell.m */; };
@@ -2880,6 +2881,7 @@
 		F7F870061C9258B400A75520 /* MyLeaveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyLeaveModel.m; path = model/MyLeaveModel.m; sourceTree = "<group>"; };
 		F7F870081C925E0900A75520 /* LeaveDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailModel.h; path = model/LeaveDetailModel.h; sourceTree = "<group>"; };
 		F7F870091C925E0900A75520 /* LeaveDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveDetailModel.m; path = model/LeaveDetailModel.m; sourceTree = "<group>"; };
+		F7FB79DC1FF3729A006B5233 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "Image/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F7FFD9D61BCF4DB4004A691A /* Mode_Selection_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode_Selection_Cell.h; sourceTree = "<group>"; };
 		F7FFD9D71BCF4DB4004A691A /* Mode_Selection_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode_Selection_Cell.m; sourceTree = "<group>"; };
 		F7FFD9D81BCF4DB4004A691A /* Mode_Selection_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Mode_Selection_Cell.xib; sourceTree = "<group>"; };
@@ -3841,6 +3843,7 @@
 				A7AAC4C519F75D6E00A0ED40 /* InternetApp */,
 				A7AD8C4119F6447A002E65FB /* root */,
 				A755E6B519F25EC300BBDF3D /* register */,
+				F7FB79DC1FF3729A006B5233 /* Launch Screen.storyboard */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -5856,6 +5859,7 @@
 				F70B96931C90FC510001D696 /* DetailQueryCell.xib in Resources */,
 				A7AC7B671A008FEA0072CF05 /* MsgDetail_Cell.xib in Resources */,
 				A79C7AE41AF22ACB00E9D30A /* newWork_allSelect@2x.png in Resources */,
+				F7FB79DD1FF3729A006B5233 /* Launch Screen.storyboard in Resources */,
 				A7781F4F1AE8A0F300F03AEB /* NewWorkView_click_2@2x.png in Resources */,
 				A76829801AC69B21003B31EB /* classView_4@2x.png in Resources */,
 				430279991C995845003546E9 /* CheckLeaveViewController.xib in Resources */,

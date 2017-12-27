@@ -18,6 +18,7 @@
 #define CONTENTSIZEX [dm getInstance].width
 
 #define BUTTONID (sender.tag-100)
+  #define TabbarHeight     ([[UIApplication sharedApplication] statusBarFrame].size.height>20?82:48) // 适配iPhone x 底栏高度
 
 @implementation InternetAppTopScrollView
 @synthesize mArr_name,mImgV_slide,mInt_scrollViewSelectedChannelID,mInt_userSelectedChannelID,mInt_share,mInt_show,mInt_show2,mInt_theme,mInt_work_mysend,mInt_work_sendToMe;
@@ -27,7 +28,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 //        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 49+[dm getInstance].statusBar, [dm getInstance].width, 40)];
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, [dm getInstance].height-48, [dm getInstance].width, 48)];
+        __singletion=[[self alloc] initWithFrame:CGRectMake(0, [dm getInstance].height-TabbarHeight, [dm getInstance].width, TabbarHeight)];
     });
     return __singletion;
 }

@@ -11,13 +11,13 @@
 @implementation InternetAppRootScrollView
 @synthesize workView,shareView,showView,notiView,mInt,themeView,classView;
 #define POSITIONID (int)self.contentOffset.x/[dm getInstance].width
-
+  #define TabbarHeight     ([[UIApplication sharedApplication] statusBarFrame].size.height>20?82:48) // 适配iPhone x 底栏高度
 + (InternetAppRootScrollView *)shareInstance {
     static InternetAppRootScrollView *__singletion;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 //        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 49+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-49*1-[dm getInstance].statusBar-40)];
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 43+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-48)];
+        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 43+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-TabbarHeight)];
     });
     return __singletion;
 }
@@ -29,7 +29,7 @@
         if (SHOWRONGYUN == 1) {
             self.contentSize = CGSizeMake([dm getInstance].width*5, [dm getInstance].height-43-[dm getInstance].statusBar-48);
         }else{
-            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-48);
+            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-TabbarHeight);
         }
         
         self.pagingEnabled = YES;
