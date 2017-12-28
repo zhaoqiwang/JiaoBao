@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -97,19 +98,22 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="DPA-w7-3Gi" firstAttribute="top" secondItem="5tu-At-aI0" secondAttribute="bottom" id="BL9-v9-iNZ"/>
-                <constraint firstItem="5tu-At-aI0" firstAttribute="leading" secondItem="uB5-Vq-Tal" secondAttribute="leading" id="QbV-Ew-46p"/>
-                <constraint firstAttribute="trailing" secondItem="5tu-At-aI0" secondAttribute="trailing" id="Twh-1g-bNU"/>
-                <constraint firstItem="5tu-At-aI0" firstAttribute="top" secondItem="uB5-Vq-Tal" secondAttribute="top" constant="67" id="cA5-oM-8CT"/>
-                <constraint firstItem="5tu-At-aI0" firstAttribute="trailing" secondItem="DPA-w7-3Gi" secondAttribute="trailing" id="cih-72-rJd"/>
-                <constraint firstItem="5tu-At-aI0" firstAttribute="leading" secondItem="DPA-w7-3Gi" secondAttribute="leading" id="kOY-zp-n1I"/>
-                <constraint firstAttribute="bottom" secondItem="DPA-w7-3Gi" secondAttribute="bottom" constant="-1" id="qIx-sx-Rdl"/>
+                <constraint firstItem="DPA-w7-3Gi" firstAttribute="top" secondItem="5tu-At-aI0" secondAttribute="bottom" id="136-VS-yhc"/>
+                <constraint firstAttribute="bottom" secondItem="DPA-w7-3Gi" secondAttribute="bottom" constant="-1" id="1Kc-zH-acW"/>
+                <constraint firstItem="5tu-At-aI0" firstAttribute="trailing" secondItem="S03-ld-UFf" secondAttribute="trailing" id="RfK-d9-K0P"/>
+                <constraint firstItem="DPA-w7-3Gi" firstAttribute="leading" secondItem="S03-ld-UFf" secondAttribute="leading" id="dR6-GU-dlw"/>
+                <constraint firstItem="DPA-w7-3Gi" firstAttribute="top" secondItem="5tu-At-aI0" secondAttribute="bottom" id="gCf-SD-mxv"/>
+                <constraint firstItem="DPA-w7-3Gi" firstAttribute="trailing" secondItem="S03-ld-UFf" secondAttribute="trailing" id="heE-H5-UVZ"/>
+                <constraint firstItem="5tu-At-aI0" firstAttribute="top" secondItem="S03-ld-UFf" secondAttribute="top" constant="47" id="ilw-tM-1BK"/>
+                <constraint firstItem="5tu-At-aI0" firstAttribute="leading" secondItem="S03-ld-UFf" secondAttribute="leading" id="z8d-zl-h8H"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="S03-ld-UFf"/>
             <point key="canvasLocation" x="-103" y="8"/>
         </view>
         <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="7Qp-0M-5dj">
             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+            <viewLayoutGuide key="safeArea" id="N22-ik-BNp"/>
             <items>
                 <barButtonItem title="取消" id="dIe-KU-EPK">
                     <connections>
@@ -128,6 +132,7 @@
         <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" id="pFa-2h-pBt">
             <rect key="frame" x="0.0" y="0.0" width="375" height="162"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+            <viewLayoutGuide key="safeArea" id="L8a-Hw-fMv"/>
             <date key="date" timeIntervalSinceReferenceDate="531651554.30441201">
                 <!--2017-11-06 08:59:14 +0000-->
             </date>

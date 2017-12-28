@@ -31,6 +31,7 @@
     UnitSectionMessageModel *mModel_unit;//传递过来的单位信息
     int mInt_section;//判断是来自分享0还是展示1
     NSString *mStr_uType;//类型
+    __weak IBOutlet NSLayoutConstraint *top;
     NSString *mStr_unitID;//单位ID
     UILabel *mLab_fabu;//发布lab
     UILabel *mLab_dongtai;//动态lab

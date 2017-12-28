@@ -15,6 +15,7 @@
 #import "NSString+Extension.h"
 
 @interface SharePostingViewController ()
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *top;
 @property (nonatomic,strong)TableViewWithBlock *mTableV_type;//下拉选择框
 @property(nonatomic,assign)BOOL isOpen;//是否下拉的标志
 @property(nonatomic,assign)NSRange cursorPosition;
@@ -57,7 +58,17 @@
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
 }
-
+//动态改变高度
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    if([dm getInstance].statusBar>20){
+        self.top.constant = self.top.constant+20;
+                
+        
+    }
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
 //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
