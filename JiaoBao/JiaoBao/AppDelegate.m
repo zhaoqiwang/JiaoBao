@@ -117,8 +117,11 @@
     [dm getInstance].width = self.window.frame.size.width;
     [dm getInstance].height = self.window.frame.size.height;
     //根据系统版本，做状态栏的值
+    CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+    NSLog(@"status width - %f", rectStatus.size.width); // 宽度
+    NSLog(@"status height - %f", rectStatus.size.height); // 高度
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
-        [dm getInstance].statusBar = 20;
+        [dm getInstance].statusBar = rectStatus.size.height;
     }else{
         [dm getInstance].statusBar = 0;
     }

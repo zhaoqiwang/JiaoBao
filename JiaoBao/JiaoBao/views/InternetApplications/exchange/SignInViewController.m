@@ -32,6 +32,17 @@
 @end
 
 @implementation SignInViewController
+//动态改变高度
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    if([dm getInstance].statusBar>20){
+        
+//        self.top.constant = 54;
+ 
+    }
+    
+}
 -(void)dealloc
 {
     [self.detail removeFromParentViewController];
