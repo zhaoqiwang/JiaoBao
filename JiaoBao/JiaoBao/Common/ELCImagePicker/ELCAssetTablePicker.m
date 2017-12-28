@@ -34,7 +34,6 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	[self.tableView setAllowsSelection:NO];
 
@@ -46,7 +45,7 @@
     } else {
         UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAction:)];
         [self.navigationItem setRightBarButtonItem:doneButtonItem];
-        [self.navigationItem setTitle:NSLocalizedString(@"加载中...", nil)];
+        [self.navigationItem setTitle:NSLocalizedString(@"Loading...", nil)];
     }
 
 	[self performSelectorInBackground:@selector(preparePhotos) withObject:nil];
@@ -120,7 +119,7 @@
                                                       animated:NO];
             }
             
-            [self.navigationItem setTitle:self.singleSelection ? NSLocalizedString(@"选择照片", nil) : NSLocalizedString(@"选择照片", nil)];
+            [self.navigationItem setTitle:self.singleSelection ? NSLocalizedString(@"Pick Photo", nil) : NSLocalizedString(@"Pick Photos", nil)];
         });
     }
 }

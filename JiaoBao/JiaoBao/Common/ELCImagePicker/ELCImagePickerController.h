@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ELCAssetSelectionDelegate.h"
-#import <MobileCoreServices/MobileCoreServices.h>
 
 @class ELCImagePickerController;
 @class ELCAlbumPickerController;

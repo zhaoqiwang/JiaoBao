@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 // Notifications
 #define MWPHOTO_LOADING_DID_END_NOTIFICATION @"MWPHOTO_LOADING_DID_END_NOTIFICATION"
@@ -54,6 +53,13 @@
 - (void)unloadUnderlyingImage;
 
 @optional
+
+// If photo is empty, in which case, don't show loading error icons
+@property (nonatomic) BOOL emptyImage;
+
+// Video
+@property (nonatomic) BOOL isVideo;
+- (void)getVideoURL:(void (^)(NSURL *url))completion;
 
 // Return a caption string to be displayed over the image
 // Return nil to display no caption

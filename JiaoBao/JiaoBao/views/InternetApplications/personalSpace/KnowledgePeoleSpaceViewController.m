@@ -55,7 +55,7 @@
     if([str integerValue]==0)
     {
         [MBProgressHUD showSuccess:@"修改头像成功" toView:self.view];
-        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao]];
+        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao] withCompletion:nil];
         [self.HeadCell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
     }
     else

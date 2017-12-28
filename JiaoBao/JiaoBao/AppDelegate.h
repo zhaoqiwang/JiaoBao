@@ -16,9 +16,9 @@
 #import <UMAnalytics/MobClick.h>
 #import<CoreData/CoreData.h>
 #import "NSString+Extension.h"
+#import "UMessage.h"
 
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>{
+@interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate,UNUserNotificationCenterDelegate>{
 //    RootViewController *mRoot_view;
     InternetApplicationsViewController *mInternet;
     RegisterViewController *mRegister_view;

@@ -12,7 +12,6 @@
 #import "utils.h"
 #import "ShareHttp.h"
 #import "MBProgressHUD.h"
-#import "MHImagePickerMutilSelector.h"
 #import "ELCImagePickerHeader.h"
 #import "ReleaseNewsUnitsModel.h"
 #import "GetmyUserClassModel.h"

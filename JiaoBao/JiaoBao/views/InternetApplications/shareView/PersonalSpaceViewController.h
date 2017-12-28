@@ -17,8 +17,7 @@
 #import "ArthDetailViewController.h"
 #import "ThemeHttp.h"
 #import "UIImageView+WebCache.h"
-#import "MJPhoto.h"
-#import "MJPhotoBrowser.h"
+#import "SDImageCache.h"
 
 @interface PersonalSpaceViewController : UIViewController<MyNavigationDelegate,UITableViewDataSource,UITableViewDelegate,MBProgressHUDDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>{
     MyNavigationBar *mNav_navgationBar;//导航条

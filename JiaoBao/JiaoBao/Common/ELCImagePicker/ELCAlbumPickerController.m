@@ -28,12 +28,10 @@
     [super viewDidLoad];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	
-	[self.navigationItem setTitle:NSLocalizedString(@"加载中...", nil)];
+	[self.navigationItem setTitle:NSLocalizedString(@"Loading...", nil)];
 
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self.parent action:@selector(cancelImagePicker)];
-    [cancelButton setTitle:@"取消"];
 	[self.navigationItem setRightBarButtonItem:cancelButton];
-    
 
     NSMutableArray *tempArray = [[NSMutableArray alloc] init];
 	self.assetGroups = tempArray;
@@ -95,20 +93,20 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView) name:ALAssetsLibraryChangedNotification object:nil];
     [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:YES];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:ALAssetsLibraryChangedNotification object:nil];
 }
 
 - (void)reloadTableView
 {
 	[self.tableView reloadData];
-	[self.navigationItem setTitle:NSLocalizedString(@"选择相册", nil)];
+	[self.navigationItem setTitle:NSLocalizedString(@"Select an Album", nil)];
 }
 
 - (BOOL)shouldSelectAsset:(ELCAsset *)asset previousCount:(NSUInteger)previousCount
@@ -174,16 +172,7 @@
     [g setAssetsFilter:[self assetFilter]];
     NSInteger gCount = [g numberOfAssets];
     
-    //
-    NSString *name = [g valueForProperty:ALAssetsGroupPropertyName];
-    if ([name isEqual:@"Camera Roll"])
-    {
-        name = @"相册";
-    }
-    
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",[g valueForProperty:ALAssetsGroupPropertyName], (long)gCount];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",name, (long)gCount];
-    NSLog(@"lsdfldjglrkgjl000000000====%@",cell.textLabel.text);
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%ld)",[g valueForProperty:ALAssetsGroupPropertyName], (long)gCount];
     UIImage* image = [UIImage imageWithCGImage:[g posterImage]];
     image = [self resize:image to:CGSizeMake(78, 78)];
     [cell.imageView setImage:image];

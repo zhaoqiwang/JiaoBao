@@ -431,7 +431,7 @@
             NSString * str = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
             if (([str isEqual:@"png"]||[str isEqual:@"gif"]||[str isEqual:@"jpg"]||[str isEqual:@"bmp"])){
                 NSString * getImageStrPath = [NSString stringWithFormat:@"%@/%@",tempPath,model.OrgFilename];
-                [self.mArr_photos addObject:[MWPhoto photoWithFilePath:getImageStrPath]];
+                [self.mArr_photos addObject:[MWPhoto photoWithURL:getImageStrPath]];
             }
             self.mArr_photos = photos0;
             // Create browser
