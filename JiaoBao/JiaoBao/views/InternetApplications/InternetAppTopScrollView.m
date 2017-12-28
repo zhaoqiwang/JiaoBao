@@ -99,14 +99,23 @@
             [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTable_%d",i]] forState:UIControlStateNormal];
             [button setImage:[UIImage imageNamed:[NSString stringWithFormat:@"rootTableSelect_%d",i]] forState:UIControlStateSelected];
 //        }
-        
+//        CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+//        [dm getInstance].statusBar = rectStatus.size.height;
+        D("TabbarHeight:%d",TabbarHeight);
         [button addTarget:self action:@selector(selectNameButton:) forControlEvents:UIControlEventTouchUpInside];
         
         //    在UIButton中有三个对EdgeInsets的设置：ContentEdgeInsets、titleEdgeInsets、imageEdgeInsets
-        button.imageEdgeInsets = UIEdgeInsetsMake(4,(tempWidth-25)/2,21,(tempWidth-25)/2);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
+        if (TabbarHeight>20) {
+            button.imageEdgeInsets = UIEdgeInsetsMake(14,(tempWidth-25)/2,11,(tempWidth-25)/2);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
+            button.titleEdgeInsets = UIEdgeInsetsMake(52, -(tempWidth-tempSize.width)/2+25, 4, 0);
+        } else {
+            button.imageEdgeInsets = UIEdgeInsetsMake(4,(tempWidth-25)/2,21,(tempWidth-25)/2);//设置image在button上的位置（上top，左left，下bottom，右right）这里可以写负值，对上写－5，那么image就象上移动5个像素
+            button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2+10, 4, 0);
+        }
+        
         button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
 //        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）
-        button.titleEdgeInsets = UIEdgeInsetsMake(32, -(tempWidth-tempSize.width)/2+10, 4, 0);
+        
 //        button.imageEdgeInsets = UIEdgeInsetsMake(4,0,21,(tempWidth-25)/2);
 //        button.titleLabel.textAlignment = NSTextAlignmentCenter;//设置title的字体居中
 //        button.titleEdgeInsets = UIEdgeInsetsMake(32, (tempWidth-tempSize.width)/2-2, 4, 0);//设置title在button上的位置（上top，左left，下bottom，右right）

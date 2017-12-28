@@ -30,8 +30,12 @@
     self.mNav_navgationBar.delegate = self;
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
+    if ([dm getInstance].statusBar>20) {
+        self.mTableV_detailist.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+    } else {
+        self.mTableV_detailist.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    }
     
-    self.mTableV_detailist.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
     self.mTableV_detailist.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
 //    self.automaticallyAdjustsScrollViewInsets = false;
 
@@ -210,6 +214,7 @@
         [cell2.mBtn_signIn setTitle:@"已签到" forState:UIControlStateNormal];
          [cell2.mBtn_signIn setBackgroundColor:[UIColor brownColor]];
     }
+    cell2.mBtn_signIn.frame = CGRectMake([dm getInstance].width-cell2.mBtn_signIn.frame.size.width-20, cell2.mBtn_signIn.frame.origin.y, cell2.mBtn_signIn.frame.size.width, cell2.mBtn_signIn.frame.size.height);
     [cell2.mBtn_signIn addTarget:self action:@selector(clickSignInBtn:) forControlEvents:UIControlEventTouchUpInside];
     //若是回复我的，显示回复内容
 //    if (unReadMsgModel.MsgTabIDStr.length>0) {

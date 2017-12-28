@@ -65,7 +65,12 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     //总
-    self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    if ([dm getInstance].statusBar>20) {
+        self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height);
+    } else {
+        self.mScrollV_all.frame = CGRectMake(0, self.mNav_navgationBar.frame.size.height-[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-self.mNav_navgationBar.frame.size.height+[dm getInstance].statusBar);
+    }
+    
     //个人头像
     self.mImgV_head.frame = CGRectMake(18, 15, 57, 57);
     [self.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,self.mModel_personal.AccID] placeholderImage:[UIImage  imageNamed:@"root_img"]];
