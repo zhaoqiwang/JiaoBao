@@ -15,8 +15,6 @@
 #import "MBProgressHUD.h"
 #import "ThemeHttp.h"
 #import "UIImageView+WebCache.h"
-#import "MJPhoto.h"
-#import "MJPhotoBrowser.h"
 #import "MWPhotoBrowser.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 

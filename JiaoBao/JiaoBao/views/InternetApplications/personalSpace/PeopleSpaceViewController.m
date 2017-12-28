@@ -71,7 +71,7 @@
     if([str integerValue]==0)
     {
         [MBProgressHUD showSuccess:@"修改头像成功" toView:self.view];
-        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao]];
+        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao] withCompletion:nil];
     }
     else
     {
@@ -337,7 +337,7 @@
     
     if (indexPath.row ==0) {
         cell.mImgV_head.hidden = NO;
-        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao]];
+        [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao] withCompletion:nil];
         [cell.mImgV_head sd_setImageWithURL:(NSURL *)[NSString stringWithFormat:@"%@%@",AccIDImg,[dm getInstance].jiaoBaoHao] placeholderImage:[UIImage  imageNamed:@"root_img"]];
         cell.mImgV_head.frame = CGRectMake(10, 10, cell.mImgV_head.frame.size.width, cell.mImgV_head.frame.size.height);
         cell.imgBtn.frame = cell.mImgV_head.frame;

@@ -37,7 +37,7 @@ static NSString *PersonSpaceAlbums = @"ShareCollectionViewCell";
     [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
     //清掉当前头像缓存
-    [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,self.mModel_personal.AccID]];
+    [[SDImageCache sharedImageCache] removeImageForKey:[NSString stringWithFormat:@"%@%@",AccIDImg,self.mModel_personal.AccID] withCompletion:nil];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];

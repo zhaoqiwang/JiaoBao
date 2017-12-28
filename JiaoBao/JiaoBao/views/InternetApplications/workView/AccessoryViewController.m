@@ -137,7 +137,7 @@
             NSString * str = [rslt objectAtIndex:[rslt count]-1];//找到最后一块，即为后缀名
             if (([str isEqual:@"png"]||[str isEqual:@"gif"]||[str isEqual:@"jpg"]||[str isEqual:@"bmp"])){
                 NSString * getImageStrPath = [NSString stringWithFormat:@"%@/%@",tempPath,model.mStr_name];
-                [photos addObject:[MWPhoto photoWithFilePath:getImageStrPath]];
+                [photos addObject:[MWPhoto photoWithURL:getImageStrPath]];
                 [self.mArr_photo addObject:model.mStr_name];
                 //判断当前点击的这张图片，在图片列表中，是第几张
                 if ([model0.mStr_name isEqual:model.mStr_name]) {

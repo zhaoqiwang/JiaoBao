@@ -15,8 +15,6 @@
 #import "ArthDetailViewController.h"
 #import "ClassTopViewController.h"
 #import "SharePostingViewController.h"
-#import "MJPhoto.h"
-#import "MJPhotoBrowser.h"
 #import "ForwardViewController.h"
 #import "WorkMsgListViewController.h"
 

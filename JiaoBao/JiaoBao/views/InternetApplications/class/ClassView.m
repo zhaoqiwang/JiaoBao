@@ -1949,21 +1949,6 @@
 - (void) ClassTableViewCellTapPress0:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
-//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
-//        // 替换为中等尺寸图片
-//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-//        MJPhoto *photo = [[MJPhoto alloc] init];
-//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-//        photo.srcImageView = imageView;
-//        [photos addObject:photo];
-//    }
-//    
-//    // 2.显示相册
-//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-//    browser.currentPhotoIndex = 0; // 弹出相册时显示的第一张图片是？
-//    browser.photos = photos; // 设置所有的图片
-//    [browser show];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -1997,21 +1982,6 @@
 - (void) ClassTableViewCellTapPress1:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
-//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
-//        // 替换为中等尺寸图片
-//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-//        MJPhoto *photo = [[MJPhoto alloc] init];
-//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-//        photo.srcImageView = imageView;
-//        [photos addObject:photo];
-//    }
-//    
-//    // 2.显示相册
-//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-//    browser.currentPhotoIndex = 1; // 弹出相册时显示的第一张图片是？
-//    browser.photos = photos; // 设置所有的图片
-//    [browser show];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
@@ -2048,22 +2018,6 @@
 - (void) ClassTableViewCellTapPress2:(ClassTableViewCell *) topArthListCell ImgV:(UIImageView *)img{
     // 1.封装图片数据
     NSMutableArray *photos = [NSMutableArray array];
-//    for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
-//        // 替换为中等尺寸图片
-//        NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
-//        MJPhoto *photo = [[MJPhoto alloc] init];
-//        photo.url = [NSURL URLWithString: getImageStrUrl]; // 图片路径
-//        UIImageView * imageView = (UIImageView *)[self viewWithTag: i+10000];
-//        photo.srcImageView = imageView;
-//        [photos addObject:photo];
-//    }
-//    
-//    
-//    // 2.显示相册
-//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-//    browser.currentPhotoIndex = 2; // 弹出相册时显示的第一张图片是？
-//    browser.photos = photos; // 设置所有的图片
-//    [browser show];
     for (int i = 0; i < [topArthListCell.mModel_class.Thumbnail count]; i++) {
         // 替换为中等尺寸图片
         NSString * getImageStrUrl = [NSString stringWithFormat:@"%@", [topArthListCell.mModel_class.Thumbnail objectAtIndex:i]];
