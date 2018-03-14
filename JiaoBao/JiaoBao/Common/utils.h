@@ -57,4 +57,10 @@
 //textView限制字数 num(限制的字数大小)--（textView text range是UITextViewDelegate里的参数）--textField（负责显示placehold的textfield）
 +(BOOL)textViewWordLimit:(NSInteger)num textView:(UITextView*)textView text:(NSString*)text range:(NSRange)range textField:(UITextField*)textField;
 
+//得到应用角标数字
++(int)getAppIconBadgeNumber;
+
+//改变应用角标
++(void)modifyAppIconBadgeNumber:(NSInteger)num;
+
 @end

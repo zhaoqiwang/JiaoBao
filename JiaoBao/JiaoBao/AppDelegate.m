@@ -196,12 +196,23 @@
     NSLog(@"detail parameters:%@", noti.object);
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    D("deviceToken:%@",deviceToken);
+    NSString *string = [[NSString alloc] initWithData:deviceToken encoding:NSUTF8StringEncoding];
+    D("deviceToken111:%@",string);
+    // 1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册
+    //[UMessage registerDeviceToken:deviceToken];
+    
+}
+
 //iOS10以下使用这个方法接收通知
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     //关闭U-Push自带的弹出框
     [UMessage setAutoAlert:NO];
     [UMessage didReceiveRemoteNotification:userInfo];
+    //修改角标
+    [utils modifyAppIconBadgeNumber:[utils getAppIconBadgeNumber]+1];
     
     //    self.userInfo = userInfo;
     //    //定制自定的的弹出框
@@ -221,6 +232,8 @@
 //iOS10新增：处理前台收到通知的代理方法
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
     NSDictionary * userInfo = notification.request.content.userInfo;
+    //修改角标
+//    [utils modifyAppIconBadgeNumber:[utils getAppIconBadgeNumber]+1];
     if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         //应用处于前台时的远程推送接受
         //关闭U-Push自带的弹出框
@@ -238,6 +251,8 @@
 //iOS10新增：处理后台点击通知的代理方法
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler{
     NSDictionary * userInfo = response.notification.request.content.userInfo;
+    //修改角标
+    [utils modifyAppIconBadgeNumber:[utils getAppIconBadgeNumber]+1];
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
         //应用处于后台时的远程推送接受
         //必须加这句代码
@@ -311,7 +326,7 @@
 }
 
 //切换账号时，更新数据
--(void)RegisterView:(NSNotification *)noti{;
+-(void)RegisterView:(NSNotification *)noti{
     [[dm getInstance].mArr_rongYunGroup removeAllObjects];
     [[dm getInstance].mArr_rongYunUser removeAllObjects];
     [[dm getInstance].mArr_unit_member removeAllObjects];

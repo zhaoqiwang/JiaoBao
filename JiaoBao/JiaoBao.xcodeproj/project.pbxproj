@@ -1267,6 +1267,7 @@
 		435D45E31CC4934E0073179B /* leaveDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leaveDelete.png; path = JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete.png; sourceTree = "<group>"; };
 		435D45E41CC4934E0073179B /* leaveDelete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaveDelete@2x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete@2x.png"; sourceTree = "<group>"; };
 		435D45E51CC4934E0073179B /* leaveDelete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leaveDelete@3x.png"; path = "JiaoBao/Image/InternetApp/workView/NewWorkView/insideworkImage/leaveDelete@3x.png"; sourceTree = "<group>"; };
+		436EE7B31FFC677700AFA34E /* JiaoBao.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JiaoBao.entitlements; sourceTree = "<group>"; };
 		4373CB291FF1E16E002FA4D6 /* SecurityEnvSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SecurityEnvSDK.framework; sourceTree = "<group>"; };
 		4373CB2A1FF1E16F002FA4D6 /* UTDID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTDID.framework; sourceTree = "<group>"; };
 		4373CB2D1FF1E238002FA4D6 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
@@ -3826,6 +3827,7 @@
 		A755E66F19F2492700BBDF3D /* JiaoBao */ = {
 			isa = PBXGroup;
 			children = (
+				436EE7B31FFC677700AFA34E /* JiaoBao.entitlements */,
 				A755E69819F24AE500BBDF3D /* views */,
 				A755E6B019F25B5500BBDF3D /* Common */,
 				A755E6B419F25E9F00BBDF3D /* Image */,
@@ -5578,7 +5580,7 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -6807,8 +6809,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -6826,7 +6828,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
@@ -6851,8 +6853,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -6864,7 +6866,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos8.2;
@@ -6880,8 +6882,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_ENTITLEMENTS = JiaoBao/JiaoBao.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 68R8QP4X33;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6907,8 +6911,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "e18a5330-d8d4-41d9-913b-d0fc2d02c890";
-				PROVISIONING_PROFILE_SPECIFIER = dis_jiaobao_Zqw;
+				PROVISIONING_PROFILE = "2546b16b-08ab-4100-a02f-6d886d3e92e3";
+				PROVISIONING_PROFILE_SPECIFIER = jiaobao_devPro;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -6921,8 +6925,10 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Canxin Mo (68R8QP4X33)";
+				CODE_SIGN_ENTITLEMENTS = JiaoBao/JiaoBao.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 68R8QP4X33;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6948,8 +6954,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sdjsy.JiaoBao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "88a49e89-643d-4aa8-ac3d-4ed51122e68c";
-				PROVISIONING_PROFILE_SPECIFIER = dis_jiaobao_Zqw;
+				PROVISIONING_PROFILE = "2546b16b-08ab-4100-a02f-6d886d3e92e3";
+				PROVISIONING_PROFILE_SPECIFIER = jiaobao_devPro;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

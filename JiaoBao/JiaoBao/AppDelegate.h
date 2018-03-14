@@ -17,6 +17,8 @@
 #import<CoreData/CoreData.h>
 #import "NSString+Extension.h"
 #import "UMessage.h"
+#import <UserNotifications/UserNotifications.h>
+#import "utils.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate,UNUserNotificationCenterDelegate>{
 //    RootViewController *mRoot_view;

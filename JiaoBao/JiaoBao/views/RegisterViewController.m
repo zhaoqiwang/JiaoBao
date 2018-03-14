@@ -161,6 +161,11 @@
     NSString *str = noti.object;
     D("loginSuccess-== %@",str);
     [MBProgressHUD showSuccess:str toView:self.view];
+    [UMessage setAlias:[[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"] type:@"JiaoBao" response:^(id responseObject, NSError *error) {
+        D("responseObject:%@",responseObject);
+    }];
+    //修改角标s
+    [utils modifyAppIconBadgeNumber:0];
 }
 
 -(void)myTask{

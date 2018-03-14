@@ -10,7 +10,7 @@
 #import "dm.h"
 #import "LoginSendHttp.h"
 #import "MBProgressHUD+AD.h"
-
+#import "UMessage.h"
 
 @interface RegisterViewController : UIViewController<UITextFieldDelegate,UIGestureRecognizerDelegate,ASIHTTPRequestDelegate,LoginSendHttpDelegate,MBProgressHUDDelegate>{
     UIImageView *mImgV_bg;//填充背景

@@ -390,4 +390,16 @@
     
 }
 
+//得到应用角标数字
++(int)getAppIconBadgeNumber{
+    NSString *tempNum = [[NSUserDefaults standardUserDefaults] objectForKey:@"IconBadgeNumber"];
+    return [tempNum intValue];
+}
+
+//改变应用角标
++(void)modifyAppIconBadgeNumber:(NSInteger)num{
+    [[NSUserDefaults standardUserDefaults] setValue:@(num) forKey:@"IconBadgeNumber"];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = num;
+}
+
 @end

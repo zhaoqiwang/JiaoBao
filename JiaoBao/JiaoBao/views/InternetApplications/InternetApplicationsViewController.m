@@ -181,6 +181,11 @@
     NSString *str = noti.object;
     D("loginSuccess-== %@",str);
     [MBProgressHUD showSuccess:str toView:self.view];
+    [UMessage setAlias:[[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"] type:@"JiaoBao" response:^(id responseObject, NSError *error) {
+        D("responseObject:%@",responseObject);
+    }];
+    //修改角标
+    [utils modifyAppIconBadgeNumber:0];
     if ([str isEqual:@"用户名或密码错误！"]) {
         [self pushMenuItem3:nil];
     }
@@ -594,10 +599,10 @@
         NSArray *menuItems0 =
         @[
           
-//          [KxMenuItem menuItem:@"签到考勤"
-//                         image:[UIImage imageNamed:@"appNav_contact"]
-//                        target:self
-//                        action:@selector(pushMenuItemSignIn:)],
+          [KxMenuItem menuItem:@"签到考勤"
+                         image:[UIImage imageNamed:@"appNav_contact"]
+                        target:self
+                        action:@selector(pushMenuItemSignIn:)],
           [KxMenuItem menuItem:@"日程记录"
                          image:[UIImage imageNamed:@"appNav_contact"]
                         target:self
@@ -780,6 +785,12 @@
     
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"PassWD"];
     [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:@"Register"];
+    //清掉友盟推送
+    [UMessage removeAlias:[[NSUserDefaults standardUserDefaults] valueForKey:@"UserName"] type:@"JiaoBao" response:^(id responseObject, NSError *error) {
+        
+    }];
+    //修改角标
+    [utils modifyAppIconBadgeNumber:0];
     //通知界面，更新数据
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RegisterView" object:nil];
     [Nav_internetAppView getInstance].mLab_name.text = @"";

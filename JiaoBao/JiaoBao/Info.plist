@@ -35,9 +35,7 @@
 			<key>CFBundleURLName</key>
 			<string>com.sdjsy.JiaoBao</string>
 			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>weixin</string>
-			</array>
+			<array/>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
