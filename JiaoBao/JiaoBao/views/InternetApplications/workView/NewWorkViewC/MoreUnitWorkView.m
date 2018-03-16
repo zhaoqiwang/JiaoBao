@@ -44,6 +44,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(GetCommPerm:) name:@"GetCommPerm" object:nil];
         
         self.mArr_sumData = [NSMutableArray array];
+        self.mArr_list = [NSMutableArray array];
         self.mArr_display = [NSArray array];
         self.mInt_readflag = 0;
         self.mInt_requestCount = 0;
