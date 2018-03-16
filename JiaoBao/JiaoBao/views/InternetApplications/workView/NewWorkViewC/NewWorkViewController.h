@@ -23,6 +23,8 @@
 @property(nonatomic,strong)NewWorkTopScrollView *top;
 @property (nonatomic,strong) NewWorkRootScrollView *rootView;
 @property(nonatomic,strong)NSDictionary *rightDic;
-
+@property (nonatomic,assign) int flag;//0新建，1转发
+@property (nonatomic,strong) NSString *mStr_content;//转发时，传过来的内容
+@property (nonatomic,strong) NSMutableArray *mArr_list;//转发时，传过来的附件列表
 
 @end

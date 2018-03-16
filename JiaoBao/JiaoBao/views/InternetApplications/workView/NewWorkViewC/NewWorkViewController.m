@@ -23,6 +23,11 @@
     
 }
 
+-(id)init{
+    self.mArr_list = [NSMutableArray array];
+    return self;
+}
+
 -(void)changeCurUnit:(NSNotification *)noti{
     NSString *str = noti.object;
     if ([str intValue] ==0||[str intValue] ==2) {//成功
@@ -74,6 +79,11 @@
 //    [self.view addSubview:[NewWorkTopScrollView shareInstance]];
     //root
     self.rootView = [[NewWorkRootScrollView alloc] initWithFrame];
+    if (self.flag == 1) {
+        self.rootView.flag = self.flag;
+        self.rootView.mStr_content = self.mStr_content;
+        self.rootView.mArr_list = self.mArr_list;
+    }
     [self.view addSubview:self.rootView];
 //    [self.view addSubview:[NewWorkRootScrollView shareInstance]];
 

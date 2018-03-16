@@ -51,6 +51,10 @@
         [self addSubview:self.homeClassView];
         //多单位事务
         self.moreUnitView = [[MoreUnitWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
+        if (self.flag == 1) {
+            self.moreUnitView.mStr_content = self.mStr_content;
+            self.moreUnitView.mArr_list = self.mArr_list;
+        }
         [self addSubview:self.moreUnitView];
     }
     return self;
