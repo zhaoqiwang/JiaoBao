@@ -23,6 +23,9 @@
 @property (nonatomic,strong) NewWorkTopView *mViewTop;//上半部分
 @property(nonatomic,strong)UIView *bottomView;
 @property (nonatomic,strong) MBProgressHUD *mProgressV;//
+@property (nonatomic,assign) int flag;//0新建，1转发
+@property (nonatomic,strong) NSString *mStr_content;//转发时，传过来的内容
+@property (nonatomic,strong) NSMutableArray *mArr_list;//转发时，传过来的附件列表
 
 - (id)initWithFrame1:(CGRect)frame;
 -(void)resetFrame;

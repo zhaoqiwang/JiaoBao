@@ -308,9 +308,209 @@
 
 }
 
+-(void)transmit_send:(UIButton *)btn{
 
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
+    if([[dm getInstance].secondFlag isEqualToString: @"无权限"]){
+        [MBProgressHUD showError:@"无权限" toView:self];
+        return;
+    }
+
+
+    
+    NSMutableArray *genArr = [[NSMutableArray alloc]initWithCapacity:0];
+    NSMutableArray *array0 = [[NSMutableArray alloc]initWithCapacity:0];
+    for(int i=0;i<self.mArr_list.count;i++)
+    {
+        AccessoryModel *model = [self.mArr_list objectAtIndex:i];
+        [array0 addObject:model.mStr_name];
+    }
+    //[array0 addObjectsFromArray:self.mViewTop.mArr_accessory];
+    if([dm getInstance].notificationSymbol == 1)
+    {
+        [dm getInstance].notificationSymbol = [HomeClassTopScrollView shareInstance].mInt_userSelectedChannelID;
+    }
+    
+    if([dm getInstance].notificationSymbol == 100)
+    {
+        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].classMessageView.datasource;
+        for(int i=0;i<dataArr.count;i++)
+        {
+            myUnit *unit = [dataArr objectAtIndex:i];
+            if(unit.isSelected == YES)
+            {
+                UserListModel *model;
+                if(unit.list.count>1)
+                {
+                    model = [unit.list objectAtIndex:1];
+                    
+                    
+                }
+                else
+                {
+                    if(unit.list.count>0)
+                    {
+                        model = [unit.list objectAtIndex:0];
+                        
+                    }
+                    
+                    
+                }
+                groupselit_selitModel *groupModel ;
+                for(int i=0;i<model.groupselit_selit.count;i++)
+                {
+                    groupModel = [model.groupselit_selit objectAtIndex:i];
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                    [dic setValue:groupModel.flag forKey:@"flag"];
+                    [dic setValue:groupModel.selit forKey:@"selit"];
+                    [genArr addObject:dic];
+                    
+                    
+                    
+                    
+                }
+                
+            }
+            
+            
+        }
+        if(genArr.count ==0)
+        {
+            [MBProgressHUD showError:@"请选择人员" toView:self];
+            return;
+        }
+        [[LoginSendHttp getInstance] creatCommMsgWith:self.mStr_content SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        
+        
+        
+    }
+    if([dm getInstance].notificationSymbol == 101)
+    {
+        NSMutableArray * dataArr = [HomeClassRootScrollView shareInstance].characterView.datasource;
+        for(int i=0;i<dataArr.count;i++)
+        {
+            myUnit *unit = [dataArr objectAtIndex:i];
+            UserListModel *model;
+            if(unit.list.count>1)
+            {
+                model = [unit.list objectAtIndex:1];
+                
+                
+            }
+            else
+            {
+                model = [unit.list objectAtIndex:0];
+                
+                
+            }            groupselit_selitModel *groupModel;
+            for(int i=0;i<model.groupselit_selit.count;i++)
+            {
+                groupModel = [model.groupselit_selit objectAtIndex:i];
+                if(groupModel.mInt_select == 1)
+                {
+                    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+                    [dic setValue:groupModel.flag forKey:@"flag"];
+                    [dic setValue:groupModel.selit forKey:@"selit"];
+                    [genArr addObject:dic];
+                    //[genArr addObject:groupModel];
+                }
+                
+                
+            }
+            
+        }
+        //int num = (int)genArr.count;
+        if(genArr.count ==0)
+        {
+            [MBProgressHUD showError:@"请选择人员" toView:self];
+            return;
+        }
+        
+        [[LoginSendHttp getInstance] creatCommMsgWith:self.mStr_content SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:(int)genArr.count grsms:1 array:genArr forwardMsgID:nil access:array0];
+        
+    }
+    if([dm getInstance].notificationSymbol == 102)
+    {
+        if([HomeClassRootScrollView shareInstance].schoolMessage.allSelected == YES)
+        {
+            NSArray *arr = [HomeClassTopScrollView shareInstance].thirdArr;
+            
+            for (int i=0; i<arr.count; i++) {
+                SMSTreeArrayModel *model = [arr objectAtIndex:i];
+                for (int m=0; m<model.smsTree.count; m++) {
+                    SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                    if (i == 1)
+                    {
+                        [genArr addObject:tempModel.id0];
+                        
+                    }
+                    
+                }
+            }
+            if(genArr.count ==0)
+            {
+                [MBProgressHUD showError:@"请选择人员" toView:self];
+                return;
+            }
+            
+            [[LoginSendHttp getInstance]creatCommMsgWith:self.mStr_content SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
+            
+            
+        }
+        else
+        {
+            
+        }
+        
+    }
+    
+    if([dm getInstance].notificationSymbol == 103)
+    {
+        
+        NSArray *arr = [HomeClassRootScrollView shareInstance].patriarchView.datasource;
+        
+        for (int i=0; i<arr.count; i++) {
+            SMSTreeArrayModel *model = [arr objectAtIndex:i];
+            for (int m=0; m<model.smsTree.count; m++) {
+                SMSTreeUnitModel *tempModel = [model.smsTree objectAtIndex:m];
+                if (i == 1)
+                {
+                    if(tempModel.mInt_select == 1)
+                    {
+                        [genArr addObject:tempModel.id0];
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        if(genArr.count ==0)
+        {
+            [MBProgressHUD showError:@"请选择人员" toView:self];
+            return;
+        }
+        [[LoginSendHttp getInstance]creatCommMsgWith:self.mStr_content SMSFlag:self.mViewTop.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 arrMem:nil arrGen:genArr arrStu:nil access:array0];
+        
+    }
+    
+    
+    
+    
+    
+    
+    [MBProgressHUD showMessage:@"正在发送..." toView:self];
+}
 //点击发送按钮
 -(void)mBtn_send:(UIButton *)btn{
+    if(self.flag==1){
+        [self transmit_send:btn];
+        return;
+    }
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;

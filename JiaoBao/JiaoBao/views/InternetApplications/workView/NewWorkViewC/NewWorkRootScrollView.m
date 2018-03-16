@@ -52,6 +52,8 @@
         //多单位事务
         self.moreUnitView = [[MoreUnitWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
         if (self.flag == 1) {
+            self.homeClassView.mStr_content = self.mStr_content;
+            self.homeClassView.mArr_list = self.mArr_list;
             self.moreUnitView.mStr_content = self.mStr_content;
             self.moreUnitView.mArr_list = self.mArr_list;
         }

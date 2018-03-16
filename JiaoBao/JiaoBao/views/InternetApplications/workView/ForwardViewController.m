@@ -680,8 +680,51 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     }
     return YES;
 }
+-(void)transmit_send:(UIButton *)btn{
+    //检查当前网络是否可用
+    if ([self checkNetWork]) {
+        return;
+    }
 
+    
+
+    
+    
+    
+
+    NSMutableArray *array = [NSMutableArray array];
+    
+    myUnit *tempUnit = [dm getInstance].mModel_unitList.myUnit;
+    
+    [array addObjectsFromArray:[self addMyUnitMember:tempUnit]];
+    
+    if (array.count==0) {
+        [MBProgressHUD showError:@"请选择人员" toView:self.view];
+        return;
+    }
+    
+    //发表
+    NSMutableArray *array1 = [[NSMutableArray alloc]initWithCapacity:0];
+    //[array1 addObjectsFromArray:self.topView.mArr_accessory];
+    for(int i=0;i<self.mArr_list.count;i++)
+    {
+        AccessoryModel *model = [self.mArr_list objectAtIndex:i];
+        [array1 addObject:model.mStr_name];
+    }
+    [[LoginSendHttp getInstance] creatCommMsgWith:self.mStr_content SMSFlag:self.topView.mInt_sendMsg unitid:[dm getInstance].mModel_unitList.myUnit.TabIDStr classCount:0 grsms:1 array:array forwardMsgID:@"" access:array1];
+    
+    
+    
+    [MBProgressHUD showMessage:@"正在发送" toView:self.view];
+    
+    [self.mCollectionV_list reloadData];
+    
+}
 -(void)mBtn_send:(UIButton *)btn{
+    if(self.flag==1){
+        [self transmit_send:btn];
+        return;
+    }
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;
