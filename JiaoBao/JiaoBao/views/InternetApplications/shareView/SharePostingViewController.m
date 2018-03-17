@@ -52,11 +52,15 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
+    
     [MobClick beginLogPageView:UMMESSAGE];
     [MobClick beginLogPageView:UMPAGE];
     //做bug服务器显示当前的哪个界面
     NSString *nowViewStr = [NSString stringWithUTF8String:object_getClassName(self)];
     [[NSUserDefaults standardUserDefaults]setValue:nowViewStr forKey:BUGFROM];
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:YES];
 }
 //动态改变高度
 -(void)updateViewConstraints
@@ -67,10 +71,16 @@
                 
         
     }
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
+        self.top.constant = self.top.constant+10;
+    }
+    
+
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
 //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
     self.mInt_index = 1;
     self.positionFlag = NO;
