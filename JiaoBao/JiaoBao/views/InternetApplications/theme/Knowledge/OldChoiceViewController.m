@@ -105,7 +105,10 @@
     NSString *tempUrl;
     if (model.ImgContent.count>0) {
         tempUrl = [NSString stringWithFormat:@"%@%@%@",MAINURL,model.baseImgUrl,[model.ImgContent objectAtIndex:0]];
+        D("tempUrl=%@",tempUrl);
     }
+//    https://www.jiaobaowang.net/Knl/KnlIndex/AllPickedIndex/Knl/userdoc/knupload/20170117/c44ad405bece4fa688d5d6a5fb69a0ea.png
+//    https://www.jiaobaowang.net/JBClient/userdoc/knupload/20170117/c44ad405bece4fa688d5d6a5fb69a0ea.png
     cell.mImgV_img.contentMode = UIViewContentModeScaleAspectFit;
     [cell.mImgV_img sd_setImageWithURL:(NSURL *)tempUrl placeholderImage:[UIImage  imageNamed:@"root_img"]];
     cell.mImgV_img.frame = CGRectMake([dm getInstance].width-70-9, 10, 70, 50);

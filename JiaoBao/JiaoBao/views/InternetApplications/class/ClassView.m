@@ -158,6 +158,7 @@
         self.mView_text.layer.borderWidth = .5;
         self.mView_text.layer.borderColor = [[UIColor colorWithRed:217/255.0 green:217/255.0 blue:217/255.0 alpha:1] CGColor];
         [self addSubview:self.mView_text];
+        self.mView_text.hidden = YES;
         //输入框
         self.mTextF_text = [[UITextField alloc] init];
         self.mTextF_text.frame = CGRectMake(15, 10, [dm getInstance].width-15*2, 51-20);
@@ -178,6 +179,7 @@
 //        [self.mView_text setHidden:YES];
         
     }
+    
     self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, [dm getInstance].height/3, [dm getInstance].width, 50)];
     
     self.label.textColor = [UIColor grayColor];

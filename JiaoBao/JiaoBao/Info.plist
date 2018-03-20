@@ -75,8 +75,6 @@
 	<string>我们需要通过您的地理位置信息获取您周边的相关数据</string>
 	<key>Privacy - Speech Recognition Usage Description</key>
 	<string>是否允许此App使用语音识别？</string>
-	<key>UILaunchStoryboardName</key>
-	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

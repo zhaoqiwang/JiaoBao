@@ -17,7 +17,11 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
 //        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 49+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-49*1-[dm getInstance].statusBar-40)];
-        __singletion=[[self alloc] initWithFrame:CGRectMake(0, 43+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-TabbarHeight)];
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            __singletion=[[self alloc] initWithFrame:CGRectMake(0, 43+[dm getInstance].statusBar+20, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-TabbarHeight-20)];
+        }else{
+            __singletion=[[self alloc] initWithFrame:CGRectMake(0, 43+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-TabbarHeight)];
+        }
     });
     return __singletion;
 }
@@ -29,7 +33,8 @@
         if (SHOWRONGYUN == 1) {
             self.contentSize = CGSizeMake([dm getInstance].width*5, [dm getInstance].height-43-[dm getInstance].statusBar-48);
         }else{
-            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-TabbarHeight);
+//            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-TabbarHeight);
+            self.contentSize = CGSizeMake([dm getInstance].width*3, 0);
         }
         
         self.pagingEnabled = YES;

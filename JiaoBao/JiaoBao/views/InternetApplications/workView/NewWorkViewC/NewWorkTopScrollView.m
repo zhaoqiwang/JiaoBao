@@ -41,8 +41,14 @@
 
 - (id)initWithFrame
 {
-    CGRect frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48);
-    self = [super initWithFrame:frame];
+    
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
+        CGRect frame = CGRectMake(0, 44+[dm getInstance].statusBar+20, [dm getInstance].width, 48);
+        self = [super initWithFrame:frame];
+    }else{
+        CGRect frame = CGRectMake(0, 44+[dm getInstance].statusBar, [dm getInstance].width, 48);
+        self = [super initWithFrame:frame];
+    }
     if (self) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"adjustTopScrollViewButton" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(adjustTopScrollViewButton:) name:@"adjustTopScrollViewButton" object:nil];

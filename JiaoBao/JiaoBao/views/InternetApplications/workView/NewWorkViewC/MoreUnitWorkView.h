@@ -46,8 +46,6 @@
 @property (nonatomic,assign) int mInt_requestCount2;//请求数量
 @property (nonatomic,assign) int mInt_flag;//判断是否第一次进入此界面，发送数据请求
 @property (nonatomic,strong) RightModel *mModel_right;//发送权限
-@property (nonatomic,strong) NSString *mStr_content;//转发时，传过来的内容
-@property (nonatomic,strong) NSMutableArray *mArr_list;//转发时，传过来的附件列表
 
 - (id)initWithFrame1:(CGRect)frame;
 

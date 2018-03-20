@@ -26,12 +26,22 @@
 }
 
 - (id)initWithFrame{
-    CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44);
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+        CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar+20, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44-20);
+        self = [super initWithFrame:frame];
+    }else{
+        CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44);
+        self = [super initWithFrame:frame];
+    }
     
-    self = [super initWithFrame:frame];
     if (self) {
         self.delegate = self;
-        self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44);
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44+20);
+        }else{
+            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44);
+        }
+        
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"selectNameButton" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectNameButton:) name:@"selectNameButton" object:nil];
         self.pagingEnabled = YES;
@@ -51,10 +61,6 @@
         [self addSubview:self.homeClassView];
         //多单位事务
         self.moreUnitView = [[MoreUnitWorkView alloc] initWithFrame1:CGRectMake([dm getInstance].width*2, 0, [dm getInstance].width, self.frame.size.height)];
-        if (self.flag == 1) {
-            self.moreUnitView.mStr_content = self.mStr_content;
-            self.moreUnitView.mArr_list = self.mArr_list;
-        }
         [self addSubview:self.moreUnitView];
     }
     return self;

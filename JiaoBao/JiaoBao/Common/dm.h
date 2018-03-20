@@ -98,6 +98,10 @@
 @property (nonatomic,strong) NSMutableArray *mArr_allClass;//所有班级
 @property (nonatomic,strong) NSMutableArray *mArr_listClass;//所有班级的二级列表格式
 @property (nonatomic,assign) int mInt_addView;//防止重新登录时，重复加载
+
+@property (nonatomic,assign) int mInt_forwarkFlag;//转发事务时，0否，1是
+@property (nonatomic,strong) NSString* mStr_forwarkContent;//转发事务时，内容
+@property (nonatomic,strong) NSMutableArray* mArr_forwarkList;//转发事务时，附件列表
 + (dm*) getInstance;
 
 

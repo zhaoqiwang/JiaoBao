@@ -27,9 +27,6 @@
 @property (strong,nonatomic) InsideWorkView *insideView;//内部事务
 @property (strong,nonatomic) HomeClassWorkView *homeClassView;//家校互动
 @property (strong,nonatomic) MoreUnitWorkView *moreUnitView;//多单位事务
-@property (nonatomic,assign) int flag;//0新建，1转发
-@property (nonatomic,strong) NSString *mStr_content;//转发时，传过来的内容
-@property (nonatomic,strong) NSMutableArray *mArr_list;//转发时，传过来的附件列表
 
 //+ (NewWorkRootScrollView *)shareInstance;
 - (id)initWithFrame;

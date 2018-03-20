@@ -45,11 +45,20 @@
 {
     self = [super init];
     if (self) {
-        self.frame = CGRectMake(0, 0, [dm getInstance].width, Nav_height+[dm getInstance].statusBar);
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.frame = CGRectMake(0, 0, [dm getInstance].width, Nav_height+[dm getInstance].statusBar+20);
+        }else{
+            self.frame = CGRectMake(0, 0, [dm getInstance].width, Nav_height+[dm getInstance].statusBar);
+        }
+        
         self.backgroundColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
         //设置按钮
         self.mBtn_setting = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.mBtn_setting.frame = CGRectMake([dm getInstance].width-Nav_width, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.mBtn_setting.frame = CGRectMake([dm getInstance].width-Nav_width, 0+[dm getInstance].statusBar+20, Nav_width, Nav_height);
+        }else{
+            self.mBtn_setting.frame = CGRectMake([dm getInstance].width-Nav_width, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
+        }
         [self.mBtn_setting setImage:[UIImage imageNamed:@"appNav_setting"] forState:UIControlStateNormal];
         self.mBtn_setting.tag = 1;
         [self.mBtn_setting addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
@@ -57,7 +66,11 @@
         //添加按钮
         
         self.mBtn_add = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.mBtn_add.frame = CGRectMake([dm getInstance].width-Nav_width*2, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.mBtn_add.frame = CGRectMake([dm getInstance].width-Nav_width*2, 0+[dm getInstance].statusBar+20, Nav_width, Nav_height);
+        }else{
+            self.mBtn_add.frame = CGRectMake([dm getInstance].width-Nav_width*2, 0+[dm getInstance].statusBar, Nav_width, Nav_height);
+        }
         [self.mBtn_add setImage:[UIImage imageNamed:@"appNav_add"] forState:UIControlStateNormal];
         self.mBtn_add.tag = 2;
         [self.mBtn_add addTarget:self action:@selector(clickBtn:) forControlEvents:UIControlEventTouchDown];
@@ -75,7 +88,11 @@
         if (name.length==0) {
             name = @"                                                               ";
         }
-        self.mScrollV_name = [[UIScrollView alloc] initWithFrame:CGRectMake(15, 0+[dm getInstance].statusBar, [dm getInstance].width-11-Nav_width*2-10, Nav_height)];
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.mScrollV_name = [[UIScrollView alloc] initWithFrame:CGRectMake(15, 0+[dm getInstance].statusBar+20, [dm getInstance].width-11-Nav_width*2-10, Nav_height)];
+        }else{
+            self.mScrollV_name = [[UIScrollView alloc] initWithFrame:CGRectMake(15, 0+[dm getInstance].statusBar, [dm getInstance].width-11-Nav_width*2-10, Nav_height)];
+        }
         CGSize newSize = [name sizeWithFont:[UIFont systemFontOfSize:15]];
         self.mLab_name = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, newSize.width, Nav_height)];
         self.mLab_name.backgroundColor = [UIColor clearColor];

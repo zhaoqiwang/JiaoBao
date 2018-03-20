@@ -74,7 +74,11 @@
         self.label_Title.textAlignment = NSTextAlignmentCenter;
         self.label_Title.font = [UIFont systemFontOfSize:LABEL_TEXT_FONTSIZE];
         self.label_Title.textColor = [UIColor whiteColor];
-        self.label_Title.frame = CGRectMake(([dm getInstance].width-150)/2, 14+[dm getInstance].statusBar, 150, 18);
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.label_Title.frame = CGRectMake(([dm getInstance].width-150)/2, 14+[dm getInstance].statusBar+20, 150, 18);
+        }else{
+            self.label_Title.frame = CGRectMake(([dm getInstance].width-150)/2, 14+[dm getInstance].statusBar, 150, 18);
+        }
         self.label_Title.text = title;
         self.backgroundColor = [UIColor colorWithRed:33/255.0 green:41/255.0 blue:43/255.0 alpha:1];
         // 如果需要背景透明加上下面这句
@@ -107,7 +111,13 @@
         [self.mainTitleLabel setTextColor:[UIColor whiteColor]];
         self.mainTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.mainTitleLabel];
-         UILabel * subLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 30+[dm getInstance].statusBar, 150, 12)];
+        UILabel * subLabel = [[UILabel alloc] init];
+//        UILabel * subLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, 30+[dm getInstance].statusBar, 150, 12)];
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            subLabel.frame = CGRectMake(85, 30+[dm getInstance].statusBar+20, 150, 12);
+        }else{
+            subLabel.frame = CGRectMake(85, 30+[dm getInstance].statusBar, 150, 12);
+        }
         self.subTitleLabel = subLabel;
         [subLabel release];
         [self.subTitleLabel setText:subTitle];
@@ -144,7 +154,12 @@
         btn_Title.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         triImageView = [[UIImageView alloc]initWithImage:image];
-        [triImageView setFrame:CGRectMake(0, 0+[dm getInstance].statusBar, image.size.width, image.size.height)];
+        
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            [triImageView setFrame:CGRectMake(0, 0+[dm getInstance].statusBar+20, image.size.width, image.size.height)];
+        }else{
+            [triImageView setFrame:CGRectMake(0, 0+[dm getInstance].statusBar, image.size.width, image.size.height)];
+        }
 //        [triImageView setCenter:CGPointMake(btn_Title.frame.origin.x+btn_Title.frame.size.width+5, MAIN_TOPBAR_HEIGHT/2)];
         D("triW == %f",btn_Title.frame.origin.x+btn_Title.frame.size.width+5);
         [self addSubview:triImageView];
@@ -158,8 +173,12 @@
         // 如果需要背景透明加上下面这句
         //        self.layer.backgroundColor = [UIColor clearColor].CGColor;
         [self addSubview:btn_Title];
-        sliderImageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0+[dm getInstance].statusBar, 116, 2)];
         
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            sliderImageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0+[dm getInstance].statusBar+20, 116, 2)];
+        }else{
+            sliderImageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0+[dm getInstance].statusBar, 116, 2)];
+        }
         [self addSubview:sliderImageV];
         [sliderImageV release];
     }
@@ -174,7 +193,12 @@
             UIImage * sliderImage = [UIImage imageNamed:@"sliderLeftImage"];
             [sliderImageV setHidden:NO];
             [sliderImageV setImage:sliderImage];
-            [sliderImageV setFrame:CGRectMake((320-sliderImage.size.width)/2, 35+[dm getInstance].statusBar, sliderImage.size.width, sliderImage.size.height)];
+            
+            if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+                [sliderImageV setFrame:CGRectMake((320-sliderImage.size.width)/2, 35+[dm getInstance].statusBar+20, sliderImage.size.width, sliderImage.size.height)];
+            }else{
+                [sliderImageV setFrame:CGRectMake((320-sliderImage.size.width)/2, 35+[dm getInstance].statusBar, sliderImage.size.width, sliderImage.size.height)];
+            }
         }
             break;
         case 2:
@@ -182,7 +206,12 @@
             UIImage * sliderImage = [UIImage imageNamed:@"sliderRightImage"];
             [sliderImageV setHidden:NO];
             [sliderImageV setImage:sliderImage];
-            [sliderImageV setFrame:CGRectMake((320-sliderImage.size.width)/2, 35+[dm getInstance].statusBar, sliderImage.size.width, sliderImage.size.height)];
+            
+            if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+                [sliderImageV setFrame:CGRectMake((320-sliderImage.size.width)/2, 35+[dm getInstance].statusBar+20, sliderImage.size.width, sliderImage.size.height)];
+            }else{
+                [sliderImageV setFrame:CGRectMake((320-sliderImage.size.width)/2, 35+[dm getInstance].statusBar, sliderImage.size.width, sliderImage.size.height)];
+            }
         }
             break;
         case 3:
@@ -238,7 +267,12 @@
     if (self) {
         [self setMyFrame];
         UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"meinv.png"]];
-        imgView.frame = CGRectMake(100, 5+[dm getInstance].statusBar, 30, 30);
+        
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            imgView.frame = CGRectMake(100, 5+[dm getInstance].statusBar+20, 30, 30);
+        }else{
+            imgView.frame = CGRectMake(100, 5+[dm getInstance].statusBar, 30, 30);
+        }
         [self addSubview:imgView];
         [imgView release];
         
@@ -247,7 +281,12 @@
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:18];
         label.text = title;
-        label.frame = CGRectMake(100+30+10, 5+[dm getInstance].statusBar, 100, 18);
+        
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            label.frame = CGRectMake(100+30+10, 5+[dm getInstance].statusBar+20, 100, 18);
+        }else{
+            label.frame = CGRectMake(100+30+10, 5+[dm getInstance].statusBar, 100, 18);
+        }
         label.textAlignment = NSTextAlignmentLeft;
         [self addSubview:label];
         [label release];
@@ -257,7 +296,12 @@
         label1.backgroundColor = [UIColor clearColor];
         label1.font = [UIFont systemFontOfSize:12];
         label1.text = tel;
-        label1.frame = CGRectMake(100+30+10, 5+18+[dm getInstance].statusBar, 100, 13);
+        
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            label1.frame = CGRectMake(100+30+10, 5+18+[dm getInstance].statusBar+20, 100, 13);
+        }else{
+            label1.frame = CGRectMake(100+30+10, 5+18+[dm getInstance].statusBar, 100, 13);
+        }
         label1.textAlignment = NSTextAlignmentLeft;
         [self addSubview:label1];
         [label1 release];
@@ -270,7 +314,12 @@
 -(void)setGoBack{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(5, 0+[dm getInstance].statusBar, 60, MAIN_TOPBAR_HEIGHT);
-    button.imageEdgeInsets = UIEdgeInsetsMake(15,-10,10,12);
+    
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+        button.imageEdgeInsets = UIEdgeInsetsMake(15+20,-10,10-20,12);
+    }else{
+        button.imageEdgeInsets = UIEdgeInsetsMake(15,-10,10,12);
+    }
     [button setImage:[UIImage imageNamed:@"nav_return"] forState:UIControlStateNormal];
     button.tag = BTN_GOBACK_TAG;
     [button addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
@@ -281,8 +330,13 @@
     [self.leftBtn removeFromSuperview];
     self.leftBtn = nil;
     self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.leftBtn.frame = CGRectMake(5, 0+[dm getInstance].statusBar, 200, MAIN_TOPBAR_HEIGHT);
+    
     self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(12,0,10,12);
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+        self.leftBtn.frame = CGRectMake(5, 0+[dm getInstance].statusBar+20, 200, MAIN_TOPBAR_HEIGHT);
+    }else{
+        self.leftBtn.frame = CGRectMake(5, 0+[dm getInstance].statusBar, 200, MAIN_TOPBAR_HEIGHT);
+    }
     //self.leftBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
     self.leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.leftBtn setTitle:title forState:UIControlStateNormal];
@@ -327,7 +381,12 @@
     }
     button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    button.frame = CGRectMake(MAIN_WIDTH-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-img.size.width)/2-10, (MAIN_TOPBAR_HEIGHT-img.size.height)/2+[dm getInstance].statusBar, img.size.width, img.size.height);
-    button.frame = CGRectMake([dm getInstance].width-44, [dm getInstance].statusBar, 44, 44);
+    
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+        button.frame = CGRectMake([dm getInstance].width-44, [dm getInstance].statusBar+20, 44, 44);
+    }else{
+        button.frame = CGRectMake([dm getInstance].width-44, [dm getInstance].statusBar, 44, 44);
+    }
 //    [button setBackgroundImage:img forState:UIControlStateNormal];
     [button setImage:img forState:UIControlStateNormal];
     button.tag = BTN_RIGHT_TAG;
@@ -346,7 +405,12 @@
     [button.titleLabel setFont:[UIFont systemFontOfSize:15]];
     int tempWidth = 40;
 //    button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-btnSize.width)/2-10, (MAIN_TOPBAR_HEIGHT-btnSize.height)/2+[dm getInstance].statusBar, btnSize.width, btnSize.height);
-    button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-tempWidth)/2-10, 0+[dm getInstance].statusBar, tempWidth, tempWidth);
+    
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+        button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-tempWidth)/2-10, 0+[dm getInstance].statusBar+20, tempWidth, tempWidth);
+    }else{
+        button.frame = CGRectMake([dm getInstance].width-MAIN_TOPBAR_HEIGHT+(MAIN_TOPBAR_HEIGHT-tempWidth)/2-10, 0+[dm getInstance].statusBar, tempWidth, tempWidth);
+    }
     [button setTitle:title forState:UIControlStateNormal];
     button.tag = BTN_RIGHT_TAG;
     [button addTarget:self action:@selector(rightbtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -389,7 +453,13 @@
 
 -(void)setMyFrame
 {
-    self.frame = CGRectMake(0, 0, [dm getInstance].width, MAIN_TOPBAR_HEIGHT+[dm getInstance].statusBar);
+//    self.frame = CGRectMake(0, 0, [dm getInstance].width, MAIN_TOPBAR_HEIGHT+[dm getInstance].statusBar);
+    
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+        self.frame = CGRectMake(0, 0, [dm getInstance].width, MAIN_TOPBAR_HEIGHT+20);
+    }else{
+        self.frame = CGRectMake(0, 0, [dm getInstance].width, MAIN_TOPBAR_HEIGHT+[dm getInstance].statusBar);
+    }
 }
 
 -(void)setMyFrameBy:(CGRect)frame

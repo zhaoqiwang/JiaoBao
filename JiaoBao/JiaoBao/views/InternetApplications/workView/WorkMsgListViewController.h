@@ -18,6 +18,7 @@
 #import "LoginSendHttp.h"
 #import "MsgDetailViewController.h"
 #import "TreeView_Level2_Model.h"
+#import "NewWorkViewController.h"
 
 
 @interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate,NSURLConnectionDownloadDelegate,ASIProgressDelegate,UITextFieldDelegate>{
@@ -74,5 +75,7 @@
 @property (nonatomic,strong) NSString *mStr_flag;//我自己发送的信息中，未读数量
 @property (nonatomic,strong) NSMutableArray *mArr_photos;
 @property (nonatomic,assign) int mInt_fileDown;//下载附件的索引
+@property (nonatomic,strong) NSString *mStr_content;//转发时，传过来的内容
+@property (nonatomic,strong) NSMutableArray *mArr_list1;//转发时，传过来的附件列表
 
 @end

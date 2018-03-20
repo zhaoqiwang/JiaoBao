@@ -121,6 +121,10 @@
     CGRect StatusRect = [[UIApplication sharedApplication] statusBarFrame];
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
         [dm getInstance].statusBar = rectStatus.size.height;
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            [dm getInstance].statusBar = 0;
+        }
+        D("[dm getInstance].statusBar=%d",[dm getInstance].statusBar);
     }else{
         [dm getInstance].statusBar = 0;
     }

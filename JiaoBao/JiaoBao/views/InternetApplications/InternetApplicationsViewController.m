@@ -849,7 +849,7 @@
     D("点击新建事务、发布通知按钮");
 
     NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
-    newWork.flag = 0;//新建
+    [dm getInstance].mInt_forwarkFlag = 0;//新建
     [utils pushViewController:newWork animated:YES];
 }
 

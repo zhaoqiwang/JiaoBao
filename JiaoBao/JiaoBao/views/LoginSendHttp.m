@@ -483,15 +483,23 @@ static LoginSendHttp *loginSendHttp = nil;
            
         }
     }
-    //判断是否有附件
-    if (arrayAccess.count>0) {
-        //文件名
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
-        for (int i=0; i<arrayAccess.count; i++) {
-            NSString *imgPath=[tempPath stringByAppendingPathComponent:[arrayAccess objectAtIndex:i]];
-            [request setFile:imgPath forKey:[NSString stringWithFormat:@"ATTfileList%d",i]];
-            D("imgegpaht-===%@",imgPath);
+    //判断是否转发
+    if ([dm getInstance].mInt_forwarkFlag == 1) {
+        for (int i=0; i<[dm getInstance].mArr_forwarkList.count; i++) {
+//            D("判断是否转发=%@",[dm getInstance].mArr_forwarkList[i].dlurl);
+//            [request setFile:imgPath forKey:[NSString stringWithFormat:@"ATTfileList%d",i]];
+        }
+    } else {
+        //判断是否有附件
+        if (arrayAccess.count>0) {
+            //文件名
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            NSString *tempPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"file-%@",[dm getInstance].jiaoBaoHao]];
+            for (int i=0; i<arrayAccess.count; i++) {
+                NSString *imgPath=[tempPath stringByAppendingPathComponent:[arrayAccess objectAtIndex:i]];
+                [request setFile:imgPath forKey:[NSString stringWithFormat:@"ATTfileList%d",i]];
+                D("imgegpaht-===%@",imgPath);
+            }
         }
     }
     

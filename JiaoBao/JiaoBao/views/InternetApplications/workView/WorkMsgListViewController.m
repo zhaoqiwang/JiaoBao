@@ -21,6 +21,7 @@
 -(instancetype)init{
     self = [super init];
     self.mArr_list = [[NSMutableArray alloc] init];
+    self.mArr_list1 = [[NSMutableArray alloc] init];
     self.mArr_msg = [[NSMutableArray alloc] init];
     self.mArr_feeback = [[NSMutableArray alloc] init];
     self.mArr_attList = [[NSMutableArray alloc] init];
@@ -78,6 +79,7 @@
     //添加导航条
     self.mNav_navgationBar = [[MyNavigationBar alloc] initWithTitle:self.mStr_name];
     self.mNav_navgationBar.delegate = self;
+//    [self.mNav_navgationBar setRightBtnTitle:@"转发"];
     [self.mNav_navgationBar setGoBack];
     [self.view addSubview:self.mNav_navgationBar];
     
@@ -132,6 +134,18 @@
     [self.view endEditing:YES];
 }
 
+-(void)navigationRightAction:(UIButton *)sender{
+    D("点击转发按钮");
+    NewWorkViewController *newWork = [[NewWorkViewController alloc] init];
+//    newWork.flag = 1;//转发
+//    newWork.mStr_content = self.mStr_content;
+//    newWork.mArr_list = self.mArr_list1;
+    [dm getInstance].mInt_forwarkFlag = 1;
+    [dm getInstance].mStr_forwarkContent = self.mStr_content;
+    [dm getInstance].mArr_forwarkList = self.mArr_list;
+    [utils pushViewController:newWork animated:YES];
+}
+
 //通知界面刷新信息详情
 -(void)MsgDetail:(NSNotification *)noti{
     [MBProgressHUD hideHUDForView:self.view];
@@ -172,6 +186,8 @@
             model.flag = @"0";
             [self.mArr_msg addObject:model];
             [self.mArr_attList addObjectsFromArray:modelMsg.arrayAttList];
+            self.mStr_content = modelMsg.MsgContent;
+            self.mArr_list1 = modelMsg.arrayAttList;
             //阅读人员列表
             self.mArr_readList = [NSMutableArray arrayWithArray:modelMsg.arrayReaderList];
         }

@@ -55,6 +55,14 @@
         [self.mBtn_photos addTarget:self action:@selector(btnVoiceUp:) forControlEvents:UIControlEventTouchUpInside];
         [self.mBtn_photos addTarget:self action:@selector(btnVoiceDragUp:) forControlEvents:UIControlEventTouchDragExit];
         [self addSubview:self.mBtn_photos];
+        //判断是否是转发，如果是隐藏部分显示
+        if ([dm getInstance].mInt_forwarkFlag == 1) {
+            self.mBtn_photos.hidden = YES;
+            self.mBtn_accessory.hidden = YES;
+            self.mTextV_input.text = [dm getInstance].mStr_forwarkContent;
+            [self.mTextV_input setEditable:NO];
+            [self.mTextV_input setTextColor:[UIColor grayColor]];
+        }
         //短信提醒
         self.mBtn_sendMsg = [UIButton buttonWithType:UIButtonTypeCustom];
         self.mBtn_sendMsg.frame = CGRectMake(self.mBtn_photos.frame.origin.x+self.mBtn_photos.frame.size.width+a, self.mBtn_accessory.frame.origin.y, 90, 30);
