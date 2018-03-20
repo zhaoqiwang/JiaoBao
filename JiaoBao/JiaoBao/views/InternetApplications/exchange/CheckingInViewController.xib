@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="FirstBtn" destination="FDu-rY-XVg" id="WA8-LA-CZi"/>
                 <outlet property="bottomView" destination="Mti-TX-udp" id="h38-we-MKv"/>
+                <outlet property="nameLabel2" destination="7Td-OW-gXl" id="jP8-ue-wWF"/>
                 <outlet property="pickView" destination="UV8-n1-BcU" id="KQn-XG-zkF"/>
                 <outlet property="secondBtn" destination="pRg-j4-ci8" id="v9o-k9-hWr"/>
                 <outlet property="toolBar" destination="zxr-q2-EI3" id="fDQ-Ic-yx3"/>
@@ -91,11 +92,11 @@
             <point key="canvasLocation" x="591" y="64"/>
         </toolbar>
         <view contentMode="scaleToFill" id="Mti-TX-udp">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="148"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Tg-nB-zRw">
-                    <rect key="frame" x="53" y="31" width="37" height="30"/>
+                    <rect key="frame" x="56" y="89" width="50" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="签到">
                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -105,7 +106,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bW1-yr-yjM">
-                    <rect key="frame" x="260" y="31" width="41" height="30"/>
+                    <rect key="frame" x="252" y="89" width="55" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="记录">
                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -114,10 +115,17 @@
                         <action selector="recordAction:" destination="-1" eventType="touchUpInside" id="i5f-HY-xYd"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Td-OW-gXl">
+                    <rect key="frame" x="44" y="33" width="288" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="0.27000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="1477" y="282"/>
+            <point key="canvasLocation" x="1476.5" y="311"/>
         </view>
     </objects>
 </document>
