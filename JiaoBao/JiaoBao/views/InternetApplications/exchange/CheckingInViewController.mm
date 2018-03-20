@@ -298,7 +298,7 @@ errorCode:(BMKSearchErrorCode)error{
       self.nameLabel2.font = [UIFont systemFontOfSize:12];
       self.nameLabel2.textAlignment = NSTextAlignmentCenter;
       self.nameLabel2.textColor = [UIColor blueColor];
-      [self.view addSubview:self.nameLabel2];
+//      [self.view addSubview:self.nameLabel2];
       
       
   }

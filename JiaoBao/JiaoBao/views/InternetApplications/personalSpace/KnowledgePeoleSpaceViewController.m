@@ -157,8 +157,9 @@
     [self.HeadCell.categoryBtn addTarget:self action:@selector(categoryBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.HeadCell.personBtn addTarget:self action:@selector(personBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.HeadCell.meBtn addTarget:self action:@selector(meBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-
-    UIView *headView = [[UIView alloc]initWithFrame:self.HeadCell.frame];
+    UIView *headView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.HeadCell.frame.size.height)];
+    self.HeadCell.frame = CGRectMake(0, 0, [dm getInstance].width, self.HeadCell.frame.size.height);
+//    self.HeadCell.backgroundColor = [UIColor redColor];
     headView.backgroundColor = [UIColor clearColor];
     [headView addSubview:self.HeadCell];
     self.tableView.tableHeaderView = headView;
