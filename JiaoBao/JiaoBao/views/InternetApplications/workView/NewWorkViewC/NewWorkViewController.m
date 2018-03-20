@@ -155,9 +155,6 @@
             self.forward.mInt_forwardAll = 2;
             self.forward.mInt_flag = 1;
             self.forward.mInt_all = 2;
-            self.forward.flag = self.flag;
-            self.forward.mStr_content = self.mStr_content;
-            self.forward.mArr_list = self.mArr_list;
 
             //forward.mInt_where = 0;
             [self addChildViewController:self.forward];
