@@ -39,7 +39,7 @@
 @property(nonatomic,assign)NSUInteger selectedRow;
 @property(nonatomic,strong)UITextField *field;
 @property(nonatomic,strong)BMKCircle* circle;
-@property(nonatomic,strong)UILabel *nameLabel,*nameLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel2;
 @property(nonatomic,assign)NSUInteger range;
 
 - (IBAction)checkInAction:(id)sender;//点击签到按钮方法
@@ -147,9 +147,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     
-    self.nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, [dm getInstance].height*0.8, 280, 30)];
-    self.nameLabel2 = [[UILabel alloc]initWithFrame:CGRectMake(20, [dm getInstance].height*0.8, 280, 30)];
 
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getUnitName:) name:@"unitNameNotication" object:nil];
@@ -157,7 +156,7 @@
     BaidumapView = [[BMKMapView alloc]initWithFrame:CGRectMake(0, 64+30, [dm getInstance].width, [dm getInstance].height-94)];
     [self.view addSubview:BaidumapView];
     [self.view addSubview:bottomView];
-    [bottomView setFrame:CGRectMake(0, [dm getInstance].height-90, [dm getInstance].width, 90)];
+    [bottomView setFrame:CGRectMake(0, [dm getInstance].height-148, [dm getInstance].width, 148)];
     UIButton *locationBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     [locationBtn setTitle:@"定位" forState:UIControlStateNormal];
     [locationBtn addTarget:self action:@selector(locationAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -239,6 +238,7 @@
     BMKGeoCodeSearchOption *geoCodeSearchOption = [[BMKGeoCodeSearchOption alloc]init];
     geoCodeSearchOption.city= @"北京市";
     geoCodeSearchOption.address = @"海淀区上地10街10号";
+//    [self.view addSubview:self.nameLabel2];
 
 }
 -(void)checkinResult:(id)sender
@@ -298,7 +298,7 @@ errorCode:(BMKSearchErrorCode)error{
       self.nameLabel2.font = [UIFont systemFontOfSize:12];
       self.nameLabel2.textAlignment = NSTextAlignmentCenter;
       self.nameLabel2.textColor = [UIColor blueColor];
-      [self.view addSubview:self.nameLabel2];
+//      [self.view addSubview:self.nameLabel2];
       
       
   }

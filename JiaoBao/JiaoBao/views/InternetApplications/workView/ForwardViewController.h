@@ -42,6 +42,9 @@
 @property(nonatomic,strong)NewWorkTopView *topView;
 @property(nonatomic,assign)BOOL showTopView;
 @property(nonatomic,assign)NSUInteger allSelected;
+@property (nonatomic,assign) int flag;//0新建，1转发
+@property (nonatomic,strong) NSString *mStr_content;//转发时，传过来的内容
+@property (nonatomic,strong) NSMutableArray *mArr_list;//转发时，传过来的附件列表
 -(void)removeNotification;
 
 

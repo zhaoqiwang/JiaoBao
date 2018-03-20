@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordViewController">
@@ -15,101 +20,159 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="z8j-wf-rSS">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fjD-qd-UgN" customClass="JTCalendarMenuView">
-                    <rect key="frame" x="0.0" y="64" width="320" height="50"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="50"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQR-oO-RGu" customClass="JTCalendarContentView">
-                    <rect key="frame" x="0.0" y="114" width="320" height="300"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="114" width="375" height="399"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wq-d2-U1D">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Wq-d2-U1D">
                     <rect key="frame" x="20" y="80" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="R6w-AD-zY1"/>
+                        <constraint firstAttribute="height" constant="20" id="hQt-eh-Lvb"/>
+                    </constraints>
                     <state key="normal" image="kal_left_arrow.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="leftBtnAction:" destination="-1" eventType="touchUpInside" id="TDf-RF-74m"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zx0-Qb-eyU">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zx0-Qb-eyU">
                     <rect key="frame" x="77" y="80" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="5yg-mb-TLJ"/>
+                    </constraints>
                     <state key="normal" image="kal_left_arrow.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="minusYearAction:" destination="-1" eventType="touchUpInside" id="Pkm-EU-k9g"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbY-rT-Bu7">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tbY-rT-Bu7">
                     <rect key="frame" x="87" y="80" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="VHu-pW-PAA"/>
+                    </constraints>
                     <state key="normal" image="kal_left_arrow.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="minusYearAction:" destination="-1" eventType="touchUpInside" id="DVQ-W6-26r"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42o-eK-Hie">
-                    <rect key="frame" x="226" y="80" width="20" height="20"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42o-eK-Hie">
+                    <rect key="frame" x="278" y="80" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="5tQ-qn-nD1"/>
+                    </constraints>
                     <state key="normal" image="kal_right_arrow.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="addYearAction:" destination="-1" eventType="touchUpInside" id="Muu-ui-i9V"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9z-Rh-tCg">
-                    <rect key="frame" x="236" y="80" width="20" height="20"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9z-Rh-tCg">
+                    <rect key="frame" x="288" y="80" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="3Kd-8W-oaz"/>
+                    </constraints>
                     <state key="normal" image="kal_right_arrow.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="addYearAction:" destination="-1" eventType="touchUpInside" id="8l3-ug-FZR"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jV3-3X-ONz">
-                    <rect key="frame" x="290" y="80" width="20" height="20"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jV3-3X-ONz">
+                    <rect key="frame" x="335" y="80" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="4ZO-i9-bZw"/>
+                    </constraints>
                     <state key="normal" image="kal_right_arrow.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="rightBtnAction:" destination="-1" eventType="touchUpInside" id="vHk-qY-V5U"/>
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kuL-qR-S77">
-                    <rect key="frame" x="0.0" y="422" width="320" height="146"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="0.0" y="521" width="375" height="146"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="146" id="l3p-qM-Z95"/>
+                    </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="k01-2d-3VN"/>
                         <outlet property="delegate" destination="-1" id="Lxd-cM-Z6e"/>
                     </connections>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fjD-qd-UgN" firstAttribute="leading" secondItem="hQR-oO-RGu" secondAttribute="leading" id="7y9-TS-CMw"/>
-                <constraint firstAttribute="bottom" secondItem="kuL-qR-S77" secondAttribute="bottom" id="AYZ-NI-4UE"/>
-                <constraint firstItem="kuL-qR-S77" firstAttribute="trailing" secondItem="hQR-oO-RGu" secondAttribute="trailing" id="BCG-za-A5m"/>
-                <constraint firstItem="hQR-oO-RGu" firstAttribute="top" secondItem="fjD-qd-UgN" secondAttribute="bottom" id="Bkv-qp-USy"/>
-                <constraint firstItem="fjD-qd-UgN" firstAttribute="top" secondItem="z8j-wf-rSS" secondAttribute="top" constant="64" id="CL9-js-UVV"/>
-                <constraint firstItem="hQR-oO-RGu" firstAttribute="top" secondItem="z8j-wf-rSS" secondAttribute="top" constant="114" id="Y2r-W5-CLY"/>
-                <constraint firstItem="kuL-qR-S77" firstAttribute="leading" secondItem="hQR-oO-RGu" secondAttribute="leading" id="bkw-LK-Kdo"/>
-                <constraint firstItem="hQR-oO-RGu" firstAttribute="trailing" secondItem="fjD-qd-UgN" secondAttribute="trailing" id="iO3-92-o9h"/>
-                <constraint firstItem="fjD-qd-UgN" firstAttribute="leading" secondItem="z8j-wf-rSS" secondAttribute="leading" id="nhf-nK-jT2"/>
-                <constraint firstItem="kuL-qR-S77" firstAttribute="top" secondItem="hQR-oO-RGu" secondAttribute="bottom" constant="8" symbolic="YES" id="s4V-7M-mZs"/>
-                <constraint firstAttribute="trailing" secondItem="hQR-oO-RGu" secondAttribute="trailing" id="w9h-4f-2PX"/>
-                <constraint firstAttribute="bottom" secondItem="hQR-oO-RGu" secondAttribute="bottom" constant="154" id="wlZ-wm-flm"/>
+                <constraint firstItem="42o-eK-Hie" firstAttribute="baseline" secondItem="5Wq-d2-U1D" secondAttribute="baseline" id="0wJ-Xc-iJI"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="leading" secondItem="5Wq-d2-U1D" secondAttribute="trailing" constant="37" id="1vw-hU-5Q9"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="leading" secondItem="5Wq-d2-U1D" secondAttribute="trailing" constant="47" id="35y-VM-6au"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="firstBaseline" secondItem="tbY-rT-Bu7" secondAttribute="firstBaseline" id="3zc-TQ-Ft7"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="top" secondItem="42o-eK-Hie" secondAttribute="top" id="74F-1C-cTn"/>
+                <constraint firstItem="jV3-3X-ONz" firstAttribute="baseline" secondItem="tbY-rT-Bu7" secondAttribute="baseline" id="7ae-Gh-cuN"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="firstBaseline" secondItem="42o-eK-Hie" secondAttribute="firstBaseline" id="7bE-pd-ER3"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="baseline" secondItem="Zx0-Qb-eyU" secondAttribute="baseline" id="7sM-fg-5hp"/>
+                <constraint firstItem="jV3-3X-ONz" firstAttribute="firstBaseline" secondItem="42o-eK-Hie" secondAttribute="firstBaseline" id="8pP-s5-d2z"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="firstBaseline" secondItem="42o-eK-Hie" secondAttribute="firstBaseline" id="CYH-Hm-AgN"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="top" secondItem="Zx0-Qb-eyU" secondAttribute="top" id="EGl-xj-hbI"/>
+                <constraint firstAttribute="trailing" secondItem="jV3-3X-ONz" secondAttribute="trailing" constant="20" id="F5A-92-OZJ"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="baseline" secondItem="jV3-3X-ONz" secondAttribute="baseline" id="FdV-Vh-iEA"/>
+                <constraint firstItem="42o-eK-Hie" firstAttribute="top" secondItem="U9z-Rh-tCg" secondAttribute="top" id="J3O-dL-i8W"/>
+                <constraint firstAttribute="bottom" secondItem="kuL-qR-S77" secondAttribute="bottom" id="J5w-hX-5f7"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="baseline" secondItem="U9z-Rh-tCg" secondAttribute="baseline" id="LBF-iF-hs4"/>
+                <constraint firstItem="U9z-Rh-tCg" firstAttribute="firstBaseline" secondItem="jV3-3X-ONz" secondAttribute="firstBaseline" id="LWC-vt-twr"/>
+                <constraint firstItem="U9z-Rh-tCg" firstAttribute="baseline" secondItem="jV3-3X-ONz" secondAttribute="baseline" id="MAX-81-w87"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="leading" secondItem="z8j-wf-rSS" secondAttribute="leading" constant="20" id="MBQ-pV-iIA"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="trailing" secondItem="kuL-qR-S77" secondAttribute="trailing" id="NSK-tT-9RL"/>
+                <constraint firstAttribute="trailing" secondItem="fjD-qd-UgN" secondAttribute="trailing" id="NgF-bE-hJ1"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="baseline" secondItem="5Wq-d2-U1D" secondAttribute="baseline" id="TOo-jm-Rke"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="top" secondItem="5Wq-d2-U1D" secondAttribute="bottom" constant="14" id="WtZ-4W-xDR"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="firstBaseline" secondItem="tbY-rT-Bu7" secondAttribute="firstBaseline" id="Xqu-Qx-BlT"/>
+                <constraint firstItem="42o-eK-Hie" firstAttribute="baseline" secondItem="tbY-rT-Bu7" secondAttribute="baseline" id="aUC-FU-48S"/>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="trailing" secondItem="hQR-oO-RGu" secondAttribute="trailing" id="dvA-r2-6W0"/>
+                <constraint firstItem="jV3-3X-ONz" firstAttribute="leading" secondItem="U9z-Rh-tCg" secondAttribute="trailing" constant="27" id="e0E-rX-qpU"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="baseline" secondItem="jV3-3X-ONz" secondAttribute="baseline" id="fE3-7g-Ofk"/>
+                <constraint firstItem="42o-eK-Hie" firstAttribute="baseline" secondItem="U9z-Rh-tCg" secondAttribute="baseline" id="haa-5x-Azk"/>
+                <constraint firstItem="jV3-3X-ONz" firstAttribute="baseline" secondItem="42o-eK-Hie" secondAttribute="baseline" id="jX5-9d-soO"/>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="leading" secondItem="hQR-oO-RGu" secondAttribute="leading" id="lL1-cr-Nqe"/>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="leading" secondItem="z8j-wf-rSS" secondAttribute="leading" id="mBJ-Ds-nNW"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="firstBaseline" secondItem="5Wq-d2-U1D" secondAttribute="firstBaseline" id="mwp-WQ-nxy"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="baseline" secondItem="U9z-Rh-tCg" secondAttribute="baseline" id="nA9-i3-n71"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="top" secondItem="fjD-qd-UgN" secondAttribute="bottom" id="nWK-Ds-0Os"/>
+                <constraint firstItem="42o-eK-Hie" firstAttribute="firstBaseline" secondItem="U9z-Rh-tCg" secondAttribute="firstBaseline" id="ndV-gK-8mX"/>
+                <constraint firstItem="U9z-Rh-tCg" firstAttribute="top" secondItem="jV3-3X-ONz" secondAttribute="top" id="oiX-P5-eaT"/>
+                <constraint firstItem="U9z-Rh-tCg" firstAttribute="firstBaseline" secondItem="Zx0-Qb-eyU" secondAttribute="firstBaseline" id="pAX-Kr-EES"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="top" secondItem="z8j-wf-rSS" secondAttribute="top" constant="80" id="pbh-30-KGi"/>
+                <constraint firstItem="5Wq-d2-U1D" firstAttribute="baseline" secondItem="Zx0-Qb-eyU" secondAttribute="baseline" id="pma-5q-8U0"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="top" secondItem="tbY-rT-Bu7" secondAttribute="top" id="q1i-T6-ZtA"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="firstBaseline" secondItem="jV3-3X-ONz" secondAttribute="firstBaseline" id="r0G-vr-Bwv"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="baseline" secondItem="U9z-Rh-tCg" secondAttribute="baseline" id="reY-me-BdQ"/>
+                <constraint firstItem="jV3-3X-ONz" firstAttribute="leading" secondItem="42o-eK-Hie" secondAttribute="trailing" constant="37" id="tgv-hb-jt3"/>
+                <constraint firstItem="kuL-qR-S77" firstAttribute="top" secondItem="hQR-oO-RGu" secondAttribute="bottom" constant="8" symbolic="YES" id="uC1-ni-rsx"/>
+                <constraint firstItem="Zx0-Qb-eyU" firstAttribute="baseline" secondItem="42o-eK-Hie" secondAttribute="baseline" id="xjd-KG-hpB"/>
+                <constraint firstItem="tbY-rT-Bu7" firstAttribute="firstBaseline" secondItem="U9z-Rh-tCg" secondAttribute="firstBaseline" id="yXb-b5-RCt"/>
+                <constraint firstItem="hQR-oO-RGu" firstAttribute="leading" secondItem="kuL-qR-S77" secondAttribute="leading" id="yv5-YO-Z6j"/>
+                <constraint firstItem="fjD-qd-UgN" firstAttribute="top" secondItem="z8j-wf-rSS" secondAttribute="top" constant="64" id="zo8-4B-0Xq"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-            <point key="canvasLocation" x="304" y="378"/>
+            <point key="canvasLocation" x="303.5" y="377.5"/>
         </view>
     </objects>
     <resources>
         <image name="kal_left_arrow.png" width="9" height="12"/>
-        <image name="kal_right_arrow.png" width="10" height="12"/>
+        <image name="kal_right_arrow.png" width="9" height="12"/>
     </resources>
 </document>
