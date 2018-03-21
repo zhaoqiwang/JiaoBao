@@ -721,10 +721,10 @@ NSString *kCellID = @"Forward_cell";                          // UICollectionVie
     
 }
 -(void)mBtn_send:(UIButton *)btn{
-    if(self.flag==1){
-        [self transmit_send:btn];
-        return;
-    }
+//    if(self.flag==1){
+//        [self transmit_send:btn];
+//        return;
+//    }
     //检查当前网络是否可用
     if ([self checkNetWork]) {
         return;

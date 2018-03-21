@@ -71,9 +71,9 @@
                 
         
     }
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
-        self.top.constant = self.top.constant+10;
-    }
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
+//        self.top.constant = self.top.constant+10;
+//    }
     
 
     
