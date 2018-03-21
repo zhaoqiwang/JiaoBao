@@ -42,7 +42,7 @@
 - (id)initWithFrame
 {
     
-    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
+    if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
         CGRect frame = CGRectMake(0, 44+[dm getInstance].statusBar+20, [dm getInstance].width, 48);
         self = [super initWithFrame:frame];
     }else{

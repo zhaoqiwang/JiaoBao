@@ -27,17 +27,17 @@
 
 - (id)initWithFrame{
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
-        CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar+20, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44-20);
+        CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar+20, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44);
         self = [super initWithFrame:frame];
     }else{
-        CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44);
+        CGRect frame = CGRectMake(0, 44+40+[dm getInstance].statusBar, [dm getInstance].width, [dm getInstance].height-43*1-[dm getInstance].statusBar-44+20);
         self = [super initWithFrame:frame];
     }
     
     if (self) {
         self.delegate = self;
         if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
-            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44+20);
+            self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44);
         }else{
             self.contentSize = CGSizeMake([dm getInstance].width*3, [dm getInstance].height-43-[dm getInstance].statusBar-44);
         }

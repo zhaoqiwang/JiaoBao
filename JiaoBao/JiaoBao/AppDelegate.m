@@ -118,7 +118,6 @@
     [dm getInstance].height = self.window.frame.size.height;
     //根据系统版本，做状态栏的值
     CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect StatusRect = [[UIApplication sharedApplication] statusBarFrame];
     if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 7.0) {
         [dm getInstance].statusBar = rectStatus.size.height;
         if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
@@ -138,6 +137,15 @@
             UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
             [application registerForRemoteNotificationTypes:myTypes];
         }
+    }
+    //解决iOS11，仅实现heightForHeaderInSection，没有实现viewForHeaderInSection方法时,section间距大的问题
+    [UITableView appearance].estimatedRowHeight = 0;
+    [UITableView appearance].estimatedSectionHeaderHeight = 0;
+    [UITableView appearance].estimatedSectionFooterHeight = 0;
+    
+    //iOS11 解决SafeArea的问题，同时能解决pop时上级页面scrollView抖动的问题
+    if (@available(iOS 11, *)) {
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever; //iOS11 解决SafeArea的问题，同时能解决pop时上级页面scrollView抖动的问题
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"registeredSuccessfully" object:nil];

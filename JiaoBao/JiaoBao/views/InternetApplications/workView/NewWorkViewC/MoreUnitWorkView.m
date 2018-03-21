@@ -49,14 +49,22 @@
         self.mInt_requestCount = 0;
         self.mInt_requestCount2 = 0;
         //总框
-        self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height-20)];
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height-20)];
+        }else{
+            self.mScrollV_all = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [dm getInstance].width, self.frame.size.height-20)];
+        }
         [self addSubview:self.mScrollV_all];
         //上半部分
         self.mViewTop = [[NewWorkTopView alloc] init];
         self.mViewTop.delegate = self;
         [self.mScrollV_all addSubview:self.mViewTop];
         //表格
-        self.mTableV_work = [[UITableView alloc] initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height, frame.size.width, 48*7+20)];
+        if ([[[UIDevice currentDevice]systemVersion]floatValue] >= 11.0) {
+            self.mTableV_work = [[UITableView alloc] initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height, frame.size.width, 48*7)];
+        }else{
+            self.mTableV_work = [[UITableView alloc] initWithFrame:CGRectMake(0, self.mViewTop.frame.size.height, frame.size.width, 48*7+20)];
+        }
         self.mTableV_work.delegate = self;
         self.mTableV_work.dataSource = self;
         self.mTableV_work.scrollEnabled = NO;
