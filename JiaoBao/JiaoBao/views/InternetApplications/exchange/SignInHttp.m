@@ -204,6 +204,7 @@ static  SignInHttp*__instance;
 }
 -(void)GetSignInListForMobile:(NSString*)year Month:(NSString*)month
 {
+    D("GetSignInListForMobile:%@,%@",year,month);
     NSString *urlString = [NSString stringWithFormat:@"%@/InterAppMobileInterface/GetSignInListForMobile",[dm getInstance].KaoQUrl ];
     NSURL *url = [NSURL URLWithString:urlString];
 //    NSString *urlString = @"http://58.56.66.215:8084/InterAppMobileInterface/GetSignInListForMobile";
@@ -298,6 +299,7 @@ static  SignInHttp*__instance;
     NSDictionary *dicList = [dataString objectFromJSONString];
     NSString *ResultCode = [dicList objectForKey:@"ResultCode"];
     NSString *ResultDesc = [dicList objectForKey:@"ResultDesc"];
+    NSLog(@"dataString:%@",dataString);
     if([ResultCode integerValue]==1)
     {
         if(_request.tag == 8)

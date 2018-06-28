@@ -448,6 +448,7 @@
         CGSize contentSize = [model.MsgContent sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:CGSizeMake(tempW, 20000) lineBreakMode:NSLineBreakByWordWrapping];
         cell.mLab_content.text = model.MsgContent;
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
+        cell.mLab_content.isCopyable = YES;
         //计算宽度
         CGFloat cellFloat;
         if (contentSize.width<tempW) {
@@ -545,6 +546,7 @@
         cell.mLab_content.text = model.FeeBackMsg;
         //NSLog(@"contentSize_width = %f contentSize_width = %f",contentSize.width,contentSize.height);
         cell.mLab_content.font = [UIFont systemFontOfSize:16];
+        cell.mLab_content.isCopyable = YES;
         //计算宽度
         CGFloat cellFloat;
         if (contentSize.width<tempW) {

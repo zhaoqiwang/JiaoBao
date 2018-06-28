@@ -19,7 +19,7 @@
 #import "MsgDetailViewController.h"
 #import "TreeView_Level2_Model.h"
 #import "NewWorkViewController.h"
-
+#import "UILabel+Copy.h"
 
 @interface WorkMsgListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MyNavigationDelegate,MBProgressHUDDelegate,MWPhotoBrowserDelegate,NSURLConnectionDownloadDelegate,ASIProgressDelegate,UITextFieldDelegate>{
     MyNavigationBar *mNav_navgationBar;//导航条

@@ -52,6 +52,7 @@
 		437E2D811C9F9B600074F2ED /* LeaveDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 437E2D7F1C9F9B600074F2ED /* LeaveDetailViewController.m */; };
 		437E2D821C9F9B600074F2ED /* LeaveDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */; };
 		437E2D851C9FA2220074F2ED /* LeaveDetailShowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 437E2D841C9FA2220074F2ED /* LeaveDetailShowModel.m */; };
+		4383DD1F2092BFAB00F3DFE4 /* UILabel+Copy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4383DD1E2092BFAB00F3DFE4 /* UILabel+Copy.m */; };
 		438F176C1C9BDE5A002AA0DA /* SelectChapteridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */; };
 		438F176D1C9BDE5A002AA0DA /* SelectChapteridViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */; };
 		4392A5BD1B2067F600C5878D /* ReviseNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4392A5BB1B2067F600C5878D /* ReviseNameViewController.m */; };
@@ -1293,6 +1294,8 @@
 		437E2D801C9F9B600074F2ED /* LeaveDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeaveDetailViewController.xib; path = check/LeaveDetailViewController.xib; sourceTree = "<group>"; };
 		437E2D831C9FA2220074F2ED /* LeaveDetailShowModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeaveDetailShowModel.h; path = model/LeaveDetailShowModel.h; sourceTree = "<group>"; };
 		437E2D841C9FA2220074F2ED /* LeaveDetailShowModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeaveDetailShowModel.m; path = model/LeaveDetailShowModel.m; sourceTree = "<group>"; };
+		4383DD1D2092BFAB00F3DFE4 /* UILabel+Copy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UILabel+Copy.h"; path = "Common/UILabel+Copy.h"; sourceTree = "<group>"; };
+		4383DD1E2092BFAB00F3DFE4 /* UILabel+Copy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UILabel+Copy.m"; path = "Common/UILabel+Copy.m"; sourceTree = "<group>"; };
 		438F17691C9BDE5A002AA0DA /* SelectChapteridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectChapteridViewController.h; path = views/InternetApplications/onlineJob/SelectChapteridViewController.h; sourceTree = "<group>"; };
 		438F176A1C9BDE5A002AA0DA /* SelectChapteridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectChapteridViewController.m; path = views/InternetApplications/onlineJob/SelectChapteridViewController.m; sourceTree = "<group>"; };
 		438F176B1C9BDE5A002AA0DA /* SelectChapteridViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectChapteridViewController.xib; path = views/InternetApplications/onlineJob/SelectChapteridViewController.xib; sourceTree = "<group>"; };
@@ -3080,6 +3083,15 @@
 			path = Common/UMessage_Sdk_1.5.0;
 			sourceTree = "<group>";
 		};
+		4383DD1C2092BF3D00F3DFE4 /* labelCopy */ = {
+			isa = PBXGroup;
+			children = (
+				4383DD1D2092BFAB00F3DFE4 /* UILabel+Copy.h */,
+				4383DD1E2092BFAB00F3DFE4 /* UILabel+Copy.m */,
+			);
+			name = labelCopy;
+			sourceTree = "<group>";
+		};
 		43D84C8E1FEE027B00153439 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -3922,6 +3934,7 @@
 		A755E6B019F25B5500BBDF3D /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				4383DD1C2092BF3D00F3DFE4 /* labelCopy */,
 				4336B52B1FF4A295001B1252 /* UMessage_Sdk_1.5.0 */,
 				43FBAE451CD3524B00236F61 /* emoji */,
 				A79021781C5612A3007736E9 /* 广告循环AdView */,
@@ -6500,6 +6513,7 @@
 				F7CBB9E41CBB450F00063920 /* StudentSumViewController.m in Sources */,
 				F7935A631BDA0EE00021A048 /* StuHWModel.m in Sources */,
 				43D84C3B1FEE006500153439 /* SDWebImageWebPCoder.m in Sources */,
+				4383DD1F2092BFAB00F3DFE4 /* UILabel+Copy.m in Sources */,
 				430279861C995618003546E9 /* LeaveTopScrollView.m in Sources */,
 				A78459DD1B7B4D1D00EA7D5D /* IQBarButtonItem.m in Sources */,
 				A79AD7801BAA4C2200F2CE77 /* MyAnswerViewController.m in Sources */,
@@ -6884,7 +6898,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JiaoBao/JiaoBao.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 68R8QP4X33;
 				ENABLE_BITCODE = NO;
@@ -6927,7 +6941,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = JiaoBao/JiaoBao.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Canxin Mo (7FU9MAJ8GT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 68R8QP4X33;
 				ENABLE_BITCODE = NO;

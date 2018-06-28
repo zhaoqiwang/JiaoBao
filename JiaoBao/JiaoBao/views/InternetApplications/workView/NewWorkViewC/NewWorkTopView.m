@@ -151,6 +151,10 @@
 
 //发送按钮
 -(void)mBtn_send:(UIButton *)btn{
+    if (self.mTextV_input.text.length>300) {
+        [MBProgressHUD showError:@"输入文字不能多于300个" toView:self];
+        return;
+    }
     if (self.mArr_accessory.count>10) {
         [MBProgressHUD showError:@"附件不能多于10个" toView:self];
         return;
